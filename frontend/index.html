@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MindMetric AI</title>
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<!-- Global rules copied verbatim from MindMetric AI.dc.html's <helmet><style> block — unchanged. -->
+<style>
+@keyframes mm-shimmer { 0% { background-position: -400px 0; } 100% { background-position: 400px 0; } }
+@keyframes mm-fade-up { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes mm-blob { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(20px,-30px) scale(1.06); } }
+@keyframes mm-spin { to { transform: rotate(360deg); } }
+
+/* Achievement badge icon animations — one per indicator, looping only while unlocked. */
+@keyframes mm-badge-math { 0%, 55%, 100% { transform: translateY(0) scale(1); } 15% { transform: translateY(-5px) scale(1.1); } 30% { transform: translateY(2px) scale(0.92); } }
+@keyframes mm-badge-logic { 0%, 100% { transform: scale(1) rotate(0deg); filter: brightness(1); } 25% { transform: scale(1.28) rotate(-8deg); filter: brightness(1.4); } 50% { transform: scale(1) rotate(0deg); filter: brightness(1); } 75% { transform: scale(1.28) rotate(8deg); filter: brightness(1.4); } }
+@keyframes mm-badge-algorithmic { 0%, 60%, 100% { transform: translateX(0) skewX(0deg); } 15% { transform: translateX(-4px) skewX(-12deg); } 30% { transform: translateX(4px) skewX(12deg); } }
+@keyframes mm-badge-creative { 0%, 100% { transform: scale(1); filter: drop-shadow(0 0 0 rgba(184,134,47,0)); } 50% { transform: scale(1.22); filter: drop-shadow(0 0 9px rgba(184,134,47,0.85)); } }
+@keyframes mm-badge-teamwork-a { 0%, 20%, 100% { transform: translateX(0) rotate(0deg) scale(1); } 50% { transform: translateX(-4px) rotate(-14deg) scale(0.72); } 80% { transform: translateX(0) rotate(0deg) scale(1); } }
+@keyframes mm-badge-teamwork-b { 0%, 20%, 100% { transform: translateX(0) rotate(0deg) scale(1); } 50% { transform: translateX(4px) rotate(14deg) scale(0.72); } 80% { transform: translateX(0) rotate(0deg) scale(1); } }
+@keyframes mm-badge-teamwork-c { 0%, 18%, 100% { transform: translateY(3.5px) scale(0.3); opacity: 0; } 45% { transform: translateY(-1.5px) scale(1.55); opacity: 1; } 62% { transform: translateY(-2px) scale(1.45); opacity: 1; } 82% { transform: translateY(3px) scale(0.4); opacity: 0; } }
+@keyframes mm-badge-teamwork-spark1 { 0%, 32%, 100% { transform: scale(0); opacity: 0; } 52% { transform: scale(1); opacity: 1; } 68% { transform: scale(0); opacity: 0; } }
+@keyframes mm-badge-teamwork-spark2 { 0%, 38%, 100% { transform: scale(0); opacity: 0; } 58% { transform: scale(1); opacity: 1; } 74% { transform: scale(0); opacity: 0; } }
+@keyframes mm-badge-patience { 0%, 40% { transform: rotate(0deg); } 60% { transform: rotate(180deg); } 100% { transform: rotate(360deg); } }
+@keyframes mm-badge-problem-solving { 0%, 100% { transform: rotate(0deg) scale(1); filter: drop-shadow(0 0 0 rgba(184,134,47,0)); } 18% { transform: rotate(-28deg) scale(1.05); filter: drop-shadow(0 0 0 rgba(184,134,47,0)); } 32% { transform: rotate(18deg) scale(1.18); filter: drop-shadow(0 0 9px rgba(184,134,47,0.8)); } 46% { transform: rotate(-8deg) scale(1.05); filter: drop-shadow(0 0 2px rgba(184,134,47,0.3)); } 60%, 100% { transform: rotate(0deg) scale(1); filter: drop-shadow(0 0 0 rgba(184,134,47,0)); } }
+@keyframes mm-badge-learning-speed { 0%, 40%, 100% { opacity: 1; transform: translateY(0) scale(1); } 45% { opacity: 0.3; transform: translateY(2px) scale(0.88); } 50% { opacity: 1; transform: translateY(-4px) scale(1.18); } 55% { opacity: 0.6; transform: translateY(0) scale(1); } }
+@keyframes mm-badge-attention { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(0.1); } 98% { transform: scaleY(1); } }
+@keyframes mm-badge-iq { 0%, 100% { transform: scale(1) rotate(0deg); filter: drop-shadow(0 0 0 rgba(62,126,166,0)); } 18% { transform: scale(1.14) rotate(-5deg); filter: drop-shadow(0 0 6px rgba(62,126,166,0.55)); } 32% { transform: scale(1) rotate(0deg); filter: drop-shadow(0 0 0 rgba(62,126,166,0)); } 50% { transform: scale(1.28) rotate(5deg); filter: drop-shadow(0 0 13px rgba(62,126,166,0.9)); } 68%, 100% { transform: scale(1) rotate(0deg); filter: drop-shadow(0 0 0 rgba(62,126,166,0)); } }
+@keyframes mm-badge-reveal { 0% { transform: scale(0) rotate(-25deg); opacity: 0; } 60% { transform: scale(1.18) rotate(8deg); opacity: 1; } 80% { transform: scale(0.95) rotate(-4deg); } 100% { transform: scale(1) rotate(0deg); } }
+body { margin: 0; background: #F5F7F8; font-family: 'Manrope', sans-serif; -webkit-font-smoothing: antialiased; }
+a { color: #2E5570; }
+a:hover { color: #1F374B; }
+* { box-sizing: border-box; }
+.mm-btn { transition: transform 0.12s ease, opacity 0.12s ease, box-shadow 0.12s ease; }
+.mm-btn:active:not(:disabled) { transform: scale(0.95); }
+.mm-btn:disabled { cursor: not-allowed; opacity: 0.75; }
+.mm-spinner {
+  width: 15px; height: 15px; border-radius: 50%; display: inline-block; vertical-align: middle;
+  border: 2px solid rgba(255,255,255,0.4); border-top-color: #fff; animation: mm-spin 0.7s linear infinite;
+}
+.mm-spinner-dark {
+  border: 2px solid rgba(46,85,112,0.25); border-top-color: #2E5570;
+}
+@media (prefers-reduced-motion: reduce) {
+  .mm-badge-icon, .mm-badge-icon * { animation: none !important; }
+}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="module" src="/src/main.jsx"></script>
+</body>
+</html>
