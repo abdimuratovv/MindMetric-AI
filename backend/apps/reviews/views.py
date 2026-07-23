@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from apps.accounts.models import User
-from apps.accounts.permissions import IsTeacher
+from apps.accounts.permissions import IsAdmin
 from apps.i18n import get_language
 from apps.scoring.constants import INDICATOR_CHOICES, INDICATOR_SHORT_LABELS
 from apps.scoring.models import FieldRecommendation, IndicatorScore, OverallScore
@@ -17,14 +17,17 @@ from .status import status_style
 
 class TeacherStudentListView(APIView):
     """
-    GET /api/teacher/students/?search=
+    GET /api/teacher/students/?search=&faculty=&course=&group=
 
     Feeds {{ teacherStudents }} — searchable by name/program, same `.filter()`
     semantics as the mockup's client-side search over `STUDENTS`, now a
-    server-side query so the roster isn't hardcoded.
+    server-side query so the roster isn't hardcoded. faculty/course/group
+    narrow it further using the student's onboarding-survey answers
+    (accounts.StudentProfile) — options come from
+    GET /api/admin/student-filter-options/.
     """
 
-    permission_classes = [IsTeacher]
+    permission_classes = [IsAdmin]
 
     def get(self, request):
         lang = get_language(request)
@@ -34,6 +37,15 @@ class TeacherStudentListView(APIView):
             students = students.filter(
                 Q(first_name__icontains=search) | Q(last_name__icontains=search) | Q(program__icontains=search)
             )
+        faculty = request.query_params.get('faculty', '')
+        if faculty:
+            students = students.filter(student_profile__faculty=faculty)
+        course = request.query_params.get('course', '')
+        if course:
+            students = students.filter(student_profile__course=course)
+        group = request.query_params.get('group', '')
+        if group:
+            students = students.filter(student_profile__group=group)
 
         rows = []
         for student in students:
@@ -63,7 +75,7 @@ class TeacherStudentDetailView(APIView):
     reviewer can tell "not scored" apart from a genuine low score).
     """
 
-    permission_classes = [IsTeacher]
+    permission_classes = [IsAdmin]
 
     def get(self, request, student_id):
         lang = get_language(request)
@@ -97,7 +109,7 @@ class TeacherStudentDetailView(APIView):
 class SubmitReviewView(APIView):
     """POST /api/teacher/students/{id}/review/ {rubric_scores, comment} — mirrors `submitReview`."""
 
-    permission_classes = [IsTeacher]
+    permission_classes = [IsAdmin]
 
     def post(self, request, student_id):
         student = get_object_or_404(User, id=student_id, role=User.Role.STUDENT)

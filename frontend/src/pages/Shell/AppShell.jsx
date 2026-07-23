@@ -10,17 +10,18 @@ import TeacherReview from './TeacherReview.jsx';
 
 // Ported from `navConfigs` in renderVals() (lines 827-839). `labelKey` looks
 // up the translated label at render time (see i18n/translations.js `nav`).
+// Review Queue lives under `admin` now — the teacher role was removed (a
+// teacher could only ever view student results, nothing else, so that
+// screen is just another admin capability rather than its own role).
 const NAV_CONFIGS = {
   student: [
     { key: 'selection', labelKey: 'assessments', iconPath: 'M3 3h8v8H3zM13 3h8v5h-8zM13 12h8v9h-8zM3 15h8v6H3z' },
     { key: 'results', labelKey: 'myResults', iconPath: 'M9 5h6a2 2 0 012 2v12a2 2 0 01-2 2H9a2 2 0 01-2-2V7a2 2 0 012-2zM9 3h6v4H9zM8 12l2 2 4-4' },
     { key: 'achievements', labelKey: 'achievements', iconPath: 'M12 2l2.4 5.8L20 9l-4.5 4 1.3 6-4.8-3-4.8 3 1.3-6L4 9l5.6-1.2z' },
   ],
-  teacher: [
-    { key: 'teacherReview', labelKey: 'reviewQueue', iconPath: 'M17 21v-2a4 4 0 00-3-3.87M9 11a4 4 0 100-8 4 4 0 000 8zM3 21v-2a4 4 0 013-3.87M16 3.13a4 4 0 010 7.75' },
-  ],
   admin: [
     { key: 'admin', labelKey: 'overview', iconPath: 'M12 3l7 3v6c0 5-3.5 8-7 9-3.5-1-7-4-7-9V6z' },
+    { key: 'teacherReview', labelKey: 'reviewQueue', iconPath: 'M17 21v-2a4 4 0 00-3-3.87M9 11a4 4 0 100-8 4 4 0 000 8zM3 21v-2a4 4 0 013-3.87M16 3.13a4 4 0 010 7.75' },
     { key: 'questionBank', labelKey: 'questionBank', iconPath: 'M9 4h6a1 1 0 011 1v1h1a2 2 0 012 2v11a2 2 0 01-2 2H7a2 2 0 01-2-2V8a2 2 0 012-2h1V5a1 1 0 011-1zM8 12h8M8 16h5' },
   ],
 };
@@ -45,6 +46,12 @@ export default function AppShell({ screen, goTo, user, logout }) {
       <aside style={{
         width: '246px', flexShrink: 0, padding: '24px 16px', display: 'flex', flexDirection: 'column',
         background: 'rgba(255,255,255,0.5)', borderRight: '1px solid rgba(255,255,255,0.7)', backdropFilter: 'blur(18px)',
+        // Pin the sidebar to the viewport instead of stretching to match the
+        // main content column's height — otherwise on tall pages (long
+        // student/admin screens) the flex row's default `align-items: stretch`
+        // stretches the aside too, and the profile/logout footer (pushed to
+        // the bottom via `nav`'s flex:1) ends up far below the fold.
+        position: 'sticky', top: 0, height: '100vh', alignSelf: 'flex-start', overflowY: 'auto',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '9px', padding: '8px 10px 22px' }}>
           <img src={logoIcon} alt="MindMetric AI" style={{ width: '28px', height: '28px', borderRadius: '8px' }} />

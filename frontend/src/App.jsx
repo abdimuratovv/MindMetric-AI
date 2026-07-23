@@ -3,6 +3,7 @@ import { ASSESSMENT_TYPES } from './constants/assessments.js';
 import AppShell from './pages/Shell/AppShell.jsx';
 import Auth from './pages/Auth.jsx';
 import FocusedTestShell from './pages/FocusedTest/FocusedTestShell.jsx';
+import StudentSurvey from './pages/StudentSurvey.jsx';
 import Welcome from './pages/Welcome.jsx';
 import { useAppState } from './state/useAppState.js';
 
@@ -15,7 +16,7 @@ const SHELL_SCREENS = ['selection', 'results', 'achievements', 'analytics', 'tea
  * `Component.state.screen`.
  */
 export default function App() {
-  const { screen, goTo, user, onLoginSuccess, logout } = useAppState();
+  const { screen, goTo, user, onLoginSuccess, onProfileCompleted, logout } = useAppState();
 
   return (
     <PageBackground>
@@ -23,6 +24,9 @@ export default function App() {
         <Welcome onGoAuth={() => goTo('auth')} />
       )}
       {screen === 'auth' && <Auth onLoginSuccess={onLoginSuccess} onGoWelcome={() => goTo('welcome')} />}
+      {screen === 'studentSurvey' && (
+        <StudentSurvey user={user} onComplete={onProfileCompleted} onLogout={logout} />
+      )}
       {ASSESSMENT_TYPES.includes(screen) && <FocusedTestShell screen={screen} goTo={goTo} />}
       {SHELL_SCREENS.includes(screen) && (
         <AppShell screen={screen} goTo={goTo} user={user} logout={logout} />

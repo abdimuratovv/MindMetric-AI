@@ -85,6 +85,11 @@ else:
 
 AUTH_USER_MODEL = 'accounts.User'
 
+# Self-registration (apps.accounts.serializers.RegisterSerializer) only accepts
+# emails on this domain — there's no SMTP/email-verification infra in this
+# project, so the domain check is the only gate against non-student sign-ups.
+UNIVERSITY_EMAIL_DOMAIN = 'university.edu'
+
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},

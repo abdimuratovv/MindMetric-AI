@@ -15,3 +15,13 @@ export async function logout() {
 export function me() {
   return api.get('/accounts/me/');
 }
+
+/** Backs auth.jsx's `doRegister`. Does not touch the token — registering never logs the user in. */
+export function register(firstName, lastName, email, password) {
+  return api.post('/auth/register/', { first_name: firstName, last_name: lastName, email, password });
+}
+
+/** Backs StudentSurvey's submit. Returns the updated user (profile_completed: true). */
+export function completeProfile({ faculty, course, group, specialization }) {
+  return api.post('/accounts/complete-profile/', { faculty, course, group, specialization });
+}

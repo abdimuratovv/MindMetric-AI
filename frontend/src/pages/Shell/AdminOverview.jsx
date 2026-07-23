@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
-import { getAdminKpis, getAdminStudents, getCohortDistribution, getFacultyActivity, getFieldDistribution } from '../../api/admin.js';
+import { getAdminKpis, getAdminStudents, getCohortDistribution, getFacultyActivity, getFieldDistribution, getStudentFilterOptions } from '../../api/admin.js';
+import StudentFilters from '../../components/StudentFilters.jsx';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
 
 const SHIMMER = {
@@ -18,11 +19,17 @@ export default function AdminOverview() {
   const [adminSearch, setAdminSearch] = useState('');
   const [adminStudents, setAdminStudents] = useState([]);
   const [searchFocused, setSearchFocused] = useState(false);
+  const [filters, setFilters] = useState({ faculty: '', course: '', group: '' });
+  const [filterOptions, setFilterOptions] = useState({ faculties: [], courses: [], groups: [] });
   const { t, language } = useLanguage();
 
   useEffect(() => {
+    getStudentFilterOptions().then(setFilterOptions);
+  }, []);
+
+  useEffect(() => {
     setLoading(true);
-    Promise.all([getAdminKpis(), getCohortDistribution(), getFieldDistribution(), getFacultyActivity(), getAdminStudents(adminSearch)])
+    Promise.all([getAdminKpis(), getCohortDistribution(), getFieldDistribution(), getFacultyActivity(), getAdminStudents(adminSearch, filters)])
       .then(([kpis, distribution, fieldDistribution, activity, students]) => {
         setAdminKpis(kpis); setDistributionBars(distribution); setFieldDistributionBars(fieldDistribution);
         setFacultyActivity(activity); setAdminStudents(students);
@@ -32,8 +39,10 @@ export default function AdminOverview() {
 
   useEffect(() => {
     if (loading) return;
-    getAdminStudents(adminSearch).then(setAdminStudents);
-  }, [adminSearch]); // eslint-disable-line react-hooks/exhaustive-deps
+    getAdminStudents(adminSearch, filters).then(setAdminStudents);
+  }, [adminSearch, filters]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const updateFilter = (key, value) => setFilters((f) => ({ ...f, [key]: value }));
 
   return (
     <div style={{ animation: 'mm-fade-up 0.4s ease both' }}>
@@ -98,20 +107,23 @@ export default function AdminOverview() {
           <div style={{ padding: '22px 26px', borderRadius: '20px', background: 'rgba(255,255,255,0.6)', border: '1px solid rgba(255,255,255,0.85)', backdropFilter: 'blur(14px)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
               <h3 style={{ fontSize: '15px', fontWeight: 700, color: '#161F24', margin: 0 }}>{t('admin.recentAssessments')}</h3>
-              <input
-                value={adminSearch}
-                onChange={(e) => setAdminSearch(e.target.value)}
-                onFocus={() => setSearchFocused(true)}
-                onBlur={() => setSearchFocused(false)}
-                placeholder={t('common.searchStudents')}
-                style={{
-                  padding: '9px 14px', borderRadius: '10px',
-                  border: `1px solid ${searchFocused ? '#2E5570' : 'rgba(31,55,75,0.14)'}`,
-                  boxShadow: searchFocused ? '0 0 0 3px rgba(46,85,112,0.14)' : 'none',
-                  transition: 'border-color 0.15s ease, box-shadow 0.15s ease',
-                  fontSize: '13px', fontFamily: 'Manrope', outline: 'none', background: 'rgba(255,255,255,0.8)', width: '220px',
-                }}
-              />
+              <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                <StudentFilters options={filterOptions} filters={filters} onChange={updateFilter} />
+                <input
+                  value={adminSearch}
+                  onChange={(e) => setAdminSearch(e.target.value)}
+                  onFocus={() => setSearchFocused(true)}
+                  onBlur={() => setSearchFocused(false)}
+                  placeholder={t('common.searchStudents')}
+                  style={{
+                    padding: '9px 14px', borderRadius: '10px',
+                    border: `1px solid ${searchFocused ? '#2E5570' : 'rgba(31,55,75,0.14)'}`,
+                    boxShadow: searchFocused ? '0 0 0 3px rgba(46,85,112,0.14)' : 'none',
+                    transition: 'border-color 0.15s ease, box-shadow 0.15s ease',
+                    fontSize: '13px', fontFamily: 'Manrope', outline: 'none', background: 'rgba(255,255,255,0.8)', width: '220px',
+                  }}
+                />
+              </div>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '2fr 1.4fr 0.9fr 1fr 1fr', gap: '10px', padding: '0 6px 10px', fontSize: '11.5px', fontWeight: 700, color: '#939EA3', borderBottom: '1px solid rgba(31,55,75,0.08)' }}>
               <span>{t('admin.tableStudent')}</span><span>{t('admin.tableProgram')}</span><span>{t('admin.tableScore')}</span><span>{t('admin.tableStatus')}</span><span>{t('admin.tableDate')}</span>

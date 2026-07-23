@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate
+from django.utils import timezone
 from rest_framework import status
 from rest_framework.generics import RetrieveAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -8,7 +9,9 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 from apps.i18n import get_language
 
-from .serializers import LoginSerializer, UserSerializer
+from .models import StudentProfile
+from .permissions import IsStudent
+from .serializers import LoginSerializer, RegisterSerializer, StudentProfileSerializer, UserSerializer
 
 INVALID_CREDENTIALS = {
     'ru': 'Пожалуйста, введите university-почту и пароль.',
@@ -64,6 +67,27 @@ class LoginView(APIView):
         })
 
 
+class RegisterView(APIView):
+    """
+    POST /api/auth/register/  {first_name, last_name, email, password}
+
+    Creates a role=STUDENT account only. Does NOT log the user in and
+    returns no tokens — the frontend sends them back to the login screen
+    to sign in with the credentials they just created.
+    """
+
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        lang = get_language(request)
+        serializer = RegisterSerializer(data=request.data, context={'lang': lang})
+        if not serializer.is_valid():
+            first_error = next(iter(serializer.errors.values()))[0]
+            return Response({'detail': str(first_error)}, status=status.HTTP_400_BAD_REQUEST)
+        user = serializer.save()
+        return Response({'email': user.email}, status=status.HTTP_201_CREATED)
+
+
 class LogoutView(APIView):
     """POST /api/auth/logout/ — blacklists the refresh token; mirrors the sidebar's `logout`."""
 
@@ -85,3 +109,22 @@ class MeView(RetrieveAPIView):
 
     def get_object(self):
         return self.request.user
+
+
+class CompleteProfileView(APIView):
+    """
+    POST /api/accounts/complete-profile/  {faculty, course, group, specialization}
+
+    One-time onboarding-survey submission. Creates or updates the caller's
+    StudentProfile and stamps completed_at, which is what
+    HasCompletedProfile / UserSerializer.profile_completed key off of.
+    """
+
+    permission_classes = [IsStudent]
+
+    def post(self, request):
+        profile, _ = StudentProfile.objects.get_or_create(user=request.user)
+        serializer = StudentProfileSerializer(profile, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(completed_at=timezone.now())
+        return Response(UserSerializer(request.user).data)

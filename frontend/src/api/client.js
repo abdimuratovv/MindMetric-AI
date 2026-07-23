@@ -47,3 +47,11 @@ export const api = {
   patch: (path, body) => request('PATCH', path, body),
   delete: (path) => request('DELETE', path),
 };
+
+/** Builds a `?key=value&...` query string, skipping empty/falsy values (e.g. unset filters). */
+export function buildQuery(params) {
+  const qs = new URLSearchParams();
+  Object.entries(params).forEach(([key, value]) => { if (value) qs.set(key, value); });
+  const s = qs.toString();
+  return s ? `?${s}` : '';
+}

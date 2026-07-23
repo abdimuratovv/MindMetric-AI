@@ -1,15 +1,17 @@
 """
 Loads apps/assessments/content.py into the database and creates demo
-accounts (one login per role, plus a small student roster so the teacher
-and admin dashboards have something to show). Safe to re-run — everything
-is an upsert.
+accounts (one student login, two admin logins, plus a small student roster
+so the review queue and admin dashboards have something to show). Safe to
+re-run — everything is an upsert.
 
 Usage: python manage.py seed_assessment_content
 """
 from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand
 from django.db import transaction
+from django.utils import timezone
 
+from apps.accounts.models import StudentProfile
 from apps.assessments.content import CODING_PROBLEM, LIKERT_CATEGORIES, MCQ_QUESTIONS
 from apps.assessments.feedback_content import QUESTION_FEEDBACK
 from apps.assessments.models import BehavioralCategory, BehavioralItem, CodingProblem, CognitiveQuestion
@@ -21,7 +23,7 @@ from apps.scoring.calculators import band_for
 User = get_user_model()
 DEMO_PASSWORD = 'demo1234'
 
-# Roster shown on the teacher/admin screens — ported from the mockup's STUDENTS array.
+# Roster shown on the review queue / admin screens — ported from the mockup's STUDENTS array.
 ROSTER = [
     {'name': 'Amara Osei', 'program': 'CS · Sophomore', 'score': 88, 'status': 'reviewed'},
     {'name': 'Diego Fernandez', 'program': 'CS · Freshman', 'score': 62, 'status': 'pending'},
@@ -47,12 +49,12 @@ class Command(BaseCommand):
         self._seed_mcq_questions()
         self._seed_coding_problem()
         self._seed_likert_categories()
-        teacher = self._seed_demo_accounts()
-        self._seed_roster(teacher)
+        reviewer = self._seed_demo_accounts()
+        self._seed_roster(reviewer)
         self.stdout.write(self.style.SUCCESS('Seed complete.'))
         self.stdout.write('Demo logins (any of these, password "demo1234"):')
         self.stdout.write('  student  jordan.blake@university.edu')
-        self.stdout.write('  teacher  elena.marsh@university.edu')
+        self.stdout.write('  admin    elena.marsh@university.edu')
         self.stdout.write('  admin    sam.whitfield@university.edu')
 
     def _seed_mcq_questions(self):
@@ -116,12 +118,29 @@ class Command(BaseCommand):
         student.set_password(DEMO_PASSWORD)
         student.save()
 
-        teacher, _ = User.objects.update_or_create(
-            email='elena.marsh@university.edu',
-            defaults={'first_name': 'Elena', 'last_name': 'Marsh', 'role': User.Role.TEACHER},
+        # Pre-completed so the demo login skips the first-login onboarding
+        # survey (accounts.permissions.HasCompletedProfile) for smooth manual testing.
+        StudentProfile.objects.update_or_create(
+            user=student,
+            defaults={
+                'faculty': 'Faculty of Computer Science',
+                'course': '2nd year',
+                'group': 'CS-204',
+                'specialization': 'Software Engineering',
+                'completed_at': timezone.now(),
+            },
         )
-        teacher.set_password(DEMO_PASSWORD)
-        teacher.save()
+
+        # Elena Marsh used to be the demo "teacher" login. The teacher role was
+        # removed (a teacher could only ever view their own students' results,
+        # nothing else — that's just an admin capability now), so she's an
+        # admin account too and keeps reviewing students under that role.
+        reviewer, _ = User.objects.update_or_create(
+            email='elena.marsh@university.edu',
+            defaults={'first_name': 'Elena', 'last_name': 'Marsh', 'role': User.Role.ADMIN},
+        )
+        reviewer.set_password(DEMO_PASSWORD)
+        reviewer.save()
 
         admin, _ = User.objects.update_or_create(
             email='sam.whitfield@university.edu',
@@ -130,10 +149,10 @@ class Command(BaseCommand):
         admin.set_password(DEMO_PASSWORD)
         admin.save()
 
-        self.stdout.write('  3 demo accounts (student/teacher/admin)')
-        return teacher
+        self.stdout.write('  3 demo accounts (student/admin/admin)')
+        return reviewer
 
-    def _seed_roster(self, teacher):
+    def _seed_roster(self, reviewer):
         for row in ROSTER:
             first, _, last = row['name'].partition(' ')
             email = f"{first}.{last}".lower().replace(' ', '') + '@university.edu'
@@ -156,11 +175,11 @@ class Command(BaseCommand):
             status = row['status']
             if status == 'reviewed':
                 TeacherReview.objects.update_or_create(
-                    student=student, defaults={'reviewer': teacher, 'submitted': True, 'flagged': False},
+                    student=student, defaults={'reviewer': reviewer, 'submitted': True, 'flagged': False},
                 )
             elif status == 'flagged':
                 TeacherReview.objects.update_or_create(
-                    student=student, defaults={'reviewer': teacher, 'submitted': False, 'flagged': True},
+                    student=student, defaults={'reviewer': reviewer, 'submitted': False, 'flagged': True},
                 )
             # 'pending' → no TeacherReview row, matches the model's default 'pending' status.
 

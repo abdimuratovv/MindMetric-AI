@@ -6,7 +6,17 @@
  */
 export default function PageBackground({ children }) {
   return (
-    <div style={{ position: 'relative', minHeight: '100vh', width: '100%', overflowX: 'hidden', background: '#F5F7F8' }}>
+    <div style={{
+      position: 'relative', minHeight: '100vh', width: '100%',
+      // 'clip' (not 'hidden') on purpose: per the CSS overflow spec, setting
+      // overflow-x to anything but 'visible' while overflow-y stays 'visible'
+      // silently promotes overflow-y to 'auto' too — turning this wrapper into
+      // an unintended scroll container. That breaks `position: sticky` on the
+      // AppShell sidebar (its containing block becomes this box instead of the
+      // real viewport). 'clip' still prevents the horizontal scrollbar without
+      // triggering that promotion.
+      overflowX: 'clip', background: '#F5F7F8',
+    }}>
       <div style={{
         position: 'fixed', top: '-140px', right: '-120px', width: '480px', height: '480px', borderRadius: '50%',
         background: 'radial-gradient(circle at 30% 30%, rgba(143,188,217,0.55), rgba(143,188,217,0) 70%)',

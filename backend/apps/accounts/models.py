@@ -55,3 +55,22 @@ class User(AbstractUser):
     def initials(self):
         parts = [p for p in self.get_full_name().split(' ') if p]
         return ''.join(p[0] for p in parts[:2]).upper() or self.email[0].upper()
+
+
+class StudentProfile(models.Model):
+    """
+    One-time onboarding survey answers, collected right after a student's
+    first login and before they can start any assessment. `completed_at`
+    null means the survey hasn't been submitted yet (see
+    accounts.permissions.HasCompletedProfile).
+    """
+
+    user = models.OneToOneField(User, related_name='student_profile', on_delete=models.CASCADE)
+    faculty = models.CharField(max_length=150)
+    course = models.CharField(max_length=150)
+    group = models.CharField(max_length=150)
+    specialization = models.CharField(max_length=150)
+    completed_at = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return f'{self.user.email} profile'

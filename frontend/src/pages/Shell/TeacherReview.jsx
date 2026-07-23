@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 
+import { getStudentFilterOptions } from '../../api/admin.js';
 import { getTeacherStudentDetail, getTeacherStudents, submitReview as apiSubmitReview } from '../../api/teacher.js';
+import StudentFilters from '../../components/StudentFilters.jsx';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
 
 const SHIMMER = {
@@ -24,12 +26,20 @@ export default function TeacherReview() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [searchFocused, setSearchFocused] = useState(false);
   const [commentFocused, setCommentFocused] = useState(false);
+  const [filters, setFilters] = useState({ faculty: '', course: '', group: '' });
+  const [filterOptions, setFilterOptions] = useState({ faculties: [], courses: [], groups: [] });
   const { t, language } = useLanguage();
 
   useEffect(() => {
+    getStudentFilterOptions().then(setFilterOptions);
+  }, []);
+
+  useEffect(() => {
     setLoading(true);
-    getTeacherStudents(teacherSearch).then((rows) => { setTeacherStudents(rows); setLoading(false); });
-  }, [teacherSearch, language]);
+    getTeacherStudents(teacherSearch, filters).then((rows) => { setTeacherStudents(rows); setLoading(false); });
+  }, [teacherSearch, filters, language]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const updateFilter = (key, value) => setFilters((f) => ({ ...f, [key]: value }));
 
   const selectStudent = (id) => {
     setSelectedStudentId(id);
@@ -68,7 +78,7 @@ export default function TeacherReview() {
       ) : (
         <div style={{ display: 'grid', gridTemplateColumns: '360px 1fr', gap: '20px', alignItems: 'start' }}>
           <div style={{ borderRadius: '20px', background: 'rgba(255,255,255,0.6)', border: '1px solid rgba(255,255,255,0.85)', backdropFilter: 'blur(14px)', overflow: 'hidden' }}>
-            <div style={{ padding: '14px', borderBottom: '1px solid rgba(31,55,75,0.08)' }}>
+            <div style={{ padding: '14px', borderBottom: '1px solid rgba(31,55,75,0.08)', display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <input
                 value={teacherSearch}
                 onChange={(e) => setTeacherSearch(e.target.value)}
@@ -83,6 +93,9 @@ export default function TeacherReview() {
                   fontFamily: 'Manrope', fontSize: '13px', outline: 'none', background: 'rgba(255,255,255,0.8)',
                 }}
               />
+              <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+                <StudentFilters options={filterOptions} filters={filters} onChange={updateFilter} />
+              </div>
             </div>
             {teacherStudents.length > 0 ? (
               <div style={{ maxHeight: '520px', overflowY: 'auto' }}>

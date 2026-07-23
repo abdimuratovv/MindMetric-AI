@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from apps.accounts.permissions import IsStudent
+from apps.accounts.permissions import HasCompletedProfile, IsStudent
 from apps.i18n import get_language
 from apps.scoring.engine import AdaptiveTestingEngine
 from apps.scoring.state_tracker import StudentStateTracker
@@ -71,7 +71,7 @@ class AssessmentStatusView(APIView):
     generic across however many AssessmentAttempt.Type values exist.
     """
 
-    permission_classes = [IsStudent]
+    permission_classes = [IsStudent, HasCompletedProfile]
 
     def get(self, request):
         return Response(StudentStateTracker().get_resume_state(request.user))
@@ -82,7 +82,7 @@ class AssessmentStatusView(APIView):
 class StartMcqAttemptView(APIView):
     """POST /api/assessments/mcq/<kind>/start/"""
 
-    permission_classes = [IsStudent]
+    permission_classes = [IsStudent, HasCompletedProfile]
 
     def post(self, request, kind):
         kind = _valid_kind(kind, AssessmentAttempt.MCQ_TYPES)
@@ -187,7 +187,7 @@ class SubmitMcqView(APIView):
 class StartCodingView(APIView):
     """POST /api/assessments/coding/start/"""
 
-    permission_classes = [IsStudent]
+    permission_classes = [IsStudent, HasCompletedProfile]
 
     def post(self, request):
         tracker = StudentStateTracker()
@@ -272,7 +272,7 @@ class SubmitCodingView(APIView):
 class StartLikertAttemptView(APIView):
     """POST /api/assessments/likert/<kind>/start/"""
 
-    permission_classes = [IsStudent]
+    permission_classes = [IsStudent, HasCompletedProfile]
 
     def post(self, request, kind):
         kind = _valid_kind(kind, AssessmentAttempt.LIKERT_TYPES)

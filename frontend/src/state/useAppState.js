@@ -3,7 +3,15 @@ import { useCallback, useEffect, useState } from 'react';
 import { getToken } from '../api/client.js';
 import { logout as apiLogout, me } from '../api/auth.js';
 
-const LANDING_BY_ROLE = { student: 'selection', teacher: 'teacherReview', admin: 'admin' };
+const LANDING_BY_ROLE = { student: 'selection', admin: 'admin' };
+
+// A student who hasn't submitted the one-time onboarding survey yet
+// (profile_completed: false, from UserSerializer) is routed to it instead of
+// straight to test-selection — see App.jsx's 'studentSurvey' branch.
+function resolveLandingScreen(user) {
+  if (user.role === 'student' && !user.profile_completed) return 'studentSurvey';
+  return LANDING_BY_ROLE[user.role];
+}
 
 /**
  * Client-side navigation state — the parts of the mockup's `Component.state`
@@ -25,7 +33,7 @@ export function useAppState() {
     if (!getToken()) return;
     me().then((loggedInUser) => {
       setUser(loggedInUser);
-      setScreen(LANDING_BY_ROLE[loggedInUser.role]);
+      setScreen(resolveLandingScreen(loggedInUser));
     }).catch(() => {}); // expired/invalid token — stay on Welcome, same as no token
   }, []);
 
@@ -33,7 +41,12 @@ export function useAppState() {
 
   const onLoginSuccess = useCallback((loggedInUser) => {
     setUser(loggedInUser);
-    setScreen(LANDING_BY_ROLE[loggedInUser.role]);
+    setScreen(resolveLandingScreen(loggedInUser));
+  }, []);
+
+  const onProfileCompleted = useCallback((updatedUser) => {
+    setUser(updatedUser);
+    setScreen('selection');
   }, []);
 
   const logout = useCallback(async () => {
@@ -42,5 +55,5 @@ export function useAppState() {
     setScreen('welcome');
   }, []);
 
-  return { screen, goTo, user, onLoginSuccess, logout };
+  return { screen, goTo, user, onLoginSuccess, onProfileCompleted, logout };
 }

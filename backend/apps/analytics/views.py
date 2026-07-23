@@ -6,7 +6,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from apps.accounts.models import User
+from apps.accounts.models import StudentProfile, User
 from apps.accounts.permissions import IsAdmin
 from apps.assessments.models import AssessmentAttempt, BehavioralCategory, BehavioralItem, CognitiveQuestion
 from apps.assessments.serializers import (
@@ -219,8 +219,34 @@ class FacultyActivityView(APIView):
         ])
 
 
+class StudentFilterOptionsView(APIView):
+    """
+    GET /api/admin/student-filter-options/
+
+    Distinct faculty/course/group values from students' onboarding-survey
+    answers (accounts.StudentProfile), feeding the roster filter dropdowns
+    on the Overview and Review Queue screens. Not a fixed list — those
+    fields are free text (accounts.serializers.StudentProfileSerializer).
+    """
+
+    permission_classes = [IsAdmin]
+
+    def get(self, request):
+        def distinct_values(field):
+            return list(
+                StudentProfile.objects.exclude(**{field: ''})
+                .order_by(field).values_list(field, flat=True).distinct()
+            )
+
+        return Response({
+            'faculties': distinct_values('faculty'),
+            'courses': distinct_values('course'),
+            'groups': distinct_values('group'),
+        })
+
+
 class AdminStudentListView(APIView):
-    """GET /api/admin/students/?search= — feeds the {{ adminStudents }} recent-assessments table."""
+    """GET /api/admin/students/?search=&faculty=&course=&group= — feeds the {{ adminStudents }} recent-assessments table."""
 
     permission_classes = [IsAdmin]
 
@@ -232,6 +258,15 @@ class AdminStudentListView(APIView):
             students = students.filter(
                 Q(first_name__icontains=search) | Q(last_name__icontains=search)
             )
+        faculty = request.query_params.get('faculty', '')
+        if faculty:
+            students = students.filter(student_profile__faculty=faculty)
+        course = request.query_params.get('course', '')
+        if course:
+            students = students.filter(student_profile__course=course)
+        group = request.query_params.get('group', '')
+        if group:
+            students = students.filter(student_profile__group=group)
         students = students.annotate(last_activity=Max('attempts__completed_at'))
 
         rows = []
