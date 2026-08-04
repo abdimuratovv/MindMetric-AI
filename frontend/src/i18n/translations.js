@@ -246,10 +246,10 @@ export const translations = {
     },
     roles: { student: 'Talaba', admin: 'Administrator' },
     welcome: {
-      badge: 'UNIVERSITET QOBILIYAT INTELLEKTI',
-      headline: 'Dasturlash qobiliyatini',
+      badge: 'UNIVERSITET IQTIDOR INTELLEKTI',
+      headline: 'Dasturlash iqtidorini',
       headlineEm: "transkriptdan oldin ko'ring.",
-      lede: "MindMetric AI kognitiv testlash, jonli kodlash topshiriqlari va xulq-atvor bahosini bitta kalibrlangan qobiliyat balliga birlashtiradi — o'qituvchilar tomonidan ko'rib chiqiladi, qabul komissiyalari ishonadi.",
+      lede: "MindMetric AI kognitiv testlash, jonli kodlash topshiriqlari va xulq-atvor bahosini bitta kalibrlangan iqtidor balliga birlashtiradi — o'qituvchilar tomonidan ko'rib chiqiladi, qabul komissiyalari ishonadi.",
       getStarted: 'Boshlash',
       viewSample: "Namunaviy hisobotni ko'rish",
       footer: '© 2026 MindMetric AI — Akademik baholash boʼlimi',
@@ -321,7 +321,7 @@ export const translations = {
     },
     selection: {
       greeting: (name) => `Xayrli kun, ${name}`,
-      subtitle: "To'liq qobiliyat hisobotini olish uchun barcha o'nta testni yakunlang.",
+      subtitle: "To'liq iqtidor hisobotini olish uchun barcha o'nta testni yakunlang.",
       viewResults: "Natijalarimni ko'rish",
       statusCompleted: 'Yakunlangan',
       statusAvailable: 'Mavjud',
@@ -331,9 +331,9 @@ export const translations = {
       btnContinue: 'Davom ettirish',
     },
     results: {
-      title: 'Qobiliyat natijalari xulosasi',
+      title: 'Iqtidor natijalari xulosasi',
       assessedOn: (name, program, date) => `${name} · ${program} · ${date} da baholangan`,
-      overallScoreLabel: 'UMUMIY QOBILIYAT BALLI',
+      overallScoreLabel: 'UMUMIY IQTIDOR BALLI',
       indicatorBreakdown: "Ko'rsatkichlar bo'yicha taqsimot",
       viewDetailedAnalytics: "Batafsil tahlilni ko'rish →",
       whatThisMeans: 'Bu nimani anglatadi',
@@ -353,7 +353,7 @@ export const translations = {
       yourScore: 'Sizning balingiz',
       cohortAverage: (pct) => `Guruh o'rtachasi · ${pct}-protsentil`,
       takeTest: 'Testni boshlash →',
-      methodology: "Metodologiya: umumiy ball — har biri o'z testi yoki topshirig'i orqali baholanadigan o'nta qobiliyat ko'rsatkichining o'rtachasi bo'lib, joriy o'quv yili guruhiga nisbatan normallashtiriladi.",
+      methodology: "Metodologiya: umumiy ball — har biri o'z testi yoki topshirig'i orqali baholanadigan o'nta iqtidor ko'rsatkichining o'rtachasi bo'lib, joriy o'quv yili guruhiga nisbatan normallashtiriladi.",
     },
     teacherReview: {
       title: "Ko'rib chiqish navbati",
@@ -378,7 +378,7 @@ export const translations = {
     admin: {
       title: 'Muassasa umumiy ko\'rinishi',
       cohortLine: '2026 kuz · Muhandislik kolleji',
-      distributionTitle: "Guruh bo'yicha qobiliyat balllari taqsimoti",
+      distributionTitle: "Guruh bo'yicha iqtidor balllari taqsimoti",
       fieldDistributionTitle: "Yo'nalishlar bo'yicha taqsimot",
       facultyActivityTitle: "O'qituvchilarning ko'rib chiqish faolligi",
       reviewedCount: (n) => `${n} ta ko'rib chiqildi`,
@@ -463,7 +463,7 @@ export const translations = {
     },
     achievements: {
       title: 'Mening yutuqlarim',
-      subtitle: "O'nta qobiliyat ko'rsatkichining har birida yuqori ball to'plab, nishonlar kolleksiyasini yig'ing.",
+      subtitle: "O'nta iqtidor ko'rsatkichining har birida yuqori ball to'plab, nishonlar kolleksiyasini yig'ing.",
       progress: (n, total) => `${total} tadan ${n} tasi qo'lga kiritildi`,
       locked: 'Hali ochilmagan',
       earnedOn: (date) => `${date} sanasida qo'lga kiritildi`,
