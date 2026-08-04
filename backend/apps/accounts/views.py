@@ -14,8 +14,8 @@ from .permissions import IsStudent
 from .serializers import LoginSerializer, RegisterSerializer, StudentProfileSerializer, UserSerializer
 
 INVALID_CREDENTIALS = {
-    'ru': 'Пожалуйста, введите university-почту и пароль.',
-    'uz': 'Iltimos, universitet emailingiz va parolingizni kiriting.',
+    'ru': 'Неверный email или пароль.',
+    'uz': 'Email yoki parol noto‘g‘ri.',
 }
 NO_ACCOUNT_FOR_ROLE = {
     'ru': {'student': 'студента', 'teacher': 'преподавателя', 'admin': 'администратора'},
