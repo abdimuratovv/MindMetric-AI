@@ -1,34 +1,36 @@
 """
-AdaptiveTestingEngine — replaces the mockup's fixed
-`COGNITIVE_QUESTIONS[cqIndex]` walk with item selection driven by a running
-per-indicator ability estimate. See ARCHITECTURE.md §4 for the design
-rationale; this module is the implementation.
+AdaptiveTestingEngine — Computerized Adaptive Testing (CAT) driven by a 2-parameter
+logistic (2PL) IRT model (see apps.scoring.irt): every answered item re-estimates the
+student's ability (theta) from that attempt's full response history so far via
+MLE-with-EAP-fallback, and the next item is chosen by Maximum Fisher Information
+(MFI) at the current theta. Replaces the mockup's fixed `COGNITIVE_QUESTIONS[cqIndex]`
+walk entirely — see ARCHITECTURE.md §4 for the original design rationale.
 
 Each MCQ-pattern AssessmentAttempt is scoped to exactly one indicator (its
 `assessment_type` IS the indicator key — see AssessmentAttempt.MCQ_TYPES), so
-question selection only needs to difficulty-match within that one indicator's
-bank, not round-robin across several.
+question selection only needs to work within that one indicator's bank, not
+round-robin across several.
 """
-import math
-
 from apps.assessments.models import CognitiveQuestion, CognitiveResponse
 
+from . import irt
 from .essay_grader import essay_correctness, grade_essay_response
 from .models import StudentAbilityEstimate
 
-K_FACTOR = 0.6  # step size for the ability update; larger = more reactive, noisier
-
-# Speed-aware step amplification: a student's own running-average response time on an
+# Speed-aware response weighting: a student's own running-average response time on an
 # indicator (StudentAbilityEstimate.avg_response_ms) is their baseline, not a fixed global
 # number — a "fast" answer for one student may be a "slow" one for another. When the speed
 # signal and the correctness signal agree (fast+correct, slow+incorrect), that's a confident
-# read on ability and the step is amplified; when they disagree (slow-but-correct careful
-# work, fast-but-wrong guesses) the read is ambiguous, so the step stays at the plain K_FACTOR.
+# read on ability, so the response counts for more in the theta estimate — implemented as a
+# case weight in a weighted (quasi-)likelihood (see irt.py's module docstring for why this is
+# a different, more standard technique than Warm's (1989) WLE bias correction despite the
+# similar name). When speed and correctness disagree (slow-but-correct careful work,
+# fast-but-wrong guesses) the read is ambiguous, so the response keeps the plain weight of 1.0.
 FAST_RATIO = 0.7   # answered in <=70% of their own average time for this indicator
 SLOW_RATIO = 1.3   # answered in >=130% of their own average time for this indicator
-TIME_BOOST = 1.6   # step multiplier applied when speed and correctness agree
+TIME_BOOST = 1.6   # weight applied when speed and correctness agree
 EMA_ALPHA = 0.3    # weight given to each new response time in the running average
-TIME_CLAMP_MS = 180_000  # cap a single response_time_ms before it can skew the average/multiplier
+TIME_CLAMP_MS = 180_000  # cap a single response_time_ms before it can skew the average/weight
 
 
 class AdaptiveTestingEngine:
@@ -38,15 +40,7 @@ class AdaptiveTestingEngine:
         )
         return estimate
 
-    def expected_probability(self, theta: float, difficulty: float) -> float:
-        """1-parameter logistic (1PL / Rasch) probability of a correct answer."""
-        return 1.0 / (1.0 + math.exp(-(theta - difficulty)))
-
-    def update_ability(self, theta: float, difficulty: float, correctness: float, time_multiplier: float = 1.0) -> float:
-        expected = self.expected_probability(theta, difficulty)
-        return theta + K_FACTOR * time_multiplier * (correctness - expected)
-
-    def _speed_multiplier(self, avg_response_ms: float | None, response_time_ms: int | None, correctness: float) -> float:
+    def _response_weight(self, avg_response_ms: float | None, response_time_ms: int | None, correctness: float) -> float:
         """>1.0 when this answer's speed backs up what its correctness already suggests."""
         if avg_response_ms is None or response_time_ms is None:
             return 1.0  # no personal baseline yet, or the client didn't report timing
@@ -78,18 +72,23 @@ class AdaptiveTestingEngine:
         if not candidates:
             return None
 
-        # Prefer a question_type the student hasn't seen yet this attempt (so a bank that
-        # mixes single/multi/essay — currently only `logic` — actually surfaces all of them
-        # within the capped question count) before falling back to pure difficulty-matching.
-        # No-op for single-type-only banks, where every candidate already shares one type.
+        # Prefer a question_type the student hasn't seen yet this attempt — a content-
+        # balancing constraint, so a bank that mixes single/multi/essay (currently only
+        # `logic`) actually surfaces all of them within the capped question count — before
+        # falling back to pure information-maximizing selection. No-op for single-type-only
+        # banks, where every candidate already shares one type.
         unseen_types = {q.question_type for q in candidates} - answered_types
         if unseen_types:
             preferred = [q for q in candidates if q.question_type in unseen_types]
             if preferred:
                 candidates = preferred
 
-        # Maximum-information-style pick: the item whose difficulty is closest to theta.
-        return min(candidates, key=lambda q: abs(q.difficulty - estimate.theta))
+        # Maximum Fisher Information (MFI) selection: the item that carries the most
+        # information about this student at their current ability estimate — see
+        # irt.item_information. For 2PL this is generally close to, but not exactly, the
+        # item whose difficulty is nearest theta, since high-discrimination items pull the
+        # information peak in their favor even a bit off-target.
+        return max(candidates, key=lambda q: irt.item_information(estimate.theta, q.discrimination, q.difficulty))
 
     def record_answer(
         self, attempt, question_id: int, *, selected_indices: list[int] | None = None, essay_text: str | None = None,
@@ -128,9 +127,25 @@ class AdaptiveTestingEngine:
         # shouldn't count the same answer twice against theta.
         if created:
             estimate = self.get_or_create_estimate(attempt.student, question.indicator_key)
-            time_multiplier = self._speed_multiplier(estimate.avg_response_ms, response_time_ms, correctness)
-            estimate.theta = self.update_ability(estimate.theta, question.difficulty, correctness, time_multiplier)
             estimate.avg_response_ms = self._update_avg_response_ms(estimate.avg_response_ms, response_time_ms)
-            estimate.save(update_fields=['theta', 'avg_response_ms', 'updated_at'])
+
+            # Re-estimate theta from this attempt's full response history so far (not an
+            # incremental nudge from just the newest answer) — the standard CAT approach:
+            # MLE where the response pattern has an interior maximum, EAP (prior-regularized,
+            # always finite) otherwise. See irt.estimate_theta. Every response in the history
+            # is weighted against the *current* (most up to date) avg_response_ms baseline, so
+            # all of them are judged on the same footing at estimation time.
+            history = CognitiveResponse.objects.filter(
+                attempt=attempt, question__indicator_key=question.indicator_key,
+            ).select_related('question')
+            weighted_responses = [
+                (
+                    r.question.discrimination, r.question.difficulty, r.correctness,
+                    self._response_weight(estimate.avg_response_ms, r.response_time_ms, r.correctness),
+                )
+                for r in history
+            ]
+            estimate.theta, estimate.se, estimate.estimation_method = irt.estimate_theta(weighted_responses)
+            estimate.save(update_fields=['theta', 'se', 'estimation_method', 'avg_response_ms', 'updated_at'])
 
         return response

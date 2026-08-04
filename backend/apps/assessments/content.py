@@ -30,8 +30,11 @@ Load with:  python manage.py seed_assessment_content
 MCQ_QUESTIONS = {
     # Sourced from a dedicated "Matematikadan test savollari tizimi" bank (3 difficulty
     # tiers: oson/o'rtacha/murakkab — easy/medium/hard), 61 questions total. Difficulty
-    # values are assigned per-tier bands (easy -1.00..-0.05, medium 0.00..0.95,
-    # hard 1.00..1.60) rather than derived from real IRT calibration.
+    # (b) values are assigned per-tier bands (easy -1.00..-0.05, medium 0.00..0.95,
+    # hard 1.00..1.60) rather than derived from real IRT calibration; discrimination (a)
+    # is left at CognitiveQuestion's default (1.0, i.e. uncalibrated) for the same reason.
+    # See apps.scoring.calibration / the `calibrate_items` management command for how
+    # real response data eventually replaces both with JMLE-estimated values.
     'math': [
         # -- Oson (easy) — 20 questions -------------------------------------------------
         {

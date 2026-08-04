@@ -41,7 +41,12 @@ class CognitiveQuestion(models.Model):
             'order-independent (exact-set match). Essay: [] (unused — see apps.scoring.essay_grader).'
         ),
     )
-    difficulty = models.FloatField(default=0.0, help_text='IRT-style difficulty, roughly -3..3')
+    difficulty = models.FloatField(default=0.0, help_text='2PL difficulty (b), roughly -3..3')
+    # 2PL discrimination (a) — how sharply P(correct) rises around theta=difficulty; higher
+    # means the item separates low/high-ability students more cleanly. Default 1.0 makes an
+    # uncalibrated item behave like a 1PL/Rasch item until apps.scoring.calibration estimates
+    # a real value for it from response data — see apps.scoring.irt.probability_2pl.
+    discrimination = models.FloatField(default=1.0, help_text='2PL discrimination (a), typically 0.3..2.5; 1.0 = uncalibrated default')
     # Pedagogical advice shown only on the student's Results page for questions they didn't
     # answer fully correctly (never during the live test — see apps.scoring.views' mistakes
     # endpoint). Blank until authored; content lives in apps.assessments.feedback_content.

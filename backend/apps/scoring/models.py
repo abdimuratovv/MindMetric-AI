@@ -12,12 +12,25 @@ class StudentAbilityEstimate(models.Model):
     on every answered question. See ARCHITECTURE.md §4.
     """
 
+    class EstimationMethod(models.TextChoices):
+        PRIOR = 'prior', 'Prior mean (no responses yet)'
+        EAP = 'eap', 'Expected a Posteriori'
+        MLE = 'mle', 'Maximum Likelihood (Newton-Raphson)'
+
     student = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='ability_estimates', on_delete=models.CASCADE)
     indicator_key = models.CharField(max_length=20, choices=INDICATOR_CHOICES)
     theta = models.FloatField(default=0.0)
+    # Asymptotic standard error of theta — 1/sqrt(test information) for MLE, posterior SD for
+    # EAP (see apps.scoring.irt). Null until at least one response has been scored, since SE is
+    # undefined with zero test information.
+    se = models.FloatField(null=True, blank=True)
+    # Which estimator produced the current `theta`/`se` — see apps.scoring.irt.estimate_theta.
+    # MLE is preferred (asymptotically unbiased) but is undefined for all-correct/all-incorrect
+    # response patterns, where the engine falls back to EAP (always finite, prior-regularized).
+    estimation_method = models.CharField(max_length=10, choices=EstimationMethod.choices, default=EstimationMethod.PRIOR)
     # Running average (EMA) of this student's own response_time_ms on this indicator, used as
     # their personal baseline for "fast"/"slow" rather than a fixed global threshold — see
-    # AdaptiveTestingEngine._speed_multiplier. Null until their first timed answer.
+    # AdaptiveTestingEngine._response_weight. Null until their first timed answer.
     avg_response_ms = models.FloatField(null=True, blank=True)
     updated_at = models.DateTimeField(auto_now=True)
 
