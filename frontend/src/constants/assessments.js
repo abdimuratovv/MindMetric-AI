@@ -72,12 +72,28 @@ export const ASSESSMENT_ICONS = {
  * background + a metallic-toned foreground, distinct from the analytical
  * tier chips (calculators._TIERS colors) elsewhere in the app so a badge
  * reads as a collectible, not a repeated stat.
+ *
+ * Bronze and gold sit close in hue (both warm orange/yellow), so they're
+ * pushed deliberately apart: bronze toward a darker, more muted copper
+ * (~30° hue) and gold toward a brighter, more saturated yellow (~48° hue,
+ * meaningfully higher lightness) so gold reads as the "shinier" tier rather
+ * than a duller version of bronze. See also ACHIEVEMENT_TIER_LEVEL below for
+ * the color-independent cue.
  */
 export const ACHIEVEMENT_TIER_COLORS = {
-  bronze: { bg: '#F5EBDD', color: '#9C6B2E', ring: '#CD9B5D' },
+  bronze: { bg: '#F5E8DB', color: '#874C1D', ring: '#CD7F32' },
   silver: { bg: '#EEF0F1', color: '#6B7278', ring: '#A9B0B5' },
-  gold: { bg: '#ECE6FA', color: '#6339B5', ring: '#9B7FE0' },
+  gold: { bg: '#FBF1D2', color: '#AE8A13', ring: '#E2C75A' },
 };
+
+/**
+ * How many of 3 pips a tier fills in the small level-meter drawn next to a
+ * tier label (components/TierPips.jsx) — a redundant, color-independent
+ * signal for bronze vs. gold, whose hues are close enough to be hard to
+ * tell apart at a glance (or for colorblind users). Mirrors TIER_ORDER in
+ * apps.scoring.achievements on the backend.
+ */
+export const ACHIEVEMENT_TIER_LEVEL = { bronze: 1, silver: 2, gold: 3 };
 
 /**
  * One distinct looping CSS animation per indicator, keyed to what its icon

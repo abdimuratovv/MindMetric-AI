@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { getAchievements } from '../../api/achievements.js';
 import TeamworkBadgeIcon from '../../components/TeamworkBadgeIcon.jsx';
+import TierPips from '../../components/TierPips.jsx';
 import { ACHIEVEMENT_ICON_ANIMATIONS, ACHIEVEMENT_TIER_COLORS, ASSESSMENT_ICONS } from '../../constants/assessments.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
 
@@ -65,12 +66,12 @@ export default function Achievements() {
                 boxShadow: b.locked ? 'none' : `0 0 0 3px ${tierColors.ring}`,
               }}>
                 {!b.locked && b.key === 'teamwork' ? (
-                  <TeamworkBadgeIcon size={26} color={icon.iconColor} />
+                  <TeamworkBadgeIcon size={26} color={tierColors.color} sparkleColor={tierColors.ring} />
                 ) : (
                   <svg
                     className={b.locked ? undefined : 'mm-badge-icon'}
                     width="26" height="26" viewBox="0 0 24 24" fill="none"
-                    stroke={b.locked ? '#B7C1C4' : icon.iconColor} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"
+                    stroke={b.locked ? '#B7C1C4' : tierColors.color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"
                     style={b.locked ? undefined : { animation: `${ACHIEVEMENT_ICON_ANIMATIONS[b.key].name} ${ACHIEVEMENT_ICON_ANIMATIONS[b.key].duration} ease-in-out infinite` }}
                   >
                     <path d={icon.iconPath}></path>
@@ -86,9 +87,11 @@ export default function Achievements() {
               </div>
 
               <span style={{
+                display: 'inline-flex', alignItems: 'center', gap: '6px',
                 padding: '5px 14px', borderRadius: '100px', fontWeight: 700, fontSize: '11.5px',
                 background: b.locked ? '#EDF1F1' : tierColors.bg, color: b.locked ? '#939EA3' : tierColors.color,
               }}>
+                {!b.locked && <TierPips tier={b.tier} color={tierColors.color} />}
                 {b.locked ? t('achievements.locked') : b.tierLabel}
               </span>
 

@@ -1,4 +1,5 @@
 import TeamworkBadgeIcon from '../../components/TeamworkBadgeIcon.jsx';
+import TierPips from '../../components/TierPips.jsx';
 import { ACHIEVEMENT_ICON_ANIMATIONS, ACHIEVEMENT_TIER_COLORS, ASSESSMENT_ICONS } from '../../constants/assessments.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
 
@@ -56,11 +57,11 @@ export default function CompletionOverlay({ indicatorKey, score, achievement, on
             }}>
               {indicatorKey === 'teamwork' ? (
                 <div style={{ animation: 'mm-badge-reveal 0.7s cubic-bezier(0.34,1.56,0.64,1) both' }}>
-                  <TeamworkBadgeIcon size={22} color={icon.iconColor} />
+                  <TeamworkBadgeIcon size={22} color={tierColors.color} sparkleColor={tierColors.ring} />
                 </div>
               ) : (
                 <svg
-                  width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={icon.iconColor} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"
+                  width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={tierColors.color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"
                   style={{
                     animation: `mm-badge-reveal 0.7s cubic-bezier(0.34,1.56,0.64,1) both, ${ACHIEVEMENT_ICON_ANIMATIONS[indicatorKey].name} ${ACHIEVEMENT_ICON_ANIMATIONS[indicatorKey].duration} ease-in-out 0.7s infinite`,
                   }}
@@ -73,8 +74,9 @@ export default function CompletionOverlay({ indicatorKey, score, achievement, on
               <div style={{ fontSize: '11px', fontWeight: 700, color: tierColors.color, letterSpacing: '0.03em', marginBottom: '2px' }}>
                 {t('completion.newBadge')}
               </div>
-              <div style={{ fontSize: '14.5px', fontWeight: 700, color: '#161F24' }}>
-                {achievement.name} · {achievement.tierLabel}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '14.5px', fontWeight: 700, color: '#161F24' }}>
+                <span>{achievement.name} · {achievement.tierLabel}</span>
+                <TierPips tier={achievement.tier} color={tierColors.color} />
               </div>
             </div>
           </div>
