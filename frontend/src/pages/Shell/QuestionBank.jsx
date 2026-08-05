@@ -282,7 +282,7 @@ export default function QuestionBank() {
                       const isConfirmingDelete = confirmingDelete === rowKey;
                       return (
                         <div key={q.id} style={{ padding: '16px 18px', borderRadius: '14px', background: 'rgba(255,255,255,0.55)', border: '1px solid rgba(31,55,75,0.08)' }}>
-                          <div style={{ display: 'flex', justifyContent: 'space-between', gap: '10px', marginBottom: '8px' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '10px', marginBottom: '8px' }}>
                             <span style={{ fontSize: '11.5px', fontWeight: 700, color: '#939EA3' }}>
                               #{i + 1}{g.type === 'mcq' && q.category ? ` · ${q.category}` : ''}
                             </span>
@@ -356,7 +356,7 @@ export default function QuestionBank() {
 
                           {isEditing && g.type === 'mcq' && (
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+                              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '10px' }}>
                                 <div>
                                   <label style={FIELD_LABEL}>{t('questionBank.categoryRuLabel')}</label>
                                   <input style={INPUT} value={draft.categoryRu} onChange={(e) => setDraft((p) => ({ ...p, categoryRu: e.target.value }))} />
@@ -366,7 +366,7 @@ export default function QuestionBank() {
                                   <input style={INPUT} value={draft.categoryUz} onChange={(e) => setDraft((p) => ({ ...p, categoryUz: e.target.value }))} />
                                 </div>
                               </div>
-                              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+                              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '10px' }}>
                                 <div>
                                   <label style={FIELD_LABEL}>{t('questionBank.promptRuLabel')}</label>
                                   <textarea rows={2} style={{ ...INPUT, resize: 'vertical' }} value={draft.promptRu} onChange={(e) => setDraft((p) => ({ ...p, promptRu: e.target.value }))} />
@@ -378,14 +378,14 @@ export default function QuestionBank() {
                               </div>
 
                               {q.type !== 'essay' && (
-                                <div>
-                                  <div style={{ display: 'grid', gridTemplateColumns: '28px 1fr 1fr', gap: '8px', marginBottom: '4px' }}>
+                                <div style={{ overflowX: 'auto' }}>
+                                  <div style={{ display: 'grid', gridTemplateColumns: '28px 1fr 1fr', gap: '8px', marginBottom: '4px', minWidth: '320px' }}>
                                     <span />
                                     <label style={FIELD_LABEL}>{t('questionBank.optionsRuLabel')}</label>
                                     <label style={FIELD_LABEL}>{t('questionBank.optionsUzLabel')}</label>
                                   </div>
                                   {draft.optionsRu.map((_, oi) => (
-                                    <div key={oi} style={{ display: 'grid', gridTemplateColumns: '28px 1fr 1fr', gap: '8px', marginBottom: '6px', alignItems: 'center' }}>
+                                    <div key={oi} style={{ display: 'grid', gridTemplateColumns: '28px 1fr 1fr', gap: '8px', marginBottom: '6px', alignItems: 'center', minWidth: '320px' }}>
                                       <input
                                         type={q.type === 'multi' ? 'checkbox' : 'radio'}
                                         checked={draft.correctIndices.includes(oi)}
@@ -408,7 +408,7 @@ export default function QuestionBank() {
 
                           {isEditing && g.type === 'likert' && (
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+                              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '10px' }}>
                                 <div>
                                   <label style={FIELD_LABEL}>{t('questionBank.promptRuLabel')}</label>
                                   <textarea rows={2} style={{ ...INPUT, resize: 'vertical' }} value={draft.textRu} onChange={(e) => setDraft((p) => ({ ...p, textRu: e.target.value }))} />
@@ -454,7 +454,7 @@ export default function QuestionBank() {
                                 <option value="essay">{t('questionBank.typeEssayOption')}</option>
                               </select>
                             </div>
-                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '10px' }}>
                               <div>
                                 <label style={FIELD_LABEL}>{t('questionBank.categoryRuLabel')}</label>
                                 <input style={INPUT} value={newDraft.categoryRu} onChange={(e) => setNewDraft((p) => ({ ...p, categoryRu: e.target.value }))} />
@@ -464,7 +464,7 @@ export default function QuestionBank() {
                                 <input style={INPUT} value={newDraft.categoryUz} onChange={(e) => setNewDraft((p) => ({ ...p, categoryUz: e.target.value }))} />
                               </div>
                             </div>
-                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '10px' }}>
                               <div>
                                 <label style={FIELD_LABEL}>{t('questionBank.promptRuLabel')}</label>
                                 <textarea rows={2} style={{ ...INPUT, resize: 'vertical' }} value={newDraft.promptRu} onChange={(e) => setNewDraft((p) => ({ ...p, promptRu: e.target.value }))} />
@@ -476,15 +476,15 @@ export default function QuestionBank() {
                             </div>
 
                             {newDraft.questionType !== 'essay' && (
-                              <div>
-                                <div style={{ display: 'grid', gridTemplateColumns: '28px 1fr 1fr 28px', gap: '8px', marginBottom: '4px' }}>
+                              <div style={{ overflowX: 'auto' }}>
+                                <div style={{ display: 'grid', gridTemplateColumns: '28px 1fr 1fr 28px', gap: '8px', marginBottom: '4px', minWidth: '340px' }}>
                                   <span />
                                   <label style={FIELD_LABEL}>{t('questionBank.optionsRuLabel')}</label>
                                   <label style={FIELD_LABEL}>{t('questionBank.optionsUzLabel')}</label>
                                   <span />
                                 </div>
                                 {newDraft.optionsRu.map((_, oi) => (
-                                  <div key={oi} style={{ display: 'grid', gridTemplateColumns: '28px 1fr 1fr 28px', gap: '8px', marginBottom: '6px', alignItems: 'center' }}>
+                                  <div key={oi} style={{ display: 'grid', gridTemplateColumns: '28px 1fr 1fr 28px', gap: '8px', marginBottom: '6px', alignItems: 'center', minWidth: '340px' }}>
                                     <input
                                       type={newDraft.questionType === 'multi' ? 'checkbox' : 'radio'}
                                       checked={newDraft.correctIndices.includes(oi)}
@@ -514,7 +514,7 @@ export default function QuestionBank() {
                           </div>
                         ) : (
                           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '10px' }}>
                               <div>
                                 <label style={FIELD_LABEL}>{t('questionBank.promptRuLabel')}</label>
                                 <textarea rows={2} style={{ ...INPUT, resize: 'vertical' }} value={newDraft.textRu} onChange={(e) => setNewDraft((p) => ({ ...p, textRu: e.target.value }))} />

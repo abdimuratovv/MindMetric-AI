@@ -30,7 +30,7 @@ export default function Analytics({ goTo }) {
             padding: '24px 28px', borderRadius: '20px', background: 'rgba(255,255,255,0.6)', border: '1px solid rgba(255,255,255,0.85)',
             backdropFilter: 'blur(14px)', boxShadow: '0 8px 24px rgba(31,55,75,0.05)', opacity: d.completed ? 1 : 0.75,
           }}>
-            <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr 1fr', gap: '22px', alignItems: 'center' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '22px', alignItems: 'center' }}>
               <div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
                   <h3 style={{ fontSize: '16px', fontWeight: 700, color: '#161F24', margin: 0 }}>{d.label}</h3>
@@ -42,7 +42,7 @@ export default function Analytics({ goTo }) {
                 </div>
               </div>
               {d.completed ? (
-                <>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '18px', justifyContent: 'center' }}>
                   <div style={{ textAlign: 'center' }}>
                     <div style={{ fontFamily: "'Montserrat',sans-serif", fontWeight: 700, fontSize: '36px', color: '#1F374B' }}>{d.score}</div>
                     <div style={{ fontSize: '11.5px', color: '#939EA3', fontWeight: 600 }}>{t('analytics.yourScore')}</div>
@@ -51,9 +51,9 @@ export default function Analytics({ goTo }) {
                     <div style={{ fontFamily: "'Montserrat',sans-serif", fontWeight: 700, fontSize: '36px', color: '#939EA3' }}>{d.cohortAvg}</div>
                     <div style={{ fontSize: '11.5px', color: '#939EA3', fontWeight: 600 }}>{t('analytics.cohortAverage')(d.percentile)}</div>
                   </div>
-                </>
+                </div>
               ) : (
-                <div style={{ gridColumn: '2 / span 2', textAlign: 'center' }}>
+                <div style={{ textAlign: 'center' }}>
                   <button className="mm-btn" onClick={() => goTo('selection')} style={{ border: 'none', background: 'none', color: '#2E5570', fontWeight: 700, fontSize: '13px', cursor: 'pointer', padding: 0 }}>
                     {t('analytics.takeTest')}
                   </button>

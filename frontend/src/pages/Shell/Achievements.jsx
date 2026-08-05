@@ -31,7 +31,7 @@ export default function Achievements() {
 
   return (
     <div style={{ animation: 'mm-fade-up 0.4s ease both' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '30px' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '14px', marginBottom: '30px' }}>
         <div>
           <h1 style={{ fontFamily: "'Montserrat',sans-serif", fontWeight: 700, fontSize: '30px', color: '#161F24', margin: '0 0 4px' }}>
             {t('achievements.title')}

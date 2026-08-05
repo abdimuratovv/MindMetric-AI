@@ -75,6 +75,7 @@ export const translations = {
       overview: 'Обзор',
       questionBank: 'Банк вопросов',
       logout: 'Выйти',
+      menuToggle: 'Меню',
     },
     assessmentsMeta: {
       math: { title: 'Тест по математике', desc: 'Вопросы на арифметику, проценты и алгебраические рассуждения.', duration: '6 мин · 5 вопросов' },
@@ -306,6 +307,7 @@ export const translations = {
       overview: "Umumiy ko'rinish",
       questionBank: 'Savollar banki',
       logout: 'Chiqish',
+      menuToggle: 'Menyu',
     },
     assessmentsMeta: {
       math: { title: 'Matematika testi', desc: "Arifmetika, foizlar va algebraik mulohaza bo'yicha savollar.", duration: '6 daq · 5 savol' },

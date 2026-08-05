@@ -67,8 +67,8 @@ export default function Likert({ assessmentType, goTo, onProgress }) {
   }
 
   return (
-    <div style={{ flex: 1, display: 'flex', justifyContent: 'center', padding: '40px 24px 60px' }}>
-      <div style={{ width: '680px' }}>
+    <div style={{ flex: 1, display: 'flex', justifyContent: 'center', padding: 'clamp(20px,6vw,40px) clamp(14px,4vw,24px) 60px' }}>
+      <div style={{ width: '100%', maxWidth: '680px' }}>
         <h2 style={{ fontFamily: "'Montserrat',sans-serif", fontWeight: 700, fontSize: '28px', color: '#161F24', margin: '0 0 8px' }}>
           {meta.title}
         </h2>

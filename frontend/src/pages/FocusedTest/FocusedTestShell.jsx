@@ -41,19 +41,23 @@ export default function FocusedTestShell({ screen, goTo }) {
   return (
     <div style={{ position: 'relative', zIndex: 1, minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <header style={{
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '20px 40px',
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px',
+        padding: 'clamp(12px,3.5vw,20px) clamp(16px,5vw,40px)',
         borderBottom: '1px solid rgba(31,55,75,0.08)', background: 'rgba(255,255,255,0.4)', backdropFilter: 'blur(14px)',
       }}>
         <button
           className="mm-btn"
           disabled={isExiting}
           onClick={exitTest}
-          style={{ border: 'none', background: 'none', color: '#556269', fontWeight: 600, fontSize: '13px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '7px' }}>
+          style={{ border: 'none', background: 'none', color: '#556269', fontWeight: 600, fontSize: '13px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '7px', flexShrink: 0 }}>
           {isExiting && <span className="mm-spinner mm-spinner-dark" />}
           {t('focusedTest.saveExit')}
         </button>
-        <div style={{ fontWeight: 700, fontSize: '13.5px', color: '#161F24' }}>{t('assessmentsMeta.' + screen).title}</div>
-        <div style={{ fontWeight: 700, fontSize: '14px', color: timerColor, fontVariantNumeric: 'tabular-nums' }}>{timerLabel}</div>
+        <div style={{
+          fontWeight: 700, fontSize: '13.5px', color: '#161F24', flex: 1, minWidth: 0, textAlign: 'center',
+          whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', padding: '0 8px',
+        }}>{t('assessmentsMeta.' + screen).title}</div>
+        <div style={{ fontWeight: 700, fontSize: '14px', color: timerColor, fontVariantNumeric: 'tabular-nums', flexShrink: 0 }}>{timerLabel}</div>
       </header>
       <div style={{ height: '4px', background: '#EAF2F5' }}>
         <div style={{ height: '100%', width: progress.pct, background: '#2E5570', transition: 'width 0.3s' }} />

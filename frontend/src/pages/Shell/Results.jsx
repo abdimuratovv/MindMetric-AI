@@ -54,7 +54,7 @@ export default function Results({ user, goTo }) {
         {t('results.assessedOn')(user?.name, user?.program, formatDate(new Date(), language))}
       </p>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 1.4fr', gap: '22px', marginBottom: '22px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '22px', marginBottom: '22px' }}>
         <div style={{
           padding: '30px', borderRadius: '22px', background: 'rgba(255,255,255,0.62)', border: '1px solid rgba(255,255,255,0.85)',
           backdropFilter: 'blur(16px)', boxShadow: '0 10px 30px rgba(31,55,75,0.06)', display: 'flex', flexDirection: 'column',
@@ -74,7 +74,8 @@ export default function Results({ user, goTo }) {
 
         <div style={{
           padding: '26px 30px', borderRadius: '22px', background: 'rgba(255,255,255,0.62)', border: '1px solid rgba(255,255,255,0.85)',
-          backdropFilter: 'blur(16px)', boxShadow: '0 10px 30px rgba(31,55,75,0.06)', display: 'flex', alignItems: 'center', gap: '24px',
+          backdropFilter: 'blur(16px)', boxShadow: '0 10px 30px rgba(31,55,75,0.06)', display: 'flex', alignItems: 'center',
+          flexWrap: 'wrap', justifyContent: 'center', gap: '24px',
         }}>
           <div style={{ position: 'relative', width: '220px', height: '220px', flexShrink: 0 }}>
             <svg width="220" height="220" viewBox="0 0 220 220" style={{ overflow: 'visible' }}>
@@ -123,7 +124,7 @@ export default function Results({ user, goTo }) {
               </div>
             )}
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', flex: 1 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', flex: 1, minWidth: '220px' }}>
             {indicators.map((ind, idx) => (
               <div
                 key={ind.key}

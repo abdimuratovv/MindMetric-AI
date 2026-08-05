@@ -167,9 +167,9 @@ export default function Mcq({ assessmentType, goTo, onProgress }) {
   const essayWordCount = typeof cqAnswer === 'string' ? cqAnswer.trim().split(/\s+/).filter(Boolean).length : 0;
 
   return (
-    <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '40px 24px' }}>
+    <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 'clamp(20px,6vw,40px) clamp(14px,4vw,24px)' }}>
       <div style={{
-        width: '640px', padding: '40px 44px', borderRadius: '24px', background: 'rgba(255,255,255,0.62)',
+        width: '100%', maxWidth: '640px', padding: 'clamp(24px,6vw,40px) clamp(20px,6vw,44px)', borderRadius: '24px', background: 'rgba(255,255,255,0.62)',
         border: '1px solid rgba(255,255,255,0.85)', backdropFilter: 'blur(18px)', boxShadow: '0 20px 50px rgba(31,55,75,0.08)',
       }}>
         <div style={{ fontSize: '12px', fontWeight: 700, color: '#2E5570', letterSpacing: '0.04em', marginBottom: '8px' }}>

@@ -107,7 +107,7 @@ export default function Auth({ onLoginSuccess, onGoWelcome }) {
   return (
     <div style={{ position: 'relative', zIndex: 1, minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px' }}>
       <div style={{
-        width: '420px', padding: '40px 36px', borderRadius: '24px', background: 'rgba(255,255,255,0.6)',
+        width: '100%', maxWidth: '420px', padding: 'clamp(26px,7vw,40px) clamp(20px,6vw,36px)', borderRadius: '24px', background: 'rgba(255,255,255,0.6)',
         border: '1px solid rgba(255,255,255,0.9)', backdropFilter: 'blur(20px)', boxShadow: '0 20px 60px rgba(31,55,75,0.1)',
         animation: 'mm-fade-up 0.5s ease both',
       }}>

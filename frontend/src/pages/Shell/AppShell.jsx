@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import logoIcon from '../../assets/logo-icon.png';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import Achievements from './Achievements.jsx';
@@ -33,6 +35,7 @@ const NAV_CONFIGS = {
  */
 export default function AppShell({ screen, goTo, user, logout }) {
   const { t } = useLanguage();
+  const [navOpen, setNavOpen] = useState(false);
   const role = user?.role || 'student';
   const navItems = (NAV_CONFIGS[role] || NAV_CONFIGS.student).map((n) => ({
     ...n,
@@ -41,9 +44,45 @@ export default function AppShell({ screen, goTo, user, logout }) {
     color: screen === n.key ? '#1F374B' : '#556269',
   }));
 
+  // On mobile the sidebar is an off-canvas drawer (see .mm-shell-sidebar in
+  // index.html); navigating or tapping the backdrop closes it again so it
+  // doesn't stay open over the next screen.
+  const closeNav = () => setNavOpen(false);
+  const handleNav = (key) => { goTo(key); closeNav(); };
+  const handleLogout = () => { closeNav(); logout(); };
+
   return (
     <div style={{ position: 'relative', zIndex: 1, minHeight: '100vh', display: 'flex' }}>
-      <aside style={{
+      {/* position:fixed (not a flex sibling in flow) so it can't fight the
+          sidebar/content row for horizontal space once the sidebar becomes
+          an off-canvas drawer on mobile — see .mm-shell-main's top padding
+          below, which reserves clearance for this bar's height. */}
+      <header className="mm-shell-topbar" style={{
+        alignItems: 'center', justifyContent: 'space-between', padding: '14px 18px', gap: '12px',
+        background: 'rgba(255,255,255,0.75)', borderBottom: '1px solid rgba(255,255,255,0.85)',
+        backdropFilter: 'blur(16px)', position: 'fixed', top: 0, left: 0, right: 0, zIndex: 30,
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '9px', minWidth: 0 }}>
+          <img src={logoIcon} alt="MindMetric AI" style={{ width: '26px', height: '26px', borderRadius: '7px', flexShrink: 0 }} />
+          <span style={{ fontWeight: 800, fontSize: '14px', color: '#161F24', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>MindMetric AI</span>
+        </div>
+        <button
+          className="mm-btn"
+          onClick={() => setNavOpen(true)}
+          aria-label={t('nav.menuToggle')}
+          style={{
+            border: 'none', background: 'rgba(46,85,112,0.1)', borderRadius: '10px', width: '38px', height: '38px',
+            flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#1F374B',
+          }}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+            <path d="M4 7h16M4 12h16M4 17h16" />
+          </svg>
+        </button>
+      </header>
+
+      {navOpen && <div className="mm-shell-backdrop" onClick={closeNav} />}
+
+      <aside className={`mm-shell-sidebar${navOpen ? ' mm-shell-sidebar-open' : ''}`} style={{
         width: '246px', flexShrink: 0, padding: '24px 16px', display: 'flex', flexDirection: 'column',
         background: 'rgba(255,255,255,0.5)', borderRight: '1px solid rgba(255,255,255,0.7)', backdropFilter: 'blur(18px)',
         // Pin the sidebar to the viewport instead of stretching to match the
@@ -59,7 +98,7 @@ export default function AppShell({ screen, goTo, user, logout }) {
         </div>
         <nav style={{ display: 'flex', flexDirection: 'column', gap: '3px', flex: 1 }}>
           {navItems.map((item) => (
-            <button key={item.key} className="mm-btn" onClick={() => goTo(item.key)} style={{
+            <button key={item.key} className="mm-btn" onClick={() => handleNav(item.key)} style={{
               display: 'flex', alignItems: 'center', gap: '11px', padding: '11px 14px', borderRadius: '12px',
               border: 'none', cursor: 'pointer', textAlign: 'left', background: item.bg, color: item.color,
               fontFamily: 'Manrope', fontWeight: 600, fontSize: '13.5px',
@@ -85,7 +124,7 @@ export default function AppShell({ screen, goTo, user, logout }) {
             </div>
             <div style={{ fontSize: '11px', color: '#939EA3' }}>{t(`roles.${role}`)}</div>
           </div>
-          <button className="mm-btn" onClick={logout} title={t('nav.logout')} style={{ border: 'none', background: 'none', cursor: 'pointer', color: '#939EA3', padding: '4px' }}>
+          <button className="mm-btn" onClick={handleLogout} title={t('nav.logout')} style={{ border: 'none', background: 'none', cursor: 'pointer', color: '#939EA3', padding: '4px' }}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
               <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"></path>
             </svg>
@@ -93,7 +132,7 @@ export default function AppShell({ screen, goTo, user, logout }) {
         </div>
       </aside>
 
-      <div style={{ flex: 1, minWidth: 0, padding: '32px 44px 60px', overflowX: 'hidden' }}>
+      <div className="mm-shell-main" style={{ flex: 1, minWidth: 0, padding: '32px 44px 60px', overflowX: 'hidden' }}>
         {screen === 'selection' && <StudentSelection user={user} goTo={goTo} />}
         {screen === 'results' && <Results user={user} goTo={goTo} />}
         {screen === 'achievements' && <Achievements />}

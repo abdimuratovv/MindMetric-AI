@@ -71,12 +71,12 @@ export default function TeacherReview() {
       <p style={{ fontSize: '14px', color: '#556269', margin: '0 0 22px' }}>{t('teacherReview.subtitle')}</p>
 
       {loading ? (
-        <div style={{ display: 'grid', gridTemplateColumns: '360px 1fr', gap: '20px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
           <div style={{ height: '420px', borderRadius: '20px', ...SHIMMER }} />
           <div style={{ height: '420px', borderRadius: '20px', ...SHIMMER }} />
         </div>
       ) : (
-        <div style={{ display: 'grid', gridTemplateColumns: '360px 1fr', gap: '20px', alignItems: 'start' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px', alignItems: 'start' }}>
           <div style={{ borderRadius: '20px', background: 'rgba(255,255,255,0.6)', border: '1px solid rgba(255,255,255,0.85)', backdropFilter: 'blur(14px)', overflow: 'hidden' }}>
             <div style={{ padding: '14px', borderBottom: '1px solid rgba(31,55,75,0.08)', display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <input
@@ -132,7 +132,7 @@ export default function TeacherReview() {
 
           {selectedStudent ? (
             <div style={{ borderRadius: '20px', background: 'rgba(255,255,255,0.6)', border: '1px solid rgba(255,255,255,0.85)', backdropFilter: 'blur(14px)', padding: '28px 30px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '22px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '12px', marginBottom: '22px' }}>
                 <div>
                   <h2 style={{ fontSize: '20px', fontWeight: 700, color: '#161F24', margin: '0 0 4px' }}>{selectedStudent.name}</h2>
                   <p style={{ fontSize: '13px', color: '#556269', margin: 0 }}>{selectedStudent.program} · {selectedStudent.id}</p>

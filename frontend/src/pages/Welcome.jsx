@@ -20,7 +20,10 @@ export default function Welcome({ onGoAuth }) {
 
   return (
     <div style={{ position: 'relative', zIndex: 1, minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      <header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '28px 56px' }}>
+      <header style={{
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px',
+        padding: 'clamp(16px,4vw,28px) clamp(18px,6vw,56px)',
+      }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <img src={logoIcon} alt="MindMetric AI" style={{ width: '34px', height: '34px', borderRadius: '9px' }} />
           <span style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: '17px', letterSpacing: '-0.01em', color: '#161F24' }}>
@@ -36,7 +39,10 @@ export default function Welcome({ onGoAuth }) {
         </div>
       </header>
 
-      <main style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '40px 24px 80px', textAlign: 'center' }}>
+      <main style={{
+        flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+        padding: 'clamp(24px,6vw,40px) clamp(16px,5vw,24px) clamp(48px,10vw,80px)', textAlign: 'center',
+      }}>
         <div style={{
           display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '7px 16px', borderRadius: '100px',
           background: 'rgba(255,255,255,0.65)', border: '1px solid rgba(255,255,255,0.9)', backdropFilter: 'blur(10px)',
@@ -58,7 +64,7 @@ export default function Welcome({ onGoAuth }) {
         }}>
           {t('welcome.lede')}
         </p>
-        <div style={{ display: 'flex', gap: '14px', animation: 'mm-fade-up 0.7s ease 0.15s both' }}>
+        <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap', justifyContent: 'center', animation: 'mm-fade-up 0.7s ease 0.15s both' }}>
           <button className="mm-btn" onClick={onGoAuth} style={{
             fontFamily: 'Manrope', fontWeight: 700, fontSize: '15px', color: '#fff', background: '#2E5570',
             border: 'none', padding: '14px 30px', borderRadius: '100px', cursor: 'pointer', boxShadow: '0 10px 24px rgba(46,85,112,0.28)',
@@ -86,7 +92,7 @@ export default function Welcome({ onGoAuth }) {
         </div>
       </main>
 
-      <footer style={{ padding: '22px 56px', fontSize: '12.5px', color: '#939EA3' }}>
+      <footer style={{ padding: 'clamp(16px,4vw,22px) clamp(18px,6vw,56px)', fontSize: '12.5px', color: '#939EA3' }}>
         <span>{t('welcome.footer')}</span>
       </footer>
     </div>

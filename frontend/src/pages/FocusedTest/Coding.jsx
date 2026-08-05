@@ -67,8 +67,11 @@ export default function Coding({ goTo, onProgress }) {
   };
 
   return (
-    <div style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 1.2fr', gap: '1px', background: 'rgba(31,55,75,0.08)' }}>
-      <div style={{ background: 'rgba(245,247,248,0.9)', padding: '34px 38px', overflowY: 'auto' }}>
+    <div style={{
+      flex: 1, display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
+      gap: '1px', background: 'rgba(31,55,75,0.08)', overflowY: 'auto',
+    }}>
+      <div style={{ background: 'rgba(245,247,248,0.9)', padding: 'clamp(20px,5vw,34px) clamp(18px,5vw,38px)', overflowY: 'auto' }}>
         <div style={{ fontSize: '12px', fontWeight: 700, color: '#2E5570', letterSpacing: '0.04em', marginBottom: '10px' }}>{t('coding.task')}</div>
         <h2 style={{ fontFamily: "'Montserrat',sans-serif", fontWeight: 700, fontSize: '26px', color: '#161F24', margin: '0 0 14px' }}>{problem.title}</h2>
         <p style={{ fontSize: '14px', lineHeight: 1.7, color: '#3B444A', margin: '0 0 18px' }}>{problem.statement}</p>
