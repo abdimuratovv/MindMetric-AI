@@ -8,27 +8,64 @@ import { useLanguage } from '../i18n/LanguageContext.jsx';
 // in their own section, nothing else — that's now folded into Admin.
 const ROLES = ['student', 'admin'];
 
+/** Open/closed eye icon toggling a password field between masked and plain text. */
+function PasswordVisibilityToggle({ visible, onToggle, label }) {
+  return (
+    <button
+      type="button"
+      onClick={onToggle}
+      aria-label={label}
+      aria-pressed={visible}
+      style={{
+        position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)',
+        width: '28px', height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center',
+        border: 'none', background: 'transparent', cursor: 'pointer', padding: 0, color: '#7C8A91',
+      }}
+    >
+      {visible ? (
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A10.94 10.94 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
+          <line x1="1" y1="1" x2="23" y2="23" />
+        </svg>
+      ) : (
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z" />
+          <circle cx="12" cy="12" r="3" />
+        </svg>
+      )}
+    </button>
+  );
+}
+
 /** Shared label+input look for both the login and register forms below. */
-function AuthField({ label, type = 'text', value, onChange, placeholder, focused, onFocus, onBlur, marginBottom = '16px' }) {
+function AuthField({ label, type = 'text', value, onChange, placeholder, focused, onFocus, onBlur, marginBottom = '16px', showLabel, hideLabel }) {
+  const isPassword = type === 'password';
+  const [visible, setVisible] = useState(false);
+
   return (
     <>
       <label style={{ display: 'block', fontSize: '12.5px', fontWeight: 600, color: '#1F374B', marginBottom: '6px' }}>{label}</label>
-      <input
-        type={type}
-        value={value}
-        onChange={onChange}
-        onFocus={onFocus}
-        onBlur={onBlur}
-        placeholder={placeholder}
-        style={{
-          width: '100%', padding: '12px 14px', borderRadius: '12px',
-          border: `1px solid ${focused ? '#2E5570' : 'rgba(31,55,75,0.14)'}`,
-          boxShadow: focused ? '0 0 0 3px rgba(46,85,112,0.14)' : 'none',
-          transition: 'border-color 0.15s ease, box-shadow 0.15s ease',
-          background: 'rgba(255,255,255,0.7)', fontFamily: 'Manrope', fontSize: '14px', color: '#161F24',
-          marginBottom, outline: 'none',
-        }}
-      />
+      <div style={{ position: 'relative', marginBottom }}>
+        <input
+          type={isPassword && visible ? 'text' : type}
+          value={value}
+          onChange={onChange}
+          onFocus={onFocus}
+          onBlur={onBlur}
+          placeholder={placeholder}
+          style={{
+            width: '100%', padding: isPassword ? '12px 42px 12px 14px' : '12px 14px', borderRadius: '12px',
+            border: `1px solid ${focused ? '#2E5570' : 'rgba(31,55,75,0.14)'}`,
+            boxShadow: focused ? '0 0 0 3px rgba(46,85,112,0.14)' : 'none',
+            transition: 'border-color 0.15s ease, box-shadow 0.15s ease',
+            background: 'rgba(255,255,255,0.7)', fontFamily: 'Manrope', fontSize: '14px', color: '#161F24',
+            outline: 'none', boxSizing: 'border-box',
+          }}
+        />
+        {isPassword && (
+          <PasswordVisibilityToggle visible={visible} onToggle={() => setVisible((v) => !v)} label={visible ? hideLabel : showLabel} />
+        )}
+      </div>
     </>
   );
 }
@@ -189,6 +226,8 @@ export default function Auth({ onLoginSuccess, onGoWelcome }) {
           placeholder="••••••••"
           focused={passwordFocused}
           marginBottom={authMode === 'register' ? '16px' : '8px'}
+          showLabel={t('auth.showPassword')}
+          hideLabel={t('auth.hidePassword')}
         />
 
         {authMode === 'register' && (
@@ -202,6 +241,8 @@ export default function Auth({ onLoginSuccess, onGoWelcome }) {
             placeholder="••••••••"
             focused={confirmPasswordFocused}
             marginBottom="8px"
+            showLabel={t('auth.showPassword')}
+            hideLabel={t('auth.hidePassword')}
           />
         )}
 

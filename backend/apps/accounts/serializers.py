@@ -1,19 +1,37 @@
 from django.conf import settings
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError as DjangoValidationError
+from django.core.validators import validate_email as django_validate_email
 from rest_framework import serializers
 
 from apps.i18n import DEFAULT_LANGUAGE
 
 from .models import StudentProfile, User
 
+INVALID_EMAIL_FORMAT = {
+    'ru': 'Введите корректный email.',
+    'uz': "To‘g‘ri email manzilini kiriting.",
+}
+
 
 class LoginSerializer(serializers.Serializer):
     """Validates the `{{ email }}` / `{{ password }}` fields from the auth screen."""
 
-    email = serializers.EmailField()
+    # Plain CharField, not EmailField: format errors are raised in validate_email
+    # below so they can be localized (this product ships RU/UZ only, no English —
+    # see apps/i18n.py), instead of leaking DRF's built-in English message.
+    email = serializers.CharField()
     password = serializers.CharField(write_only=True)
     role = serializers.ChoiceField(choices=User.Role.choices)
+
+    def validate_email(self, value):
+        lang = self.context.get('lang', DEFAULT_LANGUAGE)
+        value = value.strip()
+        try:
+            django_validate_email(value)
+        except DjangoValidationError:
+            raise serializers.ValidationError(INVALID_EMAIL_FORMAT[lang])
+        return value
 
 
 INVALID_EMAIL_DOMAIN = {
@@ -41,12 +59,18 @@ class RegisterSerializer(serializers.Serializer):
 
     first_name = serializers.CharField(max_length=150)
     last_name = serializers.CharField(max_length=150)
-    email = serializers.EmailField()
+    # Plain CharField, not EmailField: format errors are raised below so they
+    # can be localized instead of leaking DRF's built-in English message.
+    email = serializers.CharField()
     password = serializers.CharField(write_only=True)
 
     def validate_email(self, value):
         lang = self.context.get('lang', DEFAULT_LANGUAGE)
         value = value.strip().lower()
+        try:
+            django_validate_email(value)
+        except DjangoValidationError:
+            raise serializers.ValidationError(INVALID_EMAIL_FORMAT[lang])
         domain = value.rsplit('@', 1)[-1]
         if domain != settings.UNIVERSITY_EMAIL_DOMAIN:
             raise serializers.ValidationError(INVALID_EMAIL_DOMAIN[lang])
