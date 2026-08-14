@@ -11,6 +11,7 @@ from apps.scoring.engine import AdaptiveTestingEngine
 from apps.scoring.state_tracker import StudentStateTracker
 from apps.scoring.views import serialize_achievement
 
+from .coding_sandbox import run_test_cases
 from .models import (
     AssessmentAttempt,
     BehavioralCategory,
@@ -166,11 +167,16 @@ class AnswerMcqView(APIView):
 
 class SubmitMcqView(APIView):
     """
-    POST /api/assessments/mcq/<kind>/submit/ — finalizes the attempt.
+    POST /api/assessments/mcq/<kind>/submit/ — finalizes the attempt, *except*
+    for HYBRID_TYPES (algorithmic), where the MCQ phase is only half the
+    assessment: this stashes its score and hands off to the coding phase
+    instead of completing anything, returning {phase: 'coding'} so the
+    frontend's Hybrid wrapper knows to mount the Coding screen next.
 
-    Returns {score, achievement} (achievement is null unless this submission
-    newly earned/upgraded a badge) so the frontend can show a completion
-    screen with the just-earned score and, when applicable, a badge reveal.
+    Otherwise returns {score, achievement} (achievement is null unless this
+    submission newly earned/upgraded a badge) so the frontend can show a
+    completion screen with the just-earned score and, when applicable, a
+    badge reveal.
     """
 
     permission_classes = [IsStudent]
@@ -178,20 +184,28 @@ class SubmitMcqView(APIView):
     def post(self, request, kind):
         kind = _valid_kind(kind, AssessmentAttempt.MCQ_TYPES)
         attempt = get_object_or_404(AssessmentAttempt, student=request.user, assessment_type=kind)
+        if kind in AssessmentAttempt.HYBRID_TYPES:
+            StudentStateTracker().finish_mcq_phase(attempt)
+            return Response({'phase': 'coding'})
         result = StudentStateTracker().complete_attempt(attempt)
         return _completion_response(result, get_language(request))
 
 
-# -- Coding pattern: algorithmic (the only member) -----------------------------------------
+# -- Coding pattern: the coding phase of algorithmic's hybrid attempt ----------------------
 
 class StartCodingView(APIView):
-    """POST /api/assessments/coding/start/"""
+    """
+    POST /api/assessments/coding/start/ — begins the coding phase of the
+    algorithmic hybrid attempt (the MCQ phase already put it IN_PROGRESS, so
+    start_or_restart_attempt is a no-op here beyond returning the row).
+    """
 
     permission_classes = [IsStudent, HasCompletedProfile]
 
     def post(self, request):
         tracker = StudentStateTracker()
         attempt = tracker.start_or_restart_attempt(request.user, AssessmentAttempt.Type.ALGORITHMIC)
+        tracker.start_coding_phase(attempt)
         return Response({
             'assessment_type': attempt.assessment_type,
             'status': attempt.status,
@@ -213,8 +227,10 @@ class RunCodingView(APIView):
     """
     POST /api/assessments/coding/run/  {code}
 
-    Executes `code` against the problem's *sample* (non-hidden) test cases in a
-    sandboxed runner (not implemented here) and returns {{ testResults }} shape.
+    Executes `code` against the problem's *sample* (non-hidden) test cases via
+    apps.assessments.coding_sandbox and returns {{ testResults }} shape. Doesn't
+    count toward the attempt-count penalty in state_tracker._score_hybrid — only
+    "Submit solution" (is_final=True) rows do.
     """
 
     permission_classes = [IsStudent]
@@ -226,15 +242,13 @@ class RunCodingView(APIView):
         problem = CodingProblem.objects.filter(is_active=True).first()
         code = request.data.get('code', '')
 
-        # TODO: replace with a real sandboxed JS runner; this stub always "passes".
         sample_cases = [c for c in problem.test_cases if not c.get('hidden')]
-        test_results = [
-            {'label': c['label'], 'passed': True} for c in sample_cases
-        ]
+        test_results = run_test_cases(problem.function_name, code, sample_cases)
+        passed_count = sum(1 for r in test_results if r['passed'])
 
         CodingSubmission.objects.create(
             attempt=attempt, problem=problem, code=code, is_final=False,
-            test_results=test_results, passed_count=len(test_results), total_count=len(sample_cases),
+            test_results=test_results, passed_count=passed_count, total_count=len(sample_cases),
         )
         return Response({'testResults': test_results})
 
@@ -256,12 +270,12 @@ class SubmitCodingView(APIView):
         problem = CodingProblem.objects.filter(is_active=True).first()
         code = request.data.get('code', '')
 
-        # TODO: replace with a real sandboxed JS runner against the full test_cases list.
-        test_results = [{'label': c['label'], 'passed': True} for c in problem.test_cases]
+        test_results = run_test_cases(problem.function_name, code, problem.test_cases)
+        passed_count = sum(1 for r in test_results if r['passed'])
 
         CodingSubmission.objects.create(
             attempt=attempt, problem=problem, code=code, is_final=True,
-            test_results=test_results, passed_count=len(test_results), total_count=len(test_results),
+            test_results=test_results, passed_count=passed_count, total_count=len(test_results),
         )
         result = StudentStateTracker().complete_attempt(attempt)
         return _completion_response(result, get_language(request))

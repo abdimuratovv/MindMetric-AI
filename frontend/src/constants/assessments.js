@@ -1,11 +1,12 @@
 /**
  * Single source of truth for the 10 assessment cards — mirrors
  * apps.assessments.models.AssessmentAttempt.Type (backend) and its
- * MCQ_TYPES/CODING_TYPES/LIKERT_TYPES groupings.
+ * MCQ_TYPES/HYBRID_TYPES/LIKERT_TYPES groupings.
  *
  * ASSESSMENT_TYPES drives card order on the selection screen; ASSESSMENT_PATTERN
- * drives which generalized screen component (Mcq/Coding/Likert) handles a given
- * type inside FocusedTestShell.
+ * drives which generalized screen component (Mcq/Hybrid/Likert) handles a given
+ * type inside FocusedTestShell — 'hybrid' is algorithmic's MCQ phase followed by
+ * a coding phase (see pages/FocusedTest/Hybrid.jsx), blended into one score.
  */
 export const ASSESSMENT_TYPES = [
   'math', 'logic', 'algorithmic', 'creative', 'teamwork',
@@ -13,7 +14,7 @@ export const ASSESSMENT_TYPES = [
 ];
 
 export const ASSESSMENT_PATTERN = {
-  math: 'mcq', logic: 'mcq', algorithmic: 'mcq', creative: 'mcq', problem_solving: 'mcq', attention: 'mcq', iq: 'mcq',
+  math: 'mcq', logic: 'mcq', algorithmic: 'hybrid', creative: 'mcq', problem_solving: 'mcq', attention: 'mcq', iq: 'mcq',
   teamwork: 'likert', patience: 'likert', learning_speed: 'likert',
 };
 

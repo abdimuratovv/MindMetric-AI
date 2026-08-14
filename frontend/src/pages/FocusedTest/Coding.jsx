@@ -74,6 +74,9 @@ export default function Coding({ goTo, onProgress }) {
       <div style={{ background: 'rgba(245,247,248,0.9)', padding: 'clamp(20px,5vw,34px) clamp(18px,5vw,38px)', overflowY: 'auto' }}>
         <div style={{ fontSize: '12px', fontWeight: 700, color: '#2E5570', letterSpacing: '0.04em', marginBottom: '10px' }}>{t('coding.task')}</div>
         <h2 style={{ fontFamily: "'Montserrat',sans-serif", fontWeight: 700, fontSize: '26px', color: '#161F24', margin: '0 0 14px' }}>{problem.title}</h2>
+        <div style={{ fontSize: '12.5px', fontWeight: 600, color: '#8A6D1F', marginBottom: '14px' }}>
+          {t('coding.targetTime')(Math.round(problem.target_time_seconds / 60))}
+        </div>
         <p style={{ fontSize: '14px', lineHeight: 1.7, color: '#3B444A', margin: '0 0 18px' }}>{problem.statement}</p>
         <div style={{ padding: '16px 18px', borderRadius: '14px', background: 'rgba(255,255,255,0.6)', border: '1px solid rgba(255,255,255,0.85)', marginBottom: '18px' }}>
           <div style={{ fontSize: '11.5px', fontWeight: 700, color: '#939EA3', marginBottom: '8px' }}>{t('coding.example')}</div>

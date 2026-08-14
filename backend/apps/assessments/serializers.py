@@ -178,7 +178,7 @@ class CodingProblemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CodingProblem
-        fields = ['id', 'title', 'statement', 'example', 'constraints', 'starter_code']
+        fields = ['id', 'title', 'statement', 'example', 'constraints', 'starter_code', 'target_time_seconds']
 
     def get_title(self, obj):
         return getattr(obj, f'title_{self.context["lang"]}')

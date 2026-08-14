@@ -22,8 +22,12 @@ const emptyAnswerFor = (questionType) => (questionType === 'multi' ? [] : questi
  *   questions folded into this type).
  * - multi: same option rows as non-exclusive toggles ("select all that apply").
  * - essay: a free-text textarea, graded by apps.scoring.essay_grader on the backend.
+ *
+ * `onPhaseComplete` is set only by Hybrid.jsx (algorithmic's MCQ phase) — when
+ * present, a `{phase: 'coding'}` submit response hands off to the coding phase
+ * instead of this component showing its own CompletionOverlay.
  */
-export default function Mcq({ assessmentType, goTo, onProgress }) {
+export default function Mcq({ assessmentType, goTo, onProgress, onPhaseComplete }) {
   const [liveQuestion, setLiveQuestion] = useState(null);
   const [cqNumber, setCqNumber] = useState(1);
   const [cqTotal, setCqTotal] = useState(5);
@@ -48,6 +52,18 @@ export default function Mcq({ assessmentType, goTo, onProgress }) {
       deadlineRef.current = Date.now() + start.time_remaining_seconds * 1000;
       setTimeRemaining(start.time_remaining_seconds);
       const next = await getMcqNextQuestion(assessmentType);
+      // Reached with all questions already answered but not yet submitted — e.g. a
+      // hybrid attempt whose MCQ phase already finished and the student refreshed
+      // while on the coding phase (Hybrid.jsx always mounts back into 'mcq' first).
+      // Re-submitting is idempotent (finish_mcq_phase just recomputes the same
+      // score), so this hands off/completes immediately instead of stalling on a
+      // blank screen with no question to show.
+      if (!next.question) {
+        const result = await submitMcq(assessmentType);
+        if (result.phase === 'coding') { onPhaseComplete(); return; }
+        setCompletion(result);
+        return;
+      }
       setLiveQuestion(next.question);
       setLocalAnswer(emptyAnswerFor(next.question?.question_type));
       setCqNumber(next.cqNumber);
@@ -80,6 +96,7 @@ export default function Mcq({ assessmentType, goTo, onProgress }) {
     if (timeRemaining !== 0 || completion) return;
     (async () => {
       const result = await submitMcq(assessmentType);
+      if (result.phase === 'coding') { onPhaseComplete(); return; }
       setCompletion(result);
     })();
   }, [timeRemaining]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -143,6 +160,7 @@ export default function Mcq({ assessmentType, goTo, onProgress }) {
 
       if (result.is_last) {
         const completionResult = await submitMcq(assessmentType);
+        if (completionResult.phase === 'coding') { onPhaseComplete(); return; }
         setCompletion(completionResult);
         return;
       }

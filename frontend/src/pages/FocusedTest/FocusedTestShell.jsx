@@ -3,16 +3,16 @@ import { useState } from 'react';
 import { pauseAttempt } from '../../api/assessments.js';
 import { ASSESSMENT_PATTERN } from '../../constants/assessments.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
-import Coding from './Coding.jsx';
+import Hybrid from './Hybrid.jsx';
 import Likert from './Likert.jsx';
 import Mcq from './Mcq.jsx';
 
 /**
  * Header/timer/progress bar shared by all ten focused-test screens, plus the
- * pattern-based dispatch (mcq/coding/likert) that picks which generalized
+ * pattern-based dispatch (mcq/hybrid/likert) that picks which generalized
  * screen component handles the current `screen` type — see
  * constants/assessments.js's ASSESSMENT_PATTERN, mirroring
- * apps.assessments.models.AssessmentAttempt's MCQ_TYPES/CODING_TYPES/LIKERT_TYPES.
+ * apps.assessments.models.AssessmentAttempt's MCQ_TYPES/HYBRID_TYPES/LIKERT_TYPES.
  */
 export default function FocusedTestShell({ screen, goTo }) {
   const [progress, setProgress] = useState({ pct: '0%', timeRemainingSeconds: null });
@@ -33,7 +33,7 @@ export default function FocusedTestShell({ screen, goTo }) {
     }
   };
 
-  const timerLabel = pattern === 'mcq' && progress.timeRemainingSeconds != null
+  const timerLabel = (pattern === 'mcq' || pattern === 'hybrid') && progress.timeRemainingSeconds != null
     ? `${Math.floor(progress.timeRemainingSeconds / 60)}:${String(progress.timeRemainingSeconds % 60).padStart(2, '0')}`
     : '';
   const timerColor = progress.timeRemainingSeconds != null && progress.timeRemainingSeconds < 60 ? '#BD5B4C' : '#1F374B';
@@ -64,7 +64,7 @@ export default function FocusedTestShell({ screen, goTo }) {
       </div>
 
       {pattern === 'mcq' && <Mcq assessmentType={screen} goTo={goTo} onProgress={setProgress} />}
-      {pattern === 'coding' && <Coding goTo={goTo} onProgress={setProgress} />}
+      {pattern === 'hybrid' && <Hybrid goTo={goTo} onProgress={setProgress} />}
       {pattern === 'likert' && <Likert assessmentType={screen} goTo={goTo} onProgress={setProgress} />}
     </div>
   );

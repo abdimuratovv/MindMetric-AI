@@ -35,6 +35,8 @@ class StudentStateTracker:
             attempt.coding_submissions.all().delete()
             attempt.status = AssessmentAttempt.Status.NOT_STARTED
             attempt.completed_at = None
+            attempt.mcq_phase_score = None
+            attempt.coding_started_at = None
         if attempt.status == AssessmentAttempt.Status.NOT_STARTED:
             attempt.status = AssessmentAttempt.Status.IN_PROGRESS
             attempt.started_at = timezone.now()
@@ -59,6 +61,25 @@ class StudentStateTracker:
         )
         return result
 
+    def finish_mcq_phase(self, attempt: AssessmentAttempt) -> None:
+        """
+        Called by SubmitMcqView for a HYBRID_TYPES attempt instead of complete_attempt —
+        the attempt isn't done yet (the coding phase is next), so this just stashes the
+        MCQ phase's own score onto the attempt for _score_hybrid to blend in later,
+        without touching `status`/`completed_at`.
+        """
+        responses = attempt.cognitive_responses.select_related('question')
+        results = [r.correctness for r in responses]
+        score = round(100 * sum(results) / len(results)) if results else 0
+        attempt.mcq_phase_score = score
+        attempt.save(update_fields=['mcq_phase_score'])
+
+    def start_coding_phase(self, attempt: AssessmentAttempt) -> None:
+        """Called by StartCodingView — marks when the coding phase began, the baseline
+        _score_hybrid measures elapsed solve time against target_time_seconds from."""
+        attempt.coding_started_at = timezone.now()
+        attempt.save(update_fields=['coding_started_at'])
+
     def complete_attempt(self, attempt: AssessmentAttempt) -> dict:
         """
         Returns {'score': int|None, 'achievement': Achievement|None} — `score`
@@ -73,10 +94,10 @@ class StudentStateTracker:
         attempt.save(update_fields=['status', 'completed_at'])
 
         result = {'score': None, 'achievement': None}
-        if attempt.assessment_type in AssessmentAttempt.MCQ_TYPES:
+        if attempt.assessment_type in AssessmentAttempt.HYBRID_TYPES:
+            result = self._score_hybrid(attempt)
+        elif attempt.assessment_type in AssessmentAttempt.MCQ_TYPES:
             result = self._score_mcq(attempt)
-        elif attempt.assessment_type in AssessmentAttempt.CODING_TYPES:
-            result = self._score_coding(attempt)
         elif attempt.assessment_type in AssessmentAttempt.LIKERT_TYPES:
             result = self._score_likert(attempt)
 
@@ -93,11 +114,37 @@ class StudentStateTracker:
         score = round(100 * sum(results) / len(results))
         return self._upsert_indicator_score(attempt.student, attempt.assessment_type, score)
 
-    def _score_coding(self, attempt: AssessmentAttempt) -> dict:
+    def _score_hybrid(self, attempt: AssessmentAttempt) -> dict:
+        """
+        Blends the MCQ phase's score (attempt.mcq_phase_score, stashed by
+        finish_mcq_phase) with the coding phase's result: 0.4 x mcq + 0.6 x coding,
+        weighted toward coding since it's the more direct signal of whether the
+        student can actually produce working code, not just reason about it.
+
+        The coding portion itself is correctness (passed/total) scaled down by two
+        multiplicative penalties — not added as separate weighted terms — so a fast,
+        low-attempt submission that mostly fails the test suite still scores near
+        zero rather than being propped up by speed/attempt count:
+          - time_factor: full credit at or under the problem's target_time_seconds,
+            tapering linearly to a 0.7 floor by 2x that target.
+          - attempt_factor: full credit on the first "Submit solution", -0.1 per
+            extra submit (not "Run tests"), floored at 0.6.
+        """
         final = attempt.coding_submissions.filter(is_final=True).order_by('-created_at').first()
-        if not final or final.total_count == 0:
+        if not final or final.total_count == 0 or attempt.mcq_phase_score is None:
             return {'score': None, 'achievement': None}
-        score = round(100 * final.passed_count / final.total_count)
+
+        correctness = 100 * final.passed_count / final.total_count
+
+        target = final.problem.target_time_seconds
+        elapsed = (final.created_at - attempt.coding_started_at).total_seconds() if attempt.coding_started_at else target
+        time_factor = 1.0 if elapsed <= target else max(0.7, 1 - 0.3 * (elapsed - target) / target)
+
+        submit_count = attempt.coding_submissions.filter(is_final=True).count()
+        attempt_factor = max(0.6, 1 - 0.1 * (submit_count - 1))
+
+        coding_score = correctness * time_factor * attempt_factor
+        score = round(0.4 * attempt.mcq_phase_score + 0.6 * coding_score)
         return self._upsert_indicator_score(attempt.student, 'algorithmic', score)
 
     def _score_likert(self, attempt: AssessmentAttempt) -> dict:

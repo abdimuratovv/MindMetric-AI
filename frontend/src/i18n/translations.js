@@ -220,6 +220,7 @@ export const translations = {
       constraints: 'ОГРАНИЧЕНИЯ',
       runTests: 'Запустить тесты',
       submitSolution: 'Отправить решение',
+      targetTime: (min) => `Рекомендуемое время: ${min} мин`,
     },
     likert: {
       subtitle: 'Отвечайте честно — здесь нет правильных ответов. Это влияет на психолого-педагогическую проверку, а не на автоматический балл.',
@@ -454,6 +455,7 @@ export const translations = {
       constraints: 'CHEKLOVLAR',
       runTests: 'Testlarni ishga tushirish',
       submitSolution: 'Yechimni yuborish',
+      targetTime: (min) => `Tavsiya etilgan vaqt: ${min} daqiqa`,
     },
     likert: {
       subtitle: "Halol javob bering — bu yerda to'g'ri javoblar yo'q. Bu avtomatik ballingizga emas, balki psixologik-pedagogik ko'rib chiqishga ta'sir qiladi.",

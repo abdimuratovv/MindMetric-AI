@@ -28,9 +28,11 @@ export const answerLikert = (type, itemId, value) =>
   api.patch(`/assessments/likert/${type}/answer/`, { item_id: itemId, value });
 export const submitLikert = (type) => api.post(`/assessments/likert/${type}/submit/`, {});
 
-/** Generic "start" dispatcher used by StudentSelection's card list. */
+/** Generic "start" dispatcher used by StudentSelection's card list. `hybrid`
+ * (algorithmic) always begins at its MCQ phase, same as plain `mcq` types —
+ * Hybrid.jsx's own Coding phase calls startCoding() once that phase is reached. */
 export const startAssessment = (type, pattern) => {
-  if (pattern === 'mcq') return startMcq(type);
+  if (pattern === 'mcq' || pattern === 'hybrid') return startMcq(type);
   if (pattern === 'likert') return startLikert(type);
   return startCoding();
 };

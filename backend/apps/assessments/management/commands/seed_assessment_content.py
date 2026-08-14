@@ -87,6 +87,8 @@ class Command(BaseCommand):
                 'constraints_ru': CODING_PROBLEM['constraints_ru'], 'constraints_uz': CODING_PROBLEM['constraints_uz'],
                 'starter_code_ru': CODING_PROBLEM['starter_code_ru'], 'starter_code_uz': CODING_PROBLEM['starter_code_uz'],
                 'test_cases': CODING_PROBLEM['test_cases'], 'is_active': True,
+                'function_name': CODING_PROBLEM['function_name'],
+                'target_time_seconds': CODING_PROBLEM['target_time_seconds'],
             },
         )
         self.stdout.write('  1 coding problem (algorithmic)')

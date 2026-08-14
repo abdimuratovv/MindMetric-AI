@@ -74,6 +74,14 @@ class CodingProblem(models.Model):
     constraints_uz = models.JSONField(default=list)
     starter_code_ru = models.TextField()
     starter_code_uz = models.TextField()
+    # The JS function apps.assessments.coding_sandbox calls after eval-ing the
+    # student's submitted code — language-neutral like test_cases, since the
+    # student is expected to keep this exact name across both _ru/_uz starter codes.
+    function_name = models.CharField(max_length=60, default='solution')
+    # Scoring baseline for the coding phase's time factor (apps.scoring.state_tracker.
+    # _score_hybrid) — solving at or under this earns full time credit; solving slower
+    # tapers off. Not a hard deadline, unlike the MCQ phase's time_remaining_seconds.
+    target_time_seconds = models.PositiveIntegerField(default=300)
     # Test data itself (input words, expected output) is language-neutral puzzle
     # content, not UI prose, so it stays a single shared field.
     test_cases = models.JSONField(
@@ -133,10 +141,11 @@ class AssessmentAttempt(models.Model):
     `completed{}` flags gating "View my results" — see apps.scoring.state_tracker.
 
     Each type maps 1:1 to an indicator key (apps.scoring.constants.INDICATOR_CHOICES)
-    and to exactly one of three reusable UI/scoring patterns — MCQ_TYPES (timed,
-    difficulty-matched question bank), CODING_TYPES (single problem, run/submit),
-    LIKERT_TYPES (self-report statements). Views/state_tracker dispatch on these
-    sets rather than hardcoding all ten types individually.
+    and to one of three reusable UI/scoring patterns — MCQ_TYPES (timed,
+    difficulty-matched question bank), LIKERT_TYPES (self-report statements), and
+    the MCQ pattern followed by a coding run/submit phase for HYBRID_TYPES (a
+    subset of MCQ_TYPES — see below). Views/state_tracker dispatch on these sets
+    rather than hardcoding all ten types individually.
     """
 
     class Type(models.TextChoices):
@@ -160,10 +169,14 @@ class AssessmentAttempt(models.Model):
         Type.MATH, Type.LOGIC, Type.ALGORITHMIC, Type.CREATIVE, Type.PROBLEM_SOLVING, Type.ATTENTION, Type.IQ,
     })
     LIKERT_TYPES = frozenset({Type.TEAMWORK, Type.PATIENCE, Type.LEARNING_SPEED})
-    # Empty — algorithmic (the only ever member) moved to MCQ_TYPES. Kept as a named
-    # set (rather than deleted) so state_tracker's dispatch and the coding views/models
-    # stay valid for a future indicator that wants the run/submit pattern.
-    CODING_TYPES = frozenset()
+    # Subset of MCQ_TYPES whose MCQ phase doesn't finalize the attempt on its own —
+    # SubmitMcqView instead calls StudentStateTracker.finish_mcq_phase and hands off
+    # to the coding pattern (CodingProblem/CodingSubmission, Start/Run/SubmitCodingView)
+    # for a second phase, with state_tracker._score_hybrid blending both phases' results
+    # into the one indicator score. algorithmic is the only member: MCQ questions alone
+    # can't show whether a student can actually produce working code, so this indicator
+    # also runs a real coding task before it's scored.
+    HYBRID_TYPES = frozenset({Type.ALGORITHMIC})
 
     student = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='attempts', on_delete=models.CASCADE)
     assessment_type = models.CharField(max_length=20, choices=Type.choices)
@@ -173,6 +186,14 @@ class AssessmentAttempt(models.Model):
     # MCQ types only — the authoritative source for {{ timerLabel }}/{{ timerColor }};
     # the client just ticks a local copy between answer round-trips.
     time_remaining_seconds = models.PositiveIntegerField(null=True, blank=True)
+    # HYBRID_TYPES only. mcq_phase_score is the 0-100 result of the MCQ phase alone,
+    # stashed by StudentStateTracker.finish_mcq_phase when that phase ends so
+    # _score_hybrid can blend it with the coding phase's result once that finishes
+    # too — the attempt isn't COMPLETED yet at that point, so it can't go in
+    # IndicatorScore. coding_started_at marks when the coding phase began (set by
+    # StartCodingView), the baseline _score_hybrid measures elapsed solve time from.
+    mcq_phase_score = models.FloatField(null=True, blank=True)
+    coding_started_at = models.DateTimeField(null=True, blank=True)
 
     class Meta:
         constraints = [
