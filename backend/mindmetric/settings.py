@@ -90,12 +90,10 @@ AUTH_USER_MODEL = 'accounts.User'
 # project, so the domain check is the only gate against non-student sign-ups.
 UNIVERSITY_EMAIL_DOMAIN = 'university.edu'
 
-AUTH_PASSWORD_VALIDATORS = [
-    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
-]
+# Deliberately empty: students kept failing to register because of Django's
+# default complexity rules, so self-registration accepts any non-empty
+# password (see apps.accounts.serializers.RegisterSerializer).
+AUTH_PASSWORD_VALIDATORS = []
 
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
