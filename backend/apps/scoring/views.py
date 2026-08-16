@@ -51,31 +51,24 @@ INDICATOR_EXPLANATIONS = {
 # cleanly by word-splicing a translated noun phrase into a fixed sentence frame.
 BAND_EXPLANATIONS = {
     'ru': {
-        'exceptional': 'Входит в топ трети этого курса по всем десяти показателям способностей.',
-        'high': 'Стабильно входит в верхнюю половину курса по большинству из десяти показателей способностей.',
+        'high': 'Стабильно входит в верхнюю часть курса по большинству из десяти показателей способностей.',
         'developing': 'Показывает результаты около среднего уровня курса, с явными точками роста по отдельным показателям.',
-        'foundational': 'Находится на начальном уровне по большинству из десяти показателей — есть значительный потенциал для роста при целевой практике.',
+        'foundational': 'Находится ниже среднего уровня курса по большинству из десяти показателей — требуется значительная целевая практика.',
     },
     'uz': {
-        'exceptional': "O'nta qobiliyat ko'rsatkichi bo'yicha ushbu oqimning eng yuqori uchdan bir qismiga kiradi.",
-        'high': "O'nta ko'rsatkichning aksariyati bo'yicha barqaror tarzda oqimning yuqori yarmida turadi.",
+        'high': "O'nta ko'rsatkichning aksariyati bo'yicha barqaror tarzda oqimning yuqori qismida turadi.",
         'developing': "Oqimning o'rtacha darajasiga yaqin natija ko'rsatmoqda, alohida ko'rsatkichlarda aniq o'sish nuqtalari bor.",
-        'foundational': "O'nta ko'rsatkichning aksariyati bo'yicha boshlang'ich darajada — maqsadli mashq bilan sezilarli o'sish salohiyati mavjud.",
+        'foundational': "O'nta ko'rsatkichning aksariyati bo'yicha oqim o'rtachasidan past — maqsadli mashq katta ahamiyatga ega.",
     },
 }
 
 OVERALL_EXPLANATIONS = {
     'ru': {
-        'exceptional': (
-            'Исключительный результат по всем десяти показателям способностей. Наиболее сильные стороны видны у '
-            'показателей с самым высоким баллом на диаграмме ниже — им стоит уделить внимание в первую очередь '
-            'при планировании развития. Эта оценка отражает только автоматизированное тестирование — '
-            'педагогический контекст см. в отзыве преподавателя.'
-        ),
         'high': (
-            'Высокий результат по большинству из десяти показателей способностей. Показатели с наименьшим '
-            'баллом на диаграмме ниже — область, которая больше всего выиграет от целевой практики. Эта оценка '
-            'отражает только автоматизированное тестирование — педагогический контекст см. в отзыве преподавателя.'
+            'Высокий результат по большинству из десяти показателей способностей. Наиболее сильные стороны '
+            'видны у показателей с самым высоким баллом на диаграмме ниже — им стоит уделить внимание в первую '
+            'очередь при планировании развития. Эта оценка отражает только автоматизированное тестирование — '
+            'педагогический контекст см. в отзыве преподавателя.'
         ),
         'developing': (
             'Развивающийся результат: некоторые показатели уже являются сильными сторонами, другие только '
@@ -84,23 +77,18 @@ OVERALL_EXPLANATIONS = {
             'педагогический контекст см. в отзыве преподавателя.'
         ),
         'foundational': (
-            'Начальный результат с пространством для роста по большинству из десяти показателей. Показатели с '
-            'наименьшим баллом на диаграмме ниже — хорошая отправная точка для целевой практики. Эта оценка '
-            'отражает только автоматизированное тестирование — педагогический контекст см. в отзыве преподавателя.'
+            'Результат ниже среднего уровня курса по большинству из десяти показателей — значительное '
+            'пространство для роста. Показатели с наименьшим баллом на диаграмме ниже — хорошая отправная точка '
+            'для целевой практики. Эта оценка отражает только автоматизированное тестирование — педагогический '
+            'контекст см. в отзыве преподавателя.'
         ),
     },
     'uz': {
-        'exceptional': (
-            "O'nta qobiliyat ko'rsatkichi bo'yicha ajoyib natija. Eng kuchli tomonlar quyidagi diagrammada eng "
-            "yuqori ballga ega ko'rsatkichlarda ko'rinadi — rivojlanishni rejalashtirishda ularga birinchi "
+        'high': (
+            "O'nta ko'rsatkichning aksariyati bo'yicha yuqori natija. Eng kuchli tomonlar quyidagi diagrammada "
+            "eng yuqori ballga ega ko'rsatkichlarda ko'rinadi — rivojlanishni rejalashtirishda ularga birinchi "
             "navbatda e'tibor bering. Ushbu ball faqat avtomatlashtirilgan testlashni aks ettiradi — pedagogik "
             "kontekst uchun o'qituvchi tavsiyanomasiga qarang."
-        ),
-        'high': (
-            "O'nta ko'rsatkichning aksariyati bo'yicha yuqori natija. Quyidagi diagrammada eng past ballga ega "
-            "ko'rsatkichlar — maqsadli mashqdan eng ko'p foyda ko'radigan soha. Ushbu ball faqat "
-            "avtomatlashtirilgan testlashni aks ettiradi — pedagogik kontekst uchun o'qituvchi tavsiyanomasiga "
-            "qarang."
         ),
         'developing': (
             "Rivojlanayotgan natija: ba'zi ko'rsatkichlar allaqachon kuchli tomon, boshqalari hali "
@@ -109,10 +97,10 @@ OVERALL_EXPLANATIONS = {
             "kontekst uchun o'qituvchi tavsiyanomasiga qarang."
         ),
         'foundational': (
-            "O'nta ko'rsatkichning aksariyati bo'yicha o'sish salohiyati katta bo'lgan boshlang'ich natija. "
-            "Quyidagi diagrammada eng past ballga ega ko'rsatkichlar — maqsadli mashq uchun yaxshi boshlang'ich "
-            "nuqta. Ushbu ball faqat avtomatlashtirilgan testlashni aks ettiradi — pedagogik kontekst uchun "
-            "o'qituvchi tavsiyanomasiga qarang."
+            "O'nta ko'rsatkichning aksariyati bo'yicha oqim o'rtachasidan past natija — o'sish uchun katta "
+            "imkoniyat bor. Quyidagi diagrammada eng past ballga ega ko'rsatkichlar — maqsadli mashq uchun "
+            "yaxshi boshlang'ich nuqta. Ushbu ball faqat avtomatlashtirilgan testlashni aks ettiradi — pedagogik "
+            "kontekst uchun o'qituvchi tavsiyanomasiga qarang."
         ),
     },
 }

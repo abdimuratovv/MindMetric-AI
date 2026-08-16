@@ -1,10 +1,13 @@
 """
 Badge catalog for the student gamification/achievement system. A badge is
 awarded per indicator (see constants.INDICATOR_CHOICES) once its
-IndicatorScore crosses a tier threshold — the *same* 55/70/85 cutoffs as
-calculators.tier_for, so a badge always lines up with the tier text already
-shown on the results/analytics screens, just reframed as bronze/silver/gold
-for the gamified collection view (apps.scoring.views.AchievementListView).
+IndicatorScore crosses a tier threshold, reframed as bronze/silver/gold for
+the gamified collection view (apps.scoring.views.AchievementListView).
+
+These 55/70/85 cutoffs are intentionally kept independent from
+calculators.tier_for's 61/81 rubric — a 3-tier text rubric doesn't have
+enough room for a 3-tier badge ladder, so the badge thresholds no longer
+line up 1:1 with the tier text shown next to each indicator.
 
 Only the highest tier reached per indicator is kept (see models.Achievement's
 docstring) — there is no "downgrade" path here, only upgrade-or-nothing.

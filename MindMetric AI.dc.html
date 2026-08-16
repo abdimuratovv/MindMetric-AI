@@ -670,26 +670,24 @@ const BEHAVIORAL_GROUPS = [
 const STUDENTS = [
   { id: 'S-10234', name: 'Amara Osei', program: 'CS · Sophomore', score: 88, band: 'High', status: 'reviewed', date: 'Jul 14' },
   { id: 'S-10391', name: 'Diego Fernandez', program: 'CS · Freshman', score: 62, band: 'Developing', status: 'pending', date: 'Jul 15' },
-  { id: 'S-10456', name: 'Lin Wei Chen', program: 'Data Science · Junior', score: 94, band: 'Exceptional', status: 'flagged', date: 'Jul 15' },
-  { id: 'S-10502', name: 'Priya Nair', program: 'CS · Sophomore', score: 71, band: 'High', status: 'pending', date: 'Jul 16' },
-  { id: 'S-10578', name: 'Jonah Miles', program: 'CS · Freshman', score: 55, band: 'Foundational', status: 'pending', date: 'Jul 16' },
+  { id: 'S-10456', name: 'Lin Wei Chen', program: 'Data Science · Junior', score: 94, band: 'High', status: 'flagged', date: 'Jul 15' },
+  { id: 'S-10502', name: 'Priya Nair', program: 'CS · Sophomore', score: 71, band: 'Developing', status: 'pending', date: 'Jul 16' },
+  { id: 'S-10578', name: 'Jonah Miles', program: 'CS · Freshman', score: 55, band: 'No Aptitude', status: 'pending', date: 'Jul 16' },
   { id: 'Sofia Marchetti' , name: 'Sofia Marchetti', program: 'Software Eng · Senior', score: 83, band: 'High', status: 'reviewed', date: 'Jul 17' },
 ];
 
 const RUBRIC_LABELS = ['Code readability', 'Debugging approach', 'Collaboration observed', 'Conceptual understanding'];
 
 function tierFor(score) {
-  if (score >= 85) return { tier: 'Exceptional', color: '#2E7052', bg: '#DCEFE2' };
-  if (score >= 70) return { tier: 'Strong', color: '#4FAE83', bg: '#EAF5EE' };
-  if (score >= 55) return { tier: 'Developing', color: '#B8862F', bg: '#F5E9D3' };
-  return { tier: 'Foundational', color: '#BD5B4C', bg: '#F6E0DC' };
+  if (score >= 81) return { tier: 'High', color: '#2E7052', bg: '#DCEFE2' };
+  if (score >= 61) return { tier: 'Developing', color: '#B8862F', bg: '#F5E9D3' };
+  return { tier: 'No Aptitude', color: '#BD5B4C', bg: '#F6E0DC' };
 }
 
 function bandFor(score) {
-  if (score >= 85) return { band: 'Exceptional Aptitude', bg: '#DCEFE2', color: '#1F4B39' };
-  if (score >= 70) return { band: 'High Aptitude', bg: '#EAF5EE', color: '#2E7052' };
-  if (score >= 55) return { band: 'Developing Aptitude', bg: '#F5E9D3', color: '#B8862F' };
-  return { band: 'Foundational Aptitude', bg: '#F6E0DC', color: '#BD5B4C' };
+  if (score >= 81) return { band: 'High Aptitude', bg: '#DCEFE2', color: '#1F4B39' };
+  if (score >= 61) return { band: 'Developing Aptitude', bg: '#F5E9D3', color: '#B8862F' };
+  return { band: 'No Aptitude', bg: '#F6E0DC', color: '#BD5B4C' };
 }
 
 function polar(angleDeg, radiusPx, cx, cy) {

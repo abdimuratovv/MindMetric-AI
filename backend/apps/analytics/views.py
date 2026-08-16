@@ -145,13 +145,13 @@ class CohortDistributionView(APIView):
         lang = get_language(request)
         scores = list(OverallScore.objects.values_list('score', flat=True))
         total = len(scores) or 1
-        bucket_order = ['foundational', 'developing', 'high', 'exceptional']
+        bucket_order = ['foundational', 'developing', 'high']
         buckets = {k: 0 for k in bucket_order}
         for score in scores:
             buckets[calculators.band_for(score, lang)['key']] += 1
 
         max_count = max(buckets.values()) or 1
-        colors = {'foundational': '#BD5B4C', 'developing': '#B8862F', 'high': '#4FAE83', 'exceptional': '#2E7052'}
+        colors = {'foundational': '#BD5B4C', 'developing': '#B8862F', 'high': '#2E7052'}
         short_labels = calculators.BAND_SHORT_LABELS[lang]
         return Response([
             {

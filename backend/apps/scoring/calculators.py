@@ -1,34 +1,36 @@
 """
-Pure functions ported 1:1 from the mockup's `tierFor()` / `bandFor()`
-(MindMetric AI.dc.html lines 681-693), so the thresholds and copy the UI
-already displays stay the single source of truth server-side too.
+Pure functions originally ported 1:1 from the mockup's `tierFor()` / `bandFor()`
+(MindMetric AI.dc.html lines 681-693); thresholds/copy have since diverged from
+that file (3-tier rubric: 0-60/61-80/81-100) and calculators.py is now the
+single source of truth server-side.
 
 Each returns a `key` (stable, language-independent — used for bucketing,
 e.g. apps.analytics.views.CohortDistributionView) alongside the localized
 text for the requested `lang`, so callers that only need to compare bands
 (rather than display one) never have to compare translated strings.
+
+Note: apps.scoring.achievements.TIER_THRESHOLDS (bronze/silver/gold badges)
+intentionally keeps its own 55/70/85 cutoffs — see that module's docstring.
 """
 from .constants import FIELD_WEIGHTS, PROGRAMMING_APTITUDE_WEIGHTS
 
 _TIERS = [
-    (85, 'exceptional', {'ru': 'Исключительный', 'uz': 'Ajoyib'}, '#2E7052', '#DCEFE2'),
-    (70, 'strong', {'ru': 'Сильный', 'uz': 'Kuchli'}, '#4FAE83', '#EAF5EE'),
-    (55, 'developing', {'ru': 'Развивающийся', 'uz': 'Rivojlanayotgan'}, '#B8862F', '#F5E9D3'),
-    (0, 'foundational', {'ru': 'Начальный', 'uz': "Boshlang'ich"}, '#BD5B4C', '#F6E0DC'),
+    (81, 'high', {'ru': 'Высокий', 'uz': 'Yuqori'}, '#2E7052', '#DCEFE2'),
+    (61, 'developing', {'ru': 'Развивающийся', 'uz': 'Rivojlanayotgan'}, '#B8862F', '#F5E9D3'),
+    (0, 'foundational', {'ru': 'Слабый', 'uz': 'Iqtidorsiz'}, '#BD5B4C', '#F6E0DC'),
 ]
 
 _BANDS = [
-    (85, 'exceptional', {'ru': 'Исключительные способности', 'uz': 'Ajoyib qobiliyat'}, '#DCEFE2', '#1F4B39'),
-    (70, 'high', {'ru': 'Высокие способности', 'uz': 'Yuqori qobiliyat'}, '#EAF5EE', '#2E7052'),
-    (55, 'developing', {'ru': 'Развивающиеся способности', 'uz': 'Rivojlanayotgan qobiliyat'}, '#F5E9D3', '#B8862F'),
-    (0, 'foundational', {'ru': 'Начальный уровень способностей', 'uz': "Boshlang'ich qobiliyat"}, '#F6E0DC', '#BD5B4C'),
+    (81, 'high', {'ru': 'Высокие способности', 'uz': 'Yuqori iqtidor'}, '#DCEFE2', '#1F4B39'),
+    (61, 'developing', {'ru': 'Развивающиеся способности', 'uz': 'Rivojlanayotgan iqtidor'}, '#F5E9D3', '#B8862F'),
+    (0, 'foundational', {'ru': 'Способности не выявлены', 'uz': 'Iqtidorli emas'}, '#F6E0DC', '#BD5B4C'),
 ]
 
 # {{ distributionBars }} bucket headings — short form of each band, keyed by
 # the same stable `key` as _BANDS above.
 BAND_SHORT_LABELS = {
-    'ru': {'foundational': 'Начальный', 'developing': 'Развивающийся', 'high': 'Высокий', 'exceptional': 'Исключительный'},
-    'uz': {'foundational': "Boshlang'ich", 'developing': 'Rivojlanayotgan', 'high': 'Yuqori', 'exceptional': 'Ajoyib'},
+    'ru': {'foundational': 'Слабый', 'developing': 'Развивающийся', 'high': 'Высокий'},
+    'uz': {'foundational': 'Iqtidorsiz', 'developing': 'Rivojlanayotgan', 'high': 'Yuqori'},
 }
 
 
