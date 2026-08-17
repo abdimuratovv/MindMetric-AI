@@ -13708,65 +13708,546 @@ MCQ_QUESTIONS = {
 ],
 }
 
-CODING_PROBLEM = {
-    'slug': 'most-frequent-word',
-    # Must match the function name the starter code (both languages) declares —
-    # apps.assessments.coding_sandbox calls it by this name after eval-ing the
-    # student's submitted code.
-    'function_name': 'mostFrequentWord',
-    # Baseline for state_tracker._score_hybrid's time factor — full credit at or
-    # under 5 minutes for a single-function word-frequency problem.
-    'target_time_seconds': 300,
-    'title_ru': 'Самое частое слово',
-    'title_uz': "Eng ko'p uchraydigan so'z",
-    'statement_ru': (
-        'Напишите функцию, которая принимает предложение и возвращает слово, встречающееся чаще '
-        'всего. При равенстве частот побеждает слово, встретившееся первым. Игнорируйте пунктуацию '
-        'и регистр.'
-    ),
-    'statement_uz': (
-        "Gapni qabul qilib, unda eng ko'p uchraydigan so'zni qaytaruvchi funksiya yozing. Chastotalar "
-        "teng bo'lsa, birinchi uchragan so'z g'olib hisoblanadi. Tinish belgilari va katta-kichik "
-        "harflarga e'tibor bermang."
-    ),
-    'example_ru': 'Вход:  "the cat sat on the mat"\nВыход: "the"',
-    'example_uz': 'Kirish:  "the cat sat on the mat"\nChiqish: "the"',
-    'constraints_ru': [
-        '1 ≤ длина предложения ≤ 10 000 символов',
-        'Слова разделены одиночными пробелами',
-        'Сравнение не чувствительно к регистру',
-    ],
-    'constraints_uz': [
-        '1 ≤ gap uzunligi ≤ 10 000 belgi',
-        "So'zlar bitta bo'sh joy bilan ajratilgan",
-        "Solishtirish katta-kichik harflarga bog'liq emas",
-    ],
-    'starter_code_ru': (
-        'function mostFrequentWord(sentence) {\n'
-        '  const counts = {};\n'
-        '  const words = sentence.toLowerCase().split(" ");\n\n'
-        '  for (const w of words) {\n'
-        '    counts[w] = (counts[w] || 0) + 1;\n'
-        '  }\n\n'
-        '  // TODO: верните слово с наибольшим количеством повторений\n'
-        '}'
-    ),
-    'starter_code_uz': (
-        'function mostFrequentWord(sentence) {\n'
-        '  const counts = {};\n'
-        '  const words = sentence.toLowerCase().split(" ");\n\n'
-        '  for (const w of words) {\n'
-        '    counts[w] = (counts[w] || 0) + 1;\n'
-        '  }\n\n'
-        "  // TODO: eng ko'p takrorlangan so'zni qaytaring\n"
-        '}'
-    ),
-    'test_cases': [
-        {'label': "'the cat sat on the mat' → 'the'", 'input': 'the cat sat on the mat', 'expected': 'the', 'hidden': False},
-        {'label': "'a b b c c c' → 'c'", 'input': 'a b b c c c', 'expected': 'c', 'hidden': False},
-        {'label': "'The Cat sat' → 'the' (case-insensitive)", 'input': 'The Cat sat', 'expected': 'the', 'hidden': True},
-    ],
-}
+# CODING_TASK_CAP (apps.assessments.views) distinct problems make up algorithmic's coding
+# phase per attempt — CodingProblemView draws from this whole pool, excluding problems this
+# cycle already has a final submission for (see its docstring). All 20 are single-function,
+# JS, primitive-in/primitive-out (apps.assessments.coding_sandbox calls `function_name(input)`
+# with a single JSON-decoded argument and compares the return value with `==`, so anything
+# needing 2+ logical inputs — e.g. gcd, binary search — takes them packed into one array).
+CODING_PROBLEMS = [
+    {
+        'slug': 'most-frequent-word',
+        'function_name': 'mostFrequentWord',
+        'target_time_seconds': 300,
+        'title_ru': 'Самое частое слово',
+        'title_uz': "Eng ko'p uchraydigan so'z",
+        'statement_ru': (
+            'Напишите функцию, которая принимает предложение и возвращает слово, встречающееся чаще '
+            'всего. При равенстве частот побеждает слово, встретившееся первым. Игнорируйте пунктуацию '
+            'и регистр.'
+        ),
+        'statement_uz': (
+            "Gapni qabul qilib, unda eng ko'p uchraydigan so'zni qaytaruvchi funksiya yozing. Chastotalar "
+            "teng bo'lsa, birinchi uchragan so'z g'olib hisoblanadi. Tinish belgilari va katta-kichik "
+            "harflarga e'tibor bermang."
+        ),
+        'example_ru': 'Вход:  "the cat sat on the mat"\nВыход: "the"',
+        'example_uz': 'Kirish:  "the cat sat on the mat"\nChiqish: "the"',
+        'constraints_ru': [
+            '1 ≤ длина предложения ≤ 10 000 символов',
+            'Слова разделены одиночными пробелами',
+            'Сравнение не чувствительно к регистру',
+        ],
+        'constraints_uz': [
+            '1 ≤ gap uzunligi ≤ 10 000 belgi',
+            "So'zlar bitta bo'sh joy bilan ajratilgan",
+            "Solishtirish katta-kichik harflarga bog'liq emas",
+        ],
+        'starter_code_ru': (
+            'function mostFrequentWord(sentence) {\n'
+            '  const counts = {};\n'
+            '  const words = sentence.toLowerCase().split(" ");\n\n'
+            '  for (const w of words) {\n'
+            '    counts[w] = (counts[w] || 0) + 1;\n'
+            '  }\n\n'
+            '  // TODO: верните слово с наибольшим количеством повторений\n'
+            '}'
+        ),
+        'starter_code_uz': (
+            'function mostFrequentWord(sentence) {\n'
+            '  const counts = {};\n'
+            '  const words = sentence.toLowerCase().split(" ");\n\n'
+            '  for (const w of words) {\n'
+            '    counts[w] = (counts[w] || 0) + 1;\n'
+            '  }\n\n'
+            "  // TODO: eng ko'p takrorlangan so'zni qaytaring\n"
+            '}'
+        ),
+        'test_cases': [
+            {'label': "'the cat sat on the mat' → 'the'", 'input': 'the cat sat on the mat', 'expected': 'the', 'hidden': False},
+            {'label': "'a b b c c c' → 'c'", 'input': 'a b b c c c', 'expected': 'c', 'hidden': False},
+            {'label': "'The Cat sat' → 'the' (case-insensitive)", 'input': 'The Cat sat', 'expected': 'the', 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'reverse-string',
+        'function_name': 'reverseString',
+        'target_time_seconds': 180,
+        'title_ru': 'Строка наоборот',
+        'title_uz': 'Satrni teskari aylantirish',
+        'statement_ru': 'Напишите функцию, которая принимает строку и возвращает её в обратном порядке.',
+        'statement_uz': "Satrni qabul qilib, uni teskari tartibda qaytaruvchi funksiya yozing.",
+        'example_ru': 'Вход:  "hello"\nВыход: "olleh"',
+        'example_uz': 'Kirish:  "hello"\nChiqish: "olleh"',
+        'constraints_ru': ['0 ≤ длина строки ≤ 1000 символов'],
+        'constraints_uz': ['0 ≤ satr uzunligi ≤ 1000 belgi'],
+        'starter_code_ru': 'function reverseString(s) {\n  // TODO: верните строку в обратном порядке\n}',
+        'starter_code_uz': "function reverseString(s) {\n  // TODO: satrni teskari tartibda qaytaring\n}",
+        'test_cases': [
+            {'label': "'hello' → 'olleh'", 'input': 'hello', 'expected': 'olleh', 'hidden': False},
+            {'label': "'abc' → 'cba'", 'input': 'abc', 'expected': 'cba', 'hidden': False},
+            {'label': "'a' → 'a'", 'input': 'a', 'expected': 'a', 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'is-palindrome',
+        'function_name': 'isPalindrome',
+        'target_time_seconds': 200,
+        'title_ru': 'Проверка палиндрома',
+        'title_uz': 'Palindromni tekshirish',
+        'statement_ru': (
+            'Напишите функцию, которая проверяет, является ли строка палиндромом (читается одинаково '
+            'в обе стороны), без учёта регистра.'
+        ),
+        'statement_uz': (
+            "Satr palindrom (ikki tomondan bir xil o'qiladigan) ekanligini, katta-kichik harflarga "
+            "e'tibor bermay tekshiruvchi funksiya yozing."
+        ),
+        'example_ru': 'Вход:  "level"\nВыход: true',
+        'example_uz': 'Kirish:  "level"\nChiqish: true',
+        'constraints_ru': ['1 ≤ длина строки ≤ 1000 символов', 'Сравнение не чувствительно к регистру'],
+        'constraints_uz': ['1 ≤ satr uzunligi ≤ 1000 belgi', "Solishtirish katta-kichik harflarga bog'liq emas"],
+        'starter_code_ru': 'function isPalindrome(s) {\n  // TODO: true, если s — палиндром\n}',
+        'starter_code_uz': "function isPalindrome(s) {\n  // TODO: s palindrom bo'lsa true qaytaring\n}",
+        'test_cases': [
+            {'label': "'level' → true", 'input': 'level', 'expected': True, 'hidden': False},
+            {'label': "'hello' → false", 'input': 'hello', 'expected': False, 'hidden': False},
+            {'label': "'Level' → true (case-insensitive)", 'input': 'Level', 'expected': True, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'sum-array',
+        'function_name': 'sumArray',
+        'target_time_seconds': 150,
+        'title_ru': 'Сумма массива',
+        'title_uz': "Massiv yig'indisi",
+        'statement_ru': 'Напишите функцию, которая возвращает сумму всех чисел в массиве.',
+        'statement_uz': "Massivdagi barcha sonlarning yig'indisini qaytaruvchi funksiya yozing.",
+        'example_ru': 'Вход:  [1, 2, 3, 4]\nВыход: 10',
+        'example_uz': 'Kirish:  [1, 2, 3, 4]\nChiqish: 10',
+        'constraints_ru': ['0 ≤ длина массива ≤ 1000', 'Элементы — целые числа'],
+        'constraints_uz': ['0 ≤ massiv uzunligi ≤ 1000', 'Elementlar butun sonlar'],
+        'starter_code_ru': 'function sumArray(arr) {\n  // TODO: верните сумму всех элементов\n}',
+        'starter_code_uz': "function sumArray(arr) {\n  // TODO: barcha elementlar yig'indisini qaytaring\n}",
+        'test_cases': [
+            {'label': '[1,2,3,4] → 10', 'input': [1, 2, 3, 4], 'expected': 10, 'hidden': False},
+            {'label': '[] → 0', 'input': [], 'expected': 0, 'hidden': False},
+            {'label': '[-1,1,5] → 5', 'input': [-1, 1, 5], 'expected': 5, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'find-max',
+        'function_name': 'findMax',
+        'target_time_seconds': 150,
+        'title_ru': 'Максимум массива',
+        'title_uz': 'Massivdagi maksimal son',
+        'statement_ru': 'Напишите функцию, которая возвращает наибольшее число в массиве.',
+        'statement_uz': "Massivdagi eng katta sonni qaytaruvchi funksiya yozing.",
+        'example_ru': 'Вход:  [3, 7, 2]\nВыход: 7',
+        'example_uz': 'Kirish:  [3, 7, 2]\nChiqish: 7',
+        'constraints_ru': ['1 ≤ длина массива ≤ 1000'],
+        'constraints_uz': ['1 ≤ massiv uzunligi ≤ 1000'],
+        'starter_code_ru': 'function findMax(arr) {\n  // TODO: верните наибольший элемент\n}',
+        'starter_code_uz': "function findMax(arr) {\n  // TODO: eng katta elementni qaytaring\n}",
+        'test_cases': [
+            {'label': '[3,7,2] → 7', 'input': [3, 7, 2], 'expected': 7, 'hidden': False},
+            {'label': '[-5,-1,-9] → -1', 'input': [-5, -1, -9], 'expected': -1, 'hidden': True},
+            {'label': '[4] → 4', 'input': [4], 'expected': 4, 'hidden': False},
+        ],
+    },
+    {
+        'slug': 'find-min',
+        'function_name': 'findMin',
+        'target_time_seconds': 150,
+        'title_ru': 'Минимум массива',
+        'title_uz': 'Massivdagi minimal son',
+        'statement_ru': 'Напишите функцию, которая возвращает наименьшее число в массиве.',
+        'statement_uz': "Massivdagi eng kichik sonni qaytaruvchi funksiya yozing.",
+        'example_ru': 'Вход:  [3, 7, 2]\nВыход: 2',
+        'example_uz': 'Kirish:  [3, 7, 2]\nChiqish: 2',
+        'constraints_ru': ['1 ≤ длина массива ≤ 1000'],
+        'constraints_uz': ['1 ≤ massiv uzunligi ≤ 1000'],
+        'starter_code_ru': 'function findMin(arr) {\n  // TODO: верните наименьший элемент\n}',
+        'starter_code_uz': "function findMin(arr) {\n  // TODO: eng kichik elementni qaytaring\n}",
+        'test_cases': [
+            {'label': '[3,7,2] → 2', 'input': [3, 7, 2], 'expected': 2, 'hidden': False},
+            {'label': '[-5,-1,-9] → -9', 'input': [-5, -1, -9], 'expected': -9, 'hidden': True},
+            {'label': '[4] → 4', 'input': [4], 'expected': 4, 'hidden': False},
+        ],
+    },
+    {
+        'slug': 'factorial',
+        'function_name': 'factorial',
+        'target_time_seconds': 180,
+        'title_ru': 'Факториал',
+        'title_uz': 'Faktorial',
+        'statement_ru': 'Напишите функцию, которая вычисляет факториал неотрицательного целого числа n.',
+        'statement_uz': "Manfiy bo'lmagan butun n sonining faktorialini hisoblaydigan funksiya yozing.",
+        'example_ru': 'Вход:  5\nВыход: 120',
+        'example_uz': 'Kirish:  5\nChiqish: 120',
+        'constraints_ru': ['0 ≤ n ≤ 12'],
+        'constraints_uz': ['0 ≤ n ≤ 12'],
+        'starter_code_ru': 'function factorial(n) {\n  // TODO: верните n!\n}',
+        'starter_code_uz': "function factorial(n) {\n  // TODO: n! ni qaytaring\n}",
+        'test_cases': [
+            {'label': '5 → 120', 'input': 5, 'expected': 120, 'hidden': False},
+            {'label': '0 → 1', 'input': 0, 'expected': 1, 'hidden': False},
+            {'label': '6 → 720', 'input': 6, 'expected': 720, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'fibonacci-nth',
+        'function_name': 'fibonacciNth',
+        'target_time_seconds': 240,
+        'title_ru': 'N-ное число Фибоначчи',
+        'title_uz': "Fibonachchining N-chi soni",
+        'statement_ru': (
+            'Напишите функцию, которая возвращает n-е число последовательности Фибоначчи '
+            '(F(0)=0, F(1)=1).'
+        ),
+        'statement_uz': (
+            "Fibonachchi ketma-ketligining n-chi sonini qaytaruvchi funksiya yozing "
+            "(F(0)=0, F(1)=1)."
+        ),
+        'example_ru': 'Вход:  6\nВыход: 8',
+        'example_uz': 'Kirish:  6\nChiqish: 8',
+        'constraints_ru': ['0 ≤ n ≤ 30'],
+        'constraints_uz': ['0 ≤ n ≤ 30'],
+        'starter_code_ru': 'function fibonacciNth(n) {\n  // TODO: верните F(n)\n}',
+        'starter_code_uz': "function fibonacciNth(n) {\n  // TODO: F(n) ni qaytaring\n}",
+        'test_cases': [
+            {'label': '6 → 8', 'input': 6, 'expected': 8, 'hidden': False},
+            {'label': '0 → 0', 'input': 0, 'expected': 0, 'hidden': False},
+            {'label': '10 → 55', 'input': 10, 'expected': 55, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'count-vowels',
+        'function_name': 'countVowels',
+        'target_time_seconds': 180,
+        'title_ru': 'Подсчёт гласных',
+        'title_uz': 'Unlilarni sanash',
+        'statement_ru': (
+            'Напишите функцию, которая считает количество гласных букв (a, e, i, o, u) в строке, '
+            'без учёта регистра.'
+        ),
+        'statement_uz': (
+            "Satrdagi unli harflar (a, e, i, o, u) sonini, katta-kichik harflarga e'tibor bermay "
+            "sanaydigan funksiya yozing."
+        ),
+        'example_ru': 'Вход:  "Hello World"\nВыход: 3',
+        'example_uz': 'Kirish:  "Hello World"\nChiqish: 3',
+        'constraints_ru': ['0 ≤ длина строки ≤ 10 000 символов'],
+        'constraints_uz': ['0 ≤ satr uzunligi ≤ 10 000 belgi'],
+        'starter_code_ru': 'function countVowels(s) {\n  // TODO: верните количество гласных\n}',
+        'starter_code_uz': "function countVowels(s) {\n  // TODO: unlilar sonini qaytaring\n}",
+        'test_cases': [
+            {'label': "'Hello World' → 3", 'input': 'Hello World', 'expected': 3, 'hidden': False},
+            {'label': "'xyz' → 0", 'input': 'xyz', 'expected': 0, 'hidden': False},
+            {'label': "'AEIOU' → 5", 'input': 'AEIOU', 'expected': 5, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'sum-digits',
+        'function_name': 'sumDigits',
+        'target_time_seconds': 180,
+        'title_ru': 'Сумма цифр числа',
+        'title_uz': "Sonning raqamlari yig'indisi",
+        'statement_ru': 'Напишите функцию, которая возвращает сумму цифр неотрицательного целого числа.',
+        'statement_uz': "Manfiy bo'lmagan butun sonning raqamlari yig'indisini qaytaruvchi funksiya yozing.",
+        'example_ru': 'Вход:  12345\nВыход: 15',
+        'example_uz': 'Kirish:  12345\nChiqish: 15',
+        'constraints_ru': ['0 ≤ n ≤ 10^9'],
+        'constraints_uz': ['0 ≤ n ≤ 10^9'],
+        'starter_code_ru': 'function sumDigits(n) {\n  // TODO: верните сумму цифр n\n}',
+        'starter_code_uz': "function sumDigits(n) {\n  // TODO: n raqamlari yig'indisini qaytaring\n}",
+        'test_cases': [
+            {'label': '12345 → 15', 'input': 12345, 'expected': 15, 'hidden': False},
+            {'label': '0 → 0', 'input': 0, 'expected': 0, 'hidden': False},
+            {'label': '9999 → 36', 'input': 9999, 'expected': 36, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'is-prime',
+        'function_name': 'isPrime',
+        'target_time_seconds': 240,
+        'title_ru': 'Проверка на простое число',
+        'title_uz': 'Tub sonni tekshirish',
+        'statement_ru': 'Напишите функцию, которая проверяет, является ли число n простым.',
+        'statement_uz': "n sonining tub son ekanligini tekshiruvchi funksiya yozing.",
+        'example_ru': 'Вход:  7\nВыход: true',
+        'example_uz': 'Kirish:  7\nChiqish: true',
+        'constraints_ru': ['0 ≤ n ≤ 1 000 000'],
+        'constraints_uz': ['0 ≤ n ≤ 1 000 000'],
+        'starter_code_ru': 'function isPrime(n) {\n  // TODO: true, если n простое\n}',
+        'starter_code_uz': "function isPrime(n) {\n  // TODO: n tub son bo'lsa true qaytaring\n}",
+        'test_cases': [
+            {'label': '7 → true', 'input': 7, 'expected': True, 'hidden': False},
+            {'label': '8 → false', 'input': 8, 'expected': False, 'hidden': False},
+            {'label': '1 → false', 'input': 1, 'expected': False, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'first-duplicate',
+        'function_name': 'firstDuplicate',
+        'target_time_seconds': 240,
+        'title_ru': 'Первый повтор',
+        'title_uz': 'Birinchi takrorlanuvchi element',
+        'statement_ru': (
+            'Напишите функцию, которая возвращает первое число в массиве, для которого встречается '
+            'повторное вхождение (по порядку появления этого повторного вхождения). Если повторов '
+            'нет — верните -1.'
+        ),
+        'statement_uz': (
+            "Massivda takroran uchraydigan birinchi sonni (uning ikkinchi marta uchrash tartibi "
+            "bo'yicha) qaytaruvchi funksiya yozing. Takror bo'lmasa — -1 qaytaring."
+        ),
+        'example_ru': 'Вход:  [2, 5, 3, 5, 2]\nВыход: 5',
+        'example_uz': 'Kirish:  [2, 5, 3, 5, 2]\nChiqish: 5',
+        'constraints_ru': ['0 ≤ длина массива ≤ 1000'],
+        'constraints_uz': ['0 ≤ massiv uzunligi ≤ 1000'],
+        'starter_code_ru': 'function firstDuplicate(arr) {\n  // TODO: верните первое повторяющееся число или -1\n}',
+        'starter_code_uz': "function firstDuplicate(arr) {\n  // TODO: birinchi takrorlanuvchi sonni yoki -1 ni qaytaring\n}",
+        'test_cases': [
+            {'label': '[2,5,3,5,2] → 5', 'input': [2, 5, 3, 5, 2], 'expected': 5, 'hidden': False},
+            {'label': '[1,2,3] → -1', 'input': [1, 2, 3], 'expected': -1, 'hidden': False},
+            {'label': '[4,4,4] → 4', 'input': [4, 4, 4], 'expected': 4, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'is-anagram',
+        'function_name': 'isAnagram',
+        'target_time_seconds': 240,
+        'title_ru': 'Анаграмма',
+        'title_uz': 'Anagramma',
+        'statement_ru': (
+            'Напишите функцию, которая принимает массив из двух строк и проверяет, являются ли они '
+            'анаграммами друг друга (без учёта регистра и пробелов).'
+        ),
+        'statement_uz': (
+            "Ikkita satrdan iborat massivni qabul qilib, ular bir-birining anagrammasi (katta-kichik "
+            "harf va bo'sh joylarga e'tibor bermay) ekanligini tekshiruvchi funksiya yozing."
+        ),
+        'example_ru': 'Вход:  ["listen", "silent"]\nВыход: true',
+        'example_uz': 'Kirish:  ["listen", "silent"]\nChiqish: true',
+        'constraints_ru': ['1 ≤ длина каждой строки ≤ 1000 символов'],
+        'constraints_uz': ['1 ≤ har bir satr uzunligi ≤ 1000 belgi'],
+        'starter_code_ru': (
+            'function isAnagram(pair) {\n'
+            '  const [a, b] = pair;\n'
+            '  // TODO: true, если a и b — анаграммы\n'
+            '}'
+        ),
+        'starter_code_uz': (
+            'function isAnagram(pair) {\n'
+            '  const [a, b] = pair;\n'
+            "  // TODO: a va b anagramma bo'lsa true qaytaring\n"
+            '}'
+        ),
+        'test_cases': [
+            {'label': "['listen','silent'] → true", 'input': ['listen', 'silent'], 'expected': True, 'hidden': False},
+            {'label': "['hello','world'] → false", 'input': ['hello', 'world'], 'expected': False, 'hidden': False},
+            {'label': "['Dormitory','Dirty Room'] → true", 'input': ['Dormitory', 'Dirty Room'], 'expected': True, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'longest-word',
+        'function_name': 'longestWord',
+        'target_time_seconds': 200,
+        'title_ru': 'Самое длинное слово',
+        'title_uz': "Eng uzun so'z",
+        'statement_ru': (
+            'Напишите функцию, которая принимает предложение и возвращает самое длинное слово в нём. '
+            'При равенстве длины побеждает слово, встретившееся первым.'
+        ),
+        'statement_uz': (
+            "Gapni qabul qilib, undagi eng uzun so'zni qaytaruvchi funksiya yozing. Uzunliklar teng "
+            "bo'lsa, birinchi uchragan so'z g'olib hisoblanadi."
+        ),
+        'example_ru': 'Вход:  "the quick brown fox"\nВыход: "quick"',
+        'example_uz': 'Kirish:  "the quick brown fox"\nChiqish: "quick"',
+        'constraints_ru': ['1 ≤ длина предложения ≤ 10 000 символов', 'Слова разделены одиночными пробелами'],
+        'constraints_uz': ['1 ≤ gap uzunligi ≤ 10 000 belgi', "So'zlar bitta bo'sh joy bilan ajratilgan"],
+        'starter_code_ru': 'function longestWord(sentence) {\n  // TODO: верните самое длинное слово\n}',
+        'starter_code_uz': "function longestWord(sentence) {\n  // TODO: eng uzun so'zni qaytaring\n}",
+        'test_cases': [
+            {'label': "'the quick brown fox' → 'quick'", 'input': 'the quick brown fox', 'expected': 'quick', 'hidden': False},
+            {'label': "'a bb ccc' → 'ccc'", 'input': 'a bb ccc', 'expected': 'ccc', 'hidden': False},
+            {'label': "'equal size here now' → 'equal'", 'input': 'equal size here now', 'expected': 'equal', 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'valid-parentheses',
+        'function_name': 'isValidParentheses',
+        'target_time_seconds': 260,
+        'title_ru': 'Проверка скобок',
+        'title_uz': 'Qavslarni tekshirish',
+        'statement_ru': (
+            'Напишите функцию, которая проверяет, правильно ли расставлены и закрыты скобки '
+            '(), [] и {} в строке.'
+        ),
+        'statement_uz': (
+            "Satrda (), [] va {} qavslari to'g'ri joylashtirilgan va yopilganligini tekshiruvchi "
+            "funksiya yozing."
+        ),
+        'example_ru': 'Вход:  "([]{})"\nВыход: true',
+        'example_uz': 'Kirish:  "([]{})"\nChiqish: true',
+        'constraints_ru': ['0 ≤ длина строки ≤ 10 000 символов', 'Строка содержит только символы ()[]{}'],
+        'constraints_uz': ['0 ≤ satr uzunligi ≤ 10 000 belgi', "Satr faqat ()[]{} belgilaridan iborat"],
+        'starter_code_ru': 'function isValidParentheses(s) {\n  // TODO: true, если скобки расставлены верно\n}',
+        'starter_code_uz': "function isValidParentheses(s) {\n  // TODO: qavslar to'g'ri bo'lsa true qaytaring\n}",
+        'test_cases': [
+            {'label': "'([]{})' → true", 'input': '([]{})', 'expected': True, 'hidden': False},
+            {'label': "'([)]' → false", 'input': '([)]', 'expected': False, 'hidden': False},
+            {'label': "'{[()()]}' → true", 'input': '{[()()]}', 'expected': True, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'capitalize-words',
+        'function_name': 'capitalizeWords',
+        'target_time_seconds': 200,
+        'title_ru': 'Заглавные буквы слов',
+        'title_uz': "Har bir so'zni bosh harf bilan boshlash",
+        'statement_ru': (
+            'Напишите функцию, которая делает первую букву каждого слова в предложении заглавной, '
+            'остальные — строчными.'
+        ),
+        'statement_uz': (
+            "Gapdagi har bir so'zning birinchi harfini bosh, qolganini kichik harfga aylantiruvchi "
+            "funksiya yozing."
+        ),
+        'example_ru': 'Вход:  "hello world"\nВыход: "Hello World"',
+        'example_uz': 'Kirish:  "hello world"\nChiqish: "Hello World"',
+        'constraints_ru': ['1 ≤ длина предложения ≤ 10 000 символов', 'Слова разделены одиночными пробелами'],
+        'constraints_uz': ['1 ≤ gap uzunligi ≤ 10 000 belgi', "So'zlar bitta bo'sh joy bilan ajratilgan"],
+        'starter_code_ru': 'function capitalizeWords(sentence) {\n  // TODO: верните предложение с заглавными буквами слов\n}',
+        'starter_code_uz': "function capitalizeWords(sentence) {\n  // TODO: har bir so'z bosh harf bilan boshlanadigan gapni qaytaring\n}",
+        'test_cases': [
+            {'label': "'hello world' → 'Hello World'", 'input': 'hello world', 'expected': 'Hello World', 'hidden': False},
+            {'label': "'javascript is fun' → 'Javascript Is Fun'", 'input': 'javascript is fun', 'expected': 'Javascript Is Fun', 'hidden': False},
+            {'label': "'a' → 'A'", 'input': 'a', 'expected': 'A', 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'gcd-two-numbers',
+        'function_name': 'gcd',
+        'target_time_seconds': 220,
+        'title_ru': 'НОД двух чисел',
+        'title_uz': "Ikki sonning EKUB'i",
+        'statement_ru': (
+            'Напишите функцию, которая принимает массив из двух положительных целых чисел и '
+            'возвращает их наибольший общий делитель (НОД).'
+        ),
+        'statement_uz': (
+            "Ikkita musbat butun sondan iborat massivni qabul qilib, ularning eng katta umumiy "
+            "bo'luvchisini (EKUB) qaytaruvchi funksiya yozing."
+        ),
+        'example_ru': 'Вход:  [12, 18]\nВыход: 6',
+        'example_uz': 'Kirish:  [12, 18]\nChiqish: 6',
+        'constraints_ru': ['1 ≤ каждое число ≤ 10^9'],
+        'constraints_uz': ['1 ≤ har bir son ≤ 10^9'],
+        'starter_code_ru': (
+            'function gcd(pair) {\n'
+            '  const [a, b] = pair;\n'
+            '  // TODO: верните НОД(a, b)\n'
+            '}'
+        ),
+        'starter_code_uz': (
+            'function gcd(pair) {\n'
+            '  const [a, b] = pair;\n'
+            '  // TODO: EKUB(a, b) ni qaytaring\n'
+            '}'
+        ),
+        'test_cases': [
+            {'label': '[12,18] → 6', 'input': [12, 18], 'expected': 6, 'hidden': False},
+            {'label': '[17,5] → 1', 'input': [17, 5], 'expected': 1, 'hidden': False},
+            {'label': '[100,75] → 25', 'input': [100, 75], 'expected': 25, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'is-power-of-two',
+        'function_name': 'isPowerOfTwo',
+        'target_time_seconds': 180,
+        'title_ru': 'Степень двойки',
+        'title_uz': 'Ikkining darajasi',
+        'statement_ru': (
+            'Напишите функцию, которая проверяет, является ли число n степенью двойки (1, 2, 4, 8, ...).'
+        ),
+        'statement_uz': "n sonining ikkining darajasi (1, 2, 4, 8, ...) ekanligini tekshiruvchi funksiya yozing.",
+        'example_ru': 'Вход:  16\nВыход: true',
+        'example_uz': 'Kirish:  16\nChiqish: true',
+        'constraints_ru': ['0 ≤ n ≤ 2^30'],
+        'constraints_uz': ['0 ≤ n ≤ 2^30'],
+        'starter_code_ru': 'function isPowerOfTwo(n) {\n  // TODO: true, если n — степень двойки\n}',
+        'starter_code_uz': "function isPowerOfTwo(n) {\n  // TODO: n ikkining darajasi bo'lsa true qaytaring\n}",
+        'test_cases': [
+            {'label': '16 → true', 'input': 16, 'expected': True, 'hidden': False},
+            {'label': '18 → false', 'input': 18, 'expected': False, 'hidden': False},
+            {'label': '1 → true', 'input': 1, 'expected': True, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'count-unique',
+        'function_name': 'countUnique',
+        'target_time_seconds': 180,
+        'title_ru': 'Количество уникальных элементов',
+        'title_uz': 'Noyob elementlar soni',
+        'statement_ru': (
+            'Напишите функцию, которая возвращает количество уникальных (неповторяющихся) значений '
+            'в массиве.'
+        ),
+        'statement_uz': "Massivdagi noyob (takrorlanmaydigan) qiymatlar sonini qaytaruvchi funksiya yozing.",
+        'example_ru': 'Вход:  [1, 2, 2, 3, 3, 3]\nВыход: 3',
+        'example_uz': 'Kirish:  [1, 2, 2, 3, 3, 3]\nChiqish: 3',
+        'constraints_ru': ['0 ≤ длина массива ≤ 1000'],
+        'constraints_uz': ['0 ≤ massiv uzunligi ≤ 1000'],
+        'starter_code_ru': 'function countUnique(arr) {\n  // TODO: верните количество уникальных значений\n}',
+        'starter_code_uz': "function countUnique(arr) {\n  // TODO: noyob qiymatlar sonini qaytaring\n}",
+        'test_cases': [
+            {'label': '[1,2,2,3,3,3] → 3', 'input': [1, 2, 2, 3, 3, 3], 'expected': 3, 'hidden': False},
+            {'label': '[] → 0', 'input': [], 'expected': 0, 'hidden': False},
+            {'label': '[5,5,5] → 1', 'input': [5, 5, 5], 'expected': 1, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'binary-search',
+        'function_name': 'binarySearch',
+        'target_time_seconds': 300,
+        'title_ru': 'Бинарный поиск',
+        'title_uz': 'Ikkilik qidiruv',
+        'statement_ru': (
+            'Напишите функцию, которая принимает массив из отсортированного по возрастанию массива '
+            'чисел и искомого значения, и бинарным поиском возвращает индекс этого значения '
+            '(или -1, если оно не найдено).'
+        ),
+        'statement_uz': (
+            "O'sish tartibida saralangan sonlar massivi va qidirilayotgan qiymatdan iborat massivni "
+            "qabul qilib, ikkilik qidiruv orqali shu qiymatning indeksini (topilmasa -1) "
+            "qaytaruvchi funksiya yozing."
+        ),
+        'example_ru': 'Вход:  [[1, 3, 5, 7, 9], 7]\nВыход: 3',
+        'example_uz': 'Kirish:  [[1, 3, 5, 7, 9], 7]\nChiqish: 3',
+        'constraints_ru': ['1 ≤ длина массива ≤ 10 000', 'Массив отсортирован по возрастанию'],
+        'constraints_uz': ["1 ≤ massiv uzunligi ≤ 10 000", "Massiv o'sish tartibida saralangan"],
+        'starter_code_ru': (
+            'function binarySearch(pair) {\n'
+            '  const [arr, target] = pair;\n'
+            '  // TODO: верните индекс target бинарным поиском, иначе -1\n'
+            '}'
+        ),
+        'starter_code_uz': (
+            'function binarySearch(pair) {\n'
+            '  const [arr, target] = pair;\n'
+            "  // TODO: target indeksini ikkilik qidiruv bilan qaytaring, aks holda -1\n"
+            '}'
+        ),
+        'test_cases': [
+            {'label': '[[1,3,5,7,9],7] → 3', 'input': [[1, 3, 5, 7, 9], 7], 'expected': 3, 'hidden': False},
+            {'label': '[[2,4,6,8],5] → -1', 'input': [[2, 4, 6, 8], 5], 'expected': -1, 'hidden': False},
+            {'label': '[[1,2,3,4,5,6,7,8,9,10],1] → 0', 'input': [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 1], 'expected': 0, 'hidden': True},
+        ],
+    },
+]
 
 LIKERT_CATEGORIES = {
     'teamwork': {

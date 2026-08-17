@@ -12,7 +12,7 @@ from django.db import transaction
 from django.utils import timezone
 
 from apps.accounts.models import StudentProfile
-from apps.assessments.content import CODING_PROBLEM, LIKERT_CATEGORIES, MCQ_QUESTIONS
+from apps.assessments.content import CODING_PROBLEMS, LIKERT_CATEGORIES, MCQ_QUESTIONS
 from apps.assessments.feedback_content import QUESTION_FEEDBACK
 from apps.assessments.models import BehavioralCategory, BehavioralItem, CodingProblem, CognitiveQuestion
 from apps.i18n import DEFAULT_LANGUAGE
@@ -78,20 +78,21 @@ class Command(BaseCommand):
         self.stdout.write(f'  {count} MCQ questions across {len(MCQ_QUESTIONS)} indicators')
 
     def _seed_coding_problem(self):
-        CodingProblem.objects.update_or_create(
-            slug=CODING_PROBLEM['slug'],
-            defaults={
-                'title_ru': CODING_PROBLEM['title_ru'], 'title_uz': CODING_PROBLEM['title_uz'],
-                'statement_ru': CODING_PROBLEM['statement_ru'], 'statement_uz': CODING_PROBLEM['statement_uz'],
-                'example_ru': CODING_PROBLEM['example_ru'], 'example_uz': CODING_PROBLEM['example_uz'],
-                'constraints_ru': CODING_PROBLEM['constraints_ru'], 'constraints_uz': CODING_PROBLEM['constraints_uz'],
-                'starter_code_ru': CODING_PROBLEM['starter_code_ru'], 'starter_code_uz': CODING_PROBLEM['starter_code_uz'],
-                'test_cases': CODING_PROBLEM['test_cases'], 'is_active': True,
-                'function_name': CODING_PROBLEM['function_name'],
-                'target_time_seconds': CODING_PROBLEM['target_time_seconds'],
-            },
-        )
-        self.stdout.write('  1 coding problem (algorithmic)')
+        for problem in CODING_PROBLEMS:
+            CodingProblem.objects.update_or_create(
+                slug=problem['slug'],
+                defaults={
+                    'title_ru': problem['title_ru'], 'title_uz': problem['title_uz'],
+                    'statement_ru': problem['statement_ru'], 'statement_uz': problem['statement_uz'],
+                    'example_ru': problem['example_ru'], 'example_uz': problem['example_uz'],
+                    'constraints_ru': problem['constraints_ru'], 'constraints_uz': problem['constraints_uz'],
+                    'starter_code_ru': problem['starter_code_ru'], 'starter_code_uz': problem['starter_code_uz'],
+                    'test_cases': problem['test_cases'], 'is_active': True,
+                    'function_name': problem['function_name'],
+                    'target_time_seconds': problem['target_time_seconds'],
+                },
+            )
+        self.stdout.write(f'  {len(CODING_PROBLEMS)} coding problems (algorithmic)')
 
     def _seed_likert_categories(self):
         item_count = 0

@@ -61,7 +61,9 @@ class CognitiveQuestion(models.Model):
 
 
 class CodingProblem(models.Model):
-    """The single active coding task (CODING_PROBLEM in the mockup)."""
+    """One task in the coding-phase pool (CODING_PROBLEMS in apps.assessments.content) that
+    apps.assessments.views.CodingProblemView draws CODING_TASK_CAP distinct picks from per
+    algorithmic attempt."""
 
     slug = models.SlugField(max_length=60, unique=True)
     title_ru = models.CharField(max_length=120)
@@ -194,6 +196,13 @@ class AssessmentAttempt(models.Model):
     # StartCodingView), the baseline _score_hybrid measures elapsed solve time from.
     mcq_phase_score = models.FloatField(null=True, blank=True)
     coding_started_at = models.DateTimeField(null=True, blank=True)
+    # Bumped (never reset) each time a COMPLETED attempt is retaken — see
+    # StudentStateTracker.start_or_restart_attempt. Responses are no longer deleted on
+    # retake (they're tagged with the cycle they were answered in instead), so selection
+    # logic (AdaptiveTestingEngine.select_next_question, CodingProblemView) can tell
+    # "answered already this run" (cycle == attempt_cycle) apart from "seen in a past
+    # attempt" (any earlier cycle) and avoid re-serving the latter while pool allows.
+    attempt_cycle = models.PositiveIntegerField(default=1)
 
     class Meta:
         constraints = [
@@ -235,10 +244,14 @@ class CognitiveResponse(models.Model):
         ),
     )
     responded_at = models.DateTimeField(auto_now_add=True)
+    # Snapshot of attempt.attempt_cycle at answer time — not just a FK-follow, since the
+    # attempt's cycle keeps advancing on later retakes while this row must stay pinned to
+    # the run it was actually answered in. See AssessmentAttempt.attempt_cycle.
+    cycle = models.PositiveIntegerField(default=1)
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['attempt', 'question'], name='one_response_per_question'),
+            models.UniqueConstraint(fields=['attempt', 'question', 'cycle'], name='one_response_per_question_per_cycle'),
         ]
 
 
@@ -257,6 +270,13 @@ class CodingSubmission(models.Model):
     passed_count = models.PositiveSmallIntegerField(default=0)
     total_count = models.PositiveSmallIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
+    # Client-measured time spent on this problem (shown → submitted), mirroring
+    # CognitiveResponse.response_time_ms — needed because the coding phase now runs
+    # CODING_TASK_CAP distinct problems per attempt, so a single phase-wide
+    # coding_started_at can no longer serve as every problem's own time baseline.
+    elapsed_ms = models.PositiveIntegerField(null=True, blank=True)
+    # See CognitiveResponse.cycle.
+    cycle = models.PositiveIntegerField(default=1)
 
 
 class BehavioralResponse(models.Model):
@@ -264,8 +284,10 @@ class BehavioralResponse(models.Model):
     item = models.ForeignKey(BehavioralItem, on_delete=models.PROTECT)
     scale_value = models.PositiveSmallIntegerField(help_text='1 (Strongly Disagree) .. 5 (Strongly Agree)')
     responded_at = models.DateTimeField(auto_now_add=True)
+    # See CognitiveResponse.cycle.
+    cycle = models.PositiveIntegerField(default=1)
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['attempt', 'item'], name='one_response_per_item'),
+            models.UniqueConstraint(fields=['attempt', 'item', 'cycle'], name='one_response_per_item_per_cycle'),
         ]

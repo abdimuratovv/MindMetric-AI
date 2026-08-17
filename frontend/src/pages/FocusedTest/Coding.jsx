@@ -1,12 +1,20 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { getCodingProblem, runCode as apiRunCode, startCoding, submitCoding as apiSubmitCoding } from '../../api/assessments.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import CompletionOverlay from './CompletionOverlay.jsx';
 
-/** Ported verbatim from MindMetric AI.dc.html lines 545-585 (`isCoding`). */
+/**
+ * algorithmic's coding phase — CODING_TASK_CAP (backend apps.assessments.views)
+ * distinct problems in sequence, mirroring Mcq.jsx's next-question loop: each
+ * "Submit solution" either hands back {phase: 'next', cpNumber, cpTotal} (fetch the
+ * next problem and keep going) or a completed {score, achievement} once the cap is
+ * reached — see apps.assessments.views.SubmitCodingView.
+ */
 export default function Coding({ goTo, onProgress }) {
   const [problem, setProblem] = useState(null);
+  const [cpNumber, setCpNumber] = useState(1);
+  const [cpTotal, setCpTotal] = useState(1);
   const [code, setCode] = useState('');
   const [hasRun, setHasRun] = useState(false);
   const [testResults, setTestResults] = useState([]);
@@ -15,17 +23,25 @@ export default function Coding({ goTo, onProgress }) {
   const [codeFocused, setCodeFocused] = useState(false);
   const [completion, setCompletion] = useState(null);
   const { t } = useLanguage();
+  // When the current problem was first shown — sent back as elapsed_ms so
+  // state_tracker._score_hybrid can factor solve time into that problem's score.
+  const problemShownAtRef = useRef(null);
 
   useEffect(() => {
     (async () => {
       await startCoding();
-      const p = await getCodingProblem();
-      setProblem(p);
-      setCode(p.starter_code);
+      const next = await getCodingProblem();
+      setProblem(next.problem);
+      setCode(next.problem?.starter_code || '');
+      setCpNumber(next.cpNumber);
+      setCpTotal(next.cpTotal);
+      problemShownAtRef.current = Date.now();
     })();
   }, []);
 
-  useEffect(() => { onProgress({ pct: '50%', timeRemainingSeconds: null }); }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    onProgress({ pct: `${Math.round((cpNumber / cpTotal) * 100)}%`, timeRemainingSeconds: null });
+  }, [cpNumber, cpTotal]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (completion) {
     return (
@@ -43,7 +59,7 @@ export default function Coding({ goTo, onProgress }) {
   const run = async () => {
     setIsRunning(true);
     try {
-      const { testResults: results } = await apiRunCode(code);
+      const { testResults: results } = await apiRunCode(problem.id, code);
       setHasRun(true);
       setTestResults(results.map((r) => ({
         icon: r.passed ? '✓' : '✕',
@@ -59,7 +75,19 @@ export default function Coding({ goTo, onProgress }) {
   const submit = async () => {
     setIsSubmitting(true);
     try {
-      const result = await apiSubmitCoding(code);
+      const elapsedMs = problemShownAtRef.current != null ? Date.now() - problemShownAtRef.current : null;
+      const result = await apiSubmitCoding(problem.id, code, elapsedMs);
+      if (result.phase === 'next') {
+        const next = await getCodingProblem();
+        setProblem(next.problem);
+        setCode(next.problem?.starter_code || '');
+        setCpNumber(next.cpNumber);
+        setCpTotal(next.cpTotal);
+        setHasRun(false);
+        setTestResults([]);
+        problemShownAtRef.current = Date.now();
+        return;
+      }
       setCompletion(result);
     } finally {
       setIsSubmitting(false);
@@ -72,7 +100,9 @@ export default function Coding({ goTo, onProgress }) {
       gap: '1px', background: 'rgba(31,55,75,0.08)', overflowY: 'auto',
     }}>
       <div style={{ background: 'rgba(245,247,248,0.9)', padding: 'clamp(20px,5vw,34px) clamp(18px,5vw,38px)', overflowY: 'auto' }}>
-        <div style={{ fontSize: '12px', fontWeight: 700, color: '#2E5570', letterSpacing: '0.04em', marginBottom: '10px' }}>{t('coding.task')}</div>
+        <div style={{ fontSize: '12px', fontWeight: 700, color: '#2E5570', letterSpacing: '0.04em', marginBottom: '10px' }}>
+          {t('coding.task')} {cpNumber} {t('mcq.of')} {cpTotal}
+        </div>
         <h2 style={{ fontFamily: "'Montserrat',sans-serif", fontWeight: 700, fontSize: '26px', color: '#161F24', margin: '0 0 14px' }}>{problem.title}</h2>
         <div style={{ fontSize: '12.5px', fontWeight: 600, color: '#8A6D1F', marginBottom: '14px' }}>
           {t('coding.targetTime')(Math.round(problem.target_time_seconds / 60))}
@@ -92,6 +122,7 @@ export default function Coding({ goTo, onProgress }) {
           <div style={{ padding: '12px 20px', fontSize: '12.5px', fontWeight: 700, color: '#8FBCD9', borderBottom: '2px solid #8FBCD9' }}>solution.js</div>
         </div>
         <textarea
+          key={problem.id}
           value={code}
           onChange={(e) => setCode(e.target.value)}
           onFocus={() => setCodeFocused(true)}
@@ -127,7 +158,7 @@ export default function Coding({ goTo, onProgress }) {
                 background: 'transparent', color: '#EAF2F5', fontWeight: 700, fontSize: '12.5px', display: 'flex', alignItems: 'center', gap: '7px',
               }}>
               {isSubmitting && <span className="mm-spinner" />}
-              {t('coding.submitSolution')}
+              {cpNumber >= cpTotal ? t('mcq.submitTest') : t('coding.submitSolution')}
             </button>
           </div>
           {hasRun && (

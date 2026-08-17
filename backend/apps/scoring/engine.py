@@ -11,11 +11,22 @@ Each MCQ-pattern AssessmentAttempt is scoped to exactly one indicator (its
 question selection only needs to work within that one indicator's bank, not
 round-robin across several.
 """
+import random
+
 from apps.assessments.models import CognitiveQuestion, CognitiveResponse
 
 from . import irt
 from .essay_grader import essay_correctness, grade_essay_response
 from .models import StudentAbilityEstimate
+
+# How many of the top information-maximizing candidates to randomize among, instead of
+# always taking the single best one. Without this, two students starting cold (theta=0)
+# deterministically converge on the exact same items, and a retake re-converges on the
+# same set all over again since nothing else differs. Picking randomly among a handful
+# of near-equally-informative items keeps selection psychometrically sound (every
+# candidate in the pool is still a strong pick for this student's ability) while making
+# concurrent students' and retries' question sets diverge in practice.
+TOP_K_CANDIDATES = 5
 
 # Speed-aware response weighting: a student's own running-average response time on an
 # indicator (StudentAbilityEstimate.avg_response_ms) is their baseline, not a fixed global
@@ -62,15 +73,26 @@ class AdaptiveTestingEngine:
     def select_next_question(self, attempt) -> CognitiveQuestion | None:
         indicator_key = attempt.assessment_type
         estimate = self.get_or_create_estimate(attempt.student, indicator_key)
-        answered = CognitiveResponse.objects.filter(attempt=attempt).select_related('question')
-        answered_ids = set(answered.values_list('question_id', flat=True))
-        answered_types = set(answered.values_list('question__question_type', flat=True))
+
+        # "Answered" (this cycle only) drives the type-balance constraint and is always
+        # excluded — a question can't repeat within one run. "Seen" (every cycle, i.e. this
+        # and every past retake of this same attempt) is a *soft* exclusion: preferred, but
+        # dropped if honoring it would leave no candidates, so an exhausted bank still
+        # serves a full test instead of erroring or falling short of the cap.
+        current_cycle = CognitiveResponse.objects.filter(attempt=attempt, cycle=attempt.attempt_cycle)
+        answered_ids = set(current_cycle.values_list('question_id', flat=True))
+        answered_types = set(current_cycle.values_list('question__question_type', flat=True))
+        seen_ids = set(CognitiveResponse.objects.filter(attempt=attempt).values_list('question_id', flat=True))
 
         candidates = list(
             CognitiveQuestion.objects.filter(indicator_key=indicator_key).exclude(id__in=answered_ids)
         )
         if not candidates:
             return None
+
+        fresh = [q for q in candidates if q.id not in seen_ids]
+        if fresh:
+            candidates = fresh
 
         # Prefer a question_type the student hasn't seen yet this attempt — a content-
         # balancing constraint, so a bank that mixes single/multi/essay (currently only
@@ -83,12 +105,14 @@ class AdaptiveTestingEngine:
             if preferred:
                 candidates = preferred
 
-        # Maximum Fisher Information (MFI) selection: the item that carries the most
-        # information about this student at their current ability estimate — see
-        # irt.item_information. For 2PL this is generally close to, but not exactly, the
-        # item whose difficulty is nearest theta, since high-discrimination items pull the
-        # information peak in their favor even a bit off-target.
-        return max(candidates, key=lambda q: irt.item_information(estimate.theta, q.discrimination, q.difficulty))
+        # Maximum Fisher Information (MFI) selection, randomized among the top K: each
+        # candidate's information content at this student's current ability estimate — see
+        # irt.item_information — ranks the pool, then the pick is random among the top
+        # TOP_K_CANDIDATES rather than always the single best (see TOP_K_CANDIDATES' docstring).
+        ranked = sorted(
+            candidates, key=lambda q: irt.item_information(estimate.theta, q.discrimination, q.difficulty), reverse=True,
+        )
+        return random.choice(ranked[:TOP_K_CANDIDATES])
 
     def record_answer(
         self, attempt, question_id: int, *, selected_indices: list[int] | None = None, essay_text: str | None = None,
@@ -112,10 +136,10 @@ class AdaptiveTestingEngine:
             stored_essay = ''
 
         # update_or_create (not create) — a double-click or network retry re-submitting the
-        # same question would otherwise hit CognitiveResponse's one_response_per_question
+        # same question would otherwise hit CognitiveResponse's one_response_per_question_per_cycle
         # constraint and crash with an unhandled 500 instead of just no-op'ing.
         response, created = CognitiveResponse.objects.update_or_create(
-            attempt=attempt, question=question,
+            attempt=attempt, question=question, cycle=attempt.attempt_cycle,
             defaults={
                 'selected_indices': stored_indices, 'essay_text': stored_essay,
                 'rubric_scores': rubric_scores, 'correctness': correctness,
@@ -129,14 +153,17 @@ class AdaptiveTestingEngine:
             estimate = self.get_or_create_estimate(attempt.student, question.indicator_key)
             estimate.avg_response_ms = self._update_avg_response_ms(estimate.avg_response_ms, response_time_ms)
 
-            # Re-estimate theta from this attempt's full response history so far (not an
+            # Re-estimate theta from this cycle's full response history so far (not an
             # incremental nudge from just the newest answer) — the standard CAT approach:
             # MLE where the response pattern has an interior maximum, EAP (prior-regularized,
-            # always finite) otherwise. See irt.estimate_theta. Every response in the history
-            # is weighted against the *current* (most up to date) avg_response_ms baseline, so
-            # all of them are judged on the same footing at estimation time.
+            # always finite) otherwise. See irt.estimate_theta. Scoped to attempt.attempt_cycle
+            # (not every past retake) since a retake is meant to re-probe the student's current
+            # ability fresh each run — StudentAbilityEstimate.theta itself still carries over
+            # as this cycle's starting prior. Every response in the history is weighted against
+            # the *current* (most up to date) avg_response_ms baseline, so all of them are
+            # judged on the same footing at estimation time.
             history = CognitiveResponse.objects.filter(
-                attempt=attempt, question__indicator_key=question.indicator_key,
+                attempt=attempt, question__indicator_key=question.indicator_key, cycle=attempt.attempt_cycle,
             ).select_related('question')
             weighted_responses = [
                 (

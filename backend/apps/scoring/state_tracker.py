@@ -23,16 +23,18 @@ class StudentStateTracker:
         """
         Shared by Start{Mcq,Likert,Coding}AttemptView. There's exactly one
         AssessmentAttempt row per (student, assessment_type) — the "Retake" button
-        reuses it rather than creating a new one — so a COMPLETED attempt must have
-        its prior answers cleared here. Without this, e.g. NextMcqQuestionView sees
-        `cognitive_responses.count() >= MCQ_QUESTION_CAP` immediately (from the
-        previous completion) and returns no question at all, rendering a blank screen.
+        reuses it rather than creating a new one. A COMPLETED attempt's prior answers
+        are no longer deleted here: they're left in place, tagged with the
+        attempt_cycle they were answered in, and `attempt_cycle` is bumped so this
+        run starts "empty" (every count/exclusion query elsewhere scopes to the
+        *current* cycle). Keeping old rows around — instead of wiping them — is what
+        lets AdaptiveTestingEngine.select_next_question and CodingProblemView avoid
+        re-serving the same questions/tasks a retake would otherwise get, since the
+        prior cycle's picks are still there to exclude.
         """
         attempt = self.get_or_create_attempt(student, assessment_type)
         if attempt.status == AssessmentAttempt.Status.COMPLETED:
-            attempt.cognitive_responses.all().delete()
-            attempt.behavioral_responses.all().delete()
-            attempt.coding_submissions.all().delete()
+            attempt.attempt_cycle += 1
             attempt.status = AssessmentAttempt.Status.NOT_STARTED
             attempt.completed_at = None
             attempt.mcq_phase_score = None
@@ -68,7 +70,7 @@ class StudentStateTracker:
         MCQ phase's own score onto the attempt for _score_hybrid to blend in later,
         without touching `status`/`completed_at`.
         """
-        responses = attempt.cognitive_responses.select_related('question')
+        responses = attempt.cognitive_responses.filter(cycle=attempt.attempt_cycle).select_related('question')
         results = [r.correctness for r in responses]
         score = round(100 * sum(results) / len(results)) if results else 0
         attempt.mcq_phase_score = score
@@ -107,7 +109,7 @@ class StudentStateTracker:
     # -- per-assessment indicator scoring -------------------------------------------------
 
     def _score_mcq(self, attempt: AssessmentAttempt) -> dict:
-        responses = attempt.cognitive_responses.select_related('question')
+        responses = attempt.cognitive_responses.filter(cycle=attempt.attempt_cycle).select_related('question')
         results = [r.correctness for r in responses]
         if not results:
             return {'score': None, 'achievement': None}
@@ -121,29 +123,39 @@ class StudentStateTracker:
         weighted toward coding since it's the more direct signal of whether the
         student can actually produce working code, not just reason about it.
 
-        The coding portion itself is correctness (passed/total) scaled down by two
-        multiplicative penalties — not added as separate weighted terms — so a fast,
-        low-attempt submission that mostly fails the test suite still scores near
-        zero rather than being propped up by speed/attempt count:
-          - time_factor: full credit at or under the problem's target_time_seconds,
-            tapering linearly to a 0.7 floor by 2x that target.
-          - attempt_factor: full credit on the first "Submit solution", -0.1 per
-            extra submit (not "Run tests"), floored at 0.6.
+        The coding phase now runs CODING_TASK_CAP distinct problems (not one), so
+        the coding portion is the *average* of each problem's own correctness x
+        time_factor — one final submission per problem (CodingProblemView never
+        re-offers a problem this cycle already has an is_final submission for, so
+        there's normally exactly one; if a client ever double-submits, only the
+        latest counts):
+          - correctness: passed/total on that problem's full hidden suite.
+          - time_factor: full credit at or under that problem's target_time_seconds
+            (measured from the client-reported elapsed_ms, not a single phase-wide
+            clock), tapering linearly to a 0.7 floor by 2x that target.
         """
-        final = attempt.coding_submissions.filter(is_final=True).order_by('-created_at').first()
-        if not final or final.total_count == 0 or attempt.mcq_phase_score is None:
+        finals = list(
+            attempt.coding_submissions.filter(cycle=attempt.attempt_cycle, is_final=True)
+            .select_related('problem').order_by('created_at')
+        )
+        if not finals or attempt.mcq_phase_score is None:
             return {'score': None, 'achievement': None}
 
-        correctness = 100 * final.passed_count / final.total_count
+        latest_by_problem = {sub.problem_id: sub for sub in finals}  # last-write-wins, in created_at order
 
-        target = final.problem.target_time_seconds
-        elapsed = (final.created_at - attempt.coding_started_at).total_seconds() if attempt.coding_started_at else target
-        time_factor = 1.0 if elapsed <= target else max(0.7, 1 - 0.3 * (elapsed - target) / target)
+        per_problem_scores = []
+        for sub in latest_by_problem.values():
+            if sub.total_count == 0:
+                continue
+            correctness = 100 * sub.passed_count / sub.total_count
+            target = sub.problem.target_time_seconds
+            elapsed = sub.elapsed_ms / 1000 if sub.elapsed_ms is not None else target
+            time_factor = 1.0 if elapsed <= target else max(0.7, 1 - 0.3 * (elapsed - target) / target)
+            per_problem_scores.append(correctness * time_factor)
+        if not per_problem_scores:
+            return {'score': None, 'achievement': None}
 
-        submit_count = attempt.coding_submissions.filter(is_final=True).count()
-        attempt_factor = max(0.6, 1 - 0.1 * (submit_count - 1))
-
-        coding_score = correctness * time_factor * attempt_factor
+        coding_score = sum(per_problem_scores) / len(per_problem_scores)
         score = round(0.4 * attempt.mcq_phase_score + 0.6 * coding_score)
         return self._upsert_indicator_score(attempt.student, 'algorithmic', score)
 
@@ -151,7 +163,7 @@ class StudentStateTracker:
         # Each Likert-pattern attempt is scoped to exactly one BehavioralCategory
         # (kind.upper() == category.key), so every response feeds the same
         # indicator: attempt.assessment_type itself.
-        responses = attempt.behavioral_responses.select_related('item')
+        responses = attempt.behavioral_responses.filter(cycle=attempt.attempt_cycle).select_related('item')
         values = []
         for response in responses:
             value = response.scale_value

@@ -1,3 +1,5 @@
+import random
+
 from django.http import Http404
 from django.shortcuts import get_object_or_404
 from rest_framework import status
@@ -26,8 +28,20 @@ from .serializers import (
     CognitiveQuestionSerializer,
 )
 
-MCQ_QUESTION_CAP = 5  # questions per MCQ-pattern indicator (math/logic/creative/problem_solving/attention/iq)
-MCQ_TIME_LIMIT_SECONDS = 300  # 5 min, set on start for any MCQ-pattern attempt
+MCQ_QUESTION_CAP = 40  # questions per MCQ-pattern indicator (math/logic/creative/problem_solving/attention/iq)
+ALGORITHMIC_MCQ_CAP = 20  # algorithmic's MCQ phase — its other 20 items are coding tasks, see CODING_TASK_CAP
+CODING_TASK_CAP = 20  # coding tasks in algorithmic's coding phase
+MCQ_SECONDS_PER_QUESTION = 60  # pacing baseline both time limits below scale from
+MCQ_TIME_LIMIT_SECONDS = MCQ_QUESTION_CAP * MCQ_SECONDS_PER_QUESTION  # 40 min, non-algorithmic MCQ indicators
+ALGORITHMIC_MCQ_TIME_LIMIT_SECONDS = ALGORITHMIC_MCQ_CAP * MCQ_SECONDS_PER_QUESTION  # 20 min, algorithmic's MCQ phase
+
+
+def _mcq_cap(kind: str) -> int:
+    return ALGORITHMIC_MCQ_CAP if kind == AssessmentAttempt.Type.ALGORITHMIC else MCQ_QUESTION_CAP
+
+
+def _mcq_time_limit(kind: str) -> int:
+    return ALGORITHMIC_MCQ_TIME_LIMIT_SECONDS if kind == AssessmentAttempt.Type.ALGORITHMIC else MCQ_TIME_LIMIT_SECONDS
 
 # Mirrors {{ behavioralError }} — the only free-text message this app emits itself.
 ALL_STATEMENTS_REQUIRED = {
@@ -88,7 +102,7 @@ class StartMcqAttemptView(APIView):
     def post(self, request, kind):
         kind = _valid_kind(kind, AssessmentAttempt.MCQ_TYPES)
         tracker = StudentStateTracker()
-        attempt = tracker.start_or_restart_attempt(request.user, kind, time_remaining_seconds=MCQ_TIME_LIMIT_SECONDS)
+        attempt = tracker.start_or_restart_attempt(request.user, kind, time_remaining_seconds=_mcq_time_limit(kind))
         return Response({
             'assessment_type': attempt.assessment_type,
             'status': attempt.status,
@@ -110,16 +124,17 @@ class NextMcqQuestionView(APIView):
     def get(self, request, kind):
         kind = _valid_kind(kind, AssessmentAttempt.MCQ_TYPES)
         attempt = get_object_or_404(AssessmentAttempt, student=request.user, assessment_type=kind)
-        answered = attempt.cognitive_responses.count()
-        if answered >= MCQ_QUESTION_CAP:
-            return Response({'question': None, 'cqNumber': answered, 'cqTotal': MCQ_QUESTION_CAP})
+        cap = _mcq_cap(kind)
+        answered = attempt.cognitive_responses.filter(cycle=attempt.attempt_cycle).count()
+        if answered >= cap:
+            return Response({'question': None, 'cqNumber': answered, 'cqTotal': cap})
 
         question = AdaptiveTestingEngine().select_next_question(attempt)
         lang = get_language(request)
         return Response({
             'question': CognitiveQuestionSerializer(question, context={'lang': lang}).data if question else None,
             'cqNumber': answered + 1,
-            'cqTotal': MCQ_QUESTION_CAP,
+            'cqTotal': cap,
             'time_remaining_seconds': attempt.time_remaining_seconds,
         })
 
@@ -156,11 +171,11 @@ class AnswerMcqView(APIView):
             response_time_ms=int(response_time_ms) if response_time_ms is not None else None,
         )
 
-        answered = attempt.cognitive_responses.count()
+        answered = attempt.cognitive_responses.filter(cycle=attempt.attempt_cycle).count()
         return Response({
             'correctness': response.correctness,
             'answered': answered,
-            'is_last': answered >= MCQ_QUESTION_CAP,
+            'is_last': answered >= _mcq_cap(kind),
             'time_remaining_seconds': attempt.time_remaining_seconds,
         })
 
@@ -214,23 +229,52 @@ class StartCodingView(APIView):
 
 
 class CodingProblemView(APIView):
-    """GET /api/assessments/coding/problem/ — {{ codingProblem.* }}."""
+    """
+    GET /api/assessments/coding/problem/ — the next coding task in algorithmic's
+    coding phase (mirrors NextMcqQuestionView's cqNumber/cqTotal as cpNumber/cpTotal).
+    Excludes problems this cycle already has a final submission for, preferring ones
+    never seen in any past cycle of this same attempt (falling back to allowing a
+    repeat only once that's exhausted) — same history-aware, randomized approach as
+    AdaptiveTestingEngine.select_next_question, just without the IRT ranking (coding
+    problems aren't difficulty-calibrated). Returns {problem: null, ...} once
+    CODING_TASK_CAP distinct problems have a final submission this cycle.
+    """
 
     permission_classes = [IsStudent]
 
     def get(self, request):
-        problem = CodingProblem.objects.filter(is_active=True).first()
-        return Response(CodingProblemSerializer(problem, context={'lang': get_language(request)}).data)
+        attempt = get_object_or_404(
+            AssessmentAttempt, student=request.user, assessment_type=AssessmentAttempt.Type.ALGORITHMIC,
+        )
+        done_ids = set(
+            attempt.coding_submissions.filter(cycle=attempt.attempt_cycle, is_final=True)
+            .values_list('problem_id', flat=True)
+        )
+        if len(done_ids) >= CODING_TASK_CAP:
+            return Response({'problem': None, 'cpNumber': len(done_ids), 'cpTotal': CODING_TASK_CAP})
+
+        seen_ids = set(
+            CodingSubmission.objects.filter(attempt=attempt, is_final=True).values_list('problem_id', flat=True)
+        )
+        candidates = list(CodingProblem.objects.filter(is_active=True).exclude(id__in=done_ids))
+        fresh = [p for p in candidates if p.id not in seen_ids]
+        pool = fresh or candidates
+        problem = random.choice(pool) if pool else None
+        return Response({
+            'problem': CodingProblemSerializer(problem, context={'lang': get_language(request)}).data if problem else None,
+            'cpNumber': len(done_ids) + 1,
+            'cpTotal': CODING_TASK_CAP,
+        })
 
 
 class RunCodingView(APIView):
     """
-    POST /api/assessments/coding/run/  {code}
+    POST /api/assessments/coding/run/  {problem_id, code}
 
-    Executes `code` against the problem's *sample* (non-hidden) test cases via
+    Executes `code` against `problem_id`'s *sample* (non-hidden) test cases via
     apps.assessments.coding_sandbox and returns {{ testResults }} shape. Doesn't
-    count toward the attempt-count penalty in state_tracker._score_hybrid — only
-    "Submit solution" (is_final=True) rows do.
+    count toward CODING_TASK_CAP or state_tracker._score_hybrid — only "Submit
+    solution" (is_final=True) rows do.
     """
 
     permission_classes = [IsStudent]
@@ -239,7 +283,7 @@ class RunCodingView(APIView):
         attempt = get_object_or_404(
             AssessmentAttempt, student=request.user, assessment_type=AssessmentAttempt.Type.ALGORITHMIC,
         )
-        problem = CodingProblem.objects.filter(is_active=True).first()
+        problem = get_object_or_404(CodingProblem, id=request.data.get('problem_id'), is_active=True)
         code = request.data.get('code', '')
 
         sample_cases = [c for c in problem.test_cases if not c.get('hidden')]
@@ -247,7 +291,7 @@ class RunCodingView(APIView):
         passed_count = sum(1 for r in test_results if r['passed'])
 
         CodingSubmission.objects.create(
-            attempt=attempt, problem=problem, code=code, is_final=False,
+            attempt=attempt, problem=problem, code=code, is_final=False, cycle=attempt.attempt_cycle,
             test_results=test_results, passed_count=passed_count, total_count=len(sample_cases),
         )
         return Response({'testResults': test_results})
@@ -255,10 +299,16 @@ class RunCodingView(APIView):
 
 class SubmitCodingView(APIView):
     """
-    POST /api/assessments/coding/submit/ {code} — full hidden suite, finalizes the attempt.
+    POST /api/assessments/coding/submit/ {problem_id, code, elapsed_ms} — full hidden
+    suite for that one problem (elapsed_ms is client-measured time on this problem,
+    shown -> submitted, mirroring AnswerMcqView's response_time_ms — feeds this
+    problem's time_factor in state_tracker._score_hybrid).
 
-    Returns {score, achievement}, same shape as SubmitMcqView — see
-    _completion_response.
+    Returns {phase: 'next', cpNumber, cpTotal} until CODING_TASK_CAP distinct problems
+    have a final submission this cycle — the frontend then fetches the next one via
+    CodingProblemView, same shape as SubmitMcqView's {phase: 'coding'} hand-off. Once
+    the cap is reached this finalizes the attempt instead, returning {score,
+    achievement} like every other Submit*View — see _completion_response.
     """
 
     permission_classes = [IsStudent]
@@ -267,16 +317,26 @@ class SubmitCodingView(APIView):
         attempt = get_object_or_404(
             AssessmentAttempt, student=request.user, assessment_type=AssessmentAttempt.Type.ALGORITHMIC,
         )
-        problem = CodingProblem.objects.filter(is_active=True).first()
+        problem = get_object_or_404(CodingProblem, id=request.data.get('problem_id'), is_active=True)
         code = request.data.get('code', '')
+        elapsed_ms = request.data.get('elapsed_ms')
 
         test_results = run_test_cases(problem.function_name, code, problem.test_cases)
         passed_count = sum(1 for r in test_results if r['passed'])
 
         CodingSubmission.objects.create(
-            attempt=attempt, problem=problem, code=code, is_final=True,
+            attempt=attempt, problem=problem, code=code, is_final=True, cycle=attempt.attempt_cycle,
             test_results=test_results, passed_count=passed_count, total_count=len(test_results),
+            elapsed_ms=int(elapsed_ms) if elapsed_ms is not None else None,
         )
+
+        done_count = (
+            attempt.coding_submissions.filter(cycle=attempt.attempt_cycle, is_final=True)
+            .values('problem_id').distinct().count()
+        )
+        if done_count < CODING_TASK_CAP:
+            return Response({'phase': 'next', 'cpNumber': done_count + 1, 'cpTotal': CODING_TASK_CAP})
+
         result = StudentStateTracker().complete_attempt(attempt)
         return _completion_response(result, get_language(request))
 
@@ -326,7 +386,7 @@ class AnswerLikertView(APIView):
         kind = _valid_kind(kind, AssessmentAttempt.LIKERT_TYPES)
         attempt = get_object_or_404(AssessmentAttempt, student=request.user, assessment_type=kind)
         BehavioralResponse.objects.update_or_create(
-            attempt=attempt, item_id=request.data['item_id'],
+            attempt=attempt, item_id=request.data['item_id'], cycle=attempt.attempt_cycle,
             defaults={'scale_value': int(request.data['value'])},
         )
         return Response(status=status.HTTP_204_NO_CONTENT)
@@ -347,7 +407,7 @@ class SubmitLikertView(APIView):
         attempt = get_object_or_404(AssessmentAttempt, student=request.user, assessment_type=kind)
         category = BehavioralCategory.objects.filter(key=kind.upper()).prefetch_related('items').first()
         total_items = category.items.count() if category else 0
-        if attempt.behavioral_responses.count() < total_items:
+        if attempt.behavioral_responses.filter(cycle=attempt.attempt_cycle).count() < total_items:
             return Response(
                 {'detail': ALL_STATEMENTS_REQUIRED[get_language(request)]},
                 status=status.HTTP_400_BAD_REQUEST,
