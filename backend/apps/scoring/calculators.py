@@ -20,11 +20,29 @@ _TIERS = [
     (0, 'foundational', {'ru': 'Слабый', 'uz': 'Iqtidorsiz'}, '#BD5B4C', '#F6E0DC'),
 ]
 
+# The degree of aptitude, shown as a secondary line *under* the verdict on the
+# results screen (see verdict_for) — so these read as "how much", not "whether".
+# The whether/not question is answered once, by APTITUDE_THRESHOLD.
 _BANDS = [
-    (81, 'high', {'ru': 'Высокие способности', 'uz': 'Yuqori iqtidor'}, '#DCEFE2', '#1F4B39'),
-    (61, 'developing', {'ru': 'Развивающиеся способности', 'uz': 'Rivojlanayotgan iqtidor'}, '#F5E9D3', '#B8862F'),
-    (0, 'foundational', {'ru': 'Способности не выявлены', 'uz': 'Iqtidorli emas'}, '#F6E0DC', '#BD5B4C'),
+    (81, 'high', {'ru': 'Высокий уровень', 'uz': 'Yuqori daraja'}, '#DCEFE2', '#1F4B39'),
+    (61, 'developing', {'ru': 'Развивающийся уровень', 'uz': 'Rivojlanayotgan daraja'}, '#F5E9D3', '#B8862F'),
+    (0, 'foundational', {'ru': 'Начальный уровень', 'uz': "Boshlang'ich daraja"}, '#F6E0DC', '#BD5B4C'),
 ]
+
+# The headline the results screen leads with: is this student gifted or not?
+# Deliberately its own constant rather than `_BANDS[-2][0]` — the verdict is the
+# product's primary claim, so re-cutting the degree bands later must not silently
+# move the line between "iqtidorli" and "iqtidorli emas".
+APTITUDE_THRESHOLD = 61
+
+# Russian intentionally phrases the verdict about the *finding* ("aptitude was /
+# was not identified") rather than labeling the student, which is the register
+# institutional reports use there; Uzbek "Iqtidorli"/"Iqtidorli emas" is already
+# the idiomatic phrasing for the same claim.
+_VERDICTS = {
+    True: ({'ru': 'Одарённость выявлена', 'uz': 'Iqtidorli'}, '#DCEFE2', '#1F4B39'),
+    False: ({'ru': 'Одарённость не выявлена', 'uz': 'Iqtidorli emas'}, '#F6E0DC', '#BD5B4C'),
+}
 
 # {{ distributionBars }} bucket headings — short form of each band, keyed by
 # the same stable `key` as _BANDS above.
@@ -43,11 +61,23 @@ def tier_for(score: int, lang: str) -> dict:
 
 
 def band_for(score: int, lang: str) -> dict:
-    """Overall band — feeds {{ band }}/{{ bandBg }}/{{ bandColor }} on the results screen."""
+    """Degree of aptitude — feeds {{ band }}/{{ bandBg }}/{{ bandColor }}, the
+    secondary line under the verdict on the results screen."""
     for threshold, key, text, bg, color in _BANDS:
         if score >= threshold:
             return {'key': key, 'band': text[lang], 'bg': bg, 'color': color}
     return {'key': 'foundational', 'band': _BANDS[-1][2][lang], 'bg': _BANDS[-1][3], 'color': _BANDS[-1][4]}
+
+
+def verdict_for(score: int, lang: str) -> dict:
+    """Headline gifted/not-gifted call — feeds {{ verdict }} on the results screen.
+
+    `talented` travels alongside the localized text so the frontend can style the
+    two outcomes differently without string-matching a translation.
+    """
+    talented = score >= APTITUDE_THRESHOLD
+    text, bg, color = _VERDICTS[talented]
+    return {'talented': talented, 'verdict': text[lang], 'bg': bg, 'color': color}
 
 
 def compute_overall_score(indicator_scores) -> int:

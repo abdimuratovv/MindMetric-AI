@@ -155,8 +155,10 @@ class ResultsSummaryView(APIView):
     """
     GET /api/results/summary/
 
-    Feeds the results screen: {{ overallScore }}, {{ band }}, {{ bandExplanation }},
-    {{ indicators }}. The radar chart's points/axes/rings/dots stay a pure
+    Feeds the results screen: {{ overallScore }}, {{ verdict }}, {{ band }},
+    {{ bandExplanation }}, {{ indicators }}. {{ verdict }} is the headline claim
+    (gifted / not gifted at calculators.APTITUDE_THRESHOLD) and {{ band }} the
+    degree beneath it. The radar chart's points/axes/rings/dots stay a pure
     frontend computation (same `polar()` helper, ported unchanged) over
     `indicators`, so they aren't computed here.
 
@@ -205,12 +207,16 @@ class ResultsSummaryView(APIView):
 
         overall_score = overall.score if overall else 0
         band_info = calculators.band_for(overall_score, lang)
+        verdict_info = calculators.verdict_for(overall_score, lang)
         field_recommendation = FieldRecommendation.objects.filter(student=request.user).first()
 
         return Response({
             'overallScore': overall_score,
+            'verdict': verdict_info['verdict'],
+            'verdictBg': verdict_info['bg'],
+            'verdictColor': verdict_info['color'],
+            'isTalented': verdict_info['talented'],
             'band': band_info['band'],
-            'bandBg': band_info['bg'],
             'bandColor': band_info['color'],
             'bandExplanation': BAND_EXPLANATIONS[lang][band_info['key']],
             'indicators': indicators,

@@ -30,8 +30,8 @@ export default function Results({ user, goTo }) {
   if (!data) return null;
 
   const {
-    overallScore, band, bandBg, bandColor, bandExplanation, indicators, overallExplanation,
-    programmingAptitudeScore, fieldRecommendations,
+    overallScore, verdict, verdictBg, verdictColor, band, bandColor, bandExplanation,
+    indicators, overallExplanation, programmingAptitudeScore, fieldRecommendations,
   } = data;
 
   // Radar geometry — ported from renderVals() lines 882-892 (pure presentation, computed client-side).
@@ -62,7 +62,16 @@ export default function Results({ user, goTo }) {
         }}>
           <span style={{ fontSize: '12px', fontWeight: 700, letterSpacing: '0.04em', color: '#939EA3' }}>{t('results.overallScoreLabel')}</span>
           <div style={{ fontFamily: "'Montserrat',sans-serif", fontWeight: 700, fontSize: '76px', lineHeight: 1, color: '#1F374B' }}>{overallScore}</div>
-          <span style={{ padding: '7px 18px', borderRadius: '100px', fontWeight: 700, fontSize: '13px', background: bandBg, color: bandColor }}>{band}</span>
+          {/* The gifted/not-gifted call is the headline the card leads with; `band` sits
+              under it as the degree, so the two are grouped on a tighter gap than the
+              card's own 10px rhythm. */}
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '7px' }}>
+            <span style={{
+              padding: '9px 26px', borderRadius: '100px', fontWeight: 700, fontSize: '17px',
+              background: verdictBg, color: verdictColor,
+            }}>{verdict}</span>
+            <span style={{ fontSize: '12.5px', fontWeight: 700, color: bandColor }}>{band}</span>
+          </div>
           <p style={{ fontSize: '12.5px', color: '#556269', lineHeight: 1.55, margin: '8px 0 0', maxWidth: '280px' }}>{bandExplanation}</p>
           {programmingAptitudeScore != null && (
             <div style={{ marginTop: '10px', paddingTop: '12px', borderTop: '1px solid rgba(46,85,112,0.12)', width: '100%' }}>
