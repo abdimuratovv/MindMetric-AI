@@ -4,6 +4,7 @@ import AppShell from './pages/Shell/AppShell.jsx';
 import Auth from './pages/Auth.jsx';
 import FocusedTestShell from './pages/FocusedTest/FocusedTestShell.jsx';
 import StudentSurvey from './pages/StudentSurvey.jsx';
+import VideoCallPage from './pages/VideoCall/VideoCallPage.jsx';
 import Welcome from './pages/Welcome.jsx';
 import { useAppState } from './state/useAppState.js';
 
@@ -13,10 +14,11 @@ const SHELL_SCREENS = ['selection', 'results', 'achievements', 'analytics', 'tea
  * Top-level router. Mirrors the mockup's four mutually-exclusive `sc-if`
  * blocks (isWelcome / isAuth / showShell / isFocusedTest, lines 29-620) —
  * same branching, now driven by real navigation state instead of
- * `Component.state.screen`.
+ * `Component.state.screen`. 'videoCall' is a fifth, full-screen branch
+ * (no sidebar), same tier as the assessment-type branch below it.
  */
 export default function App() {
-  const { screen, goTo, user, onLoginSuccess, onProfileCompleted, logout } = useAppState();
+  const { screen, goTo, user, onLoginSuccess, onProfileCompleted, logout, activeCall, enterCall, leaveCall } = useAppState();
 
   return (
     <PageBackground>
@@ -28,8 +30,9 @@ export default function App() {
         <StudentSurvey user={user} onComplete={onProfileCompleted} onLogout={logout} />
       )}
       {ASSESSMENT_TYPES.includes(screen) && <FocusedTestShell screen={screen} goTo={goTo} />}
+      {screen === 'videoCall' && <VideoCallPage call={activeCall} onLeave={leaveCall} />}
       {SHELL_SCREENS.includes(screen) && (
-        <AppShell screen={screen} goTo={goTo} user={user} logout={logout} />
+        <AppShell screen={screen} goTo={goTo} user={user} logout={logout} enterCall={enterCall} />
       )}
     </PageBackground>
   );

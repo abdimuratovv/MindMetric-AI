@@ -16,4 +16,5 @@ urlpatterns = [
     path('api/achievements/', include('apps.scoring.urls_achievements')),
     path('api/teacher/', include('apps.reviews.urls')),
     path('api/admin/', include('apps.analytics.urls')),
+    path('api/videocalls/', include('apps.videocalls.urls')),
 ]

@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'apps.scoring',
     'apps.reviews',
     'apps.analytics',
+    'apps.videocalls',
 ]
 
 MIDDLEWARE = [
@@ -131,6 +132,12 @@ SIMPLE_JWT = {
 CORS_ALLOWED_ORIGINS = os.environ.get(
     'CORS_ALLOWED_ORIGINS', 'http://localhost:5173'
 ).split(',')
+
+# LiveKit Cloud project backing apps.videocalls — the backend only ever mints
+# short-lived join tokens with these; media/signaling never touches our server.
+LIVEKIT_URL = os.environ.get('LIVEKIT_URL', '')
+LIVEKIT_API_KEY = os.environ.get('LIVEKIT_API_KEY', '')
+LIVEKIT_API_SECRET = os.environ.get('LIVEKIT_API_SECRET', '')
 
 from corsheaders.defaults import default_headers  # noqa: E402
 

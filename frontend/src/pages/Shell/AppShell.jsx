@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import logoIcon from '../../assets/logo-icon.png';
+import { getActiveCall, joinCall } from '../../api/videocalls.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import Achievements from './Achievements.jsx';
 import AdminOverview from './AdminOverview.jsx';
@@ -9,6 +10,10 @@ import QuestionBank from './QuestionBank.jsx';
 import Results from './Results.jsx';
 import StudentSelection from './StudentSelection.jsx';
 import TeacherReview from './TeacherReview.jsx';
+
+// No WebSockets in this stack, so an incoming call is detected by short
+// polling instead of a push notification — see apps.videocalls.views.ActiveCallView.
+const CALL_POLL_INTERVAL_MS = 8000;
 
 // Ported from `navConfigs` in renderVals() (lines 827-839). `labelKey` looks
 // up the translated label at render time (see i18n/translations.js `nav`).
@@ -33,7 +38,7 @@ const NAV_CONFIGS = {
  * sidebar) plus the content-area router (lines 138-514) that swaps in the
  * screen matching `screen`.
  */
-export default function AppShell({ screen, goTo, user, logout }) {
+export default function AppShell({ screen, goTo, user, logout, enterCall }) {
   const { t } = useLanguage();
   const [navOpen, setNavOpen] = useState(false);
   const role = user?.role || 'student';
@@ -51,8 +56,56 @@ export default function AppShell({ screen, goTo, user, logout }) {
   const handleNav = (key) => { goTo(key); closeNav(); };
   const handleLogout = () => { closeNav(); logout(); };
 
+  const [incomingCall, setIncomingCall] = useState(null);
+  const [dismissedCallId, setDismissedCallId] = useState(null);
+  const [joining, setJoining] = useState(false);
+
+  useEffect(() => {
+    if (role !== 'student') return undefined;
+    let cancelled = false;
+    const poll = () => getActiveCall().then((call) => { if (!cancelled) setIncomingCall(call); }).catch(() => {});
+    poll();
+    const interval = setInterval(poll, CALL_POLL_INTERVAL_MS);
+    return () => { cancelled = true; clearInterval(interval); };
+  }, [role]);
+
+  const showBanner = incomingCall && incomingCall.callId !== dismissedCallId;
+
+  const handleJoinCall = async () => {
+    setJoining(true);
+    try {
+      const joined = await joinCall(incomingCall.callId);
+      setIncomingCall(null);
+      enterCall({ callId: joined.callId, roomName: joined.roomName, livekitUrl: joined.livekitUrl, token: joined.token });
+    } finally {
+      setJoining(false);
+    }
+  };
+
+  const handleDismissCall = () => setDismissedCallId(incomingCall.callId);
+
   return (
     <div style={{ position: 'relative', zIndex: 1, minHeight: '100vh', display: 'flex' }}>
+      {showBanner && (
+        <div style={{
+          position: 'fixed', top: '18px', left: '50%', transform: 'translateX(-50%)', zIndex: 60,
+          display: 'flex', alignItems: 'center', gap: '14px', padding: '12px 16px 12px 18px', borderRadius: '16px',
+          background: '#1F374B', color: '#fff', boxShadow: '0 12px 32px rgba(22,31,36,0.28)',
+          fontFamily: 'Manrope', maxWidth: '92vw',
+        }}>
+          <div style={{ fontSize: '13px', fontWeight: 600 }}>{t('videoCall.incomingCallFrom')(incomingCall.initiatorName)}</div>
+          <div style={{ display: 'flex', gap: '8px', flexShrink: 0 }}>
+            <button className="mm-btn" disabled={joining} onClick={handleJoinCall} style={{
+              padding: '7px 14px', borderRadius: '100px', border: 'none', cursor: 'pointer',
+              background: '#3F9C6D', color: '#fff', fontWeight: 700, fontSize: '12.5px',
+            }}>{t('videoCall.join')}</button>
+            <button className="mm-btn" onClick={handleDismissCall} style={{
+              padding: '7px 14px', borderRadius: '100px', border: 'none', cursor: 'pointer',
+              background: 'rgba(255,255,255,0.14)', color: '#fff', fontWeight: 700, fontSize: '12.5px',
+            }}>{t('videoCall.dismiss')}</button>
+          </div>
+        </div>
+      )}
       {/* position:fixed (not a flex sibling in flow) so it can't fight the
           sidebar/content row for horizontal space once the sidebar becomes
           an off-canvas drawer on mobile — see .mm-shell-main's top padding
@@ -137,7 +190,7 @@ export default function AppShell({ screen, goTo, user, logout }) {
         {screen === 'results' && <Results user={user} goTo={goTo} />}
         {screen === 'achievements' && <Achievements />}
         {screen === 'analytics' && <Analytics goTo={goTo} />}
-        {screen === 'teacherReview' && <TeacherReview />}
+        {screen === 'teacherReview' && <TeacherReview enterCall={enterCall} />}
         {screen === 'admin' && <AdminOverview />}
         {screen === 'questionBank' && <QuestionBank />}
       </div>

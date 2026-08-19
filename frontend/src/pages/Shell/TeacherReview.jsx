@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { getStudentFilterOptions } from '../../api/admin.js';
 import { getTeacherStudentDetail, getTeacherStudents, submitReview as apiSubmitReview } from '../../api/teacher.js';
+import { startCall } from '../../api/videocalls.js';
 import StudentFilters from '../../components/StudentFilters.jsx';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
 
@@ -11,12 +12,13 @@ const SHIMMER = {
 };
 
 /** Ported verbatim from MindMetric AI.dc.html lines 275-370 (`isTeacherReview`). */
-export default function TeacherReview() {
+export default function TeacherReview({ enterCall }) {
   const [loading, setLoading] = useState(true);
   const [teacherSearch, setTeacherSearch] = useState('');
   const [teacherStudents, setTeacherStudents] = useState([]);
   const [selectedStudentId, setSelectedStudentId] = useState(null);
   const [selectedStudent, setSelectedStudent] = useState(null);
+  const [callStarting, setCallStarting] = useState(false);
   // Keyed by the rubric item's stable `key` (e.g. "code_readability"), not its
   // display label — the label is translated and would change with `language`,
   // which would silently orphan any score already picked under the old text.
@@ -54,6 +56,16 @@ export default function TeacherReview() {
   useEffect(() => {
     if (selectedStudentId != null) getTeacherStudentDetail(selectedStudentId).then(setSelectedStudent);
   }, [language]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const startVideoCall = async () => {
+    setCallStarting(true);
+    try {
+      const call = await startCall(selectedStudentId);
+      enterCall({ callId: call.callId, roomName: call.roomName, livekitUrl: call.livekitUrl, token: call.token });
+    } finally {
+      setCallStarting(false);
+    }
+  };
 
   const submit = async () => {
     setIsSubmitting(true);
@@ -135,7 +147,21 @@ export default function TeacherReview() {
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '12px', marginBottom: '22px' }}>
                 <div>
                   <h2 style={{ fontSize: '20px', fontWeight: 700, color: '#161F24', margin: '0 0 4px' }}>{selectedStudent.name}</h2>
-                  <p style={{ fontSize: '13px', color: '#556269', margin: 0 }}>{selectedStudent.program} · {selectedStudent.id}</p>
+                  <p style={{ fontSize: '13px', color: '#556269', margin: '0 0 10px' }}>{selectedStudent.program} · {selectedStudent.id}</p>
+                  <button
+                    className="mm-btn"
+                    disabled={callStarting}
+                    onClick={startVideoCall}
+                    style={{
+                      display: 'flex', alignItems: 'center', gap: '7px', padding: '8px 14px', borderRadius: '100px',
+                      border: 'none', cursor: 'pointer', background: '#2E5570', color: '#fff', fontWeight: 700, fontSize: '12.5px',
+                    }}>
+                    {callStarting && <span className="mm-spinner" />}
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M23 7l-7 5 7 5V7zM14 5H3a2 2 0 00-2 2v10a2 2 0 002 2h11a2 2 0 002-2V7a2 2 0 00-2-2z" />
+                    </svg>
+                    {t('teacherReview.startVideoCall')}
+                  </button>
                 </div>
                 <div style={{ textAlign: 'right' }}>
                   <div style={{ fontFamily: "'Montserrat',sans-serif", fontWeight: 700, fontSize: '38px', color: '#1F374B' }}>{selectedStudent.score}</div>

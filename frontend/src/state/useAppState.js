@@ -24,6 +24,11 @@ function resolveLandingScreen(user) {
 export function useAppState() {
   const [screen, setScreen] = useState('welcome');
   const [user, setUser] = useState(null); // { id, name, initials, role, program }
+  // { callId, roomName, livekitUrl, token } while a video call is open —
+  // set by TeacherReview's "start call" and AppShell's incoming-call banner,
+  // both via enterCall(). See pages/VideoCall/VideoCallPage.jsx.
+  const [activeCall, setActiveCall] = useState(null);
+  const [screenBeforeCall, setScreenBeforeCall] = useState('selection');
 
   // The mockup has no equivalent of this — its `state` lived only in memory,
   // so a refresh always dropped back to Welcome. A real JWT survives a
@@ -39,6 +44,17 @@ export function useAppState() {
 
   const goTo = useCallback((next) => setScreen(next), []);
 
+  const enterCall = useCallback((callInfo) => {
+    setScreenBeforeCall(screen);
+    setActiveCall(callInfo);
+    setScreen('videoCall');
+  }, [screen]);
+
+  const leaveCall = useCallback(() => {
+    setActiveCall(null);
+    setScreen((current) => (current === 'videoCall' ? screenBeforeCall : current));
+  }, [screenBeforeCall]);
+
   const onLoginSuccess = useCallback((loggedInUser) => {
     setUser(loggedInUser);
     setScreen(resolveLandingScreen(loggedInUser));
@@ -52,8 +68,9 @@ export function useAppState() {
   const logout = useCallback(async () => {
     await apiLogout();
     setUser(null);
+    setActiveCall(null);
     setScreen('welcome');
   }, []);
 
-  return { screen, goTo, user, onLoginSuccess, onProfileCompleted, logout };
+  return { screen, goTo, user, onLoginSuccess, onProfileCompleted, logout, activeCall, enterCall, leaveCall };
 }
