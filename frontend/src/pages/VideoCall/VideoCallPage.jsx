@@ -42,12 +42,27 @@ export default function VideoCallPage({ call, onLeave }) {
       try {
         await room.connect(call.livekitUrl, call.token);
         hasConnected = true;
-        const camPub = await room.localParticipant.setCameraEnabled(true);
-        if (camPub?.track) camPub.track.attach(localVideoRef.current);
-        await room.localParticipant.setMicrophoneEnabled(true);
-        if (!cancelled) setStatus('connected');
       } catch {
         if (!cancelled) setStatus('error');
+        return;
+      }
+
+      if (!cancelled) setStatus('connected');
+
+      // Camera/mic failures (permission denied, no device) shouldn't be
+      // treated as a connection error — the call is live either way, just
+      // without local video/audio until the user grants access and retries
+      // via the mic/camera buttons.
+      try {
+        const camPub = await room.localParticipant.setCameraEnabled(true);
+        if (camPub?.track) camPub.track.attach(localVideoRef.current);
+      } catch {
+        if (!cancelled) setCamOn(false);
+      }
+      try {
+        await room.localParticipant.setMicrophoneEnabled(true);
+      } catch {
+        if (!cancelled) setMicOn(false);
       }
     })();
 
