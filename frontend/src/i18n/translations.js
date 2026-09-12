@@ -70,7 +70,7 @@ export const translations = {
       logout: 'Выйти из аккаунта',
     },
     nav: {
-      assessments: 'Тесты',
+      assessments: 'Тесты и задания',
       myResults: 'Мои результаты',
       achievements: 'Достижения',
       reviewQueue: 'Очередь проверки',
