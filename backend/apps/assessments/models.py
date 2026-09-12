@@ -84,6 +84,17 @@ class CodingProblem(models.Model):
     # _score_hybrid) — solving at or under this earns full time credit; solving slower
     # tapers off. Not a hard deadline, unlike the MCQ phase's time_remaining_seconds.
     target_time_seconds = models.PositiveIntegerField(default=300)
+    # Authoring tier for the task, used to keep the pool balanced (roughly a third
+    # each) and to reason about coverage when curating CODING_PROBLEMS. Unlike
+    # CognitiveQuestion.difficulty this is coarse editorial metadata, not an IRT
+    # parameter — nothing in apps.scoring reads it. The choice labels stay English
+    # because they only ever surface in the Django admin, never to students (student
+    # -facing prose is always a _ru/_uz pair — see apps.i18n).
+    difficulty = models.CharField(
+        max_length=10,
+        choices=[('easy', 'Easy'), ('medium', 'Medium'), ('hard', 'Hard')],
+        default='medium',
+    )
     # Test data itself (input words, expected output) is language-neutral puzzle
     # content, not UI prose, so it stays a single shared field.
     test_cases = models.JSONField(

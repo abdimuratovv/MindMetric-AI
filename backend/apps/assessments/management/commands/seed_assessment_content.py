@@ -90,6 +90,9 @@ class Command(BaseCommand):
                     'test_cases': problem['test_cases'], 'is_active': True,
                     'function_name': problem['function_name'],
                     'target_time_seconds': problem['target_time_seconds'],
+                    # Editorial tier — defaulted here too so an entry authored before the
+                    # field existed still seeds cleanly.
+                    'difficulty': problem.get('difficulty', 'medium'),
                 },
             )
         self.stdout.write(f'  {len(CODING_PROBLEMS)} coding problems (algorithmic)')

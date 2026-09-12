@@ -713,7 +713,11 @@ QUESTION_FEEDBACK = {
         'ru': 'Каждое рукопожатие — это пара из общего числа людей, поэтому считайте по формуле сочетаний C(n,2), а не просто умножайте число людей на количество попыток каждого.',
         'uz': "Har bir qo'l siqish odamlar sonidan tuzilgan juftlik, shuning uchun C(n,2) kombinatsiya formulasi bilan sanang, odamlar sonini har birining urinishlar soniga shunchaki ko'paytirmang.",
     },
-    # -- algorithmic (20) ------------------------------------------------------------------
+    # -- algorithmic -----------------------------------------------------------------------
+    # Feedback is optional (seed_assessment_content defaults it to ''), so this block covers
+    # only part of the indicator's 100-question pool; the stale "(20)" count that used to sit
+    # here was left over from an older pool size. Keys that no longer match a question in
+    # MCQ_QUESTIONS['algorithmic'] are simply never looked up.
     'algorithmic-boolean-1': {
         'ru': 'Логическое И (AND) истинно только тогда, когда ОБА условия истинны — если хотя бы одно ложно, результат всегда ложь.',
         'uz': "Mantiqiy VA (AND) faqat ikkala shart ham rost bo'lganda rost bo'ladi — kamida bittasi yolg'on bo'lsa, natija doim yolg'on.",

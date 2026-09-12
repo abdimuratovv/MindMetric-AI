@@ -10,13 +10,16 @@ Shape:
 - MCQ_QUESTIONS: dict keyed by one of AssessmentAttempt.MCQ_TYPES' values
   (math/logic/algorithmic/creative/problem_solving/attention/iq), each a list
   of question dicts with `difficulty` (IRT-style, roughly -1..1) for the
-  adaptive engine. All 7 indicators carry 200 questions each (1400 total),
-  giving the adaptive engine deep coverage across the difficulty range;
-  self-report Likert indicators are intentionally excluded from this
-  expansion — see LIKERT_CATEGORIES below.
-- CODING_PROBLEM: the single active coding task, run after algorithmic's MCQ
-  phase (AssessmentAttempt.HYBRID_TYPES) and blended into that one indicator's
-  score alongside it — see apps.scoring.state_tracker._score_hybrid.
+  adaptive engine. Six of the seven indicators carry 200 questions each;
+  'algorithmic' is the exception with 100 curated MCQ, because it is the only
+  hybrid indicator and pairs its MCQ pool with a 100-task coding pool
+  (CODING_PROBLEMS below) — 1300 MCQ + 100 coding tasks in total. Self-report
+  Likert indicators are intentionally excluded from this expansion — see
+  LIKERT_CATEGORIES below.
+- CODING_PROBLEMS: the coding-task pool (100 tasks across three difficulty
+  tiers), run after algorithmic's MCQ phase (AssessmentAttempt.HYBRID_TYPES)
+  and blended into that one indicator's score alongside it — see
+  apps.scoring.state_tracker._score_hybrid.
 - LIKERT_CATEGORIES: dict keyed by one of AssessmentAttempt.LIKERT_TYPES'
   values (teamwork/patience/learning_speed), each a dict with a display
   label plus a list of Likert statement items (reverse_scored flips the
@@ -11807,6 +11810,11 @@ MCQ_QUESTIONS = {
             'correct_indices': [1],
         },
 ],
+    # Curated down from the original 200-item draft to the 100 most representative
+    # questions — the pool stays wide enough for ALGORITHMIC_MCQ_CAP (20 per attempt,
+    # apps.assessments.views) plus history-aware reshuffling on retakes, while keeping
+    # the category mix and the full difficulty band. 100 questions, ordered by
+    # difficulty (b from -1.0 to 1.6).
     'algorithmic': [
         {
             'key': 'algorithmic-boolean-1', 'difficulty': -1.0,
@@ -11818,66 +11826,157 @@ MCQ_QUESTIONS = {
             'correct_indices': [1],
         },
         {
-            'key': 'algorithmic-flowchart-1', 'difficulty': -0.9,
+            'key': 'algo-extra-flowchart-9', 'difficulty': -1.0,
             'category_ru': 'Блок-схемы', 'category_uz': 'Blok-sxemalar',
-            'prompt_ru': 'В блок-схемах проверка условия (да/нет, истина/ложь) обычно записывается внутри какой геометрической фигуры?',
-            'prompt_uz': "Blok-sxemalarda shartni tekshirish (ha/yo'q, rost/yolg'on) odatda qaysi geometrik shakl ichida yoziladi?",
-            'options_ru': ['Прямоугольник', 'Ромб', 'Овал', 'Параллелограмм'],
-            'options_uz': ["To'g'ri to'rtburchak", 'Romb', 'Oval', 'Parallelogramm'],
-            'correct_indices': [1],
+            'prompt_ru': 'Сколько исходящих путей обычно имеет блок условия (ромб) в блок-схеме?',
+            'prompt_uz': "Blok-sxemadagi shart bloki (romb) odatda nechta chiquvchi yo'lga ega bo'ladi?",
+            'options_ru': ['Обычно 2 (да/нет)', 'Всегда 4', 'Только 1', 'Не менее 10'],
+            'options_uz': ["Odatda 2 ta (ha/yo'q)", 'Har doim 4 ta', 'Faqat 1 ta', 'Kamida 10 ta'],
+            'correct_indices': [0],
         },
         {
-            'key': 'algorithmic-linear-structure-1', 'difficulty': -0.8,
-            'category_ru': 'Структуры алгоритма', 'category_uz': 'Algoritm tuzilmalari',
-            'prompt_ru': 'Что понимается под линейной структурой в алгоритме?',
-            'prompt_uz': 'Algoritmdagi chiziqli tuzilma deganda nima tushuniladi?',
-            'options_ru': [
-                'Выполнение шагов в разных направлениях в зависимости от условия', 'Бесконечное повторение шагов',
-                'Выполнение шагов последовательно, одно за другим, без каких-либо условий', 'Полная неработоспособность алгоритма',
-            ],
-            'options_uz': [
-                "Qadamlarning shartga qarab har xil yo'nalishda bajarilishi", 'Qadamlarning cheksiz takrorlanishi',
-                "Qadamlarning hech qanday shartsiz, ketma-ket, birin-ketin bajarilishi", 'Algoritmning umuman ishlamasligi',
-            ],
-            'correct_indices': [2],
+            'key': 'algo-extra-array-list-8', 'difficulty': -1.0,
+            'category_ru': 'Структуры данных', 'category_uz': "Ma'lumotlar tuzilmalari",
+            'prompt_ru': 'Как лучше всего описать «массив»?',
+            'prompt_uz': '"Massiv" tushunchasini qanday ta\'riflash to\'g\'ri bo\'ladi?',
+            'options_ru': ['Упорядоченная коллекция элементов одного типа, хранящихся подряд и доступных по индексу', 'Набор случайных чисел без порядка', 'Единственная переменная', 'Функция, вызывающая саму себя'],
+            'options_uz': ["Bir xil turdagi elementlarning ketma-ket saqlanadigan va indeks orqali kirish mumkin bo'lgan tartiblangan to'plami", "Tartibsiz tasodifiy sonlar to'plami", "Yagona o'zgaruvchi", "O'z-o'zini chaqiruvchi funksiya"],
+            'correct_indices': [0],
         },
         {
-            'key': 'algorithmic-property-finiteness-1', 'difficulty': -0.7,
-            'category_ru': 'Свойства алгоритма', 'category_uz': 'Algoritm xossalari',
-            'prompt_ru': 'Одно из важнейших свойств, которым должен обладать любой алгоритм, — конечность. Что это означает?',
-            'prompt_uz': "Har qanday algoritm ega bo'lishi kerak bo'lgan eng muhim xususiyatlardan biri — cheklanganlikdir. Bu nima degani?",
-            'options_ru': [
-                'Алгоритм должен работать только на компьютере.', 'Алгоритм должен быть сложным.',
-                'Алгоритм обязан прийти к логическому завершению за конечное число шагов.', 'Алгоритм должен понимать только один человек.',
-            ],
-            'options_uz': [
-                'Algoritm faqat kompyuterda ishlashi kerak.', 'Algoritm qiyin bo\'lishi kerak.',
-                'Algoritm chekli qadamlardan keyin mantiqiy yakuniga yetishi shart.', 'Algoritmni faqat bir kishi tushunishi kerak.',
-            ],
-            'correct_indices': [2],
+            'key': 'algo-extra-datastructure-11', 'difficulty': -1.0,
+            'category_ru': 'Выбор структуры данных', 'category_uz': "Ma'lumotlar tuzilmasini tanlash",
+            'prompt_ru': 'Нужно хранить фиксированный список из 7 названий дней недели для многократного обращения по позиции. Какая простая структура подойдёт?',
+            'prompt_uz': "Pozitsiya bo'yicha ko'p marta murojaat qilish uchun 7 ta hafta kuni nomidan iborat qat'iy ro'yxatni saqlash kerak. Qaysi oddiy tuzilma mos keladi?",
+            'options_ru': ['Массив', 'Граф', 'Стек с постоянным изменением', 'Хеш-таблица с коллизиями'],
+            'options_uz': ['Massiv', 'Graf', "Doim o'zgarib turuvchi stek", "To'qnashuvli xesh-jadval"],
+            'correct_indices': [0],
         },
         {
-            'key': 'algorithmic-recursion-1', 'difficulty': -0.5,
+            'key': 'algo-extra-bigO-4', 'difficulty': -1.0,
+            'category_ru': 'Сложность алгоритмов', 'category_uz': 'Algoritm murakkabligi',
+            'prompt_ru': 'Какой из этих темпов роста при больших n обычно считается САМЫМ БЫСТРЫМ (наименее эффективным)?',
+            'prompt_uz': "Katta n larda quyidagilardan qaysi biri odatda ENG TEZ (eng kam samarali) o'sish hisoblanadi?",
+            'options_ru': ['O(2^n) — экспоненциальный рост', 'O(log n)', 'O(1)', 'O(n)'],
+            'options_uz': ["O(2^n) - eksponensial o'sish", 'O(log n)', 'O(1)', 'O(n)'],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-bruteforce-9', 'difficulty': -1.0,
+            'category_ru': 'Стратегии решения задач', 'category_uz': 'Masala yechish strategiyalari',
+            'prompt_ru': 'Верно ли, что оптимизированный алгоритм всегда даёт ДРУГОЙ итоговый результат по сравнению с полным перебором для той же задачи?',
+            'prompt_uz': "Optimallashtirilgan algoritm bir xil masala uchun to'liq pereborga nisbatan har doim BOSHQA yakuniy natija berishi to'g'rimi?",
+            'options_ru': ['Нет, оптимизированный алгоритм должен давать тот же верный ответ, но быстрее', 'Да, ответы всегда отличаются', 'Оптимизация меняет только цвет текста в коде', 'Брутфорс никогда не даёт верного ответа'],
+            'options_uz': ["Yo'q, optimallashtirilgan algoritm ham xuddi shu to'g'ri javobni berishi kerak, faqat tezroq", 'Ha, javoblar har doim farq qiladi', "Optimallashtirish faqat koddagi matn rangini o'zgartiradi", "Brutfors hech qachon to'g'ri javob bermaydi"],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-recursion-3', 'difficulty': -1.0,
             'category_ru': 'Рекурсия', 'category_uz': 'Rekursiya',
-            'prompt_ru': 'Что такое рекурсия?',
-            'prompt_uz': 'Rekursiya nima?',
-            'options_ru': [
-                'Остановка алгоритма из-за ошибки.', 'Обращение функции или алгоритма к самому себе (самовызов).',
-                'Сортировка данных в алфавитном порядке.', 'Удаление программы из памяти.',
-            ],
-            'options_uz': [
-                "Algoritmning xatolikka uchrab to'xtab qolishi.", "Funksiya yoki algoritmning o'z-o'ziga qayta murojaat qilishi (o'zini o'zi chaqirishi).",
-                "Ma'lumotlarni alifbo tartibida saralash.", 'Dasturni xotiradan o\'chirib tashlash.',
-            ],
-            'correct_indices': [1],
+            'prompt_ru': 'Что обязательно должна иметь любая корректная рекурсивная функция, чтобы избежать бесконечной рекурсии?',
+            'prompt_uz': "Cheksiz rekursiyadan qochish uchun har qanday to'g'ri rekursiv funksiya nimaga ega bo'lishi shart?",
+            'options_ru': ['Базовый случай (условие остановки)', 'Как можно больше параметров', 'Обязательно глобальную переменную', 'Цикл for внутри'],
+            'options_uz': ["Bazaviy holat (to'xtash sharti)", "Iloji boricha ko'proq parametr", "Albatta global o'zgaruvchi", 'Ichida for sikli'],
+            'correct_indices': [0],
         },
         {
-            'key': 'algorithmic-trace-1', 'difficulty': -0.4,
+            'key': 'algo-extra-trace-2', 'difficulty': -0.9,
             'category_ru': 'Трассировка алгоритма', 'category_uz': 'Algoritmni kuzatish',
-            'prompt_ru': 'Проанализируйте данную последовательность: X = 5. На следующем шаге X = X + 3. Затем X = X * 2. Чему будет равен X в конце алгоритма?',
-            'prompt_uz': "Berilgan ketma-ketlikni tahlil qiling: X = 5. Keyingi qadamda X = X + 3. Undan keyingi qadamda X = X * 2. Algoritm yakunida X nechaga teng bo'ladi?",
-            'options_ru': ['11', '13', '16', '26'], 'options_uz': ['11', '13', '16', '26'],
-            'correct_indices': [2],
+            'prompt_ru': 'Дано: a = 10; b = 3; a = a - b; b = a + b. Чему равно b в конце?',
+            'prompt_uz': "Berilgan: a = 10; b = 3; a = a - b; b = a + b. Oxirida b nechaga teng bo'ladi?",
+            'options_ru': ['10', '7', '3', '13'],
+            'options_uz': ['10', '7', '3', '13'],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-flowchart-10', 'difficulty': -0.9,
+            'category_ru': 'Последовательность действий', 'category_uz': 'Ketma-ketlik',
+            'prompt_ru': 'Определите правильный порядок действий алгоритма приготовления бутерброда: 1) Положить начинку между 2 кусками хлеба. 2) Достать куски хлеба. 3) Намазать хлеб маслом. 4) Разрезать бутерброд пополам.',
+            'prompt_uz': "Sendvich tayyorlash algoritmining to'g'ri ketma-ketligini aniqlang: 1) Ichini 2 bo'lak non orasiga qo'yish. 2) Non bo'laklarini olish. 3) Nonga sariyog' surtish. 4) Sendvichni ikkiga bo'lish.",
+            'options_ru': ['2, 3, 1, 4', '1, 2, 3, 4', '4, 1, 2, 3', '3, 2, 1, 4'],
+            'options_uz': ['2, 3, 1, 4', '1, 2, 3, 4', '4, 1, 2, 3', '3, 2, 1, 4'],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-greedy-2', 'difficulty': -0.9,
+            'category_ru': 'Жадные алгоритмы', 'category_uz': "Ochko'z algoritmlar",
+            'prompt_ru': 'На каком принципе принимает решения «жадный алгоритм» (greedy algorithm)?',
+            'prompt_uz': '"Ochko\'z algoritm" (greedy algorithm) qanday tamoyil asosida qaror qabul qiladi?',
+            'options_ru': ['Выбор наилучшего варианта на каждом шаге, без пересмотра предыдущих решений', 'Перебор абсолютно всех возможных вариантов', 'Случайный выбор на каждом шаге', 'Откладывание решения до самого конца'],
+            'options_uz': ["Har bir qadamda oldingi qarorlarni qayta ko'rib chiqmasdan eng yaxshi variantni tanlash", "Mutlaqo barcha mumkin bo'lgan variantlarni ko'rib chiqish", 'Har bir qadamda tasodifiy tanlash', 'Qarorni eng oxirigacha qoldirish'],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-queue-2', 'difficulty': -0.8,
+            'category_ru': 'Структуры данных', 'category_uz': "Ma'lumotlar tuzilmalari",
+            'prompt_ru': 'По какому правилу обрабатываются элементы в структуре данных Queue (Очередь)?',
+            'prompt_uz': "Queue (Navbat) ma'lumotlar tuzilmasida elementlar qaysi qoida asosida qayta ishlanadi?",
+            'options_ru': ['FIFO (первый пришёл — первый вышел)', 'LIFO (последний пришёл — первый вышел)', 'В случайном порядке', 'Только по алфавиту'],
+            'options_uz': ['FIFO (birinchi kelgan, birinchi ketadi)', 'LIFO (oxirgi kelgan, birinchi ketadi)', 'Tasodifiy tartibda', 'Faqat alifbo tartibida'],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-datastructure-13', 'difficulty': -0.8,
+            'category_ru': 'Выбор структуры данных', 'category_uz': "Ma'lumotlar tuzilmasini tanlash",
+            'prompt_ru': 'Какая структура данных наиболее подходит для «списка ожидания», где первый записавшийся обслуживается первым?',
+            'prompt_uz': 'Birinchi yozilgan birinchi xizmat oladigan "kutish ro\'yxati" uchun qaysi tuzilma eng mos keladi?',
+            'options_ru': ['Очередь', 'Стек', 'Хеш-множество', 'Дерево'],
+            'options_uz': ['Navbat', 'Stek', "Xesh-to'plam", 'Daraxt'],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-bigO-6', 'difficulty': -0.8,
+            'category_ru': 'Сложность алгоритмов', 'category_uz': 'Algoritm murakkabligi',
+            'prompt_ru': 'Какова сложность обращения к конкретному элементу массива по его индексу?',
+            'prompt_uz': "Massivning ma'lum elementiga indeksi bo'yicha murojaat qilishning murakkabligi qanday?",
+            'options_ru': ['O(1)', 'O(n)', 'O(n^2)', 'O(log n)'],
+            'options_uz': ['O(1)', 'O(n)', 'O(n^2)', 'O(log n)'],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-recursion-5', 'difficulty': -0.8,
+            'category_ru': 'Рекурсия', 'category_uz': 'Rekursiya',
+            'prompt_ru': 'Что обычно происходит, если у рекурсивной функции отсутствует базовый случай (или он никогда не достигается)?',
+            'prompt_uz': "Agar rekursiv funksiyada bazaviy holat bo'lmasa (yoki unga hech qachon yetib borilmasa), odatda nima yuz beradi?",
+            'options_ru': ['Она будет вызывать себя бесконечно, что в итоге приведёт к переполнению стека', 'Программа сразу выведет правильный результат', 'Функция автоматически остановится через 1 секунду', 'Ошибок не возникнет никогда'],
+            'options_uz': ["U o'zini cheksiz chaqiraveradi, natijada stek to'lib ketadi (stack overflow)", "Dastur darhol to'g'ri natijani chiqaradi", "Funksiya avtomatik ravishda 1 soniyadan keyin to'xtaydi", 'Hech qachon xatolik yuzaga kelmaydi'],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-trace-4', 'difficulty': -0.7,
+            'category_ru': 'Трассировка алгоритма', 'category_uz': 'Algoritmni kuzatish',
+            'prompt_ru': 'Дано: s = "A"; s = s + "B"; s = s + "C". Какой будет итоговая строка s?',
+            'prompt_uz': 'Berilgan: s = "A"; s = s + "B"; s = s + "C". Yakuniy s satri qanday bo\'ladi?',
+            'options_ru': ['"ABC"', '"CBA"', '"AB"', '"BC"'],
+            'options_uz': ['"ABC"', '"CBA"', '"AB"', '"BC"'],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-pseudocode-2', 'difficulty': -0.7,
+            'category_ru': 'Псевдокод', 'category_uz': 'Psevdokod',
+            'prompt_ru': 'В псевдокоде для нахождения большего из двух чисел: "ЕСЛИ a > b ТО max = a ___ max = b". Какое слово пропущено?',
+            'prompt_uz': 'Ikki sondan kattasini topish psevdokodida: "AGAR a > b BO\'LSA max = a ___ max = b". Qaysi so\'z tushirib qoldirilgan?',
+            'options_ru': ['ИНАЧЕ', 'ТО', 'ПОКА', 'КОНЕЦ'],
+            'options_uz': ['AKS HOLDA', "BO'LSA", 'TOKI', 'TUGADI'],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-sorting-2', 'difficulty': -0.7,
+            'category_ru': 'Алгоритмы сортировки', 'category_uz': 'Saralash algoritmlari',
+            'prompt_ru': 'Что означает «отсортировать» массив?',
+            'prompt_uz': 'Massivni "saralash" nimani anglatadi?',
+            'options_ru': ['Расположить элементы в определённом порядке (по возрастанию или убыванию)', 'Удалить повторяющиеся элементы', 'Найти максимальный элемент', 'Разбить массив на две части'],
+            'options_uz': ["Elementlarni ma'lum tartibda (o'sish yoki kamayish bo'yicha) joylashtirish", "Takrorlanuvchi elementlarni o'chirish", 'Eng katta elementni topish', "Massivni ikkiga bo'lish"],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-greedy-4', 'difficulty': -0.7,
+            'category_ru': 'Жадные алгоритмы', 'category_uz': "Ochko'z algoritmlar",
+            'prompt_ru': 'Всегда ли жадный алгоритм гарантирует нахождение глобально наилучшего (оптимального) решения для любой задачи?',
+            'prompt_uz': "Ochko'z algoritm har qanday masala uchun global eng yaxshi (optimal) yechimni har doim kafolatlaydimi?",
+            'options_ru': ['Нет, для некоторых задач жадный подход не даёт оптимального результата', 'Да, жадный алгоритм всегда даёт наилучший возможный результат', 'Жадные алгоритмы никогда не дают правильного ответа', 'Это зависит только от языка программирования'],
+            'options_uz': ["Yo'q, ba'zi masalalar uchun ochko'z yondashuv optimal natija bermaydi", "Ha, ochko'z algoritm har doim eng yaxshi natijani beradi", "Ochko'z algoritmlar hech qachon to'g'ri javob bermaydi", "Bu faqat dasturlash tiliga bog'liq"],
+            'correct_indices': [0],
         },
         {
             'key': 'algorithmic-loop-1', 'difficulty': -0.6,
@@ -11889,19 +11988,121 @@ MCQ_QUESTIONS = {
             'correct_indices': [1],
         },
         {
-            'key': 'algorithmic-infinite-loop-1', 'difficulty': -0.3,
-            'category_ru': 'Циклы', 'category_uz': 'Sikllar',
-            'prompt_ru': 'Что логически называется «бесконечным циклом» (Infinite loop)?',
-            'prompt_uz': '"Cheksiz sikl" (Infinite loop) mantiqan nimaga aytiladi?',
-            'options_ru': [
-                'Программе, которая работает очень быстро', 'Процессу, условие выхода из которого никогда не выполняется, и он не останавливается',
-                'Функции, полностью очищающей память', 'Коду, состоящему только из 0 и 1',
-            ],
-            'options_uz': [
-                'Juda tez ishlaydigan dasturga', "Sikldan chiqish sharti hech qachon bajarilmaydigan va to'xtamaydigan jarayonga",
-                'Xotirani butunlay tozalaydigan funksiyaga', 'Faqat 0 va 1 lardan iborat kodga',
-            ],
-            'correct_indices': [1],
+            'key': 'algo-extra-stack-2', 'difficulty': -0.6,
+            'category_ru': 'Структуры данных', 'category_uz': "Ma'lumotlar tuzilmalari",
+            'prompt_ru': 'Какой жизненный пример ведёт себя как стек (Stack)?',
+            'prompt_uz': 'Qaysi hayotiy misol stek (Stack) kabi harakat qiladi?',
+            'options_ru': ['Стопка тарелок, из которой берут сверху', 'Очередь в кассу', 'Расписание поездов', 'Список контактов по алфавиту'],
+            'options_uz': ['Yuqoridan olinadigan likopchalar uyumi', 'Kassa navbati', 'Poyezdlar jadvali', "Alifbo tartibidagi kontaktlar ro'yxati"],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-bigO-8', 'difficulty': -0.6,
+            'category_ru': 'Сложность алгоритмов', 'category_uz': 'Algoritm murakkabligi',
+            'prompt_ru': 'Алгоритм с двумя вложенными циклами, каждый из которых проходит по тому же списку из n элементов, обычно имеет какую сложность?',
+            'prompt_uz': "Ikkalasi ham n elementli bir xil ro'yxat bo'ylab yuruvchi ikkita ichma-ich joylashgan siklga ega algoritm odatda qanday murakkablikka ega?",
+            'options_ru': ['O(n^2)', 'O(n)', 'O(log n)', 'O(1)'],
+            'options_uz': ['O(n^2)', 'O(n)', 'O(log n)', 'O(1)'],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-recursion-7', 'difficulty': -0.6,
+            'category_ru': 'Рекурсия', 'category_uz': 'Rekursiya',
+            'prompt_ru': 'Каждый рекурсивный вызов обычно использует дополнительную память в какой структуре, чтобы запомнить, куда вернуться после завершения?',
+            'prompt_uz': "Har bir rekursiv chaqiruv tugagandan keyin qayerga qaytishni eslab qolish uchun odatda qaysi tuzilmada qo'shimcha xotiradan foydalanadi?",
+            'options_ru': ['Стек вызовов (call stack)', 'Хеш-таблицу', 'Очередь сообщений', 'Оперативную память видеокарты'],
+            'options_uz': ['Chaqiruvlar steki (call stack)', 'Xesh-jadval', 'Xabarlar navbati', 'Video karta operativ xotirasi'],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-trace-6', 'difficulty': -0.5,
+            'category_ru': 'Трассировка алгоритма', 'category_uz': 'Algoritmni kuzatish',
+            'prompt_ru': 'Дано: total = 0; total = total + 5; total = total * 2; total = total - 3. Чему равен total в конце?',
+            'prompt_uz': "Berilgan: total = 0; total = total + 5; total = total * 2; total = total - 3. Oxirida total nechaga teng bo'ladi?",
+            'options_ru': ['7', '10', '13', '2'],
+            'options_uz': ['7', '10', '13', '2'],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-pseudocode-4', 'difficulty': -0.5,
+            'category_ru': 'Псевдокод', 'category_uz': 'Psevdokod',
+            'prompt_ru': 'Псевдокод: "ВВЕСТИ number; ЕСЛИ number MOD 2 = 0 ТО ВЫВЕСТИ \'чётное\' ИНАЧЕ ВЫВЕСТИ \'нечётное\'". Что делает этот алгоритм?',
+            'prompt_uz': 'Psevdokod: "number NI KIRITISH; AGAR number MOD 2 = 0 BO\'LSA \'juft\' DEB CHIQARISH AKS HOLDA \'toq\' DEB CHIQARISH". Bu algoritm nima qiladi?',
+            'options_ru': ['Определяет, чётное число или нечётное', 'Находит квадрат числа', 'Сортирует числа', 'Ищет число в списке'],
+            'options_uz': ['Sonning juft yoki toqligini aniqlaydi', 'Sonning kvadratini topadi', 'Sonlarni saralaydi', "Ro'yxatdan sonni qidiradi"],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-sorting-4', 'difficulty': -0.5,
+            'category_ru': 'Алгоритмы сортировки', 'category_uz': 'Saralash algoritmlari',
+            'prompt_ru': 'Дан массив [3, 3, 1, 2]. Каким он станет после сортировки по убыванию?',
+            'prompt_uz': "[3, 3, 1, 2] massivi berilgan. Kamayish tartibida saralangandan keyin u qanday bo'ladi?",
+            'options_ru': ['[3, 3, 2, 1]', '[1, 2, 3, 3]', '[3, 1, 3, 2]', '[2, 1, 3, 3]'],
+            'options_uz': ['[3, 3, 2, 1]', '[1, 2, 3, 3]', '[3, 1, 3, 2]', '[2, 1, 3, 3]'],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-queue-4', 'difficulty': -0.4,
+            'category_ru': 'Структуры данных', 'category_uz': "Ma'lumotlar tuzilmalari",
+            'prompt_ru': 'Очередь заданий на печать (документы печатаются в порядке отправки) логически использует какую структуру?',
+            'prompt_uz': 'Bosib chiqarish navbati (hujjatlar yuborilgan tartibda chop etiladi) mantiqan qaysi tuzilmadan foydalanadi?',
+            'options_ru': ['Очередь (FIFO)', 'Стек (LIFO)', 'Дерево', 'Граф'],
+            'options_uz': ['Navbat (FIFO)', 'Stek (LIFO)', 'Daraxt', 'Graf'],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-greedy-7', 'difficulty': -0.4,
+            'category_ru': 'Жадные алгоритмы', 'category_uz': "Ochko'z algoritmlar",
+            'prompt_ru': 'В супермаркете выбор очереди с наименьшим числом людей, без учёта того, насколько быстро работает каждый кассир, — повседневный пример чего?',
+            'prompt_uz': 'Supermarketda har bir kassir qanchalik tez ishlashini hisobga olmasdan, eng kam odam turgan navbatni tanlash - bu kundalik hayotda nimaning misoli?',
+            'options_ru': ['Жадного выбора, который не гарантирует наилучший итоговый результат', 'Гарантированно оптимального выбора при любых условиях', 'Полного перебора всех возможных вариантов', 'Случайного выбора без всякой логики'],
+            'options_uz': ["Eng yaxshi yakuniy natijani kafolatlamaydigan ochko'z tanlov", 'Har qanday sharoitda kafolatlangan optimal tanlov', "Barcha mumkin bo'lgan variantlarning to'liq perebori", 'Hech qanday mantiqsiz tasodifiy tanlov'],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-recursion-9', 'difficulty': -0.4,
+            'category_ru': 'Рекурсия', 'category_uz': 'Rekursiya',
+            'prompt_ru': 'Рекурсивная функция sum(n): если n = 0, вернуть 0, иначе вернуть n + sum(n-1). Что вернёт sum(4)?',
+            'prompt_uz': "Rekursiv funksiya sum(n): agar n = 0 bo'lsa, 0 ni qaytarish, aks holda n + sum(n-1) ni qaytarish. sum(4) nimani qaytaradi?",
+            'options_ru': ['10', '4', '24', '14'],
+            'options_uz': ['10', '4', '24', '14'],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-trace-8', 'difficulty': -0.3,
+            'category_ru': 'Трассировка алгоритма', 'category_uz': 'Algoritmni kuzatish',
+            'prompt_ru': 'Дано: flag = истина; если не flag, то result = "A", иначе result = "B". Чему равен result?',
+            'prompt_uz': 'Berilgan: flag = rost; agar flag rost bo\'lmasa, result = "A", aks holda result = "B". result nimaga teng?',
+            'options_ru': ['"B"', '"A"', 'истина', 'ложь'],
+            'options_uz': ['"B"', '"A"', 'rost', "yolg'on"],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-pseudocode-6', 'difficulty': -0.3,
+            'category_ru': 'Псевдокод', 'category_uz': 'Psevdokod',
+            'prompt_ru': 'Какой псевдокод корректно меняет местами значения a и b с помощью вспомогательной переменной temp?',
+            'prompt_uz': "Qaysi psevdokod temp yordamchi o'zgaruvchisi yordamida a va b qiymatlarini to'g'ri almashtiradi?",
+            'options_ru': ['temp = a; a = b; b = temp', 'a = b; b = a', 'temp = a; b = a; a = temp', 'a = temp; temp = b; b = a'],
+            'options_uz': ['temp = a; a = b; b = temp', 'a = b; b = a', 'temp = a; b = a; a = temp', 'a = temp; temp = b; b = a'],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-sorting-6', 'difficulty': -0.3,
+            'category_ru': 'Алгоритмы сортировки', 'category_uz': 'Saralash algoritmlari',
+            'prompt_ru': 'Дан массив [4, 1, 3, 2]. Пузырьковая сортировка (Bubble sort) сравнивает соседние пары слева направо. Какой элемент гарантированно окажется на своём итоговом месте после ПЕРВОГО полного прохода?',
+            'prompt_uz': "[4, 1, 3, 2] massivi berilgan. Ko'pikli saralash (Bubble sort) qo'shni juftliklarni chapdan o'ngga solishtiradi. Birinchi to'liq o'tishdan keyin qaysi element kafolatlangan holda o'z yakuniy joyida bo'ladi?",
+            'options_ru': ['Самый большой элемент окажется в конце массива', 'Самый маленький элемент окажется в начале', 'Массив будет полностью отсортирован', 'Ни один элемент не будет на своём месте'],
+            'options_uz': ["Eng katta element massiv oxirida bo'ladi", "Eng kichik element boshida bo'ladi", "Massiv to'liq saralangan bo'ladi", "Birorta element o'z joyida bo'lmaydi"],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-bigO-11', 'difficulty': -0.3,
+            'category_ru': 'Сложность алгоритмов', 'category_uz': 'Algoritm murakkabligi',
+            'prompt_ru': 'Удвоение размера входных данных для алгоритма O(n) примерно удваивает время выполнения. А что происходит со временем выполнения алгоритма O(n^2) при удвоении размера входных данных?',
+            'prompt_uz': "O(n) algoritmi uchun kirish ma'lumotlari hajmini ikki barobar oshirish bajarilish vaqtini taxminan ikki barobar oshiradi. O(n^2) algoritmi uchun kirish hajmi ikki barobar oshsa, bajarilish vaqtiga nima bo'ladi?",
+            'options_ru': ['Увеличивает время примерно в 4 раза', 'Увеличивает время примерно в 2 раза, как и O(n)', 'Уменьшает время вдвое', 'Время не меняется'],
+            'options_uz': ['Vaqtni taxminan 4 barobar oshiradi', 'Vaqtni O(n) kabi taxminan 2 barobar oshiradi', 'Vaqtni ikki barobar kamaytiradi', "Vaqt o'zgarmaydi"],
+            'correct_indices': [0],
         },
         {
             'key': 'algorithmic-robot-1', 'difficulty': -0.2,
@@ -11927,6 +12128,141 @@ MCQ_QUESTIONS = {
             'correct_indices': [2],
         },
         {
+            'key': 'algo-extra-queue-5', 'difficulty': -0.2,
+            'category_ru': 'Структуры данных', 'category_uz': "Ma'lumotlar tuzilmalari",
+            'prompt_ru': 'Какая операция добавляет элемент в конец очереди?',
+            'prompt_uz': "Qaysi amal elementni navbat oxiriga qo'shadi?",
+            'options_ru': ['Enqueue (добавление в конец очереди)', 'Pop', 'Push', 'Dequeue'],
+            'options_uz': ["Enqueue (navbat oxiriga qo'shish)", 'Pop', 'Push', 'Dequeue'],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-greedy-9', 'difficulty': -0.2,
+            'category_ru': 'Жадные алгоритмы', 'category_uz': "Ochko'z algoritmlar",
+            'prompt_ru': 'Жадные алгоритмы обычно наиболее уместны, когда...',
+            'prompt_uz': "Ochko'z algoritmlar odatda qachon eng maqbul bo'ladi?",
+            'options_ru': ['Когда локально наилучший выбор на каждом шаге действительно приводит к глобально наилучшему результату', 'Всегда, для абсолютно любой задачи без исключений', 'Только когда данные полностью случайны', 'Никогда, жадные алгоритмы бесполезны'],
+            'options_uz': ['Har bir qadamdagi mahalliy eng yaxshi tanlov haqiqatan ham global eng yaxshi natijaga olib kelganda', 'Har doim, mutlaqo har qanday masala uchun istisnosiz', "Faqat ma'lumotlar butunlay tasodifiy bo'lganda", "Hech qachon, ochko'z algoritmlar foydasiz"],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-recursion-11', 'difficulty': -0.2,
+            'category_ru': 'Рекурсия', 'category_uz': 'Rekursiya',
+            'prompt_ru': 'Классическая рекурсивная задача «Ханойские башни» для n дисков требует примерно скольких ходов (минимум), согласно известной формуле?',
+            'prompt_uz': 'Klassik rekursiv "Xanoy minoralari" masalasi n ta disk uchun mashhur formulaga ko\'ra taxminan necha xarakat (minimal) talab qiladi?',
+            'options_ru': ['2^n − 1 ходов', 'n ходов', 'n^2 ходов', 'n! ходов'],
+            'options_uz': ['2^n − 1 ta harakat', 'n ta harakat', 'n^2 ta harakat', 'n! ta harakat'],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-trace-10', 'difficulty': -0.1,
+            'category_ru': 'Трассировка алгоритма', 'category_uz': 'Algoritmni kuzatish',
+            'prompt_ru': 'Дано: y = 5; для i от 1 до 3 выполнять: y = y + i. Чему равен y после цикла?',
+            'prompt_uz': 'Berilgan: y = 5; i = 1 dan 3 gacha bajarilsin: y = y + i. Sikldan keyin y nechaga teng?',
+            'options_ru': ['11', '8', '9', '14'],
+            'options_uz': ['11', '8', '9', '14'],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-sorting-8', 'difficulty': -0.1,
+            'category_ru': 'Алгоритмы сортировки', 'category_uz': 'Saralash algoritmlari',
+            'prompt_ru': 'На какой стратегии проектирования алгоритмов основана сортировка слиянием (Merge sort)?',
+            'prompt_uz': 'Birlashtirib saralash (Merge sort) qaysi algoritm loyihalash strategiyasiga asoslangan?',
+            'options_ru': ['Разделяй и властвуй (divide and conquer)', 'Жадный алгоритм', 'Полный перебор', 'Только динамическое программирование'],
+            'options_uz': ['Ajrat va hukmronlik qil (divide and conquer)', "Ochko'z (greedy) algoritm", "To'liq perebor", 'Faqat dinamik dasturlash'],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-bigO-13', 'difficulty': -0.1,
+            'category_ru': 'Сложность алгоритмов', 'category_uz': 'Algoritm murakkabligi',
+            'prompt_ru': 'Сравнение каждой возможной пары элементов в списке из n элементов (n на n) ближе всего к какой сложности?',
+            'prompt_uz': "n ta elementli ro'yxatdagi har bir mumkin bo'lgan juftlikni solishtirish (n ga n) qaysi murakkablikka eng yaqin?",
+            'options_ru': ['O(n^2)', 'O(n)', 'O(log n)', 'O(1)'],
+            'options_uz': ['O(n^2)', 'O(n)', 'O(log n)', 'O(1)'],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-divide-conquer-2', 'difficulty': -0.1,
+            'category_ru': 'Разделяй и властвуй', 'category_uz': 'Ajrat va hukmronlik qil',
+            'prompt_ru': 'Какие три общих шага включает стратегия «разделяй и властвуй» (divide and conquer)?',
+            'prompt_uz': '"Ajrat va hukmronlik qil" (divide and conquer) strategiyasi qanday uch umumiy qadamni o\'z ichiga oladi?',
+            'options_ru': ['Разделить задачу на подзадачи, решить каждую подзадачу, объединить результаты', 'Решить задачу сразу целиком без разбиения', 'Игнорировать часть задачи', 'Повторять одну и ту же задачу бесконечно'],
+            'options_uz': ["Masalani qism-masalalarga bo'lish, har bir qism-masalani yechish, natijalarni birlashtirish", "Masalani bo'lmasdan bir yo'la butunligicha yechish", "Masalaning bir qismini e'tiborsiz qoldirish", 'Bir xil masalani cheksiz takrorlash'],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-loop-2', 'difficulty': 0.0,
+            'category_ru': 'Циклы', 'category_uz': 'Sikllar',
+            'prompt_ru': 'Дано: i = 0; пока i < 10, выполнять: i = i + 2. Сколько раз выполнится тело цикла?',
+            'prompt_uz': "Berilgan: i = 0; toki i < 10 bo'lguncha bajarilsin: i = i + 2. Sikl tanasi necha marta bajariladi?",
+            'options_ru': ['5 раз', '4 раза', '10 раз', '6 раз'],
+            'options_uz': ['5 marta', '4 marta', '10 marta', '6 marta'],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-pseudocode-9', 'difficulty': 0.0,
+            'category_ru': 'Псевдокод', 'category_uz': 'Psevdokod',
+            'prompt_ru': 'В псевдокоде для проверки, положительно ли число n: "ЕСЛИ n ___ 0 ТО ВЫВЕСТИ \'положительное\'". Какой знак пропущен?',
+            'prompt_uz': 'n sonining musbat ekanini tekshirish psevdokodida: "AGAR n ___ 0 BO\'LSA \'musbat\' DEB CHIQARISH". Qaysi belgi tushirib qoldirilgan?',
+            'options_ru': ['>', '<', '=', 'MOD'],
+            'options_uz': ['>', '<', '=', 'MOD'],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-hashmap-2', 'difficulty': 0.0,
+            'category_ru': 'Структуры данных', 'category_uz': "Ma'lumotlar tuzilmalari",
+            'prompt_ru': 'В каком виде хеш-таблица (словарь) хранит данные?',
+            'prompt_uz': "Xesh-jadval (lug'at) ma'lumotlarni qanday saqlaydi?",
+            'options_ru': ['В виде пар «ключ — значение»', 'Только в виде упорядоченных чисел', 'Только в виде текстовых строк без ключей', 'В виде двумерной сетки'],
+            'options_uz': ['"Kalit — qiymat" juftliklari sifatida', 'Faqat tartiblangan sonlar sifatida', 'Faqat kalitsiz matn satrlari sifatida', "Ikki o'lchamli to'r sifatida"],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-complexity-2', 'difficulty': 0.0,
+            'category_ru': 'Сравнение эффективности', 'category_uz': 'Samaradorlikni solishtirish',
+            'prompt_ru': 'Нужно найти книгу на полке, где книги расставлены по алфавиту. Что быстрее: проверять каждую книгу подряд с самого начала, или сразу переходить к примерному разделу по нужной букве?',
+            'prompt_uz': "Kitoblar alifbo tartibida joylashgan tokchada kitob topish kerak. Qaysi biri tezroq: har bir kitobni boshidan ketma-ket tekshirishmi, yoki kerakli harf bo'yicha taxminiy bo'limga darhol o'tishmi?",
+            'options_ru': ['Сразу переходить к нужному разделу по букве (аналог бинарного поиска)', 'Проверять каждую книгу по порядку с самого начала', 'Оба способа одинаково быстры', 'Способ поиска не влияет на скорость'],
+            'options_uz': ["Harf bo'yicha kerakli bo'limga darhol o'tish (binar qidiruvga o'xshash)", 'Har bir kitobni boshidan ketma-ket tekshirish', 'Ikkala usul ham bir xil tezlikda', "Qidiruv usuli tezlikka ta'sir qilmaydi"],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-design-2', 'difficulty': 0.0,
+            'category_ru': 'Проектирование алгоритмов', 'category_uz': 'Algoritm loyihalash',
+            'prompt_ru': 'Каким обычно должен быть хороший первый шаг в проектировании алгоритма, прежде чем писать код?',
+            'prompt_uz': "Kod yozishdan oldin algoritm loyihalashda odatda qanday yaxshi birinchi qadam bo'lishi kerak?",
+            'options_ru': ['Чётко понять и сформулировать задачу: входные данные, выходные данные и ограничения', 'Сразу начать писать код без анализа задачи', 'Пропустить требования задачи полностью', 'Выбрать случайный язык программирования'],
+            'options_uz': ["Masalani aniq tushunish va shakllantirish: kirish ma'lumotlari, chiqish ma'lumotlari va cheklovlar", 'Masalani tahlil qilmasdan darhol kod yozishni boshlash', "Masala talablarini butunlay o'tkazib yuborish", 'Tasodifiy dasturlash tilini tanlash'],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-hashmap-3', 'difficulty': 0.1,
+            'category_ru': 'Структуры данных', 'category_uz': "Ma'lumotlar tuzilmalari",
+            'prompt_ru': 'В чём главное преимущество хеш-таблицы при поиске по сравнению с перебором неотсортированного массива?',
+            'prompt_uz': "Xesh-jadvalda qidirishning tartiblanmagan massivni to'liq ko'rib chiqishga nisbatan asosiy afzalligi nimada?",
+            'options_ru': ['Поиск по ключу в среднем происходит почти мгновенно, в отличие от последовательного просмотра массива', 'Хеш-таблица всегда медленнее массива', 'Хеш-таблица не может хранить числа', 'Хеш-таблица требует сортировки перед каждым поиском'],
+            'options_uz': ["Kalit bo'yicha qidirish o'rtacha deyarli bir zumda bo'ladi, massivni ketma-ket ko'rishdan farqli o'laroq", 'Xesh-jadval massivdan har doim sekinroq', 'Xesh-jadval sonlarni saqlay olmaydi', 'Xesh-jadval har bir qidiruvdan oldin saralashni talab qiladi'],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-sorting-10', 'difficulty': 0.1,
+            'category_ru': 'Алгоритмы сортировки', 'category_uz': 'Saralash algoritmlari',
+            'prompt_ru': 'Быстрая сортировка (Quicksort) обычно выбирает некий элемент и разбивает массив относительно него. Как называется этот элемент?',
+            'prompt_uz': "Tezkor saralash (Quicksort) odatda biror elementni tanlab, massivni shu elementga nisbatan bo'ladi. Bu element qanday ataladi?",
+            'options_ru': ['Опорный элемент (pivot)', 'Случайное число вне массива', 'Только первый и последний элементы одновременно', 'Сумма всех элементов'],
+            'options_uz': ['Tayanch element (pivot)', 'Massivdan tashqaridagi tasodifiy son', 'Faqat birinchi va oxirgi elementlar birga', "Barcha elementlar yig'indisi"],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-divide-conquer-4', 'difficulty': 0.1,
+            'category_ru': 'Разделяй и властвуй', 'category_uz': 'Ajrat va hukmronlik qil',
+            'prompt_ru': 'Бинарный поиск можно считать формой «разделяй и властвуй», потому что на каждом шаге он делает что?',
+            'prompt_uz': 'Binar qidiruvni "ajrat va hukmronlik qil" ning bir turi deb hisoblash mumkin, chunki u har bir qadamda nima qiladi?',
+            'options_ru': ['Делит область поиска пополам и продолжает искать только в нужной половине', 'Проверяет все элементы подряд без деления', 'Удваивает область поиска на каждом шаге', 'Всегда начинает поиск с первого элемента'],
+            'options_uz': ["Qidiruv sohasini ikkiga bo'lib, faqat kerakli yarmida qidirishda davom etadi", "Bo'linmasdan barcha elementlarni ketma-ket tekshiradi", 'Har bir qadamda qidiruv sohasini ikki barobar oshiradi', 'Har doim qidiruvni birinchi elementdan boshlaydi'],
+            'correct_indices': [0],
+        },
+        {
             'key': 'algorithmic-property-definiteness-1', 'difficulty': 0.2,
             'category_ru': 'Свойства алгоритма', 'category_uz': 'Algoritm xossalari',
             'prompt_ru': 'Что означает свойство результативности алгоритма?',
@@ -11942,19 +12278,40 @@ MCQ_QUESTIONS = {
             'correct_indices': [1],
         },
         {
-            'key': 'algorithmic-stack-1', 'difficulty': 0.1,
-            'category_ru': 'Структуры данных', 'category_uz': "Ma'lumotlar tuzilmalari",
-            'prompt_ru': 'По какому алгоритмическому правилу обрабатываются элементы в структуре данных Stack (Стек)?',
-            'prompt_uz': "Stack (Stek) ma'lumotlar tuzilmasida elementlar qaysi algoritmik qoida asosida qayta ishlanadi?",
-            'options_ru': [
-                'FIFO (First In, First Out — первый пришёл, первый вышел)', 'LIFO (Last In, First Out — последний пришёл, первый вышел)',
-                'В случайном порядке', 'Извлекаются только элементы из середины',
-            ],
-            'options_uz': [
-                'FIFO (First In, First Out - Birinchi kelgan, birinchi ketadi)', 'LIFO (Last In, First Out - Oxirgi kelgan, birinchi ketadi)',
-                'Tasodifiy tartibda', "Faqat o'rtadagi elementlar olinadi",
-            ],
-            'correct_indices': [1],
+            'key': 'algo-extra-loop-4', 'difficulty': 0.2,
+            'category_ru': 'Циклы', 'category_uz': 'Sikllar',
+            'prompt_ru': 'Сколько раз минимум выполнится тело цикла do-while, даже если условие изначально ложно?',
+            'prompt_uz': "Shart boshida yolg'on bo'lsa ham, do-while sikli tanasi kamida necha marta bajariladi?",
+            'options_ru': ['1 раз (минимум)', '0 раз', 'Бесконечно', 'Зависит от компилятора'],
+            'options_uz': ['1 marta (kamida)', '0 marta', 'Cheksiz', "Kompilyatorga bog'liq"],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-pseudocode-11', 'difficulty': 0.2,
+            'category_ru': 'Псевдокод', 'category_uz': 'Psevdokod',
+            'prompt_ru': 'Что нужно сделать в первую очередь, прежде чем обрабатывать список элементов в алгоритме?',
+            'prompt_uz': "Algoritmda elementlar ro'yxatini qayta ishlashdan oldin birinchi navbatda nima qilish kerak?",
+            'options_ru': ['Проверить, пуст ли список', 'Сразу начать обработку', 'Удалить список', 'Отсортировать список'],
+            'options_uz': ["Ro'yxat bo'shligini tekshirish", 'Darhol qayta ishlashni boshlash', "Ro'yxatni o'chirish", "Ro'yxatni saralash"],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-complexity-4', 'difficulty': 0.2,
+            'category_ru': 'Сравнение эффективности', 'category_uz': 'Samaradorlikni solishtirish',
+            'prompt_ru': 'Один и тот же алгоритм сортировки применяется к списку из 10 элементов и к списку из 10 миллионов элементов. Что верно в отношении затраченного времени?',
+            'prompt_uz': "Bir xil saralash algoritmi 10 ta elementli va 10 million elementli ro'yxatga qo'llanadi. Sarflangan vaqt haqida nima to'g'ri?",
+            'options_ru': ['Сортировка 10 миллионов элементов займёт больше времени, чем сортировка 10 элементов', 'Оба варианта займут одинаковое время', 'Сортировка 10 элементов займёт больше времени', 'Время выполнения не зависит от количества элементов'],
+            'options_uz': ["10 million elementni saralash 10 elementni saralashdan ko'proq vaqt oladi", 'Ikkalasi ham bir xil vaqt oladi', "10 elementni saralash ko'proq vaqt oladi", "Bajarilish vaqti elementlar soniga bog'liq emas"],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-design-4', 'difficulty': 0.2,
+            'category_ru': 'Проектирование алгоритмов', 'category_uz': 'Algoritm loyihalash',
+            'prompt_ru': 'Как лучше всего описать «эффективность алгоритма»?',
+            'prompt_uz': '"Algoritm samaradorligi" ni qanday ta\'riflash to\'g\'ri bo\'ladi?',
+            'options_ru': ['Насколько хорошо алгоритм использует ресурсы (время и память) при решении задачи', 'Насколько красиво оформлен код', 'Количество строк в коде программы', 'Название языка программирования'],
+            'options_uz': ['Algoritm masalani yechishda resurslardan (vaqt va xotiradan) qanchalik yaxshi foydalanishi', 'Kod qanchalik chiroyli bezalganligi', 'Dastur kodidagi qatorlar soni', 'Dasturlash tili nomi'],
+            'correct_indices': [0],
         },
         {
             'key': 'algorithmic-sequence-1', 'difficulty': 0.3,
@@ -11974,25 +12331,49 @@ MCQ_QUESTIONS = {
             'correct_indices': [1],
         },
         {
-            'key': 'algorithmic-conditional-1', 'difficulty': 0.4,
-            'category_ru': 'Условные операторы', 'category_uz': 'Shartli operatorlar',
-            'prompt_ru': (
-                '«Если урок начался и студент опоздал, пусть не заходит в аудиторию, иначе пусть садится на своё место.» '
-                'Студент не опоздал, но урок ещё не начался. Что он должен сделать согласно алгоритму?'
-            ),
-            'prompt_uz': (
-                '"Agar dars boshlangan bo\'lsa va talaba kechikkan bo\'lsa, u xonaga kirmasin, aks holda joyiga o\'tirsin." '
-                "Talaba kechikmadi, lekin dars hali boshlanmagan. Algoritmga ko'ra u nima qilishi kerak?"
-            ),
-            'options_ru': [
-                'Не должен заходить в аудиторию', 'Должен сесть на своё место',
-                'Должен подождать в коридоре', 'В алгоритме есть ошибка',
-            ],
-            'options_uz': [
-                'Xonaga kirmasligi kerak', "Joyiga o'tirishi kerak",
-                "Yo'lakda kutishi kerak", 'Algoritmda xatolik bor',
-            ],
-            'correct_indices': [1],
+            'key': 'algo-extra-decomposition-2', 'difficulty': 0.3,
+            'category_ru': 'Декомпозиция', 'category_uz': 'Dekompozitsiya',
+            'prompt_ru': 'Что такое «декомпозиция» в алгоритмическом мышлении?',
+            'prompt_uz': 'Algoritmik fikrlashda "dekompozitsiya" nima?',
+            'options_ru': ['Разбиение сложной задачи на более мелкие, управляемые подзадачи', 'Объединение нескольких простых задач в одну сложную', 'Удаление ненужного кода', 'Ускорение выполнения программы'],
+            'options_uz': ["Murakkab masalani kichikroq, boshqarish oson bo'lgan qism-masalalarga bo'lish", 'Bir nechta oddiy masalalarni bitta murakkabga birlashtirish', "Keraksiz kodni o'chirish", 'Dastur ishlash tezligini oshirish'],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-hashmap-5', 'difficulty': 0.3,
+            'category_ru': 'Структуры данных', 'category_uz': "Ma'lumotlar tuzilmalari",
+            'prompt_ru': 'Что такое «хеш-коллизия»?',
+            'prompt_uz': '"Xesh to\'qnashuvi" (hash collision) nima?',
+            'options_ru': ['Ситуация, когда два разных ключа отображаются в одно и то же место хеш-таблицы', 'Ошибка при удалении элемента', 'Переполнение памяти компьютера', 'Сортировка данных в обратном порядке'],
+            'options_uz': ['Ikki xil kalit xesh-jadvalning bir joyiga tushib qolishi holati', "Elementni o'chirishdagi xatolik", "Kompyuter xotirasining to'lib ketishi", "Ma'lumotlarni teskari tartibda saralash"],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-sorting-12', 'difficulty': 0.3,
+            'category_ru': 'Алгоритмы сортировки', 'category_uz': 'Saralash algoritmlari',
+            'prompt_ru': 'Что означает «устойчивость» (stability) сортировки?',
+            'prompt_uz': 'Saralashning "barqarorligi" (stability) nimani anglatadi?',
+            'options_ru': ['Элементы с одинаковыми ключами сохраняют свой первоначальный относительный порядок после сортировки', 'Алгоритм никогда не завершается', 'Сортировка происходит только один раз за всё время работы программы', 'Все элементы становятся одинаковыми'],
+            'options_uz': ["Bir xil kalitli elementlar saralashdan keyin o'zaro dastlabki nisbiy tartibini saqlaydi", 'Algoritm hech qachon tugamaydi', "Saralash dastur ishlashi davomida faqat bir marta bo'ladi", "Barcha elementlar bir xil bo'lib qoladi"],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-complexity-6', 'difficulty': 0.4,
+            'category_ru': 'Сравнение эффективности', 'category_uz': 'Samaradorlikni solishtirish',
+            'prompt_ru': 'Наивная рекурсивная функция вычисления чисел Фибоначчи многократно пересчитывает одни и те же подзадачи, что делает её намного медленнее итеративной версии для больших n. Какой приём устраняет эту неэффективность, сохраняя уже вычисленные результаты?',
+            'prompt_uz': "Fibonachchi sonlarini hisoblovchi soddalashtirilgan rekursiv funksiya bir xil qism-masalalarni ko'p marta qayta hisoblaydi, bu esa uni katta n larda iterativ versiyadan ancha sekinlashtiradi. Allaqachon hisoblangan natijalarni saqlab, bu samarasizlikni qaysi usul bartaraf etadi?",
+            'options_ru': ['Мемоизация (кэширование уже вычисленных результатов)', 'Увеличение количества циклов', 'Удаление базового случая рекурсии', 'Использование более длинных имён переменных'],
+            'options_uz': ['Memoizatsiya (allaqachon hisoblangan natijalarni keshlash)', 'Sikllar sonini oshirish', 'Rekursiyaning bazaviy holatini olib tashlash', "O'zgaruvchilarga uzunroq nom berish"],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-divide-conquer-7', 'difficulty': 0.4,
+            'category_ru': 'Разделяй и властвуй', 'category_uz': 'Ajrat va hukmronlik qil',
+            'prompt_ru': 'В сортировке слиянием после разбиения массива до отдельных элементов, что делает шаг «объединение» (combine)?',
+            'prompt_uz': 'Birlashtirib saralashda massiv alohida elementlargacha bo\'lingandan keyin "birlashtirish" (combine) qadami nima qiladi?',
+            'options_ru': ['Поочерёдно объединяет пары отсортированных подсписков во всё более крупные отсортированные подсписки, пока не останется один отсортированный список', 'Удаляет половину всех элементов', 'Сортирует элементы случайным образом заново', 'Оставляет массив разделённым навсегда'],
+            'options_uz': ["Saralangan qism-ro'yxatlar juftliklarini navbat bilan yiriklashtirib boradi, toki bitta saralangan ro'yxat qolguncha", "Barcha elementlarning yarmini o'chiradi", 'Elementlarni qaytadan tasodifiy tartibda saralaydi', "Massivni abadiy bo'lingan holda qoldiradi"],
+            'correct_indices': [0],
         },
         {
             'key': 'algorithmic-bubble-sort-1', 'difficulty': 0.5,
@@ -12010,42 +12391,130 @@ MCQ_QUESTIONS = {
             'correct_indices': [2],
         },
         {
-            'key': 'algorithmic-traffic-light-1', 'difficulty': 0.6,
-            'category_ru': 'Циклические процессы', 'category_uz': 'Davriy jarayonlar',
-            'prompt_ru': (
-                'Если алгоритм светофора выглядит так: Красный -> Жёлтый -> Зелёный -> Жёлтый -> Красный. '
-                'Какой цвет загорится при 11-й смене состояния (начальное состояние — Красный)?'
-            ),
-            'prompt_uz': (
-                "Agar svetofor algoritmi quyidagicha bo'lsa: Qizil -> Sariq -> Yashil -> Sariq -> Qizil. "
-                "Tizim 11-marta o'zgarganda qaysi rang yonadi (boshlang'ich holat - Qizil)?"
-            ),
-            'options_ru': ['Красный', 'Жёлтый', 'Зелёный', 'Светофор выключается'],
-            'options_uz': ['Qizil', 'Sariq', 'Yashil', "Svetofor o'chadi"],
-            'correct_indices': [1],
-        },
-        {
-            'key': 'algorithmic-weighing-1', 'difficulty': 0.7,
-            'category_ru': 'Оптимизация', 'category_uz': 'Optimallashtirish',
-            'prompt_ru': 'У вас есть 3 монеты, одна из них фальшивая (легче остальных). За какое минимальное число взвешиваний на чашечных весах можно точно найти фальшивую монету?',
-            'prompt_uz': "Sizda 3 ta tanga bor, ulardan biri soxta (yengilroq). Pallali tarozida minimal necha marta tortish orqali soxta tangani aniq topish mumkin?",
-            'options_ru': ['1 раз', '2 раза', '3 раза', 'Найти невозможно'],
-            'options_uz': ['1 marta', '2 marta', '3 marta', "Topib bo'lmaydi"],
+            'key': 'algo-extra-loop-7', 'difficulty': 0.5,
+            'category_ru': 'Циклы', 'category_uz': 'Sikllar',
+            'prompt_ru': 'Что делает оператор break внутри цикла?',
+            'prompt_uz': 'Sikl ichidagi break operatori nima qiladi?',
+            'options_ru': ['Немедленно прерывает выполнение цикла', 'Пропускает одну итерацию и продолжает', 'Перезапускает цикл сначала', 'Останавливает всю программу'],
+            'options_uz': ["Siklni darhol to'xtatadi", "Bitta iteratsiyani o'tkazib yuborib davom etadi", 'Siklni boshidan qayta boshlaydi', "Butun dasturni to'xtatadi"],
             'correct_indices': [0],
         },
         {
-            'key': 'algorithmic-binary-search-1', 'difficulty': 0.8,
+            'key': 'algo-extra-decomposition-4', 'difficulty': 0.5,
+            'category_ru': 'Декомпозиция', 'category_uz': 'Dekompozitsiya',
+            'prompt_ru': 'В чём главное преимущество декомпозиции при решении большой задачи?',
+            'prompt_uz': 'Katta masalani hal qilishda dekompozitsiyaning asosiy afzalligi nimada?',
+            'options_ru': ['Каждую часть проще разрабатывать, тестировать и отлаживать по отдельности', 'Задача становится длиннее и сложнее', 'Требуется больше памяти компьютера', 'Устраняется необходимость тестирования'],
+            'options_uz': ['Har bir qismni alohida ishlab chiqish, sinash va nosozliklarni tuzatish osonlashadi', "Masala uzunroq va murakkabroq bo'lib qoladi", "Kompyuter xotirasi ko'proq talab qilinadi", "Testlash zarurati yo'qoladi"],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-hashmap-7', 'difficulty': 0.5,
+            'category_ru': 'Структуры данных', 'category_uz': "Ma'lumotlar tuzilmalari",
+            'prompt_ru': 'Может ли хеш-таблица обычно содержать два одинаковых ключа?',
+            'prompt_uz': "Xesh-jadvalda odatda ikkita bir xil kalit bo'lishi mumkinmi?",
+            'options_ru': ['Нет, каждый ключ уникален — повторное присвоение перезаписывает значение', 'Да, ключи могут повторяться неограниченно', 'Да, но только для чисел', 'Это зависит только от количества элементов'],
+            'options_uz': ["Yo'q, har bir kalit yagona - qayta yozish avvalgi qiymatni almashtiradi", 'Ha, kalitlar cheksiz takrorlanishi mumkin', 'Ha, lekin faqat sonlar uchun', "Bu faqat elementlar soniga bog'liq"],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-searching-2', 'difficulty': 0.5,
             'category_ru': 'Алгоритмы поиска', 'category_uz': 'Qidiruv algoritmlari',
-            'prompt_ru': (
-                'Алгоритм поиска: у вас есть отсортированные числа от 1 до 100. Чтобы найти число 75 с помощью '
-                'бинарного поиска (деления пополам), какое число проверяется первым?'
-            ),
-            'prompt_uz': (
-                "Qidiruv algoritmi: Sizda 1 dan 100 gacha tartiblangan raqamlar bor. Binoriy qidiruv (o'rtadan bo'lish) "
-                "algoritmi orqali 75 sonini topish uchun birinchi bo'lib qaysi son tekshiriladi?"
-            ),
-            'options_ru': ['25', '50', '75', '1'], 'options_uz': ['25', '50', '75', '1'],
-            'correct_indices': [1],
+            'prompt_ru': 'Как линейный поиск проверяет элементы?',
+            'prompt_uz': 'Chiziqli qidiruv elementlarni qanday tekshiradi?',
+            'options_ru': ['По одному, начиная с начала, пока элемент не найден или список не закончится', 'Всегда начиная с середины', 'Только чётные позиции', 'В случайном порядке'],
+            'options_uz': ["Boshidan boshlab birma-bir, toki element topilguncha yoki ro'yxat tugaguncha", "Har doim o'rtadan boshlab", 'Faqat juft pozitsiyalarni', 'Tasodifiy tartibda'],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-design-7', 'difficulty': 0.5,
+            'category_ru': 'Проектирование алгоритмов', 'category_uz': 'Algoritm loyihalash',
+            'prompt_ru': '«Ручная прогонка» (dry run) алгоритма на бумаге с примерами значений перед написанием кода помогает чему?',
+            'prompt_uz': 'Kod yozishdan oldin algoritmni qog\'ozda misol qiymatlar bilan "qo\'lda sinab ko\'rish" (dry run) nimaga yordam beradi?',
+            'options_ru': ['Выявить логические ошибки на раннем этапе, до написания кода', 'Автоматически написать код за вас', 'Заменить необходимость тестирования программы', 'Ускорить работу процессора'],
+            'options_uz': ['Kod yozishdan oldin mantiqiy xatolarni erta bosqichda aniqlashga', 'Kodni siz uchun avtomatik yozishga', "Dasturni sinash zaruratini yo'qotishga", 'Protsessor ishlashini tezlashtirishga'],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-divide-conquer-9', 'difficulty': 0.6,
+            'category_ru': 'Разделяй и властвуй', 'category_uz': 'Ajrat va hukmronlik qil',
+            'prompt_ru': 'Шаг «разделение» в быстрой сортировке (quicksort) выбирает опорный элемент и разбивает массив так, чтобы...',
+            'prompt_uz': 'Tezkor saralashda (quicksort) "bo\'lish" qadami tayanch elementni tanlab, massivni shunday bo\'ladiki...',
+            'options_ru': ['Элементы меньше опорного значения оказываются с одной стороны, а больше — с другой', 'Все элементы становятся равными опорному значению', 'Массив полностью удаляется', 'Элементы перемешиваются случайным образом'],
+            'options_uz': ['Tayanch qiymatdan kichik elementlar bir tomonda, kattalari boshqa tomonda joylashadi', "Barcha elementlar tayanch qiymatga teng bo'lib qoladi", "Massiv butunlay o'chiriladi", 'Elementlar tasodifiy aralashtiriladi'],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-loop-9', 'difficulty': 0.7,
+            'category_ru': 'Циклы', 'category_uz': 'Sikllar',
+            'prompt_ru': 'Дано: sum = 0; для i от 1 до 4 выполнять: sum = sum + i * i. Чему равен sum после цикла?',
+            'prompt_uz': 'Berilgan: sum = 0; i = 1 dan 4 gacha bajarilsin: sum = sum + i * i. Sikldan keyin sum nechaga teng?',
+            'options_ru': ['30', '10', '24', '16'],
+            'options_uz': ['30', '10', '24', '16'],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-hashmap-9', 'difficulty': 0.7,
+            'category_ru': 'Структуры данных', 'category_uz': "Ma'lumotlar tuzilmalari",
+            'prompt_ru': 'Как обычно меняется скорость поиска в хеш-таблице при добавлении новых элементов, если хеш-функция хорошая и места достаточно?',
+            'prompt_uz': "Agar xesh-funksiya yaxshi bo'lsa va joy yetarli bo'lsa, yangi elementlar qo'shilganda xesh-jadvaldagi qidiruv tezligi odatda qanday o'zgaradi?",
+            'options_ru': ['Остаётся примерно постоянной в среднем', 'Линейно замедляется всегда', 'Мгновенно становится равной нулю', 'Всегда резко возрастает пропорционально квадрату'],
+            'options_uz': ["O'rtacha deyarli o'zgarmasdan qoladi", 'Har doim chiziqli sekinlashadi', 'Zumda nolga tushadi', 'Har doim kvadratga proportsional keskin oshadi'],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-searching-4', 'difficulty': 0.7,
+            'category_ru': 'Алгоритмы поиска', 'category_uz': 'Qidiruv algoritmlari',
+            'prompt_ru': 'Отсортированный список содержит 1000 элементов. Сколько сравнений потребуется бинарному поиску приблизительно в худшем случае (округлённо, log2(1000) ≈ 10)?',
+            'prompt_uz': "Saralangan ro'yxatda 1000 ta element bor. Binar qidiruvga eng yomon holatda taxminan necha marta solishtirish kerak bo'ladi (yaxlitlab, log2(1000) ≈ 10)?",
+            'options_ru': ['Около 10', 'Около 1000', 'Около 500', 'Всего 1'],
+            'options_uz': ['Taxminan 10', 'Taxminan 1000', 'Taxminan 500', 'Atigi 1'],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-complexity-9', 'difficulty': 0.7,
+            'category_ru': 'Сравнение эффективности', 'category_uz': 'Samaradorlikni solishtirish',
+            'prompt_ru': 'Алгоритм C работает за постоянное время O(1) независимо от входных данных, алгоритм D — за O(n). При экстремально больших входных данных какой из них в итоге окажется эффективнее?',
+            'prompt_uz': "C algoritmi kirish ma'lumotlaridan qat'i nazar O(1) doimiy vaqtda ishlaydi, D algoritmi esa O(n) da. Juda katta kirish ma'lumotlarida qaysi biri oxir-oqibat samaraliroq bo'ladi?",
+            'options_ru': ['Алгоритм C (O(1)) — его время не растёт с увеличением данных', 'Алгоритм D (O(n)) — он всегда эффективнее', 'Оба одинаково эффективны для больших входных данных', 'Сравнение невозможно без знания языка программирования'],
+            'options_uz': ["C algoritmi (O(1)) - uning vaqti ma'lumotlar ortishi bilan o'smaydi", 'D algoritmi (O(n)) - u har doim samaraliroq', "Ikkalasi ham katta kirish ma'lumotlarida bir xil samarali", 'Dasturlash tilini bilmasdan solishtirish mumkin emas'],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-debugging-2', 'difficulty': 0.7,
+            'category_ru': 'Отладка', 'category_uz': 'Nosozliklarni tuzatish',
+            'prompt_ru': 'Каков первый рекомендуемый шаг, когда программа выдаёт неожиданный результат?',
+            'prompt_uz': 'Dastur kutilmagan natija berganda birinchi tavsiya etiladigan qadam nima?',
+            'options_ru': ['Воспроизвести ошибку и точно определить, где результат расходится с ожидаемым', 'Сразу переписать всю программу с нуля', 'Игнорировать ошибку и надеяться, что она исчезнет', 'Удалить все комментарии в коде'],
+            'options_uz': ['Xatolikni qayta hosil qilib, natija kutilganidan aynan qayerda farq qilishini aniqlash', 'Darhol butun dasturni noldan qayta yozish', "Xatolikni e'tiborsiz qoldirib, o'z-o'zidan yo'qolishini kutish", "Koddagi barcha izohlarni o'chirish"],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-design-9', 'difficulty': 0.7,
+            'category_ru': 'Проектирование алгоритмов', 'category_uz': 'Algoritm loyihalash',
+            'prompt_ru': 'Какое определение лучше всего описывает «алгоритм»?',
+            'prompt_uz': 'Qaysi ta\'rif "algoritm" tushunchasini eng yaxshi tavsiflaydi?',
+            'options_ru': ['Конечная, чётко определённая последовательность шагов для решения конкретной задачи', 'Любой набор случайных инструкций без структуры', 'Только код, написанный на языке Python', 'Название программы на компьютере'],
+            'options_uz': ['Muayyan masalani yechish uchun chekli, aniq belgilangan qadamlar ketma-ketligi', "Tuzilmasiz istalgan tasodifiy ko'rsatmalar to'plami", 'Faqat Python tilida yozilgan kod', 'Kompyuterdagi dastur nomi'],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-decomposition-7', 'difficulty': 0.8,
+            'category_ru': 'Декомпозиция', 'category_uz': 'Dekompozitsiya',
+            'prompt_ru': 'Что из перечисленного НЕ является преимуществом декомпозиции задачи?',
+            'prompt_uz': 'Quyidagilardan qaysi biri masalani dekompozitsiya qilishning afzalligi EMAS?',
+            'options_ru': ['Упрощает повторное использование отдельных частей кода', 'Упрощает тестирование отдельных модулей', 'Позволяет разным людям работать над разными частями одновременно', 'Автоматически увеличивает общую сложность всей задачи'],
+            'options_uz': ['Kod qismlarini qayta ishlatishni osonlashtiradi', 'Alohida modullarni sinashni osonlashtiradi', 'Turli odamlarga turli qismlar ustida bir vaqtda ishlash imkonini beradi', 'Butun masalaning murakkabligini avtomatik oshiradi'],
+            'correct_indices': [3],
+        },
+        {
+            'key': 'algo-extra-searching-5', 'difficulty': 0.8,
+            'category_ru': 'Алгоритмы поиска', 'category_uz': 'Qidiruv algoritmlari',
+            'prompt_ru': 'Неотсортированный массив из 1000 элементов. Сколько сравнений максимум может потребоваться линейному поиску в худшем случае?',
+            'prompt_uz': "1000 ta elementli tartiblanmagan massiv bor. Chiziqli qidiruvga eng yomon holatda maksimal necha marta solishtirish kerak bo'lishi mumkin?",
+            'options_ru': ['1000', '10', 'В среднем всегда ровно 500', '1'],
+            'options_uz': ['1000', '10', "O'rtacha har doim aynan 500", '1'],
+            'correct_indices': [0],
         },
         {
             'key': 'algorithmic-recursion-2', 'difficulty': 0.9,
@@ -12062,207 +12531,39 @@ MCQ_QUESTIONS = {
             'correct_indices': [1],
         },
         {
-            'key': 'algorithmic-swap-1', 'difficulty': 1.0,
-            'category_ru': 'Практические алгоритмы', 'category_uz': 'Amaliy algoritmlar',
-            'prompt_ru': 'На каких математических операциях основан алгоритм обмена значений двух переменных без использования третьей вспомогательной переменной?',
-            'prompt_uz': "Ikki o'zgaruvchining qiymatini uchinchi qo'shimcha o'zgaruvchisiz almashtirish algoritmi qaysi matematik amallarga asoslanadi?",
-            'options_ru': ['Только умножение и деление', 'Сложение и вычитание (или операция XOR)', 'Только возведение в степень', 'Значения нельзя поменять местами'],
-            'options_uz': ['Faqat ko\'paytirish va bo\'lish', "Qo'shish va ayirish (yoki XOR amali)", 'Faqat darajaga ko\'tarish', "Qiymatlarni almashtirib bo'lmaydi"],
-            'correct_indices': [1],
-        },
-        {
-            'key': 'algorithmic-code-trace-1', 'difficulty': -0.1,
-            'category_ru': 'Трассировка кода', 'category_uz': 'Kod trassirovkasi',
-            'prompt_ru': (
-                'Определите результат следующего фрагмента кода: x = 10; y = 20; if (x > y) { x = x + 5; } '
-                'else { y = y + 5; } Каковы итоговые значения x и y?'
-            ),
-            'prompt_uz': (
-                'Quyidagi kod qismining natijasini aniqlang: x = 10; y = 20; if (x > y) { x = x + 5; } '
-                "else { y = y + 5; } Yakuniy x va y qiymatlari qancha?"
-            ),
-            'options_ru': ['x = 15, y = 20', 'x = 10, y = 20', 'x = 10, y = 25', 'x = 15, y = 25'],
-            'options_uz': ['x = 15, y = 20', 'x = 10, y = 20', 'x = 10, y = 25', 'x = 15, y = 25'],
-            'correct_indices': [2],
-        },
-            {
-            'key': 'algo-extra-trace-1', 'difficulty': -1.0,
-            'category_ru': 'Трассировка алгоритма', 'category_uz': 'Algoritmni kuzatish',
-            'prompt_ru': 'Дано: x = 2; x = x * 3; x = x + 4. Чему равен x в конце?',
-            'prompt_uz': "Berilgan: x = 2; x = x * 3; x = x + 4. Oxirida x nechaga teng bo'ladi?",
-            'options_ru': ['10', '9', '6', '14'],
-            'options_uz': ['10', '9', '6', '14'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-trace-2', 'difficulty': -0.9,
-            'category_ru': 'Трассировка алгоритма', 'category_uz': 'Algoritmni kuzatish',
-            'prompt_ru': 'Дано: a = 10; b = 3; a = a - b; b = a + b. Чему равно b в конце?',
-            'prompt_uz': "Berilgan: a = 10; b = 3; a = a - b; b = a + b. Oxirida b nechaga teng bo'ladi?",
-            'options_ru': ['10', '7', '3', '13'],
-            'options_uz': ['10', '7', '3', '13'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-trace-3', 'difficulty': -0.8,
-            'category_ru': 'Трассировка алгоритма', 'category_uz': 'Algoritmni kuzatish',
-            'prompt_ru': 'Дано: n = 4; n = n * n; n = n - 1. Чему равно n в конце?',
-            'prompt_uz': "Berilgan: n = 4; n = n * n; n = n - 1. Oxirida n nechaga teng bo'ladi?",
-            'options_ru': ['15', '16', '7', '12'],
-            'options_uz': ['15', '16', '7', '12'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-trace-4', 'difficulty': -0.7,
-            'category_ru': 'Трассировка алгоритма', 'category_uz': 'Algoritmni kuzatish',
-            'prompt_ru': 'Дано: s = "A"; s = s + "B"; s = s + "C". Какой будет итоговая строка s?',
-            'prompt_uz': 'Berilgan: s = "A"; s = s + "B"; s = s + "C". Yakuniy s satri qanday bo\'ladi?',
-            'options_ru': ['"ABC"', '"CBA"', '"AB"', '"BC"'],
-            'options_uz': ['"ABC"', '"CBA"', '"AB"', '"BC"'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-trace-5', 'difficulty': -0.6,
-            'category_ru': 'Трассировка алгоритма', 'category_uz': 'Algoritmni kuzatish',
-            'prompt_ru': 'Дано: k = 1; если k > 0, то k = k + 10, иначе k = k - 10. Чему равно k в конце?',
-            'prompt_uz': "Berilgan: k = 1; agar k > 0 bo'lsa, k = k + 10, aks holda k = k - 10. Oxirida k nechaga teng bo'ladi?",
-            'options_ru': ['11', '-9', '1', '10'],
-            'options_uz': ['11', '-9', '1', '10'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-trace-6', 'difficulty': -0.5,
-            'category_ru': 'Трассировка алгоритма', 'category_uz': 'Algoritmni kuzatish',
-            'prompt_ru': 'Дано: total = 0; total = total + 5; total = total * 2; total = total - 3. Чему равен total в конце?',
-            'prompt_uz': "Berilgan: total = 0; total = total + 5; total = total * 2; total = total - 3. Oxirida total nechaga teng bo'ladi?",
-            'options_ru': ['7', '10', '13', '2'],
-            'options_uz': ['7', '10', '13', '2'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-trace-7', 'difficulty': -0.4,
-            'category_ru': 'Трассировка алгоритма', 'category_uz': 'Algoritmni kuzatish',
-            'prompt_ru': 'Дано: p = 6; q = 2; r = p / q; r = r + 1. Чему равно r в конце?',
-            'prompt_uz': "Berilgan: p = 6; q = 2; r = p / q; r = r + 1. Oxirida r nechaga teng bo'ladi?",
-            'options_ru': ['4', '3', '8', '2'],
-            'options_uz': ['4', '3', '8', '2'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-trace-8', 'difficulty': -0.3,
-            'category_ru': 'Трассировка алгоритма', 'category_uz': 'Algoritmni kuzatish',
-            'prompt_ru': 'Дано: flag = истина; если не flag, то result = "A", иначе result = "B". Чему равен result?',
-            'prompt_uz': 'Berilgan: flag = rost; agar flag rost bo\'lmasa, result = "A", aks holda result = "B". result nimaga teng?',
-            'options_ru': ['"B"', '"A"', 'истина', 'ложь'],
-            'options_uz': ['"B"', '"A"', 'rost', "yolg'on"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-trace-9', 'difficulty': -0.2,
-            'category_ru': 'Трассировка алгоритма', 'category_uz': 'Algoritmni kuzatish',
-            'prompt_ru': 'Дано: count = 3; count = count + count; count = count - 1. Чему равен count в конце?',
-            'prompt_uz': "Berilgan: count = 3; count = count + count; count = count - 1. Oxirida count nechaga teng bo'ladi?",
-            'options_ru': ['5', '6', '4', '3'],
-            'options_uz': ['5', '6', '4', '3'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-trace-10', 'difficulty': -0.1,
-            'category_ru': 'Трассировка алгоритма', 'category_uz': 'Algoritmni kuzatish',
-            'prompt_ru': 'Дано: y = 5; для i от 1 до 3 выполнять: y = y + i. Чему равен y после цикла?',
-            'prompt_uz': 'Berilgan: y = 5; i = 1 dan 3 gacha bajarilsin: y = y + i. Sikldan keyin y nechaga teng?',
-            'options_ru': ['11', '8', '9', '14'],
-            'options_uz': ['11', '8', '9', '14'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-loop-2', 'difficulty': 0.0,
-            'category_ru': 'Циклы', 'category_uz': 'Sikllar',
-            'prompt_ru': 'Дано: i = 0; пока i < 10, выполнять: i = i + 2. Сколько раз выполнится тело цикла?',
-            'prompt_uz': "Berilgan: i = 0; toki i < 10 bo'lguncha bajarilsin: i = i + 2. Sikl tanasi necha marta bajariladi?",
-            'options_ru': ['5 раз', '4 раза', '10 раз', '6 раз'],
-            'options_uz': ['5 marta', '4 marta', '10 marta', '6 marta'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-loop-3', 'difficulty': 0.1,
-            'category_ru': 'Циклы', 'category_uz': 'Sikllar',
-            'prompt_ru': 'Цикл: для i от 1 до 5 с шагом 2 (то есть i = 1, 3, 5). Сколько итераций выполнится?',
-            'prompt_uz': "Sikl: i = 1 dan 5 gacha, qadam 2 bilan (ya'ni i = 1, 3, 5). Nechta iteratsiya bajariladi?",
-            'options_ru': ['3', '2', '5', '4'],
-            'options_uz': ['3', '2', '5', '4'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-loop-4', 'difficulty': 0.2,
-            'category_ru': 'Циклы', 'category_uz': 'Sikllar',
-            'prompt_ru': 'Сколько раз минимум выполнится тело цикла do-while, даже если условие изначально ложно?',
-            'prompt_uz': "Shart boshida yolg'on bo'lsa ham, do-while sikli tanasi kamida necha marta bajariladi?",
-            'options_ru': ['1 раз (минимум)', '0 раз', 'Бесконечно', 'Зависит от компилятора'],
-            'options_uz': ['1 marta (kamida)', '0 marta', 'Cheksiz', "Kompilyatorga bog'liq"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-loop-5', 'difficulty': 0.3,
-            'category_ru': 'Циклы', 'category_uz': 'Sikllar',
-            'prompt_ru': 'Внешний цикл выполняется 3 раза, а внутренний — 4 раза при каждом проходе внешнего. Сколько всего раз выполнится тело внутреннего цикла?',
-            'prompt_uz': 'Tashqi sikl 3 marta, ichki sikl esa har safar 4 marta bajariladi. Ichki sikl tanasi jami necha marta bajariladi?',
-            'options_ru': ['12', '7', '3', '4'],
-            'options_uz': ['12', '7', '3', '4'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-loop-6', 'difficulty': 0.4,
-            'category_ru': 'Циклы', 'category_uz': 'Sikllar',
-            'prompt_ru': 'Ошибка «на единицу» (off-by-one) в циклах чаще всего вызвана чем?',
-            'prompt_uz': 'Sikllardagi "bitta birlikka xato" (off-by-one) ko\'pincha nima sababli yuzaga keladi?',
-            'options_ru': ['Неверной границей цикла (например, < вместо <=)', 'Слишком быстрым процессором', 'Отсутствием переменных', 'Использованием рекурсии'],
-            'options_uz': ["Sikl chegarasining noto'g'ri qo'yilishi (masalan, < o'rniga <=)", 'Juda tez protsessor', "O'zgaruvchilarning yo'qligi", 'Rekursiyadan foydalanish'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-loop-7', 'difficulty': 0.5,
-            'category_ru': 'Циклы', 'category_uz': 'Sikllar',
-            'prompt_ru': 'Что делает оператор break внутри цикла?',
-            'prompt_uz': 'Sikl ichidagi break operatori nima qiladi?',
-            'options_ru': ['Немедленно прерывает выполнение цикла', 'Пропускает одну итерацию и продолжает', 'Перезапускает цикл сначала', 'Останавливает всю программу'],
-            'options_uz': ["Siklni darhol to'xtatadi", "Bitta iteratsiyani o'tkazib yuborib davom etadi", 'Siklni boshidan qayta boshlaydi', "Butun dasturni to'xtatadi"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-loop-8', 'difficulty': 0.6,
-            'category_ru': 'Циклы', 'category_uz': 'Sikllar',
-            'prompt_ru': 'Что делает оператор continue внутри цикла?',
-            'prompt_uz': 'Sikl ichidagi continue operatori nima qiladi?',
-            'options_ru': ['Пропускает оставшуюся часть текущей итерации и переходит к следующей', 'Полностью завершает цикл', 'Останавливает программу', 'Повторяет текущую итерацию бесконечно'],
-            'options_uz': ["Joriy iteratsiyaning qolgan qismini o'tkazib, keyingisiga o'tadi", 'Siklni butunlay tugatadi', "Dasturni to'xtatadi", 'Joriy iteratsiyani cheksiz takrorlaydi'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-loop-9', 'difficulty': 0.7,
-            'category_ru': 'Циклы', 'category_uz': 'Sikllar',
-            'prompt_ru': 'Дано: sum = 0; для i от 1 до 4 выполнять: sum = sum + i * i. Чему равен sum после цикла?',
-            'prompt_uz': 'Berilgan: sum = 0; i = 1 dan 4 gacha bajarilsin: sum = sum + i * i. Sikldan keyin sum nechaga teng?',
-            'options_ru': ['30', '10', '24', '16'],
-            'options_uz': ['30', '10', '24', '16'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-loop-10', 'difficulty': 0.8,
-            'category_ru': 'Циклы', 'category_uz': 'Sikllar',
-            'prompt_ru': 'Что произойдёт, если шаг приращения счётчика цикла равен 0, а условие выхода зависит только от этого счётчика?',
-            'prompt_uz': "Agar sikl hisoblagichining o'sish qadami 0 bo'lsa va chiqish sharti faqat shu hisoblagichga bog'liq bo'lsa, nima yuz beradi?",
-            'options_ru': ['Цикл станет бесконечным', 'Цикл выполнится один раз', 'Программа сразу завершится с ошибкой компиляции', 'Цикл выполнится ровно 10 раз'],
-            'options_uz': ["Sikl cheksiz bo'lib qoladi", 'Sikl bir marta bajariladi', 'Dastur darhol kompilyatsiya xatosi bilan tugaydi', 'Sikl aynan 10 marta bajariladi'],
-            'correct_indices': [0],
-        },
-        {
             'key': 'algo-extra-loop-11', 'difficulty': 0.9,
             'category_ru': 'Циклы', 'category_uz': 'Sikllar',
             'prompt_ru': 'Какой тип цикла лучше всего подходит, если заранее известно точное количество повторений?',
             'prompt_uz': "Takrorlanishlar soni oldindan aniq ma'lum bo'lsa, qaysi sikl turi eng mos keladi?",
             'options_ru': ['Цикл for (со счётчиком)', 'Цикл while со случайным условием', 'Рекурсия без базового случая', 'Бесконечный цикл'],
             'options_uz': ['For sikli (hisoblagich bilan)', 'Tasodifiy shartli while sikli', 'Bazaviy holatsiz rekursiya', 'Cheksiz sikl'],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-datastructure-3', 'difficulty': 0.9,
+            'category_ru': 'Выбор структуры данных', 'category_uz': "Ma'lumotlar tuzilmasini tanlash",
+            'prompt_ru': 'Нужно проверить, сбалансированы ли скобки в выражении, например «(a+(b*c))». Какая структура данных подойдёт лучше всего?',
+            'prompt_uz': '"(a+(b*c))" kabi ifodada qavslar muvozanatlanganligini tekshirish kerak. Qaysi tuzilma eng mos keladi?',
+            'options_ru': ['Стек', 'Очередь', 'Хеш-таблица', 'Массив без операций'],
+            'options_uz': ['Stek', 'Navbat', 'Xesh-jadval', 'Amalsiz massiv'],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-complexity-11', 'difficulty': 0.9,
+            'category_ru': 'Сравнение эффективности', 'category_uz': 'Samaradorlikni solishtirish',
+            'prompt_ru': 'Всегда ли алгоритм с более низкой временной сложностью — «лучший» выбор в любой практической ситуации (учитывая крошечные входные данные, использование памяти, простоту кода)?',
+            'prompt_uz': 'Vaqt murakkabligi past bo\'lgan algoritm har qanday amaliy vaziyatda (kichik kirish ma\'lumotlari, xotira sarfi, kod soddaligini hisobga olganda) har doim "eng yaxshi" tanlovmi?',
+            'options_ru': ['Нет — при малых объёмах данных или больших накладных расходах более простой алгоритм может оказаться практичнее', 'Да, всегда без исключений', 'Сложность алгоритма не имеет значения на практике', 'Более низкая сложность всегда означает более короткий код'],
+            'options_uz': ["Yo'q - kichik hajmdagi ma'lumotlarda yoki katta qo'shimcha xarajatlarda soddaroq algoritm amalda qulayroq bo'lishi mumkin", 'Ha, har doim istisnosiz', 'Algoritm murakkabligi amalda ahamiyatga ega emas', 'Pastroq murakkablik har doim qisqaroq kodni anglatadi'],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-debugging-4', 'difficulty': 0.9,
+            'category_ru': 'Отладка', 'category_uz': 'Nosozliklarni tuzatish',
+            'prompt_ru': 'В чём суть отладки «методом бинарного поиска» на большой программе?',
+            'prompt_uz': 'Katta dasturda "binar qidiruv usuli" bilan otladka qilishning mohiyati nimada?',
+            'options_ru': ['Сужение поиска ошибки, многократно проверяя примерно середину кода/выполнения — по аналогии с бинарным поиском', 'Проверка абсолютно каждой строки одновременно', 'Полное игнорирование структуры кода', 'Случайное изменение переменных без плана'],
+            'options_uz': ["Binar qidiruvga o'xshab, kod/bajarilishning taxminan o'rtasini qayta-qayta tekshirib, xato qidiruvini torayttirish", 'Mutlaqo har bir qatorni bir vaqtda tekshirish', "Kod tuzilishini butunlay e'tiborsiz qoldirish", "O'zgaruvchilarni rejasiz tasodifiy o'zgartirish"],
             'correct_indices': [0],
         },
         {
@@ -12275,21 +12576,66 @@ MCQ_QUESTIONS = {
             'correct_indices': [0],
         },
         {
-            'key': 'algo-extra-flowchart-3', 'difficulty': 1.1,
-            'category_ru': 'Блок-схемы', 'category_uz': 'Blok-sxemalar',
-            'prompt_ru': 'Что обычно обозначает овальная (скруглённая) фигура в блок-схеме?',
-            'prompt_uz': 'Blok-sxemadagi oval (yumaloqlangan) shakl odatda nimani bildiradi?',
-            'options_ru': ['Начало или конец алгоритма', 'Условие', 'Ввод данных', 'Цикл'],
-            'options_uz': ['Algoritmning boshlanishi yoki tugashi', 'Shart', "Ma'lumot kiritish", 'Sikl'],
+            'key': 'algo-extra-decomposition-9', 'difficulty': 1.0,
+            'category_ru': 'Декомпозиция', 'category_uz': 'Dekompozitsiya',
+            'prompt_ru': 'Что означает подход «снизу вверх» (bottom-up) при решении задачи?',
+            'prompt_uz': 'Masalani "pastdan yuqoriga" (bottom-up) yondashuvi bilan yechish nimani anglatadi?',
+            'options_ru': ['Начать с мелких составных частей и постепенно объединить их в полное решение', 'Начать с общей задачи и вовсе не разбивать её', 'Решить только половину задачи', 'Пропустить планирование задачи'],
+            'options_uz': ["Kichik tarkibiy qismlardan boshlab, ularni asta-sekin to'liq yechimga birlashtirish", "Umumiy masaladan boshlab, uni umuman bo'lmaslik", 'Masalaning faqat yarmini yechish', 'Masalani rejalashtirmaslik'],
             'correct_indices': [0],
         },
         {
-            'key': 'algo-extra-flowchart-4', 'difficulty': 1.2,
-            'category_ru': 'Блок-схемы', 'category_uz': 'Blok-sxemalar',
-            'prompt_ru': 'Что обычно обозначает параллелограмм в блок-схеме?',
-            'prompt_uz': 'Blok-sxemadagi parallelogramm odatda nimani bildiradi?',
-            'options_ru': ['Ввод или вывод данных', 'Начало алгоритма', 'Условие', 'Обработку данных'],
-            'options_uz': ["Ma'lumot kiritish yoki chiqarish", 'Algoritmning boshlanishi', 'Shart', "Ma'lumotni qayta ishlash"],
+            'key': 'algo-extra-searching-7', 'difficulty': 1.0,
+            'category_ru': 'Алгоритмы поиска', 'category_uz': 'Qidiruv algoritmlari',
+            'prompt_ru': 'Отсортированный массив [2, 4, 6, 8, 10, 12, 14] (индексы 0-6). Ищем число 8 с помощью бинарного поиска. Какой индекс проверяется первым и какое значение там находится?',
+            'prompt_uz': "Saralangan massiv [2, 4, 6, 8, 10, 12, 14] (indekslar 0-6). Binar qidiruv yordamida 8 sonini qidiryapmiz. Birinchi bo'lib qaysi indeks tekshiriladi va u yerda qanday qiymat bor?",
+            'options_ru': ['Индекс 3, значение 8', 'Индекс 0, значение 2', 'Индекс 6, значение 14', 'Индекс 4, значение 10'],
+            'options_uz': ['Indeks 3, qiymat 8', 'Indeks 0, qiymat 2', 'Indeks 6, qiymat 14', 'Indeks 4, qiymat 10'],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-bruteforce-3', 'difficulty': 1.1,
+            'category_ru': 'Стратегии решения задач', 'category_uz': 'Masala yechish strategiyalari',
+            'prompt_ru': 'Перебор всех возможных 4-значных PIN-кодов (от 0000 до 9999) по очереди, пока не подойдёт нужный, — пример чего?',
+            'prompt_uz': "0000 dan 9999 gacha bo'lgan barcha mumkin bo'lgan 4 xonali PIN-kodlarni mos kelguncha birma-bir sinab ko'rish - bu nimaning misoli?",
+            'options_ru': ['Полного перебора (brute force)', 'Бинарного поиска', 'Жадного алгоритма', 'Мемоизации'],
+            'options_uz': ["To'liq perebor (brute force)", 'Binar qidiruv', "Ochko'z algoritm", 'Memoizatsiya'],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-debugging-6', 'difficulty': 1.1,
+            'category_ru': 'Отладка', 'category_uz': 'Nosozliklarni tuzatish',
+            'prompt_ru': 'Как называется отладка, при которой значения переменных выводятся/логируются в ключевых точках кода для наблюдения за поведением программы?',
+            'prompt_uz': "Dastur xatti-harakatini kuzatish uchun kodning muhim nuqtalarida o'zgaruvchilar qiymatlarini chop etish/loglashga asoslangan otladka qanday ataladi?",
+            'options_ru': ['Отладка с помощью вывода/логирования значений переменных', 'Компиляция без запуска', 'Удаление файла с кодом', 'Изменение операционной системы'],
+            'options_uz': ["O'zgaruvchilar qiymatini chop etish/loglash orqali otladka", 'Ishga tushirmasdan kompilyatsiya qilish', "Kod faylini o'chirish", "Operatsion tizimni o'zgartirish"],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-array-list-3', 'difficulty': 1.2,
+            'category_ru': 'Структуры данных', 'category_uz': "Ma'lumotlar tuzilmalari",
+            'prompt_ru': 'Вставка элемента в середину — в каком случае обычно дешевле: в связном списке или в массиве?',
+            'prompt_uz': "Elementni o'rtaga qo'shish qaysi holatda odatda arzonroq: bog'langan ro'yxatdami yoki massivdami?",
+            'options_ru': ['В связном списке, так как не нужно сдвигать остальные элементы', 'В массиве, так как элементы неподвижны', 'Одинаково в обоих случаях', 'Ни в одном из них вставка невозможна'],
+            'options_uz': ["Bog'langan ro'yxatda, chunki qolgan elementlarni siljitish shart emas", "Massivda, chunki elementlar o'zgarmasdir", 'Ikkalasida ham bir xil', "Ikkalasida ham qo'shish mumkin emas"],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-datastructure-6', 'difficulty': 1.2,
+            'category_ru': 'Выбор структуры данных', 'category_uz': "Ma'lumotlar tuzilmasini tanlash",
+            'prompt_ru': 'Нужно хранить уникальные имена пользователей и быстро проверять, занято ли имя. Какая структура данных подойдёт лучше всего?',
+            'prompt_uz': 'Noyob foydalanuvchi nomlarini saqlash va nom band ekanligini tezda tekshirish kerak. Qaysi tuzilma eng mos keladi?',
+            'options_ru': ['Хеш-множество (Set)', 'Стек', 'Несортированный список с полным перебором каждый раз', 'Очередь'],
+            'options_uz': ["Xesh-to'plam (Set)", 'Stek', "Har safar to'liq ko'riladigan tartiblanmagan ro'yxat", 'Navbat'],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-searching-9', 'difficulty': 1.2,
+            'category_ru': 'Алгоритмы поиска', 'category_uz': 'Qidiruv algoritmlari',
+            'prompt_ru': 'Поиск имени в телефонной книге путём открытия примерно середины нужного диапазона и сужения поиска — повседневный пример чего?',
+            'prompt_uz': "Telefon kitobida kerakli oraliqning taxminan o'rtasini ochib, qidiruvni torayttirib borish - bu qaysi usulning kundalik misoli?",
+            'options_ru': ['Бинарного поиска', 'Линейного поиска', 'Пузырьковой сортировки', 'Рекурсии без базового случая'],
+            'options_uz': ['Binar qidiruvning', 'Chiziqli qidiruvning', "Ko'pikli saralashning", 'Bazaviy holatsiz rekursiyaning'],
             'correct_indices': [0],
         },
         {
@@ -12302,12 +12648,48 @@ MCQ_QUESTIONS = {
             'correct_indices': [0],
         },
         {
-            'key': 'algo-extra-flowchart-6', 'difficulty': 1.4,
-            'category_ru': 'Последовательность действий', 'category_uz': 'Ketma-ketlik',
-            'prompt_ru': 'Определите правильный порядок действий алгоритма чистки зубов: 1) Нанести зубную пасту на щётку. 2) Почистить зубы. 3) Смочить щётку водой. 4) Прополоскать рот.',
-            'prompt_uz': "Tish tozalash algoritmining to'g'ri ketma-ketligini aniqlang: 1) Cho'tkaga tish pastasini surtish. 2) Tishlarni tozalash. 3) Cho'tkani suv bilan ho'llash. 4) Og'izni chayish.",
-            'options_ru': ['3, 1, 2, 4', '1, 2, 3, 4', '4, 3, 1, 2', '2, 1, 3, 4'],
-            'options_uz': ['3, 1, 2, 4', '1, 2, 3, 4', '4, 3, 1, 2', '2, 1, 3, 4'],
+            'key': 'algo-extra-array-list-5', 'difficulty': 1.4,
+            'category_ru': 'Структуры данных', 'category_uz': "Ma'lumotlar tuzilmalari",
+            'prompt_ru': 'Размер массива во многих языках программирования фиксирован при создании. Что это означает для изменения размера?',
+            'prompt_uz': "Ko'plab dasturlash tillarida massiv o'lchami yaratilganda qat'iy belgilanadi. Bu o'lchamni o'zgartirish uchun nimani anglatadi?",
+            'options_ru': ['Для изменения размера часто нужно создать новый массив и скопировать элементы', 'Размер массива можно увеличивать бесплатно в любой момент', 'Массивы никогда не имеют ограничения по размеру', 'Массив автоматически удаляет лишние элементы'],
+            'options_uz': ["O'lchamni o'zgartirish uchun ko'pincha yangi massiv yaratib, elementlarni ko'chirish kerak bo'ladi", "Massiv o'lchamini istalgan vaqtda bepul oshirish mumkin", "Massivlar hech qachon o'lcham cheklovi bo'lmaydi", "Massiv ortiqcha elementlarni avtomatik o'chiradi"],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-datastructure-8', 'difficulty': 1.4,
+            'category_ru': 'Выбор структуры данных', 'category_uz': "Ma'lumotlar tuzilmasini tanlash",
+            'prompt_ru': 'Нужно управлять задачами по приоритету так, чтобы самая срочная всегда обрабатывалась первой, независимо от порядка поступления. Какая структура подойдёт?',
+            'prompt_uz': "Vazifalarni ustuvorlik bo'yicha boshqarish kerak, shunda kelish tartibidan qat'i nazar eng shoshilinchi vazifa doim birinchi bajariladi. Qaysi tuzilma mos keladi?",
+            'options_ru': ['Приоритетная очередь', 'Обычная очередь FIFO', 'Стек LIFO', 'Простой список без сортировки'],
+            'options_uz': ['Ustuvor navbat (priority queue)', 'Oddiy FIFO navbat', 'LIFO stek', "Saralanmagan oddiy ro'yxat"],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-searching-11', 'difficulty': 1.4,
+            'category_ru': 'Алгоритмы поиска', 'category_uz': 'Qidiruv algoritmlari',
+            'prompt_ru': 'Как обычно записывается алгоритмическая сложность бинарного поиска в нотации Big-O?',
+            'prompt_uz': 'Binar qidiruvning algoritmik murakkabligi Big-O yozuvida odatda qanday ifodalanadi?',
+            'options_ru': ['O(log n)', 'O(n)', 'O(n^2)', 'O(1) всегда, независимо от размера'],
+            'options_uz': ['O(log n)', 'O(n)', 'O(n^2)', "O(1), hajmdan qat'i nazar har doim"],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-bruteforce-6', 'difficulty': 1.4,
+            'category_ru': 'Стратегии решения задач', 'category_uz': 'Masala yechish strategiyalari',
+            'prompt_ru': 'За счёт чего оптимизированный алгоритм (например, бинарный поиск) обычно достигает высокой скорости?',
+            'prompt_uz': 'Optimallashtirilgan algoritm (masalan, binar qidiruv) odatda yuqori tezlikka nima hisobiga erishadi?',
+            'options_ru': ['Используя известные свойства данных (например, отсортированность), чтобы пропускать ненужные проверки', 'Проверяя абсолютно все возможные варианты подряд', 'Случайным образом угадывая ответ', 'Игнорируя входные данные полностью'],
+            'options_uz': ["Ma'lumotlarning ma'lum xususiyatlaridan (masalan, saralanganligidan) foydalanib, keraksiz tekshiruvlarni chetlab o'tish orqali", "Mutlaqo barcha mumkin bo'lgan variantlarni ketma-ket tekshirish orqali", 'Javobni tasodifiy taxmin qilish orqali', "Kirish ma'lumotlarini butunlay e'tiborsiz qoldirish orqali"],
+            'correct_indices': [0],
+        },
+        {
+            'key': 'algo-extra-debugging-9', 'difficulty': 1.4,
+            'category_ru': 'Отладка', 'category_uz': 'Nosozliklarni tuzatish',
+            'prompt_ru': 'Прежде чем считать, что логика алгоритма неверна, какую базовую проверку входных данных стоит сделать в первую очередь?',
+            'prompt_uz': "Algoritm mantig'i noto'g'ri deb hisoblashdan oldin kirish ma'lumotlari bo'yicha qanday asosiy tekshiruvni birinchi navbatda qilish kerak?",
+            'options_ru': ['Убедиться, что входные данные корректны и соответствуют ожиданиям', 'Сразу переписать алгоритм с нуля, не проверяя данные', 'Удалить все входные данные', 'Изменить язык программирования'],
+            'options_uz': ["Kirish ma'lumotlari to'g'ri va kutilganga mos ekanligiga ishonch hosil qilish", "Ma'lumotlarni tekshirmasdan algoritmni darhol noldan qayta yozish", "Barcha kirish ma'lumotlarini o'chirish", "Dasturlash tilini o'zgartirish"],
             'correct_indices': [0],
         },
         {
@@ -12329,480 +12711,12 @@ MCQ_QUESTIONS = {
             'correct_indices': [0],
         },
         {
-            'key': 'algo-extra-flowchart-9', 'difficulty': -1.0,
-            'category_ru': 'Блок-схемы', 'category_uz': 'Blok-sxemalar',
-            'prompt_ru': 'Сколько исходящих путей обычно имеет блок условия (ромб) в блок-схеме?',
-            'prompt_uz': "Blok-sxemadagi shart bloki (romb) odatda nechta chiquvchi yo'lga ega bo'ladi?",
-            'options_ru': ['Обычно 2 (да/нет)', 'Всегда 4', 'Только 1', 'Не менее 10'],
-            'options_uz': ["Odatda 2 ta (ha/yo'q)", 'Har doim 4 ta', 'Faqat 1 ta', 'Kamida 10 ta'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-flowchart-10', 'difficulty': -0.9,
-            'category_ru': 'Последовательность действий', 'category_uz': 'Ketma-ketlik',
-            'prompt_ru': 'Определите правильный порядок действий алгоритма приготовления бутерброда: 1) Положить начинку между 2 кусками хлеба. 2) Достать куски хлеба. 3) Намазать хлеб маслом. 4) Разрезать бутерброд пополам.',
-            'prompt_uz': "Sendvich tayyorlash algoritmining to'g'ri ketma-ketligini aniqlang: 1) Ichini 2 bo'lak non orasiga qo'yish. 2) Non bo'laklarini olish. 3) Nonga sariyog' surtish. 4) Sendvichni ikkiga bo'lish.",
-            'options_ru': ['2, 3, 1, 4', '1, 2, 3, 4', '4, 1, 2, 3', '3, 2, 1, 4'],
-            'options_uz': ['2, 3, 1, 4', '1, 2, 3, 4', '4, 1, 2, 3', '3, 2, 1, 4'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-flowchart-11', 'difficulty': -0.8,
-            'category_ru': 'Последовательность действий', 'category_uz': 'Ketma-ketlik',
-            'prompt_ru': 'Определите правильный порядок действий алгоритма снятия наличных в банкомате: 1) Вставить карту. 2) Ввести PIN-код. 3) Выбрать сумму. 4) Забрать наличные и карту.',
-            'prompt_uz': "Bankomatdan naqd pul olish algoritmining to'g'ri ketma-ketligini aniqlang: 1) Kartani solish. 2) PIN-kodni kiritish. 3) Summani tanlash. 4) Naqd pul va kartani olish.",
-            'options_ru': ['1, 2, 3, 4', '2, 1, 3, 4', '1, 3, 2, 4', '4, 1, 2, 3'],
-            'options_uz': ['1, 2, 3, 4', '2, 1, 3, 4', '1, 3, 2, 4', '4, 1, 2, 3'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-pseudocode-2', 'difficulty': -0.7,
-            'category_ru': 'Псевдокод', 'category_uz': 'Psevdokod',
-            'prompt_ru': 'В псевдокоде для нахождения большего из двух чисел: "ЕСЛИ a > b ТО max = a ___ max = b". Какое слово пропущено?',
-            'prompt_uz': 'Ikki sondan kattasini topish psevdokodida: "AGAR a > b BO\'LSA max = a ___ max = b". Qaysi so\'z tushirib qoldirilgan?',
-            'options_ru': ['ИНАЧЕ', 'ТО', 'ПОКА', 'КОНЕЦ'],
-            'options_uz': ['AKS HOLDA', "BO'LSA", 'TOKI', 'TUGADI'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-pseudocode-3', 'difficulty': -0.6,
-            'category_ru': 'Псевдокод', 'category_uz': 'Psevdokod',
-            'prompt_ru': 'Псевдокод для суммы чисел от 1 до N: "total = 0; ДЛЯ i ОТ 1 ДО N: total = total + ___". Что должно быть в пропуске?',
-            'prompt_uz': '1 dan N gacha sonlar yig\'indisi psevdokodi: "total = 0; i = 1 DAN N GACHA: total = total + ___". Bo\'sh joyga nima yoziladi?',
-            'options_ru': ['i', 'N', 'total', '1'],
-            'options_uz': ['i', 'N', 'total', '1'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-pseudocode-4', 'difficulty': -0.5,
-            'category_ru': 'Псевдокод', 'category_uz': 'Psevdokod',
-            'prompt_ru': 'Псевдокод: "ВВЕСТИ number; ЕСЛИ number MOD 2 = 0 ТО ВЫВЕСТИ \'чётное\' ИНАЧЕ ВЫВЕСТИ \'нечётное\'". Что делает этот алгоритм?',
-            'prompt_uz': 'Psevdokod: "number NI KIRITISH; AGAR number MOD 2 = 0 BO\'LSA \'juft\' DEB CHIQARISH AKS HOLDA \'toq\' DEB CHIQARISH". Bu algoritm nima qiladi?',
-            'options_ru': ['Определяет, чётное число или нечётное', 'Находит квадрат числа', 'Сортирует числа', 'Ищет число в списке'],
-            'options_uz': ['Sonning juft yoki toqligini aniqlaydi', 'Sonning kvadratini topadi', 'Sonlarni saralaydi', "Ro'yxatdan sonni qidiradi"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-pseudocode-5', 'difficulty': -0.4,
-            'category_ru': 'Псевдокод', 'category_uz': 'Psevdokod',
-            'prompt_ru': 'Псевдокод поиска максимума в массиве: "max = array[0]; ДЛЯ каждого элемента В массиве: ЕСЛИ элемент > max ТО max = элемент". Почему нужно начинать именно с array[0], а не с 0?',
-            'prompt_uz': 'Massivdan maksimumni topish psevdokodi: "max = array[0]; massivdagi har bir element UCHUN: AGAR element > max BO\'LSA max = element". Nima uchun 0 emas, aynan array[0] bilan boshlash kerak?',
-            'options_ru': ['Потому что все элементы массива могут быть отрицательными, и 0 не будет корректной начальной точкой', 'Потому что 0 — самое большое число', 'Потому что так короче писать код', 'Потому что array[0] всегда равен максимуму'],
-            'options_uz': ["Chunki massivning barcha elementlari manfiy bo'lishi mumkin va 0 to'g'ri boshlang'ich nuqta bo'lmaydi", 'Chunki 0 - eng katta son', 'Chunki shunday yozish qisqaroq', 'Chunki array[0] doim maksimumga teng'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-pseudocode-6', 'difficulty': -0.3,
-            'category_ru': 'Псевдокод', 'category_uz': 'Psevdokod',
-            'prompt_ru': 'Какой псевдокод корректно меняет местами значения a и b с помощью вспомогательной переменной temp?',
-            'prompt_uz': "Qaysi psevdokod temp yordamchi o'zgaruvchisi yordamida a va b qiymatlarini to'g'ri almashtiradi?",
-            'options_ru': ['temp = a; a = b; b = temp', 'a = b; b = a', 'temp = a; b = a; a = temp', 'a = temp; temp = b; b = a'],
-            'options_uz': ['temp = a; a = b; b = temp', 'a = b; b = a', 'temp = a; b = a; a = temp', 'a = temp; temp = b; b = a'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-pseudocode-7', 'difficulty': -0.2,
-            'category_ru': 'Псевдокод', 'category_uz': 'Psevdokod',
-            'prompt_ru': 'Определите правильный порядок шагов для вычисления среднего трёх чисел: 1) sum = a + b + c. 2) Ввести a, b, c. 3) average = sum / 3. 4) Вывести average.',
-            'prompt_uz': "Uchta sonning o'rtachasini hisoblash uchun qadamlarning to'g'ri ketma-ketligini aniqlang: 1) sum = a + b + c. 2) a, b, c ni kiritish. 3) average = sum / 3. 4) average ni chiqarish.",
-            'options_ru': ['2, 1, 3, 4', '1, 2, 3, 4', '2, 3, 1, 4', '4, 3, 2, 1'],
-            'options_uz': ['2, 1, 3, 4', '1, 2, 3, 4', '2, 3, 1, 4', '4, 3, 2, 1'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-pseudocode-8', 'difficulty': -0.1,
-            'category_ru': 'Псевдокод', 'category_uz': 'Psevdokod',
-            'prompt_ru': 'Псевдокод: "count = 1; ПОКА count <= 3: ВЫВЕСТИ count; count = count + 1". Что будет выведено?',
-            'prompt_uz': 'Psevdokod: "count = 1; TOKI count <= 3 BO\'LGUNCHA: count NI CHIQARISH; count = count + 1". Nima chiqariladi?',
-            'options_ru': ['1 2 3', '1 2 3 4', '3 2 1', 'Бесконечный вывод'],
-            'options_uz': ['1 2 3', '1 2 3 4', '3 2 1', 'Cheksiz chiqarish'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-pseudocode-9', 'difficulty': 0.0,
-            'category_ru': 'Псевдокод', 'category_uz': 'Psevdokod',
-            'prompt_ru': 'В псевдокоде для проверки, положительно ли число n: "ЕСЛИ n ___ 0 ТО ВЫВЕСТИ \'положительное\'". Какой знак пропущен?',
-            'prompt_uz': 'n sonining musbat ekanini tekshirish psevdokodida: "AGAR n ___ 0 BO\'LSA \'musbat\' DEB CHIQARISH". Qaysi belgi tushirib qoldirilgan?',
-            'options_ru': ['>', '<', '=', 'MOD'],
-            'options_uz': ['>', '<', '=', 'MOD'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-pseudocode-10', 'difficulty': 0.1,
-            'category_ru': 'Псевдокод', 'category_uz': 'Psevdokod',
-            'prompt_ru': 'Псевдокод: "count = 0; ДЛЯ каждого x В списке: ЕСЛИ x MOD 2 = 0 ТО count = count + 1". Что будет содержать count после выполнения цикла?',
-            'prompt_uz': 'Psevdokod: "count = 0; ro\'yxatdagi har bir x UCHUN: AGAR x MOD 2 = 0 BO\'LSA count = count + 1". Sikl tugagach count nimani saqlaydi?',
-            'options_ru': ['Количество чётных элементов в списке', 'Сумму всех элементов', 'Максимальный элемент', 'Количество нечётных элементов'],
-            'options_uz': ["Ro'yxatdagi juft elementlar sonini", "Barcha elementlar yig'indisini", 'Eng katta elementni', 'Toq elementlar sonini'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-pseudocode-11', 'difficulty': 0.2,
-            'category_ru': 'Псевдокод', 'category_uz': 'Psevdokod',
-            'prompt_ru': 'Что нужно сделать в первую очередь, прежде чем обрабатывать список элементов в алгоритме?',
-            'prompt_uz': "Algoritmda elementlar ro'yxatini qayta ishlashdan oldin birinchi navbatda nima qilish kerak?",
-            'options_ru': ['Проверить, пуст ли список', 'Сразу начать обработку', 'Удалить список', 'Отсортировать список'],
-            'options_uz': ["Ro'yxat bo'shligini tekshirish", 'Darhol qayta ishlashni boshlash', "Ro'yxatni o'chirish", "Ro'yxatni saralash"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-decomposition-2', 'difficulty': 0.3,
-            'category_ru': 'Декомпозиция', 'category_uz': 'Dekompozitsiya',
-            'prompt_ru': 'Что такое «декомпозиция» в алгоритмическом мышлении?',
-            'prompt_uz': 'Algoritmik fikrlashda "dekompozitsiya" nima?',
-            'options_ru': ['Разбиение сложной задачи на более мелкие, управляемые подзадачи', 'Объединение нескольких простых задач в одну сложную', 'Удаление ненужного кода', 'Ускорение выполнения программы'],
-            'options_uz': ["Murakkab masalani kichikroq, boshqarish oson bo'lgan qism-masalalarga bo'lish", 'Bir nechta oddiy masalalarni bitta murakkabga birlashtirish', "Keraksiz kodni o'chirish", 'Dastur ishlash tezligini oshirish'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-decomposition-3', 'difficulty': 0.4,
-            'category_ru': 'Декомпозиция', 'category_uz': 'Dekompozitsiya',
-            'prompt_ru': 'Вам нужно создать веб-сайт. Какой вариант лучше всего иллюстрирует декомпозицию задачи?',
-            'prompt_uz': "Sizga veb-sayt yaratish kerak. Qaysi variant vazifani dekompozitsiya qilishni eng yaxshi ko'rsatadi?",
-            'options_ru': ['Разделить задачу на дизайн, фронтенд, бэкенд, базу данных и тестирование', 'Написать весь код за один присест без плана', 'Поручить всю задачу одному человеку без разделения', 'Пропустить планирование и сразу запустить сайт'],
-            'options_uz': ["Vazifani dizayn, frontend, backend, ma'lumotlar bazasi va testlashga bo'lish", "Rejasiz butun kodni bir o'tirishda yozish", "Butun vazifani bir kishiga bo'linmagan holda topshirish", 'Rejalashtirmasdan saytni darhol ishga tushirish'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-decomposition-4', 'difficulty': 0.5,
-            'category_ru': 'Декомпозиция', 'category_uz': 'Dekompozitsiya',
-            'prompt_ru': 'В чём главное преимущество декомпозиции при решении большой задачи?',
-            'prompt_uz': 'Katta masalani hal qilishda dekompozitsiyaning asosiy afzalligi nimada?',
-            'options_ru': ['Каждую часть проще разрабатывать, тестировать и отлаживать по отдельности', 'Задача становится длиннее и сложнее', 'Требуется больше памяти компьютера', 'Устраняется необходимость тестирования'],
-            'options_uz': ['Har bir qismni alohida ishlab chiqish, sinash va nosozliklarni tuzatish osonlashadi', "Masala uzunroq va murakkabroq bo'lib qoladi", "Kompyuter xotirasi ko'proq talab qilinadi", "Testlash zarurati yo'qoladi"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-decomposition-5', 'difficulty': 0.6,
-            'category_ru': 'Декомпозиция', 'category_uz': 'Dekompozitsiya',
-            'prompt_ru': 'Вы готовите ужин из нескольких блюд. Какой подход правильно отражает декомпозицию задачи?',
-            'prompt_uz': "Siz bir nechta taomdan iborat kechki ovqat tayyorlayapsiz. Qaysi yondashuv vazifa dekompozitsiyasini to'g'ri aks ettiradi?",
-            'options_ru': ['Разбить на отдельные подзадачи для каждого блюда и скоординировать время приготовления', 'Готовить все блюда одновременно без плана', 'Приготовить только одно блюдо и подать его как всё меню', 'Игнорировать рецепты и готовить наугад'],
-            'options_uz': ["Har bir taom uchun alohida qism-vazifalarga bo'lib, tayyorlash vaqtini muvofiqlashtirish", 'Barcha taomlarni rejasiz bir vaqtda pishirish', 'Faqat bitta taom tayyorlab, uni butun menyu sifatida taqdim etish', "Retseptlarga e'tibor bermay, tasodifiy pishirish"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-decomposition-6', 'difficulty': 0.7,
-            'category_ru': 'Декомпозиция', 'category_uz': 'Dekompozitsiya',
-            'prompt_ru': 'Разбиение большой функции в программе на несколько маленьких вспомогательных функций — это пример чего?',
-            'prompt_uz': "Dasturdagi katta funksiyani bir nechta kichik yordamchi funksiyalarga bo'lish nimaning misoli?",
-            'options_ru': ['Декомпозиции (модульности)', 'Рекурсии', 'Бесконечного цикла', 'Утечки памяти'],
-            'options_uz': ['Dekompozitsiya (modullilik)', 'Rekursiya', 'Cheksiz sikl', 'Xotira sizib chiqishi'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-decomposition-7', 'difficulty': 0.8,
-            'category_ru': 'Декомпозиция', 'category_uz': 'Dekompozitsiya',
-            'prompt_ru': 'Что из перечисленного НЕ является преимуществом декомпозиции задачи?',
-            'prompt_uz': 'Quyidagilardan qaysi biri masalani dekompozitsiya qilishning afzalligi EMAS?',
-            'options_ru': ['Упрощает повторное использование отдельных частей кода', 'Упрощает тестирование отдельных модулей', 'Позволяет разным людям работать над разными частями одновременно', 'Автоматически увеличивает общую сложность всей задачи'],
-            'options_uz': ['Kod qismlarini qayta ishlatishni osonlashtiradi', 'Alohida modullarni sinashni osonlashtiradi', 'Turli odamlarga turli qismlar ustida bir vaqtda ishlash imkonini beradi', 'Butun masalaning murakkabligini avtomatik oshiradi'],
-            'correct_indices': [3],
-        },
-        {
-            'key': 'algo-extra-decomposition-8', 'difficulty': 0.9,
-            'category_ru': 'Декомпозиция', 'category_uz': 'Dekompozitsiya',
-            'prompt_ru': 'Что означает подход «сверху вниз» (top-down) при решении задачи?',
-            'prompt_uz': 'Masalani "yuqoridan pastga" (top-down) yondashuvi bilan yechish nimani anglatadi?',
-            'options_ru': ['Начать с общей задачи и постепенно разбивать её на более мелкие подзадачи', 'Начать с мельчайших деталей и объединять их в общую задачу', 'Решать задачу случайным образом', 'Игнорировать структуру задачи'],
-            'options_uz': ["Umumiy masaladan boshlab, uni asta-sekin kichikroq qism-masalalarga bo'lish", 'Eng mayda detallardan boshlab, ularni umumiy masalaga birlashtirish', 'Masalani tasodifiy tarzda yechish', "Masala tuzilishiga e'tibor bermaslik"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-decomposition-9', 'difficulty': 1.0,
-            'category_ru': 'Декомпозиция', 'category_uz': 'Dekompozitsiya',
-            'prompt_ru': 'Что означает подход «снизу вверх» (bottom-up) при решении задачи?',
-            'prompt_uz': 'Masalani "pastdan yuqoriga" (bottom-up) yondashuvi bilan yechish nimani anglatadi?',
-            'options_ru': ['Начать с мелких составных частей и постепенно объединить их в полное решение', 'Начать с общей задачи и вовсе не разбивать её', 'Решить только половину задачи', 'Пропустить планирование задачи'],
-            'options_uz': ["Kichik tarkibiy qismlardan boshlab, ularni asta-sekin to'liq yechimga birlashtirish", "Umumiy masaladan boshlab, uni umuman bo'lmaslik", 'Masalaning faqat yarmini yechish', 'Masalani rejalashtirmaslik'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-array-list-2', 'difficulty': 1.1,
-            'category_ru': 'Структуры данных', 'category_uz': "Ma'lumotlar tuzilmalari",
-            'prompt_ru': 'Как обычно соотносится скорость доступа к элементу по индексу (например, array[5]) в массиве и в связном списке?',
-            'prompt_uz': "Massivda va bog'langan ro'yxatda indeks bo'yicha elementga (masalan, array[5]) kirish tezligi odatda qanday farq qiladi?",
-            'options_ru': ['В массиве доступ мгновенный по индексу; в связном списке нужно последовательно пройти элементы', 'Оба варианта всегда одинаково быстры', 'Связный список всегда быстрее массива', 'Массив всегда медленнее списка'],
-            'options_uz': ["Massivda indeks bo'yicha kirish bir zumda bo'ladi; bog'langan ro'yxatda esa elementlarni ketma-ket o'tish kerak", 'Ikkalasi har doim bir xil tezlikda', "Bog'langan ro'yxat massivdan har doim tezroq", "Massiv ro'yxatdan har doim sekinroq"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-array-list-3', 'difficulty': 1.2,
-            'category_ru': 'Структуры данных', 'category_uz': "Ma'lumotlar tuzilmalari",
-            'prompt_ru': 'Вставка элемента в середину — в каком случае обычно дешевле: в связном списке или в массиве?',
-            'prompt_uz': "Elementni o'rtaga qo'shish qaysi holatda odatda arzonroq: bog'langan ro'yxatdami yoki massivdami?",
-            'options_ru': ['В связном списке, так как не нужно сдвигать остальные элементы', 'В массиве, так как элементы неподвижны', 'Одинаково в обоих случаях', 'Ни в одном из них вставка невозможна'],
-            'options_uz': ["Bog'langan ro'yxatda, chunki qolgan elementlarni siljitish shart emas", "Massivda, chunki elementlar o'zgarmasdir", 'Ikkalasida ham bir xil', "Ikkalasida ham qo'shish mumkin emas"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-array-list-4', 'difficulty': 1.3,
-            'category_ru': 'Структуры данных', 'category_uz': "Ma'lumotlar tuzilmalari",
-            'prompt_ru': 'Если вам часто нужен произвольный доступ по индексу и редко нужно вставлять/удалять элементы, какая структура подойдёт лучше?',
-            'prompt_uz': "Agar sizga tez-tez indeks bo'yicha tasodifiy kirish kerak bo'lsa va kamdan-kam qo'shish/o'chirish kerak bo'lsa, qaysi tuzilma yaxshiroq mos keladi?",
-            'options_ru': ['Массив', 'Связный список', 'Оба варианта одинаково плохи', 'Ни один из них не подходит'],
-            'options_uz': ['Massiv', "Bog'langan ro'yxat", 'Ikkalasi ham bir xil yomon', 'Ikkalasi ham mos kelmaydi'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-array-list-5', 'difficulty': 1.4,
-            'category_ru': 'Структуры данных', 'category_uz': "Ma'lumotlar tuzilmalari",
-            'prompt_ru': 'Размер массива во многих языках программирования фиксирован при создании. Что это означает для изменения размера?',
-            'prompt_uz': "Ko'plab dasturlash tillarida massiv o'lchami yaratilganda qat'iy belgilanadi. Bu o'lchamni o'zgartirish uchun nimani anglatadi?",
-            'options_ru': ['Для изменения размера часто нужно создать новый массив и скопировать элементы', 'Размер массива можно увеличивать бесплатно в любой момент', 'Массивы никогда не имеют ограничения по размеру', 'Массив автоматически удаляет лишние элементы'],
-            'options_uz': ["O'lchamni o'zgartirish uchun ko'pincha yangi massiv yaratib, elementlarni ko'chirish kerak bo'ladi", "Massiv o'lchamini istalgan vaqtda bepul oshirish mumkin", "Massivlar hech qachon o'lcham cheklovi bo'lmaydi", "Massiv ortiqcha elementlarni avtomatik o'chiradi"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-array-list-6', 'difficulty': 1.5,
-            'category_ru': 'Структуры данных', 'category_uz': "Ma'lumotlar tuzilmalari",
-            'prompt_ru': 'Какой сценарий лучше всего подходит для использования двумерного массива (матрицы)?',
-            'prompt_uz': "Ikki o'lchamli massiv (matritsa) dan foydalanish uchun qaysi holat eng mos keladi?",
-            'options_ru': ['Представление сетки данных, например шахматной доски или таблицы', 'Хранение единственного числа', 'Хранение случайного текста без структуры', 'Замена всех остальных структур данных'],
-            'options_uz': ["Ma'lumotlar to'rini ifodalash, masalan, shaxmat taxtasi yoki jadval", 'Bitta sonni saqlash', 'Tuzilmasiz tasodifiy matnni saqlash', 'Barcha boshqa tuzilmalarni almashtirish'],
-            'correct_indices': [0],
-        },
-        {
             'key': 'algo-extra-array-list-7', 'difficulty': 1.6,
             'category_ru': 'Структуры данных', 'category_uz': "Ma'lumotlar tuzilmalari",
             'prompt_ru': 'Удаление первого элемента большого массива (не связного списка) обычно требует чего?',
             'prompt_uz': "Katta massivning (bog'langan ro'yxat emas) birinchi elementini o'chirish odatda nimani talab qiladi?",
             'options_ru': ['Сдвига всех оставшихся элементов на одну позицию, что затратно для больших массивов', 'Мгновенного удаления без каких-либо затрат', 'Автоматического увеличения размера массива', 'Удаления всех элементов массива'],
             'options_uz': ['Qolgan barcha elementlarni bir pozitsiyaga siljitishni, bu katta massivlar uchun qimmatga tushadi', "Hech qanday xarajatsiz zumda o'chirishni", "Massiv o'lchamining avtomatik oshishini", "Massivning barcha elementlarini o'chirishni"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-array-list-8', 'difficulty': -1.0,
-            'category_ru': 'Структуры данных', 'category_uz': "Ma'lumotlar tuzilmalari",
-            'prompt_ru': 'Как лучше всего описать «массив»?',
-            'prompt_uz': '"Massiv" tushunchasini qanday ta\'riflash to\'g\'ri bo\'ladi?',
-            'options_ru': ['Упорядоченная коллекция элементов одного типа, хранящихся подряд и доступных по индексу', 'Набор случайных чисел без порядка', 'Единственная переменная', 'Функция, вызывающая саму себя'],
-            'options_uz': ["Bir xil turdagi elementlarning ketma-ket saqlanadigan va indeks orqali kirish mumkin bo'lgan tartiblangan to'plami", "Tartibsiz tasodifiy sonlar to'plami", "Yagona o'zgaruvchi", "O'z-o'zini chaqiruvchi funksiya"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-array-list-9', 'difficulty': -0.9,
-            'category_ru': 'Структуры данных', 'category_uz': "Ma'lumotlar tuzilmalari",
-            'prompt_ru': 'Какой индекс обычно имеет первый элемент массива в большинстве языков программирования?',
-            'prompt_uz': "Ko'pchilik dasturlash tillarida massivning birinchi elementi odatda qaysi indeksga ega bo'ladi?",
-            'options_ru': ['0', '1', '-1', '10'],
-            'options_uz': ['0', '1', '-1', '10'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-queue-2', 'difficulty': -0.8,
-            'category_ru': 'Структуры данных', 'category_uz': "Ma'lumotlar tuzilmalari",
-            'prompt_ru': 'По какому правилу обрабатываются элементы в структуре данных Queue (Очередь)?',
-            'prompt_uz': "Queue (Navbat) ma'lumotlar tuzilmasida elementlar qaysi qoida asosida qayta ishlanadi?",
-            'options_ru': ['FIFO (первый пришёл — первый вышел)', 'LIFO (последний пришёл — первый вышел)', 'В случайном порядке', 'Только по алфавиту'],
-            'options_uz': ['FIFO (birinchi kelgan, birinchi ketadi)', 'LIFO (oxirgi kelgan, birinchi ketadi)', 'Tasodifiy tartibda', 'Faqat alifbo tartibida'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-queue-3', 'difficulty': -0.7,
-            'category_ru': 'Структуры данных', 'category_uz': "Ma'lumotlar tuzilmalari",
-            'prompt_ru': 'Какой жизненный пример ведёт себя как очередь (Queue)?',
-            'prompt_uz': 'Qaysi hayotiy misol navbat (Queue) kabi harakat qiladi?',
-            'options_ru': ['Очередь людей в магазине', 'Стопка тарелок на столе', 'Список покупок в случайном порядке', 'Генеалогическое дерево семьи'],
-            'options_uz': ["Do'kondagi odamlar navbati", 'Stoldagi likopchalar uyumi', "Tasodifiy tartibdagi xarid ro'yxati", 'Oilaning avlodlar daraxti'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-stack-2', 'difficulty': -0.6,
-            'category_ru': 'Структуры данных', 'category_uz': "Ma'lumotlar tuzilmalari",
-            'prompt_ru': 'Какой жизненный пример ведёт себя как стек (Stack)?',
-            'prompt_uz': 'Qaysi hayotiy misol stek (Stack) kabi harakat qiladi?',
-            'options_ru': ['Стопка тарелок, из которой берут сверху', 'Очередь в кассу', 'Расписание поездов', 'Список контактов по алфавиту'],
-            'options_uz': ['Yuqoridan olinadigan likopchalar uyumi', 'Kassa navbati', 'Poyezdlar jadvali', "Alifbo tartibidagi kontaktlar ro'yxati"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-stack-3', 'difficulty': -0.5,
-            'category_ru': 'Структуры данных', 'category_uz': "Ma'lumotlar tuzilmalari",
-            'prompt_ru': 'Функция «отменить действие» (undo) в текстовых редакторах обычно реализуется с помощью какой структуры данных?',
-            'prompt_uz': 'Matn muharrirlaridagi "amalni bekor qilish" (undo) funksiyasi odatda qaysi ma\'lumotlar tuzilmasi yordamida amalga oshiriladi?',
-            'options_ru': ['Стек (последнее действие отменяется первым)', 'Очередь (FIFO)', 'Хеш-таблица', 'Двумерный массив'],
-            'options_uz': ['Stek (oxirgi amal birinchi bekor qilinadi)', 'Navbat (FIFO)', 'Xesh-jadval', "Ikki o'lchamli massiv"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-queue-4', 'difficulty': -0.4,
-            'category_ru': 'Структуры данных', 'category_uz': "Ma'lumotlar tuzilmalari",
-            'prompt_ru': 'Очередь заданий на печать (документы печатаются в порядке отправки) логически использует какую структуру?',
-            'prompt_uz': 'Bosib chiqarish navbati (hujjatlar yuborilgan tartibda chop etiladi) mantiqan qaysi tuzilmadan foydalanadi?',
-            'options_ru': ['Очередь (FIFO)', 'Стек (LIFO)', 'Дерево', 'Граф'],
-            'options_uz': ['Navbat (FIFO)', 'Stek (LIFO)', 'Daraxt', 'Graf'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-stack-4', 'difficulty': -0.3,
-            'category_ru': 'Структуры данных', 'category_uz': "Ma'lumotlar tuzilmalari",
-            'prompt_ru': 'Какая операция удаляет последний добавленный элемент в стеке?',
-            'prompt_uz': "Stekda oxirgi qo'shilgan elementni qaysi amal o'chiradi?",
-            'options_ru': ['Pop (извлечение верхнего элемента)', 'Enqueue', 'Dequeue', 'Sort'],
-            'options_uz': ['Pop (yuqoridagi elementni olish)', 'Enqueue', 'Dequeue', 'Sort'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-queue-5', 'difficulty': -0.2,
-            'category_ru': 'Структуры данных', 'category_uz': "Ma'lumotlar tuzilmalari",
-            'prompt_ru': 'Какая операция добавляет элемент в конец очереди?',
-            'prompt_uz': "Qaysi amal elementni navbat oxiriga qo'shadi?",
-            'options_ru': ['Enqueue (добавление в конец очереди)', 'Pop', 'Push', 'Dequeue'],
-            'options_uz': ["Enqueue (navbat oxiriga qo'shish)", 'Pop', 'Push', 'Dequeue'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-stack-5', 'difficulty': -0.1,
-            'category_ru': 'Структуры данных', 'category_uz': "Ma'lumotlar tuzilmalari",
-            'prompt_ru': 'История переходов при нажатии кнопки «назад» в браузере лучше всего моделируется какой структурой?',
-            'prompt_uz': 'Brauzerda "orqaga" tugmasi bosilganda sahifalar tarixi qaysi tuzilma bilan yaxshi modellashtiriladi?',
-            'options_ru': ['Стек', 'Очередь', 'Хеш-таблица', 'Дерево'],
-            'options_uz': ['Stek', 'Navbat', 'Xesh-jadval', 'Daraxt'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-hashmap-2', 'difficulty': 0.0,
-            'category_ru': 'Структуры данных', 'category_uz': "Ma'lumotlar tuzilmalari",
-            'prompt_ru': 'В каком виде хеш-таблица (словарь) хранит данные?',
-            'prompt_uz': "Xesh-jadval (lug'at) ma'lumotlarni qanday saqlaydi?",
-            'options_ru': ['В виде пар «ключ — значение»', 'Только в виде упорядоченных чисел', 'Только в виде текстовых строк без ключей', 'В виде двумерной сетки'],
-            'options_uz': ['"Kalit — qiymat" juftliklari sifatida', 'Faqat tartiblangan sonlar sifatida', 'Faqat kalitsiz matn satrlari sifatida', "Ikki o'lchamli to'r sifatida"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-hashmap-3', 'difficulty': 0.1,
-            'category_ru': 'Структуры данных', 'category_uz': "Ma'lumotlar tuzilmalari",
-            'prompt_ru': 'В чём главное преимущество хеш-таблицы при поиске по сравнению с перебором неотсортированного массива?',
-            'prompt_uz': "Xesh-jadvalda qidirishning tartiblanmagan massivni to'liq ko'rib chiqishga nisbatan asosiy afzalligi nimada?",
-            'options_ru': ['Поиск по ключу в среднем происходит почти мгновенно, в отличие от последовательного просмотра массива', 'Хеш-таблица всегда медленнее массива', 'Хеш-таблица не может хранить числа', 'Хеш-таблица требует сортировки перед каждым поиском'],
-            'options_uz': ["Kalit bo'yicha qidirish o'rtacha deyarli bir zumda bo'ladi, massivni ketma-ket ko'rishdan farqli o'laroq", 'Xesh-jadval massivdan har doim sekinroq', 'Xesh-jadval sonlarni saqlay olmaydi', 'Xesh-jadval har bir qidiruvdan oldin saralashni talab qiladi'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-hashmap-4', 'difficulty': 0.2,
-            'category_ru': 'Структуры данных', 'category_uz': "Ma'lumotlar tuzilmalari",
-            'prompt_ru': 'Нужно быстро проверять, есть ли номер телефона среди миллиона контактов. Какая структура данных подойдёт лучше всего?',
-            'prompt_uz': "Bir million kontakt orasida telefon raqami mavjudligini tezda tekshirish kerak. Qaysi ma'lumotlar tuzilmasi eng mos keladi?",
-            'options_ru': ['Хеш-таблица (или хеш-множество) для быстрого поиска', 'Несортированный массив с полным перебором', 'Стек', 'Очередь'],
-            'options_uz': ["Tez qidirish uchun xesh-jadval (yoki xesh-to'plam)", "To'liq ko'rib chiqiladigan tartiblanmagan massiv", 'Stek', 'Navbat'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-hashmap-5', 'difficulty': 0.3,
-            'category_ru': 'Структуры данных', 'category_uz': "Ma'lumotlar tuzilmalari",
-            'prompt_ru': 'Что такое «хеш-коллизия»?',
-            'prompt_uz': '"Xesh to\'qnashuvi" (hash collision) nima?',
-            'options_ru': ['Ситуация, когда два разных ключа отображаются в одно и то же место хеш-таблицы', 'Ошибка при удалении элемента', 'Переполнение памяти компьютера', 'Сортировка данных в обратном порядке'],
-            'options_uz': ['Ikki xil kalit xesh-jadvalning bir joyiga tushib qolishi holati', "Elementni o'chirishdagi xatolik", "Kompyuter xotirasining to'lib ketishi", "Ma'lumotlarni teskari tartibda saralash"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-hashmap-6', 'difficulty': 0.4,
-            'category_ru': 'Структуры данных', 'category_uz': "Ma'lumotlar tuzilmalari",
-            'prompt_ru': 'Какой сценарий лучше подходит для хеш-таблицы (словаря), а не для простого массива?',
-            'prompt_uz': "Oddiy massiv o'rniga xesh-jadval (lug'at) dan foydalanish uchun qaysi holat mosroq?",
-            'options_ru': ['Хранение данных, которые ищут по осмысленному ключу (например, подсчёт слов), а не по позиции', 'Хранение только последовательных чисел от 1 до N', 'Хранение единственного значения', 'Замена всех циклов в программе'],
-            'options_uz': ["Pozitsiya bo'yicha emas, mazmunli kalit bo'yicha izlanadigan ma'lumotlarni saqlash (masalan, so'zlarni sanash)", 'Faqat 1 dan N gacha ketma-ket sonlarni saqlash', 'Yagona qiymatni saqlash', 'Dasturdagi barcha sikllarni almashtirish'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-hashmap-7', 'difficulty': 0.5,
-            'category_ru': 'Структуры данных', 'category_uz': "Ma'lumotlar tuzilmalari",
-            'prompt_ru': 'Может ли хеш-таблица обычно содержать два одинаковых ключа?',
-            'prompt_uz': "Xesh-jadvalda odatda ikkita bir xil kalit bo'lishi mumkinmi?",
-            'options_ru': ['Нет, каждый ключ уникален — повторное присвоение перезаписывает значение', 'Да, ключи могут повторяться неограниченно', 'Да, но только для чисел', 'Это зависит только от количества элементов'],
-            'options_uz': ["Yo'q, har bir kalit yagona - qayta yozish avvalgi qiymatni almashtiradi", 'Ha, kalitlar cheksiz takrorlanishi mumkin', 'Ha, lekin faqat sonlar uchun', "Bu faqat elementlar soniga bog'liq"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-hashmap-8', 'difficulty': 0.6,
-            'category_ru': 'Структуры данных', 'category_uz': "Ma'lumotlar tuzilmalari",
-            'prompt_ru': 'Для подсчёта частоты каждого слова в большом тексте какая структура данных наиболее естественна и эффективна?',
-            'prompt_uz': "Katta matndagi har bir so'zning chastotasini sanash uchun qaysi tuzilma eng tabiiy va samarali?",
-            'options_ru': ['Хеш-таблица: слово → количество', 'Стек слов', 'Очередь символов', 'Двумерный массив без ключей'],
-            'options_uz': ["Xesh-jadval: so'z → soni", "So'zlar steki", 'Belgilar navbati', "Kalitsiz ikki o'lchamli massiv"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-hashmap-9', 'difficulty': 0.7,
-            'category_ru': 'Структуры данных', 'category_uz': "Ma'lumotlar tuzilmalari",
-            'prompt_ru': 'Как обычно меняется скорость поиска в хеш-таблице при добавлении новых элементов, если хеш-функция хорошая и места достаточно?',
-            'prompt_uz': "Agar xesh-funksiya yaxshi bo'lsa va joy yetarli bo'lsa, yangi elementlar qo'shilganda xesh-jadvaldagi qidiruv tezligi odatda qanday o'zgaradi?",
-            'options_ru': ['Остаётся примерно постоянной в среднем', 'Линейно замедляется всегда', 'Мгновенно становится равной нулю', 'Всегда резко возрастает пропорционально квадрату'],
-            'options_uz': ["O'rtacha deyarli o'zgarmasdan qoladi", 'Har doim chiziqli sekinlashadi', 'Zumda nolga tushadi', 'Har doim kvadratga proportsional keskin oshadi'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-datastructure-2', 'difficulty': 0.8,
-            'category_ru': 'Выбор структуры данных', 'category_uz': "Ma'lumotlar tuzilmasini tanlash",
-            'prompt_ru': 'Нужно обрабатывать заявки в службу поддержки строго в том порядке, в котором они поступили. Какая структура данных подойдёт?',
-            'prompt_uz': "Qo'llab-quvvatlash arizalarini aynan kelgan tartibida qayta ishlash kerak. Qaysi tuzilma mos keladi?",
-            'options_ru': ['Очередь', 'Стек', 'Хеш-таблица без порядка', 'Случайный набор'],
-            'options_uz': ['Navbat', 'Stek', 'Tartibsiz xesh-jadval', "Tasodifiy to'plam"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-datastructure-3', 'difficulty': 0.9,
-            'category_ru': 'Выбор структуры данных', 'category_uz': "Ma'lumotlar tuzilmasini tanlash",
-            'prompt_ru': 'Нужно проверить, сбалансированы ли скобки в выражении, например «(a+(b*c))». Какая структура данных подойдёт лучше всего?',
-            'prompt_uz': '"(a+(b*c))" kabi ifodada qavslar muvozanatlanganligini tekshirish kerak. Qaysi tuzilma eng mos keladi?',
-            'options_ru': ['Стек', 'Очередь', 'Хеш-таблица', 'Массив без операций'],
-            'options_uz': ['Stek', 'Navbat', 'Xesh-jadval', 'Amalsiz massiv'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-datastructure-4', 'difficulty': 1.0,
-            'category_ru': 'Выбор структуры данных', 'category_uz': "Ma'lumotlar tuzilmasini tanlash",
-            'prompt_ru': 'Нужно представить связи вида «друзья друзей» в социальной сети. Какая структура данных подойдёт лучше всего?',
-            'prompt_uz': 'Ijtimoiy tarmoqda "do\'stlarning do\'stlari" kabi bog\'lanishlarni ifodalash kerak. Qaysi tuzilma eng mos keladi?',
-            'options_ru': ['Граф', 'Стек', 'Очередь', 'Одномерный массив'],
-            'options_uz': ['Graf', 'Stek', 'Navbat', "Bir o'lchamli massiv"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-datastructure-5', 'difficulty': 1.1,
-            'category_ru': 'Выбор структуры данных', 'category_uz': "Ma'lumotlar tuzilmasini tanlash",
-            'prompt_ru': 'Нужно представить семейную родословную с отношениями «родитель — ребёнок». Какая структура данных подойдёт лучше всего?',
-            'prompt_uz': '"Ota-ona — farzand" munosabatlari bilan oilaviy shajarani ifodalash kerak. Qaysi tuzilma eng mos keladi?',
-            'options_ru': ['Дерево', 'Стек', 'Хеш-таблица без связей', 'Очередь'],
-            'options_uz': ['Daraxt', 'Stek', "Bog'lanishsiz xesh-jadval", 'Navbat'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-datastructure-6', 'difficulty': 1.2,
-            'category_ru': 'Выбор структуры данных', 'category_uz': "Ma'lumotlar tuzilmasini tanlash",
-            'prompt_ru': 'Нужно хранить уникальные имена пользователей и быстро проверять, занято ли имя. Какая структура данных подойдёт лучше всего?',
-            'prompt_uz': 'Noyob foydalanuvchi nomlarini saqlash va nom band ekanligini tezda tekshirish kerak. Qaysi tuzilma eng mos keladi?',
-            'options_ru': ['Хеш-множество (Set)', 'Стек', 'Несортированный список с полным перебором каждый раз', 'Очередь'],
-            'options_uz': ["Xesh-to'plam (Set)", 'Stek', "Har safar to'liq ko'riladigan tartiblanmagan ro'yxat", 'Navbat'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-datastructure-7', 'difficulty': 1.3,
-            'category_ru': 'Выбор структуры данных', 'category_uz': "Ma'lumotlar tuzilmasini tanlash",
-            'prompt_ru': 'Для функции отмены действия (undo) обычно нужен стек. А что обычно нужно дополнительно для повтора действия (redo)?',
-            'prompt_uz': "Amalni bekor qilish (undo) uchun odatda stek kerak. Amalni qaytarish (redo) uchun qo'shimcha odatda nima kerak bo'ladi?",
-            'options_ru': ['Ещё один стек — для хранения отменённых действий', 'Хеш-таблица без порядка', 'Только один стек без изменений', 'Очередь FIFO вместо стека'],
-            'options_uz': ['Bekor qilingan amallarni saqlash uchun yana bitta stek', 'Tartibsiz xesh-jadval', "O'zgarishsiz faqat bitta stek", "Stek o'rniga FIFO navbat"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-datastructure-8', 'difficulty': 1.4,
-            'category_ru': 'Выбор структуры данных', 'category_uz': "Ma'lumotlar tuzilmasini tanlash",
-            'prompt_ru': 'Нужно управлять задачами по приоритету так, чтобы самая срочная всегда обрабатывалась первой, независимо от порядка поступления. Какая структура подойдёт?',
-            'prompt_uz': "Vazifalarni ustuvorlik bo'yicha boshqarish kerak, shunda kelish tartibidan qat'i nazar eng shoshilinchi vazifa doim birinchi bajariladi. Qaysi tuzilma mos keladi?",
-            'options_ru': ['Приоритетная очередь', 'Обычная очередь FIFO', 'Стек LIFO', 'Простой список без сортировки'],
-            'options_uz': ['Ustuvor navbat (priority queue)', 'Oddiy FIFO navbat', 'LIFO stek', "Saralanmagan oddiy ro'yxat"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-datastructure-9', 'difficulty': 1.5,
-            'category_ru': 'Выбор структуры данных', 'category_uz': "Ma'lumotlar tuzilmasini tanlash",
-            'prompt_ru': 'Нужно быстро найти кратчайший путь между двумя городами на дорожной карте. Какая структура моделирует эту карту?',
-            'prompt_uz': "Yo'l xaritasida ikki shahar orasidagi eng qisqa yo'lni tezda topish kerak. Qaysi tuzilma bu xaritani modellashtiradi?",
-            'options_ru': ['Граф (города — вершины, дороги — рёбра)', 'Стек', 'Хеш-таблица без связей', 'Одномерный массив'],
-            'options_uz': ["Graf (shaharlar - uchlar, yo'llar - qirralar)", 'Stek', "Bog'lanishsiz xesh-jadval", "Bir o'lchamli massiv"],
             'correct_indices': [0],
         },
         {
@@ -12815,480 +12729,12 @@ MCQ_QUESTIONS = {
             'correct_indices': [0],
         },
         {
-            'key': 'algo-extra-datastructure-11', 'difficulty': -1.0,
-            'category_ru': 'Выбор структуры данных', 'category_uz': "Ma'lumotlar tuzilmasini tanlash",
-            'prompt_ru': 'Нужно хранить фиксированный список из 7 названий дней недели для многократного обращения по позиции. Какая простая структура подойдёт?',
-            'prompt_uz': "Pozitsiya bo'yicha ko'p marta murojaat qilish uchun 7 ta hafta kuni nomidan iborat qat'iy ro'yxatni saqlash kerak. Qaysi oddiy tuzilma mos keladi?",
-            'options_ru': ['Массив', 'Граф', 'Стек с постоянным изменением', 'Хеш-таблица с коллизиями'],
-            'options_uz': ['Massiv', 'Graf', "Doim o'zgarib turuvchi stek", "To'qnashuvli xesh-jadval"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-datastructure-12', 'difficulty': -0.9,
-            'category_ru': 'Выбор структуры данных', 'category_uz': "Ma'lumotlar tuzilmasini tanlash",
-            'prompt_ru': 'Нужно проверять соответствие открывающих и закрывающих тегов HTML. Какая структура данных подойдёт лучше всего?',
-            'prompt_uz': 'HTML dagi ochuvchi va yopuvchi teglar mosligini tekshirish kerak. Qaysi tuzilma eng mos keladi?',
-            'options_ru': ['Стек', 'Очередь', 'Хеш-таблица', 'Дерево без связей'],
-            'options_uz': ['Stek', 'Navbat', 'Xesh-jadval', "Bog'lanishsiz daraxt"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-datastructure-13', 'difficulty': -0.8,
-            'category_ru': 'Выбор структуры данных', 'category_uz': "Ma'lumotlar tuzilmasini tanlash",
-            'prompt_ru': 'Какая структура данных наиболее подходит для «списка ожидания», где первый записавшийся обслуживается первым?',
-            'prompt_uz': 'Birinchi yozilgan birinchi xizmat oladigan "kutish ro\'yxati" uchun qaysi tuzilma eng mos keladi?',
-            'options_ru': ['Очередь', 'Стек', 'Хеш-множество', 'Дерево'],
-            'options_uz': ['Navbat', 'Stek', "Xesh-to'plam", 'Daraxt'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-sorting-2', 'difficulty': -0.7,
-            'category_ru': 'Алгоритмы сортировки', 'category_uz': 'Saralash algoritmlari',
-            'prompt_ru': 'Что означает «отсортировать» массив?',
-            'prompt_uz': 'Massivni "saralash" nimani anglatadi?',
-            'options_ru': ['Расположить элементы в определённом порядке (по возрастанию или убыванию)', 'Удалить повторяющиеся элементы', 'Найти максимальный элемент', 'Разбить массив на две части'],
-            'options_uz': ["Elementlarni ma'lum tartibda (o'sish yoki kamayish bo'yicha) joylashtirish", "Takrorlanuvchi elementlarni o'chirish", 'Eng katta elementni topish', "Massivni ikkiga bo'lish"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-sorting-3', 'difficulty': -0.6,
-            'category_ru': 'Алгоритмы сортировки', 'category_uz': 'Saralash algoritmlari',
-            'prompt_ru': 'Дан массив [5, 2, 8, 1]. Каким он станет после сортировки по возрастанию?',
-            'prompt_uz': "[5, 2, 8, 1] massivi berilgan. O'sish tartibida saralangandan keyin u qanday bo'ladi?",
-            'options_ru': ['[1, 2, 5, 8]', '[8, 5, 2, 1]', '[2, 5, 1, 8]', '[1, 8, 2, 5]'],
-            'options_uz': ['[1, 2, 5, 8]', '[8, 5, 2, 1]', '[2, 5, 1, 8]', '[1, 8, 2, 5]'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-sorting-4', 'difficulty': -0.5,
-            'category_ru': 'Алгоритмы сортировки', 'category_uz': 'Saralash algoritmlari',
-            'prompt_ru': 'Дан массив [3, 3, 1, 2]. Каким он станет после сортировки по убыванию?',
-            'prompt_uz': "[3, 3, 1, 2] massivi berilgan. Kamayish tartibida saralangandan keyin u qanday bo'ladi?",
-            'options_ru': ['[3, 3, 2, 1]', '[1, 2, 3, 3]', '[3, 1, 3, 2]', '[2, 1, 3, 3]'],
-            'options_uz': ['[3, 3, 2, 1]', '[1, 2, 3, 3]', '[3, 1, 3, 2]', '[2, 1, 3, 3]'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-sorting-5', 'difficulty': -0.4,
-            'category_ru': 'Алгоритмы сортировки', 'category_uz': 'Saralash algoritmlari',
-            'prompt_ru': 'Что повторяет сортировка выбором (Selection sort) на каждом проходе?',
-            'prompt_uz': "Tanlash orqali saralash (Selection sort) har bir o'tishda nimani takrorlaydi?",
-            'options_ru': ['Находит минимальный (или максимальный) элемент оставшейся неотсортированной части и ставит его на нужное место', 'Случайным образом переставляет элементы', 'Удаляет половину элементов', 'Складывает все элементы вместе'],
-            'options_uz': ["Qolgan saralanmagan qismning eng kichik (yoki eng katta) elementini topib, uni kerakli joyga qo'yadi", "Elementlarni tasodifiy joylarga o'tkazadi", "Elementlarning yarmini o'chiradi", "Barcha elementlarni qo'shib chiqadi"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-sorting-6', 'difficulty': -0.3,
-            'category_ru': 'Алгоритмы сортировки', 'category_uz': 'Saralash algoritmlari',
-            'prompt_ru': 'Дан массив [4, 1, 3, 2]. Пузырьковая сортировка (Bubble sort) сравнивает соседние пары слева направо. Какой элемент гарантированно окажется на своём итоговом месте после ПЕРВОГО полного прохода?',
-            'prompt_uz': "[4, 1, 3, 2] massivi berilgan. Ko'pikli saralash (Bubble sort) qo'shni juftliklarni chapdan o'ngga solishtiradi. Birinchi to'liq o'tishdan keyin qaysi element kafolatlangan holda o'z yakuniy joyida bo'ladi?",
-            'options_ru': ['Самый большой элемент окажется в конце массива', 'Самый маленький элемент окажется в начале', 'Массив будет полностью отсортирован', 'Ни один элемент не будет на своём месте'],
-            'options_uz': ["Eng katta element massiv oxirida bo'ladi", "Eng kichik element boshida bo'ladi", "Massiv to'liq saralangan bo'ladi", "Birorta element o'z joyida bo'lmaydi"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-sorting-7', 'difficulty': -0.2,
-            'category_ru': 'Алгоритмы сортировки', 'category_uz': 'Saralash algoritmlari',
-            'prompt_ru': 'Какой из перечисленных алгоритмов обычно считается простым, но менее эффективным для больших данных по сравнению с более продвинутыми алгоритмами?',
-            'prompt_uz': "Quyidagilardan qaysi biri odatda oddiy, ammo katta ma'lumotlar uchun ilg'or algoritmlarga nisbatan kamroq samarali hisoblanadi?",
-            'options_ru': ['Пузырьковая сортировка (Bubble sort)', 'Быстрая сортировка (Quick sort)', 'Сортировка слиянием (Merge sort)', 'Пирамидальная сортировка (Heap sort)'],
-            'options_uz': ["Ko'pikli saralash (Bubble sort)", 'Tezkor saralash (Quick sort)', 'Birlashtirib saralash (Merge sort)', 'Uyum saralash (Heap sort)'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-sorting-8', 'difficulty': -0.1,
-            'category_ru': 'Алгоритмы сортировки', 'category_uz': 'Saralash algoritmlari',
-            'prompt_ru': 'На какой стратегии проектирования алгоритмов основана сортировка слиянием (Merge sort)?',
-            'prompt_uz': 'Birlashtirib saralash (Merge sort) qaysi algoritm loyihalash strategiyasiga asoslangan?',
-            'options_ru': ['Разделяй и властвуй (divide and conquer)', 'Жадный алгоритм', 'Полный перебор', 'Только динамическое программирование'],
-            'options_uz': ['Ajrat va hukmronlik qil (divide and conquer)', "Ochko'z (greedy) algoritm", "To'liq perebor", 'Faqat dinamik dasturlash'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-sorting-9', 'difficulty': 0.0,
-            'category_ru': 'Алгоритмы сортировки', 'category_uz': 'Saralash algoritmlari',
-            'prompt_ru': 'Если массив уже полностью отсортирован и к нему снова применить алгоритм сортировки, что произойдёт с порядком элементов?',
-            'prompt_uz': "Agar massiv allaqachon to'liq saralangan bo'lsa va unga yana saralash algoritmi qo'llanilsa, elementlar tartibiga nima bo'ladi?",
-            'options_ru': ['Порядок элементов останется тем же', 'Порядок обязательно изменится', 'Массив станет пустым', 'Появится ошибка выполнения'],
-            'options_uz': ["Elementlar tartibi o'zgarishsiz qoladi", "Tartib albatta o'zgaradi", "Massiv bo'sh bo'lib qoladi", "Bajarilish xatosi paydo bo'ladi"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-sorting-10', 'difficulty': 0.1,
-            'category_ru': 'Алгоритмы сортировки', 'category_uz': 'Saralash algoritmlari',
-            'prompt_ru': 'Быстрая сортировка (Quicksort) обычно выбирает некий элемент и разбивает массив относительно него. Как называется этот элемент?',
-            'prompt_uz': "Tezkor saralash (Quicksort) odatda biror elementni tanlab, massivni shu elementga nisbatan bo'ladi. Bu element qanday ataladi?",
-            'options_ru': ['Опорный элемент (pivot)', 'Случайное число вне массива', 'Только первый и последний элементы одновременно', 'Сумма всех элементов'],
-            'options_uz': ['Tayanch element (pivot)', 'Massivdan tashqaridagi tasodifiy son', 'Faqat birinchi va oxirgi elementlar birga', "Barcha elementlar yig'indisi"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-sorting-11', 'difficulty': 0.2,
-            'category_ru': 'Алгоритмы сортировки', 'category_uz': 'Saralash algoritmlari',
-            'prompt_ru': 'Для почти отсортированного небольшого массива какой алгоритм часто оказывается практически эффективным, несмотря на худшую теоретическую сложность в худшем случае?',
-            'prompt_uz': "Deyarli saralangan kichik massiv uchun eng yomon holatdagi nazariy murakkablik yomonroq bo'lsa ham qaysi algoritm amalda ko'pincha samarali bo'ladi?",
-            'options_ru': ['Сортировка вставками (Insertion sort)', 'Быстрая сортировка всегда быстрее в любом случае', 'Полностью случайная сортировка', 'Отсутствие сортировки'],
-            'options_uz': ['Kiritish orqali saralash (Insertion sort)', 'Tezkor saralash har doim va har qanday holatda tezroq', 'Butunlay tasodifiy saralash', "Saralashning yo'qligi"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-sorting-12', 'difficulty': 0.3,
-            'category_ru': 'Алгоритмы сортировки', 'category_uz': 'Saralash algoritmlari',
-            'prompt_ru': 'Что означает «устойчивость» (stability) сортировки?',
-            'prompt_uz': 'Saralashning "barqarorligi" (stability) nimani anglatadi?',
-            'options_ru': ['Элементы с одинаковыми ключами сохраняют свой первоначальный относительный порядок после сортировки', 'Алгоритм никогда не завершается', 'Сортировка происходит только один раз за всё время работы программы', 'Все элементы становятся одинаковыми'],
-            'options_uz': ["Bir xil kalitli elementlar saralashdan keyin o'zaro dastlabki nisbiy tartibini saqlaydi", 'Algoritm hech qachon tugamaydi', "Saralash dastur ishlashi davomida faqat bir marta bo'ladi", "Barcha elementlar bir xil bo'lib qoladi"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-sorting-13', 'difficulty': 0.4,
-            'category_ru': 'Алгоритмы сортировки', 'category_uz': 'Saralash algoritmlari',
-            'prompt_ru': 'Массив [9, 7, 5, 3, 1] — отсортирован ли он, и если да, то как?',
-            'prompt_uz': "[9, 7, 5, 3, 1] massivi saralanganmi, agar shunday bo'lsa, qanday tartibda?",
-            'options_ru': ['Да, отсортирован по убыванию', 'Да, отсортирован по возрастанию', 'Нет, не отсортирован', 'Невозможно определить'],
-            'options_uz': ['Ha, kamayish tartibida saralangan', "Ha, o'sish tartibida saralangan", "Yo'q, saralanmagan", "Aniqlab bo'lmaydi"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-searching-2', 'difficulty': 0.5,
-            'category_ru': 'Алгоритмы поиска', 'category_uz': 'Qidiruv algoritmlari',
-            'prompt_ru': 'Как линейный поиск проверяет элементы?',
-            'prompt_uz': 'Chiziqli qidiruv elementlarni qanday tekshiradi?',
-            'options_ru': ['По одному, начиная с начала, пока элемент не найден или список не закончится', 'Всегда начиная с середины', 'Только чётные позиции', 'В случайном порядке'],
-            'options_uz': ["Boshidan boshlab birma-bir, toki element topilguncha yoki ro'yxat tugaguncha", "Har doim o'rtadan boshlab", 'Faqat juft pozitsiyalarni', 'Tasodifiy tartibda'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-searching-3', 'difficulty': 0.6,
-            'category_ru': 'Алгоритмы поиска', 'category_uz': 'Qidiruv algoritmlari',
-            'prompt_ru': 'В каком состоянии заранее должны находиться данные, чтобы можно было применить бинарный поиск?',
-            'prompt_uz': "Binar qidiruvni qo'llash uchun ma'lumotlar oldindan qanday holatda bo'lishi kerak?",
-            'options_ru': ['Данные должны быть отсортированы', 'Данные могут быть в любом порядке', 'Данные обязательно без дубликатов', 'Данные только из чисел от 1 до 10'],
-            'options_uz': ["Ma'lumotlar saralangan bo'lishi kerak", "Ma'lumotlar istalgan tartibda bo'lishi mumkin", "Ma'lumotlarda albatta dublikat bo'lmasligi kerak", "Faqat 1 dan 10 gacha sonlar bo'lishi kerak"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-searching-4', 'difficulty': 0.7,
-            'category_ru': 'Алгоритмы поиска', 'category_uz': 'Qidiruv algoritmlari',
-            'prompt_ru': 'Отсортированный список содержит 1000 элементов. Сколько сравнений потребуется бинарному поиску приблизительно в худшем случае (округлённо, log2(1000) ≈ 10)?',
-            'prompt_uz': "Saralangan ro'yxatda 1000 ta element bor. Binar qidiruvga eng yomon holatda taxminan necha marta solishtirish kerak bo'ladi (yaxlitlab, log2(1000) ≈ 10)?",
-            'options_ru': ['Около 10', 'Около 1000', 'Около 500', 'Всего 1'],
-            'options_uz': ['Taxminan 10', 'Taxminan 1000', 'Taxminan 500', 'Atigi 1'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-searching-5', 'difficulty': 0.8,
-            'category_ru': 'Алгоритмы поиска', 'category_uz': 'Qidiruv algoritmlari',
-            'prompt_ru': 'Неотсортированный массив из 1000 элементов. Сколько сравнений максимум может потребоваться линейному поиску в худшем случае?',
-            'prompt_uz': "1000 ta elementli tartiblanmagan massiv bor. Chiziqli qidiruvga eng yomon holatda maksimal necha marta solishtirish kerak bo'lishi mumkin?",
-            'options_ru': ['1000', '10', 'В среднем всегда ровно 500', '1'],
-            'options_uz': ['1000', '10', "O'rtacha har doim aynan 500", '1'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-searching-6', 'difficulty': 0.9,
-            'category_ru': 'Алгоритмы поиска', 'category_uz': 'Qidiruv algoritmlari',
-            'prompt_ru': 'Почему бинарный поиск нельзя напрямую применить к неотсортированному списку?',
-            'prompt_uz': "Nima uchun binar qidiruvni tartiblanmagan ro'yxatga to'g'ridan-to'g'ri qo'llab bo'lmaydi?",
-            'options_ru': ['Потому что алгоритм основан на сравнении со средним элементом и отбрасывании половины — это работает только при гарантированном порядке', 'Потому что бинарный поиск работает только с текстом', 'Потому что бинарный поиск требует ровно 2 элемента', 'Бинарный поиск можно применить к любому списку без проблем'],
-            'options_uz': ["Chunki algoritm o'rtadagi element bilan solishtirib, yarmini tashlab yuborishga asoslangan - bu faqat tartib kafolatlangandagina ishlaydi", 'Chunki binar qidiruv faqat matn bilan ishlaydi', 'Chunki binar qidiruvga aynan 2 ta element kerak', "Binar qidiruvni istalgan ro'yxatga muammosiz qo'llash mumkin"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-searching-7', 'difficulty': 1.0,
-            'category_ru': 'Алгоритмы поиска', 'category_uz': 'Qidiruv algoritmlari',
-            'prompt_ru': 'Отсортированный массив [2, 4, 6, 8, 10, 12, 14] (индексы 0-6). Ищем число 8 с помощью бинарного поиска. Какой индекс проверяется первым и какое значение там находится?',
-            'prompt_uz': "Saralangan massiv [2, 4, 6, 8, 10, 12, 14] (indekslar 0-6). Binar qidiruv yordamida 8 sonini qidiryapmiz. Birinchi bo'lib qaysi indeks tekshiriladi va u yerda qanday qiymat bor?",
-            'options_ru': ['Индекс 3, значение 8', 'Индекс 0, значение 2', 'Индекс 6, значение 14', 'Индекс 4, значение 10'],
-            'options_uz': ['Indeks 3, qiymat 8', 'Indeks 0, qiymat 2', 'Indeks 6, qiymat 14', 'Indeks 4, qiymat 10'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-searching-8', 'difficulty': 1.1,
-            'category_ru': 'Алгоритмы поиска', 'category_uz': 'Qidiruv algoritmlari',
-            'prompt_ru': 'Какой поиск, как правило, быстрее на большом отсортированном наборе данных — линейный или бинарный?',
-            'prompt_uz': "Katta saralangan ma'lumotlar to'plamida odatda qaysi qidiruv tezroq - chiziqlimi yoki binarmi?",
-            'options_ru': ['Бинарный поиск', 'Линейный поиск всегда быстрее', 'Оба одинаково быстры при любом размере данных', 'Скорость не зависит от алгоритма'],
-            'options_uz': ['Binar qidiruv', 'Chiziqli qidiruv har doim tezroq', 'Ikkalasi har qanday hajmda bir xil tezlikda', "Tezlik algoritmga bog'liq emas"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-searching-9', 'difficulty': 1.2,
-            'category_ru': 'Алгоритмы поиска', 'category_uz': 'Qidiruv algoritmlari',
-            'prompt_ru': 'Поиск имени в телефонной книге путём открытия примерно середины нужного диапазона и сужения поиска — повседневный пример чего?',
-            'prompt_uz': "Telefon kitobida kerakli oraliqning taxminan o'rtasini ochib, qidiruvni torayttirib borish - bu qaysi usulning kundalik misoli?",
-            'options_ru': ['Бинарного поиска', 'Линейного поиска', 'Пузырьковой сортировки', 'Рекурсии без базового случая'],
-            'options_uz': ['Binar qidiruvning', 'Chiziqli qidiruvning', "Ko'pikli saralashning", 'Bazaviy holatsiz rekursiyaning'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-searching-10', 'difficulty': 1.3,
-            'category_ru': 'Алгоритмы поиска', 'category_uz': 'Qidiruv algoritmlari',
-            'prompt_ru': 'Элемента нет в отсортированном массиве из 1 000 000 элементов. Приблизительно сколько сравнений сделает бинарный поиск, прежде чем подтвердит его отсутствие (log2(1 000 000) ≈ 20)?',
-            'prompt_uz': "1 000 000 elementli saralangan massivda element yo'q. Binar qidiruv uning yo'qligini tasdiqlashdan oldin taxminan necha marta solishtiradi (log2(1 000 000) ≈ 20)?",
-            'options_ru': ['Около 20', 'Около 1 000 000', 'Ровно 2', 'Около 500 000'],
-            'options_uz': ['Taxminan 20', 'Taxminan 1 000 000', 'Aynan 2', 'Taxminan 500 000'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-searching-11', 'difficulty': 1.4,
-            'category_ru': 'Алгоритмы поиска', 'category_uz': 'Qidiruv algoritmlari',
-            'prompt_ru': 'Как обычно записывается алгоритмическая сложность бинарного поиска в нотации Big-O?',
-            'prompt_uz': 'Binar qidiruvning algoritmik murakkabligi Big-O yozuvida odatda qanday ifodalanadi?',
-            'options_ru': ['O(log n)', 'O(n)', 'O(n^2)', 'O(1) всегда, независимо от размера'],
-            'options_uz': ['O(log n)', 'O(n)', 'O(n^2)', "O(1), hajmdan qat'i nazar har doim"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-bigO-2', 'difficulty': 1.5,
-            'category_ru': 'Сложность алгоритмов', 'category_uz': 'Algoritm murakkabligi',
-            'prompt_ru': 'Что описывает нотация Big-O в контексте алгоритмов?',
-            'prompt_uz': 'Algoritmlar kontekstida Big-O yozuvi nimani ifodalaydi?',
-            'options_ru': ['Как растёт время выполнения (или используемые ресурсы) при увеличении размера входных данных', 'Точное время выполнения в секундах', 'Название языка программирования', 'Количество ошибок в коде'],
-            'options_uz': ["Kirish ma'lumotlari hajmi oshganda bajarilish vaqti (yoki resurs sarfi) qanday o'sishini", 'Sekundlardagi aniq bajarilish vaqtini', 'Dasturlash tili nomini', 'Koddagi xatolar sonini'],
-            'correct_indices': [0],
-        },
-        {
             'key': 'algo-extra-bigO-3', 'difficulty': 1.6,
             'category_ru': 'Сложность алгоритмов', 'category_uz': 'Algoritm murakkabligi',
             'prompt_ru': 'Какой из этих темпов роста при увеличении n обычно самый МЕДЛЕННЫЙ (наиболее эффективный)?',
             'prompt_uz': "n oshganda quyidagi o'sish sur'atlaridan qaysi biri odatda eng SEKIN (eng samarali)?",
             'options_ru': ['O(log n)', 'O(n)', 'O(n^2)', 'O(2^n)'],
             'options_uz': ['O(log n)', 'O(n)', 'O(n^2)', 'O(2^n)'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-bigO-4', 'difficulty': -1.0,
-            'category_ru': 'Сложность алгоритмов', 'category_uz': 'Algoritm murakkabligi',
-            'prompt_ru': 'Какой из этих темпов роста при больших n обычно считается САМЫМ БЫСТРЫМ (наименее эффективным)?',
-            'prompt_uz': "Katta n larda quyidagilardan qaysi biri odatda ENG TEZ (eng kam samarali) o'sish hisoblanadi?",
-            'options_ru': ['O(2^n) — экспоненциальный рост', 'O(log n)', 'O(1)', 'O(n)'],
-            'options_uz': ["O(2^n) - eksponensial o'sish", 'O(log n)', 'O(1)', 'O(n)'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-bigO-5', 'difficulty': -0.9,
-            'category_ru': 'Сложность алгоритмов', 'category_uz': 'Algoritm murakkabligi',
-            'prompt_ru': 'Что означает сложность O(1)?',
-            'prompt_uz': 'O(1) murakkabligi nimani anglatadi?',
-            'options_ru': ['Операция выполняется за постоянное время, независимо от размера входных данных', 'Время растёт пропорционально размеру данных', 'Время растёт в квадрате от размера данных', 'Операция всегда выполняется бесконечно'],
-            'options_uz': ["Amal kirish ma'lumotlari hajmidan qat'i nazar doimiy vaqtda bajariladi", "Vaqt ma'lumotlar hajmiga proportsional o'sadi", "Vaqt ma'lumotlar hajmining kvadratiga proportsional o'sadi", 'Amal har doim cheksiz bajariladi'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-bigO-6', 'difficulty': -0.8,
-            'category_ru': 'Сложность алгоритмов', 'category_uz': 'Algoritm murakkabligi',
-            'prompt_ru': 'Какова сложность обращения к конкретному элементу массива по его индексу?',
-            'prompt_uz': "Massivning ma'lum elementiga indeksi bo'yicha murojaat qilishning murakkabligi qanday?",
-            'options_ru': ['O(1)', 'O(n)', 'O(n^2)', 'O(log n)'],
-            'options_uz': ['O(1)', 'O(n)', 'O(n^2)', 'O(log n)'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-bigO-7', 'difficulty': -0.7,
-            'category_ru': 'Сложность алгоритмов', 'category_uz': 'Algoritm murakkabligi',
-            'prompt_ru': 'Какова сложность однократного просмотра каждого из n элементов списка ровно один раз?',
-            'prompt_uz': "Ro'yxatdagi n ta elementning har birini aynan bir marta ko'rib chiqishning murakkabligi qanday?",
-            'options_ru': ['O(n)', 'O(1)', 'O(n^2)', 'O(log n)'],
-            'options_uz': ['O(n)', 'O(1)', 'O(n^2)', 'O(log n)'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-bigO-8', 'difficulty': -0.6,
-            'category_ru': 'Сложность алгоритмов', 'category_uz': 'Algoritm murakkabligi',
-            'prompt_ru': 'Алгоритм с двумя вложенными циклами, каждый из которых проходит по тому же списку из n элементов, обычно имеет какую сложность?',
-            'prompt_uz': "Ikkalasi ham n elementli bir xil ro'yxat bo'ylab yuruvchi ikkita ichma-ich joylashgan siklga ega algoritm odatda qanday murakkablikka ega?",
-            'options_ru': ['O(n^2)', 'O(n)', 'O(log n)', 'O(1)'],
-            'options_uz': ['O(n^2)', 'O(n)', 'O(log n)', 'O(1)'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-bigO-9', 'difficulty': -0.5,
-            'category_ru': 'Сложность алгоритмов', 'category_uz': 'Algoritm murakkabligi',
-            'prompt_ru': 'Для очень больших n какой алгоритм в итоге будет работать быстрее: со сложностью O(n) или O(n^2)?',
-            'prompt_uz': 'Juda katta n lar uchun qaysi algoritm oxir-oqibat tezroq ishlaydi: O(n) murakkablikdagimi yoki O(n^2) murakkablikdagimi?',
-            'options_ru': ['Алгоритм с O(n)', 'Алгоритм с O(n^2)', 'Оба выполнятся за одинаковое время', 'Это зависит только от языка программирования'],
-            'options_uz': ["O(n) bo'lgan algoritm", "O(n^2) bo'lgan algoritm", 'Ikkalasi bir xil vaqtda bajariladi', "Bu faqat dasturlash tiliga bog'liq"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-bigO-10', 'difficulty': -0.4,
-            'category_ru': 'Сложность алгоритмов', 'category_uz': 'Algoritm murakkabligi',
-            'prompt_ru': 'Big-O чаще всего используется для описания какого случая производительности алгоритма?',
-            'prompt_uz': 'Big-O odatda algoritm ishlashining qaysi holatini tavsiflash uchun ishlatiladi?',
-            'options_ru': ['Чаще всего описывает наихудший случай выполнения', 'Всегда описывает только лучший случай', 'Big-O не связан со случаями выполнения вовсе', 'Всегда означает ровно 1 секунду выполнения'],
-            'options_uz': ["Ko'pincha eng yomon holatni tavsiflaydi", 'Har doim faqat eng yaxshi holatni tavsiflaydi', "Big-O bajarilish holatlari bilan umuman bog'liq emas", 'Har doim aynan 1 soniyalik bajarilishni bildiradi'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-bigO-11', 'difficulty': -0.3,
-            'category_ru': 'Сложность алгоритмов', 'category_uz': 'Algoritm murakkabligi',
-            'prompt_ru': 'Удвоение размера входных данных для алгоритма O(n) примерно удваивает время выполнения. А что происходит со временем выполнения алгоритма O(n^2) при удвоении размера входных данных?',
-            'prompt_uz': "O(n) algoritmi uchun kirish ma'lumotlari hajmini ikki barobar oshirish bajarilish vaqtini taxminan ikki barobar oshiradi. O(n^2) algoritmi uchun kirish hajmi ikki barobar oshsa, bajarilish vaqtiga nima bo'ladi?",
-            'options_ru': ['Увеличивает время примерно в 4 раза', 'Увеличивает время примерно в 2 раза, как и O(n)', 'Уменьшает время вдвое', 'Время не меняется'],
-            'options_uz': ['Vaqtni taxminan 4 barobar oshiradi', 'Vaqtni O(n) kabi taxminan 2 barobar oshiradi', 'Vaqtni ikki barobar kamaytiradi', "Vaqt o'zgarmaydi"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-bigO-12', 'difficulty': -0.2,
-            'category_ru': 'Сложность алгоритмов', 'category_uz': 'Algoritm murakkabligi',
-            'prompt_ru': 'Какая задача из повседневной жизни является примером поведения, близкого к сложности O(n)?',
-            'prompt_uz': "Kundalik hayotdagi qaysi vazifa O(n) murakkablikka yaqin xatti-harakatga misol bo'la oladi?",
-            'options_ru': ['Прочитать каждую страницу книги ровно один раз, от начала до конца', 'Найти конкретную страницу по номеру, сразу открыв её', 'Посчитать все возможные пары читателей библиотеки', 'Выполнить работу, не зависящую от объёма книги'],
-            'options_uz': ["Kitobning har bir sahifasini boshidan oxirigacha aynan bir marta o'qish", "Raqami bo'yicha kerakli sahifani darhol topib ochish", "Kutubxona o'quvchilarining barcha mumkin bo'lgan juftliklarini sanash", "Kitob hajmiga bog'liq bo'lmagan ishni bajarish"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-bigO-13', 'difficulty': -0.1,
-            'category_ru': 'Сложность алгоритмов', 'category_uz': 'Algoritm murakkabligi',
-            'prompt_ru': 'Сравнение каждой возможной пары элементов в списке из n элементов (n на n) ближе всего к какой сложности?',
-            'prompt_uz': "n ta elementli ro'yxatdagi har bir mumkin bo'lgan juftlikni solishtirish (n ga n) qaysi murakkablikka eng yaqin?",
-            'options_ru': ['O(n^2)', 'O(n)', 'O(log n)', 'O(1)'],
-            'options_uz': ['O(n^2)', 'O(n)', 'O(log n)', 'O(1)'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-complexity-2', 'difficulty': 0.0,
-            'category_ru': 'Сравнение эффективности', 'category_uz': 'Samaradorlikni solishtirish',
-            'prompt_ru': 'Нужно найти книгу на полке, где книги расставлены по алфавиту. Что быстрее: проверять каждую книгу подряд с самого начала, или сразу переходить к примерному разделу по нужной букве?',
-            'prompt_uz': "Kitoblar alifbo tartibida joylashgan tokchada kitob topish kerak. Qaysi biri tezroq: har bir kitobni boshidan ketma-ket tekshirishmi, yoki kerakli harf bo'yicha taxminiy bo'limga darhol o'tishmi?",
-            'options_ru': ['Сразу переходить к нужному разделу по букве (аналог бинарного поиска)', 'Проверять каждую книгу по порядку с самого начала', 'Оба способа одинаково быстры', 'Способ поиска не влияет на скорость'],
-            'options_uz': ["Harf bo'yicha kerakli bo'limga darhol o'tish (binar qidiruvga o'xshash)", 'Har bir kitobni boshidan ketma-ket tekshirish', 'Ikkala usul ham bir xil tezlikda', "Qidiruv usuli tezlikka ta'sir qilmaydi"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-complexity-3', 'difficulty': 0.1,
-            'category_ru': 'Сравнение эффективности', 'category_uz': 'Samaradorlikni solishtirish',
-            'prompt_ru': 'Алгоритм A решает задачу за O(n), алгоритм B — за O(n log n). Для очень больших n какой из них обычно быстрее?',
-            'prompt_uz': 'A algoritmi masalani O(n) da, B algoritmi esa O(n log n) da yechadi. Juda katta n lar uchun qaysi biri odatda tezroq?',
-            'options_ru': ['Алгоритм A (O(n))', 'Алгоритм B (O(n log n))', 'Оба работают одинаково быстро всегда', 'Это невозможно определить'],
-            'options_uz': ['A algoritmi (O(n))', 'B algoritmi (O(n log n))', 'Ikkalasi har doim bir xil tezlikda ishlaydi', "Buni aniqlab bo'lmaydi"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-complexity-4', 'difficulty': 0.2,
-            'category_ru': 'Сравнение эффективности', 'category_uz': 'Samaradorlikni solishtirish',
-            'prompt_ru': 'Один и тот же алгоритм сортировки применяется к списку из 10 элементов и к списку из 10 миллионов элементов. Что верно в отношении затраченного времени?',
-            'prompt_uz': "Bir xil saralash algoritmi 10 ta elementli va 10 million elementli ro'yxatga qo'llanadi. Sarflangan vaqt haqida nima to'g'ri?",
-            'options_ru': ['Сортировка 10 миллионов элементов займёт больше времени, чем сортировка 10 элементов', 'Оба варианта займут одинаковое время', 'Сортировка 10 элементов займёт больше времени', 'Время выполнения не зависит от количества элементов'],
-            'options_uz': ["10 million elementni saralash 10 elementni saralashdan ko'proq vaqt oladi", 'Ikkalasi ham bir xil vaqt oladi', "10 elementni saralash ko'proq vaqt oladi", "Bajarilish vaqti elementlar soniga bog'liq emas"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-complexity-5', 'difficulty': 0.3,
-            'category_ru': 'Сравнение эффективности', 'category_uz': 'Samaradorlikni solishtirish',
-            'prompt_ru': 'Нужно проверить, есть ли значение среди миллиона элементов. Что обычно быстрее: поиск в хеш-множестве или в несортированном массиве?',
-            'prompt_uz': "Bir million element orasida qiymat borligini tekshirish kerak. Odatda qaysi biri tezroq: xesh-to'plamda qidirishmi yoki tartiblanmagan massivda qidirishmi?",
-            'options_ru': ['Поиск в хеш-множестве (в среднем почти мгновенно)', 'Поиск в несортированном массиве', 'Оба одинаково быстры', 'Это зависит только от языка программирования'],
-            'options_uz': ["Xesh-to'plamda qidirish (o'rtacha deyarli bir zumda)", 'Tartiblanmagan massivda qidirish', 'Ikkalasi bir xil tez', "Bu faqat dasturlash tiliga bog'liq"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-complexity-6', 'difficulty': 0.4,
-            'category_ru': 'Сравнение эффективности', 'category_uz': 'Samaradorlikni solishtirish',
-            'prompt_ru': 'Наивная рекурсивная функция вычисления чисел Фибоначчи многократно пересчитывает одни и те же подзадачи, что делает её намного медленнее итеративной версии для больших n. Какой приём устраняет эту неэффективность, сохраняя уже вычисленные результаты?',
-            'prompt_uz': "Fibonachchi sonlarini hisoblovchi soddalashtirilgan rekursiv funksiya bir xil qism-masalalarni ko'p marta qayta hisoblaydi, bu esa uni katta n larda iterativ versiyadan ancha sekinlashtiradi. Allaqachon hisoblangan natijalarni saqlab, bu samarasizlikni qaysi usul bartaraf etadi?",
-            'options_ru': ['Мемоизация (кэширование уже вычисленных результатов)', 'Увеличение количества циклов', 'Удаление базового случая рекурсии', 'Использование более длинных имён переменных'],
-            'options_uz': ['Memoizatsiya (allaqachon hisoblangan natijalarni keshlash)', 'Sikllar sonini oshirish', 'Rekursiyaning bazaviy holatini olib tashlash', "O'zgaruvchilarga uzunroq nom berish"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-complexity-7', 'difficulty': 0.5,
-            'category_ru': 'Сравнение эффективности', 'category_uz': 'Samaradorlikni solishtirish',
-            'prompt_ru': 'Что обычно эффективнее для большого объёма данных: отсортировать список один раз и затем выполнить 1000 бинарных поисков, или выполнить 1000 линейных поисков по неотсортированному списку?',
-            'prompt_uz': "Katta hajmdagi ma'lumotlar uchun odatda qaysi biri samaraliroq: ro'yxatni bir marta saralab, keyin 1000 marta binar qidiruv o'tkazishmi, yoki tartiblanmagan ro'yxatda 1000 marta chiziqli qidiruv o'tkazishmi?",
-            'options_ru': ['Отсортировать один раз и затем использовать бинарный поиск', 'Использовать линейный поиск 1000 раз без сортировки', 'Оба варианта требуют одинакового времени', 'Сортировка никогда не бывает полезной'],
-            'options_uz': ["Bir marta saralab, so'ng binar qidiruvdan foydalanish", 'Saralamasdan 1000 marta chiziqli qidiruvdan foydalanish', 'Ikkalasi ham bir xil vaqt talab qiladi', 'Saralash hech qachon foydali emas'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-complexity-8', 'difficulty': 0.6,
-            'category_ru': 'Сравнение эффективности', 'category_uz': 'Samaradorlikni solishtirish',
-            'prompt_ru': 'Что обычно эффективнее по времени для поиска максимума в неотсортированном списке из n чисел: однократный просмотр списка (O(n)), или сначала полная сортировка списка, а затем взять последний элемент (O(n log n))?',
-            'prompt_uz': "n ta sondan iborat tartiblanmagan ro'yxatdagi maksimumni topish uchun odatda vaqt bo'yicha qaysi biri samaraliroq: ro'yxatni bir marta ko'rib chiqish (O(n))mi, yoki avval to'liq saralab, so'ng oxirgi elementni olishmi (O(n log n))?",
-            'options_ru': ['Однократный просмотр списка (O(n))', 'Полная сортировка списка, а затем взять последний элемент (O(n log n))', 'Оба варианта одинаково эффективны', 'Сортировка всегда быстрее одного прохода'],
-            'options_uz': ["Ro'yxatni bir marta ko'rib chiqish (O(n))", "To'liq saralab, keyin oxirgi elementni olish (O(n log n))", 'Ikkalasi ham bir xil samarali', "Saralash bir marta ko'rib chiqishdan har doim tezroq"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-complexity-9', 'difficulty': 0.7,
-            'category_ru': 'Сравнение эффективности', 'category_uz': 'Samaradorlikni solishtirish',
-            'prompt_ru': 'Алгоритм C работает за постоянное время O(1) независимо от входных данных, алгоритм D — за O(n). При экстремально больших входных данных какой из них в итоге окажется эффективнее?',
-            'prompt_uz': "C algoritmi kirish ma'lumotlaridan qat'i nazar O(1) doimiy vaqtda ishlaydi, D algoritmi esa O(n) da. Juda katta kirish ma'lumotlarida qaysi biri oxir-oqibat samaraliroq bo'ladi?",
-            'options_ru': ['Алгоритм C (O(1)) — его время не растёт с увеличением данных', 'Алгоритм D (O(n)) — он всегда эффективнее', 'Оба одинаково эффективны для больших входных данных', 'Сравнение невозможно без знания языка программирования'],
-            'options_uz': ["C algoritmi (O(1)) - uning vaqti ma'lumotlar ortishi bilan o'smaydi", 'D algoritmi (O(n)) - u har doim samaraliroq', "Ikkalasi ham katta kirish ma'lumotlarida bir xil samarali", 'Dasturlash tilini bilmasdan solishtirish mumkin emas'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-complexity-10', 'difficulty': 0.8,
-            'category_ru': 'Сравнение эффективности', 'category_uz': 'Samaradorlikni solishtirish',
-            'prompt_ru': 'Какой поиск, как правило, требует больше сравнений в худшем случае для поиска элемента среди 1 000 000 отсортированных элементов: линейный или бинарный?',
-            'prompt_uz': "1 000 000 ta saralangan element orasidan elementni topish uchun eng yomon holatda odatda qaysi qidiruv ko'proq solishtirish talab qiladi: chiziqlimi yoki binarmi?",
-            'options_ru': ['Линейный поиск', 'Бинарный поиск', 'Оба требуют одинакового числа сравнений', 'Ни один из них не требует сравнений'],
-            'options_uz': ['Chiziqli qidiruv', 'Binar qidiruv', 'Ikkalasi bir xil sonda solishtirish talab qiladi', 'Ularning hech biri solishtirish talab qilmaydi'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-complexity-11', 'difficulty': 0.9,
-            'category_ru': 'Сравнение эффективности', 'category_uz': 'Samaradorlikni solishtirish',
-            'prompt_ru': 'Всегда ли алгоритм с более низкой временной сложностью — «лучший» выбор в любой практической ситуации (учитывая крошечные входные данные, использование памяти, простоту кода)?',
-            'prompt_uz': 'Vaqt murakkabligi past bo\'lgan algoritm har qanday amaliy vaziyatda (kichik kirish ma\'lumotlari, xotira sarfi, kod soddaligini hisobga olganda) har doim "eng yaxshi" tanlovmi?',
-            'options_ru': ['Нет — при малых объёмах данных или больших накладных расходах более простой алгоритм может оказаться практичнее', 'Да, всегда без исключений', 'Сложность алгоритма не имеет значения на практике', 'Более низкая сложность всегда означает более короткий код'],
-            'options_uz': ["Yo'q - kichik hajmdagi ma'lumotlarda yoki katta qo'shimcha xarajatlarda soddaroq algoritm amalda qulayroq bo'lishi mumkin", 'Ha, har doim istisnosiz', 'Algoritm murakkabligi amalda ahamiyatga ega emas', 'Pastroq murakkablik har doim qisqaroq kodni anglatadi'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-bruteforce-2', 'difficulty': 1.0,
-            'category_ru': 'Стратегии решения задач', 'category_uz': 'Masala yechish strategiyalari',
-            'prompt_ru': 'Что означает подход «полного перебора» (brute force) при решении задачи?',
-            'prompt_uz': 'Masalani yechishda "to\'liq perebor" (brute force) yondashuvi nimani anglatadi?',
-            'options_ru': ['Систематический перебор всех возможных вариантов решения, пока не найдётся верный', 'Использование только самого быстрого известного алгоритма', 'Пропуск части возможных вариантов наугад', 'Отказ от решения задачи'],
-            'options_uz': ["To'g'ri javob topilguncha barcha mumkin bo'lgan variantlarni tizimli ravishda ko'rib chiqish", "Faqat eng tezkor ma'lum algoritmdan foydalanish", "Mumkin bo'lgan variantlarning bir qismini tasodifiy o'tkazib yuborish", 'Masalani yechishdan voz kechish'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-bruteforce-3', 'difficulty': 1.1,
-            'category_ru': 'Стратегии решения задач', 'category_uz': 'Masala yechish strategiyalari',
-            'prompt_ru': 'Перебор всех возможных 4-значных PIN-кодов (от 0000 до 9999) по очереди, пока не подойдёт нужный, — пример чего?',
-            'prompt_uz': "0000 dan 9999 gacha bo'lgan barcha mumkin bo'lgan 4 xonali PIN-kodlarni mos kelguncha birma-bir sinab ko'rish - bu nimaning misoli?",
-            'options_ru': ['Полного перебора (brute force)', 'Бинарного поиска', 'Жадного алгоритма', 'Мемоизации'],
-            'options_uz': ["To'liq perebor (brute force)", 'Binar qidiruv', "Ochko'z algoritm", 'Memoizatsiya'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-bruteforce-4', 'difficulty': 1.2,
-            'category_ru': 'Стратегии решения задач', 'category_uz': 'Masala yechish strategiyalari',
-            'prompt_ru': 'Каков главный недостаток подхода полного перебора для больших задач?',
-            'prompt_uz': "Katta masalalar uchun to'liq perebor yondashuvining asosiy kamchiligi nimada?",
-            'options_ru': ['Может быть крайне медленным и неэффективным, так как проверяет все возможные варианты', 'Всегда даёт неверный ответ', 'Требует меньше всего памяти в любом случае', 'Невозможно реализовать на компьютере'],
-            'options_uz': ["Barcha mumkin bo'lgan variantlarni tekshirgani uchun juda sekin va samarasiz bo'lishi mumkin", "Har doim noto'g'ri javob beradi", 'Har qanday holatda ham eng kam xotira talab qiladi', 'Kompyuterda amalga oshirish mumkin emas'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-bruteforce-5', 'difficulty': 1.3,
-            'category_ru': 'Стратегии решения задач', 'category_uz': 'Masala yechish strategiyalari',
-            'prompt_ru': 'Для небольшого набора данных (например, 5 элементов) часто ли подход полного перебора остаётся практически приемлемым, даже если он не самый оптимизированный?',
-            'prompt_uz': "Kichik hajmdagi ma'lumotlar (masalan, 5 ta element) uchun to'liq perebor yondashuvi eng optimal bo'lmasa ham amalda ko'pincha maqbul hisoblanadimi?",
-            'options_ru': ['Да, при малом объёме данных неэффективность обычно не критична', 'Нет, полный перебор недопустим ни при каких условиях', 'Полный перебор возможен только для больших данных', 'Брутфорс всегда быстрее оптимизированного алгоритма'],
-            'options_uz': ["Ha, kichik hajmdagi ma'lumotlarda samarasizlik odatda muhim emas", "Yo'q, to'liq perebor hech qanday sharoitda mumkin emas", "To'liq perebor faqat katta ma'lumotlar uchun mumkin", 'Brutfors har doim optimallashtirilgan algoritmdan tezroq'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-bruteforce-6', 'difficulty': 1.4,
-            'category_ru': 'Стратегии решения задач', 'category_uz': 'Masala yechish strategiyalari',
-            'prompt_ru': 'За счёт чего оптимизированный алгоритм (например, бинарный поиск) обычно достигает высокой скорости?',
-            'prompt_uz': 'Optimallashtirilgan algoritm (masalan, binar qidiruv) odatda yuqori tezlikka nima hisobiga erishadi?',
-            'options_ru': ['Используя известные свойства данных (например, отсортированность), чтобы пропускать ненужные проверки', 'Проверяя абсолютно все возможные варианты подряд', 'Случайным образом угадывая ответ', 'Игнорируя входные данные полностью'],
-            'options_uz': ["Ma'lumotlarning ma'lum xususiyatlaridan (masalan, saralanganligidan) foydalanib, keraksiz tekshiruvlarni chetlab o'tish orqali", "Mutlaqo barcha mumkin bo'lgan variantlarni ketma-ket tekshirish orqali", 'Javobni tasodifiy taxmin qilish orqali', "Kirish ma'lumotlarini butunlay e'tiborsiz qoldirish orqali"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-bruteforce-7', 'difficulty': 1.5,
-            'category_ru': 'Стратегии решения задач', 'category_uz': 'Masala yechish strategiyalari',
-            'prompt_ru': 'Проверка простоты числа делением на каждое число от 2 до самого числа — это полный перебор. До какого предела достаточно проверять делимость в оптимизированной версии?',
-            'prompt_uz': "Sonni 2 dan uning o'zigacha bo'lgan har bir songa bo'lib, tublikni tekshirish - bu to'liq perebor. Optimallashtirilgan versiyada bo'linishni qaysi chegaragacha tekshirish yetarli?",
-            'options_ru': ['До квадратного корня из этого числа', 'До удвоенного значения числа', 'Только до числа 2', 'До половины значения числа'],
-            'options_uz': ['Shu sonning kvadrat ildizigacha', 'Sonning ikki barobarigacha', 'Faqat 2 songacha', 'Sonning yarmigacha'],
             'correct_indices': [0],
         },
         {
@@ -13301,240 +12747,6 @@ MCQ_QUESTIONS = {
             'correct_indices': [0],
         },
         {
-            'key': 'algo-extra-bruteforce-9', 'difficulty': -1.0,
-            'category_ru': 'Стратегии решения задач', 'category_uz': 'Masala yechish strategiyalari',
-            'prompt_ru': 'Верно ли, что оптимизированный алгоритм всегда даёт ДРУГОЙ итоговый результат по сравнению с полным перебором для той же задачи?',
-            'prompt_uz': "Optimallashtirilgan algoritm bir xil masala uchun to'liq pereborga nisbatan har doim BOSHQA yakuniy natija berishi to'g'rimi?",
-            'options_ru': ['Нет, оптимизированный алгоритм должен давать тот же верный ответ, но быстрее', 'Да, ответы всегда отличаются', 'Оптимизация меняет только цвет текста в коде', 'Брутфорс никогда не даёт верного ответа'],
-            'options_uz': ["Yo'q, optimallashtirilgan algoritm ham xuddi shu to'g'ri javobni berishi kerak, faqat tezroq", 'Ha, javoblar har doim farq qiladi', "Optimallashtirish faqat koddagi matn rangini o'zgartiradi", "Brutfors hech qachon to'g'ri javob bermaydi"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-greedy-2', 'difficulty': -0.9,
-            'category_ru': 'Жадные алгоритмы', 'category_uz': "Ochko'z algoritmlar",
-            'prompt_ru': 'На каком принципе принимает решения «жадный алгоритм» (greedy algorithm)?',
-            'prompt_uz': '"Ochko\'z algoritm" (greedy algorithm) qanday tamoyil asosida qaror qabul qiladi?',
-            'options_ru': ['Выбор наилучшего варианта на каждом шаге, без пересмотра предыдущих решений', 'Перебор абсолютно всех возможных вариантов', 'Случайный выбор на каждом шаге', 'Откладывание решения до самого конца'],
-            'options_uz': ["Har bir qadamda oldingi qarorlarni qayta ko'rib chiqmasdan eng yaxshi variantni tanlash", "Mutlaqo barcha mumkin bo'lgan variantlarni ko'rib chiqish", 'Har bir qadamda tasodifiy tanlash', 'Qarorni eng oxirigacha qoldirish'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-greedy-3', 'difficulty': -0.8,
-            'category_ru': 'Жадные алгоритмы', 'category_uz': "Ochko'z algoritmlar",
-            'prompt_ru': 'Выдача сдачи наименьшим числом монет путём выбора на каждом шаге самой крупной монеты, не превышающей оставшуюся сумму, — пример чего?',
-            'prompt_uz': 'Har bir qadamda qolgan summadan oshmaydigan eng katta tangani tanlash orqali eng kam sonli tanga bilan qaytim berish - bu nimaning misoli?',
-            'options_ru': ['Жадного алгоритма', 'Полного перебора', 'Рекурсии без базового случая', 'Хеширования'],
-            'options_uz': ["Ochko'z algoritm", "To'liq perebor", 'Bazaviy holatsiz rekursiya', 'Xeshlash'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-greedy-4', 'difficulty': -0.7,
-            'category_ru': 'Жадные алгоритмы', 'category_uz': "Ochko'z algoritmlar",
-            'prompt_ru': 'Всегда ли жадный алгоритм гарантирует нахождение глобально наилучшего (оптимального) решения для любой задачи?',
-            'prompt_uz': "Ochko'z algoritm har qanday masala uchun global eng yaxshi (optimal) yechimni har doim kafolatlaydimi?",
-            'options_ru': ['Нет, для некоторых задач жадный подход не даёт оптимального результата', 'Да, жадный алгоритм всегда даёт наилучший возможный результат', 'Жадные алгоритмы никогда не дают правильного ответа', 'Это зависит только от языка программирования'],
-            'options_uz': ["Yo'q, ba'zi masalalar uchun ochko'z yondashuv optimal natija bermaydi", "Ha, ochko'z algoritm har doim eng yaxshi natijani beradi", "Ochko'z algoritmlar hech qachon to'g'ri javob bermaydi", "Bu faqat dasturlash tiliga bog'liq"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-greedy-5', 'difficulty': -0.6,
-            'category_ru': 'Жадные алгоритмы', 'category_uz': "Ochko'z algoritmlar",
-            'prompt_ru': 'Планирование максимального числа непересекающихся встреч путём выбора на каждом шаге встречи с наиболее ранним временем окончания — классический пример какой стратегии?',
-            'prompt_uz': "Har bir qadamda eng erta tugaydigan uchrashuvni tanlash orqali eng ko'p sonli kesishmaydigan uchrashuvlarni rejalashtirish - qaysi strategiyaning klassik misoli?",
-            'options_ru': ['Жадной стратегии', 'Полного перебора без анализа', 'Мемоизации', 'Хеш-таблицы'],
-            'options_uz': ["Ochko'z strategiya", "Tahlilsiz to'liq perebor", 'Memoizatsiya', 'Xesh-jadval'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-greedy-6', 'difficulty': -0.5,
-            'category_ru': 'Жадные алгоритмы', 'category_uz': "Ochko'z algoritmlar",
-            'prompt_ru': 'В чём главное преимущество жадных алгоритмов по сравнению с полным перебором?',
-            'prompt_uz': "Ochko'z algoritmlarning to'liq pereborga nisbatan asosiy afzalligi nimada?",
-            'options_ru': ['Обычно намного быстрее и проще, так как не рассматривают все возможные комбинации', 'Всегда точнее полного перебора', 'Требуют больше памяти в любом случае', 'Работают только с текстовыми данными'],
-            'options_uz': ["Barcha mumkin bo'lgan kombinatsiyalarni ko'rib chiqmagani uchun odatda ancha tezroq va soddaroq", "To'liq perebordan har doim aniqroq", "Har qanday holatda ko'proq xotira talab qiladi", "Faqat matnli ma'lumotlar bilan ishlaydi"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-greedy-7', 'difficulty': -0.4,
-            'category_ru': 'Жадные алгоритмы', 'category_uz': "Ochko'z algoritmlar",
-            'prompt_ru': 'В супермаркете выбор очереди с наименьшим числом людей, без учёта того, насколько быстро работает каждый кассир, — повседневный пример чего?',
-            'prompt_uz': 'Supermarketda har bir kassir qanchalik tez ishlashini hisobga olmasdan, eng kam odam turgan navbatni tanlash - bu kundalik hayotda nimaning misoli?',
-            'options_ru': ['Жадного выбора, который не гарантирует наилучший итоговый результат', 'Гарантированно оптимального выбора при любых условиях', 'Полного перебора всех возможных вариантов', 'Случайного выбора без всякой логики'],
-            'options_uz': ["Eng yaxshi yakuniy natijani kafolatlamaydigan ochko'z tanlov", 'Har qanday sharoitda kafolatlangan optimal tanlov', "Barcha mumkin bo'lgan variantlarning to'liq perebori", 'Hech qanday mantiqsiz tasodifiy tanlov'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-greedy-8', 'difficulty': -0.3,
-            'category_ru': 'Жадные алгоритмы', 'category_uz': "Ochko'z algoritmlar",
-            'prompt_ru': 'Что лучше всего отличает жадный подход от динамического программирования?',
-            'prompt_uz': "Ochko'z yondashuvni dinamik dasturlashdan nima eng yaxshi ajratib turadi?",
-            'options_ru': ['Жадный алгоритм принимает решение сразу и не пересматривает его, а динамическое программирование учитывает несколько вариантов и переиспользует решения подзадач', 'Оба метода абсолютно идентичны', 'Жадный алгоритм всегда медленнее динамического программирования', 'Динамическое программирование никогда не использует память'],
-            'options_uz': ["Ochko'z algoritm qarorni darhol qabul qilib, uni qayta ko'rib chiqmaydi, dinamik dasturlash esa bir nechta variantni hisobga olib, qism-masalalar yechimlarini qayta ishlatadi", 'Ikkala usul mutlaqo bir xil', "Ochko'z algoritm dinamik dasturlashdan har doim sekinroq", 'Dinamik dasturlash hech qachon xotiradan foydalanmaydi'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-greedy-9', 'difficulty': -0.2,
-            'category_ru': 'Жадные алгоритмы', 'category_uz': "Ochko'z algoritmlar",
-            'prompt_ru': 'Жадные алгоритмы обычно наиболее уместны, когда...',
-            'prompt_uz': "Ochko'z algoritmlar odatda qachon eng maqbul bo'ladi?",
-            'options_ru': ['Когда локально наилучший выбор на каждом шаге действительно приводит к глобально наилучшему результату', 'Всегда, для абсолютно любой задачи без исключений', 'Только когда данные полностью случайны', 'Никогда, жадные алгоритмы бесполезны'],
-            'options_uz': ['Har bir qadamdagi mahalliy eng yaxshi tanlov haqiqatan ham global eng yaxshi natijaga olib kelganda', 'Har doim, mutlaqo har qanday masala uchun istisnosiz', "Faqat ma'lumotlar butunlay tasodifiy bo'lganda", "Hech qachon, ochko'z algoritmlar foydasiz"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-divide-conquer-2', 'difficulty': -0.1,
-            'category_ru': 'Разделяй и властвуй', 'category_uz': 'Ajrat va hukmronlik qil',
-            'prompt_ru': 'Какие три общих шага включает стратегия «разделяй и властвуй» (divide and conquer)?',
-            'prompt_uz': '"Ajrat va hukmronlik qil" (divide and conquer) strategiyasi qanday uch umumiy qadamni o\'z ichiga oladi?',
-            'options_ru': ['Разделить задачу на подзадачи, решить каждую подзадачу, объединить результаты', 'Решить задачу сразу целиком без разбиения', 'Игнорировать часть задачи', 'Повторять одну и ту же задачу бесконечно'],
-            'options_uz': ["Masalani qism-masalalarga bo'lish, har bir qism-masalani yechish, natijalarni birlashtirish", "Masalani bo'lmasdan bir yo'la butunligicha yechish", "Masalaning bir qismini e'tiborsiz qoldirish", 'Bir xil masalani cheksiz takrorlash'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-divide-conquer-3', 'difficulty': 0.0,
-            'category_ru': 'Разделяй и властвуй', 'category_uz': 'Ajrat va hukmronlik qil',
-            'prompt_ru': 'Какой классический алгоритм сортировки является хрестоматийным примером «разделяй и властвуй»?',
-            'prompt_uz': 'Qaysi klassik saralash algoritmi "ajrat va hukmronlik qil" ning darslik misoli hisoblanadi?',
-            'options_ru': ['Сортировка слиянием (Merge sort)', 'Сортировка выбором (Selection sort)', 'Сортировка пузырьком (Bubble sort) в чистом виде', 'Линейный проход по массиву'],
-            'options_uz': ['Birlashtirib saralash (Merge sort)', 'Tanlash orqali saralash (Selection sort)', "Sof ko'pikli saralash (Bubble sort)", "Massiv bo'ylab chiziqli o'tish"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-divide-conquer-4', 'difficulty': 0.1,
-            'category_ru': 'Разделяй и властвуй', 'category_uz': 'Ajrat va hukmronlik qil',
-            'prompt_ru': 'Бинарный поиск можно считать формой «разделяй и властвуй», потому что на каждом шаге он делает что?',
-            'prompt_uz': 'Binar qidiruvni "ajrat va hukmronlik qil" ning bir turi deb hisoblash mumkin, chunki u har bir qadamda nima qiladi?',
-            'options_ru': ['Делит область поиска пополам и продолжает искать только в нужной половине', 'Проверяет все элементы подряд без деления', 'Удваивает область поиска на каждом шаге', 'Всегда начинает поиск с первого элемента'],
-            'options_uz': ["Qidiruv sohasini ikkiga bo'lib, faqat kerakli yarmida qidirishda davom etadi", "Bo'linmasdan barcha elementlarni ketma-ket tekshiradi", 'Har bir qadamda qidiruv sohasini ikki barobar oshiradi', 'Har doim qidiruvni birinchi elementdan boshlaydi'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-divide-conquer-5', 'difficulty': 0.2,
-            'category_ru': 'Разделяй и властвуй', 'category_uz': 'Ajrat va hukmronlik qil',
-            'prompt_ru': 'Разделение большой стопки экзаменационных работ между 4 преподавателями для проверки по отдельности, а затем объединение оценок в один журнал — повседневная аналогия чего?',
-            'prompt_uz': "Katta imtihon ishlari uyumini 4 ta o'qituvchi orasida alohida tekshirish uchun bo'lib, so'ng baholarni bitta jurnalga birlashtirish - bu nimaning kundalik o'xshatmasi?",
-            'options_ru': ['Разделяй и властвуй', 'Жадного алгоритма', 'Полного перебора без разделения', 'Бесконечного цикла'],
-            'options_uz': ['Ajrat va hukmronlik qil', "Ochko'z algoritm", "Bo'linishsiz to'liq perebor", 'Cheksiz sikl'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-divide-conquer-6', 'difficulty': 0.3,
-            'category_ru': 'Разделяй и властвуй', 'category_uz': 'Ajrat va hukmronlik qil',
-            'prompt_ru': 'Что делает алгоритмы «разделяй и властвуй» естественно подходящими для рекурсивной реализации?',
-            'prompt_uz': '"Ajrat va hukmronlik qil" algoritmlarini rekursiv amalga oshirishga tabiiy ravishda mos qiladigan narsa nima?',
-            'options_ru': ['Каждая подзадача — это уменьшенная версия исходной задачи, а именно так работает рекурсивный вызов самого себя', 'Рекурсия всегда быстрее любого цикла', 'Разделяй и властвуй никогда не использует рекурсию', 'Подзадачи никогда не бывают похожи на исходную задачу'],
-            'options_uz': ["Har bir qism-masala asl masalaning kichraytirilgan versiyasi bo'lib, aynan shu tarzda rekursiv chaqiruv ishlaydi", 'Rekursiya har qanday sikldan har doim tezroq', 'Ajrat va hukmronlik qil hech qachon rekursiyadan foydalanmaydi', "Qism-masalalar hech qachon asl masalaga o'xshamaydi"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-divide-conquer-7', 'difficulty': 0.4,
-            'category_ru': 'Разделяй и властвуй', 'category_uz': 'Ajrat va hukmronlik qil',
-            'prompt_ru': 'В сортировке слиянием после разбиения массива до отдельных элементов, что делает шаг «объединение» (combine)?',
-            'prompt_uz': 'Birlashtirib saralashda massiv alohida elementlargacha bo\'lingandan keyin "birlashtirish" (combine) qadami nima qiladi?',
-            'options_ru': ['Поочерёдно объединяет пары отсортированных подсписков во всё более крупные отсортированные подсписки, пока не останется один отсортированный список', 'Удаляет половину всех элементов', 'Сортирует элементы случайным образом заново', 'Оставляет массив разделённым навсегда'],
-            'options_uz': ["Saralangan qism-ro'yxatlar juftliklarini navbat bilan yiriklashtirib boradi, toki bitta saralangan ro'yxat qolguncha", "Barcha elementlarning yarmini o'chiradi", 'Elementlarni qaytadan tasodifiy tartibda saralaydi', "Massivni abadiy bo'lingan holda qoldiradi"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-divide-conquer-8', 'difficulty': 0.5,
-            'category_ru': 'Разделяй и властвуй', 'category_uz': 'Ajrat va hukmronlik qil',
-            'prompt_ru': 'Если подзадачи НЕ пересекаются и могут решаться полностью независимо, почему «разделяй и властвуй» работает особенно хорошо?',
-            'prompt_uz': 'Agar qism-masalalar bir-biriga bog\'liq bo\'lmasa va butunlay mustaqil yechilsa, nima uchun "ajrat va hukmronlik qil" ayniqsa yaxshi ishlaydi?',
-            'options_ru': ['Независимые подзадачи можно решать без ожидания результатов друг друга (в том числе параллельно)', 'Подзадачи обязаны выполняться строго по очереди с задержками', 'Независимость подзадач делает задачу нерешаемой', 'Разделяй и властвуй требует, чтобы подзадачи полностью совпадали друг с другом'],
-            'options_uz': ['Mustaqil qism-masalalarni bir-birining natijasini kutmasdan (jumladan parallel) yechish mumkin', "Qism-masalalar qat'iy navbat bilan, kechikishlar bilan bajarilishi shart", "Qism-masalalarning mustaqilligi masalani yechib bo'lmaydigan qiladi", "Ajrat va hukmronlik qil qism-masalalar bir-biriga to'liq mos kelishini talab qiladi"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-divide-conquer-9', 'difficulty': 0.6,
-            'category_ru': 'Разделяй и властвуй', 'category_uz': 'Ajrat va hukmronlik qil',
-            'prompt_ru': 'Шаг «разделение» в быстрой сортировке (quicksort) выбирает опорный элемент и разбивает массив так, чтобы...',
-            'prompt_uz': 'Tezkor saralashda (quicksort) "bo\'lish" qadami tayanch elementni tanlab, massivni shunday bo\'ladiki...',
-            'options_ru': ['Элементы меньше опорного значения оказываются с одной стороны, а больше — с другой', 'Все элементы становятся равными опорному значению', 'Массив полностью удаляется', 'Элементы перемешиваются случайным образом'],
-            'options_uz': ['Tayanch qiymatdan kichik elementlar bir tomonda, kattalari boshqa tomonda joylashadi', "Barcha elementlar tayanch qiymatga teng bo'lib qoladi", "Massiv butunlay o'chiriladi", 'Elementlar tasodifiy aralashtiriladi'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-debugging-2', 'difficulty': 0.7,
-            'category_ru': 'Отладка', 'category_uz': 'Nosozliklarni tuzatish',
-            'prompt_ru': 'Каков первый рекомендуемый шаг, когда программа выдаёт неожиданный результат?',
-            'prompt_uz': 'Dastur kutilmagan natija berganda birinchi tavsiya etiladigan qadam nima?',
-            'options_ru': ['Воспроизвести ошибку и точно определить, где результат расходится с ожидаемым', 'Сразу переписать всю программу с нуля', 'Игнорировать ошибку и надеяться, что она исчезнет', 'Удалить все комментарии в коде'],
-            'options_uz': ['Xatolikni qayta hosil qilib, natija kutilganidan aynan qayerda farq qilishini aniqlash', 'Darhol butun dasturni noldan qayta yozish', "Xatolikni e'tiborsiz qoldirib, o'z-o'zidan yo'qolishini kutish", "Koddagi barcha izohlarni o'chirish"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-debugging-3', 'difficulty': 0.8,
-            'category_ru': 'Отладка', 'category_uz': 'Nosozliklarni tuzatish',
-            'prompt_ru': 'В чём заключается техника отладки «резиновой уточки» (rubber duck debugging)?',
-            'prompt_uz': '"Rezina o\'rdak" (rubber duck debugging) nomli otladka texnikasi nimadan iborat?',
-            'options_ru': ['Объяснение кода вслух, строка за строкой (даже неодушевлённому предмету), чтобы самому заметить логическую ошибку', 'Замена всех переменных на случайные буквы', 'Полное удаление всей программы', 'Использование только жёлтого цвета для комментариев'],
-            'options_uz': ["Kodni ovoz chiqarib, qator-qator tushuntirish (hatto jonsiz buyumga ham), shu orqali mantiqiy xatoni o'zi payqash", "Barcha o'zgaruvchilarni tasodifiy harflarga almashtirish", "Butun dasturni to'liq o'chirish", 'Izohlar uchun faqat sariq rangdan foydalanish'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-debugging-4', 'difficulty': 0.9,
-            'category_ru': 'Отладка', 'category_uz': 'Nosozliklarni tuzatish',
-            'prompt_ru': 'В чём суть отладки «методом бинарного поиска» на большой программе?',
-            'prompt_uz': 'Katta dasturda "binar qidiruv usuli" bilan otladka qilishning mohiyati nimada?',
-            'options_ru': ['Сужение поиска ошибки, многократно проверяя примерно середину кода/выполнения — по аналогии с бинарным поиском', 'Проверка абсолютно каждой строки одновременно', 'Полное игнорирование структуры кода', 'Случайное изменение переменных без плана'],
-            'options_uz': ["Binar qidiruvga o'xshab, kod/bajarilishning taxminan o'rtasini qayta-qayta tekshirib, xato qidiruvini torayttirish", 'Mutlaqo har bir qatorni bir vaqtda tekshirish', "Kod tuzilishini butunlay e'tiborsiz qoldirish", "O'zgaruvchilarni rejasiz tasodifiy o'zgartirish"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-debugging-5', 'difficulty': 1.0,
-            'category_ru': 'Отладка', 'category_uz': 'Nosozliklarni tuzatish',
-            'prompt_ru': 'В какой части кода чаще всего возникает ошибка «на единицу» (off-by-one)?',
-            'prompt_uz': '"Bitta birlikka xato" (off-by-one) kodning qaysi qismida ko\'proq uchraydi?',
-            'options_ru': ['В граничных условиях циклов (например, < вместо <=, неверный начальный индекс)', 'В названии переменных', 'В цвете текста редактора', 'В количестве открытых вкладок в браузере'],
-            'options_uz': ["Sikllarning chegara shartlarida (masalan, <= o'rniga <, noto'g'ri boshlang'ich indeks)", "O'zgaruvchilar nomida", 'Muharrir matn rangida', 'Brauzerda ochiq vkladkalar sonida'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-debugging-6', 'difficulty': 1.1,
-            'category_ru': 'Отладка', 'category_uz': 'Nosozliklarni tuzatish',
-            'prompt_ru': 'Как называется отладка, при которой значения переменных выводятся/логируются в ключевых точках кода для наблюдения за поведением программы?',
-            'prompt_uz': "Dastur xatti-harakatini kuzatish uchun kodning muhim nuqtalarida o'zgaruvchilar qiymatlarini chop etish/loglashga asoslangan otladka qanday ataladi?",
-            'options_ru': ['Отладка с помощью вывода/логирования значений переменных', 'Компиляция без запуска', 'Удаление файла с кодом', 'Изменение операционной системы'],
-            'options_uz': ["O'zgaruvchilar qiymatini chop etish/loglash orqali otladka", 'Ishga tushirmasdan kompilyatsiya qilish', "Kod faylini o'chirish", "Operatsion tizimni o'zgartirish"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-debugging-7', 'difficulty': 1.2,
-            'category_ru': 'Отладка', 'category_uz': 'Nosozliklarni tuzatish',
-            'prompt_ru': 'Как часто называют ошибку, которая проявляется лишь время от времени и очень трудно стабильно воспроизводится?',
-            'prompt_uz': "Faqat vaqti-vaqti bilan namoyon bo'ladigan va barqaror qayta hosil qilish juda qiyin bo'lgan xatolik ko'pincha qanday ataladi?",
-            'options_ru': ['Нестабильной (трудновоспроизводимой) ошибкой', 'Синтаксической ошибкой компилятора', 'Ошибкой в названии переменной', 'Отсутствием ошибки вовсе'],
-            'options_uz': ['Beqaror (qiyin qayta hosil qilinadigan) xatolik', 'Kompilyator sintaksis xatosi', "O'zgaruvchi nomidagi xatolik", "Umuman xatolik yo'qligi"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-debugging-8', 'difficulty': 1.3,
-            'category_ru': 'Отладка', 'category_uz': 'Nosozliklarni tuzatish',
-            'prompt_ru': 'Как называется установка в инструменте отладки (debugger) точки, где выполнение кода приостанавливается для проверки значений переменных?',
-            'prompt_uz': "O'zgaruvchilar qiymatlarini tekshirish uchun kod bajarilishini to'xtatib turadigan nuqtani otladka vositasida (debugger) qo'yish qanday ataladi?",
-            'options_ru': ['Точка останова (breakpoint)', 'Цикл (loop)', 'Хеш-таблица', 'Массив'],
-            'options_uz': ["To'xtash nuqtasi (breakpoint)", 'Sikl (loop)', 'Xesh-jadval', 'Massiv'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-debugging-9', 'difficulty': 1.4,
-            'category_ru': 'Отладка', 'category_uz': 'Nosozliklarni tuzatish',
-            'prompt_ru': 'Прежде чем считать, что логика алгоритма неверна, какую базовую проверку входных данных стоит сделать в первую очередь?',
-            'prompt_uz': "Algoritm mantig'i noto'g'ri deb hisoblashdan oldin kirish ma'lumotlari bo'yicha qanday asosiy tekshiruvni birinchi navbatda qilish kerak?",
-            'options_ru': ['Убедиться, что входные данные корректны и соответствуют ожиданиям', 'Сразу переписать алгоритм с нуля, не проверяя данные', 'Удалить все входные данные', 'Изменить язык программирования'],
-            'options_uz': ["Kirish ma'lumotlari to'g'ri va kutilganga mos ekanligiga ishonch hosil qilish", "Ma'lumotlarni tekshirmasdan algoritmni darhol noldan qayta yozish", "Barcha kirish ma'lumotlarini o'chirish", "Dasturlash tilini o'zgartirish"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-debugging-10', 'difficulty': 1.5,
-            'category_ru': 'Отладка', 'category_uz': 'Nosozliklarni tuzatish',
-            'prompt_ru': 'Написание небольших тестовых примеров с ЗАРАНЕЕ известным ожидаемым результатом перед запуском всей программы помогает чему?',
-            'prompt_uz': "Butun dasturni ishga tushirishdan oldin OLDINDAN ma'lum kutilgan natijali kichik test misollarini yozish nimaga yordam beradi?",
-            'options_ru': ['Проверить корректность отдельных частей программы и выявить ошибки на раннем этапе', 'Замедлить работу программы намеренно', 'Скрыть ошибки от пользователя', 'Полностью исключить необходимость тестирования в будущем'],
-            'options_uz': ["Dasturning alohida qismlari to'g'riligini tekshirish va xatolarni erta bosqichda aniqlash", 'Dastur ishlashini atayin sekinlashtirish', 'Xatolarni foydalanuvchidan yashirish', "Kelajakda testlash zaruratini butunlay yo'q qilish"],
-            'correct_indices': [0],
-        },
-        {
             'key': 'algo-extra-debugging-11', 'difficulty': 1.6,
             'category_ru': 'Отладка', 'category_uz': 'Nosozliklarni tuzatish',
             'prompt_ru': '«Граничный случай» (edge case) в тестировании — это что?',
@@ -13543,182 +12755,962 @@ MCQ_QUESTIONS = {
             'options_uz': ["Kirish ma'lumotlarining odatiy bo'lmagan yoki chegaraviy qiymatlari (bo'sh ro'yxat, nol, manfiy sonlar, juda katta qiymatlar)", "Faqat eng oddiy va odatiy kirish ma'lumotlari", 'Grafik interfeysdagi xatolik', "Umuman kirish ma'lumotlarining yo'qligi"],
             'correct_indices': [0],
         },
-        {
-            'key': 'algo-extra-recursion-3', 'difficulty': -1.0,
-            'category_ru': 'Рекурсия', 'category_uz': 'Rekursiya',
-            'prompt_ru': 'Что обязательно должна иметь любая корректная рекурсивная функция, чтобы избежать бесконечной рекурсии?',
-            'prompt_uz': "Cheksiz rekursiyadan qochish uchun har qanday to'g'ri rekursiv funksiya nimaga ega bo'lishi shart?",
-            'options_ru': ['Базовый случай (условие остановки)', 'Как можно больше параметров', 'Обязательно глобальную переменную', 'Цикл for внутри'],
-            'options_uz': ["Bazaviy holat (to'xtash sharti)", "Iloji boricha ko'proq parametr", "Albatta global o'zgaruvchi", 'Ichida for sikli'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-recursion-4', 'difficulty': -0.9,
-            'category_ru': 'Рекурсия', 'category_uz': 'Rekursiya',
-            'prompt_ru': 'Рекурсивная функция вычисления факториала: fact(n) = n * fact(n-1), базовый случай fact(0) = 1. Чему равно fact(3)?',
-            'prompt_uz': 'Faktorialni hisoblovchi rekursiv funksiya: fact(n) = n * fact(n-1), bazaviy holat fact(0) = 1. fact(3) nechaga teng?',
-            'options_ru': ['6', '3', '9', '1'],
-            'options_uz': ['6', '3', '9', '1'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-recursion-5', 'difficulty': -0.8,
-            'category_ru': 'Рекурсия', 'category_uz': 'Rekursiya',
-            'prompt_ru': 'Что обычно происходит, если у рекурсивной функции отсутствует базовый случай (или он никогда не достигается)?',
-            'prompt_uz': "Agar rekursiv funksiyada bazaviy holat bo'lmasa (yoki unga hech qachon yetib borilmasa), odatda nima yuz beradi?",
-            'options_ru': ['Она будет вызывать себя бесконечно, что в итоге приведёт к переполнению стека', 'Программа сразу выведет правильный результат', 'Функция автоматически остановится через 1 секунду', 'Ошибок не возникнет никогда'],
-            'options_uz': ["U o'zini cheksiz chaqiraveradi, natijada stek to'lib ketadi (stack overflow)", "Dastur darhol to'g'ri natijani chiqaradi", "Funksiya avtomatik ravishda 1 soniyadan keyin to'xtaydi", 'Hech qachon xatolik yuzaga kelmaydi'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-recursion-6', 'difficulty': -0.7,
-            'category_ru': 'Рекурсия', 'category_uz': 'Rekursiya',
-            'prompt_ru': 'Рекурсивная функция countdown(n): если n = 0, вывести "конец", иначе вывести n, затем вызвать countdown(n-1). Что выведет вызов countdown(3)?',
-            'prompt_uz': 'Rekursiv funksiya countdown(n): agar n = 0 bo\'lsa, "tugadi" deb chiqarish, aks holda n ni chiqarish, so\'ng countdown(n-1) ni chaqirish. countdown(3) chaqiruvi nimalarni chiqaradi?',
-            'options_ru': ['3, 2, 1, конец', 'конец, 1, 2, 3', '3, 2, 1', '0, 1, 2, 3'],
-            'options_uz': ['3, 2, 1, tugadi', 'tugadi, 1, 2, 3', '3, 2, 1', '0, 1, 2, 3'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-recursion-7', 'difficulty': -0.6,
-            'category_ru': 'Рекурсия', 'category_uz': 'Rekursiya',
-            'prompt_ru': 'Каждый рекурсивный вызов обычно использует дополнительную память в какой структуре, чтобы запомнить, куда вернуться после завершения?',
-            'prompt_uz': "Har bir rekursiv chaqiruv tugagandan keyin qayerga qaytishni eslab qolish uchun odatda qaysi tuzilmada qo'shimcha xotiradan foydalanadi?",
-            'options_ru': ['Стек вызовов (call stack)', 'Хеш-таблицу', 'Очередь сообщений', 'Оперативную память видеокарты'],
-            'options_uz': ['Chaqiruvlar steki (call stack)', 'Xesh-jadval', 'Xabarlar navbati', 'Video karta operativ xotirasi'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-recursion-8', 'difficulty': -0.5,
-            'category_ru': 'Рекурсия', 'category_uz': 'Rekursiya',
-            'prompt_ru': 'Всегда ли можно переписать рекурсивный алгоритм в эквивалентный итеративный (на основе циклов) алгоритм?',
-            'prompt_uz': "Rekursiv algoritmni har doim unga teng bo'lgan iterativ (sikllarga asoslangan) algoritmga qayta yozish mumkinmi?",
-            'options_ru': ['Да, в принципе любой рекурсивный алгоритм можно переписать в итеративный (например, используя явный стек)', 'Нет, рекурсию никогда нельзя заменить циклом', 'Только для алгоритмов сортировки', 'Только если в алгоритме нет переменных'],
-            'options_uz': ['Ha, printsipial jihatdan har qanday rekursiv algoritmni iterativga qayta yozish mumkin (masalan, aniq stek yordamida)', "Yo'q, rekursiyani hech qachon sikl bilan almashtirib bo'lmaydi", 'Faqat saralash algoritmlari uchun', "Faqat algoritmda o'zgaruvchilar bo'lmasa"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-recursion-9', 'difficulty': -0.4,
-            'category_ru': 'Рекурсия', 'category_uz': 'Rekursiya',
-            'prompt_ru': 'Рекурсивная функция sum(n): если n = 0, вернуть 0, иначе вернуть n + sum(n-1). Что вернёт sum(4)?',
-            'prompt_uz': "Rekursiv funksiya sum(n): agar n = 0 bo'lsa, 0 ni qaytarish, aks holda n + sum(n-1) ni qaytarish. sum(4) nimani qaytaradi?",
-            'options_ru': ['10', '4', '24', '14'],
-            'options_uz': ['10', '4', '24', '14'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-recursion-10', 'difficulty': -0.3,
-            'category_ru': 'Рекурсия', 'category_uz': 'Rekursiya',
-            'prompt_ru': 'Рекурсивная функция, вызывающая саму себя дважды при каждом вызове (как наивные числа Фибоначчи), может стать очень медленной при больших n главным образом из-за чего?',
-            'prompt_uz': "Har bir chaqiruvda o'zini ikki marta chaqiradigan rekursiv funksiya (soddalashtirilgan Fibonachchi kabi) katta n larda asosan nima sababdan juda sekinlashib qolishi mumkin?",
-            'options_ru': ['Она многократно повторно вычисляет одни и те же перекрывающиеся подзадачи', 'Компьютер физически не может выполнять два вызова подряд', 'Рекурсия всегда быстрее циклов без исключений', 'Такая функция никогда не завершает выполнение'],
-            'options_uz': ["U bir xil kesishuvchi qism-masalalarni ko'p marta qayta hisoblaydi", 'Kompyuter fizik jihatdan ketma-ket ikkita chaqiruvni bajara olmaydi', 'Rekursiya istisnosiz har doim sikllardan tezroq', 'Bunday funksiya hech qachon bajarilishni tugatmaydi'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-recursion-11', 'difficulty': -0.2,
-            'category_ru': 'Рекурсия', 'category_uz': 'Rekursiya',
-            'prompt_ru': 'Классическая рекурсивная задача «Ханойские башни» для n дисков требует примерно скольких ходов (минимум), согласно известной формуле?',
-            'prompt_uz': 'Klassik rekursiv "Xanoy minoralari" masalasi n ta disk uchun mashhur formulaga ko\'ra taxminan necha xarakat (minimal) talab qiladi?',
-            'options_ru': ['2^n − 1 ходов', 'n ходов', 'n^2 ходов', 'n! ходов'],
-            'options_uz': ['2^n − 1 ta harakat', 'n ta harakat', 'n^2 ta harakat', 'n! ta harakat'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-recursion-12', 'difficulty': -0.1,
-            'category_ru': 'Рекурсия', 'category_uz': 'Rekursiya',
-            'prompt_ru': 'Как называется рекурсия, при которой рекурсивный вызов является самой последней операцией в функции (после его возврата больше ничего не выполняется)?',
-            'prompt_uz': "Rekursiv chaqiruv funksiyadagi eng oxirgi amal bo'lgan (u qaytgandan keyin boshqa hech narsa bajarilmaydigan) rekursiya qanday ataladi?",
-            'options_ru': ['Хвостовой рекурсией (tail recursion)', 'Базовым случаем', 'Бесконечным циклом', 'Итерацией'],
-            'options_uz': ['Dumaloq rekursiya (tail recursion)', 'Bazaviy holat', 'Cheksiz sikl', 'Iteratsiya'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-design-2', 'difficulty': 0.0,
-            'category_ru': 'Проектирование алгоритмов', 'category_uz': 'Algoritm loyihalash',
-            'prompt_ru': 'Каким обычно должен быть хороший первый шаг в проектировании алгоритма, прежде чем писать код?',
-            'prompt_uz': "Kod yozishdan oldin algoritm loyihalashda odatda qanday yaxshi birinchi qadam bo'lishi kerak?",
-            'options_ru': ['Чётко понять и сформулировать задачу: входные данные, выходные данные и ограничения', 'Сразу начать писать код без анализа задачи', 'Пропустить требования задачи полностью', 'Выбрать случайный язык программирования'],
-            'options_uz': ["Masalani aniq tushunish va shakllantirish: kirish ma'lumotlari, chiqish ma'lumotlari va cheklovlar", 'Masalani tahlil qilmasdan darhol kod yozishni boshlash', "Masala talablarini butunlay o'tkazib yuborish", 'Tasodifiy dasturlash tilini tanlash'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-design-3', 'difficulty': 0.1,
-            'category_ru': 'Проектирование алгоритмов', 'category_uz': 'Algoritm loyihalash',
-            'prompt_ru': 'Как называется запись алгоритма понятными, структурированными шагами на естественном языке до написания кода (без привязки к языку программирования)?',
-            'prompt_uz': "Kod yozishdan oldin algoritmni tushunarli, tuzilgan qadamlarda, biror dasturlash tiliga bog'lanmagan holda yozib chiqish qanday ataladi?",
-            'options_ru': ['Псевдокод', 'Машинный код', 'Двоичный код', 'Компилятор'],
-            'options_uz': ['Psevdokod', 'Mashina kodi', 'Ikkilik kod', 'Kompilyator'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-design-4', 'difficulty': 0.2,
-            'category_ru': 'Проектирование алгоритмов', 'category_uz': 'Algoritm loyihalash',
-            'prompt_ru': 'Как лучше всего описать «эффективность алгоритма»?',
-            'prompt_uz': '"Algoritm samaradorligi" ni qanday ta\'riflash to\'g\'ri bo\'ladi?',
-            'options_ru': ['Насколько хорошо алгоритм использует ресурсы (время и память) при решении задачи', 'Насколько красиво оформлен код', 'Количество строк в коде программы', 'Название языка программирования'],
-            'options_uz': ['Algoritm masalani yechishda resurslardan (vaqt va xotiradan) qanchalik yaxshi foydalanishi', 'Kod qanchalik chiroyli bezalganligi', 'Dastur kodidagi qatorlar soni', 'Dasturlash tili nomi'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-design-5', 'difficulty': 0.3,
-            'category_ru': 'Проектирование алгоритмов', 'category_uz': 'Algoritm loyihalash',
-            'prompt_ru': 'Два разных алгоритма решают одну и ту же задачу и всегда дают один и тот же верный итоговый результат. Имеет ли всё же смысл их сравнивать?',
-            'prompt_uz': "Ikki xil algoritm bir xil masalani yechadi va har doim bir xil to'g'ri yakuniy natija beradi. Ularni solishtirishning ma'nosi bormi?",
-            'options_ru': ['Да, они всё равно могут значительно отличаться по эффективности (скорости, использованию памяти)', 'Нет, если результат одинаков, сравнивать нечего', 'Такая ситуация вообще невозможна', 'Сравнивать можно только по длине кода'],
-            'options_uz': ["Ha, ular baribir samaradorlik (tezlik, xotira sarfi) bo'yicha sezilarli farq qilishi mumkin", "Yo'q, natija bir xil bo'lsa, solishtirishning hojati yo'q", 'Bunday holat umuman mumkin emas', "Faqat kod uzunligi bo'yicha solishtirish mumkin"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-design-6', 'difficulty': 0.4,
-            'category_ru': 'Проектирование алгоритмов', 'category_uz': 'Algoritm loyihalash',
-            'prompt_ru': 'Чем рискует тестирование алгоритма только типичными, обычными входными данными (без проверки пустых, крайних или необычных случаев)?',
-            'prompt_uz': "Algoritmni faqat odatiy, oddiy kirish ma'lumotlari bilan sinash (bo'sh, chegaraviy yoki g'ayrioddiy holatlarni tekshirmasdan) nima bilan xavfli?",
-            'options_ru': ['Пропустить ошибки, которые проявляются только на крайних (граничных) случаях', 'Программа станет работать быстрее', 'Полностью исключить любые ошибки', 'Ускорить разработку без последствий'],
-            'options_uz': ["Faqat chegaraviy holatlarda namoyon bo'ladigan xatolarni o'tkazib yuborish", 'Dastur tezroq ishlay boshlashi', "Har qanday xatolarni butunlay yo'q qilish", 'Hech qanday oqibatsiz ishlab chiqishni tezlashtirish'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-design-7', 'difficulty': 0.5,
-            'category_ru': 'Проектирование алгоритмов', 'category_uz': 'Algoritm loyihalash',
-            'prompt_ru': '«Ручная прогонка» (dry run) алгоритма на бумаге с примерами значений перед написанием кода помогает чему?',
-            'prompt_uz': 'Kod yozishdan oldin algoritmni qog\'ozda misol qiymatlar bilan "qo\'lda sinab ko\'rish" (dry run) nimaga yordam beradi?',
-            'options_ru': ['Выявить логические ошибки на раннем этапе, до написания кода', 'Автоматически написать код за вас', 'Заменить необходимость тестирования программы', 'Ускорить работу процессора'],
-            'options_uz': ['Kod yozishdan oldin mantiqiy xatolarni erta bosqichda aniqlashga', 'Kodni siz uchun avtomatik yozishga', "Dasturni sinash zaruratini yo'qotishga", 'Protsessor ishlashini tezlashtirishga'],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-design-8', 'difficulty': 0.6,
-            'category_ru': 'Проектирование алгоритмов', 'category_uz': 'Algoritm loyihalash',
-            'prompt_ru': 'При выборе между «правильным, но медленным» алгоритмом и «быстрым, но иногда ошибочным» для критической системы медицинской диагностики какой принцип обычно должен иметь приоритет?',
-            'prompt_uz': 'Muhim tibbiy diagnostika tizimi uchun "to\'g\'ri, lekin sekin" algoritm bilan "tez, lekin ba\'zida noto\'g\'ri" algoritm o\'rtasida tanlov qilishda odatda qaysi tamoyil ustuvor bo\'lishi kerak?',
-            'options_ru': ['Правильность важнее скорости — неверный результат обычно намного опаснее медленного', 'Скорость важнее правильности в любых случаях', 'Оба аспекта абсолютно неважны', 'Нужно выбрать самый короткий по коду вариант'],
-            'options_uz': ["To'g'rilik tezlikdan muhimroq - noto'g'ri natija odatda sekin natijadan ancha xavfliroq", "Har qanday holatda tezlik to'g'rilikdan muhimroq", 'Ikkala jihat ham mutlaqo ahamiyatsiz', "Kodi eng qisqa bo'lgan variantni tanlash kerak"],
-            'correct_indices': [0],
-        },
-        {
-            'key': 'algo-extra-design-9', 'difficulty': 0.7,
-            'category_ru': 'Проектирование алгоритмов', 'category_uz': 'Algoritm loyihalash',
-            'prompt_ru': 'Какое определение лучше всего описывает «алгоритм»?',
-            'prompt_uz': 'Qaysi ta\'rif "algoritm" tushunchasini eng yaxshi tavsiflaydi?',
-            'options_ru': ['Конечная, чётко определённая последовательность шагов для решения конкретной задачи', 'Любой набор случайных инструкций без структуры', 'Только код, написанный на языке Python', 'Название программы на компьютере'],
-            'options_uz': ['Muayyan masalani yechish uchun chekli, aniq belgilangan qadamlar ketma-ketligi', "Tuzilmasiz istalgan tasodifiy ko'rsatmalar to'plami", 'Faqat Python tilida yozilgan kod', 'Kompyuterdagi dastur nomi'],
-            'correct_indices': [0],
-        },
 ],
 }
 
 # CODING_TASK_CAP (apps.assessments.views) distinct problems make up algorithmic's coding
 # phase per attempt — CodingProblemView draws from this whole pool, excluding problems this
-# cycle already has a final submission for (see its docstring). All 20 are single-function,
+# cycle already has a final submission for (see its docstring). All 100 are single-function,
 # JS, primitive-in/primitive-out (apps.assessments.coding_sandbox calls `function_name(input)`
 # with a single JSON-decoded argument and compares the return value with `==`, so anything
-# needing 2+ logical inputs — e.g. gcd, binary search — takes them packed into one array).
+# needing 2+ logical inputs — e.g. gcd, binary search — takes them packed into one array, and
+# anything whose natural answer is a list returns it as a comma-separated string).
+#
+# The 100 tasks are grouped into three authoring tiers via `difficulty`
+# (CodingProblem.difficulty — editorial metadata, not an IRT parameter): 34 easy (string/array
+# basics, simple math and loops, light recursion), 33 medium (two pointers, sliding window,
+# hash-map frequency counting, binary-search variants, 1D dynamic programming, encoding/
+# decoding) and 33 hard (2D and knapsack-style DP, graph algorithms — BFS/Dijkstra/topological
+# sort/cycle detection, backtracking, advanced string algorithms, binary-tree problems). The
+# list is ordered easy → medium → hard. Every task's `test_cases` were verified by running a
+# reference JS solution through apps.assessments.coding_sandbox before being committed here.
 CODING_PROBLEMS = [
+    {
+        'slug': 'reverse-string',
+        'function_name': 'reverseString',
+        'target_time_seconds': 180,
+        'difficulty': 'easy',
+        'title_ru': 'Строка наоборот',
+        'title_uz': 'Satrni teskari aylantirish',
+        'statement_ru': 'Напишите функцию, которая принимает строку и возвращает её в обратном порядке.',
+        'statement_uz': "Satrni qabul qilib, uni teskari tartibda qaytaruvchi funksiya yozing.",
+        'example_ru': 'Вход:  "hello"\nВыход: "olleh"',
+        'example_uz': 'Kirish:  "hello"\nChiqish: "olleh"',
+        'constraints_ru': ['0 ≤ длина строки ≤ 1000 символов'],
+        'constraints_uz': ['0 ≤ satr uzunligi ≤ 1000 belgi'],
+        'starter_code_ru': 'function reverseString(s) {\n  // TODO: верните строку в обратном порядке\n}',
+        'starter_code_uz': "function reverseString(s) {\n  // TODO: satrni teskari tartibda qaytaring\n}",
+        'test_cases': [
+            {'label': "'hello' → 'olleh'", 'input': 'hello', 'expected': 'olleh', 'hidden': False},
+            {'label': "'abc' → 'cba'", 'input': 'abc', 'expected': 'cba', 'hidden': False},
+            {'label': "'a' → 'a'", 'input': 'a', 'expected': 'a', 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'is-palindrome',
+        'function_name': 'isPalindrome',
+        'target_time_seconds': 200,
+        'difficulty': 'easy',
+        'title_ru': 'Проверка палиндрома',
+        'title_uz': 'Palindromni tekshirish',
+        'statement_ru': (
+            'Напишите функцию, которая проверяет, является ли строка палиндромом (читается одинаково '
+            'в обе стороны), без учёта регистра.'
+        ),
+        'statement_uz': (
+            "Satr palindrom (ikki tomondan bir xil o'qiladigan) ekanligini, katta-kichik harflarga "
+            "e'tibor bermay tekshiruvchi funksiya yozing."
+        ),
+        'example_ru': 'Вход:  "level"\nВыход: true',
+        'example_uz': 'Kirish:  "level"\nChiqish: true',
+        'constraints_ru': ['1 ≤ длина строки ≤ 1000 символов', 'Сравнение не чувствительно к регистру'],
+        'constraints_uz': ['1 ≤ satr uzunligi ≤ 1000 belgi', "Solishtirish katta-kichik harflarga bog'liq emas"],
+        'starter_code_ru': 'function isPalindrome(s) {\n  // TODO: true, если s — палиндром\n}',
+        'starter_code_uz': "function isPalindrome(s) {\n  // TODO: s palindrom bo'lsa true qaytaring\n}",
+        'test_cases': [
+            {'label': "'level' → true", 'input': 'level', 'expected': True, 'hidden': False},
+            {'label': "'hello' → false", 'input': 'hello', 'expected': False, 'hidden': False},
+            {'label': "'Level' → true (case-insensitive)", 'input': 'Level', 'expected': True, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'sum-array',
+        'function_name': 'sumArray',
+        'target_time_seconds': 150,
+        'difficulty': 'easy',
+        'title_ru': 'Сумма массива',
+        'title_uz': "Massiv yig'indisi",
+        'statement_ru': 'Напишите функцию, которая возвращает сумму всех чисел в массиве.',
+        'statement_uz': "Massivdagi barcha sonlarning yig'indisini qaytaruvchi funksiya yozing.",
+        'example_ru': 'Вход:  [1, 2, 3, 4]\nВыход: 10',
+        'example_uz': 'Kirish:  [1, 2, 3, 4]\nChiqish: 10',
+        'constraints_ru': ['0 ≤ длина массива ≤ 1000', 'Элементы — целые числа'],
+        'constraints_uz': ['0 ≤ massiv uzunligi ≤ 1000', 'Elementlar butun sonlar'],
+        'starter_code_ru': 'function sumArray(arr) {\n  // TODO: верните сумму всех элементов\n}',
+        'starter_code_uz': "function sumArray(arr) {\n  // TODO: barcha elementlar yig'indisini qaytaring\n}",
+        'test_cases': [
+            {'label': '[1,2,3,4] → 10', 'input': [1, 2, 3, 4], 'expected': 10, 'hidden': False},
+            {'label': '[] → 0', 'input': [], 'expected': 0, 'hidden': False},
+            {'label': '[-1,1,5] → 5', 'input': [-1, 1, 5], 'expected': 5, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'find-max',
+        'function_name': 'findMax',
+        'target_time_seconds': 150,
+        'difficulty': 'easy',
+        'title_ru': 'Максимум массива',
+        'title_uz': 'Massivdagi maksimal son',
+        'statement_ru': 'Напишите функцию, которая возвращает наибольшее число в массиве.',
+        'statement_uz': "Massivdagi eng katta sonni qaytaruvchi funksiya yozing.",
+        'example_ru': 'Вход:  [3, 7, 2]\nВыход: 7',
+        'example_uz': 'Kirish:  [3, 7, 2]\nChiqish: 7',
+        'constraints_ru': ['1 ≤ длина массива ≤ 1000'],
+        'constraints_uz': ['1 ≤ massiv uzunligi ≤ 1000'],
+        'starter_code_ru': 'function findMax(arr) {\n  // TODO: верните наибольший элемент\n}',
+        'starter_code_uz': "function findMax(arr) {\n  // TODO: eng katta elementni qaytaring\n}",
+        'test_cases': [
+            {'label': '[3,7,2] → 7', 'input': [3, 7, 2], 'expected': 7, 'hidden': False},
+            {'label': '[-5,-1,-9] → -1', 'input': [-5, -1, -9], 'expected': -1, 'hidden': True},
+            {'label': '[4] → 4', 'input': [4], 'expected': 4, 'hidden': False},
+        ],
+    },
+    {
+        'slug': 'find-min',
+        'function_name': 'findMin',
+        'target_time_seconds': 150,
+        'difficulty': 'easy',
+        'title_ru': 'Минимум массива',
+        'title_uz': 'Massivdagi minimal son',
+        'statement_ru': 'Напишите функцию, которая возвращает наименьшее число в массиве.',
+        'statement_uz': "Massivdagi eng kichik sonni qaytaruvchi funksiya yozing.",
+        'example_ru': 'Вход:  [3, 7, 2]\nВыход: 2',
+        'example_uz': 'Kirish:  [3, 7, 2]\nChiqish: 2',
+        'constraints_ru': ['1 ≤ длина массива ≤ 1000'],
+        'constraints_uz': ['1 ≤ massiv uzunligi ≤ 1000'],
+        'starter_code_ru': 'function findMin(arr) {\n  // TODO: верните наименьший элемент\n}',
+        'starter_code_uz': "function findMin(arr) {\n  // TODO: eng kichik elementni qaytaring\n}",
+        'test_cases': [
+            {'label': '[3,7,2] → 2', 'input': [3, 7, 2], 'expected': 2, 'hidden': False},
+            {'label': '[-5,-1,-9] → -9', 'input': [-5, -1, -9], 'expected': -9, 'hidden': True},
+            {'label': '[4] → 4', 'input': [4], 'expected': 4, 'hidden': False},
+        ],
+    },
+    {
+        'slug': 'factorial',
+        'function_name': 'factorial',
+        'target_time_seconds': 180,
+        'difficulty': 'easy',
+        'title_ru': 'Факториал',
+        'title_uz': 'Faktorial',
+        'statement_ru': 'Напишите функцию, которая вычисляет факториал неотрицательного целого числа n.',
+        'statement_uz': "Manfiy bo'lmagan butun n sonining faktorialini hisoblaydigan funksiya yozing.",
+        'example_ru': 'Вход:  5\nВыход: 120',
+        'example_uz': 'Kirish:  5\nChiqish: 120',
+        'constraints_ru': ['0 ≤ n ≤ 12'],
+        'constraints_uz': ['0 ≤ n ≤ 12'],
+        'starter_code_ru': 'function factorial(n) {\n  // TODO: верните n!\n}',
+        'starter_code_uz': "function factorial(n) {\n  // TODO: n! ni qaytaring\n}",
+        'test_cases': [
+            {'label': '5 → 120', 'input': 5, 'expected': 120, 'hidden': False},
+            {'label': '0 → 1', 'input': 0, 'expected': 1, 'hidden': False},
+            {'label': '6 → 720', 'input': 6, 'expected': 720, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'fibonacci-nth',
+        'function_name': 'fibonacciNth',
+        'target_time_seconds': 240,
+        'difficulty': 'easy',
+        'title_ru': 'N-ное число Фибоначчи',
+        'title_uz': "Fibonachchining N-chi soni",
+        'statement_ru': (
+            'Напишите функцию, которая возвращает n-е число последовательности Фибоначчи '
+            '(F(0)=0, F(1)=1).'
+        ),
+        'statement_uz': (
+            "Fibonachchi ketma-ketligining n-chi sonini qaytaruvchi funksiya yozing "
+            "(F(0)=0, F(1)=1)."
+        ),
+        'example_ru': 'Вход:  6\nВыход: 8',
+        'example_uz': 'Kirish:  6\nChiqish: 8',
+        'constraints_ru': ['0 ≤ n ≤ 30'],
+        'constraints_uz': ['0 ≤ n ≤ 30'],
+        'starter_code_ru': 'function fibonacciNth(n) {\n  // TODO: верните F(n)\n}',
+        'starter_code_uz': "function fibonacciNth(n) {\n  // TODO: F(n) ni qaytaring\n}",
+        'test_cases': [
+            {'label': '6 → 8', 'input': 6, 'expected': 8, 'hidden': False},
+            {'label': '0 → 0', 'input': 0, 'expected': 0, 'hidden': False},
+            {'label': '10 → 55', 'input': 10, 'expected': 55, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'count-vowels',
+        'function_name': 'countVowels',
+        'target_time_seconds': 180,
+        'difficulty': 'easy',
+        'title_ru': 'Подсчёт гласных',
+        'title_uz': 'Unlilarni sanash',
+        'statement_ru': (
+            'Напишите функцию, которая считает количество гласных букв (a, e, i, o, u) в строке, '
+            'без учёта регистра.'
+        ),
+        'statement_uz': (
+            "Satrdagi unli harflar (a, e, i, o, u) sonini, katta-kichik harflarga e'tibor bermay "
+            "sanaydigan funksiya yozing."
+        ),
+        'example_ru': 'Вход:  "Hello World"\nВыход: 3',
+        'example_uz': 'Kirish:  "Hello World"\nChiqish: 3',
+        'constraints_ru': ['0 ≤ длина строки ≤ 10 000 символов'],
+        'constraints_uz': ['0 ≤ satr uzunligi ≤ 10 000 belgi'],
+        'starter_code_ru': 'function countVowels(s) {\n  // TODO: верните количество гласных\n}',
+        'starter_code_uz': "function countVowels(s) {\n  // TODO: unlilar sonini qaytaring\n}",
+        'test_cases': [
+            {'label': "'Hello World' → 3", 'input': 'Hello World', 'expected': 3, 'hidden': False},
+            {'label': "'xyz' → 0", 'input': 'xyz', 'expected': 0, 'hidden': False},
+            {'label': "'AEIOU' → 5", 'input': 'AEIOU', 'expected': 5, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'sum-digits',
+        'function_name': 'sumDigits',
+        'target_time_seconds': 180,
+        'difficulty': 'easy',
+        'title_ru': 'Сумма цифр числа',
+        'title_uz': "Sonning raqamlari yig'indisi",
+        'statement_ru': 'Напишите функцию, которая возвращает сумму цифр неотрицательного целого числа.',
+        'statement_uz': "Manfiy bo'lmagan butun sonning raqamlari yig'indisini qaytaruvchi funksiya yozing.",
+        'example_ru': 'Вход:  12345\nВыход: 15',
+        'example_uz': 'Kirish:  12345\nChiqish: 15',
+        'constraints_ru': ['0 ≤ n ≤ 10^9'],
+        'constraints_uz': ['0 ≤ n ≤ 10^9'],
+        'starter_code_ru': 'function sumDigits(n) {\n  // TODO: верните сумму цифр n\n}',
+        'starter_code_uz': "function sumDigits(n) {\n  // TODO: n raqamlari yig'indisini qaytaring\n}",
+        'test_cases': [
+            {'label': '12345 → 15', 'input': 12345, 'expected': 15, 'hidden': False},
+            {'label': '0 → 0', 'input': 0, 'expected': 0, 'hidden': False},
+            {'label': '9999 → 36', 'input': 9999, 'expected': 36, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'longest-word',
+        'function_name': 'longestWord',
+        'target_time_seconds': 200,
+        'difficulty': 'easy',
+        'title_ru': 'Самое длинное слово',
+        'title_uz': "Eng uzun so'z",
+        'statement_ru': (
+            'Напишите функцию, которая принимает предложение и возвращает самое длинное слово в нём. '
+            'При равенстве длины побеждает слово, встретившееся первым.'
+        ),
+        'statement_uz': (
+            "Gapni qabul qilib, undagi eng uzun so'zni qaytaruvchi funksiya yozing. Uzunliklar teng "
+            "bo'lsa, birinchi uchragan so'z g'olib hisoblanadi."
+        ),
+        'example_ru': 'Вход:  "the quick brown fox"\nВыход: "quick"',
+        'example_uz': 'Kirish:  "the quick brown fox"\nChiqish: "quick"',
+        'constraints_ru': ['1 ≤ длина предложения ≤ 10 000 символов', 'Слова разделены одиночными пробелами'],
+        'constraints_uz': ['1 ≤ gap uzunligi ≤ 10 000 belgi', "So'zlar bitta bo'sh joy bilan ajratilgan"],
+        'starter_code_ru': 'function longestWord(sentence) {\n  // TODO: верните самое длинное слово\n}',
+        'starter_code_uz': "function longestWord(sentence) {\n  // TODO: eng uzun so'zni qaytaring\n}",
+        'test_cases': [
+            {'label': "'the quick brown fox' → 'quick'", 'input': 'the quick brown fox', 'expected': 'quick', 'hidden': False},
+            {'label': "'a bb ccc' → 'ccc'", 'input': 'a bb ccc', 'expected': 'ccc', 'hidden': False},
+            {'label': "'equal size here now' → 'equal'", 'input': 'equal size here now', 'expected': 'equal', 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'capitalize-words',
+        'function_name': 'capitalizeWords',
+        'target_time_seconds': 200,
+        'difficulty': 'easy',
+        'title_ru': 'Заглавные буквы слов',
+        'title_uz': "Har bir so'zni bosh harf bilan boshlash",
+        'statement_ru': (
+            'Напишите функцию, которая делает первую букву каждого слова в предложении заглавной, '
+            'остальные — строчными.'
+        ),
+        'statement_uz': (
+            "Gapdagi har bir so'zning birinchi harfini bosh, qolganini kichik harfga aylantiruvchi "
+            "funksiya yozing."
+        ),
+        'example_ru': 'Вход:  "hello world"\nВыход: "Hello World"',
+        'example_uz': 'Kirish:  "hello world"\nChiqish: "Hello World"',
+        'constraints_ru': ['1 ≤ длина предложения ≤ 10 000 символов', 'Слова разделены одиночными пробелами'],
+        'constraints_uz': ['1 ≤ gap uzunligi ≤ 10 000 belgi', "So'zlar bitta bo'sh joy bilan ajratilgan"],
+        'starter_code_ru': 'function capitalizeWords(sentence) {\n  // TODO: верните предложение с заглавными буквами слов\n}',
+        'starter_code_uz': "function capitalizeWords(sentence) {\n  // TODO: har bir so'z bosh harf bilan boshlanadigan gapni qaytaring\n}",
+        'test_cases': [
+            {'label': "'hello world' → 'Hello World'", 'input': 'hello world', 'expected': 'Hello World', 'hidden': False},
+            {'label': "'javascript is fun' → 'Javascript Is Fun'", 'input': 'javascript is fun', 'expected': 'Javascript Is Fun', 'hidden': False},
+            {'label': "'a' → 'A'", 'input': 'a', 'expected': 'A', 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'is-power-of-two',
+        'function_name': 'isPowerOfTwo',
+        'target_time_seconds': 180,
+        'difficulty': 'easy',
+        'title_ru': 'Степень двойки',
+        'title_uz': 'Ikkining darajasi',
+        'statement_ru': (
+            'Напишите функцию, которая проверяет, является ли число n степенью двойки (1, 2, 4, 8, ...).'
+        ),
+        'statement_uz': "n sonining ikkining darajasi (1, 2, 4, 8, ...) ekanligini tekshiruvchi funksiya yozing.",
+        'example_ru': 'Вход:  16\nВыход: true',
+        'example_uz': 'Kirish:  16\nChiqish: true',
+        'constraints_ru': ['0 ≤ n ≤ 2^30'],
+        'constraints_uz': ['0 ≤ n ≤ 2^30'],
+        'starter_code_ru': 'function isPowerOfTwo(n) {\n  // TODO: true, если n — степень двойки\n}',
+        'starter_code_uz': "function isPowerOfTwo(n) {\n  // TODO: n ikkining darajasi bo'lsa true qaytaring\n}",
+        'test_cases': [
+            {'label': '16 → true', 'input': 16, 'expected': True, 'hidden': False},
+            {'label': '18 → false', 'input': 18, 'expected': False, 'hidden': False},
+            {'label': '1 → true', 'input': 1, 'expected': True, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'count-unique',
+        'function_name': 'countUnique',
+        'target_time_seconds': 180,
+        'difficulty': 'easy',
+        'title_ru': 'Количество уникальных элементов',
+        'title_uz': 'Noyob elementlar soni',
+        'statement_ru': (
+            'Напишите функцию, которая возвращает количество уникальных (неповторяющихся) значений '
+            'в массиве.'
+        ),
+        'statement_uz': "Massivdagi noyob (takrorlanmaydigan) qiymatlar sonini qaytaruvchi funksiya yozing.",
+        'example_ru': 'Вход:  [1, 2, 2, 3, 3, 3]\nВыход: 3',
+        'example_uz': 'Kirish:  [1, 2, 2, 3, 3, 3]\nChiqish: 3',
+        'constraints_ru': ['0 ≤ длина массива ≤ 1000'],
+        'constraints_uz': ['0 ≤ massiv uzunligi ≤ 1000'],
+        'starter_code_ru': 'function countUnique(arr) {\n  // TODO: верните количество уникальных значений\n}',
+        'starter_code_uz': "function countUnique(arr) {\n  // TODO: noyob qiymatlar sonini qaytaring\n}",
+        'test_cases': [
+            {'label': '[1,2,2,3,3,3] → 3', 'input': [1, 2, 2, 3, 3, 3], 'expected': 3, 'hidden': False},
+            {'label': '[] → 0', 'input': [], 'expected': 0, 'hidden': False},
+            {'label': '[5,5,5] → 1', 'input': [5, 5, 5], 'expected': 1, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'count-words',
+        'function_name': 'countWords',
+        'target_time_seconds': 150,
+        'difficulty': 'easy',
+        'title_ru': 'Количество слов',
+        'title_uz': "So'zlar soni",
+        'statement_ru': (
+            'Напишите функцию, которая принимает предложение и возвращает количество слов в нём. Слова '
+            'разделены одиночными пробелами.'
+        ),
+        'statement_uz': (
+            "Gapni qabul qilib, undagi so'zlar sonini qaytaruvchi funksiya yozing. So'zlar bitta bo'sh joy "
+            'bilan ajratilgan.'
+        ),
+        'example_ru': 'Вход:  "kod yozish qiziq"\nВыход: 3',
+        'example_uz': 'Kirish:  "kod yozish qiziq"\nChiqish: 3',
+        'constraints_ru': ['0 ≤ длина предложения ≤ 1000 символов', 'Пустая строка содержит 0 слов'],
+        'constraints_uz': ['0 ≤ gap uzunligi ≤ 1000 belgi', "Bo'sh satrda 0 ta so'z bor"],
+        'starter_code_ru': 'function countWords(sentence) {\n  // TODO: верните количество слов\n}',
+        'starter_code_uz': "function countWords(sentence) {\n  // TODO: so'zlar sonini qaytaring\n}",
+        'test_cases': [
+            {'label': "'kod yozish qiziq' → 3", 'input': 'kod yozish qiziq', 'expected': 3, 'hidden': False},
+            {'label': "'salom' → 1", 'input': 'salom', 'expected': 1, 'hidden': False},
+            {'label': "'' → 0", 'input': '', 'expected': 0, 'hidden': True},
+            {'label': "'bir ikki uch tort besh' → 5", 'input': 'bir ikki uch tort besh', 'expected': 5, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'sum-even-numbers',
+        'function_name': 'sumEvenNumbers',
+        'target_time_seconds': 160,
+        'difficulty': 'easy',
+        'title_ru': 'Сумма чётных чисел',
+        'title_uz': "Juft sonlar yig'indisi",
+        'statement_ru': (
+            'Напишите функцию, которая возвращает сумму всех чётных чисел массива. Если чётных чисел нет, '
+            'верните 0.'
+        ),
+        'statement_uz': (
+            "Massivdagi barcha juft sonlar yig'indisini qaytaruvchi funksiya yozing. Juft son bo'lmasa, 0 "
+            'qaytaring.'
+        ),
+        'example_ru': 'Вход:  [1, 2, 3, 4, 5, 6]\nВыход: 12',
+        'example_uz': 'Kirish:  [1, 2, 3, 4, 5, 6]\nChiqish: 12',
+        'constraints_ru': ['0 ≤ длина массива ≤ 1000', 'Элементы — целые числа'],
+        'constraints_uz': ['0 ≤ massiv uzunligi ≤ 1000', 'Elementlar — butun sonlar'],
+        'starter_code_ru': 'function sumEvenNumbers(arr) {\n  // TODO: верните сумму чётных элементов\n}',
+        'starter_code_uz': "function sumEvenNumbers(arr) {\n  // TODO: juft elementlar yig'indisini qaytaring\n}",
+        'test_cases': [
+            {'label': '[1,2,3,4,5,6] → 12', 'input': [1, 2, 3, 4, 5, 6], 'expected': 12, 'hidden': False},
+            {'label': '[1,3,5] → 0', 'input': [1, 3, 5], 'expected': 0, 'hidden': False},
+            {'label': '[] → 0', 'input': [], 'expected': 0, 'hidden': True},
+            {'label': '[-2,-3,8] → 6', 'input': [-2, -3, 8], 'expected': 6, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'array-product',
+        'function_name': 'arrayProduct',
+        'target_time_seconds': 150,
+        'difficulty': 'easy',
+        'title_ru': 'Произведение массива',
+        'title_uz': "Massiv elementlari ko'paytmasi",
+        'statement_ru': (
+            'Напишите функцию, которая возвращает произведение всех элементов массива. Для пустого массива '
+            'верните 1.'
+        ),
+        'statement_uz': (
+            "Massivning barcha elementlari ko'paytmasini qaytaruvchi funksiya yozing. Bo'sh massiv uchun 1 "
+            'qaytaring.'
+        ),
+        'example_ru': 'Вход:  [2, 3, 4]\nВыход: 24',
+        'example_uz': 'Kirish:  [2, 3, 4]\nChiqish: 24',
+        'constraints_ru': ['0 ≤ длина массива ≤ 100', 'Произведение не превышает 10^12'],
+        'constraints_uz': ['0 ≤ massiv uzunligi ≤ 100', "Ko'paytma 10^12 dan oshmaydi"],
+        'starter_code_ru': 'function arrayProduct(arr) {\n  // TODO: верните произведение элементов\n}',
+        'starter_code_uz': "function arrayProduct(arr) {\n  // TODO: elementlar ko'paytmasini qaytaring\n}",
+        'test_cases': [
+            {'label': '[2,3,4] → 24', 'input': [2, 3, 4], 'expected': 24, 'hidden': False},
+            {'label': '[5] → 5', 'input': [5], 'expected': 5, 'hidden': False},
+            {'label': '[] → 1', 'input': [], 'expected': 1, 'hidden': True},
+            {'label': '[1,-2,3,-4] → 24', 'input': [1, -2, 3, -4], 'expected': 24, 'hidden': True},
+            {'label': '[7,0,9] → 0', 'input': [7, 0, 9], 'expected': 0, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'max-min-difference',
+        'function_name': 'maxMinDifference',
+        'target_time_seconds': 170,
+        'difficulty': 'easy',
+        'title_ru': 'Разница максимума и минимума',
+        'title_uz': 'Eng katta va eng kichik son farqi',
+        'statement_ru': (
+            'Напишите функцию, которая возвращает разницу между наибольшим и наименьшим элементом массива.'
+        ),
+        'statement_uz': (
+            'Massivning eng katta va eng kichik elementi orasidagi farqni qaytaruvchi funksiya yozing.'
+        ),
+        'example_ru': 'Вход:  [3, 9, 1, 7]\nВыход: 8',
+        'example_uz': 'Kirish:  [3, 9, 1, 7]\nChiqish: 8',
+        'constraints_ru': ['1 ≤ длина массива ≤ 1000'],
+        'constraints_uz': ['1 ≤ massiv uzunligi ≤ 1000'],
+        'starter_code_ru': 'function maxMinDifference(arr) {\n  // TODO: верните разницу максимума и минимума\n}',
+        'starter_code_uz': 'function maxMinDifference(arr) {\n  // TODO: eng katta va eng kichik son farqini qaytaring\n}',
+        'test_cases': [
+            {'label': '[3,9,1,7] → 8', 'input': [3, 9, 1, 7], 'expected': 8, 'hidden': False},
+            {'label': '[5] → 0', 'input': [5], 'expected': 0, 'hidden': False},
+            {'label': '[-4,-10,-1] → 9', 'input': [-4, -10, -1], 'expected': 9, 'hidden': True},
+            {'label': '[2,2,2] → 0', 'input': [2, 2, 2], 'expected': 0, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'count-char-occurrences',
+        'function_name': 'countChar',
+        'target_time_seconds': 180,
+        'difficulty': 'easy',
+        'title_ru': 'Подсчёт символа',
+        'title_uz': 'Belgini sanash',
+        'statement_ru': (
+            'Напишите функцию, которая принимает массив из строки и одного символа и возвращает, сколько раз '
+            'этот символ встречается в строке. Регистр учитывается.'
+        ),
+        'statement_uz': (
+            'Satr va bitta belgidan iborat massivni qabul qilib, shu belgi satrda necha marta uchraganini '
+            'qaytaruvchi funksiya yozing. Katta-kichik harf farqlanadi.'
+        ),
+        'example_ru': 'Вход:  ["algoritm", "a"]\nВыход: 1',
+        'example_uz': 'Kirish:  ["algoritm", "a"]\nChiqish: 1',
+        'constraints_ru': ['0 ≤ длина строки ≤ 1000 символов', 'Искомый символ — ровно один символ'],
+        'constraints_uz': ['0 ≤ satr uzunligi ≤ 1000 belgi', 'Qidirilayotgan belgi — aynan bitta belgi'],
+        'starter_code_ru': (
+            'function countChar(pair) {\n'
+            '  const [text, ch] = pair;\n'
+            '  // TODO: верните количество вхождений символа ch\n'
+            '}'
+        ),
+        'starter_code_uz': (
+            'function countChar(pair) {\n'
+            '  const [text, ch] = pair;\n'
+            '  // TODO: ch belgisining uchrash sonini qaytaring\n'
+            '}'
+        ),
+        'test_cases': [
+            {'label': "['algoritm','a'] → 1", 'input': ['algoritm', 'a'], 'expected': 1, 'hidden': False},
+            {'label': "['massiv','s'] → 2", 'input': ['massiv', 's'], 'expected': 2, 'hidden': False},
+            {'label': "['','x'] → 0", 'input': ['', 'x'], 'expected': 0, 'hidden': True},
+            {'label': "['Kod kod','k'] → 1", 'input': ['Kod kod', 'k'], 'expected': 1, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'average-rounded',
+        'function_name': 'averageRounded',
+        'target_time_seconds': 170,
+        'difficulty': 'easy',
+        'title_ru': 'Среднее арифметическое',
+        'title_uz': "O'rtacha arifmetik",
+        'statement_ru': (
+            'Напишите функцию, которая возвращает среднее арифметическое элементов массива, округлённое до '
+            'ближайшего целого. Для пустого массива верните 0.'
+        ),
+        'statement_uz': (
+            "Massiv elementlarining o'rtacha arifmetik qiymatini eng yaqin butun songa yaxlitlab qaytaruvchi "
+            "funksiya yozing. Bo'sh massiv uchun 0 qaytaring."
+        ),
+        'example_ru': 'Вход:  [2, 4, 6]\nВыход: 4',
+        'example_uz': 'Kirish:  [2, 4, 6]\nChiqish: 4',
+        'constraints_ru': ['0 ≤ длина массива ≤ 1000', 'Округление — как у Math.round'],
+        'constraints_uz': ['0 ≤ massiv uzunligi ≤ 1000', 'Yaxlitlash Math.round kabi bajariladi'],
+        'starter_code_ru': 'function averageRounded(arr) {\n  // TODO: верните округлённое среднее значение\n}',
+        'starter_code_uz': "function averageRounded(arr) {\n  // TODO: yaxlitlangan o'rtacha qiymatni qaytaring\n}",
+        'test_cases': [
+            {'label': '[2,4,6] → 4', 'input': [2, 4, 6], 'expected': 4, 'hidden': False},
+            {'label': '[1,2] → 2', 'input': [1, 2], 'expected': 2, 'hidden': False},
+            {'label': '[] → 0', 'input': [], 'expected': 0, 'hidden': True},
+            {'label': '[10,20,25] → 18', 'input': [10, 20, 25], 'expected': 18, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'celsius-to-fahrenheit',
+        'function_name': 'celsiusToFahrenheit',
+        'target_time_seconds': 140,
+        'difficulty': 'easy',
+        'title_ru': 'Из Цельсия в Фаренгейты',
+        'title_uz': 'Selsiydan Farengeytga',
+        'statement_ru': (
+            'Напишите функцию, которая переводит температуру из градусов Цельсия в градусы Фаренгейта по '
+            'формуле F = C × 9 / 5 + 32.'
+        ),
+        'statement_uz': (
+            "Haroratni Selsiy darajasidan Farengeyt darajasiga F = C × 9 / 5 + 32 formulasi bo'yicha "
+            "o'giruvchi funksiya yozing."
+        ),
+        'example_ru': 'Вход:  100\nВыход: 212',
+        'example_uz': 'Kirish:  100\nChiqish: 212',
+        'constraints_ru': ['-100 ≤ C ≤ 100', 'C кратно 5, поэтому результат — целое число'],
+        'constraints_uz': ['-100 ≤ C ≤ 100', 'C 5 ga karrali, shuning uchun natija butun son'],
+        'starter_code_ru': 'function celsiusToFahrenheit(celsius) {\n  // TODO: верните температуру в градусах Фаренгейта\n}',
+        'starter_code_uz': 'function celsiusToFahrenheit(celsius) {\n  // TODO: haroratni Farengeyt darajasida qaytaring\n}',
+        'test_cases': [
+            {'label': '100 → 212', 'input': 100, 'expected': 212, 'hidden': False},
+            {'label': '0 → 32', 'input': 0, 'expected': 32, 'hidden': False},
+            {'label': '-40 → -40', 'input': -40, 'expected': -40, 'hidden': True},
+            {'label': '25 → 77', 'input': 25, 'expected': 77, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'last-word',
+        'function_name': 'lastWord',
+        'target_time_seconds': 170,
+        'difficulty': 'easy',
+        'title_ru': 'Последнее слово',
+        'title_uz': "Oxirgi so'z",
+        'statement_ru': (
+            'Напишите функцию, которая возвращает последнее слово предложения. Слова разделены одиночными '
+            'пробелами; для пустой строки верните пустую строку.'
+        ),
+        'statement_uz': (
+            "Gapning oxirgi so'zini qaytaruvchi funksiya yozing. So'zlar bitta bo'sh joy bilan ajratilgan; "
+            "bo'sh satr uchun bo'sh satr qaytaring."
+        ),
+        'example_ru': 'Вход:  "algoritm juda qiziq"\nВыход: "qiziq"',
+        'example_uz': 'Kirish:  "algoritm juda qiziq"\nChiqish: "qiziq"',
+        'constraints_ru': ['0 ≤ длина предложения ≤ 1000 символов'],
+        'constraints_uz': ['0 ≤ gap uzunligi ≤ 1000 belgi'],
+        'starter_code_ru': 'function lastWord(sentence) {\n  // TODO: верните последнее слово\n}',
+        'starter_code_uz': "function lastWord(sentence) {\n  // TODO: oxirgi so'zni qaytaring\n}",
+        'test_cases': [
+            {'label': "'algoritm juda qiziq' → 'qiziq'", 'input': 'algoritm juda qiziq', 'expected': 'qiziq', 'hidden': False},
+            {'label': "'salom' → 'salom'", 'input': 'salom', 'expected': 'salom', 'hidden': False},
+            {'label': "'' → ''", 'input': '', 'expected': '', 'hidden': True},
+            {'label': "'bir ikki uch' → 'uch'", 'input': 'bir ikki uch', 'expected': 'uch', 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'remove-spaces',
+        'function_name': 'removeSpaces',
+        'target_time_seconds': 140,
+        'difficulty': 'easy',
+        'title_ru': 'Удаление пробелов',
+        'title_uz': "Bo'sh joylarni olib tashlash",
+        'statement_ru': 'Напишите функцию, которая возвращает строку без пробелов.',
+        'statement_uz': "Satrni bo'sh joylarsiz qaytaruvchi funksiya yozing.",
+        'example_ru': 'Вход:  "kod yozish"\nВыход: "kodyozish"',
+        'example_uz': 'Kirish:  "kod yozish"\nChiqish: "kodyozish"',
+        'constraints_ru': ['0 ≤ длина строки ≤ 1000 символов'],
+        'constraints_uz': ['0 ≤ satr uzunligi ≤ 1000 belgi'],
+        'starter_code_ru': 'function removeSpaces(text) {\n  // TODO: верните строку без пробелов\n}',
+        'starter_code_uz': "function removeSpaces(text) {\n  // TODO: satrni bo'sh joylarsiz qaytaring\n}",
+        'test_cases': [
+            {'label': "'kod yozish' → 'kodyozish'", 'input': 'kod yozish', 'expected': 'kodyozish', 'hidden': False},
+            {'label': "' a b c ' → 'abc'", 'input': ' a b c ', 'expected': 'abc', 'hidden': False},
+            {'label': "'' → ''", 'input': '', 'expected': '', 'hidden': True},
+            {'label': "'bosh joysiz' → 'boshjoysiz'", 'input': 'bosh joysiz', 'expected': 'boshjoysiz', 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'count-digits-in-string',
+        'function_name': 'countDigits',
+        'target_time_seconds': 180,
+        'difficulty': 'easy',
+        'title_ru': 'Подсчёт цифр в строке',
+        'title_uz': 'Satrdagi raqamlar soni',
+        'statement_ru': 'Напишите функцию, которая возвращает количество цифр (символов 0–9) в строке.',
+        'statement_uz': 'Satrdagi raqamlar (0–9 belgilari) sonini qaytaruvchi funksiya yozing.',
+        'example_ru': 'Вход:  "a1b2c3"\nВыход: 3',
+        'example_uz': 'Kirish:  "a1b2c3"\nChiqish: 3',
+        'constraints_ru': ['0 ≤ длина строки ≤ 1000 символов'],
+        'constraints_uz': ['0 ≤ satr uzunligi ≤ 1000 belgi'],
+        'starter_code_ru': 'function countDigits(text) {\n  // TODO: верните количество цифр в строке\n}',
+        'starter_code_uz': 'function countDigits(text) {\n  // TODO: satrdagi raqamlar sonini qaytaring\n}',
+        'test_cases': [
+            {'label': "'a1b2c3' → 3", 'input': 'a1b2c3', 'expected': 3, 'hidden': False},
+            {'label': "'kod' → 0", 'input': 'kod', 'expected': 0, 'hidden': False},
+            {'label': "'2024-yil' → 4", 'input': '2024-yil', 'expected': 4, 'hidden': True},
+            {'label': "'' → 0", 'input': '', 'expected': 0, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'is-leap-year',
+        'function_name': 'isLeapYear',
+        'target_time_seconds': 190,
+        'difficulty': 'easy',
+        'title_ru': 'Високосный год',
+        'title_uz': 'Kabisa yili',
+        'statement_ru': (
+            'Напишите функцию, которая проверяет, является ли год високосным: год кратен 4, но не кратен '
+            '100, либо кратен 400.'
+        ),
+        'statement_uz': (
+            "Yil kabisa yili ekanligini tekshiruvchi funksiya yozing: yil 4 ga karrali bo'lib, 100 ga "
+            "karrali bo'lmasa yoki 400 ga karrali bo'lsa, u kabisa yili."
+        ),
+        'example_ru': 'Вход:  2024\nВыход: true',
+        'example_uz': 'Kirish:  2024\nChiqish: true',
+        'constraints_ru': ['1 ≤ year ≤ 4000'],
+        'constraints_uz': ['1 ≤ year ≤ 4000'],
+        'starter_code_ru': 'function isLeapYear(year) {\n  // TODO: верните true, если год високосный\n}',
+        'starter_code_uz': "function isLeapYear(year) {\n  // TODO: yil kabisa bo'lsa true qaytaring\n}",
+        'test_cases': [
+            {'label': '2024 → true', 'input': 2024, 'expected': True, 'hidden': False},
+            {'label': '1900 → false', 'input': 1900, 'expected': False, 'hidden': False},
+            {'label': '2000 → true', 'input': 2000, 'expected': True, 'hidden': True},
+            {'label': '2023 → false', 'input': 2023, 'expected': False, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'reverse-number',
+        'function_name': 'reverseNumber',
+        'target_time_seconds': 200,
+        'difficulty': 'easy',
+        'title_ru': 'Число наоборот',
+        'title_uz': 'Sonni teskari yozish',
+        'statement_ru': (
+            'Напишите функцию, которая возвращает число с цифрами в обратном порядке. Ведущие нули '
+            'результата отбрасываются.'
+        ),
+        'statement_uz': (
+            'Sonning raqamlarini teskari tartibda joylashtirib qaytaruvchi funksiya yozing. Natijaning '
+            'boshidagi nollar tashlab yuboriladi.'
+        ),
+        'example_ru': 'Вход:  123\nВыход: 321',
+        'example_uz': 'Kirish:  123\nChiqish: 321',
+        'constraints_ru': ['0 ≤ n ≤ 10^9'],
+        'constraints_uz': ['0 ≤ n ≤ 10^9'],
+        'starter_code_ru': 'function reverseNumber(n) {\n  // TODO: верните число с обратным порядком цифр\n}',
+        'starter_code_uz': 'function reverseNumber(n) {\n  // TODO: raqamlari teskari tartibdagi sonni qaytaring\n}',
+        'test_cases': [
+            {'label': '123 → 321', 'input': 123, 'expected': 321, 'hidden': False},
+            {'label': '1200 → 21', 'input': 1200, 'expected': 21, 'hidden': False},
+            {'label': '7 → 7', 'input': 7, 'expected': 7, 'hidden': True},
+            {'label': '90807 → 70809', 'input': 90807, 'expected': 70809, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'triangular-number',
+        'function_name': 'triangularNumber',
+        'target_time_seconds': 160,
+        'difficulty': 'easy',
+        'title_ru': 'Сумма от 1 до n',
+        'title_uz': "1 dan n gacha yig'indi",
+        'statement_ru': (
+            'Напишите функцию, которая возвращает сумму всех целых чисел от 1 до n включительно. Для n = 0 '
+            'верните 0.'
+        ),
+        'statement_uz': (
+            "1 dan n gacha (n ning o'zi ham) barcha butun sonlar yig'indisini qaytaruvchi funksiya yozing. n "
+            '= 0 uchun 0 qaytaring.'
+        ),
+        'example_ru': 'Вход:  5\nВыход: 15',
+        'example_uz': 'Kirish:  5\nChiqish: 15',
+        'constraints_ru': ['0 ≤ n ≤ 100 000'],
+        'constraints_uz': ['0 ≤ n ≤ 100 000'],
+        'starter_code_ru': 'function triangularNumber(n) {\n  // TODO: верните сумму чисел от 1 до n\n}',
+        'starter_code_uz': "function triangularNumber(n) {\n  // TODO: 1 dan n gacha sonlar yig'indisini qaytaring\n}",
+        'test_cases': [
+            {'label': '5 → 15', 'input': 5, 'expected': 15, 'hidden': False},
+            {'label': '1 → 1', 'input': 1, 'expected': 1, 'hidden': False},
+            {'label': '0 → 0', 'input': 0, 'expected': 0, 'hidden': True},
+            {'label': '100 → 5050', 'input': 100, 'expected': 5050, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'count-greater-than',
+        'function_name': 'countGreaterThan',
+        'target_time_seconds': 180,
+        'difficulty': 'easy',
+        'title_ru': 'Сколько больше порога',
+        'title_uz': 'Chegaradan katta elementlar',
+        'statement_ru': (
+            'Напишите функцию, которая принимает массив из массива чисел и порогового значения и возвращает '
+            'количество элементов, строго больших этого значения.'
+        ),
+        'statement_uz': (
+            "Sonlar massivi va chegara qiymatidan iborat massivni qabul qilib, shu qiymatdan qat'iy katta "
+            'elementlar sonini qaytaruvchi funksiya yozing.'
+        ),
+        'example_ru': 'Вход:  [[1, 5, 8, 3], 4]\nВыход: 2',
+        'example_uz': 'Kirish:  [[1, 5, 8, 3], 4]\nChiqish: 2',
+        'constraints_ru': ['0 ≤ длина массива ≤ 1000'],
+        'constraints_uz': ['0 ≤ massiv uzunligi ≤ 1000'],
+        'starter_code_ru': (
+            'function countGreaterThan(pair) {\n'
+            '  const [arr, limit] = pair;\n'
+            '  // TODO: верните количество элементов, больших limit\n'
+            '}'
+        ),
+        'starter_code_uz': (
+            'function countGreaterThan(pair) {\n'
+            '  const [arr, limit] = pair;\n'
+            '  // TODO: limit dan katta elementlar sonini qaytaring\n'
+            '}'
+        ),
+        'test_cases': [
+            {'label': '[[1,5,8,3],4] → 2', 'input': [[1, 5, 8, 3], 4], 'expected': 2, 'hidden': False},
+            {'label': '[[2,2,2],2] → 0', 'input': [[2, 2, 2], 2], 'expected': 0, 'hidden': False},
+            {'label': '[[],0] → 0', 'input': [[], 0], 'expected': 0, 'hidden': True},
+            {'label': '[[-5,0,7],-1] → 2', 'input': [[-5, 0, 7], -1], 'expected': 2, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'swap-case',
+        'function_name': 'swapCase',
+        'target_time_seconds': 200,
+        'difficulty': 'easy',
+        'title_ru': 'Смена регистра',
+        'title_uz': 'Harf registrini almashtirish',
+        'statement_ru': (
+            'Напишите функцию, которая меняет регистр каждой буквы строки: строчные становятся заглавными, '
+            'заглавные — строчными. Остальные символы не меняются.'
+        ),
+        'statement_uz': (
+            'Satrdagi har bir harfning registrini almashtiruvchi funksiya yozing: kichik harflar katta, '
+            "katta harflar kichik bo'ladi. Qolgan belgilar o'zgarmaydi."
+        ),
+        'example_ru': 'Вход:  "Kod"\nВыход: "kOD"',
+        'example_uz': 'Kirish:  "Kod"\nChiqish: "kOD"',
+        'constraints_ru': [
+            '0 ≤ длина строки ≤ 1000 символов',
+            'Строка содержит только латинские буквы, цифры и пробелы',
+        ],
+        'constraints_uz': [
+            '0 ≤ satr uzunligi ≤ 1000 belgi',
+            "Satrda faqat lotin harflari, raqamlar va bo'sh joylar bo'ladi",
+        ],
+        'starter_code_ru': 'function swapCase(text) {\n  // TODO: верните строку со смененным регистром букв\n}',
+        'starter_code_uz': 'function swapCase(text) {\n  // TODO: harflari almashtirilgan satrni qaytaring\n}',
+        'test_cases': [
+            {'label': "'Kod' → 'kOD'", 'input': 'Kod', 'expected': 'kOD', 'hidden': False},
+            {'label': "'ABC abc' → 'abc ABC'", 'input': 'ABC abc', 'expected': 'abc ABC', 'hidden': False},
+            {'label': "'' → ''", 'input': '', 'expected': '', 'hidden': True},
+            {'label': "'Test123' → 'tEST123'", 'input': 'Test123', 'expected': 'tEST123', 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'sum-range',
+        'function_name': 'sumRange',
+        'target_time_seconds': 180,
+        'difficulty': 'easy',
+        'title_ru': 'Сумма на отрезке',
+        'title_uz': "Oraliqdagi sonlar yig'indisi",
+        'statement_ru': (
+            'Напишите функцию, которая принимает массив из двух чисел a и b (a ≤ b) и возвращает сумму всех '
+            'целых чисел от a до b включительно.'
+        ),
+        'statement_uz': (
+            'Ikki son a va b (a ≤ b) dan iborat massivni qabul qilib, a dan b gacha (ikkisi ham kiradi) '
+            "barcha butun sonlar yig'indisini qaytaruvchi funksiya yozing."
+        ),
+        'example_ru': 'Вход:  [1, 5]\nВыход: 15',
+        'example_uz': 'Kirish:  [1, 5]\nChiqish: 15',
+        'constraints_ru': ['-1000 ≤ a ≤ b ≤ 1000'],
+        'constraints_uz': ['-1000 ≤ a ≤ b ≤ 1000'],
+        'starter_code_ru': (
+            'function sumRange(pair) {\n'
+            '  const [from, to] = pair;\n'
+            '  // TODO: верните сумму чисел от a до b\n'
+            '}'
+        ),
+        'starter_code_uz': (
+            'function sumRange(pair) {\n'
+            '  const [from, to] = pair;\n'
+            "  // TODO: a dan b gacha sonlar yig'indisini qaytaring\n"
+            '}'
+        ),
+        'test_cases': [
+            {'label': '[1,5] → 15', 'input': [1, 5], 'expected': 15, 'hidden': False},
+            {'label': '[3,3] → 3', 'input': [3, 3], 'expected': 3, 'hidden': False},
+            {'label': '[-3,3] → 0', 'input': [-3, 3], 'expected': 0, 'hidden': True},
+            {'label': '[10,20] → 165', 'input': [10, 20], 'expected': 165, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'middle-character',
+        'function_name': 'middleCharacter',
+        'target_time_seconds': 200,
+        'difficulty': 'easy',
+        'title_ru': 'Средний символ',
+        'title_uz': "O'rtadagi belgi",
+        'statement_ru': (
+            'Напишите функцию, которая возвращает средний символ строки. Если длина строки чётная, верните '
+            'два средних символа.'
+        ),
+        'statement_uz': (
+            "Satrning o'rtadagi belgisini qaytaruvchi funksiya yozing. Satr uzunligi juft bo'lsa, o'rtadagi "
+            'ikki belgini qaytaring.'
+        ),
+        'example_ru': 'Вход:  "kod"\nВыход: "o"',
+        'example_uz': 'Kirish:  "kod"\nChiqish: "o"',
+        'constraints_ru': ['1 ≤ длина строки ≤ 999 символов'],
+        'constraints_uz': ['1 ≤ satr uzunligi ≤ 999 belgi'],
+        'starter_code_ru': 'function middleCharacter(text) {\n  // TODO: верните средний символ (или два средних)\n}',
+        'starter_code_uz': "function middleCharacter(text) {\n  // TODO: o'rtadagi belgini (yoki ikkitasini) qaytaring\n}",
+        'test_cases': [
+            {'label': "'kod' → 'o'", 'input': 'kod', 'expected': 'o', 'hidden': False},
+            {'label': "'test' → 'es'", 'input': 'test', 'expected': 'es', 'hidden': False},
+            {'label': "'a' → 'a'", 'input': 'a', 'expected': 'a', 'hidden': True},
+            {'label': "'algoritm' → 'or'", 'input': 'algoritm', 'expected': 'or', 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'repeat-string',
+        'function_name': 'repeatString',
+        'target_time_seconds': 150,
+        'difficulty': 'easy',
+        'title_ru': 'Повторение строки',
+        'title_uz': 'Satrni takrorlash',
+        'statement_ru': (
+            'Напишите функцию, которая принимает массив из строки и целого числа n и возвращает строку, '
+            'повторённую n раз. При n = 0 верните пустую строку.'
+        ),
+        'statement_uz': (
+            'Satr va butun son n dan iborat massivni qabul qilib, satrni n marta takrorlab qaytaruvchi '
+            "funksiya yozing. n = 0 bo'lsa, bo'sh satr qaytaring."
+        ),
+        'example_ru': 'Вход:  ["ab", 3]\nВыход: "ababab"',
+        'example_uz': 'Kirish:  ["ab", 3]\nChiqish: "ababab"',
+        'constraints_ru': ['0 ≤ n ≤ 100', 'Длина результата не превышает 10 000 символов'],
+        'constraints_uz': ['0 ≤ n ≤ 100', 'Natija uzunligi 10 000 belgidan oshmaydi'],
+        'starter_code_ru': (
+            'function repeatString(pair) {\n'
+            '  const [text, times] = pair;\n'
+            '  // TODO: верните строку, повторённую n раз\n'
+            '}'
+        ),
+        'starter_code_uz': (
+            'function repeatString(pair) {\n'
+            '  const [text, times] = pair;\n'
+            '  // TODO: satrni n marta takrorlab qaytaring\n'
+            '}'
+        ),
+        'test_cases': [
+            {'label': "['ab',3] → 'ababab'", 'input': ['ab', 3], 'expected': 'ababab', 'hidden': False},
+            {'label': "['x',1] → 'x'", 'input': ['x', 1], 'expected': 'x', 'hidden': False},
+            {'label': "['kod',0] → ''", 'input': ['kod', 0], 'expected': '', 'hidden': True},
+            {'label': "['-',5] → '-----'", 'input': ['-', 5], 'expected': '-----', 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'fizz-buzz-word',
+        'function_name': 'fizzBuzzWord',
+        'target_time_seconds': 200,
+        'difficulty': 'easy',
+        'title_ru': 'FizzBuzz для одного числа',
+        'title_uz': 'Bitta son uchun FizzBuzz',
+        'statement_ru': (
+            'Напишите функцию, которая возвращает "FizzBuzz", если n делится и на 3, и на 5; "Fizz" — если '
+            'только на 3; "Buzz" — если только на 5; иначе — само число в виде строки.'
+        ),
+        'statement_uz': (
+            "n 3 ga ham, 5 ga ham bo'linsa \"FizzBuzz\", faqat 3 ga bo'linsa \"Fizz\", faqat 5 ga bo'linsa "
+            "\"Buzz\", aks holda sonning o'zini satr ko'rinishida qaytaruvchi funksiya yozing."
+        ),
+        'example_ru': 'Вход:  15\nВыход: "FizzBuzz"',
+        'example_uz': 'Kirish:  15\nChiqish: "FizzBuzz"',
+        'constraints_ru': ['1 ≤ n ≤ 10 000', 'Результат всегда строка'],
+        'constraints_uz': ['1 ≤ n ≤ 10 000', 'Natija har doim satr'],
+        'starter_code_ru': 'function fizzBuzzWord(n) {\n  // TODO: верните "Fizz", "Buzz", "FizzBuzz" или число строкой\n}',
+        'starter_code_uz': "function fizzBuzzWord(n) {\n  // TODO: \"Fizz\", \"Buzz\", \"FizzBuzz\" yoki sonni satr ko'rinishida qaytaring\n}",
+        'test_cases': [
+            {'label': "15 → 'FizzBuzz'", 'input': 15, 'expected': 'FizzBuzz', 'hidden': False},
+            {'label': "9 → 'Fizz'", 'input': 9, 'expected': 'Fizz', 'hidden': False},
+            {'label': "10 → 'Buzz'", 'input': 10, 'expected': 'Buzz', 'hidden': True},
+            {'label': "7 → '7'", 'input': 7, 'expected': '7', 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'second-largest',
+        'function_name': 'secondLargest',
+        'target_time_seconds': 220,
+        'difficulty': 'easy',
+        'title_ru': 'Второй по величине элемент',
+        'title_uz': 'Ikkinchi eng katta element',
+        'statement_ru': (
+            'Напишите функцию, которая возвращает второе по величине различное значение массива. Если такого '
+            'значения нет, верните -1.'
+        ),
+        'statement_uz': (
+            'Massivdagi ikkinchi eng katta turli qiymatni qaytaruvchi funksiya yozing. Bunday qiymat '
+            "bo'lmasa, -1 qaytaring."
+        ),
+        'example_ru': 'Вход:  [4, 9, 2, 9, 7]\nВыход: 7',
+        'example_uz': 'Kirish:  [4, 9, 2, 9, 7]\nChiqish: 7',
+        'constraints_ru': ['1 ≤ длина массива ≤ 1000', 'Повторяющиеся значения считаются один раз'],
+        'constraints_uz': ['1 ≤ massiv uzunligi ≤ 1000', 'Takrorlanuvchi qiymatlar bir marta hisoblanadi'],
+        'starter_code_ru': 'function secondLargest(arr) {\n  // TODO: верните второе по величине различное значение\n}',
+        'starter_code_uz': 'function secondLargest(arr) {\n  // TODO: ikkinchi eng katta turli qiymatni qaytaring\n}',
+        'test_cases': [
+            {'label': '[4,9,2,9,7] → 7', 'input': [4, 9, 2, 9, 7], 'expected': 7, 'hidden': False},
+            {'label': '[5,5,5] → -1', 'input': [5, 5, 5], 'expected': -1, 'hidden': False},
+            {'label': '[1,2] → 1', 'input': [1, 2], 'expected': 1, 'hidden': True},
+            {'label': '[-3,-1,-7] → -3', 'input': [-3, -1, -7], 'expected': -3, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'sort-characters',
+        'function_name': 'sortCharacters',
+        'target_time_seconds': 200,
+        'difficulty': 'easy',
+        'title_ru': 'Сортировка символов',
+        'title_uz': 'Belgilarni saralash',
+        'statement_ru': (
+            'Напишите функцию, которая возвращает строку, символы которой отсортированы по возрастанию их '
+            'кодов.'
+        ),
+        'statement_uz': (
+            "Belgilari kodlari bo'yicha o'sish tartibida saralangan satrni qaytaruvchi funksiya yozing."
+        ),
+        'example_ru': 'Вход:  "kod"\nВыход: "dko"',
+        'example_uz': 'Kirish:  "kod"\nChiqish: "dko"',
+        'constraints_ru': [
+            '0 ≤ длина строки ≤ 1000 символов',
+            'Строка содержит только строчные латинские буквы',
+        ],
+        'constraints_uz': ['0 ≤ satr uzunligi ≤ 1000 belgi', "Satrda faqat kichik lotin harflari bo'ladi"],
+        'starter_code_ru': 'function sortCharacters(text) {\n  // TODO: верните строку с отсортированными символами\n}',
+        'starter_code_uz': 'function sortCharacters(text) {\n  // TODO: belgilari saralangan satrni qaytaring\n}',
+        'test_cases': [
+            {'label': "'kod' → 'dko'", 'input': 'kod', 'expected': 'dko', 'hidden': False},
+            {'label': "'algoritm' → 'agilmort'", 'input': 'algoritm', 'expected': 'agilmort', 'hidden': False},
+            {'label': "'' → ''", 'input': '', 'expected': '', 'hidden': True},
+            {'label': "'bbaa' → 'aabb'", 'input': 'bbaa', 'expected': 'aabb', 'hidden': True},
+        ],
+    },
     {
         'slug': 'most-frequent-word',
         'function_name': 'mostFrequentWord',
         'target_time_seconds': 300,
+        'difficulty': 'medium',
         'title_ru': 'Самое частое слово',
         'title_uz': "Eng ko'p uchraydigan so'z",
         'statement_ru': (
@@ -13770,207 +13762,10 @@ CODING_PROBLEMS = [
         ],
     },
     {
-        'slug': 'reverse-string',
-        'function_name': 'reverseString',
-        'target_time_seconds': 180,
-        'title_ru': 'Строка наоборот',
-        'title_uz': 'Satrni teskari aylantirish',
-        'statement_ru': 'Напишите функцию, которая принимает строку и возвращает её в обратном порядке.',
-        'statement_uz': "Satrni qabul qilib, uni teskari tartibda qaytaruvchi funksiya yozing.",
-        'example_ru': 'Вход:  "hello"\nВыход: "olleh"',
-        'example_uz': 'Kirish:  "hello"\nChiqish: "olleh"',
-        'constraints_ru': ['0 ≤ длина строки ≤ 1000 символов'],
-        'constraints_uz': ['0 ≤ satr uzunligi ≤ 1000 belgi'],
-        'starter_code_ru': 'function reverseString(s) {\n  // TODO: верните строку в обратном порядке\n}',
-        'starter_code_uz': "function reverseString(s) {\n  // TODO: satrni teskari tartibda qaytaring\n}",
-        'test_cases': [
-            {'label': "'hello' → 'olleh'", 'input': 'hello', 'expected': 'olleh', 'hidden': False},
-            {'label': "'abc' → 'cba'", 'input': 'abc', 'expected': 'cba', 'hidden': False},
-            {'label': "'a' → 'a'", 'input': 'a', 'expected': 'a', 'hidden': True},
-        ],
-    },
-    {
-        'slug': 'is-palindrome',
-        'function_name': 'isPalindrome',
-        'target_time_seconds': 200,
-        'title_ru': 'Проверка палиндрома',
-        'title_uz': 'Palindromni tekshirish',
-        'statement_ru': (
-            'Напишите функцию, которая проверяет, является ли строка палиндромом (читается одинаково '
-            'в обе стороны), без учёта регистра.'
-        ),
-        'statement_uz': (
-            "Satr palindrom (ikki tomondan bir xil o'qiladigan) ekanligini, katta-kichik harflarga "
-            "e'tibor bermay tekshiruvchi funksiya yozing."
-        ),
-        'example_ru': 'Вход:  "level"\nВыход: true',
-        'example_uz': 'Kirish:  "level"\nChiqish: true',
-        'constraints_ru': ['1 ≤ длина строки ≤ 1000 символов', 'Сравнение не чувствительно к регистру'],
-        'constraints_uz': ['1 ≤ satr uzunligi ≤ 1000 belgi', "Solishtirish katta-kichik harflarga bog'liq emas"],
-        'starter_code_ru': 'function isPalindrome(s) {\n  // TODO: true, если s — палиндром\n}',
-        'starter_code_uz': "function isPalindrome(s) {\n  // TODO: s palindrom bo'lsa true qaytaring\n}",
-        'test_cases': [
-            {'label': "'level' → true", 'input': 'level', 'expected': True, 'hidden': False},
-            {'label': "'hello' → false", 'input': 'hello', 'expected': False, 'hidden': False},
-            {'label': "'Level' → true (case-insensitive)", 'input': 'Level', 'expected': True, 'hidden': True},
-        ],
-    },
-    {
-        'slug': 'sum-array',
-        'function_name': 'sumArray',
-        'target_time_seconds': 150,
-        'title_ru': 'Сумма массива',
-        'title_uz': "Massiv yig'indisi",
-        'statement_ru': 'Напишите функцию, которая возвращает сумму всех чисел в массиве.',
-        'statement_uz': "Massivdagi barcha sonlarning yig'indisini qaytaruvchi funksiya yozing.",
-        'example_ru': 'Вход:  [1, 2, 3, 4]\nВыход: 10',
-        'example_uz': 'Kirish:  [1, 2, 3, 4]\nChiqish: 10',
-        'constraints_ru': ['0 ≤ длина массива ≤ 1000', 'Элементы — целые числа'],
-        'constraints_uz': ['0 ≤ massiv uzunligi ≤ 1000', 'Elementlar butun sonlar'],
-        'starter_code_ru': 'function sumArray(arr) {\n  // TODO: верните сумму всех элементов\n}',
-        'starter_code_uz': "function sumArray(arr) {\n  // TODO: barcha elementlar yig'indisini qaytaring\n}",
-        'test_cases': [
-            {'label': '[1,2,3,4] → 10', 'input': [1, 2, 3, 4], 'expected': 10, 'hidden': False},
-            {'label': '[] → 0', 'input': [], 'expected': 0, 'hidden': False},
-            {'label': '[-1,1,5] → 5', 'input': [-1, 1, 5], 'expected': 5, 'hidden': True},
-        ],
-    },
-    {
-        'slug': 'find-max',
-        'function_name': 'findMax',
-        'target_time_seconds': 150,
-        'title_ru': 'Максимум массива',
-        'title_uz': 'Massivdagi maksimal son',
-        'statement_ru': 'Напишите функцию, которая возвращает наибольшее число в массиве.',
-        'statement_uz': "Massivdagi eng katta sonni qaytaruvchi funksiya yozing.",
-        'example_ru': 'Вход:  [3, 7, 2]\nВыход: 7',
-        'example_uz': 'Kirish:  [3, 7, 2]\nChiqish: 7',
-        'constraints_ru': ['1 ≤ длина массива ≤ 1000'],
-        'constraints_uz': ['1 ≤ massiv uzunligi ≤ 1000'],
-        'starter_code_ru': 'function findMax(arr) {\n  // TODO: верните наибольший элемент\n}',
-        'starter_code_uz': "function findMax(arr) {\n  // TODO: eng katta elementni qaytaring\n}",
-        'test_cases': [
-            {'label': '[3,7,2] → 7', 'input': [3, 7, 2], 'expected': 7, 'hidden': False},
-            {'label': '[-5,-1,-9] → -1', 'input': [-5, -1, -9], 'expected': -1, 'hidden': True},
-            {'label': '[4] → 4', 'input': [4], 'expected': 4, 'hidden': False},
-        ],
-    },
-    {
-        'slug': 'find-min',
-        'function_name': 'findMin',
-        'target_time_seconds': 150,
-        'title_ru': 'Минимум массива',
-        'title_uz': 'Massivdagi minimal son',
-        'statement_ru': 'Напишите функцию, которая возвращает наименьшее число в массиве.',
-        'statement_uz': "Massivdagi eng kichik sonni qaytaruvchi funksiya yozing.",
-        'example_ru': 'Вход:  [3, 7, 2]\nВыход: 2',
-        'example_uz': 'Kirish:  [3, 7, 2]\nChiqish: 2',
-        'constraints_ru': ['1 ≤ длина массива ≤ 1000'],
-        'constraints_uz': ['1 ≤ massiv uzunligi ≤ 1000'],
-        'starter_code_ru': 'function findMin(arr) {\n  // TODO: верните наименьший элемент\n}',
-        'starter_code_uz': "function findMin(arr) {\n  // TODO: eng kichik elementni qaytaring\n}",
-        'test_cases': [
-            {'label': '[3,7,2] → 2', 'input': [3, 7, 2], 'expected': 2, 'hidden': False},
-            {'label': '[-5,-1,-9] → -9', 'input': [-5, -1, -9], 'expected': -9, 'hidden': True},
-            {'label': '[4] → 4', 'input': [4], 'expected': 4, 'hidden': False},
-        ],
-    },
-    {
-        'slug': 'factorial',
-        'function_name': 'factorial',
-        'target_time_seconds': 180,
-        'title_ru': 'Факториал',
-        'title_uz': 'Faktorial',
-        'statement_ru': 'Напишите функцию, которая вычисляет факториал неотрицательного целого числа n.',
-        'statement_uz': "Manfiy bo'lmagan butun n sonining faktorialini hisoblaydigan funksiya yozing.",
-        'example_ru': 'Вход:  5\nВыход: 120',
-        'example_uz': 'Kirish:  5\nChiqish: 120',
-        'constraints_ru': ['0 ≤ n ≤ 12'],
-        'constraints_uz': ['0 ≤ n ≤ 12'],
-        'starter_code_ru': 'function factorial(n) {\n  // TODO: верните n!\n}',
-        'starter_code_uz': "function factorial(n) {\n  // TODO: n! ni qaytaring\n}",
-        'test_cases': [
-            {'label': '5 → 120', 'input': 5, 'expected': 120, 'hidden': False},
-            {'label': '0 → 1', 'input': 0, 'expected': 1, 'hidden': False},
-            {'label': '6 → 720', 'input': 6, 'expected': 720, 'hidden': True},
-        ],
-    },
-    {
-        'slug': 'fibonacci-nth',
-        'function_name': 'fibonacciNth',
-        'target_time_seconds': 240,
-        'title_ru': 'N-ное число Фибоначчи',
-        'title_uz': "Fibonachchining N-chi soni",
-        'statement_ru': (
-            'Напишите функцию, которая возвращает n-е число последовательности Фибоначчи '
-            '(F(0)=0, F(1)=1).'
-        ),
-        'statement_uz': (
-            "Fibonachchi ketma-ketligining n-chi sonini qaytaruvchi funksiya yozing "
-            "(F(0)=0, F(1)=1)."
-        ),
-        'example_ru': 'Вход:  6\nВыход: 8',
-        'example_uz': 'Kirish:  6\nChiqish: 8',
-        'constraints_ru': ['0 ≤ n ≤ 30'],
-        'constraints_uz': ['0 ≤ n ≤ 30'],
-        'starter_code_ru': 'function fibonacciNth(n) {\n  // TODO: верните F(n)\n}',
-        'starter_code_uz': "function fibonacciNth(n) {\n  // TODO: F(n) ni qaytaring\n}",
-        'test_cases': [
-            {'label': '6 → 8', 'input': 6, 'expected': 8, 'hidden': False},
-            {'label': '0 → 0', 'input': 0, 'expected': 0, 'hidden': False},
-            {'label': '10 → 55', 'input': 10, 'expected': 55, 'hidden': True},
-        ],
-    },
-    {
-        'slug': 'count-vowels',
-        'function_name': 'countVowels',
-        'target_time_seconds': 180,
-        'title_ru': 'Подсчёт гласных',
-        'title_uz': 'Unlilarni sanash',
-        'statement_ru': (
-            'Напишите функцию, которая считает количество гласных букв (a, e, i, o, u) в строке, '
-            'без учёта регистра.'
-        ),
-        'statement_uz': (
-            "Satrdagi unli harflar (a, e, i, o, u) sonini, katta-kichik harflarga e'tibor bermay "
-            "sanaydigan funksiya yozing."
-        ),
-        'example_ru': 'Вход:  "Hello World"\nВыход: 3',
-        'example_uz': 'Kirish:  "Hello World"\nChiqish: 3',
-        'constraints_ru': ['0 ≤ длина строки ≤ 10 000 символов'],
-        'constraints_uz': ['0 ≤ satr uzunligi ≤ 10 000 belgi'],
-        'starter_code_ru': 'function countVowels(s) {\n  // TODO: верните количество гласных\n}',
-        'starter_code_uz': "function countVowels(s) {\n  // TODO: unlilar sonini qaytaring\n}",
-        'test_cases': [
-            {'label': "'Hello World' → 3", 'input': 'Hello World', 'expected': 3, 'hidden': False},
-            {'label': "'xyz' → 0", 'input': 'xyz', 'expected': 0, 'hidden': False},
-            {'label': "'AEIOU' → 5", 'input': 'AEIOU', 'expected': 5, 'hidden': True},
-        ],
-    },
-    {
-        'slug': 'sum-digits',
-        'function_name': 'sumDigits',
-        'target_time_seconds': 180,
-        'title_ru': 'Сумма цифр числа',
-        'title_uz': "Sonning raqamlari yig'indisi",
-        'statement_ru': 'Напишите функцию, которая возвращает сумму цифр неотрицательного целого числа.',
-        'statement_uz': "Manfiy bo'lmagan butun sonning raqamlari yig'indisini qaytaruvchi funksiya yozing.",
-        'example_ru': 'Вход:  12345\nВыход: 15',
-        'example_uz': 'Kirish:  12345\nChiqish: 15',
-        'constraints_ru': ['0 ≤ n ≤ 10^9'],
-        'constraints_uz': ['0 ≤ n ≤ 10^9'],
-        'starter_code_ru': 'function sumDigits(n) {\n  // TODO: верните сумму цифр n\n}',
-        'starter_code_uz': "function sumDigits(n) {\n  // TODO: n raqamlari yig'indisini qaytaring\n}",
-        'test_cases': [
-            {'label': '12345 → 15', 'input': 12345, 'expected': 15, 'hidden': False},
-            {'label': '0 → 0', 'input': 0, 'expected': 0, 'hidden': False},
-            {'label': '9999 → 36', 'input': 9999, 'expected': 36, 'hidden': True},
-        ],
-    },
-    {
         'slug': 'is-prime',
         'function_name': 'isPrime',
         'target_time_seconds': 240,
+        'difficulty': 'medium',
         'title_ru': 'Проверка на простое число',
         'title_uz': 'Tub sonni tekshirish',
         'statement_ru': 'Напишите функцию, которая проверяет, является ли число n простым.',
@@ -13991,6 +13786,7 @@ CODING_PROBLEMS = [
         'slug': 'first-duplicate',
         'function_name': 'firstDuplicate',
         'target_time_seconds': 240,
+        'difficulty': 'medium',
         'title_ru': 'Первый повтор',
         'title_uz': 'Birinchi takrorlanuvchi element',
         'statement_ru': (
@@ -14018,6 +13814,7 @@ CODING_PROBLEMS = [
         'slug': 'is-anagram',
         'function_name': 'isAnagram',
         'target_time_seconds': 240,
+        'difficulty': 'medium',
         'title_ru': 'Анаграмма',
         'title_uz': 'Anagramma',
         'statement_ru': (
@@ -14051,35 +13848,10 @@ CODING_PROBLEMS = [
         ],
     },
     {
-        'slug': 'longest-word',
-        'function_name': 'longestWord',
-        'target_time_seconds': 200,
-        'title_ru': 'Самое длинное слово',
-        'title_uz': "Eng uzun so'z",
-        'statement_ru': (
-            'Напишите функцию, которая принимает предложение и возвращает самое длинное слово в нём. '
-            'При равенстве длины побеждает слово, встретившееся первым.'
-        ),
-        'statement_uz': (
-            "Gapni qabul qilib, undagi eng uzun so'zni qaytaruvchi funksiya yozing. Uzunliklar teng "
-            "bo'lsa, birinchi uchragan so'z g'olib hisoblanadi."
-        ),
-        'example_ru': 'Вход:  "the quick brown fox"\nВыход: "quick"',
-        'example_uz': 'Kirish:  "the quick brown fox"\nChiqish: "quick"',
-        'constraints_ru': ['1 ≤ длина предложения ≤ 10 000 символов', 'Слова разделены одиночными пробелами'],
-        'constraints_uz': ['1 ≤ gap uzunligi ≤ 10 000 belgi', "So'zlar bitta bo'sh joy bilan ajratilgan"],
-        'starter_code_ru': 'function longestWord(sentence) {\n  // TODO: верните самое длинное слово\n}',
-        'starter_code_uz': "function longestWord(sentence) {\n  // TODO: eng uzun so'zni qaytaring\n}",
-        'test_cases': [
-            {'label': "'the quick brown fox' → 'quick'", 'input': 'the quick brown fox', 'expected': 'quick', 'hidden': False},
-            {'label': "'a bb ccc' → 'ccc'", 'input': 'a bb ccc', 'expected': 'ccc', 'hidden': False},
-            {'label': "'equal size here now' → 'equal'", 'input': 'equal size here now', 'expected': 'equal', 'hidden': True},
-        ],
-    },
-    {
         'slug': 'valid-parentheses',
         'function_name': 'isValidParentheses',
         'target_time_seconds': 260,
+        'difficulty': 'medium',
         'title_ru': 'Проверка скобок',
         'title_uz': 'Qavslarni tekshirish',
         'statement_ru': (
@@ -14103,35 +13875,10 @@ CODING_PROBLEMS = [
         ],
     },
     {
-        'slug': 'capitalize-words',
-        'function_name': 'capitalizeWords',
-        'target_time_seconds': 200,
-        'title_ru': 'Заглавные буквы слов',
-        'title_uz': "Har bir so'zni bosh harf bilan boshlash",
-        'statement_ru': (
-            'Напишите функцию, которая делает первую букву каждого слова в предложении заглавной, '
-            'остальные — строчными.'
-        ),
-        'statement_uz': (
-            "Gapdagi har bir so'zning birinchi harfini bosh, qolganini kichik harfga aylantiruvchi "
-            "funksiya yozing."
-        ),
-        'example_ru': 'Вход:  "hello world"\nВыход: "Hello World"',
-        'example_uz': 'Kirish:  "hello world"\nChiqish: "Hello World"',
-        'constraints_ru': ['1 ≤ длина предложения ≤ 10 000 символов', 'Слова разделены одиночными пробелами'],
-        'constraints_uz': ['1 ≤ gap uzunligi ≤ 10 000 belgi', "So'zlar bitta bo'sh joy bilan ajratilgan"],
-        'starter_code_ru': 'function capitalizeWords(sentence) {\n  // TODO: верните предложение с заглавными буквами слов\n}',
-        'starter_code_uz': "function capitalizeWords(sentence) {\n  // TODO: har bir so'z bosh harf bilan boshlanadigan gapni qaytaring\n}",
-        'test_cases': [
-            {'label': "'hello world' → 'Hello World'", 'input': 'hello world', 'expected': 'Hello World', 'hidden': False},
-            {'label': "'javascript is fun' → 'Javascript Is Fun'", 'input': 'javascript is fun', 'expected': 'Javascript Is Fun', 'hidden': False},
-            {'label': "'a' → 'A'", 'input': 'a', 'expected': 'A', 'hidden': True},
-        ],
-    },
-    {
         'slug': 'gcd-two-numbers',
         'function_name': 'gcd',
         'target_time_seconds': 220,
+        'difficulty': 'medium',
         'title_ru': 'НОД двух чисел',
         'title_uz': "Ikki sonning EKUB'i",
         'statement_ru': (
@@ -14165,54 +13912,10 @@ CODING_PROBLEMS = [
         ],
     },
     {
-        'slug': 'is-power-of-two',
-        'function_name': 'isPowerOfTwo',
-        'target_time_seconds': 180,
-        'title_ru': 'Степень двойки',
-        'title_uz': 'Ikkining darajasi',
-        'statement_ru': (
-            'Напишите функцию, которая проверяет, является ли число n степенью двойки (1, 2, 4, 8, ...).'
-        ),
-        'statement_uz': "n sonining ikkining darajasi (1, 2, 4, 8, ...) ekanligini tekshiruvchi funksiya yozing.",
-        'example_ru': 'Вход:  16\nВыход: true',
-        'example_uz': 'Kirish:  16\nChiqish: true',
-        'constraints_ru': ['0 ≤ n ≤ 2^30'],
-        'constraints_uz': ['0 ≤ n ≤ 2^30'],
-        'starter_code_ru': 'function isPowerOfTwo(n) {\n  // TODO: true, если n — степень двойки\n}',
-        'starter_code_uz': "function isPowerOfTwo(n) {\n  // TODO: n ikkining darajasi bo'lsa true qaytaring\n}",
-        'test_cases': [
-            {'label': '16 → true', 'input': 16, 'expected': True, 'hidden': False},
-            {'label': '18 → false', 'input': 18, 'expected': False, 'hidden': False},
-            {'label': '1 → true', 'input': 1, 'expected': True, 'hidden': True},
-        ],
-    },
-    {
-        'slug': 'count-unique',
-        'function_name': 'countUnique',
-        'target_time_seconds': 180,
-        'title_ru': 'Количество уникальных элементов',
-        'title_uz': 'Noyob elementlar soni',
-        'statement_ru': (
-            'Напишите функцию, которая возвращает количество уникальных (неповторяющихся) значений '
-            'в массиве.'
-        ),
-        'statement_uz': "Massivdagi noyob (takrorlanmaydigan) qiymatlar sonini qaytaruvchi funksiya yozing.",
-        'example_ru': 'Вход:  [1, 2, 2, 3, 3, 3]\nВыход: 3',
-        'example_uz': 'Kirish:  [1, 2, 2, 3, 3, 3]\nChiqish: 3',
-        'constraints_ru': ['0 ≤ длина массива ≤ 1000'],
-        'constraints_uz': ['0 ≤ massiv uzunligi ≤ 1000'],
-        'starter_code_ru': 'function countUnique(arr) {\n  // TODO: верните количество уникальных значений\n}',
-        'starter_code_uz': "function countUnique(arr) {\n  // TODO: noyob qiymatlar sonini qaytaring\n}",
-        'test_cases': [
-            {'label': '[1,2,2,3,3,3] → 3', 'input': [1, 2, 2, 3, 3, 3], 'expected': 3, 'hidden': False},
-            {'label': '[] → 0', 'input': [], 'expected': 0, 'hidden': False},
-            {'label': '[5,5,5] → 1', 'input': [5, 5, 5], 'expected': 1, 'hidden': True},
-        ],
-    },
-    {
         'slug': 'binary-search',
         'function_name': 'binarySearch',
         'target_time_seconds': 300,
+        'difficulty': 'medium',
         'title_ru': 'Бинарный поиск',
         'title_uz': 'Ikkilik qidiruv',
         'statement_ru': (
@@ -14245,6 +13948,2157 @@ CODING_PROBLEMS = [
             {'label': '[[1,3,5,7,9],7] → 3', 'input': [[1, 3, 5, 7, 9], 7], 'expected': 3, 'hidden': False},
             {'label': '[[2,4,6,8],5] → -1', 'input': [[2, 4, 6, 8], 5], 'expected': -1, 'hidden': False},
             {'label': '[[1,2,3,4,5,6,7,8,9,10],1] → 0', 'input': [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 1], 'expected': 0, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'two-sum-exists',
+        'function_name': 'twoSumExists',
+        'target_time_seconds': 240,
+        'difficulty': 'medium',
+        'title_ru': 'Есть ли пара с заданной суммой',
+        'title_uz': "Berilgan yig'indili juftlik bormi",
+        'statement_ru': (
+            'Напишите функцию, которая принимает массив из массива чисел и целевого значения и возвращает '
+            'true, если в массиве есть два разных элемента (по индексам), сумма которых равна целевому '
+            'значению.'
+        ),
+        'statement_uz': (
+            "Sonlar massivi va maqsad qiymatdan iborat massivni qabul qilib, massivda yig'indisi maqsad "
+            "qiymatga teng bo'lgan (indekslari har xil) ikki element bor bo'lsa true qaytaruvchi funksiya "
+            'yozing.'
+        ),
+        'example_ru': 'Вход:  [[2, 7, 11, 15], 9]\nВыход: true',
+        'example_uz': 'Kirish:  [[2, 7, 11, 15], 9]\nChiqish: true',
+        'constraints_ru': ['0 ≤ длина массива ≤ 10 000', 'Один и тот же элемент нельзя использовать дважды'],
+        'constraints_uz': [
+            '0 ≤ massiv uzunligi ≤ 10 000',
+            'Bitta elementni ikki marta ishlatish mumkin emas',
+        ],
+        'starter_code_ru': (
+            'function twoSumExists(pair) {\n'
+            '  const [arr, target] = pair;\n'
+            '  // TODO: верните true, если такая пара существует\n'
+            '}'
+        ),
+        'starter_code_uz': (
+            'function twoSumExists(pair) {\n'
+            '  const [arr, target] = pair;\n'
+            "  // TODO: bunday juftlik bo'lsa true qaytaring\n"
+            '}'
+        ),
+        'test_cases': [
+            {'label': '[[2,7,11,15],9] → true', 'input': [[2, 7, 11, 15], 9], 'expected': True, 'hidden': False},
+            {'label': '[[1,2,3],7] → false', 'input': [[1, 2, 3], 7], 'expected': False, 'hidden': False},
+            {'label': '[[3,3],6] → true', 'input': [[3, 3], 6], 'expected': True, 'hidden': True},
+            {'label': '[[5],10] → false', 'input': [[5], 10], 'expected': False, 'hidden': True},
+            {'label': '[[-1,4,6],5] → true', 'input': [[-1, 4, 6], 5], 'expected': True, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'longest-unique-substring',
+        'function_name': 'longestUniqueSubstring',
+        'target_time_seconds': 300,
+        'difficulty': 'medium',
+        'title_ru': 'Длина подстроки без повторов',
+        'title_uz': 'Takrorlanmaydigan qism satr uzunligi',
+        'statement_ru': (
+            'Напишите функцию, которая возвращает длину самой длинной подстроки без повторяющихся символов.'
+        ),
+        'statement_uz': (
+            'Takrorlanuvchi belgilarsiz eng uzun qism satr uzunligini qaytaruvchi funksiya yozing.'
+        ),
+        'example_ru': 'Вход:  "abcabcbb"\nВыход: 3',
+        'example_uz': 'Kirish:  "abcabcbb"\nChiqish: 3',
+        'constraints_ru': ['0 ≤ длина строки ≤ 10 000 символов', 'Подстрока — непрерывный участок строки'],
+        'constraints_uz': ['0 ≤ satr uzunligi ≤ 10 000 belgi', "Qism satr — satrning uzluksiz bo'lagi"],
+        'starter_code_ru': 'function longestUniqueSubstring(text) {\n  // TODO: верните длину самой длинной подстроки без повторов\n}',
+        'starter_code_uz': 'function longestUniqueSubstring(text) {\n  // TODO: takrorlanmaydigan eng uzun qism satr uzunligini qaytaring\n}',
+        'test_cases': [
+            {'label': "'abcabcbb' → 3", 'input': 'abcabcbb', 'expected': 3, 'hidden': False},
+            {'label': "'bbbbb' → 1", 'input': 'bbbbb', 'expected': 1, 'hidden': False},
+            {'label': "'' → 0", 'input': '', 'expected': 0, 'hidden': True},
+            {'label': "'pwwkew' → 3", 'input': 'pwwkew', 'expected': 3, 'hidden': True},
+            {'label': "'algoritm' → 8", 'input': 'algoritm', 'expected': 8, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'max-subarray-sum',
+        'function_name': 'maxSubarraySum',
+        'target_time_seconds': 280,
+        'difficulty': 'medium',
+        'title_ru': 'Максимальная сумма подмассива',
+        'title_uz': "Qism massivning maksimal yig'indisi",
+        'statement_ru': (
+            'Напишите функцию, которая возвращает наибольшую сумму непрерывного непустого подмассива.'
+        ),
+        'statement_uz': (
+            "Uzluksiz va bo'sh bo'lmagan qism massivning eng katta yig'indisini qaytaruvchi funksiya yozing."
+        ),
+        'example_ru': 'Вход:  [-2, 1, -3, 4, -1, 2, 1, -5, 4]\nВыход: 6',
+        'example_uz': 'Kirish:  [-2, 1, -3, 4, -1, 2, 1, -5, 4]\nChiqish: 6',
+        'constraints_ru': ['1 ≤ длина массива ≤ 10 000', 'Элементы могут быть отрицательными'],
+        'constraints_uz': ['1 ≤ massiv uzunligi ≤ 10 000', "Elementlar manfiy ham bo'lishi mumkin"],
+        'starter_code_ru': 'function maxSubarraySum(arr) {\n  // TODO: верните максимальную сумму непрерывного подмассива\n}',
+        'starter_code_uz': "function maxSubarraySum(arr) {\n  // TODO: uzluksiz qism massivning maksimal yig'indisini qaytaring\n}",
+        'test_cases': [
+            {'label': '[-2,1,-3,4,-1,2,1,-5,4] → 6', 'input': [-2, 1, -3, 4, -1, 2, 1, -5, 4], 'expected': 6, 'hidden': False},
+            {'label': '[1,2,3] → 6', 'input': [1, 2, 3], 'expected': 6, 'hidden': False},
+            {'label': '[-5,-2,-9] → -2', 'input': [-5, -2, -9], 'expected': -2, 'hidden': True},
+            {'label': '[7] → 7', 'input': [7], 'expected': 7, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'first-unique-char',
+        'function_name': 'firstUniqueChar',
+        'target_time_seconds': 250,
+        'difficulty': 'medium',
+        'title_ru': 'Первый неповторяющийся символ',
+        'title_uz': 'Birinchi takrorlanmaydigan belgi',
+        'statement_ru': (
+            'Напишите функцию, которая возвращает первый символ строки, встречающийся в ней ровно один раз. '
+            'Если такого символа нет, верните пустую строку.'
+        ),
+        'statement_uz': (
+            'Satrda faqat bir marta uchraydigan birinchi belgini qaytaruvchi funksiya yozing. Bunday belgi '
+            "bo'lmasa, bo'sh satr qaytaring."
+        ),
+        'example_ru': 'Вход:  "aabbc"\nВыход: "c"',
+        'example_uz': 'Kirish:  "aabbc"\nChiqish: "c"',
+        'constraints_ru': ['0 ≤ длина строки ≤ 10 000 символов'],
+        'constraints_uz': ['0 ≤ satr uzunligi ≤ 10 000 belgi'],
+        'starter_code_ru': 'function firstUniqueChar(text) {\n  // TODO: верните первый неповторяющийся символ\n}',
+        'starter_code_uz': 'function firstUniqueChar(text) {\n  // TODO: birinchi takrorlanmaydigan belgini qaytaring\n}',
+        'test_cases': [
+            {'label': "'aabbc' → 'c'", 'input': 'aabbc', 'expected': 'c', 'hidden': False},
+            {'label': "'aabb' → ''", 'input': 'aabb', 'expected': '', 'hidden': False},
+            {'label': "'algoritm' → 'a'", 'input': 'algoritm', 'expected': 'a', 'hidden': True},
+            {'label': "'' → ''", 'input': '', 'expected': '', 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'longest-common-prefix',
+        'function_name': 'longestCommonPrefix',
+        'target_time_seconds': 260,
+        'difficulty': 'medium',
+        'title_ru': 'Наибольший общий префикс',
+        'title_uz': 'Eng uzun umumiy prefiks',
+        'statement_ru': (
+            'Напишите функцию, которая принимает массив строк и возвращает их наибольший общий префикс. Если '
+            'общего префикса нет, верните пустую строку.'
+        ),
+        'statement_uz': (
+            'Satrlar massivini qabul qilib, ularning eng uzun umumiy prefiksini qaytaruvchi funksiya yozing. '
+            "Umumiy prefiks bo'lmasa, bo'sh satr qaytaring."
+        ),
+        'example_ru': 'Вход:  ["flower", "flow", "flight"]\nВыход: "fl"',
+        'example_uz': 'Kirish:  ["flower", "flow", "flight"]\nChiqish: "fl"',
+        'constraints_ru': ['0 ≤ количество строк ≤ 200', '0 ≤ длина каждой строки ≤ 200 символов'],
+        'constraints_uz': ['0 ≤ satrlar soni ≤ 200', '0 ≤ har bir satr uzunligi ≤ 200 belgi'],
+        'starter_code_ru': 'function longestCommonPrefix(words) {\n  // TODO: верните наибольший общий префикс\n}',
+        'starter_code_uz': 'function longestCommonPrefix(words) {\n  // TODO: eng uzun umumiy prefiksni qaytaring\n}',
+        'test_cases': [
+            {'label': "['flower','flow','flight'] → 'fl'", 'input': ['flower', 'flow', 'flight'], 'expected': 'fl', 'hidden': False},
+            {'label': "['dog','racecar'] → ''", 'input': ['dog', 'racecar'], 'expected': '', 'hidden': False},
+            {'label': "['abc'] → 'abc'", 'input': ['abc'], 'expected': 'abc', 'hidden': True},
+            {'label': "['kod','kodlash','koder'] → 'kod'", 'input': ['kod', 'kodlash', 'koder'], 'expected': 'kod', 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'missing-number',
+        'function_name': 'missingNumber',
+        'target_time_seconds': 240,
+        'difficulty': 'medium',
+        'title_ru': 'Пропущенное число',
+        'title_uz': 'Tushib qolgan son',
+        'statement_ru': (
+            'Массив содержит n различных чисел из диапазона от 0 до n. Напишите функцию, которая возвращает '
+            'единственное пропущенное число.'
+        ),
+        'statement_uz': (
+            "Massivda 0 dan n gacha oraliqdagi n ta turli son bor. Yo'qolgan yagona sonni qaytaruvchi "
+            'funksiya yozing.'
+        ),
+        'example_ru': 'Вход:  [3, 0, 1]\nВыход: 2',
+        'example_uz': 'Kirish:  [3, 0, 1]\nChiqish: 2',
+        'constraints_ru': ['1 ≤ длина массива ≤ 10 000', 'Все элементы различны'],
+        'constraints_uz': ['1 ≤ massiv uzunligi ≤ 10 000', 'Barcha elementlar turlicha'],
+        'starter_code_ru': 'function missingNumber(arr) {\n  // TODO: верните пропущенное число\n}',
+        'starter_code_uz': 'function missingNumber(arr) {\n  // TODO: tushib qolgan sonni qaytaring\n}',
+        'test_cases': [
+            {'label': '[3,0,1] → 2', 'input': [3, 0, 1], 'expected': 2, 'hidden': False},
+            {'label': '[0] → 1', 'input': [0], 'expected': 1, 'hidden': False},
+            {'label': '[9,6,4,2,3,5,7,0,1] → 8', 'input': [9, 6, 4, 2, 3, 5, 7, 0, 1], 'expected': 8, 'hidden': True},
+            {'label': '[0,1,2] → 3', 'input': [0, 1, 2], 'expected': 3, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'majority-element',
+        'function_name': 'majorityElement',
+        'target_time_seconds': 260,
+        'difficulty': 'medium',
+        'title_ru': 'Мажоритарный элемент',
+        'title_uz': "Ko'pchilik element",
+        'statement_ru': (
+            'Напишите функцию, которая возвращает элемент, встречающийся в массиве более половины раз. '
+            'Гарантируется, что такой элемент существует.'
+        ),
+        'statement_uz': (
+            "Massivda yarmidan ko'p marta uchraydigan elementni qaytaruvchi funksiya yozing. Bunday element "
+            'mavjudligi kafolatlanadi.'
+        ),
+        'example_ru': 'Вход:  [3, 2, 3]\nВыход: 3',
+        'example_uz': 'Kirish:  [3, 2, 3]\nChiqish: 3',
+        'constraints_ru': ['1 ≤ длина массива ≤ 10 000', 'Мажоритарный элемент всегда существует'],
+        'constraints_uz': ['1 ≤ massiv uzunligi ≤ 10 000', "Ko'pchilik element har doim mavjud"],
+        'starter_code_ru': 'function majorityElement(arr) {\n  // TODO: верните мажоритарный элемент\n}',
+        'starter_code_uz': "function majorityElement(arr) {\n  // TODO: ko'pchilik elementni qaytaring\n}",
+        'test_cases': [
+            {'label': '[3,2,3] → 3', 'input': [3, 2, 3], 'expected': 3, 'hidden': False},
+            {'label': '[2,2,1,1,1,2,2] → 2', 'input': [2, 2, 1, 1, 1, 2, 2], 'expected': 2, 'hidden': False},
+            {'label': '[7] → 7', 'input': [7], 'expected': 7, 'hidden': True},
+            {'label': '[5,5,5,1] → 5', 'input': [5, 5, 5, 1], 'expected': 5, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'search-insert-position',
+        'function_name': 'searchInsertPosition',
+        'target_time_seconds': 260,
+        'difficulty': 'medium',
+        'title_ru': 'Позиция для вставки',
+        'title_uz': "Qo'yish uchun o'rin",
+        'statement_ru': (
+            'Напишите функцию, которая принимает массив из отсортированного по возрастанию массива и '
+            'целевого значения и возвращает индекс этого значения, а если его нет — индекс, куда его нужно '
+            'вставить, сохранив порядок. Используйте бинарный поиск.'
+        ),
+        'statement_uz': (
+            "O'sish tartibida saralangan massiv va maqsad qiymatdan iborat massivni qabul qilib, shu qiymat "
+            "indeksini, u yo'q bo'lsa esa tartibni saqlab qo'yish kerak bo'lgan indeksni qaytaruvchi "
+            'funksiya yozing. Ikkilik qidiruvdan foydalaning.'
+        ),
+        'example_ru': 'Вход:  [[1, 3, 5, 6], 5]\nВыход: 2',
+        'example_uz': 'Kirish:  [[1, 3, 5, 6], 5]\nChiqish: 2',
+        'constraints_ru': [
+            '0 ≤ длина массива ≤ 10 000',
+            'Массив отсортирован по возрастанию, значения различны',
+        ],
+        'constraints_uz': [
+            '0 ≤ massiv uzunligi ≤ 10 000',
+            "Massiv o'sish tartibida saralangan, qiymatlar turlicha",
+        ],
+        'starter_code_ru': (
+            'function searchInsertPosition(pair) {\n'
+            '  const [arr, target] = pair;\n'
+            '  // TODO: верните индекс target или позицию для вставки\n'
+            '}'
+        ),
+        'starter_code_uz': (
+            'function searchInsertPosition(pair) {\n'
+            '  const [arr, target] = pair;\n'
+            "  // TODO: target indeksini yoki qo'yish o'rnini qaytaring\n"
+            '}'
+        ),
+        'test_cases': [
+            {'label': '[[1,3,5,6],5] → 2', 'input': [[1, 3, 5, 6], 5], 'expected': 2, 'hidden': False},
+            {'label': '[[1,3,5,6],2] → 1', 'input': [[1, 3, 5, 6], 2], 'expected': 1, 'hidden': False},
+            {'label': '[[1,3,5,6],7] → 4', 'input': [[1, 3, 5, 6], 7], 'expected': 4, 'hidden': True},
+            {'label': '[[],4] → 0', 'input': [[], 4], 'expected': 0, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'integer-sqrt',
+        'function_name': 'integerSqrt',
+        'target_time_seconds': 280,
+        'difficulty': 'medium',
+        'title_ru': 'Целая часть квадратного корня',
+        'title_uz': 'Kvadrat ildizning butun qismi',
+        'statement_ru': (
+            'Напишите функцию, которая возвращает целую часть квадратного корня числа n, не используя '
+            'Math.sqrt. Ожидается бинарный поиск по ответу.'
+        ),
+        'statement_uz': (
+            'Math.sqrt dan foydalanmasdan n sonining kvadrat ildizining butun qismini qaytaruvchi funksiya '
+            "yozing. Javob bo'yicha ikkilik qidiruv kutiladi."
+        ),
+        'example_ru': 'Вход:  16\nВыход: 4',
+        'example_uz': 'Kirish:  16\nChiqish: 4',
+        'constraints_ru': ['0 ≤ n ≤ 10^9', 'Math.sqrt использовать нельзя'],
+        'constraints_uz': ['0 ≤ n ≤ 10^9', 'Math.sqrt dan foydalanish mumkin emas'],
+        'starter_code_ru': 'function integerSqrt(n) {\n  // TODO: верните целую часть квадратного корня из n\n}',
+        'starter_code_uz': 'function integerSqrt(n) {\n  // TODO: n ning kvadrat ildizining butun qismini qaytaring\n}',
+        'test_cases': [
+            {'label': '16 → 4', 'input': 16, 'expected': 4, 'hidden': False},
+            {'label': '8 → 2', 'input': 8, 'expected': 2, 'hidden': False},
+            {'label': '0 → 0', 'input': 0, 'expected': 0, 'hidden': True},
+            {'label': '1000000 → 1000', 'input': 1000000, 'expected': 1000, 'hidden': True},
+            {'label': '2 → 1', 'input': 2, 'expected': 1, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'climbing-stairs',
+        'function_name': 'climbingStairs',
+        'target_time_seconds': 280,
+        'difficulty': 'medium',
+        'title_ru': 'Подъём по лестнице',
+        'title_uz': 'Zinapoyaga chiqish',
+        'statement_ru': (
+            'Лестница состоит из n ступеней; за один шаг можно подняться на одну или две ступени. Напишите '
+            'функцию, которая возвращает количество различных способов подняться наверх.'
+        ),
+        'statement_uz': (
+            "Zinapoya n ta pog'onadan iborat; bir qadamda bir yoki ikki pog'onaga ko'tarilish mumkin. Tepaga "
+            'chiqishning turli usullari sonini qaytaruvchi funksiya yozing.'
+        ),
+        'example_ru': 'Вход:  2\nВыход: 2',
+        'example_uz': 'Kirish:  2\nChiqish: 2',
+        'constraints_ru': ['1 ≤ n ≤ 40', 'Ожидается решение без экспоненциального перебора'],
+        'constraints_uz': ['1 ≤ n ≤ 40', 'Eksponensial urinishlarsiz yechim kutiladi'],
+        'starter_code_ru': 'function climbingStairs(n) {\n  // TODO: верните количество способов подняться на n ступеней\n}',
+        'starter_code_uz': "function climbingStairs(n) {\n  // TODO: n pog'onaga chiqish usullari sonini qaytaring\n}",
+        'test_cases': [
+            {'label': '2 → 2', 'input': 2, 'expected': 2, 'hidden': False},
+            {'label': '3 → 3', 'input': 3, 'expected': 3, 'hidden': False},
+            {'label': '1 → 1', 'input': 1, 'expected': 1, 'hidden': True},
+            {'label': '10 → 89', 'input': 10, 'expected': 89, 'hidden': True},
+            {'label': '25 → 121393', 'input': 25, 'expected': 121393, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'house-robber',
+        'function_name': 'houseRobber',
+        'target_time_seconds': 300,
+        'difficulty': 'medium',
+        'title_ru': 'Максимум без соседей',
+        'title_uz': "Qo'shnilarsiz maksimal yig'indi",
+        'statement_ru': (
+            'Напишите функцию, которая возвращает максимальную сумму элементов массива при условии, что '
+            'нельзя брать два соседних элемента.'
+        ),
+        'statement_uz': (
+            'Yonma-yon turgan ikki elementni olish mumkin emas degan shart bilan massiv elementlarining '
+            "maksimal yig'indisini qaytaruvchi funksiya yozing."
+        ),
+        'example_ru': 'Вход:  [1, 2, 3, 1]\nВыход: 4',
+        'example_uz': 'Kirish:  [1, 2, 3, 1]\nChiqish: 4',
+        'constraints_ru': ['0 ≤ длина массива ≤ 1000', '0 ≤ каждый элемент ≤ 1000'],
+        'constraints_uz': ['0 ≤ massiv uzunligi ≤ 1000', '0 ≤ har bir element ≤ 1000'],
+        'starter_code_ru': 'function houseRobber(arr) {\n  // TODO: верните максимальную сумму без соседних элементов\n}',
+        'starter_code_uz': "function houseRobber(arr) {\n  // TODO: qo'shni elementlarsiz maksimal yig'indini qaytaring\n}",
+        'test_cases': [
+            {'label': '[1,2,3,1] → 4', 'input': [1, 2, 3, 1], 'expected': 4, 'hidden': False},
+            {'label': '[2,7,9,3,1] → 12', 'input': [2, 7, 9, 3, 1], 'expected': 12, 'hidden': False},
+            {'label': '[] → 0', 'input': [], 'expected': 0, 'hidden': True},
+            {'label': '[5] → 5', 'input': [5], 'expected': 5, 'hidden': True},
+            {'label': '[4,4,4,4] → 8', 'input': [4, 4, 4, 4], 'expected': 8, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'reverse-words',
+        'function_name': 'reverseWords',
+        'target_time_seconds': 250,
+        'difficulty': 'medium',
+        'title_ru': 'Слова в обратном порядке',
+        'title_uz': "So'zlarni teskari tartibda joylash",
+        'statement_ru': (
+            'Напишите функцию, которая возвращает предложение, в котором слова идут в обратном порядке. '
+            'Слова разделены одиночными пробелами.'
+        ),
+        'statement_uz': (
+            "So'zlari teskari tartibda joylashgan gapni qaytaruvchi funksiya yozing. So'zlar bitta bo'sh joy "
+            'bilan ajratilgan.'
+        ),
+        'example_ru': 'Вход:  "kod yozish qiziq"\nВыход: "qiziq yozish kod"',
+        'example_uz': 'Kirish:  "kod yozish qiziq"\nChiqish: "qiziq yozish kod"',
+        'constraints_ru': ['0 ≤ длина предложения ≤ 1000 символов', 'Сами слова не переворачиваются'],
+        'constraints_uz': ['0 ≤ gap uzunligi ≤ 1000 belgi', "So'zlarning o'zi teskari aylantirilmaydi"],
+        'starter_code_ru': 'function reverseWords(sentence) {\n  // TODO: верните предложение со словами в обратном порядке\n}',
+        'starter_code_uz': "function reverseWords(sentence) {\n  // TODO: so'zlari teskari tartibdagi gapni qaytaring\n}",
+        'test_cases': [
+            {'label': "'kod yozish qiziq' → 'qiziq yozish kod'", 'input': 'kod yozish qiziq', 'expected': 'qiziq yozish kod', 'hidden': False},
+            {'label': "'salom' → 'salom'", 'input': 'salom', 'expected': 'salom', 'hidden': False},
+            {'label': "'' → ''", 'input': '', 'expected': '', 'hidden': True},
+            {'label': "'bir ikki uch tort' → 'tort uch ikki bir'", 'input': 'bir ikki uch tort', 'expected': 'tort uch ikki bir', 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'run-length-encode',
+        'function_name': 'runLengthEncode',
+        'target_time_seconds': 280,
+        'difficulty': 'medium',
+        'title_ru': 'Сжатие повторов',
+        'title_uz': 'Takrorlarni siqish',
+        'statement_ru': (
+            'Напишите функцию, которая сжимает строку: каждую серию одинаковых подряд идущих символов '
+            'заменяет самим символом и её длиной, например "aaabb" → "a3b2". Серия длины 1 тоже получает '
+            'число 1.'
+        ),
+        'statement_uz': (
+            "Satrni siquvchi funksiya yozing: ketma-ket kelgan bir xil belgilar guruhi belgining o'zi va "
+            "guruh uzunligi bilan almashtiriladi, masalan \"aaabb\" → \"a3b2\". Uzunligi 1 bo'lgan guruh ham 1 "
+            'raqamini oladi.'
+        ),
+        'example_ru': 'Вход:  "aaabb"\nВыход: "a3b2"',
+        'example_uz': 'Kirish:  "aaabb"\nChiqish: "a3b2"',
+        'constraints_ru': [
+            '0 ≤ длина строки ≤ 10 000 символов',
+            'Строка содержит только строчные латинские буквы',
+        ],
+        'constraints_uz': ['0 ≤ satr uzunligi ≤ 10 000 belgi', "Satrda faqat kichik lotin harflari bo'ladi"],
+        'starter_code_ru': 'function runLengthEncode(text) {\n  // TODO: верните сжатую строку\n}',
+        'starter_code_uz': 'function runLengthEncode(text) {\n  // TODO: siqilgan satrni qaytaring\n}',
+        'test_cases': [
+            {'label': "'aaabb' → 'a3b2'", 'input': 'aaabb', 'expected': 'a3b2', 'hidden': False},
+            {'label': "'abc' → 'a1b1c1'", 'input': 'abc', 'expected': 'a1b1c1', 'hidden': False},
+            {'label': "'' → ''", 'input': '', 'expected': '', 'hidden': True},
+            {'label': "'wwwwaaadexxxxxx' → 'w4a3d1e1x6'", 'input': 'wwwwaaadexxxxxx', 'expected': 'w4a3d1e1x6', 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'digital-root',
+        'function_name': 'digitalRoot',
+        'target_time_seconds': 240,
+        'difficulty': 'medium',
+        'title_ru': 'Цифровой корень',
+        'title_uz': 'Raqamli ildiz',
+        'statement_ru': (
+            'Напишите функцию, которая повторно складывает цифры числа, пока не останется одна цифра, и '
+            'возвращает её.'
+        ),
+        'statement_uz': (
+            "Sonning raqamlarini bitta raqam qolguncha qayta-qayta qo'shib, natijani qaytaruvchi funksiya "
+            'yozing.'
+        ),
+        'example_ru': 'Вход:  38\nВыход: 2',
+        'example_uz': 'Kirish:  38\nChiqish: 2',
+        'constraints_ru': ['0 ≤ n ≤ 10^9'],
+        'constraints_uz': ['0 ≤ n ≤ 10^9'],
+        'starter_code_ru': 'function digitalRoot(n) {\n  // TODO: верните цифровой корень числа n\n}',
+        'starter_code_uz': 'function digitalRoot(n) {\n  // TODO: n sonining raqamli ildizini qaytaring\n}',
+        'test_cases': [
+            {'label': '38 → 2', 'input': 38, 'expected': 2, 'hidden': False},
+            {'label': '0 → 0', 'input': 0, 'expected': 0, 'hidden': False},
+            {'label': '999 → 9', 'input': 999, 'expected': 9, 'hidden': True},
+            {'label': '123456789 → 9', 'input': 123456789, 'expected': 9, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'balanced-brackets',
+        'function_name': 'balancedBrackets',
+        'target_time_seconds': 300,
+        'difficulty': 'medium',
+        'title_ru': 'Баланс трёх видов скобок',
+        'title_uz': 'Uch turdagi qavslar balansi',
+        'statement_ru': (
+            'Напишите функцию, которая проверяет, корректно ли расставлены скобки трёх видов: (), [] и {}. '
+            'Скобки должны закрываться в правильном порядке.'
+        ),
+        'statement_uz': (
+            "Uch turdagi qavslar — (), [] va {} — to'g'ri joylashtirilganini tekshiruvchi funksiya yozing. "
+            "Qavslar to'g'ri tartibda yopilishi kerak."
+        ),
+        'example_ru': 'Вход:  "()[]{}"\nВыход: true',
+        'example_uz': 'Kirish:  "()[]{}"\nChiqish: true',
+        'constraints_ru': ['0 ≤ длина строки ≤ 10 000 символов', 'Строка содержит только символы скобок'],
+        'constraints_uz': ['0 ≤ satr uzunligi ≤ 10 000 belgi', "Satrda faqat qavs belgilari bo'ladi"],
+        'starter_code_ru': 'function balancedBrackets(text) {\n  // TODO: верните true, если скобки расставлены корректно\n}',
+        'starter_code_uz': "function balancedBrackets(text) {\n  // TODO: qavslar to'g'ri joylashgan bo'lsa true qaytaring\n}",
+        'test_cases': [
+            {'label': "'()[]{}' → true", 'input': '()[]{}', 'expected': True, 'hidden': False},
+            {'label': "'([)]' → false", 'input': '([)]', 'expected': False, 'hidden': False},
+            {'label': "'' → true", 'input': '', 'expected': True, 'hidden': True},
+            {'label': "'{[()]}' → true", 'input': '{[()]}', 'expected': True, 'hidden': True},
+            {'label': "'(((' → false", 'input': '(((', 'expected': False, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'rotate-array-right',
+        'function_name': 'rotateArrayRight',
+        'target_time_seconds': 280,
+        'difficulty': 'medium',
+        'title_ru': 'Сдвиг массива вправо',
+        'title_uz': "Massivni o'ngga siljitish",
+        'statement_ru': (
+            'Напишите функцию, которая принимает массив из массива чисел и числа k и возвращает массив, '
+            'циклически сдвинутый вправо на k позиций, в виде строки с элементами через запятую (например '
+            '"3,4,1,2").'
+        ),
+        'statement_uz': (
+            "Sonlar massivi va k sonidan iborat massivni qabul qilib, o'ngga k pozitsiyaga davriy "
+            "siljitilgan massivni elementlari vergul bilan ajratilgan satr ko'rinishida (masalan \"3,4,1,2\") "
+            'qaytaruvchi funksiya yozing.'
+        ),
+        'example_ru': 'Вход:  [[1, 2, 3, 4], 1]\nВыход: "4,1,2,3"',
+        'example_uz': 'Kirish:  [[1, 2, 3, 4], 1]\nChiqish: "4,1,2,3"',
+        'constraints_ru': ['0 ≤ длина массива ≤ 1000', '0 ≤ k ≤ 10^6', 'Пустой массив даёт пустую строку'],
+        'constraints_uz': ['0 ≤ massiv uzunligi ≤ 1000', '0 ≤ k ≤ 10^6', "Bo'sh massiv bo'sh satr beradi"],
+        'starter_code_ru': (
+            'function rotateArrayRight(pair) {\n'
+            '  const [arr, steps] = pair;\n'
+            '  // TODO: верните сдвинутый массив строкой через запятую\n'
+            '}'
+        ),
+        'starter_code_uz': (
+            'function rotateArrayRight(pair) {\n'
+            '  const [arr, steps] = pair;\n'
+            '  // TODO: siljitilgan massivni vergul bilan ajratilgan satr sifatida qaytaring\n'
+            '}'
+        ),
+        'test_cases': [
+            {'label': "[[1,2,3,4],1] → '4,1,2,3'", 'input': [[1, 2, 3, 4], 1], 'expected': '4,1,2,3', 'hidden': False},
+            {'label': "[[1,2,3],3] → '1,2,3'", 'input': [[1, 2, 3], 3], 'expected': '1,2,3', 'hidden': False},
+            {'label': "[[1,2,3,4,5],7] → '4,5,1,2,3'", 'input': [[1, 2, 3, 4, 5], 7], 'expected': '4,5,1,2,3', 'hidden': True},
+            {'label': "[[],2] → ''", 'input': [[], 2], 'expected': '', 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'intersection-count',
+        'function_name': 'intersectionCount',
+        'target_time_seconds': 260,
+        'difficulty': 'medium',
+        'title_ru': 'Количество общих значений',
+        'title_uz': 'Umumiy qiymatlar soni',
+        'statement_ru': (
+            'Напишите функцию, которая принимает массив из двух массивов и возвращает количество различных '
+            'значений, встречающихся в обоих массивах.'
+        ),
+        'statement_uz': (
+            'Ikki massivdan iborat massivni qabul qilib, ikkalasida ham uchraydigan turli qiymatlar sonini '
+            'qaytaruvchi funksiya yozing.'
+        ),
+        'example_ru': 'Вход:  [[1, 2, 2, 3], [2, 3, 4]]\nВыход: 2',
+        'example_uz': 'Kirish:  [[1, 2, 2, 3], [2, 3, 4]]\nChiqish: 2',
+        'constraints_ru': ['0 ≤ длина каждого массива ≤ 1000', 'Повторы считаются один раз'],
+        'constraints_uz': ['0 ≤ har bir massiv uzunligi ≤ 1000', 'Takrorlar bir marta hisoblanadi'],
+        'starter_code_ru': (
+            'function intersectionCount(pair) {\n'
+            '  const [first, second] = pair;\n'
+            '  // TODO: верните количество общих различных значений\n'
+            '}'
+        ),
+        'starter_code_uz': (
+            'function intersectionCount(pair) {\n'
+            '  const [first, second] = pair;\n'
+            '  // TODO: umumiy turli qiymatlar sonini qaytaring\n'
+            '}'
+        ),
+        'test_cases': [
+            {'label': '[[1,2,2,3],[2,3,4]] → 2', 'input': [[1, 2, 2, 3], [2, 3, 4]], 'expected': 2, 'hidden': False},
+            {'label': '[[1,2],[3,4]] → 0', 'input': [[1, 2], [3, 4]], 'expected': 0, 'hidden': False},
+            {'label': '[[],[1]] → 0', 'input': [[], [1]], 'expected': 0, 'hidden': True},
+            {'label': '[[5,5,5],[5]] → 1', 'input': [[5, 5, 5], [5]], 'expected': 1, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'valid-palindrome-alnum',
+        'function_name': 'isCleanPalindrome',
+        'target_time_seconds': 260,
+        'difficulty': 'medium',
+        'title_ru': 'Палиндром без лишних символов',
+        'title_uz': 'Ortiqcha belgilarsiz palindrom',
+        'statement_ru': (
+            'Напишите функцию, которая проверяет, является ли строка палиндромом, если учитывать только '
+            'буквы и цифры и не учитывать регистр.'
+        ),
+        'statement_uz': (
+            "Faqat harflar va raqamlarni hisobga olib, katta-kichik harflarga e'tibor bermagan holda satr "
+            'palindrom ekanligini tekshiruvchi funksiya yozing.'
+        ),
+        'example_ru': 'Вход:  "A man, a plan, a canal: Panama"\nВыход: true',
+        'example_uz': 'Kirish:  "A man, a plan, a canal: Panama"\nChiqish: true',
+        'constraints_ru': ['0 ≤ длина строки ≤ 10 000 символов', 'Пустая строка считается палиндромом'],
+        'constraints_uz': ['0 ≤ satr uzunligi ≤ 10 000 belgi', "Bo'sh satr palindrom hisoblanadi"],
+        'starter_code_ru': 'function isCleanPalindrome(text) {\n  // TODO: верните true, если строка — палиндром\n}',
+        'starter_code_uz': "function isCleanPalindrome(text) {\n  // TODO: satr palindrom bo'lsa true qaytaring\n}",
+        'test_cases': [
+            {'label': "'A man, a plan, a canal: Panama' → true", 'input': 'A man, a plan, a canal: Panama', 'expected': True, 'hidden': False},
+            {'label': "'kod yozish' → false", 'input': 'kod yozish', 'expected': False, 'hidden': False},
+            {'label': "'' → true", 'input': '', 'expected': True, 'hidden': True},
+            {'label': "'Ne, men!' → true", 'input': 'Ne, men!', 'expected': True, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'max-product-pair',
+        'function_name': 'maxProductPair',
+        'target_time_seconds': 260,
+        'difficulty': 'medium',
+        'title_ru': 'Максимальное произведение пары',
+        'title_uz': "Juftlikning maksimal ko'paytmasi",
+        'statement_ru': (
+            'Напишите функцию, которая возвращает наибольшее произведение двух различных по индексам '
+            'элементов массива. Учтите отрицательные числа.'
+        ),
+        'statement_uz': (
+            "Massivdagi indekslari har xil ikki elementning eng katta ko'paytmasini qaytaruvchi funksiya "
+            'yozing. Manfiy sonlarni ham hisobga oling.'
+        ),
+        'example_ru': 'Вход:  [3, 5, 2, 6]\nВыход: 30',
+        'example_uz': 'Kirish:  [3, 5, 2, 6]\nChiqish: 30',
+        'constraints_ru': ['2 ≤ длина массива ≤ 10 000', 'Элементы могут быть отрицательными'],
+        'constraints_uz': ['2 ≤ massiv uzunligi ≤ 10 000', "Elementlar manfiy ham bo'lishi mumkin"],
+        'starter_code_ru': 'function maxProductPair(arr) {\n  // TODO: верните максимальное произведение двух элементов\n}',
+        'starter_code_uz': "function maxProductPair(arr) {\n  // TODO: ikki elementning maksimal ko'paytmasini qaytaring\n}",
+        'test_cases': [
+            {'label': '[3,5,2,6] → 30', 'input': [3, 5, 2, 6], 'expected': 30, 'hidden': False},
+            {'label': '[-10,-9,1,2] → 90', 'input': [-10, -9, 1, 2], 'expected': 90, 'hidden': False},
+            {'label': '[1,2] → 2', 'input': [1, 2], 'expected': 2, 'hidden': True},
+            {'label': '[-4,0,3] → 0', 'input': [-4, 0, 3], 'expected': 0, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'binary-to-decimal',
+        'function_name': 'binaryToDecimal',
+        'target_time_seconds': 240,
+        'difficulty': 'medium',
+        'title_ru': 'Из двоичной в десятичную',
+        'title_uz': "Ikkilikdan o'nlikka",
+        'statement_ru': (
+            'Напишите функцию, которая принимает строку из нулей и единиц и возвращает соответствующее '
+            'десятичное число. Встроенные преобразования систем счисления использовать нельзя.'
+        ),
+        'statement_uz': (
+            "Nol va birlardan iborat satrni qabul qilib, unga mos o'nlik sonni qaytaruvchi funksiya yozing. "
+            "Sanoq sistemalarini o'girishning tayyor funksiyalaridan foydalanish mumkin emas."
+        ),
+        'example_ru': 'Вход:  "1011"\nВыход: 11',
+        'example_uz': 'Kirish:  "1011"\nChiqish: 11',
+        'constraints_ru': ['1 ≤ длина строки ≤ 30 символов', 'Строка содержит только символы 0 и 1'],
+        'constraints_uz': ['1 ≤ satr uzunligi ≤ 30 belgi', "Satrda faqat 0 va 1 belgilari bo'ladi"],
+        'starter_code_ru': 'function binaryToDecimal(bits) {\n  // TODO: верните десятичное значение двоичной строки\n}',
+        'starter_code_uz': "function binaryToDecimal(bits) {\n  // TODO: ikkilik satrning o'nlik qiymatini qaytaring\n}",
+        'test_cases': [
+            {'label': "'1011' → 11", 'input': '1011', 'expected': 11, 'hidden': False},
+            {'label': "'0' → 0", 'input': '0', 'expected': 0, 'hidden': False},
+            {'label': "'1' → 1", 'input': '1', 'expected': 1, 'hidden': True},
+            {'label': "'100000' → 32", 'input': '100000', 'expected': 32, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'decimal-to-binary',
+        'function_name': 'decimalToBinary',
+        'target_time_seconds': 250,
+        'difficulty': 'medium',
+        'title_ru': 'Из десятичной в двоичную',
+        'title_uz': "O'nlikdan ikkilikka",
+        'statement_ru': (
+            'Напишите функцию, которая возвращает двоичную запись числа n в виде строки без ведущих нулей. '
+            'Встроенные преобразования систем счисления использовать нельзя.'
+        ),
+        'statement_uz': (
+            "n sonining ikkilik yozuvini boshida nollarsiz satr ko'rinishida qaytaruvchi funksiya yozing. "
+            "Sanoq sistemalarini o'girishning tayyor funksiyalaridan foydalanish mumkin emas."
+        ),
+        'example_ru': 'Вход:  11\nВыход: "1011"',
+        'example_uz': 'Kirish:  11\nChiqish: "1011"',
+        'constraints_ru': ['0 ≤ n ≤ 10^9', 'Для n = 0 результат "0"'],
+        'constraints_uz': ['0 ≤ n ≤ 10^9', 'n = 0 uchun natija "0"'],
+        'starter_code_ru': 'function decimalToBinary(n) {\n  // TODO: верните двоичную запись числа строкой\n}',
+        'starter_code_uz': 'function decimalToBinary(n) {\n  // TODO: sonning ikkilik yozuvini satr sifatida qaytaring\n}',
+        'test_cases': [
+            {'label': "11 → '1011'", 'input': 11, 'expected': '1011', 'hidden': False},
+            {'label': "0 → '0'", 'input': 0, 'expected': '0', 'hidden': False},
+            {'label': "1 → '1'", 'input': 1, 'expected': '1', 'hidden': True},
+            {'label': "64 → '1000000'", 'input': 64, 'expected': '1000000', 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'bubble-sort-swaps',
+        'function_name': 'bubbleSortSwaps',
+        'target_time_seconds': 280,
+        'difficulty': 'medium',
+        'title_ru': 'Число обменов пузырьковой сортировки',
+        'title_uz': 'Pufakli saralashdagi almashtirishlar soni',
+        'statement_ru': (
+            'Напишите функцию, которая возвращает количество обменов соседних элементов, выполняемых '
+            'пузырьковой сортировкой массива по возрастанию.'
+        ),
+        'statement_uz': (
+            "Massivni o'sish tartibida pufakli saralash usulida saralaganda bajariladigan qo'shni "
+            'elementlarni almashtirishlar sonini qaytaruvchi funksiya yozing.'
+        ),
+        'example_ru': 'Вход:  [3, 1, 2]\nВыход: 2',
+        'example_uz': 'Kirish:  [3, 1, 2]\nChiqish: 2',
+        'constraints_ru': [
+            '0 ≤ длина массива ≤ 500',
+            'Обмены считаются для классической пузырьковой сортировки',
+        ],
+        'constraints_uz': [
+            '0 ≤ massiv uzunligi ≤ 500',
+            'Almashtirishlar klassik pufakli saralash uchun hisoblanadi',
+        ],
+        'starter_code_ru': 'function bubbleSortSwaps(arr) {\n  // TODO: верните количество обменов\n}',
+        'starter_code_uz': 'function bubbleSortSwaps(arr) {\n  // TODO: almashtirishlar sonini qaytaring\n}',
+        'test_cases': [
+            {'label': '[3,1,2] → 2', 'input': [3, 1, 2], 'expected': 2, 'hidden': False},
+            {'label': '[1,2,3] → 0', 'input': [1, 2, 3], 'expected': 0, 'hidden': False},
+            {'label': '[4,3,2,1] → 6', 'input': [4, 3, 2, 1], 'expected': 6, 'hidden': True},
+            {'label': '[] → 0', 'input': [], 'expected': 0, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'max-sum-window',
+        'function_name': 'maxSumWindow',
+        'target_time_seconds': 280,
+        'difficulty': 'medium',
+        'title_ru': 'Максимальная сумма окна',
+        'title_uz': "Oynaning maksimal yig'indisi",
+        'statement_ru': (
+            'Напишите функцию, которая принимает массив из массива чисел и размера окна k и возвращает '
+            'наибольшую сумму k подряд идущих элементов. Если элементов меньше k, верните 0.'
+        ),
+        'statement_uz': (
+            "Sonlar massivi va oyna o'lchami k dan iborat massivni qabul qilib, ketma-ket kelgan k ta "
+            "elementning eng katta yig'indisini qaytaruvchi funksiya yozing. Elementlar soni k dan kam "
+            "bo'lsa, 0 qaytaring."
+        ),
+        'example_ru': 'Вход:  [[1, 4, 2, 10, 2, 3, 1, 0, 20], 4]\nВыход: 24',
+        'example_uz': 'Kirish:  [[1, 4, 2, 10, 2, 3, 1, 0, 20], 4]\nChiqish: 24',
+        'constraints_ru': ['1 ≤ k ≤ 1000', '0 ≤ длина массива ≤ 10 000', 'Ожидается решение за один проход'],
+        'constraints_uz': [
+            '1 ≤ k ≤ 1000',
+            '0 ≤ massiv uzunligi ≤ 10 000',
+            "Bir marta o'tishda ishlaydigan yechim kutiladi",
+        ],
+        'starter_code_ru': (
+            'function maxSumWindow(pair) {\n'
+            '  const [arr, k] = pair;\n'
+            '  // TODO: верните максимальную сумму окна из k элементов\n'
+            '}'
+        ),
+        'starter_code_uz': (
+            'function maxSumWindow(pair) {\n'
+            '  const [arr, k] = pair;\n'
+            "  // TODO: k elementli oynaning maksimal yig'indisini qaytaring\n"
+            '}'
+        ),
+        'test_cases': [
+            {'label': '[[1,4,2,10,2,3,1,0,20],4] → 24', 'input': [[1, 4, 2, 10, 2, 3, 1, 0, 20], 4], 'expected': 24, 'hidden': False},
+            {'label': '[[2,3],3] → 0', 'input': [[2, 3], 3], 'expected': 0, 'hidden': False},
+            {'label': '[[-1,-2,-3],2] → -3', 'input': [[-1, -2, -3], 2], 'expected': -3, 'hidden': True},
+            {'label': '[[5,5,5],1] → 5', 'input': [[5, 5, 5], 1], 'expected': 5, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'is-subsequence',
+        'function_name': 'isSubsequence',
+        'target_time_seconds': 260,
+        'difficulty': 'medium',
+        'title_ru': 'Подпоследовательность строки',
+        'title_uz': 'Satrning qism ketma-ketligi',
+        'statement_ru': (
+            'Напишите функцию, которая принимает массив из двух строк s и t и возвращает true, если s '
+            'является подпоследовательностью t, то есть s можно получить из t удалением некоторых символов '
+            'без изменения порядка.'
+        ),
+        'statement_uz': (
+            "Ikki satr s va t dan iborat massivni qabul qilib, s satri t ning qism ketma-ketligi bo'lsa true "
+            "qaytaruvchi funksiya yozing, ya'ni s ni t dan ayrim belgilarni o'chirib, tartibni "
+            "o'zgartirmasdan olish mumkin bo'lsa."
+        ),
+        'example_ru': 'Вход:  ["abc", "ahbgdc"]\nВыход: true',
+        'example_uz': 'Kirish:  ["abc", "ahbgdc"]\nChiqish: true',
+        'constraints_ru': [
+            '0 ≤ длина каждой строки ≤ 10 000 символов',
+            'Пустая строка — подпоследовательность любой строки',
+        ],
+        'constraints_uz': [
+            '0 ≤ har bir satr uzunligi ≤ 10 000 belgi',
+            "Bo'sh satr har qanday satrning qism ketma-ketligi",
+        ],
+        'starter_code_ru': (
+            'function isSubsequence(pair) {\n'
+            '  const [small, big] = pair;\n'
+            '  // TODO: верните true, если s — подпоследовательность t\n'
+            '}'
+        ),
+        'starter_code_uz': (
+            'function isSubsequence(pair) {\n'
+            '  const [small, big] = pair;\n'
+            "  // TODO: s satri t ning qism ketma-ketligi bo'lsa true qaytaring\n"
+            '}'
+        ),
+        'test_cases': [
+            {'label': "['abc','ahbgdc'] → true", 'input': ['abc', 'ahbgdc'], 'expected': True, 'hidden': False},
+            {'label': "['axc','ahbgdc'] → false", 'input': ['axc', 'ahbgdc'], 'expected': False, 'hidden': False},
+            {'label': "['','abc'] → true", 'input': ['', 'abc'], 'expected': True, 'hidden': True},
+            {'label': "['kod','kodlash'] → true", 'input': ['kod', 'kodlash'], 'expected': True, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'count-set-bits',
+        'function_name': 'countSetBits',
+        'target_time_seconds': 250,
+        'difficulty': 'medium',
+        'title_ru': 'Количество единичных битов',
+        'title_uz': 'Birlik bitlar soni',
+        'statement_ru': 'Напишите функцию, которая возвращает количество единиц в двоичной записи числа n.',
+        'statement_uz': 'n sonining ikkilik yozuvidagi birlar sonini qaytaruvchi funksiya yozing.',
+        'example_ru': 'Вход:  11\nВыход: 3',
+        'example_uz': 'Kirish:  11\nChiqish: 3',
+        'constraints_ru': ['0 ≤ n ≤ 10^9'],
+        'constraints_uz': ['0 ≤ n ≤ 10^9'],
+        'starter_code_ru': 'function countSetBits(n) {\n  // TODO: верните количество единиц в двоичной записи n\n}',
+        'starter_code_uz': 'function countSetBits(n) {\n  // TODO: n ning ikkilik yozuvidagi birlar sonini qaytaring\n}',
+        'test_cases': [
+            {'label': '11 → 3', 'input': 11, 'expected': 3, 'hidden': False},
+            {'label': '0 → 0', 'input': 0, 'expected': 0, 'hidden': False},
+            {'label': '255 → 8', 'input': 255, 'expected': 8, 'hidden': True},
+            {'label': '1024 → 1', 'input': 1024, 'expected': 1, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'kth-largest',
+        'function_name': 'kthLargest',
+        'target_time_seconds': 280,
+        'difficulty': 'medium',
+        'title_ru': 'K-й по величине элемент',
+        'title_uz': 'K-chi eng katta element',
+        'statement_ru': (
+            'Напишите функцию, которая принимает массив из массива чисел и числа k и возвращает k-й по '
+            'величине элемент. Повторы считаются отдельными элементами.'
+        ),
+        'statement_uz': (
+            'Sonlar massivi va k sonidan iborat massivni qabul qilib, k-chi eng katta elementni qaytaruvchi '
+            'funksiya yozing. Takrorlar alohida element sifatida hisoblanadi.'
+        ),
+        'example_ru': 'Вход:  [[3, 2, 1, 5, 6, 4], 2]\nВыход: 5',
+        'example_uz': 'Kirish:  [[3, 2, 1, 5, 6, 4], 2]\nChiqish: 5',
+        'constraints_ru': ['1 ≤ k ≤ длина массива ≤ 10 000'],
+        'constraints_uz': ['1 ≤ k ≤ massiv uzunligi ≤ 10 000'],
+        'starter_code_ru': (
+            'function kthLargest(pair) {\n'
+            '  const [arr, k] = pair;\n'
+            '  // TODO: верните k-й по величине элемент\n'
+            '}'
+        ),
+        'starter_code_uz': (
+            'function kthLargest(pair) {\n'
+            '  const [arr, k] = pair;\n'
+            '  // TODO: k-chi eng katta elementni qaytaring\n'
+            '}'
+        ),
+        'test_cases': [
+            {'label': '[[3,2,1,5,6,4],2] → 5', 'input': [[3, 2, 1, 5, 6, 4], 2], 'expected': 5, 'hidden': False},
+            {'label': '[[3,2,3,1,2,4,5,5,6],4] → 4', 'input': [[3, 2, 3, 1, 2, 4, 5, 5, 6], 4], 'expected': 4, 'hidden': False},
+            {'label': '[[7],1] → 7', 'input': [[7], 1], 'expected': 7, 'hidden': True},
+            {'label': '[[-1,-5,-3],2] → -3', 'input': [[-1, -5, -3], 2], 'expected': -3, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'edit-distance',
+        'function_name': 'editDistance',
+        'target_time_seconds': 300,
+        'difficulty': 'hard',
+        'title_ru': 'Расстояние редактирования',
+        'title_uz': 'Tahrirlash masofasi',
+        'statement_ru': (
+            'Напишите функцию, которая принимает массив из двух строк и возвращает минимальное количество '
+            'операций (вставка, удаление, замена одного символа), нужных чтобы превратить первую строку во '
+            'вторую.'
+        ),
+        'statement_uz': (
+            'Ikki satrdan iborat massivni qabul qilib, birinchi satrni ikkinchisiga aylantirish uchun kerak '
+            "bo'ladigan minimal amallar (bitta belgini qo'shish, o'chirish yoki almashtirish) sonini "
+            'qaytaruvchi funksiya yozing.'
+        ),
+        'example_ru': 'Вход:  ["horse", "ros"]\nВыход: 3',
+        'example_uz': 'Kirish:  ["horse", "ros"]\nChiqish: 3',
+        'constraints_ru': [
+            '0 ≤ длина каждой строки ≤ 500 символов',
+            'Ожидается динамическое программирование',
+        ],
+        'constraints_uz': ['0 ≤ har bir satr uzunligi ≤ 500 belgi', 'Dinamik dasturlash kutiladi'],
+        'starter_code_ru': (
+            'function editDistance(pair) {\n'
+            '  const [first, second] = pair;\n'
+            '  // TODO: верните минимальное число операций редактирования\n'
+            '}'
+        ),
+        'starter_code_uz': (
+            'function editDistance(pair) {\n'
+            '  const [first, second] = pair;\n'
+            '  // TODO: minimal tahrirlash amallari sonini qaytaring\n'
+            '}'
+        ),
+        'test_cases': [
+            {'label': "['horse','ros'] → 3", 'input': ['horse', 'ros'], 'expected': 3, 'hidden': False},
+            {'label': "['intention','execution'] → 5", 'input': ['intention', 'execution'], 'expected': 5, 'hidden': False},
+            {'label': "['','abc'] → 3", 'input': ['', 'abc'], 'expected': 3, 'hidden': True},
+            {'label': "['kod','kod'] → 0", 'input': ['kod', 'kod'], 'expected': 0, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'longest-common-subsequence',
+        'function_name': 'lcsLength',
+        'target_time_seconds': 300,
+        'difficulty': 'hard',
+        'title_ru': 'Наибольшая общая подпоследовательность',
+        'title_uz': 'Eng uzun umumiy qism ketma-ketlik',
+        'statement_ru': (
+            'Напишите функцию, которая принимает массив из двух строк и возвращает длину их наибольшей общей '
+            'подпоследовательности (символы идут в том же порядке, но не обязательно подряд).'
+        ),
+        'statement_uz': (
+            'Ikki satrdan iborat massivni qabul qilib, ularning eng uzun umumiy qism ketma-ketligi '
+            'uzunligini qaytaruvchi funksiya yozing (belgilar tartibi saqlanadi, lekin ketma-ket turishi '
+            'shart emas).'
+        ),
+        'example_ru': 'Вход:  ["abcde", "ace"]\nВыход: 3',
+        'example_uz': 'Kirish:  ["abcde", "ace"]\nChiqish: 3',
+        'constraints_ru': [
+            '0 ≤ длина каждой строки ≤ 500 символов',
+            'Ожидается динамическое программирование',
+        ],
+        'constraints_uz': ['0 ≤ har bir satr uzunligi ≤ 500 belgi', 'Dinamik dasturlash kutiladi'],
+        'starter_code_ru': (
+            'function lcsLength(pair) {\n'
+            '  const [first, second] = pair;\n'
+            '  // TODO: верните длину наибольшей общей подпоследовательности\n'
+            '}'
+        ),
+        'starter_code_uz': (
+            'function lcsLength(pair) {\n'
+            '  const [first, second] = pair;\n'
+            '  // TODO: eng uzun umumiy qism ketma-ketlik uzunligini qaytaring\n'
+            '}'
+        ),
+        'test_cases': [
+            {'label': "['abcde','ace'] → 3", 'input': ['abcde', 'ace'], 'expected': 3, 'hidden': False},
+            {'label': "['abc','def'] → 0", 'input': ['abc', 'def'], 'expected': 0, 'hidden': False},
+            {'label': "['','abc'] → 0", 'input': ['', 'abc'], 'expected': 0, 'hidden': True},
+            {'label': "['algoritm','logaritm'] → 6", 'input': ['algoritm', 'logaritm'], 'expected': 6, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'longest-increasing-subsequence',
+        'function_name': 'lisLength',
+        'target_time_seconds': 300,
+        'difficulty': 'hard',
+        'title_ru': 'Наибольшая возрастающая подпоследовательность',
+        'title_uz': "Eng uzun o'suvchi qism ketma-ketlik",
+        'statement_ru': (
+            'Напишите функцию, которая возвращает длину наибольшей строго возрастающей подпоследовательности '
+            'массива.'
+        ),
+        'statement_uz': (
+            "Massivning qat'iy o'suvchi eng uzun qism ketma-ketligi uzunligini qaytaruvchi funksiya yozing."
+        ),
+        'example_ru': 'Вход:  [10, 9, 2, 5, 3, 7, 101, 18]\nВыход: 4',
+        'example_uz': 'Kirish:  [10, 9, 2, 5, 3, 7, 101, 18]\nChiqish: 4',
+        'constraints_ru': ['0 ≤ длина массива ≤ 2500', 'Подпоследовательность не обязана быть непрерывной'],
+        'constraints_uz': ['0 ≤ massiv uzunligi ≤ 2500', "Qism ketma-ketlik uzluksiz bo'lishi shart emas"],
+        'starter_code_ru': 'function lisLength(arr) {\n  // TODO: верните длину наибольшей возрастающей подпоследовательности\n}',
+        'starter_code_uz': "function lisLength(arr) {\n  // TODO: eng uzun o'suvchi qism ketma-ketlik uzunligini qaytaring\n}",
+        'test_cases': [
+            {'label': '[10,9,2,5,3,7,101,18] → 4', 'input': [10, 9, 2, 5, 3, 7, 101, 18], 'expected': 4, 'hidden': False},
+            {'label': '[7,7,7] → 1', 'input': [7, 7, 7], 'expected': 1, 'hidden': False},
+            {'label': '[] → 0', 'input': [], 'expected': 0, 'hidden': True},
+            {'label': '[1,3,6,7,9,4,10,5,6] → 6', 'input': [1, 3, 6, 7, 9, 4, 10, 5, 6], 'expected': 6, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'knapsack-01',
+        'function_name': 'knapsack',
+        'target_time_seconds': 300,
+        'difficulty': 'hard',
+        'title_ru': 'Задача о рюкзаке',
+        'title_uz': 'Ryukzak masalasi',
+        'statement_ru': (
+            'Напишите функцию, которая принимает массив из трёх элементов: массива весов, массива стоимостей '
+            'и вместимости рюкзака. Верните максимальную суммарную стоимость предметов, которые можно '
+            'уложить, не превысив вместимость. Каждый предмет можно взять не более одного раза.'
+        ),
+        'statement_uz': (
+            "Uch elementdan iborat massivni qabul qiluvchi funksiya yozing: og'irliklar massivi, qiymatlar "
+            "massivi va ryukzak sig'imi. Sig'imdan oshmasdan joylash mumkin bo'lgan buyumlarning maksimal "
+            "umumiy qiymatini qaytaring. Har bir buyumni ko'pi bilan bir marta olish mumkin."
+        ),
+        'example_ru': 'Вход:  [[1, 3, 4, 5], [1, 4, 5, 7], 7]\nВыход: 9',
+        'example_uz': 'Kirish:  [[1, 3, 4, 5], [1, 4, 5, 7], 7]\nChiqish: 9',
+        'constraints_ru': [
+            '1 ≤ количество предметов ≤ 100',
+            '0 ≤ вместимость ≤ 1000',
+            'Каждый предмет берётся не более одного раза',
+        ],
+        'constraints_uz': [
+            '1 ≤ buyumlar soni ≤ 100',
+            "0 ≤ sig'im ≤ 1000",
+            "Har bir buyum ko'pi bilan bir marta olinadi",
+        ],
+        'starter_code_ru': (
+            'function knapsack(input) {\n'
+            '  const [weights, values, capacity] = input;\n'
+            '  // TODO: верните максимальную стоимость при данной вместимости\n'
+            '}'
+        ),
+        'starter_code_uz': (
+            'function knapsack(input) {\n'
+            '  const [weights, values, capacity] = input;\n'
+            "  // TODO: berilgan sig'imdagi maksimal qiymatni qaytaring\n"
+            '}'
+        ),
+        'test_cases': [
+            {'label': '[[1,3,4,5],[1,4,5,7],7] → 9', 'input': [[1, 3, 4, 5], [1, 4, 5, 7], 7], 'expected': 9, 'hidden': False},
+            {'label': '[[2,2,3],[3,3,5],1] → 0', 'input': [[2, 2, 3], [3, 3, 5], 1], 'expected': 0, 'hidden': False},
+            {'label': '[[1,2,3],[6,10,12],5] → 22', 'input': [[1, 2, 3], [6, 10, 12], 5], 'expected': 22, 'hidden': True},
+            {'label': '[[5],[10],5] → 10', 'input': [[5], [10], 5], 'expected': 10, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'coin-change-min',
+        'function_name': 'coinChangeMin',
+        'target_time_seconds': 300,
+        'difficulty': 'hard',
+        'title_ru': 'Минимальное число монет',
+        'title_uz': 'Minimal tangalar soni',
+        'statement_ru': (
+            'Напишите функцию, которая принимает массив из массива номиналов монет и суммы и возвращает '
+            'минимальное количество монет, дающее эту сумму. Монеты можно брать сколько угодно раз; если '
+            'сумму собрать нельзя, верните -1.'
+        ),
+        'statement_uz': (
+            'Tanga nominallari massivi va summadan iborat massivni qabul qilib, shu summani hosil qiluvchi '
+            'minimal tangalar sonini qaytaruvchi funksiya yozing. Tangalarni istalgancha marta olish mumkin; '
+            "summani hosil qilish imkonsiz bo'lsa, -1 qaytaring."
+        ),
+        'example_ru': 'Вход:  [[1, 2, 5], 11]\nВыход: 3',
+        'example_uz': 'Kirish:  [[1, 2, 5], 11]\nChiqish: 3',
+        'constraints_ru': [
+            '1 ≤ количество номиналов ≤ 50',
+            '0 ≤ сумма ≤ 5000',
+            'Каждый номинал можно использовать многократно',
+        ],
+        'constraints_uz': [
+            '1 ≤ nominallar soni ≤ 50',
+            '0 ≤ summa ≤ 5000',
+            'Har bir nominaldan bir necha marta foydalanish mumkin',
+        ],
+        'starter_code_ru': (
+            'function coinChangeMin(pair) {\n'
+            '  const [coins, amount] = pair;\n'
+            '  // TODO: верните минимальное число монет или -1\n'
+            '}'
+        ),
+        'starter_code_uz': (
+            'function coinChangeMin(pair) {\n'
+            '  const [coins, amount] = pair;\n'
+            '  // TODO: minimal tangalar sonini yoki -1 ni qaytaring\n'
+            '}'
+        ),
+        'test_cases': [
+            {'label': '[[1,2,5],11] → 3', 'input': [[1, 2, 5], 11], 'expected': 3, 'hidden': False},
+            {'label': '[[2],3] → -1', 'input': [[2], 3], 'expected': -1, 'hidden': False},
+            {'label': '[[1],0] → 0', 'input': [[1], 0], 'expected': 0, 'hidden': True},
+            {'label': '[[3,7],12] → 4', 'input': [[3, 7], 12], 'expected': 4, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'coin-change-ways',
+        'function_name': 'coinChangeWays',
+        'target_time_seconds': 300,
+        'difficulty': 'hard',
+        'title_ru': 'Число способов набрать сумму',
+        'title_uz': 'Summani hosil qilish usullari soni',
+        'statement_ru': (
+            'Напишите функцию, которая принимает массив из массива номиналов монет и суммы и возвращает '
+            'количество различных наборов монет, дающих эту сумму. Наборы, отличающиеся только порядком, '
+            'считаются одинаковыми.'
+        ),
+        'statement_uz': (
+            'Tanga nominallari massivi va summadan iborat massivni qabul qilib, shu summani hosil qiluvchi '
+            "turli tanga to'plamlari sonini qaytaruvchi funksiya yozing. Faqat tartibi bilan farq qiladigan "
+            "to'plamlar bir xil hisoblanadi."
+        ),
+        'example_ru': 'Вход:  [[1, 2, 5], 5]\nВыход: 4',
+        'example_uz': 'Kirish:  [[1, 2, 5], 5]\nChiqish: 4',
+        'constraints_ru': ['1 ≤ количество номиналов ≤ 50', '0 ≤ сумма ≤ 1000', 'Порядок монет не важен'],
+        'constraints_uz': ['1 ≤ nominallar soni ≤ 50', '0 ≤ summa ≤ 1000', 'Tangalar tartibi muhim emas'],
+        'starter_code_ru': (
+            'function coinChangeWays(pair) {\n'
+            '  const [coins, amount] = pair;\n'
+            '  // TODO: верните количество способов набрать сумму\n'
+            '}'
+        ),
+        'starter_code_uz': (
+            'function coinChangeWays(pair) {\n'
+            '  const [coins, amount] = pair;\n'
+            '  // TODO: summani hosil qilish usullari sonini qaytaring\n'
+            '}'
+        ),
+        'test_cases': [
+            {'label': '[[1,2,5],5] → 4', 'input': [[1, 2, 5], 5], 'expected': 4, 'hidden': False},
+            {'label': '[[2],3] → 0', 'input': [[2], 3], 'expected': 0, 'hidden': False},
+            {'label': '[[1,5,10,25],30] → 18', 'input': [[1, 5, 10, 25], 30], 'expected': 18, 'hidden': True},
+            {'label': '[[7],0] → 1', 'input': [[7], 0], 'expected': 1, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'unique-paths-grid',
+        'function_name': 'uniquePaths',
+        'target_time_seconds': 280,
+        'difficulty': 'hard',
+        'title_ru': 'Число путей в сетке',
+        'title_uz': "Katakchalardagi yo'llar soni",
+        'statement_ru': (
+            'Напишите функцию, которая принимает массив из двух чисел — количества строк и столбцов сетки — '
+            'и возвращает число различных путей из левого верхнего угла в правый нижний, если разрешены шаги '
+            'только вправо и вниз.'
+        ),
+        'statement_uz': (
+            "Ikki sondan — katakchalar to'ri satrlari va ustunlari sonidan — iborat massivni qabul qilib, "
+            "faqat o'ngga va pastga yurish mumkin bo'lganda chap yuqori burchakdan o'ng pastki burchakka "
+            "boruvchi turli yo'llar sonini qaytaruvchi funksiya yozing."
+        ),
+        'example_ru': 'Вход:  [3, 3]\nВыход: 6',
+        'example_uz': 'Kirish:  [3, 3]\nChiqish: 6',
+        'constraints_ru': ['1 ≤ строки, столбцы ≤ 15', 'Разрешены только шаги вправо и вниз'],
+        'constraints_uz': ['1 ≤ satrlar, ustunlar ≤ 15', "Faqat o'ngga va pastga yurish mumkin"],
+        'starter_code_ru': (
+            'function uniquePaths(pair) {\n'
+            '  const [rows, cols] = pair;\n'
+            '  // TODO: верните количество различных путей\n'
+            '}'
+        ),
+        'starter_code_uz': (
+            'function uniquePaths(pair) {\n'
+            '  const [rows, cols] = pair;\n'
+            "  // TODO: turli yo'llar sonini qaytaring\n"
+            '}'
+        ),
+        'test_cases': [
+            {'label': '[3,3] → 6', 'input': [3, 3], 'expected': 6, 'hidden': False},
+            {'label': '[1,7] → 1', 'input': [1, 7], 'expected': 1, 'hidden': False},
+            {'label': '[3,7] → 28', 'input': [3, 7], 'expected': 28, 'hidden': True},
+            {'label': '[10,10] → 48620', 'input': [10, 10], 'expected': 48620, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'min-path-sum',
+        'function_name': 'minPathSum',
+        'target_time_seconds': 300,
+        'difficulty': 'hard',
+        'title_ru': 'Минимальная сумма пути',
+        'title_uz': "Yo'lning minimal yig'indisi",
+        'statement_ru': (
+            'Напишите функцию, которая принимает прямоугольную таблицу чисел (массив массивов) и возвращает '
+            'минимальную сумму чисел на пути из левого верхнего угла в правый нижний, если разрешены шаги '
+            'только вправо и вниз.'
+        ),
+        'statement_uz': (
+            "Sonlardan tuzilgan to'rtburchak jadvalni (massivlar massivini) qabul qilib, faqat o'ngga va "
+            "pastga yurish mumkin bo'lganda chap yuqori burchakdan o'ng pastki burchakka boruvchi yo'ldagi "
+            "sonlarning minimal yig'indisini qaytaruvchi funksiya yozing."
+        ),
+        'example_ru': 'Вход:  [[1, 3, 1], [1, 5, 1], [4, 2, 1]]\nВыход: 7',
+        'example_uz': 'Kirish:  [[1, 3, 1], [1, 5, 1], [4, 2, 1]]\nChiqish: 7',
+        'constraints_ru': ['1 ≤ число строк, столбцов ≤ 100', '0 ≤ каждое число ≤ 1000'],
+        'constraints_uz': ['1 ≤ satrlar, ustunlar soni ≤ 100', '0 ≤ har bir son ≤ 1000'],
+        'starter_code_ru': 'function minPathSum(grid) {\n  // TODO: верните минимальную сумму пути\n}',
+        'starter_code_uz': "function minPathSum(grid) {\n  // TODO: yo'lning minimal yig'indisini qaytaring\n}",
+        'test_cases': [
+            {'label': '[[1,3,1],[1,5,1],[4,2,1]] → 7', 'input': [[1, 3, 1], [1, 5, 1], [4, 2, 1]], 'expected': 7, 'hidden': False},
+            {'label': '[[1,2,3],[4,5,6]] → 12', 'input': [[1, 2, 3], [4, 5, 6]], 'expected': 12, 'hidden': False},
+            {'label': '[[5]] → 5', 'input': [[5]], 'expected': 5, 'hidden': True},
+            {'label': '[[1,9],[9,1]] → 11', 'input': [[1, 9], [9, 1]], 'expected': 11, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'count-islands',
+        'function_name': 'countIslands',
+        'target_time_seconds': 300,
+        'difficulty': 'hard',
+        'title_ru': 'Количество островов',
+        'title_uz': 'Orollar soni',
+        'statement_ru': (
+            'Напишите функцию, которая принимает таблицу из нулей и единиц (массив массивов) и возвращает '
+            'количество островов. Остров — группа единиц, соединённых по горизонтали или вертикали.'
+        ),
+        'statement_uz': (
+            'Nol va birlardan tuzilgan jadvalni (massivlar massivini) qabul qilib, orollar sonini '
+            "qaytaruvchi funksiya yozing. Orol — gorizontal yoki vertikal bog'langan birlar guruhi."
+        ),
+        'example_ru': 'Вход:  [[1, 1, 0], [0, 1, 0], [1, 0, 1]]\nВыход: 3',
+        'example_uz': 'Kirish:  [[1, 1, 0], [0, 1, 0], [1, 0, 1]]\nChiqish: 3',
+        'constraints_ru': [
+            '1 ≤ число строк, столбцов ≤ 100',
+            'Диагональные соседи не считаются соединёнными',
+        ],
+        'constraints_uz': [
+            '1 ≤ satrlar, ustunlar soni ≤ 100',
+            "Diagonal qo'shnilar bog'langan hisoblanmaydi",
+        ],
+        'starter_code_ru': 'function countIslands(grid) {\n  // TODO: верните количество островов\n}',
+        'starter_code_uz': 'function countIslands(grid) {\n  // TODO: orollar sonini qaytaring\n}',
+        'test_cases': [
+            {'label': '[[1,1,0],[0,1,0],[1,0,1]] → 3', 'input': [[1, 1, 0], [0, 1, 0], [1, 0, 1]], 'expected': 3, 'hidden': False},
+            {'label': '[[0,0],[0,0]] → 0', 'input': [[0, 0], [0, 0]], 'expected': 0, 'hidden': False},
+            {'label': '[[1,1],[1,1]] → 1', 'input': [[1, 1], [1, 1]], 'expected': 1, 'hidden': True},
+            {'label': '[[1,0,1,0,1]] → 3', 'input': [[1, 0, 1, 0, 1]], 'expected': 3, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'bfs-shortest-path',
+        'function_name': 'shortestPathLength',
+        'target_time_seconds': 300,
+        'difficulty': 'hard',
+        'title_ru': 'Кратчайший путь в графе',
+        'title_uz': "Grafdagi eng qisqa yo'l",
+        'statement_ru': (
+            'Напишите функцию, которая принимает массив из четырёх элементов: числа вершин n, списка '
+            'неориентированных рёбер (пар вершин), начальной и конечной вершины. Верните количество рёбер в '
+            'кратчайшем пути между ними или -1, если пути нет. Вершины нумеруются с 0.'
+        ),
+        'statement_uz': (
+            "To'rt elementdan iborat massivni qabul qiluvchi funksiya yozing: uchlar soni n, "
+            "yo'naltirilmagan qirralar ro'yxati (uchlar juftliklari), boshlang'ich va oxirgi uch. Ular "
+            "orasidagi eng qisqa yo'ldagi qirralar sonini yoki yo'l bo'lmasa -1 ni qaytaring. Uchlar 0 dan "
+            'boshlab raqamlanadi.'
+        ),
+        'example_ru': 'Вход:  [5, [[0, 1], [1, 2], [2, 3], [3, 4]], 0, 4]\nВыход: 4',
+        'example_uz': 'Kirish:  [5, [[0, 1], [1, 2], [2, 3], [3, 4]], 0, 4]\nChiqish: 4',
+        'constraints_ru': [
+            '1 ≤ n ≤ 1000',
+            'Граф неориентированный, без весов',
+            'Путь из вершины в саму себя имеет длину 0',
+        ],
+        'constraints_uz': [
+            '1 ≤ n ≤ 1000',
+            "Graf yo'naltirilmagan va vaznsiz",
+            "Uchdan o'ziga yo'l uzunligi 0",
+        ],
+        'starter_code_ru': (
+            'function shortestPathLength(input) {\n'
+            '  const [n, edges, from, to] = input;\n'
+            '  // TODO: верните длину кратчайшего пути или -1\n'
+            '}'
+        ),
+        'starter_code_uz': (
+            'function shortestPathLength(input) {\n'
+            '  const [n, edges, from, to] = input;\n'
+            "  // TODO: eng qisqa yo'l uzunligini yoki -1 ni qaytaring\n"
+            '}'
+        ),
+        'test_cases': [
+            {'label': '[5,[[0,1],[1,2],[2,3],[3,4]],0,4] → 4', 'input': [5, [[0, 1], [1, 2], [2, 3], [3, 4]], 0, 4], 'expected': 4, 'hidden': False},
+            {'label': '[4,[[0,1],[2,3]],0,3] → -1', 'input': [4, [[0, 1], [2, 3]], 0, 3], 'expected': -1, 'hidden': False},
+            {'label': '[3,[[0,1],[1,2],[0,2]],0,2] → 1', 'input': [3, [[0, 1], [1, 2], [0, 2]], 0, 2], 'expected': 1, 'hidden': True},
+            {'label': '[2,[],1,1] → 0', 'input': [2, [], 1, 1], 'expected': 0, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'detect-cycle-directed',
+        'function_name': 'hasCycle',
+        'target_time_seconds': 300,
+        'difficulty': 'hard',
+        'title_ru': 'Цикл в ориентированном графе',
+        'title_uz': "Yo'naltirilgan grafdagi sikl",
+        'statement_ru': (
+            'Напишите функцию, которая принимает массив из числа вершин n и списка ориентированных рёбер '
+            '(пар «откуда, куда») и возвращает true, если в графе есть цикл. Вершины нумеруются с 0.'
+        ),
+        'statement_uz': (
+            "Uchlar soni n va yo'naltirilgan qirralar ro'yxati (\"qayerdan, qayerga\" juftliklari) dan iborat "
+            "massivni qabul qilib, grafda sikl bo'lsa true qaytaruvchi funksiya yozing. Uchlar 0 dan boshlab "
+            'raqamlanadi.'
+        ),
+        'example_ru': 'Вход:  [3, [[0, 1], [1, 2], [2, 0]]]\nВыход: true',
+        'example_uz': 'Kirish:  [3, [[0, 1], [1, 2], [2, 0]]]\nChiqish: true',
+        'constraints_ru': ['1 ≤ n ≤ 1000', 'Рёбра ориентированы', 'Петля вершины в себя — тоже цикл'],
+        'constraints_uz': [
+            '1 ≤ n ≤ 1000',
+            "Qirralar yo'naltirilgan",
+            "Uchning o'ziga halqasi ham sikl hisoblanadi",
+        ],
+        'starter_code_ru': (
+            'function hasCycle(pair) {\n'
+            '  const [n, edges] = pair;\n'
+            '  // TODO: верните true, если граф содержит цикл\n'
+            '}'
+        ),
+        'starter_code_uz': (
+            'function hasCycle(pair) {\n'
+            '  const [n, edges] = pair;\n'
+            "  // TODO: grafda sikl bo'lsa true qaytaring\n"
+            '}'
+        ),
+        'test_cases': [
+            {'label': '[3,[[0,1],[1,2],[2,0]]] → true', 'input': [3, [[0, 1], [1, 2], [2, 0]]], 'expected': True, 'hidden': False},
+            {'label': '[3,[[0,1],[1,2]]] → false', 'input': [3, [[0, 1], [1, 2]]], 'expected': False, 'hidden': False},
+            {'label': '[1,[[0,0]]] → true', 'input': [1, [[0, 0]]], 'expected': True, 'hidden': True},
+            {'label': '[4,[[0,1],[1,2],[2,3],[1,3]]] → false', 'input': [4, [[0, 1], [1, 2], [2, 3], [1, 3]]], 'expected': False, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'topological-order',
+        'function_name': 'topologicalOrder',
+        'target_time_seconds': 300,
+        'difficulty': 'hard',
+        'title_ru': 'Топологическая сортировка',
+        'title_uz': 'Topologik saralash',
+        'statement_ru': (
+            'Напишите функцию, которая принимает массив из числа вершин n и списка ориентированных рёбер и '
+            'возвращает топологический порядок вершин в виде строки с номерами через запятую. Из готовых к '
+            'выбору вершин всегда берите наименьший номер. Если порядок невозможен (есть цикл), верните '
+            'пустую строку.'
+        ),
+        'statement_uz': (
+            "Uchlar soni n va yo'naltirilgan qirralar ro'yxatidan iborat massivni qabul qilib, uchlarning "
+            "topologik tartibini raqamlari vergul bilan ajratilgan satr ko'rinishida qaytaruvchi funksiya "
+            'yozing. Tanlashga tayyor uchlardan har doim eng kichik raqamlisini oling. Tartib tuzish '
+            "imkonsiz bo'lsa (sikl bor), bo'sh satr qaytaring."
+        ),
+        'example_ru': 'Вход:  [4, [[0, 1], [0, 2], [1, 3], [2, 3]]]\nВыход: "0,1,2,3"',
+        'example_uz': 'Kirish:  [4, [[0, 1], [0, 2], [1, 3], [2, 3]]]\nChiqish: "0,1,2,3"',
+        'constraints_ru': [
+            '1 ≤ n ≤ 1000',
+            'Вершины нумеруются с 0',
+            'При равных вариантах выбирается меньший номер',
+        ],
+        'constraints_uz': [
+            '1 ≤ n ≤ 1000',
+            'Uchlar 0 dan boshlab raqamlanadi',
+            'Teng variantlarda kichik raqam tanlanadi',
+        ],
+        'starter_code_ru': (
+            'function topologicalOrder(pair) {\n'
+            '  const [n, edges] = pair;\n'
+            '  // TODO: верните топологический порядок строкой через запятую\n'
+            '}'
+        ),
+        'starter_code_uz': (
+            'function topologicalOrder(pair) {\n'
+            '  const [n, edges] = pair;\n'
+            '  // TODO: topologik tartibni vergul bilan ajratilgan satr sifatida qaytaring\n'
+            '}'
+        ),
+        'test_cases': [
+            {'label': "[4,[[0,1],[0,2],[1,3],[2,3]]] → '0,1,2,3'", 'input': [4, [[0, 1], [0, 2], [1, 3], [2, 3]]], 'expected': '0,1,2,3', 'hidden': False},
+            {'label': "[2,[[0,1],[1,0]]] → ''", 'input': [2, [[0, 1], [1, 0]]], 'expected': '', 'hidden': False},
+            {'label': "[3,[]] → '0,1,2'", 'input': [3, []], 'expected': '0,1,2', 'hidden': True},
+            {'label': "[5,[[4,0],[0,2],[2,1],[1,3]]] → '4,0,2,1,3'", 'input': [5, [[4, 0], [0, 2], [2, 1], [1, 3]]], 'expected': '4,0,2,1,3', 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'dijkstra-shortest',
+        'function_name': 'dijkstraShortest',
+        'target_time_seconds': 300,
+        'difficulty': 'hard',
+        'title_ru': 'Кратчайший путь по весам',
+        'title_uz': "Vaznlar bo'yicha eng qisqa yo'l",
+        'statement_ru': (
+            'Напишите функцию, которая принимает массив из числа вершин n, списка взвешенных рёбер (тройки '
+            '«откуда, куда, вес»), начальной и конечной вершины. Верните минимальную суммарную стоимость '
+            'пути или -1, если пути нет. Рёбра неориентированные, веса положительные.'
+        ),
+        'statement_uz': (
+            "Uchlar soni n, vaznli qirralar ro'yxati (\"qayerdan, qayerga, vazn\" uchliklari), boshlang'ich va "
+            "oxirgi uchdan iborat massivni qabul qiluvchi funksiya yozing. Yo'lning minimal umumiy narxini "
+            "yoki yo'l bo'lmasa -1 ni qaytaring. Qirralar yo'naltirilmagan, vaznlar musbat."
+        ),
+        'example_ru': 'Вход:  [4, [[0, 1, 1], [1, 2, 2], [0, 2, 5], [2, 3, 1]], 0, 3]\nВыход: 4',
+        'example_uz': 'Kirish:  [4, [[0, 1, 1], [1, 2, 2], [0, 2, 5], [2, 3, 1]], 0, 3]\nChiqish: 4',
+        'constraints_ru': ['1 ≤ n ≤ 500', '1 ≤ вес ребра ≤ 1000', 'Рёбра неориентированные'],
+        'constraints_uz': ['1 ≤ n ≤ 500', '1 ≤ qirra vazni ≤ 1000', "Qirralar yo'naltirilmagan"],
+        'starter_code_ru': (
+            'function dijkstraShortest(input) {\n'
+            '  const [n, edges, from, to] = input;\n'
+            '  // TODO: верните минимальную стоимость пути или -1\n'
+            '}'
+        ),
+        'starter_code_uz': (
+            'function dijkstraShortest(input) {\n'
+            '  const [n, edges, from, to] = input;\n'
+            "  // TODO: yo'lning minimal narxini yoki -1 ni qaytaring\n"
+            '}'
+        ),
+        'test_cases': [
+            {'label': '[4,[[0,1,1],[1,2,2],[0,2,5],[2,3,1]],0,3] → 4', 'input': [4, [[0, 1, 1], [1, 2, 2], [0, 2, 5], [2, 3, 1]], 0, 3], 'expected': 4, 'hidden': False},
+            {'label': '[3,[[0,1,4]],0,2] → -1', 'input': [3, [[0, 1, 4]], 0, 2], 'expected': -1, 'hidden': False},
+            {'label': '[2,[[0,1,7]],0,0] → 0', 'input': [2, [[0, 1, 7]], 0, 0], 'expected': 0, 'hidden': True},
+            {'label': '[5,[[0,1,2],[1,4,3],[0,2,1],[2,3,1],[3,4,1]… → 3', 'input': [5, [[0, 1, 2], [1, 4, 3], [0, 2, 1], [2, 3, 1], [3, 4, 1]], 0, 4], 'expected': 3, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'n-queens-count',
+        'function_name': 'nQueensCount',
+        'target_time_seconds': 300,
+        'difficulty': 'hard',
+        'title_ru': 'Число расстановок ферзей',
+        'title_uz': 'Qirolichalarni joylash usullari soni',
+        'statement_ru': (
+            'Напишите функцию, которая возвращает количество способов расставить n ферзей на доске n × n '
+            'так, чтобы они не атаковали друг друга.'
+        ),
+        'statement_uz': (
+            "n × n o'lchamli taxtaga n ta qirolichani bir-biriga hujum qilmaydigan holda joylashtirish "
+            'usullari sonini qaytaruvchi funksiya yozing.'
+        ),
+        'example_ru': 'Вход:  4\nВыход: 2',
+        'example_uz': 'Kirish:  4\nChiqish: 2',
+        'constraints_ru': ['1 ≤ n ≤ 9', 'Ферзи атакуют по строке, столбцу и диагоналям'],
+        'constraints_uz': ['1 ≤ n ≤ 9', "Qirolichalar satr, ustun va diagonallar bo'yicha hujum qiladi"],
+        'starter_code_ru': 'function nQueensCount(n) {\n  // TODO: верните количество корректных расстановок\n}',
+        'starter_code_uz': "function nQueensCount(n) {\n  // TODO: to'g'ri joylashtirishlar sonini qaytaring\n}",
+        'test_cases': [
+            {'label': '4 → 2', 'input': 4, 'expected': 2, 'hidden': False},
+            {'label': '1 → 1', 'input': 1, 'expected': 1, 'hidden': False},
+            {'label': '3 → 0', 'input': 3, 'expected': 0, 'hidden': True},
+            {'label': '8 → 92', 'input': 8, 'expected': 92, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'word-break',
+        'function_name': 'wordBreak',
+        'target_time_seconds': 300,
+        'difficulty': 'hard',
+        'title_ru': 'Разбиение строки на слова',
+        'title_uz': "Satrni so'zlarga ajratish",
+        'statement_ru': (
+            'Напишите функцию, которая принимает массив из строки и списка слов и возвращает true, если '
+            'строку можно без остатка разбить на слова из списка. Каждое слово можно использовать любое '
+            'число раз.'
+        ),
+        'statement_uz': (
+            "Satr va so'zlar ro'yxatidan iborat massivni qabul qilib, satrni ro'yxatdagi so'zlarga qoldiqsiz "
+            "ajratish mumkin bo'lsa true qaytaruvchi funksiya yozing. Har bir so'zdan istalgancha marta "
+            'foydalanish mumkin.'
+        ),
+        'example_ru': 'Вход:  ["leetcode", ["leet", "code"]]\nВыход: true',
+        'example_uz': 'Kirish:  ["leetcode", ["leet", "code"]]\nChiqish: true',
+        'constraints_ru': [
+            '0 ≤ длина строки ≤ 300 символов',
+            '1 ≤ количество слов ≤ 100',
+            'Пустую строку всегда можно разбить',
+        ],
+        'constraints_uz': [
+            '0 ≤ satr uzunligi ≤ 300 belgi',
+            "1 ≤ so'zlar soni ≤ 100",
+            "Bo'sh satrni har doim ajratish mumkin",
+        ],
+        'starter_code_ru': (
+            'function wordBreak(pair) {\n'
+            '  const [text, words] = pair;\n'
+            '  // TODO: верните true, если строку можно разбить на слова\n'
+            '}'
+        ),
+        'starter_code_uz': (
+            'function wordBreak(pair) {\n'
+            '  const [text, words] = pair;\n'
+            "  // TODO: satrni so'zlarga ajratish mumkin bo'lsa true qaytaring\n"
+            '}'
+        ),
+        'test_cases': [
+            {'label': "['leetcode',['leet','code']] → true", 'input': ['leetcode', ['leet', 'code']], 'expected': True, 'hidden': False},
+            {'label': "['catsandog',['cats','dog','sand','and','ca… → false", 'input': ['catsandog', ['cats', 'dog', 'sand', 'and', 'cat']], 'expected': False, 'hidden': False},
+            {'label': "['',['a']] → true", 'input': ['', ['a']], 'expected': True, 'hidden': True},
+            {'label': "['aaaab',['a','aa']] → false", 'input': ['aaaab', ['a', 'aa']], 'expected': False, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'wildcard-match',
+        'function_name': 'wildcardMatch',
+        'target_time_seconds': 300,
+        'difficulty': 'hard',
+        'title_ru': 'Сопоставление с шаблоном',
+        'title_uz': 'Shablon bilan moslashtirish',
+        'statement_ru': (
+            'Напишите функцию, которая принимает массив из строки и шаблона и возвращает true, если строка '
+            'полностью соответствует шаблону. В шаблоне «?» заменяет ровно один любой символ, «*» — любую '
+            'последовательность символов, в том числе пустую.'
+        ),
+        'statement_uz': (
+            "Satr va shablondan iborat massivni qabul qilib, satr shablonga to'liq mos kelsa true "
+            'qaytaruvchi funksiya yozing. Shablondagi "?" aynan bitta istalgan belgini, "*" esa istalgan '
+            "(shu jumladan bo'sh) belgilar ketma-ketligini almashtiradi."
+        ),
+        'example_ru': 'Вход:  ["aa", "a*"]\nВыход: true',
+        'example_uz': 'Kirish:  ["aa", "a*"]\nChiqish: true',
+        'constraints_ru': [
+            '0 ≤ длина строки ≤ 300 символов',
+            '0 ≤ длина шаблона ≤ 300 символов',
+            'Шаблон содержит буквы, «?» и «*»',
+        ],
+        'constraints_uz': [
+            '0 ≤ satr uzunligi ≤ 300 belgi',
+            '0 ≤ shablon uzunligi ≤ 300 belgi',
+            "Shablonda harflar, \"?\" va \"*\" bo'ladi",
+        ],
+        'starter_code_ru': (
+            'function wildcardMatch(pair) {\n'
+            '  const [text, pattern] = pair;\n'
+            '  // TODO: верните true, если строка соответствует шаблону\n'
+            '}'
+        ),
+        'starter_code_uz': (
+            'function wildcardMatch(pair) {\n'
+            '  const [text, pattern] = pair;\n'
+            '  // TODO: satr shablonga mos kelsa true qaytaring\n'
+            '}'
+        ),
+        'test_cases': [
+            {'label': "['aa','a*'] → true", 'input': ['aa', 'a*'], 'expected': True, 'hidden': False},
+            {'label': "['cb','?a'] → false", 'input': ['cb', '?a'], 'expected': False, 'hidden': False},
+            {'label': "['adceb','*a*b'] → true", 'input': ['adceb', '*a*b'], 'expected': True, 'hidden': True},
+            {'label': "['','*'] → true", 'input': ['', '*'], 'expected': True, 'hidden': True},
+            {'label': "['abc','a?c'] → true", 'input': ['abc', 'a?c'], 'expected': True, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'longest-palindromic-substring',
+        'function_name': 'longestPalindrome',
+        'target_time_seconds': 300,
+        'difficulty': 'hard',
+        'title_ru': 'Наибольшая палиндромная подстрока',
+        'title_uz': 'Eng uzun palindrom qism satr',
+        'statement_ru': (
+            'Напишите функцию, которая возвращает самую длинную палиндромную подстроку строки. При равной '
+            'длине верните ту, которая начинается раньше.'
+        ),
+        'statement_uz': (
+            "Satrning eng uzun palindrom qism satrini qaytaruvchi funksiya yozing. Uzunliklar teng bo'lsa, "
+            'avval boshlanganini qaytaring.'
+        ),
+        'example_ru': 'Вход:  "babad"\nВыход: "bab"',
+        'example_uz': 'Kirish:  "babad"\nChiqish: "bab"',
+        'constraints_ru': ['0 ≤ длина строки ≤ 1000 символов', 'Подстрока — непрерывный участок строки'],
+        'constraints_uz': ['0 ≤ satr uzunligi ≤ 1000 belgi', "Qism satr — satrning uzluksiz bo'lagi"],
+        'starter_code_ru': 'function longestPalindrome(text) {\n  // TODO: верните самую длинную палиндромную подстроку\n}',
+        'starter_code_uz': 'function longestPalindrome(text) {\n  // TODO: eng uzun palindrom qism satrni qaytaring\n}',
+        'test_cases': [
+            {'label': "'babad' → 'bab'", 'input': 'babad', 'expected': 'bab', 'hidden': False},
+            {'label': "'cbbd' → 'bb'", 'input': 'cbbd', 'expected': 'bb', 'hidden': False},
+            {'label': "'' → ''", 'input': '', 'expected': '', 'hidden': True},
+            {'label': "'abacabad' → 'abacaba'", 'input': 'abacabad', 'expected': 'abacaba', 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'substring-index',
+        'function_name': 'substringIndex',
+        'target_time_seconds': 300,
+        'difficulty': 'hard',
+        'title_ru': 'Поиск подстроки без встроенных функций',
+        'title_uz': 'Tayyor funksiyalarsiz qism satr qidirish',
+        'statement_ru': (
+            'Напишите функцию, которая принимает массив из строки и образца и возвращает индекс первого '
+            'вхождения образца в строку или -1, если его нет. Встроенные indexOf и includes использовать '
+            'нельзя.'
+        ),
+        'statement_uz': (
+            'Satr va namunadan iborat massivni qabul qilib, namunaning satrdagi birinchi uchrash indeksini '
+            "yoki u yo'q bo'lsa -1 ni qaytaruvchi funksiya yozing. Tayyor indexOf va includes "
+            'funksiyalaridan foydalanish mumkin emas.'
+        ),
+        'example_ru': 'Вход:  ["algoritmlar", "ritm"]\nВыход: 4',
+        'example_uz': 'Kirish:  ["algoritmlar", "ritm"]\nChiqish: 4',
+        'constraints_ru': [
+            '0 ≤ длина строки ≤ 10 000 символов',
+            'Пустой образец даёт индекс 0',
+            'indexOf и includes использовать нельзя',
+        ],
+        'constraints_uz': [
+            '0 ≤ satr uzunligi ≤ 10 000 belgi',
+            "Bo'sh namuna 0 indeksini beradi",
+            'indexOf va includes ishlatish mumkin emas',
+        ],
+        'starter_code_ru': (
+            'function substringIndex(pair) {\n'
+            '  const [text, pattern] = pair;\n'
+            '  // TODO: верните индекс первого вхождения образца или -1\n'
+            '}'
+        ),
+        'starter_code_uz': (
+            'function substringIndex(pair) {\n'
+            '  const [text, pattern] = pair;\n'
+            '  // TODO: namunaning birinchi uchrash indeksini yoki -1 ni qaytaring\n'
+            '}'
+        ),
+        'test_cases': [
+            {'label': "['algoritmlar','ritm'] → 4", 'input': ['algoritmlar', 'ritm'], 'expected': 4, 'hidden': False},
+            {'label': "['aaaaa','bba'] → -1", 'input': ['aaaaa', 'bba'], 'expected': -1, 'hidden': False},
+            {'label': "['abc',''] → 0", 'input': ['abc', ''], 'expected': 0, 'hidden': True},
+            {'label': "['mississippi','issip'] → 4", 'input': ['mississippi', 'issip'], 'expected': 4, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'anagram-substring-count',
+        'function_name': 'anagramSubstringCount',
+        'target_time_seconds': 300,
+        'difficulty': 'hard',
+        'title_ru': 'Число анаграммных подстрок',
+        'title_uz': 'Anagramm qism satrlar soni',
+        'statement_ru': (
+            'Напишите функцию, которая принимает массив из строки и образца и возвращает количество подстрок '
+            'строки, являющихся перестановкой (анаграммой) образца.'
+        ),
+        'statement_uz': (
+            "Satr va namunadan iborat massivni qabul qilib, namunaning o'rin almashtirilgan shakli "
+            "(anagrammasi) bo'lgan qism satrlar sonini qaytaruvchi funksiya yozing."
+        ),
+        'example_ru': 'Вход:  ["cbaebabacd", "abc"]\nВыход: 2',
+        'example_uz': 'Kirish:  ["cbaebabacd", "abc"]\nChiqish: 2',
+        'constraints_ru': [
+            '1 ≤ длина строки ≤ 10 000 символов',
+            '1 ≤ длина образца ≤ длина строки',
+            'Ожидается скользящее окно',
+        ],
+        'constraints_uz': [
+            '1 ≤ satr uzunligi ≤ 10 000 belgi',
+            '1 ≤ namuna uzunligi ≤ satr uzunligi',
+            'Siljuvchi oyna kutiladi',
+        ],
+        'starter_code_ru': (
+            'function anagramSubstringCount(pair) {\n'
+            '  const [text, pattern] = pair;\n'
+            '  // TODO: верните количество анаграммных подстрок\n'
+            '}'
+        ),
+        'starter_code_uz': (
+            'function anagramSubstringCount(pair) {\n'
+            '  const [text, pattern] = pair;\n'
+            '  // TODO: anagramm qism satrlar sonini qaytaring\n'
+            '}'
+        ),
+        'test_cases': [
+            {'label': "['cbaebabacd','abc'] → 2", 'input': ['cbaebabacd', 'abc'], 'expected': 2, 'hidden': False},
+            {'label': "['abab','ab'] → 3", 'input': ['abab', 'ab'], 'expected': 3, 'hidden': False},
+            {'label': "['aaa','b'] → 0", 'input': ['aaa', 'b'], 'expected': 0, 'hidden': True},
+            {'label': "['kodkod','dok'] → 4", 'input': ['kodkod', 'dok'], 'expected': 4, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'min-window-substring',
+        'function_name': 'minWindowSubstring',
+        'target_time_seconds': 300,
+        'difficulty': 'hard',
+        'title_ru': 'Минимальное окно с нужными символами',
+        'title_uz': 'Kerakli belgilarni qamrovchi minimal oyna',
+        'statement_ru': (
+            'Напишите функцию, которая принимает массив из строки s и строки t и возвращает самую короткую '
+            'подстроку s, содержащую все символы t с учётом их количества. Если такой подстроки нет, верните '
+            'пустую строку; при равной длине верните самую левую.'
+        ),
+        'statement_uz': (
+            's satri va t satridan iborat massivni qabul qilib, t ning barcha belgilarini (takrorlar soni '
+            "bilan) o'z ichiga olgan eng qisqa s qism satrini qaytaruvchi funksiya yozing. Bunday qism satr "
+            "bo'lmasa, bo'sh satr qaytaring; uzunliklar teng bo'lsa, eng chapdagisini qaytaring."
+        ),
+        'example_ru': 'Вход:  ["ADOBECODEBANC", "ABC"]\nВыход: "BANC"',
+        'example_uz': 'Kirish:  ["ADOBECODEBANC", "ABC"]\nChiqish: "BANC"',
+        'constraints_ru': [
+            '0 ≤ длина s ≤ 10 000 символов',
+            '0 ≤ длина t ≤ 100 символов',
+            'Учитывается количество повторов символов в t',
+        ],
+        'constraints_uz': [
+            '0 ≤ s uzunligi ≤ 10 000 belgi',
+            '0 ≤ t uzunligi ≤ 100 belgi',
+            't dagi belgilarning takrorlanish soni hisobga olinadi',
+        ],
+        'starter_code_ru': (
+            'function minWindowSubstring(pair) {\n'
+            '  const [text, needed] = pair;\n'
+            '  // TODO: верните минимальное окно, содержащее все символы t\n'
+            '}'
+        ),
+        'starter_code_uz': (
+            'function minWindowSubstring(pair) {\n'
+            '  const [text, needed] = pair;\n'
+            '  // TODO: t ning barcha belgilarini qamrovchi minimal oynani qaytaring\n'
+            '}'
+        ),
+        'test_cases': [
+            {'label': "['ADOBECODEBANC','ABC'] → 'BANC'", 'input': ['ADOBECODEBANC', 'ABC'], 'expected': 'BANC', 'hidden': False},
+            {'label': "['a','aa'] → ''", 'input': ['a', 'aa'], 'expected': '', 'hidden': False},
+            {'label': "['ab','b'] → 'b'", 'input': ['ab', 'b'], 'expected': 'b', 'hidden': True},
+            {'label': "['aabbcc','abc'] → 'abbc'", 'input': ['aabbcc', 'abc'], 'expected': 'abbc', 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'tree-is-balanced',
+        'function_name': 'isBalanced',
+        'target_time_seconds': 300,
+        'difficulty': 'hard',
+        'title_ru': 'Сбалансированность дерева',
+        'title_uz': 'Daraxtning balanslanganligi',
+        'statement_ru': (
+            'Двоичное дерево задано массивом в порядке обхода по уровням, где null означает отсутствующий '
+            'узел. Напишите функцию, которая возвращает true, если для каждого узла высоты его поддеревьев '
+            'различаются не более чем на 1.'
+        ),
+        'statement_uz': (
+            "Ikkilik daraxt sathlar bo'yicha yurish tartibidagi massiv bilan berilgan, null yo'q tugunni "
+            "bildiradi. Har bir tugun uchun uning qism daraxtlari balandliklari 1 dan ko'p farq qilmasa true "
+            'qaytaruvchi funksiya yozing.'
+        ),
+        'example_ru': 'Вход:  [3, 9, 20, null, null, 15, 7]\nВыход: true',
+        'example_uz': 'Kirish:  [3, 9, 20, null, null, 15, 7]\nChiqish: true',
+        'constraints_ru': [
+            '0 ≤ количество элементов массива ≤ 1000',
+            'null означает отсутствующий узел',
+            'Пустое дерево считается сбалансированным',
+        ],
+        'constraints_uz': [
+            '0 ≤ massiv elementlari soni ≤ 1000',
+            "null yo'q tugunni bildiradi",
+            "Bo'sh daraxt balanslangan hisoblanadi",
+        ],
+        'starter_code_ru': 'function isBalanced(level) {\n  // TODO: верните true, если дерево сбалансировано\n}',
+        'starter_code_uz': "function isBalanced(level) {\n  // TODO: daraxt balanslangan bo'lsa true qaytaring\n}",
+        'test_cases': [
+            {'label': '[3,9,20,null,null,15,7] → true', 'input': [3, 9, 20, None, None, 15, 7], 'expected': True, 'hidden': False},
+            {'label': '[1,2,2,3,3,null,null,4,4] → false', 'input': [1, 2, 2, 3, 3, None, None, 4, 4], 'expected': False, 'hidden': False},
+            {'label': '[] → true', 'input': [], 'expected': True, 'hidden': True},
+            {'label': '[1,2,null,3] → false', 'input': [1, 2, None, 3], 'expected': False, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'tree-diameter',
+        'function_name': 'treeDiameter',
+        'target_time_seconds': 300,
+        'difficulty': 'hard',
+        'title_ru': 'Диаметр дерева',
+        'title_uz': 'Daraxtning diametri',
+        'statement_ru': (
+            'Двоичное дерево задано массивом в порядке обхода по уровням, где null означает отсутствующий '
+            'узел. Напишите функцию, которая возвращает диаметр дерева — наибольшее количество рёбер в пути '
+            'между двумя любыми узлами.'
+        ),
+        'statement_uz': (
+            "Ikkilik daraxt sathlar bo'yicha yurish tartibidagi massiv bilan berilgan, null yo'q tugunni "
+            "bildiradi. Daraxt diametrini — ikkita istalgan tugun orasidagi yo'ldagi qirralarning eng katta "
+            'sonini qaytaruvchi funksiya yozing.'
+        ),
+        'example_ru': 'Вход:  [1, 2, 3, 4, 5]\nВыход: 3',
+        'example_uz': 'Kirish:  [1, 2, 3, 4, 5]\nChiqish: 3',
+        'constraints_ru': [
+            '0 ≤ количество элементов массива ≤ 1000',
+            'Диаметр измеряется в рёбрах, а не в узлах',
+        ],
+        'constraints_uz': [
+            '0 ≤ massiv elementlari soni ≤ 1000',
+            "Diametr tugunlar emas, qirralar bilan o'lchanadi",
+        ],
+        'starter_code_ru': 'function treeDiameter(level) {\n  // TODO: верните диаметр дерева в рёбрах\n}',
+        'starter_code_uz': 'function treeDiameter(level) {\n  // TODO: daraxt diametrini qirralar soni bilan qaytaring\n}',
+        'test_cases': [
+            {'label': '[1,2,3,4,5] → 3', 'input': [1, 2, 3, 4, 5], 'expected': 3, 'hidden': False},
+            {'label': '[1,2] → 1', 'input': [1, 2], 'expected': 1, 'hidden': False},
+            {'label': '[] → 0', 'input': [], 'expected': 0, 'hidden': True},
+            {'label': '[1,2,3,null,4,null,null,null,null,5] → 3', 'input': [1, 2, 3, None, 4, None, None, None, None, 5], 'expected': 3, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'tree-lowest-common-ancestor',
+        'function_name': 'lowestCommonAncestor',
+        'target_time_seconds': 300,
+        'difficulty': 'hard',
+        'title_ru': 'Наименьший общий предок',
+        'title_uz': 'Eng kichik umumiy ajdod',
+        'statement_ru': (
+            'Напишите функцию, которая принимает массив из трёх элементов: двоичного дерева в виде массива '
+            'по уровням (null — отсутствующий узел) и значений двух узлов. Верните значение их наименьшего '
+            'общего предка. Все значения различны, оба узла есть в дереве.'
+        ),
+        'statement_uz': (
+            "Uch elementdan iborat massivni qabul qiluvchi funksiya yozing: sathlar bo'yicha massiv "
+            "ko'rinishidagi ikkilik daraxt (null — yo'q tugun) va ikki tugunning qiymatlari. Ularning eng "
+            'kichik umumiy ajdodi qiymatini qaytaring. Barcha qiymatlar turlicha, ikki tugun ham daraxtda '
+            'bor.'
+        ),
+        'example_ru': 'Вход:  [[3, 5, 1, 6, 2, 0, 8, null, null, 7, 4], 5, 1]\nВыход: 3',
+        'example_uz': 'Kirish:  [[3, 5, 1, 6, 2, 0, 8, null, null, 7, 4], 5, 1]\nChiqish: 3',
+        'constraints_ru': [
+            '1 ≤ количество узлов ≤ 1000',
+            'Значения узлов различны',
+            'Оба искомых значения присутствуют в дереве',
+        ],
+        'constraints_uz': [
+            '1 ≤ tugunlar soni ≤ 1000',
+            'Tugun qiymatlari turlicha',
+            'Izlanayotgan ikki qiymat ham daraxtda mavjud',
+        ],
+        'starter_code_ru': (
+            'function lowestCommonAncestor(input) {\n'
+            '  const [level, first, second] = input;\n'
+            '  // TODO: верните значение наименьшего общего предка\n'
+            '}'
+        ),
+        'starter_code_uz': (
+            'function lowestCommonAncestor(input) {\n'
+            '  const [level, first, second] = input;\n'
+            '  // TODO: eng kichik umumiy ajdod qiymatini qaytaring\n'
+            '}'
+        ),
+        'test_cases': [
+            {'label': '[[3,5,1,6,2,0,8,null,null,7,4],5,1] → 3', 'input': [[3, 5, 1, 6, 2, 0, 8, None, None, 7, 4], 5, 1], 'expected': 3, 'hidden': False},
+            {'label': '[[3,5,1,6,2,0,8,null,null,7,4],5,4] → 5', 'input': [[3, 5, 1, 6, 2, 0, 8, None, None, 7, 4], 5, 4], 'expected': 5, 'hidden': False},
+            {'label': '[[1,2],1,2] → 1', 'input': [[1, 2], 1, 2], 'expected': 1, 'hidden': True},
+            {'label': '[[1,2,3,4,5],4,5] → 2', 'input': [[1, 2, 3, 4, 5], 4, 5], 'expected': 2, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'tree-max-path-sum',
+        'function_name': 'treeMaxPathSum',
+        'target_time_seconds': 300,
+        'difficulty': 'hard',
+        'title_ru': 'Максимальная сумма пути в дереве',
+        'title_uz': "Daraxtdagi yo'lning maksimal yig'indisi",
+        'statement_ru': (
+            'Двоичное дерево задано массивом в порядке обхода по уровням (null — отсутствующий узел). '
+            'Напишите функцию, которая возвращает наибольшую сумму значений узлов на пути между двумя любыми '
+            'узлами; путь не может дважды проходить через один узел.'
+        ),
+        'statement_uz': (
+            "Ikkilik daraxt sathlar bo'yicha yurish tartibidagi massiv bilan berilgan (null — yo'q tugun). "
+            "Ikkita istalgan tugun orasidagi yo'ldagi tugun qiymatlarining eng katta yig'indisini "
+            "qaytaruvchi funksiya yozing; yo'l bitta tugundan ikki marta o'tmaydi."
+        ),
+        'example_ru': 'Вход:  [1, 2, 3]\nВыход: 6',
+        'example_uz': 'Kirish:  [1, 2, 3]\nChiqish: 6',
+        'constraints_ru': [
+            '1 ≤ количество узлов ≤ 1000',
+            'Значения могут быть отрицательными',
+            'Путь содержит хотя бы один узел',
+        ],
+        'constraints_uz': [
+            '1 ≤ tugunlar soni ≤ 1000',
+            "Qiymatlar manfiy bo'lishi mumkin",
+            "Yo'l kamida bitta tugundan iborat",
+        ],
+        'starter_code_ru': 'function treeMaxPathSum(level) {\n  // TODO: верните максимальную сумму пути в дереве\n}',
+        'starter_code_uz': "function treeMaxPathSum(level) {\n  // TODO: daraxtdagi yo'lning maksimal yig'indisini qaytaring\n}",
+        'test_cases': [
+            {'label': '[1,2,3] → 6', 'input': [1, 2, 3], 'expected': 6, 'hidden': False},
+            {'label': '[-10,9,20,null,null,15,7] → 42', 'input': [-10, 9, 20, None, None, 15, 7], 'expected': 42, 'hidden': False},
+            {'label': '[-3] → -3', 'input': [-3], 'expected': -3, 'hidden': True},
+            {'label': '[2,-1,-2] → 2', 'input': [2, -1, -2], 'expected': 2, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'trapping-rain-water',
+        'function_name': 'trapRainWater',
+        'target_time_seconds': 300,
+        'difficulty': 'hard',
+        'title_ru': 'Сбор дождевой воды',
+        'title_uz': "Yomg'ir suvini yig'ish",
+        'statement_ru': (
+            'Массив задаёт высоты столбиков единичной ширины. Напишите функцию, которая возвращает объём '
+            'воды, задерживающейся между столбиками после дождя.'
+        ),
+        'statement_uz': (
+            "Massiv birlik kenglikdagi ustunlar balandligini beradi. Yomg'irdan keyin ustunlar orasida "
+            "to'planib qoladigan suv hajmini qaytaruvchi funksiya yozing."
+        ),
+        'example_ru': 'Вход:  [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]\nВыход: 6',
+        'example_uz': 'Kirish:  [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]\nChiqish: 6',
+        'constraints_ru': [
+            '0 ≤ длина массива ≤ 10 000',
+            '0 ≤ высота ≤ 10 000',
+            'Ожидается решение за один-два прохода',
+        ],
+        'constraints_uz': [
+            '0 ≤ massiv uzunligi ≤ 10 000',
+            '0 ≤ balandlik ≤ 10 000',
+            "Bir-ikki marta o'tishda ishlaydigan yechim kutiladi",
+        ],
+        'starter_code_ru': 'function trapRainWater(heights) {\n  // TODO: верните объём задержанной воды\n}',
+        'starter_code_uz': "function trapRainWater(heights) {\n  // TODO: to'planib qolgan suv hajmini qaytaring\n}",
+        'test_cases': [
+            {'label': '[0,1,0,2,1,0,1,3,2,1,2,1] → 6', 'input': [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1], 'expected': 6, 'hidden': False},
+            {'label': '[4,2,0,3,2,5] → 9', 'input': [4, 2, 0, 3, 2, 5], 'expected': 9, 'hidden': False},
+            {'label': '[] → 0', 'input': [], 'expected': 0, 'hidden': True},
+            {'label': '[3,3,3] → 0', 'input': [3, 3, 3], 'expected': 0, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'largest-rectangle-histogram',
+        'function_name': 'largestRectangle',
+        'target_time_seconds': 300,
+        'difficulty': 'hard',
+        'title_ru': 'Наибольший прямоугольник в гистограмме',
+        'title_uz': "Gistogrammadagi eng katta to'rtburchak",
+        'statement_ru': (
+            'Массив задаёт высоты столбиков гистограммы единичной ширины. Напишите функцию, которая '
+            'возвращает площадь наибольшего прямоугольника, целиком вписанного в гистограмму.'
+        ),
+        'statement_uz': (
+            "Massiv birlik kenglikdagi gistogramma ustunlarining balandligini beradi. Gistogrammaga to'liq "
+            "joylashadigan eng katta to'rtburchakning maydonini qaytaruvchi funksiya yozing."
+        ),
+        'example_ru': 'Вход:  [2, 1, 5, 6, 2, 3]\nВыход: 10',
+        'example_uz': 'Kirish:  [2, 1, 5, 6, 2, 3]\nChiqish: 10',
+        'constraints_ru': [
+            '0 ≤ длина массива ≤ 10 000',
+            '0 ≤ высота ≤ 10 000',
+            'Ожидается решение со стеком',
+        ],
+        'constraints_uz': [
+            '0 ≤ massiv uzunligi ≤ 10 000',
+            '0 ≤ balandlik ≤ 10 000',
+            'Stek yordamidagi yechim kutiladi',
+        ],
+        'starter_code_ru': 'function largestRectangle(heights) {\n  // TODO: верните площадь наибольшего прямоугольника\n}',
+        'starter_code_uz': "function largestRectangle(heights) {\n  // TODO: eng katta to'rtburchakning maydonini qaytaring\n}",
+        'test_cases': [
+            {'label': '[2,1,5,6,2,3] → 10', 'input': [2, 1, 5, 6, 2, 3], 'expected': 10, 'hidden': False},
+            {'label': '[2,4] → 4', 'input': [2, 4], 'expected': 4, 'hidden': False},
+            {'label': '[] → 0', 'input': [], 'expected': 0, 'hidden': True},
+            {'label': '[5,5,5,5] → 20', 'input': [5, 5, 5, 5], 'expected': 20, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'count-inversions',
+        'function_name': 'countInversions',
+        'target_time_seconds': 300,
+        'difficulty': 'hard',
+        'title_ru': 'Количество инверсий',
+        'title_uz': 'Inversiyalar soni',
+        'statement_ru': (
+            'Напишите функцию, которая возвращает количество пар индексов i < j, для которых элемент с '
+            'индексом i больше элемента с индексом j.'
+        ),
+        'statement_uz': (
+            "i indeksidagi element j indeksidagi elementdan katta bo'ladigan i < j indeks juftliklari sonini "
+            'qaytaruvchi funksiya yozing.'
+        ),
+        'example_ru': 'Вход:  [2, 4, 1, 3, 5]\nВыход: 3',
+        'example_uz': 'Kirish:  [2, 4, 1, 3, 5]\nChiqish: 3',
+        'constraints_ru': ['0 ≤ длина массива ≤ 100 000', 'Ожидается решение быстрее полного перебора пар'],
+        'constraints_uz': [
+            '0 ≤ massiv uzunligi ≤ 100 000',
+            'Barcha juftliklarni tekshirishdan tezroq yechim kutiladi',
+        ],
+        'starter_code_ru': 'function countInversions(arr) {\n  // TODO: верните количество инверсий\n}',
+        'starter_code_uz': 'function countInversions(arr) {\n  // TODO: inversiyalar sonini qaytaring\n}',
+        'test_cases': [
+            {'label': '[2,4,1,3,5] → 3', 'input': [2, 4, 1, 3, 5], 'expected': 3, 'hidden': False},
+            {'label': '[1,2,3] → 0', 'input': [1, 2, 3], 'expected': 0, 'hidden': False},
+            {'label': '[5,4,3,2,1] → 10', 'input': [5, 4, 3, 2, 1], 'expected': 10, 'hidden': True},
+            {'label': '[] → 0', 'input': [], 'expected': 0, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'longest-consecutive-sequence',
+        'function_name': 'longestConsecutive',
+        'target_time_seconds': 300,
+        'difficulty': 'hard',
+        'title_ru': 'Наибольшая последовательность подряд идущих чисел',
+        'title_uz': 'Ketma-ket sonlarning eng uzun ketma-ketligi',
+        'statement_ru': (
+            'Напишите функцию, которая возвращает длину наибольшего набора подряд идущих целых чисел, '
+            'встречающихся в массиве. Порядок элементов в массиве не важен; ожидается решение без полной '
+            'сортировки.'
+        ),
+        'statement_uz': (
+            "Massivda uchraydigan ketma-ket butun sonlarning eng katta to'plami uzunligini qaytaruvchi "
+            "funksiya yozing. Massivdagi elementlar tartibi muhim emas; to'liq saralashsiz yechim kutiladi."
+        ),
+        'example_ru': 'Вход:  [100, 4, 200, 1, 3, 2]\nВыход: 4',
+        'example_uz': 'Kirish:  [100, 4, 200, 1, 3, 2]\nChiqish: 4',
+        'constraints_ru': ['0 ≤ длина массива ≤ 100 000', 'Повторы не увеличивают длину последовательности'],
+        'constraints_uz': ['0 ≤ massiv uzunligi ≤ 100 000', 'Takrorlar ketma-ketlik uzunligini oshirmaydi'],
+        'starter_code_ru': 'function longestConsecutive(arr) {\n  // TODO: верните длину наибольшей последовательности\n}',
+        'starter_code_uz': 'function longestConsecutive(arr) {\n  // TODO: eng uzun ketma-ketlik uzunligini qaytaring\n}',
+        'test_cases': [
+            {'label': '[100,4,200,1,3,2] → 4', 'input': [100, 4, 200, 1, 3, 2], 'expected': 4, 'hidden': False},
+            {'label': '[0,3,7,2,5,8,4,6,0,1] → 9', 'input': [0, 3, 7, 2, 5, 8, 4, 6, 0, 1], 'expected': 9, 'hidden': False},
+            {'label': '[] → 0', 'input': [], 'expected': 0, 'hidden': True},
+            {'label': '[5,5,5] → 1', 'input': [5, 5, 5], 'expected': 1, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'partition-equal-subset',
+        'function_name': 'canPartition',
+        'target_time_seconds': 300,
+        'difficulty': 'hard',
+        'title_ru': 'Разбиение на две равные части',
+        'title_uz': 'Ikki teng qismga ajratish',
+        'statement_ru': (
+            'Напишите функцию, которая возвращает true, если массив положительных чисел можно разбить на два '
+            'подмножества с равной суммой.'
+        ),
+        'statement_uz': (
+            "Musbat sonlar massivini yig'indilari teng bo'lgan ikki qism to'plamga ajratish mumkin bo'lsa "
+            'true qaytaruvchi funksiya yozing.'
+        ),
+        'example_ru': 'Вход:  [1, 5, 11, 5]\nВыход: true',
+        'example_uz': 'Kirish:  [1, 5, 11, 5]\nChiqish: true',
+        'constraints_ru': [
+            '1 ≤ длина массива ≤ 200',
+            '1 ≤ каждый элемент ≤ 100',
+            'Каждый элемент попадает ровно в одно подмножество',
+        ],
+        'constraints_uz': [
+            '1 ≤ massiv uzunligi ≤ 200',
+            '1 ≤ har bir element ≤ 100',
+            "Har bir element aynan bitta qism to'plamga tushadi",
+        ],
+        'starter_code_ru': 'function canPartition(arr) {\n  // TODO: верните true, если разбиение на равные части возможно\n}',
+        'starter_code_uz': "function canPartition(arr) {\n  // TODO: teng qismlarga ajratish mumkin bo'lsa true qaytaring\n}",
+        'test_cases': [
+            {'label': '[1,5,11,5] → true', 'input': [1, 5, 11, 5], 'expected': True, 'hidden': False},
+            {'label': '[1,2,3,5] → false', 'input': [1, 2, 3, 5], 'expected': False, 'hidden': False},
+            {'label': '[2,2] → true', 'input': [2, 2], 'expected': True, 'hidden': True},
+            {'label': '[7] → false', 'input': [7], 'expected': False, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'union-find-groups',
+        'function_name': 'countGroups',
+        'target_time_seconds': 300,
+        'difficulty': 'hard',
+        'title_ru': 'Количество связных компонент',
+        'title_uz': "Bog'lanish komponentalari soni",
+        'statement_ru': (
+            'Напишите функцию, которая принимает массив из числа вершин n и списка неориентированных рёбер и '
+            'возвращает количество связных компонент графа. Вершины нумеруются с 0.'
+        ),
+        'statement_uz': (
+            "Uchlar soni n va yo'naltirilmagan qirralar ro'yxatidan iborat massivni qabul qilib, grafning "
+            "bog'lanish komponentalari sonini qaytaruvchi funksiya yozing. Uchlar 0 dan boshlab raqamlanadi."
+        ),
+        'example_ru': 'Вход:  [5, [[0, 1], [1, 2], [3, 4]]]\nВыход: 2',
+        'example_uz': 'Kirish:  [5, [[0, 1], [1, 2], [3, 4]]]\nChiqish: 2',
+        'constraints_ru': ['1 ≤ n ≤ 10 000', 'Изолированная вершина — отдельная компонента'],
+        'constraints_uz': ['1 ≤ n ≤ 10 000', 'Yakka uch — alohida komponenta'],
+        'starter_code_ru': (
+            'function countGroups(pair) {\n'
+            '  const [n, edges] = pair;\n'
+            '  // TODO: верните количество связных компонент\n'
+            '}'
+        ),
+        'starter_code_uz': (
+            'function countGroups(pair) {\n'
+            '  const [n, edges] = pair;\n'
+            "  // TODO: bog'lanish komponentalari sonini qaytaring\n"
+            '}'
+        ),
+        'test_cases': [
+            {'label': '[5,[[0,1],[1,2],[3,4]]] → 2', 'input': [5, [[0, 1], [1, 2], [3, 4]]], 'expected': 2, 'hidden': False},
+            {'label': '[4,[]] → 4', 'input': [4, []], 'expected': 4, 'hidden': False},
+            {'label': '[3,[[0,1],[1,2],[0,2]]] → 1', 'input': [3, [[0, 1], [1, 2], [0, 2]]], 'expected': 1, 'hidden': True},
+            {'label': '[1,[]] → 1', 'input': [1, []], 'expected': 1, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'palindrome-min-cuts',
+        'function_name': 'palindromeMinCuts',
+        'target_time_seconds': 300,
+        'difficulty': 'hard',
+        'title_ru': 'Минимум разрезов на палиндромы',
+        'title_uz': 'Palindromlarga minimal kesishlar',
+        'statement_ru': (
+            'Напишите функцию, которая возвращает минимальное количество разрезов строки, при котором каждая '
+            'часть является палиндромом. Для строки-палиндрома ответ 0.'
+        ),
+        'statement_uz': (
+            "Har bir bo'lagi palindrom bo'lishi uchun satrni kesish kerak bo'lgan minimal kesishlar sonini "
+            "qaytaruvchi funksiya yozing. Satrning o'zi palindrom bo'lsa, javob 0 bo'ladi."
+        ),
+        'example_ru': 'Вход:  "aab"\nВыход: 1',
+        'example_uz': 'Kirish:  "aab"\nChiqish: 1',
+        'constraints_ru': ['1 ≤ длина строки ≤ 500 символов', 'Ожидается динамическое программирование'],
+        'constraints_uz': ['1 ≤ satr uzunligi ≤ 500 belgi', 'Dinamik dasturlash kutiladi'],
+        'starter_code_ru': 'function palindromeMinCuts(text) {\n  // TODO: верните минимальное число разрезов\n}',
+        'starter_code_uz': 'function palindromeMinCuts(text) {\n  // TODO: minimal kesishlar sonini qaytaring\n}',
+        'test_cases': [
+            {'label': "'aab' → 1", 'input': 'aab', 'expected': 1, 'hidden': False},
+            {'label': "'a' → 0", 'input': 'a', 'expected': 0, 'hidden': False},
+            {'label': "'abcde' → 4", 'input': 'abcde', 'expected': 4, 'hidden': True},
+            {'label': "'racecarannakayak' → 2", 'input': 'racecarannakayak', 'expected': 2, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'distinct-subsequences-count',
+        'function_name': 'distinctSubsequences',
+        'target_time_seconds': 300,
+        'difficulty': 'hard',
+        'title_ru': 'Число вхождений подпоследовательности',
+        'title_uz': 'Qism ketma-ketlik uchrashlari soni',
+        'statement_ru': (
+            'Напишите функцию, которая принимает массив из двух строк s и t и возвращает количество '
+            'различных подпоследовательностей s, равных t.'
+        ),
+        'statement_uz': (
+            "Ikki satr s va t dan iborat massivni qabul qilib, t ga teng bo'lgan s ning turli qism "
+            'ketma-ketliklari sonini qaytaruvchi funksiya yozing.'
+        ),
+        'example_ru': 'Вход:  ["rabbbit", "rabbit"]\nВыход: 3',
+        'example_uz': 'Kirish:  ["rabbbit", "rabbit"]\nChiqish: 3',
+        'constraints_ru': [
+            '0 ≤ длина s ≤ 500 символов',
+            '0 ≤ длина t ≤ 100 символов',
+            'Пустая строка t встречается один раз',
+        ],
+        'constraints_uz': [
+            '0 ≤ s uzunligi ≤ 500 belgi',
+            '0 ≤ t uzunligi ≤ 100 belgi',
+            "Bo'sh t satri bir marta uchraydi",
+        ],
+        'starter_code_ru': (
+            'function distinctSubsequences(pair) {\n'
+            '  const [text, target] = pair;\n'
+            '  // TODO: верните количество подпоследовательностей, равных t\n'
+            '}'
+        ),
+        'starter_code_uz': (
+            'function distinctSubsequences(pair) {\n'
+            '  const [text, target] = pair;\n'
+            '  // TODO: t ga teng qism ketma-ketliklar sonini qaytaring\n'
+            '}'
+        ),
+        'test_cases': [
+            {'label': "['rabbbit','rabbit'] → 3", 'input': ['rabbbit', 'rabbit'], 'expected': 3, 'hidden': False},
+            {'label': "['babgbag','bag'] → 5", 'input': ['babgbag', 'bag'], 'expected': 5, 'hidden': False},
+            {'label': "['abc',''] → 1", 'input': ['abc', ''], 'expected': 1, 'hidden': True},
+            {'label': "['abc','d'] → 0", 'input': ['abc', 'd'], 'expected': 0, 'hidden': True},
+        ],
+    },
+    {
+        'slug': 'egg-drop',
+        'function_name': 'eggDrop',
+        'target_time_seconds': 300,
+        'difficulty': 'hard',
+        'title_ru': 'Задача о бросании яиц',
+        'title_uz': 'Tuxum tashlash masalasi',
+        'statement_ru': (
+            'Напишите функцию, которая принимает массив из количества яиц и количества этажей и возвращает '
+            'минимальное число бросков, гарантированно достаточное, чтобы в худшем случае определить '
+            'критический этаж.'
+        ),
+        'statement_uz': (
+            'Tuxumlar soni va qavatlar sonidan iborat massivni qabul qilib, eng yomon holatda ham kritik '
+            'qavatni aniqlash uchun kafolatli yetadigan minimal tashlashlar sonini qaytaruvchi funksiya '
+            'yozing.'
+        ),
+        'example_ru': 'Вход:  [2, 10]\nВыход: 4',
+        'example_uz': 'Kirish:  [2, 10]\nChiqish: 4',
+        'constraints_ru': [
+            '1 ≤ количество яиц ≤ 10',
+            '0 ≤ количество этажей ≤ 1000',
+            'Разбившееся яйцо больше использовать нельзя',
+        ],
+        'constraints_uz': [
+            '1 ≤ tuxumlar soni ≤ 10',
+            '0 ≤ qavatlar soni ≤ 1000',
+            "Sinib ketgan tuxumdan boshqa foydalanib bo'lmaydi",
+        ],
+        'starter_code_ru': (
+            'function eggDrop(pair) {\n'
+            '  const [eggs, floors] = pair;\n'
+            '  // TODO: верните минимальное число бросков в худшем случае\n'
+            '}'
+        ),
+        'starter_code_uz': (
+            'function eggDrop(pair) {\n'
+            '  const [eggs, floors] = pair;\n'
+            '  // TODO: eng yomon holatdagi minimal tashlashlar sonini qaytaring\n'
+            '}'
+        ),
+        'test_cases': [
+            {'label': '[2,10] → 4', 'input': [2, 10], 'expected': 4, 'hidden': False},
+            {'label': '[1,7] → 7', 'input': [1, 7], 'expected': 7, 'hidden': False},
+            {'label': '[3,14] → 4', 'input': [3, 14], 'expected': 4, 'hidden': True},
+            {'label': '[2,0] → 0', 'input': [2, 0], 'expected': 0, 'hidden': True},
         ],
     },
 ]
