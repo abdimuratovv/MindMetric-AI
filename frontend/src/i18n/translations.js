@@ -321,7 +321,7 @@ export const translations = {
       logout: 'Chiqish',
     },
     nav: {
-      assessments: 'Testlar',
+      assessments: 'Testlar va topshiriqlar',
       myResults: 'Mening natijalarim',
       achievements: 'Yutuqlarim',
       reviewQueue: "Ko'rib chiqish navbati",
