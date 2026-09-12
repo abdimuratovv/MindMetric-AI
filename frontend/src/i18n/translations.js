@@ -269,7 +269,7 @@ export const translations = {
       badge: 'UNIVERSITET IQTIDOR INTELLEKTI',
       headline: 'Dasturlash iqtidorini',
       headlineEm: "transkriptdan oldin ko'ring.",
-      lede: "MindMetric AI kognitiv testlash, jonli kodlash topshiriqlari va xulq-atvor bahosini bitta kalibrlangan iqtidor balliga birlashtiradi — o'qituvchilar tomonidan ko'rib chiqiladi, qabul komissiyalari ishonadi.",
+      lede: "MindMetric AI: Kognitiv testlar, jonli kodlash va xulq-atvor tahliliga asoslangan kalibrlangan iqtidor balli — ekspertlar tomonidan tekshirilgan va ta'lim muassasalari uchun ob'ektiv baholash manbai.",
       getStarted: 'Boshlash',
       viewSample: "Namunaviy hisobotni ko'rish",
       footer: '© 2026 MindMetric AI — Akademik baholash boʼlimi',
