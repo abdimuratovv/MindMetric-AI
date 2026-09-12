@@ -45,28 +45,28 @@ MCQ_QUESTIONS = {
             'key': 'math-easy-1', 'difficulty': -1.0,
             'category_ru': 'Проценты', 'category_uz': 'Foizlar',
             'prompt_ru': 'Сколько составляет 30% от 150?', 'prompt_uz': '150 ning 30% i nechaga teng?',
-            'options_ru': ['25', '30', '45', '50'], 'options_uz': ['25', '30', '45', '50'],
+            'options_ru': ['25.0', '30', '45', '50'], 'options_uz': ['25.0', '30', '45', '50'],
             'correct_indices': [2],
         },
         {
             'key': 'math-easy-2', 'difficulty': -0.95,
             'category_ru': 'Арифметика', 'category_uz': 'Arifmetika',
             'prompt_ru': 'Вычислите: 120∙(65-45)=?', 'prompt_uz': 'Hisoblang: 120∙(65-45)=?',
-            'options_ru': ['1500', '2400', '1200', '2100'], 'options_uz': ['1500', '2400', '1200', '2100'],
+            'options_ru': ['1500.0', '2400', '1200', '2100'], 'options_uz': ['1500.0', '2400', '1200', '2100'],
             'correct_indices': [1],
         },
         {
             'key': 'math-easy-3', 'difficulty': -0.9,
             'category_ru': 'Числовые последовательности', 'category_uz': 'Sonli qatorlar',
             'prompt_ru': 'Продолжите ряд: 2, 5, 11, 23, ?', 'prompt_uz': 'Qatorni davom ettiring: 2, 5, 11, 23, ?',
-            'options_ru': ['45', '49', '48', '47'], 'options_uz': ['45', '49', '48', '47'],
+            'options_ru': ['45.0', '49', '48', '47'], 'options_uz': ['45.0', '49', '48', '47'],
             'correct_indices': [3],
         },
         {
             'key': 'math-easy-4', 'difficulty': -0.85,
             'category_ru': 'Алгебра', 'category_uz': 'Algebra',
             'prompt_ru': 'Если x+1/x=5, найдите x²+1/x².', 'prompt_uz': 'x+1/x=5 boʻlsa, x²+1/x² ni toping.',
-            'options_ru': ['21', '23', '25', '27'], 'options_uz': ['21', '23', '25', '27'],
+            'options_ru': ['21.0', '23', '25', '27'], 'options_uz': ['21.0', '23', '25', '27'],
             'correct_indices': [1],
         },
         {
@@ -82,28 +82,28 @@ MCQ_QUESTIONS = {
             'category_ru': 'Алгебра', 'category_uz': 'Algebra',
             'prompt_ru': 'Решите уравнение |x-2|=3. Чему равен x?',
             'prompt_uz': '|x-2|=3 tenglamani yeching. x nechaga teng?',
-            'options_ru': ['-2 и 2', '2 и 3', '-1 и 5', '3 и -2'], 'options_uz': ['-2 va 2', '2 va 3', '-1 va 5', '3 va -2'],
+            'options_ru': ['-1 и -5', '2 и 3', '-1 и 5', '1 и 5'], 'options_uz': ['-1 va -5', '2 va 3', '-1 va 5', '1 va 5'],
             'correct_indices': [2],
         },
         {
             'key': 'math-easy-7', 'difficulty': -0.7,
             'category_ru': 'Теория чисел', 'category_uz': 'Sonlar nazariyasi',
             'prompt_ru': 'Сколько чисел от 1 до 100 кратны 3?', 'prompt_uz': '1 dan 100 gacha nechta son 3 ga karrali?',
-            'options_ru': ['32', '33', '34', '35'], 'options_uz': ['32', '33', '34', '35'],
+            'options_ru': ['32.0', '33', '34', '35'], 'options_uz': ['32.0', '33', '34', '35'],
             'correct_indices': [1],
         },
         {
             'key': 'math-easy-8', 'difficulty': -0.65,
             'category_ru': 'Степени', 'category_uz': 'Daraja',
             'prompt_ru': 'Вычислите 4⁵/4³.', 'prompt_uz': '4⁵/4³ ni hisoblang.',
-            'options_ru': ['16', '18', '24', '32'], 'options_uz': ['16', '18', '24', '32'],
+            'options_ru': ['16', '18.0', '24', '32'], 'options_uz': ['16', '18.0', '24', '32'],
             'correct_indices': [0],
         },
         {
             'key': 'math-easy-9', 'difficulty': -0.6,
             'category_ru': 'Числовые последовательности', 'category_uz': 'Sonli qatorlar',
             'prompt_ru': 'Продолжите ряд: 7, 15, 31, 63, ?', 'prompt_uz': 'Qatorni davom ettiring: 7, 15, 31, 63, ?',
-            'options_ru': ['150', '64', '126', '127'], 'options_uz': ['150', '64', '126', '127'],
+            'options_ru': ['150.0', '64', '126', '127'], 'options_uz': ['150.0', '64', '126', '127'],
             'correct_indices': [3],
         },
         {
@@ -131,35 +131,35 @@ MCQ_QUESTIONS = {
             'key': 'math-easy-13', 'difficulty': -0.4,
             'category_ru': 'Алгебра', 'category_uz': 'Algebra',
             'prompt_ru': 'Если x³=64, чему равен x?', 'prompt_uz': 'Agar x³=64 boʻlsa, x nechaga teng?',
-            'options_ru': ['2', '3', '4', '5'], 'options_uz': ['2', '3', '4', '5'],
+            'options_ru': ['2.0', '3', '4', '5'], 'options_uz': ['2.0', '3', '4', '5'],
             'correct_indices': [2],
         },
         {
             'key': 'math-easy-14', 'difficulty': -0.35,
             'category_ru': 'Числовые последовательности', 'category_uz': 'Sonli qatorlar',
             'prompt_ru': 'Продолжите ряд: 5, 13, 29, 61, ?', 'prompt_uz': 'Qatorni davom ettiring: 5, 13, 29, 61, ?',
-            'options_ru': ['125', '84', '122', '73'], 'options_uz': ['125', '84', '122', '73'],
+            'options_ru': ['125', '84.0', '122', '73'], 'options_uz': ['125', '84.0', '122', '73'],
             'correct_indices': [0],
         },
         {
             'key': 'math-easy-15', 'difficulty': -0.3,
             'category_ru': 'Логарифмы', 'category_uz': 'Logarifm',
             'prompt_ru': 'Вычислите log₃81.', 'prompt_uz': 'log₃81 ni hisoblang.',
-            'options_ru': ['3', '4', '5', '6'], 'options_uz': ['3', '4', '5', '6'],
+            'options_ru': ['3.0', '4', '5', '6'], 'options_uz': ['3.0', '4', '5', '6'],
             'correct_indices': [1],
         },
         {
             'key': 'math-easy-16', 'difficulty': -0.25,
             'category_ru': 'Теория чисел', 'category_uz': 'Sonlar nazariyasi',
             'prompt_ru': 'Сколько простых чисел не больше 100?', 'prompt_uz': '100 dan katta boʻlmagan tub sonlar nechta?',
-            'options_ru': ['23', '24', '25', '26'], 'options_uz': ['23', '24', '25', '26'],
+            'options_ru': ['23.0', '24', '25', '26'], 'options_uz': ['23.0', '24', '25', '26'],
             'correct_indices': [3],
         },
         {
             'key': 'math-easy-17', 'difficulty': -0.2,
             'category_ru': 'Степени', 'category_uz': 'Daraja',
             'prompt_ru': 'Вычислите 3⁰+3¹+3².', 'prompt_uz': '3⁰+3¹+3² ni hisoblang.',
-            'options_ru': ['10', '11', '13', '15'], 'options_uz': ['10', '11', '13', '15'],
+            'options_ru': ['10.0', '11', '13', '15'], 'options_uz': ['10.0', '11', '13', '15'],
             'correct_indices': [2],
         },
         {
@@ -174,7 +174,7 @@ MCQ_QUESTIONS = {
             'key': 'math-easy-19', 'difficulty': -0.1,
             'category_ru': 'Системы счисления', 'category_uz': 'Sanoq sistemalari',
             'prompt_ru': 'Сколько чисел можно записать с помощью 4 бит?', 'prompt_uz': '4 ta bit bilan nechta son yozish mumkin?',
-            'options_ru': ['8', '16', '24', '64'], 'options_uz': ['8', '16', '24', '64'],
+            'options_ru': ['8.0', '16', '24', '64'], 'options_uz': ['8.0', '16', '24', '64'],
             'correct_indices': [1],
         },
         {
@@ -191,14 +191,14 @@ MCQ_QUESTIONS = {
             'category_ru': 'Комбинаторика', 'category_uz': 'Kombinatorika',
             'prompt_ru': 'Чему равно число перестановок n элементов?',
             'prompt_uz': 'n ta elementning tartiblash (permutatsiya) soni nimaga teng?',
-            'options_ru': ['n²', 'n!', '2ⁿ', 'n'], 'options_uz': ['n²', 'n!', '2ⁿ', 'n'],
+            'options_ru': ['n²', 'n!', '2.0ⁿ', 'n'], 'options_uz': ['n²', 'n!', '2.0ⁿ', 'n'],
             'correct_indices': [1],
         },
         {
             'key': 'math-medium-2', 'difficulty': 0.05,
             'category_ru': 'Уравнения со степенями', 'category_uz': 'Daraja tenglamalari',
             'prompt_ru': 'Если 3ⁿ=81, чему равен n?', 'prompt_uz': '3ⁿ=81 boʻlsa, n nechaga teng?',
-            'options_ru': ['6', '5', '4', '3'], 'options_uz': ['6', '5', '4', '3'],
+            'options_ru': ['6.0', '5', '4', '3'], 'options_uz': ['6.0', '5', '4', '3'],
             'correct_indices': [2],
         },
         {
@@ -206,7 +206,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Комбинаторика', 'category_uz': 'Kombinatorika',
             'prompt_ru': 'Сколькими способами можно выбрать 3 элемента из 10?',
             'prompt_uz': '10 elementdan 3 tasini tanlash nechta yoʻl bilan amalga oshiriladi?',
-            'options_ru': ['140', '120', '145', '110'], 'options_uz': ['140', '120', '145', '110'],
+            'options_ru': ['140.0', '120', '145', '110'], 'options_uz': ['140.0', '120', '145', '110'],
             'correct_indices': [1],
         },
         {
@@ -214,7 +214,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Теория чисел (НОД)', 'category_uz': 'Sonlar nazariyasi (EKUB)',
             'prompt_ru': 'Найдите наибольший общий делитель (НОД) чисел 24 и 36.',
             'prompt_uz': '24 va 36 ning eng katta umumiy boʻluvchisini (EKUB) toping.',
-            'options_ru': ['12', '18', '72', '48'], 'options_uz': ['12', '18', '72', '48'],
+            'options_ru': ['12', '18.0', '72', '48'], 'options_uz': ['12', '18.0', '72', '48'],
             'correct_indices': [0],
         },
         {
@@ -222,42 +222,42 @@ MCQ_QUESTIONS = {
             'category_ru': 'Теория чисел (НОК)', 'category_uz': 'Sonlar nazariyasi (EKUK)',
             'prompt_ru': 'Найдите наименьшее общее кратное (НОК) чисел 12 и 8.',
             'prompt_uz': '12 va 8 sonlarining eng kichik umumiy karralisini (EKUK) toping.',
-            'options_ru': ['4', '8', '12', '24'], 'options_uz': ['4', '8', '12', '24'],
+            'options_ru': ['4.0', '8', '12', '24'], 'options_uz': ['4.0', '8', '12', '24'],
             'correct_indices': [3],
         },
         {
             'key': 'math-medium-6', 'difficulty': 0.25,
             'category_ru': 'Теория чисел', 'category_uz': 'Sonlar nazariyasi',
             'prompt_ru': 'Сколько простых чисел от 1 до 70?', 'prompt_uz': '1 dan 70 gacha boʻlgan tub sonlar nechta?',
-            'options_ru': ['16', '17', '18', '19'], 'options_uz': ['16', '17', '18', '19'],
+            'options_ru': ['16.0', '17', '18', '19'], 'options_uz': ['16.0', '17', '18', '19'],
             'correct_indices': [1],
         },
         {
             'key': 'math-medium-7', 'difficulty': 0.3,
             'category_ru': 'Степени', 'category_uz': 'Daraja',
             'prompt_ru': 'Чему равно 4⁴?', 'prompt_uz': '4⁴ nechaga teng?',
-            'options_ru': ['16', '64', '128', '256'], 'options_uz': ['16', '64', '128', '256'],
+            'options_ru': ['16.0', '64', '128', '256'], 'options_uz': ['16.0', '64', '128', '256'],
             'correct_indices': [3],
         },
         {
             'key': 'math-medium-8', 'difficulty': 0.35,
             'category_ru': 'Комбинаторика (факториал)', 'category_uz': 'Kombinatorika (faktorial)',
             'prompt_ru': 'Чему равно 6!?', 'prompt_uz': '6! nechaga teng?',
-            'options_ru': ['360', '480', '720', '840'], 'options_uz': ['360', '480', '720', '840'],
+            'options_ru': ['360.0', '480', '720', '840'], 'options_uz': ['360.0', '480', '720', '840'],
             'correct_indices': [2],
         },
         {
             'key': 'math-medium-9', 'difficulty': 0.4,
             'category_ru': 'Степени', 'category_uz': 'Daraja',
             'prompt_ru': 'Чему равно 3⁴+4³?', 'prompt_uz': '3⁴+4³ nechaga teng?',
-            'options_ru': ['145', '250', '75', '225'], 'options_uz': ['145', '250', '75', '225'],
+            'options_ru': ['145', '250.0', '75', '225'], 'options_uz': ['145', '250.0', '75', '225'],
             'correct_indices': [0],
         },
         {
             'key': 'math-medium-10', 'difficulty': 0.45,
             'category_ru': 'Степени', 'category_uz': 'Daraja',
             'prompt_ru': 'Чему равно 2¹⁰?', 'prompt_uz': '2¹⁰ nechaga teng?',
-            'options_ru': ['512', '1024', '2048', '4096'], 'options_uz': ['512', '1024', '2048', '4096'],
+            'options_ru': ['512.0', '1024', '2048', '4096'], 'options_uz': ['512.0', '1024', '2048', '4096'],
             'correct_indices': [1],
         },
         {
@@ -272,7 +272,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Комбинаторика', 'category_uz': 'Kombinatorika',
             'prompt_ru': 'Сколько трёхзначных чисел можно составить из цифр 1, 2, 3?',
             'prompt_uz': '1,2,3 sonlaridan nechta 3 xonali son tuzish mumkin?',
-            'options_ru': ['6', '8', '4', '5'], 'options_uz': ['6', '8', '4', '5'],
+            'options_ru': ['6', '8.0', '4', '5'], 'options_uz': ['6', '8.0', '4', '5'],
             'correct_indices': [0],
         },
         {
@@ -280,7 +280,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Комбинаторика', 'category_uz': 'Kombinatorika',
             'prompt_ru': 'Сколько двузначных чисел можно составить из цифр 1, 2, 3, 4?',
             'prompt_uz': '1,2,3,4 sonlaridan nechta ikki xonali son tuzish mumkin?',
-            'options_ru': ['6', '12', '24', '18'], 'options_uz': ['6', '12', '24', '18'],
+            'options_ru': ['6.0', '12', '24', '18'], 'options_uz': ['6.0', '12', '24', '18'],
             'correct_indices': [1],
         },
         {
@@ -294,7 +294,7 @@ MCQ_QUESTIONS = {
                 'Bir son 2 ga boʻlinganda 1 qoldiq, 3 ga boʻlinganda 2 qoldiq, 4 ga boʻlinganda 3 '
                 'qoldiq beradi. Bu son 50 dan kichik. Bu son nechaga teng?'
             ),
-            'options_ru': ['25', '36', '47', '49'], 'options_uz': ['25', '36', '47', '49'],
+            'options_ru': ['25.0', '36', '47', '49'], 'options_uz': ['25.0', '36', '47', '49'],
             'correct_indices': [2],
         },
         {
@@ -302,7 +302,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Текстовые задачи', 'category_uz': 'Matnli masalalar',
             'prompt_ru': 'Если число умножить на 5 и прибавить 15, получится 65. Найдите исходное число.',
             'prompt_uz': 'Bir sonni 5 ga koʻpaytirib, 15 qoʻshilsa, 65 chiqadi. Boshlangʻich sonni toping.',
-            'options_ru': ['8', '10', '12', '15'], 'options_uz': ['8', '10', '12', '15'],
+            'options_ru': ['8.0', '10', '12', '15'], 'options_uz': ['8.0', '10', '12', '15'],
             'correct_indices': [1],
         },
         {
@@ -316,7 +316,7 @@ MCQ_QUESTIONS = {
                 'Bir sinfda oʻquvchilar soni 40 dan kam. Ularni 4 tadan ajratsak, 3 kishi ortadi; 5 '
                 'tadan ajratsak, 2 kishi ortadi. Sinfda nechta oʻquvchi bor?'
             ),
-            'options_ru': ['25', '29', '27', '38'], 'options_uz': ['25', '29', '27', '38'],
+            'options_ru': ['25.0', '29', '27', '38'], 'options_uz': ['25.0', '29', '27', '38'],
             'correct_indices': [2],
         },
         {
@@ -324,7 +324,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Геометрия', 'category_uz': 'Geometriya',
             'prompt_ru': 'Длина прямоугольника 12 см, ширина 8 см. Сколько квадратов 4×4 максимум поместится внутри него?',
             'prompt_uz': 'Toʻgʻri toʻrtburchakning uzunligi 12 sm, eni 8 sm. Shu toʻrtburchak ichiga koʻpi bilan nechta 4×4 kvadrat joylashtirish mumkin?',
-            'options_ru': ['5', '6', '7', '8'], 'options_uz': ['5', '6', '7', '8'],
+            'options_ru': ['5.0', '6', '7', '8'], 'options_uz': ['5.0', '6', '7', '8'],
             'correct_indices': [1],
         },
         {
@@ -340,7 +340,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Геометрия', 'category_uz': 'Geometriya',
             'prompt_ru': 'Все рёбра куба равны 4 см. Найдите радиус наибольшего шара, вписанного в куб.',
             'prompt_uz': 'Kubning barcha qirralari 4 sm. Kub ichiga sigʻadigan eng katta shar radiusini toping.',
-            'options_ru': ['4', '3', '2', '1'], 'options_uz': ['4', '3', '2', '1'],
+            'options_ru': ['4.0', '3', '2', '1'], 'options_uz': ['4.0', '3', '2', '1'],
             'correct_indices': [2],
         },
         {
@@ -348,7 +348,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Текстовые задачи (совместная работа)', 'category_uz': 'Matnli masalalar (ish unumdorligi)',
             'prompt_ru': 'Первый рабочий выполняет работу за 6 дней, второй — за 3 дня. За сколько дней они выполнят работу вместе?',
             'prompt_uz': 'Bir ishni 1-ishchi 6 kunda, 2-ishchi esa 3 kunda bajaradi. Ikkalasi birga shu ishni necha kunda bajaradi?',
-            'options_ru': ['3', '4', '6', '2'], 'options_uz': ['3', '4', '6', '2'],
+            'options_ru': ['3.0', '4', '6', '2'], 'options_uz': ['3.0', '4', '6', '2'],
             'correct_indices': [3],
         },
         # -- Doimiy o'zgarish tezligi (chiziqli interpolyatsiya) — 20 questions ------------
@@ -357,7 +357,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Постоянная скорость изменения', 'category_uz': "Doimiy o'zgarish tezligi",
             'prompt_ru': 'В 12:00 температура была 10°C, а в 16:00 — 26°C. Учитывая постоянную скорость изменения, какой была температура в 14:00?',
             'prompt_uz': "Soat 12:00 da harorat 10°C, soat 16:00 da esa 26°C edi. Doimiy o'zgarish tezligini hisobga olsak, soat 14:00 da harorat qanday bo'lgan?",
-            'options_ru': ['14°C', '16°C', '18°C', '20°C'], 'options_uz': ['14°C', '16°C', '18°C', '20°C'],
+            'options_ru': ['14.0°C', '16°C', '18°C', '20°C'], 'options_uz': ['14.0°C', '16°C', '18°C', '20°C'],
             'correct_indices': [2],
         },
         {
@@ -365,8 +365,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Постоянная скорость изменения', 'category_uz': "Doimiy o'zgarish tezligi",
             'prompt_ru': 'В 08:00 в бассейне было 500 литров воды, а в 13:00 объём воды достиг 1000 литров. Если вода наливается с постоянной скоростью, сколько воды было в бассейне в 11:00?',
             'prompt_uz': "Soat 08:00 da hovuzda 500 litr suv bor edi, soat 13:00 da esa suv hajmi 1000 litrga yetdi. Suv doimiy tezlikda quyilayotgan bo'lsa, soat 11:00 da hovuzda qancha suv bo'lgan?",
-            'options_ru': ['700 литров', '800 литров', '850 литров', '900 литров'],
-            'options_uz': ['700 litr', '800 litr', '850 litr', '900 litr'],
+            'options_ru': ['700.0 литров', '800 литров', '850 литров', '900 литров'], 'options_uz': ['700.0 litr', '800 litr', '850 litr', '900 litr'],
             'correct_indices': [1],
         },
         {
@@ -374,7 +373,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Постоянная скорость изменения', 'category_uz': "Doimiy o'zgarish tezligi",
             'prompt_ru': 'В 10:00 заряд телефона был 100%. При постоянной скорости разрядки в 15:00 заряд упал до 0%. Сколько процентов заряда было в 12:00?',
             'prompt_uz': "Soat 10:00 da telefon quvvati 100% edi. Doimiy tezlikda quvvat sarflanishi natijasida soat 15:00 da quvvat 0% ga tushdi. Soat 12:00 da telefon quvvati necha foiz bo'lgan?",
-            'options_ru': ['70%', '60%', '50%', '40%'], 'options_uz': ['70%', '60%', '50%', '40%'],
+            'options_ru': ['70.0%', '60%', '50%', '40%'], 'options_uz': ['70.0%', '60%', '50%', '40%'],
             'correct_indices': [1],
         },
         {
@@ -390,7 +389,7 @@ MCQ_QUESTIONS = {
                 "yetib keldi. Agar avtomobil doimiy tezlikda harakatlangan bo'lsa, soat 11:30 da "
                 "yo'lning qaysi kilometrida bo'lgan?"
             ),
-            'options_ru': ['200 км', '250 км', '300 км', '350 км'], 'options_uz': ['200 km', '250 km', '300 km', '350 km'],
+            'options_ru': ['200.0 км', '250 км', '300 км', '350 км'], 'options_uz': ['200.0 km', '250 km', '300 km', '350 km'],
             'correct_indices': [1],
         },
         {
@@ -405,7 +404,7 @@ MCQ_QUESTIONS = {
                 "qismi yuklab olindi. Doimiy yuklanish tezligini hisobga olsak, soat 14:45 da qancha "
                 "MB yuklab olingan edi?"
             ),
-            'options_ru': ['400 МБ', '450 МБ', '500 МБ', '600 МБ'], 'options_uz': ['400 MB', '450 MB', '500 MB', '600 MB'],
+            'options_ru': ['400.0 МБ', '450 МБ', '500 МБ', '600 МБ'], 'options_uz': ['400.0 MB', '450 MB', '500 MB', '600 MB'],
             'correct_indices': [2],
         },
         {
@@ -420,7 +419,7 @@ MCQ_QUESTIONS = {
                 "metr balandlikka ko'tarildi. Samolyot doimiy tezlikda ko'tarilgan bo'lsa, soat 08:30 "
                 "da qanday balandlikda bo'lgan?"
             ),
-            'options_ru': ['1500 м', '1750 м', '2000 м', '2250 м'], 'options_uz': ['1500 m', '1750 m', '2000 m', '2250 m'],
+            'options_ru': ['1500.0 м', '1750 м', '2000 м', '2250 м'], 'options_uz': ['1500.0 m', '1750 m', '2000 m', '2250 m'],
             'correct_indices': [1],
         },
         {
@@ -434,7 +433,7 @@ MCQ_QUESTIONS = {
                 "Soat 10:00 da qorning qalinligi 40 sm edi. Havo isishi natijasida qor doimiy tezlikda "
                 "erib, soat 14:00 da 20 sm ga tushdi. Soat 11:00 da qorning qalinligi qancha bo'lgan?"
             ),
-            'options_ru': ['35 см', '30 см', '25 см', '38 см'], 'options_uz': ['35 sm', '30 sm', '25 sm', '38 sm'],
+            'options_ru': ['35 см', '30.0 см', '25 см', '38 см'], 'options_uz': ['35 sm', '30.0 sm', '25 sm', '38 sm'],
             'correct_indices': [0],
         },
         {
@@ -448,7 +447,7 @@ MCQ_QUESTIONS = {
                 "Soat 12:00 da ballondagi bosim 2.0 atm edi. Bosim doimiy tezlikda ortib, soat 18:00 "
                 "da 5.0 atm ga yetdi. Soat 15:00 da bosim qancha bo'lgan?"
             ),
-            'options_ru': ['3.0 атм', '3.5 атм', '4.0 атм', '4.5 атм'], 'options_uz': ['3.0 atm', '3.5 atm', '4.0 atm', '4.5 atm'],
+            'options_ru': ['3.00 атм', '3.5 атм', '4.0 атм', '4.5 атм'], 'options_uz': ['3.00 atm', '3.5 atm', '4.0 atm', '4.5 atm'],
             'correct_indices': [1],
         },
         {
@@ -464,7 +463,7 @@ MCQ_QUESTIONS = {
                 "seshanba kuni soat 18:00 da uning bo'yi 46 sm ga yetdi. Dushanba kuni soat 18:00 da "
                 "niholning bo'yi qancha edi? (Jami o'tgan vaqt: 36 soat)"
             ),
-            'options_ru': ['18 см', '22 см', '26 см', '30 см'], 'options_uz': ['18 sm', '22 sm', '26 sm', '30 sm'],
+            'options_ru': ['18.0 см', '22 см', '26 см', '30 см'], 'options_uz': ['18.0 sm', '22 sm', '26 sm', '30 sm'],
             'correct_indices': [1],
         },
         {
@@ -479,7 +478,7 @@ MCQ_QUESTIONS = {
                 "davom etib, soat 12:00 ga kelib 900 kg ga yetdi. Soat 09:30 da ombordagi bug'doy "
                 "massasi qancha edi?"
             ),
-            'options_ru': ['300 кг', '400 кг', '500 кг', '600 кг'], 'options_uz': ['300 kg', '400 kg', '500 kg', '600 kg'],
+            'options_ru': ['300.0 кг', '400 кг', '500 кг', '600 кг'], 'options_uz': ['300.0 kg', '400 kg', '500 kg', '600 kg'],
             'correct_indices': [1],
         },
         {
@@ -493,7 +492,7 @@ MCQ_QUESTIONS = {
                 "Soat 17:00 da qahva harorati 80°C edi. U doimiy tezlikda sovib, soat 17:20 da 40°C "
                 "ga tushdi. Soat 17:05 da qahva harorati qanday bo'lgan?"
             ),
-            'options_ru': ['60°C', '65°C', '70°C', '75°C'], 'options_uz': ['60°C', '65°C', '70°C', '75°C'],
+            'options_ru': ['60.0°C', '65°C', '70°C', '75°C'], 'options_uz': ['60.0°C', '65°C', '70°C', '75°C'],
             'correct_indices': [2],
         },
         {
@@ -508,8 +507,7 @@ MCQ_QUESTIONS = {
                 "hisobga olsak, soat 15:00 da 12 litr benzin qoldi. Soat 11:30 da bakda qancha benzin "
                 "bo'lgan?"
             ),
-            'options_ru': ['44 литра', '40 литров', '36 литров', '32 литра'],
-            'options_uz': ['44 litr', '40 litr', '36 litr', '32 litr'],
+            'options_ru': ['44.0 литра', '40 литров', '36 литров', '32 литра'], 'options_uz': ['44.0 litr', '40 litr', '36 litr', '32 litr'],
             'correct_indices': [1],
         },
         {
@@ -523,7 +521,7 @@ MCQ_QUESTIONS = {
                 "Soat 13:00 da Asadbek kitobning 45-betini o'qiyotgan edi. Doimiy tezlikda o'qishni "
                 "davom ettirib, soat 17:00 da 165-betga keldi. Soat 15:00 da u nechanchi betda bo'lgan?"
             ),
-            'options_ru': ['95', '100', '105', '115'], 'options_uz': ['95', '100', '105', '115'],
+            'options_ru': ['95.0', '100', '105', '115'], 'options_uz': ['95.0', '100', '105', '115'],
             'correct_indices': [2],
         },
         {
@@ -539,8 +537,7 @@ MCQ_QUESTIONS = {
                 "doimiy bo'lib, soat 16:00 da hisob 500 ming so'mga yetdi. Soat 10:00 da hisobda "
                 "qancha pul bo'lgan?"
             ),
-            'options_ru': ['150 тысяч', '200 тысяч', '250 тысяч', '300 тысяч'],
-            'options_uz': ["150 ming", "200 ming", "250 ming", "300 ming"],
+            'options_ru': ['150.0 тысяч', '200 тысяч', '250 тысяч', '300 тысяч'], 'options_uz': ['150.0 ming', '200 ming', '250 ming', '300 ming'],
             'correct_indices': [1],
         },
         {
@@ -555,7 +552,7 @@ MCQ_QUESTIONS = {
                 "ishlashdi va soat 15:00 da bo'yalgan maydon 75 kv.m ga yetdi. Soat 12:00 da qancha "
                 "maydon bo'yalib bo'lgan edi?"
             ),
-            'options_ru': ['35 кв.м', '40 кв.м', '45 кв.м', '50 кв.м'], 'options_uz': ['35 kv.m', '40 kv.m', '45 kv.m', '50 kv.m'],
+            'options_ru': ['35.0 кв.м', '40 кв.м', '45 кв.м', '50 кв.м'], 'options_uz': ['35.0 kv.m', '40 kv.m', '45 kv.m', '50 kv.m'],
             'correct_indices': [2],
         },
         {
@@ -571,7 +568,7 @@ MCQ_QUESTIONS = {
                 "doimiy tezlikda chuqurlashishda davom etdi va soat 16:00 da 250 metr chuqurlikka "
                 "(-250 m) yetdi. Soat 14:30 da u qanday chuqurlikda bo'lgan?"
             ),
-            'options_ru': ['100 м', '120 м', '150 м', '180 м'], 'options_uz': ['100 m', '120 m', '150 m', '180 m'],
+            'options_ru': ['100 м', '120.0 м', '150 м', '180 м'], 'options_uz': ['100 m', '120.0 m', '150 m', '180 m'],
             'correct_indices': [0],
         },
         {
@@ -586,7 +583,7 @@ MCQ_QUESTIONS = {
                 "ravishda oshirib bordi va soat 10:10 da tezlik 80 km/soatga yetdi. Soat 10:04 da "
                 "avtomobil qanday tezlikda harakatlanayotgan edi?"
             ),
-            'options_ru': ['32 км/ч', '44 км/ч', '50 км/ч', '56 км/ч'], 'options_uz': ['32 km/soat', '44 km/soat', '50 km/soat', '56 km/soat'],
+            'options_ru': ['32.0 км/ч', '44 км/ч', '50 км/ч', '56 км/ч'], 'options_uz': ['32.0 km/soat', '44 km/soat', '50 km/soat', '56 km/soat'],
             'correct_indices': [1],
         },
         {
@@ -602,7 +599,7 @@ MCQ_QUESTIONS = {
                 "tezligida soat 14:00 ga kelib uning massasi 30 kg bo'lib qoldi. Soat 12:00 da "
                 "muzning massasi necha kg edi?"
             ),
-            'options_ru': ['75 кг', '60 кг', '45 кг', '50 кг'], 'options_uz': ['75 kg', '60 kg', '45 kg', '50 kg'],
+            'options_ru': ['75.0 кг', '60 кг', '45 кг', '50 кг'], 'options_uz': ['75.0 kg', '60 kg', '45 kg', '50 kg'],
             'correct_indices': [1],
         },
         {
@@ -617,7 +614,7 @@ MCQ_QUESTIONS = {
                 "balandlashib, soat 09:00 da 1300 metr balandlikka chiqdi. Soat 08:00 da u qanday "
                 "balandlikda edi?"
             ),
-            'options_ru': ['800 м', '900 м', '1000 м', '1100 м'], 'options_uz': ['800 m', '900 m', '1000 m', '1100 m'],
+            'options_ru': ['800.0 м', '900 м', '1000 м', '1100 м'], 'options_uz': ['800.0 m', '900 m', '1000 m', '1100 m'],
             'correct_indices': [2],
         },
         {
@@ -633,8 +630,7 @@ MCQ_QUESTIONS = {
                 "tezlikda ishlab soat 11:20 da chop etilgan qog'ozlar soni 250 betga yetdi. Soat "
                 "11:05 da jami nechta qog'oz chop etilgan bo'lar edi?"
             ),
-            'options_ru': ['80 страниц', '100 страниц', '120 страниц', '150 страниц'],
-            'options_uz': ["80 bet", "100 bet", "120 bet", "150 bet"],
+            'options_ru': ['80.0 страниц', '100 страниц', '120 страниц', '150 страниц'], 'options_uz': ['80.0 bet', '100 bet', '120 bet', '150 bet'],
             'correct_indices': [1],
         },
         # -- Murakkab (hard) — 21 questions -----------------------------------------------
@@ -649,7 +645,7 @@ MCQ_QUESTIONS = {
                 'Bir son 3 ga boʻlinganda 1 qoldiq, 4 ga boʻlinganda 2 qoldiq, 5 ga boʻlinganda 3 '
                 'qoldiq beradi. Eng kichik shunday sonni toping.'
             ),
-            'options_ru': ['55', '58', '59', '60'], 'options_uz': ['55', '58', '59', '60'],
+            'options_ru': ['55.0', '58', '59', '60'], 'options_uz': ['55.0', '58', '59', '60'],
             'correct_indices': [1],
         },
         {
@@ -665,7 +661,7 @@ MCQ_QUESTIONS = {
                 '2-eshikni oʻzgartiradi (ochiqni yopadi, yopiqni ochadi). 3-odam har 3-eshikni '
                 'oʻzgartiradi. Shu tarzda 100-odamgacha davom etadi. Oxirida nechta eshik ochiq qoladi?'
             ),
-            'options_ru': ['5', '10', '9', '8'], 'options_uz': ['5', '10', '9', '8'],
+            'options_ru': ['5.0', '10', '9', '8'], 'options_uz': ['5.0', '10', '9', '8'],
             'correct_indices': [1],
         },
         {
@@ -673,7 +669,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Алгебра', 'category_uz': 'Algebra',
             'prompt_ru': 'Если к квадрату числа прибавить 6, получится число, в 5 раз большее самого числа. Найдите это число.',
             'prompt_uz': 'Bir sonning kvadratiga 6 qoʻshilsa, shu sonning 5 barobariga teng boʻladi. Sonni toping.',
-            'options_ru': ['2 или 3', '1 или 6', '3 или 7', '2 или 8'], 'options_uz': ['2 yoki 3', '1 yoki 6', '3 yoki 7', '2 yoki 8'],
+            'options_ru': ['2 или 3', '1 или 16', '3 или 7', '2 или 8'], 'options_uz': ['2 yoki 3', '1 yoki 16', '3 yoki 7', '2 yoki 8'],
             'correct_indices': [0],
         },
         {
@@ -681,7 +677,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Текстовые задачи (совместная работа)', 'category_uz': 'Matnli masalalar (ish unumdorligi)',
             'prompt_ru': 'Работу А выполняет за 10 дней, В — за 15 дней. Они работали вместе 3 дня, затем А ушёл. За сколько дней В закончит оставшуюся работу?',
             'prompt_uz': 'Bir ishni A 10 kunda, B 15 kunda bajaradi. Ular birgalikda 3 kun ishladi, keyin A ketdi. Qolgan ishni B necha kunda tugatadi?',
-            'options_ru': ['5', '6', '7', '8'], 'options_uz': ['5', '6', '7', '8'],
+            'options_ru': ['5.0', '6', '7', '8'], 'options_uz': ['5.0', '6', '7', '8'],
             'correct_indices': [2],
         },
         {
@@ -697,7 +693,7 @@ MCQ_QUESTIONS = {
             'prompt_ru': 'Стороны треугольника равны 5 см, 12 см и 13 см. Какой это треугольник?',
             'prompt_uz': 'Uchburchakning uchta tomoni 5 sm, 12 sm va 13 sm. Bu qanday uchburchak?',
             'options_ru': ['Равнобедренный', 'Равносторонний', 'Остроугольный', 'Прямоугольный'],
-            'options_uz': ['Teng yonli', 'Teng tomonli', 'Oʻtkir burchakli', 'Toʻgʻri burchakli'],
+            'options_uz': ['Teng yonli', 'Teng tomonli uchburchak', 'Oʻtkir burchakli', 'Toʻgʻri burchakli'],
             'correct_indices': [3],
         },
         {
@@ -705,7 +701,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Геометрия', 'category_uz': 'Geometriya',
             'prompt_ru': 'Радиус окружности равен 7 см. Хорда, перпендикулярная диаметру, находится на расстоянии 3 см от центра. Найдите длину хорды.',
             'prompt_uz': 'Aylananing radiusi 7 sm. Diametrga perpendikulyar oʻtkazilgan vatar markazdan 3 sm uzoqlikda joylashgan. Vatar uzunligini toping.',
-            'options_ru': ['8', '10', '4√10', '2√40'], 'options_uz': ['8', '10', '4√10', '2√40'],
+            'options_ru': ['8', '10', '4√10', '2√160'], 'options_uz': ['8', '10', '4√10', '2√160'],
             'correct_indices': [2],
         },
         {
@@ -713,7 +709,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Текстовые задачи', 'category_uz': 'Matnli masalalar',
             'prompt_ru': 'Сумма двух чисел равна 50. Одно из них на 10 больше другого. Найдите большее число.',
             'prompt_uz': 'Ikki sonning yigʻindisi 50. Ulardan biri ikkinchisidan 10 ga katta. Katta sonni toping.',
-            'options_ru': ['20', '25', '30', '35'], 'options_uz': ['20', '25', '30', '35'],
+            'options_ru': ['20.0', '25', '30', '35'], 'options_uz': ['20.0', '25', '30', '35'],
             'correct_indices': [2],
         },
         {
@@ -721,7 +717,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Алгебра', 'category_uz': 'Algebra',
             'prompt_ru': 'Сумма половины и трети некоторого числа равна 10. Найдите это число.',
             'prompt_uz': 'Bir sonning yarmi va uchdan birining yigʻindisi 10 ga teng. Sonni toping.',
-            'options_ru': ['12', '15', '20', '30'], 'options_uz': ['12', '15', '20', '30'],
+            'options_ru': ['12', '15.0', '20', '30'], 'options_uz': ['12', '15.0', '20', '30'],
             'correct_indices': [0],
         },
         {
@@ -729,8 +725,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Текстовые задачи (движение)', 'category_uz': 'Matnli masalalar (harakat)',
             'prompt_ru': 'Поезд едет со скоростью 60 км/ч в течение 2 часов, затем 80 км/ч в течение 1 часа. Найдите среднюю скорость.',
             'prompt_uz': 'Poyezd 60 km/soat tezlik bilan 2 soat, keyin 80 km/soat bilan 1 soat yuradi. Oʻrtacha tezlikni toping.',
-            'options_ru': ['65.5 км/ч', '66.6 км/ч', '70.5 км/ч', '75.5 км/ч'],
-            'options_uz': ['65.5 km/soat', '66.6 km/soat', '70.5 km/soat', '75.5 km/soat'],
+            'options_ru': ['65.50 км/ч', '66.6 км/ч', '70.5 км/ч', '75.5 км/ч'], 'options_uz': ['65.50 km/soat', '66.6 km/soat', '70.5 km/soat', '75.5 km/soat'],
             'correct_indices': [1],
         },
         {
@@ -738,7 +733,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Теория вероятностей', 'category_uz': 'Ehtimollar nazariyasi',
             'prompt_ru': 'В коробке красные и синие шары. При выборе любых 3 шаров хотя бы 1 всегда красный. Какое максимальное число синих шаров может быть в коробке?',
             'prompt_uz': 'Bir qutida qizil va koʻk rangli sharlar bor. Agar 3 ta shar olinsa, har doim kamida 1 ta qizil chiqadi. Qutida maksimal nechta koʻk shar boʻlishi mumkin?',
-            'options_ru': ['1', '2', '3', '4'], 'options_uz': ['1', '2', '3', '4'],
+            'options_ru': ['1.0', '2', '3', '4'], 'options_uz': ['1.0', '2', '3', '4'],
             'correct_indices': [1],
         },
         {
@@ -746,7 +741,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Теория чисел', 'category_uz': 'Sonlar nazariyasi',
             'prompt_ru': 'Число делится на 4 и на 3, но не делится на 5. Какое из чисел подходит?',
             'prompt_uz': 'Bir son 4 ga va 3 ga boʻlinadi, lekin 5 ga boʻlinmaydi. Quyidagilarning qaysi biri mos keladi?',
-            'options_ru': ['24', '36', '48', '60'], 'options_uz': ['24', '36', '48', '60'],
+            'options_ru': ['24.0', '36', '48', '60'], 'options_uz': ['24.0', '36', '48', '60'],
             'correct_indices': [2],
         },
         {
@@ -754,14 +749,14 @@ MCQ_QUESTIONS = {
             'category_ru': 'Алгебра', 'category_uz': 'Algebra',
             'prompt_ru': 'Сумма трёх последовательных чисел равна 72. Найдите наименьшее число.',
             'prompt_uz': 'Uchta ketma-ket sonning yigʻindisi 72 ga teng. Eng kichik sonni toping.',
-            'options_ru': ['22', '23', '24', '25'], 'options_uz': ['22', '23', '24', '25'],
+            'options_ru': ['22.0', '23', '24', '25'], 'options_uz': ['22.0', '23', '24', '25'],
             'correct_indices': [1],
         },
         {
             'key': 'math-hard-14', 'difficulty': 1.39,
             'category_ru': 'Тригонометрия', 'category_uz': 'Trigonometriya',
             'prompt_ru': 'Если sinα=3/5 и угол острый, найдите cosα.', 'prompt_uz': 'Agar sinα=3/5 boʻlsa va burchak oʻtkir boʻlsa, cosα ni toping.',
-            'options_ru': ['2/5', '1/5', '3/5', '4/5'], 'options_uz': ['2/5', '1/5', '3/5', '4/5'],
+            'options_ru': ['20/50', '1/5', '3/5', '4/5'], 'options_uz': ['20/50', '1/5', '3/5', '4/5'],
             'correct_indices': [3],
         },
         {
@@ -777,14 +772,14 @@ MCQ_QUESTIONS = {
             'category_ru': 'Геометрия', 'category_uz': 'Geometriya',
             'prompt_ru': 'В равнобедренном треугольнике боковые стороны равны 13, основание равно 10. Найдите высоту, проведённую к основанию.',
             'prompt_uz': 'Teng yonli uchburchakda yon tomonlar 13 ga, asos 10 ga teng. Asosga tushirilgan balandlikni toping.',
-            'options_ru': ['16', '13', '12', '11'], 'options_uz': ['16', '13', '12', '11'],
+            'options_ru': ['16.0', '13', '12', '11'], 'options_uz': ['16.0', '13', '12', '11'],
             'correct_indices': [2],
         },
         {
             'key': 'math-hard-17', 'difficulty': 1.48,
             'category_ru': 'Числовые последовательности (функциональные)', 'category_uz': 'Sonli qatorlar (funksional)',
             'prompt_ru': 'Если 2→6, 3→12, 4→20, то 5→?', 'prompt_uz': 'Agar 2→6, 3→12, 4→20 boʻlsa, 5→?',
-            'options_ru': ['25', '26', '28', '30'], 'options_uz': ['25', '26', '28', '30'],
+            'options_ru': ['25.0', '26', '28', '30'], 'options_uz': ['25.0', '26', '28', '30'],
             'correct_indices': [3],
         },
         {
@@ -792,7 +787,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Комбинаторика', 'category_uz': 'Kombinatorika',
             'prompt_ru': 'Сколькими способами можно выбрать 2 книги из 6 разных книг?',
             'prompt_uz': '6 ta turli kitobdan 2 tasini necha xil usulda tanlash mumkin?',
-            'options_ru': ['12', '13', '14', '15'], 'options_uz': ['12', '13', '14', '15'],
+            'options_ru': ['12.0', '13', '14', '15'], 'options_uz': ['12.0', '13', '14', '15'],
             'correct_indices': [3],
         },
         {
@@ -800,7 +795,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Комбинаторика', 'category_uz': 'Kombinatorika',
             'prompt_ru': 'Сколько трёхзначных чисел можно составить из цифр 1, 2, 3, 4, 5?',
             'prompt_uz': '1,2,3,4,5 sonlaridan nechta uch xonali son tuzish mumkin?',
-            'options_ru': ['60', '50', '40', '30'], 'options_uz': ['60', '50', '40', '30'],
+            'options_ru': ['60', '50.0', '40', '30'], 'options_uz': ['60', '50.0', '40', '30'],
             'correct_indices': [0],
         },
         {
@@ -808,7 +803,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Теория вероятностей', 'category_uz': 'Ehtimollar nazariyasi',
             'prompt_ru': 'В коробке 4 чёрных и 6 красных шаров. Найдите вероятность того, что оба случайно выбранных шара окажутся красными.',
             'prompt_uz': 'Qutida 4 ta qora va 6 ta qizil shar bor. Tasodifiy olingan ikkita sharning ikkalasi ham qizil boʻlish ehtimolini toping.',
-            'options_ru': ['1/2', '1/3', '1/4', '1/5'], 'options_uz': ['1/2', '1/3', '1/4', '1/5'],
+            'options_ru': ['10/20', '1/3', '1/4', '1/5'], 'options_uz': ['10/20', '1/3', '1/4', '1/5'],
             'correct_indices': [1],
         },
         {
@@ -816,7 +811,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Текстовые задачи (совместная работа)', 'category_uz': 'Matnli masalalar (ish unumdorligi)',
             'prompt_ru': 'За 1 час 2 кошки ловят 2 мышей. За сколько часов 4 кошки поймают 4 мышей?',
             'prompt_uz': 'Bir soatda 2 ta mushuk 2 ta sichqonni tutadi. 4 ta mushuk 4 ta sichqonni necha soatda tutadi?',
-            'options_ru': ['4', '2', '1', '8'], 'options_uz': ['4', '2', '1', '8'],
+            'options_ru': ['4.0', '2', '1', '8'], 'options_uz': ['4.0', '2', '1', '8'],
             'correct_indices': [2],
         },
             {
@@ -824,8 +819,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Арифметика (дроби)', 'category_uz': 'Arifmetika (kasrlar)',
             'prompt_ru': 'Вычислите 1/5+2/5+1/10.',
             'prompt_uz': '1/5+2/5+1/10 ni hisoblang.',
-            'options_ru': ['6/10', '8/10', '7/12', '7/10'],
-            'options_uz': ['6/10', '8/10', '7/12', '7/10'],
+            'options_ru': ['60/100', '8/10', '7/12', '7/10'], 'options_uz': ['60/100', '8/10', '7/12', '7/10'],
             'correct_indices': [3],
         },
         {
@@ -833,8 +827,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Проценты', 'category_uz': 'Foizlar',
             'prompt_ru': 'Сколько составляет 10% от 250?',
             'prompt_uz': '250 ning 10% i nechaga teng?',
-            'options_ru': ['20', '30', '35', '25'],
-            'options_uz': ['20', '30', '35', '25'],
+            'options_ru': ['20.0', '30', '35', '25'], 'options_uz': ['20.0', '30', '35', '25'],
             'correct_indices': [3],
         },
         {
@@ -842,8 +835,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Теория чисел', 'category_uz': 'Sonlar nazariyasi',
             'prompt_ru': 'Сколько чисел от 1 до 100 кратны 4?',
             'prompt_uz': '1 dan 100 gacha nechta son 4 ga karrali?',
-            'options_ru': ['27', '26', '24', '25'],
-            'options_uz': ['27', '26', '24', '25'],
+            'options_ru': ['27.0', '26', '24', '25'], 'options_uz': ['27.0', '26', '24', '25'],
             'correct_indices': [3],
         },
         {
@@ -860,8 +852,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Геометрия', 'category_uz': 'Geometriya',
             'prompt_ru': 'Длина прямоугольника 8 см, ширина 5 см. Найдите периметр.',
             'prompt_uz': 'Toʻgʻri toʻrtburchakning uzunligi 8 sm, eni 5 sm. Perimetrini toping.',
-            'options_ru': ['28', '24', '30', '26'],
-            'options_uz': ['28', '24', '30', '26'],
+            'options_ru': ['28.0', '24', '30', '26'], 'options_uz': ['28.0', '24', '30', '26'],
             'correct_indices': [3],
         },
         {
@@ -878,8 +869,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Алгебра', 'category_uz': 'Algebra',
             'prompt_ru': 'Если 4x+5=29, найдите x.',
             'prompt_uz': '4x+5=29 boʻlsa, x ni toping.',
-            'options_ru': ['8', '7', '6', '5'],
-            'options_uz': ['8', '7', '6', '5'],
+            'options_ru': ['8.0', '7', '6', '5'], 'options_uz': ['8.0', '7', '6', '5'],
             'correct_indices': [2],
         },
         {
@@ -887,8 +877,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Комбинаторика', 'category_uz': 'Kombinatorika',
             'prompt_ru': 'Чему равно 5!-3!?',
             'prompt_uz': '5!-3! nechaga teng?',
-            'options_ru': ['124', '114', '118', '110'],
-            'options_uz': ['124', '114', '118', '110'],
+            'options_ru': ['124.0', '114', '118', '110'], 'options_uz': ['124.0', '114', '118', '110'],
             'correct_indices': [1],
         },
         {
@@ -896,8 +885,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Арифметика', 'category_uz': 'Arifmetika',
             'prompt_ru': 'Вычислите: 250-3∙40=?',
             'prompt_uz': 'Hisoblang: 250-3∙40=?',
-            'options_ru': ['132', '137', '127', '130'],
-            'options_uz': ['132', '137', '127', '130'],
+            'options_ru': ['132.0', '137', '127', '130'], 'options_uz': ['132.0', '137', '127', '130'],
             'correct_indices': [3],
         },
         {
@@ -905,8 +893,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Комбинаторика', 'category_uz': 'Kombinatorika',
             'prompt_ru': 'Чему равно 4!+3!?',
             'prompt_uz': '4!+3! nechaga teng?',
-            'options_ru': ['34', '26', '30', '40'],
-            'options_uz': ['34', '26', '30', '40'],
+            'options_ru': ['34.0', '26', '30', '40'], 'options_uz': ['34.0', '26', '30', '40'],
             'correct_indices': [2],
         },
         {
@@ -914,8 +901,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Числовые последовательности', 'category_uz': 'Sonli qatorlar',
             'prompt_ru': 'Продолжите ряд: 100, 90, 80, 70, ?',
             'prompt_uz': 'Qatorni davom ettiring: 100, 90, 80, 70, ?',
-            'options_ru': ['59', '60', '61', '62'],
-            'options_uz': ['59', '60', '61', '62'],
+            'options_ru': ['59.0', '60', '61', '62'], 'options_uz': ['59.0', '60', '61', '62'],
             'correct_indices': [1],
         },
         {
@@ -923,8 +909,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Геометрия', 'category_uz': 'Geometriya',
             'prompt_ru': 'Сторона квадрата равна 9 см. Найдите его площадь.',
             'prompt_uz': 'Kvadratning tomoni 9 sm. Uning yuzini toping.',
-            'options_ru': ['36', '81', '72', '90'],
-            'options_uz': ['36', '81', '72', '90'],
+            'options_ru': ['36.0', '81', '72', '90'], 'options_uz': ['36.0', '81', '72', '90'],
             'correct_indices': [1],
         },
         {
@@ -932,8 +917,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Алгебра', 'category_uz': 'Algebra',
             'prompt_ru': 'Если 7x+4=39, найдите x.',
             'prompt_uz': '7x+4=39 boʻlsa, x ni toping.',
-            'options_ru': ['5', '6', '4', '7'],
-            'options_uz': ['5', '6', '4', '7'],
+            'options_ru': ['5', '6.0', '4', '7'], 'options_uz': ['5', '6.0', '4', '7'],
             'correct_indices': [0],
         },
         {
@@ -941,8 +925,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Алгебра', 'category_uz': 'Algebra',
             'prompt_ru': 'Если 2x+15=35, найдите x.',
             'prompt_uz': '2x+15=35 boʻlsa, x ni toping.',
-            'options_ru': ['9', '10', '12', '11'],
-            'options_uz': ['9', '10', '12', '11'],
+            'options_ru': ['9.0', '10', '12', '11'], 'options_uz': ['9.0', '10', '12', '11'],
             'correct_indices': [1],
         },
         {
@@ -950,8 +933,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Логарифмы', 'category_uz': 'Logarifm',
             'prompt_ru': 'Вычислите log₍10₎1000.',
             'prompt_uz': 'log₍10₎1000 ni hisoblang.',
-            'options_ru': ['5', '3', '2', '4'],
-            'options_uz': ['5', '3', '2', '4'],
+            'options_ru': ['5.0', '3', '2', '4'], 'options_uz': ['5.0', '3', '2', '4'],
             'correct_indices': [1],
         },
         {
@@ -968,8 +950,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Числовые последовательности', 'category_uz': 'Sonli qatorlar',
             'prompt_ru': 'Продолжите ряд: 1, 4, 9, 16, ?',
             'prompt_uz': 'Qatorni davom ettiring: 1, 4, 9, 16, ?',
-            'options_ru': ['25', '24', '27', '26'],
-            'options_uz': ['25', '24', '27', '26'],
+            'options_ru': ['25', '24.0', '27', '26'], 'options_uz': ['25', '24.0', '27', '26'],
             'correct_indices': [0],
         },
         {
@@ -977,8 +958,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Теория чисел', 'category_uz': 'Sonlar nazariyasi',
             'prompt_ru': 'Сколько чисел от 1 до 150 кратны 5?',
             'prompt_uz': '1 dan 150 gacha nechta son 5 ga karrali?',
-            'options_ru': ['29', '30', '32', '31'],
-            'options_uz': ['29', '30', '32', '31'],
+            'options_ru': ['29.0', '30', '32', '31'], 'options_uz': ['29.0', '30', '32', '31'],
             'correct_indices': [1],
         },
         {
@@ -986,8 +966,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Проценты', 'category_uz': 'Foizlar',
             'prompt_ru': 'Сколько составляет 45% от 180?',
             'prompt_uz': '180 ning 45% i nechaga teng?',
-            'options_ru': ['76', '86', '91', '81'],
-            'options_uz': ['76', '86', '91', '81'],
+            'options_ru': ['76.0', '86', '91', '81'], 'options_uz': ['76.0', '86', '91', '81'],
             'correct_indices': [3],
         },
         {
@@ -995,8 +974,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Арифметика', 'category_uz': 'Arifmetika',
             'prompt_ru': 'Вычислите: 9∙8-15=?',
             'prompt_uz': 'Hisoblang: 9∙8-15=?',
-            'options_ru': ['54', '64', '59', '57'],
-            'options_uz': ['54', '64', '59', '57'],
+            'options_ru': ['54.0', '64', '59', '57'], 'options_uz': ['54.0', '64', '59', '57'],
             'correct_indices': [3],
         },
         {
@@ -1004,8 +982,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Алгебра', 'category_uz': 'Algebra',
             'prompt_ru': 'Если 6x+9=39, найдите x.',
             'prompt_uz': '6x+9=39 boʻlsa, x ni toping.',
-            'options_ru': ['5', '6', '4', '7'],
-            'options_uz': ['5', '6', '4', '7'],
+            'options_ru': ['5', '6.0', '4', '7'], 'options_uz': ['5', '6.0', '4', '7'],
             'correct_indices': [0],
         },
         {
@@ -1013,8 +990,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Числовые последовательности', 'category_uz': 'Sonli qatorlar',
             'prompt_ru': 'Продолжите ряд: 2, 4, 8, 16, ?',
             'prompt_uz': 'Qatorni davom ettiring: 2, 4, 8, 16, ?',
-            'options_ru': ['32', '34', '31', '33'],
-            'options_uz': ['32', '34', '31', '33'],
+            'options_ru': ['32', '34.0', '31', '33'], 'options_uz': ['32', '34.0', '31', '33'],
             'correct_indices': [0],
         },
         {
@@ -1031,8 +1007,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Степени', 'category_uz': 'Daraja',
             'prompt_ru': 'Вычислите 2⁷.',
             'prompt_uz': '2⁷ ni hisoblang.',
-            'options_ru': ['256', '130', '128', '126'],
-            'options_uz': ['256', '130', '128', '126'],
+            'options_ru': ['256.0', '130', '128', '126'], 'options_uz': ['256.0', '130', '128', '126'],
             'correct_indices': [2],
         },
         {
@@ -1040,8 +1015,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Теория чисел', 'category_uz': 'Sonlar nazariyasi',
             'prompt_ru': 'Сколько чисел от 1 до 100 кратны 6?',
             'prompt_uz': '1 dan 100 gacha nechta son 6 ga karrali?',
-            'options_ru': ['18', '16', '15', '17'],
-            'options_uz': ['18', '16', '15', '17'],
+            'options_ru': ['18.0', '16', '15', '17'], 'options_uz': ['18.0', '16', '15', '17'],
             'correct_indices': [1],
         },
         {
@@ -1049,8 +1023,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Проценты', 'category_uz': 'Foizlar',
             'prompt_ru': 'Сколько составляет 20% от 145?',
             'prompt_uz': '145 ning 20% i nechaga teng?',
-            'options_ru': ['39', '24', '29', '34'],
-            'options_uz': ['39', '24', '29', '34'],
+            'options_ru': ['39.0', '24', '29', '34'], 'options_uz': ['39.0', '24', '29', '34'],
             'correct_indices': [2],
         },
         {
@@ -1058,8 +1031,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Алгебра', 'category_uz': 'Algebra',
             'prompt_ru': 'Решите уравнение |x-1|=7. Чему равен x?',
             'prompt_uz': '|x-1|=7 tenglamani yeching. x nechaga teng?',
-            'options_ru': ['-6 и 9', '-5 и 7', '-7 и 8', '-6 и 8'],
-            'options_uz': ['-6 va 9', '-5 va 7', '-7 va 8', '-6 va 8'],
+            'options_ru': ['-16 и 8', '-5 и 7', '-7 и 8', '-6 и 8'], 'options_uz': ['-16 va 8', '-5 va 7', '-7 va 8', '-6 va 8'],
             'correct_indices': [3],
         },
         {
@@ -1067,8 +1039,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Теория чисел', 'category_uz': 'Sonlar nazariyasi',
             'prompt_ru': 'Сколько чисел от 1 до 100 кратны 7?',
             'prompt_uz': '1 dan 100 gacha nechta son 7 ga karrali?',
-            'options_ru': ['15', '14', '16', '13'],
-            'options_uz': ['15', '14', '16', '13'],
+            'options_ru': ['15.0', '14', '16', '13'], 'options_uz': ['15.0', '14', '16', '13'],
             'correct_indices': [1],
         },
         {
@@ -1076,8 +1047,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Числовые последовательности', 'category_uz': 'Sonli qatorlar',
             'prompt_ru': 'Продолжите ряд: 1, 3, 6, 10, ?',
             'prompt_uz': 'Qatorni davom ettiring: 1, 3, 6, 10, ?',
-            'options_ru': ['16', '17', '14', '15'],
-            'options_uz': ['16', '17', '14', '15'],
+            'options_ru': ['16.0', '17', '14', '15'], 'options_uz': ['16.0', '17', '14', '15'],
             'correct_indices': [3],
         },
         {
@@ -1085,8 +1055,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Арифметика', 'category_uz': 'Arifmetika',
             'prompt_ru': 'Вычислите: 18∙5-30=?',
             'prompt_uz': 'Hisoblang: 18∙5-30=?',
-            'options_ru': ['62', '67', '60', '57'],
-            'options_uz': ['62', '67', '60', '57'],
+            'options_ru': ['62.0', '67', '60', '57'], 'options_uz': ['62.0', '67', '60', '57'],
             'correct_indices': [2],
         },
         {
@@ -1094,8 +1063,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Системы счисления', 'category_uz': 'Sanoq sistemalari',
             'prompt_ru': 'Сколько чисел можно записать с помощью 7 бит?',
             'prompt_uz': '7 ta bit bilan nechta son yozish mumkin?',
-            'options_ru': ['128', '135', '256', '64'],
-            'options_uz': ['128', '135', '256', '64'],
+            'options_ru': ['128', '135.0', '256', '64'], 'options_uz': ['128', '135.0', '256', '64'],
             'correct_indices': [0],
         },
         {
@@ -1103,8 +1071,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Числовые последовательности', 'category_uz': 'Sonli qatorlar',
             'prompt_ru': 'Продолжите ряд: 5, 10, 20, 40, ?',
             'prompt_uz': 'Qatorni davom ettiring: 5, 10, 20, 40, ?',
-            'options_ru': ['79', '82', '80', '81'],
-            'options_uz': ['79', '82', '80', '81'],
+            'options_ru': ['79.0', '82', '80', '81'], 'options_uz': ['79.0', '82', '80', '81'],
             'correct_indices': [2],
         },
         {
@@ -1112,8 +1079,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Среднее значение', 'category_uz': 'Oʻrtacha qiymat',
             'prompt_ru': 'Найдите среднее арифметическое чисел 12, 18, 15.',
             'prompt_uz': '12, 18, 15 sonlarining oʻrtacha arifmetigini toping.',
-            'options_ru': ['17', '15', '13', '20'],
-            'options_uz': ['17', '15', '13', '20'],
+            'options_ru': ['17.0', '15', '13', '20'], 'options_uz': ['17.0', '15', '13', '20'],
             'correct_indices': [1],
         },
         {
@@ -1121,8 +1087,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Среднее значение', 'category_uz': 'Oʻrtacha qiymat',
             'prompt_ru': 'Найдите среднее арифметическое чисел 50, 60, 70, 80.',
             'prompt_uz': '50, 60, 70, 80 sonlarining oʻrtacha arifmetigini toping.',
-            'options_ru': ['63', '70', '65', '67'],
-            'options_uz': ['63', '70', '65', '67'],
+            'options_ru': ['63.0', '70', '65', '67'], 'options_uz': ['63.0', '70', '65', '67'],
             'correct_indices': [2],
         },
         {
@@ -1130,8 +1095,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Логарифмы', 'category_uz': 'Logarifm',
             'prompt_ru': 'Вычислите log₍4₎256.',
             'prompt_uz': 'log₍4₎256 ni hisoblang.',
-            'options_ru': ['4', '5', '6', '3'],
-            'options_uz': ['4', '5', '6', '3'],
+            'options_ru': ['4', '5.0', '6', '3'], 'options_uz': ['4', '5.0', '6', '3'],
             'correct_indices': [0],
         },
         {
@@ -1139,8 +1103,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Алгебра', 'category_uz': 'Algebra',
             'prompt_ru': 'Решите уравнение |x-4|=6. Чему равен x?',
             'prompt_uz': '|x-4|=6 tenglamani yeching. x nechaga teng?',
-            'options_ru': ['-1 и 9', '-2 и 10', '-3 и 10', '-2 и 11'],
-            'options_uz': ['-1 va 9', '-2 va 10', '-3 va 10', '-2 va 11'],
+            'options_ru': ['-1 и 9', '-2 и 10', '-3 и 10', '-12 и 11'], 'options_uz': ['-1 va 9', '-2 va 10', '-3 va 10', '-12 va 11'],
             'correct_indices': [1],
         },
         {
@@ -1148,8 +1111,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Комбинаторика', 'category_uz': 'Kombinatorika',
             'prompt_ru': 'Чему равно 6!-5!?',
             'prompt_uz': '6!-5! nechaga teng?',
-            'options_ru': ['604', '596', '610', '600'],
-            'options_uz': ['604', '596', '610', '600'],
+            'options_ru': ['604.0', '596', '610', '600'], 'options_uz': ['604.0', '596', '610', '600'],
             'correct_indices': [3],
         },
         {
@@ -1157,8 +1119,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Логарифмы', 'category_uz': 'Logarifm',
             'prompt_ru': 'Вычислите log₍5₎125.',
             'prompt_uz': 'log₍5₎125 ni hisoblang.',
-            'options_ru': ['4', '5', '3', '2'],
-            'options_uz': ['4', '5', '3', '2'],
+            'options_ru': ['4.0', '5', '3', '2'], 'options_uz': ['4.0', '5', '3', '2'],
             'correct_indices': [2],
         },
         {
@@ -1166,8 +1127,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Степени', 'category_uz': 'Daraja',
             'prompt_ru': 'Вычислите 5³.',
             'prompt_uz': '5³ ni hisoblang.',
-            'options_ru': ['250', '120', '125', '130'],
-            'options_uz': ['250', '120', '125', '130'],
+            'options_ru': ['250.0', '120', '125', '130'], 'options_uz': ['250.0', '120', '125', '130'],
             'correct_indices': [2],
         },
         {
@@ -1175,8 +1135,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Среднее значение', 'category_uz': 'Oʻrtacha qiymat',
             'prompt_ru': 'Найдите среднее арифметическое чисел 7, 11, 15.',
             'prompt_uz': '7, 11, 15 sonlarining oʻrtacha arifmetigini toping.',
-            'options_ru': ['13', '16', '11', '9'],
-            'options_uz': ['13', '16', '11', '9'],
+            'options_ru': ['13.0', '16', '11', '9'], 'options_uz': ['13.0', '16', '11', '9'],
             'correct_indices': [2],
         },
         {
@@ -1184,8 +1143,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Числовые последовательности', 'category_uz': 'Sonli qatorlar',
             'prompt_ru': 'Продолжите ряд: 6, 11, 16, 21, ?',
             'prompt_uz': 'Qatorni davom ettiring: 6, 11, 16, 21, ?',
-            'options_ru': ['28', '25', '27', '26'],
-            'options_uz': ['28', '25', '27', '26'],
+            'options_ru': ['28.0', '25', '27', '26'], 'options_uz': ['28.0', '25', '27', '26'],
             'correct_indices': [3],
         },
         {
@@ -1193,8 +1151,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Арифметика', 'category_uz': 'Arifmetika',
             'prompt_ru': 'Вычислите: 96:8+7=?',
             'prompt_uz': 'Hisoblang: 96:8+7=?',
-            'options_ru': ['26', '16', '21', '19'],
-            'options_uz': ['26', '16', '21', '19'],
+            'options_ru': ['26.0', '16', '21', '19'], 'options_uz': ['26.0', '16', '21', '19'],
             'correct_indices': [3],
         },
         {
@@ -1220,8 +1177,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Проценты', 'category_uz': 'Foizlar',
             'prompt_ru': 'Сколько составляет 15% от 180?',
             'prompt_uz': '180 ning 15% i nechaga teng?',
-            'options_ru': ['32', '37', '22', '27'],
-            'options_uz': ['32', '37', '22', '27'],
+            'options_ru': ['32.0', '37', '22', '27'], 'options_uz': ['32.0', '37', '22', '27'],
             'correct_indices': [3],
         },
         {
@@ -1229,8 +1185,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Отношения', 'category_uz': 'Nisbatlar',
             'prompt_ru': 'Число 56 разделили в отношении 5:3. Найдите большую часть.',
             'prompt_uz': '56 sonini 5:3 nisbatda boʻlishdi. Katta qismini toping.',
-            'options_ru': ['40', '35', '33', '37'],
-            'options_uz': ['40', '35', '33', '37'],
+            'options_ru': ['40.0', '35', '33', '37'], 'options_uz': ['40.0', '35', '33', '37'],
             'correct_indices': [1],
         },
         {
@@ -1238,8 +1193,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Алгебра', 'category_uz': 'Algebra',
             'prompt_ru': 'Решите уравнение |x-3|=5. Чему равен x?',
             'prompt_uz': '|x-3|=5 tenglamani yeching. x nechaga teng?',
-            'options_ru': ['-2 и 9', '-2 и 8', '-1 и 7', '-3 и 8'],
-            'options_uz': ['-2 va 9', '-2 va 8', '-1 va 7', '-3 va 8'],
+            'options_ru': ['-12 и 9', '-2 и 8', '-1 и 7', '-3 и 8'], 'options_uz': ['-12 va 9', '-2 va 8', '-1 va 7', '-3 va 8'],
             'correct_indices': [1],
         },
         {
@@ -1247,8 +1201,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Отношения', 'category_uz': 'Nisbatlar',
             'prompt_ru': 'Сумма 180 разделена между двумя людьми в отношении 5:7. Найдите долю второго человека.',
             'prompt_uz': '180 summa ikki kishi orasida 5:7 nisbatda boʻlingan. Ikkinchi kishining ulushini toping.',
-            'options_ru': ['105', '115', '100', '110'],
-            'options_uz': ['105', '115', '100', '110'],
+            'options_ru': ['105', '115.0', '100', '110'], 'options_uz': ['105', '115.0', '100', '110'],
             'correct_indices': [0],
         },
         {
@@ -1256,8 +1209,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Комбинаторика (размещения)', 'category_uz': 'Kombinatorika (joylashtirish)',
             'prompt_ru': 'Сколькими способами можно расставить 3 из 6 различных предметов по порядку?',
             'prompt_uz': '6 ta har xil narsadan 3 tasini tartib bilan joylashtirish nechta usulda mumkin?',
-            'options_ru': ['120', '132', '126', '114'],
-            'options_uz': ['120', '132', '126', '114'],
+            'options_ru': ['120', '132.0', '126', '114'], 'options_uz': ['120', '132.0', '126', '114'],
             'correct_indices': [0],
         },
         {
@@ -1265,8 +1217,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Теория чисел (НОК)', 'category_uz': 'Sonlar nazariyasi (EKUK)',
             'prompt_ru': 'Найдите НОК чисел 14 и 21.',
             'prompt_uz': '14 va 21 ning EKUKini toping.',
-            'options_ru': ['52', '56', '42', '21'],
-            'options_uz': ['52', '56', '42', '21'],
+            'options_ru': ['52.0', '56', '42', '21'], 'options_uz': ['52.0', '56', '42', '21'],
             'correct_indices': [2],
         },
         {
@@ -1274,8 +1225,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Текстовые задачи (совместная работа)', 'category_uz': 'Matnli masalalar (ish unumdorligi)',
             'prompt_ru': 'Первый рабочий выполняет работу за 5 дней, второй — за 20 дней. За сколько дней они выполнят работу вместе?',
             'prompt_uz': 'Bir ishni 1-ishchi 5 kunda, 2-ishchi esa 20 kunda bajaradi. Ikkalasi birga shu ishni necha kunda bajaradi?',
-            'options_ru': ['6', '5', '4', '3'],
-            'options_uz': ['6', '5', '4', '3'],
+            'options_ru': ['6.0', '5', '4', '3'], 'options_uz': ['6.0', '5', '4', '3'],
             'correct_indices': [2],
         },
         {
@@ -1283,8 +1233,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Теория чисел (НОД)', 'category_uz': 'Sonlar nazariyasi (EKUB)',
             'prompt_ru': 'Найдите НОД чисел 72 и 96.',
             'prompt_uz': '72 va 96 ning EKUBini toping.',
-            'options_ru': ['27', '24', '22', '48'],
-            'options_uz': ['27', '24', '22', '48'],
+            'options_ru': ['27.0', '24', '22', '48'], 'options_uz': ['27.0', '24', '22', '48'],
             'correct_indices': [1],
         },
         {
@@ -1301,8 +1250,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Комбинаторика', 'category_uz': 'Kombinatorika',
             'prompt_ru': 'Сколькими способами можно выбрать 4 элемента из 10?',
             'prompt_uz': '10 elementdan 4 tasini tanlash nechta yoʻl bilan amalga oshiriladi?',
-            'options_ru': ['205', '210', '220', '215'],
-            'options_uz': ['205', '210', '220', '215'],
+            'options_ru': ['205.0', '210', '220', '215'], 'options_uz': ['205.0', '210', '220', '215'],
             'correct_indices': [1],
         },
         {
@@ -1310,8 +1258,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Теория чисел', 'category_uz': 'Sonlar nazariyasi',
             'prompt_ru': 'Сколько простых чисел от 1 до 55?',
             'prompt_uz': '1 dan 55 gacha boʻlgan tub sonlar nechta?',
-            'options_ru': ['15', '16', '17', '18'],
-            'options_uz': ['15', '16', '17', '18'],
+            'options_ru': ['15.0', '16', '17', '18'], 'options_uz': ['15.0', '16', '17', '18'],
             'correct_indices': [1],
         },
         {
@@ -1319,8 +1266,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Отношения', 'category_uz': 'Nisbatlar',
             'prompt_ru': 'Сумма 140 разделена между двумя людьми в отношении 3:4. Найдите долю второго человека.',
             'prompt_uz': '140 summa ikki kishi orasida 3:4 nisbatda boʻlingan. Ikkinchi kishining ulushini toping.',
-            'options_ru': ['90', '85', '80', '75'],
-            'options_uz': ['90', '85', '80', '75'],
+            'options_ru': ['90.0', '85', '80', '75'], 'options_uz': ['90.0', '85', '80', '75'],
             'correct_indices': [2],
         },
         {
@@ -1328,8 +1274,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Текстовые задачи (совместная работа)', 'category_uz': 'Matnli masalalar (ish unumdorligi)',
             'prompt_ru': 'Первый рабочий выполняет работу за 6 дней, второй — за 10 дней. За сколько дней они выполнят работу вместе?',
             'prompt_uz': 'Bir ishni 1-ishchi 6 kunda, 2-ishchi esa 10 kunda bajaradi. Ikkalasi birga shu ishni necha kunda bajaradi?',
-            'options_ru': ['11/4', '19/4', '23/4', '15/4'],
-            'options_uz': ['11/4', '19/4', '23/4', '15/4'],
+            'options_ru': ['110/40', '19/4', '23/4', '15/4'], 'options_uz': ['110/40', '19/4', '23/4', '15/4'],
             'correct_indices': [3],
         },
         {
@@ -1337,8 +1282,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Проценты (последовательное изменение)', 'category_uz': 'Foizlar (ketma-ket oʻzgarish)',
             'prompt_ru': 'Число 400 сначала уменьшили на 25%, затем результат увеличили на 20%. Найдите итоговое число.',
             'prompt_uz': '400 soni avval 25% ga kamaytirishdi, keyin natija 20% ga oshirishdi. Yakuniy sonni toping.',
-            'options_ru': ['350', '360', '380', '370'],
-            'options_uz': ['350', '360', '380', '370'],
+            'options_ru': ['350.0', '360', '380', '370'], 'options_uz': ['350.0', '360', '380', '370'],
             'correct_indices': [1],
         },
         {
@@ -1346,8 +1290,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Комбинаторика', 'category_uz': 'Kombinatorika',
             'prompt_ru': 'Сколькими способами можно выбрать 3 элемента из 8?',
             'prompt_uz': '8 elementdan 3 tasini tanlash nechta yoʻl bilan amalga oshiriladi?',
-            'options_ru': ['61', '66', '51', '56'],
-            'options_uz': ['61', '66', '51', '56'],
+            'options_ru': ['61.0', '66', '51', '56'], 'options_uz': ['61.0', '66', '51', '56'],
             'correct_indices': [3],
         },
         {
@@ -1355,8 +1298,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Комбинаторика', 'category_uz': 'Kombinatorika',
             'prompt_ru': 'Сколькими способами можно выбрать 2 элемента из 12?',
             'prompt_uz': '12 elementdan 2 tasini tanlash nechta yoʻl bilan amalga oshiriladi?',
-            'options_ru': ['66', '61', '71', '76'],
-            'options_uz': ['66', '61', '71', '76'],
+            'options_ru': ['66', '61.0', '71', '76'], 'options_uz': ['66', '61.0', '71', '76'],
             'correct_indices': [0],
         },
         {
@@ -1364,8 +1306,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Теория вероятностей', 'category_uz': 'Ehtimollar nazariyasi',
             'prompt_ru': 'В коробке 6 зелёных и 2 остальных шаров. Найдите вероятность того, что наугад выбранный шар окажется зелёным.',
             'prompt_uz': 'Qutida 6 ta yashil va 2 ta boshqa rangdagi shar bor. Tasodifan olingan sharning yashil boʻlish ehtimolini toping.',
-            'options_ru': ['2/8', '6/2', '3/4', '1/8'],
-            'options_uz': ['2/8', '6/2', '3/4', '1/8'],
+            'options_ru': ['20/80', '6/2', '3/4', '1/8'], 'options_uz': ['20/80', '6/2', '3/4', '1/8'],
             'correct_indices': [2],
         },
         {
@@ -1373,8 +1314,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Теория чисел (НОК)', 'category_uz': 'Sonlar nazariyasi (EKUK)',
             'prompt_ru': 'Найдите НОК чисел 8 и 20.',
             'prompt_uz': '8 va 20 ning EKUKini toping.',
-            'options_ru': ['40', '20', '50', '48'],
-            'options_uz': ['40', '20', '50', '48'],
+            'options_ru': ['40', '20.0', '50', '48'], 'options_uz': ['40', '20.0', '50', '48'],
             'correct_indices': [0],
         },
         {
@@ -1382,8 +1322,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Теория чисел (НОД)', 'category_uz': 'Sonlar nazariyasi (EKUB)',
             'prompt_ru': 'Найдите НОД чисел 56 и 42.',
             'prompt_uz': '56 va 42 ning EKUBini toping.',
-            'options_ru': ['12', '17', '14', '28'],
-            'options_uz': ['12', '17', '14', '28'],
+            'options_ru': ['12.0', '17', '14', '28'], 'options_uz': ['12.0', '17', '14', '28'],
             'correct_indices': [2],
         },
         {
@@ -1391,8 +1330,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Геометрия', 'category_uz': 'Geometriya',
             'prompt_ru': 'Катеты прямоугольного треугольника равны 6 см и 8 см. Найдите гипотенузу.',
             'prompt_uz': 'Toʻgʻri burchakli uchburchakning katetlari 6 sm va 8 sm. Gipotenuzani toping.',
-            'options_ru': ['12', '11', '10', '9'],
-            'options_uz': ['12', '11', '10', '9'],
+            'options_ru': ['12.0', '11', '10', '9'], 'options_uz': ['12.0', '11', '10', '9'],
             'correct_indices': [2],
         },
         {
@@ -1400,8 +1338,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Геометрия (окружность)', 'category_uz': 'Geometriya (aylana)',
             'prompt_ru': 'Радиус круга равен 10 см (используйте π≈22/7). Найдите площадь круга.',
             'prompt_uz': 'Doiraning radiusi 10 sm (π≈22/7 deb oling). Doira yuzini toping.',
-            'options_ru': ['336', '358', '292', '314'],
-            'options_uz': ['336', '358', '292', '314'],
+            'options_ru': ['336.0', '358', '292', '314'], 'options_uz': ['336.0', '358', '292', '314'],
             'correct_indices': [3],
         },
         {
@@ -1409,8 +1346,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Теория вероятностей', 'category_uz': 'Ehtimollar nazariyasi',
             'prompt_ru': 'В коробке 5 красных и 3 остальных шаров. Найдите вероятность того, что наугад выбранный шар окажется красным.',
             'prompt_uz': 'Qutida 5 ta qizil va 3 ta boshqa rangdagi shar bor. Tasodifan olingan sharning qizil boʻlish ehtimolini toping.',
-            'options_ru': ['3/8', '1/8', '5/8', '5/3'],
-            'options_uz': ['3/8', '1/8', '5/8', '5/3'],
+            'options_ru': ['30/80', '1/8', '5/8', '5/3'], 'options_uz': ['30/80', '1/8', '5/8', '5/3'],
             'correct_indices': [2],
         },
         {
@@ -1418,8 +1354,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Комбинаторика', 'category_uz': 'Kombinatorika',
             'prompt_ru': 'Сколькими способами можно выбрать 4 элемента из 9?',
             'prompt_uz': '9 elementdan 4 tasini tanlash nechta yoʻl bilan amalga oshiriladi?',
-            'options_ru': ['131', '121', '136', '126'],
-            'options_uz': ['131', '121', '136', '126'],
+            'options_ru': ['131.0', '121', '136', '126'], 'options_uz': ['131.0', '121', '136', '126'],
             'correct_indices': [3],
         },
         {
@@ -1427,8 +1362,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Геометрия (окружность)', 'category_uz': 'Geometriya (aylana)',
             'prompt_ru': 'Радиус круга равен 21 см (используйте π≈22/7). Найдите длину окружности.',
             'prompt_uz': 'Doiraning radiusi 21 sm (π≈22/7 deb oling). Doira uzunligini (aylana perimetrini) toping.',
-            'options_ru': ['143', '132', '154', '110'],
-            'options_uz': ['143', '132', '154', '110'],
+            'options_ru': ['143.0', '132', '154', '110'], 'options_uz': ['143.0', '132', '154', '110'],
             'correct_indices': [1],
         },
         {
@@ -1436,8 +1370,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Геометрия', 'category_uz': 'Geometriya',
             'prompt_ru': 'Катеты прямоугольного треугольника равны 5 см и 12 см. Найдите гипотенузу.',
             'prompt_uz': 'Toʻgʻri burchakli uchburchakning katetlari 5 sm va 12 sm. Gipotenuzani toping.',
-            'options_ru': ['14', '15', '13', '12'],
-            'options_uz': ['14', '15', '13', '12'],
+            'options_ru': ['14.0', '15', '13', '12'], 'options_uz': ['14.0', '15', '13', '12'],
             'correct_indices': [2],
         },
         {
@@ -1445,8 +1378,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Проценты (последовательное изменение)', 'category_uz': 'Foizlar (ketma-ket oʻzgarish)',
             'prompt_ru': 'Число 500 сначала увеличили на 20%, затем результат уменьшили на 10%. Найдите итоговое число.',
             'prompt_uz': '500 soni avval 20% ga oshirishdi, keyin natija 10% ga kamaytirishdi. Yakuniy sonni toping.',
-            'options_ru': ['560', '530', '540', '550'],
-            'options_uz': ['560', '530', '540', '550'],
+            'options_ru': ['560.0', '530', '540', '550'], 'options_uz': ['560.0', '530', '540', '550'],
             'correct_indices': [2],
         },
         {
@@ -1454,8 +1386,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Теория чисел (НОК)', 'category_uz': 'Sonlar nazariyasi (EKUK)',
             'prompt_ru': 'Найдите НОК чисел 9 и 15.',
             'prompt_uz': '9 va 15 ning EKUKini toping.',
-            'options_ru': ['55', '30', '54', '45'],
-            'options_uz': ['55', '30', '54', '45'],
+            'options_ru': ['55.0', '30', '54', '45'], 'options_uz': ['55.0', '30', '54', '45'],
             'correct_indices': [3],
         },
         {
@@ -1463,8 +1394,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Комбинаторика (размещения)', 'category_uz': 'Kombinatorika (joylashtirish)',
             'prompt_ru': 'Сколькими способами можно расставить 3 из 7 различных предметов по порядку?',
             'prompt_uz': '7 ta har xil narsadan 3 tasini tartib bilan joylashtirish nechta usulda mumkin?',
-            'options_ru': ['222', '204', '210', '216'],
-            'options_uz': ['222', '204', '210', '216'],
+            'options_ru': ['222.0', '204', '210', '216'], 'options_uz': ['222.0', '204', '210', '216'],
             'correct_indices': [2],
         },
         {
@@ -1481,8 +1411,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Отношения', 'category_uz': 'Nisbatlar',
             'prompt_ru': 'Сумма 260 разделена между двумя людьми в отношении 4:9. Найдите долю второго человека.',
             'prompt_uz': '260 summa ikki kishi orasida 4:9 nisbatda boʻlingan. Ikkinchi kishining ulushini toping.',
-            'options_ru': ['185', '175', '190', '180'],
-            'options_uz': ['185', '175', '190', '180'],
+            'options_ru': ['185.0', '175', '190', '180'], 'options_uz': ['185.0', '175', '190', '180'],
             'correct_indices': [3],
         },
         {
@@ -1499,8 +1428,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Текстовые задачи (смеси)', 'category_uz': 'Matnli masalalar (aralashmalar)',
             'prompt_ru': 'Раствор А имеет концентрацию 5%, раствор Б — 25%. В каком отношении их нужно смешать, чтобы получить раствор с концентрацией 15%?',
             'prompt_uz': 'A eritmaning konsentratsiyasi 5%, B eritmaniki 25%. 15% li eritma olish uchun ularni qanday nisbatda aralashtirish kerak?',
-            'options_ru': ['1:2', '2:1', '3:1', '1:1'],
-            'options_uz': ['1:2', '2:1', '3:1', '1:1'],
+            'options_ru': ['10:20', '2:1', '3:1', '1:1'], 'options_uz': ['10:20', '2:1', '3:1', '1:1'],
             'correct_indices': [3],
         },
         {
@@ -1508,8 +1436,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Теория чисел (остатки)', 'category_uz': 'Sonlar nazariyasi (qoldiqlar)',
             'prompt_ru': 'Число при делении на 3 даёт остаток 2, при делении на 4 — остаток 3, при делении на 7 — остаток 5. Число меньше 100. Чему оно равно?',
             'prompt_uz': 'Bir son 3 ga boʻlinganda 2 qoldiq, 4 ga boʻlinganda 3 qoldiq, 7 ga boʻlinganda 5 qoldiq beradi. Bu son 100 dan kichik. Bu son nechaga teng?',
-            'options_ru': ['59', '47', '45', '50'],
-            'options_uz': ['59', '47', '45', '50'],
+            'options_ru': ['59.0', '47', '45', '50'], 'options_uz': ['59.0', '47', '45', '50'],
             'correct_indices': [1],
         },
         {
@@ -1517,8 +1444,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Комбинаторика', 'category_uz': 'Kombinatorika',
             'prompt_ru': 'Сколькими способами можно выбрать 3 человека из 10 для комитета?',
             'prompt_uz': '10 kishidan 3 kishini qoʻmita uchun necha xil usulda tanlash mumkin?',
-            'options_ru': ['136', '128', '112', '120'],
-            'options_uz': ['136', '128', '112', '120'],
+            'options_ru': ['136.0', '128', '112', '120'], 'options_uz': ['136.0', '128', '112', '120'],
             'correct_indices': [3],
         },
         {
@@ -1535,8 +1461,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Уравнения со степенями', 'category_uz': 'Daraja tenglamalari',
             'prompt_ru': 'Если 2ⁿ=32, чему равен n?',
             'prompt_uz': '2ⁿ=32 boʻlsa, n nechaga teng?',
-            'options_ru': ['5', '4', '6', '7'],
-            'options_uz': ['5', '4', '6', '7'],
+            'options_ru': ['5', '4.0', '6', '7'], 'options_uz': ['5', '4.0', '6', '7'],
             'correct_indices': [0],
         },
         {
@@ -1544,8 +1469,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Геометрия (формула Герона)', 'category_uz': 'Geometriya (Geron formulasi)',
             'prompt_ru': 'Стороны треугольника равны 7, 24 и 25 см. Найдите площадь треугольника.',
             'prompt_uz': 'Uchburchakning tomonlari 7, 24 va 25 sm. Uchburchak yuzini toping.',
-            'options_ru': ['78', '90', '96', '84'],
-            'options_uz': ['78', '90', '96', '84'],
+            'options_ru': ['78.0', '90', '96', '84'], 'options_uz': ['78.0', '90', '96', '84'],
             'correct_indices': [3],
         },
         {
@@ -1553,8 +1477,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Тригонометрия', 'category_uz': 'Trigonometriya',
             'prompt_ru': 'В прямоугольном треугольнике катеты равны 8 и 15, гипотенуза 17. Найдите косинус угла, противолежащего катету 8.',
             'prompt_uz': 'Toʻgʻri burchakli uchburchakda katetlar 8 va 15 ga, gipotenuza 17 ga teng. 8 katetga qarama-qarshi burchakning kosinusini toping.',
-            'options_ru': ['8/17', '15/17', '15/8', '17/15'],
-            'options_uz': ['8/17', '15/17', '15/8', '17/15'],
+            'options_ru': ['80/170', '15/17', '15/8', '17/15'], 'options_uz': ['80/170', '15/17', '15/8', '17/15'],
             'correct_indices': [1],
         },
         {
@@ -1562,8 +1485,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Геометрия (формула Герона)', 'category_uz': 'Geometriya (Geron formulasi)',
             'prompt_ru': 'Стороны треугольника равны 9, 10 и 17 см. Найдите площадь треугольника.',
             'prompt_uz': 'Uchburchakning tomonlari 9, 10 va 17 sm. Uchburchak yuzini toping.',
-            'options_ru': ['36', '48', '30', '42'],
-            'options_uz': ['36', '48', '30', '42'],
+            'options_ru': ['36', '48.0', '30', '42'], 'options_uz': ['36', '48.0', '30', '42'],
             'correct_indices': [0],
         },
         {
@@ -1571,8 +1493,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Уравнения со степенями', 'category_uz': 'Daraja tenglamalari',
             'prompt_ru': 'Если 5ⁿ=125, чему равен n?',
             'prompt_uz': '5ⁿ=125 boʻlsa, n nechaga teng?',
-            'options_ru': ['2', '5', '4', '3'],
-            'options_uz': ['2', '5', '4', '3'],
+            'options_ru': ['2.0', '5', '4', '3'], 'options_uz': ['2.0', '5', '4', '3'],
             'correct_indices': [3],
         },
         {
@@ -1580,8 +1501,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Геометрия (объём)', 'category_uz': 'Geometriya (hajm)',
             'prompt_ru': 'Радиус основания цилиндра 7 см, высота 10 см (используйте π≈22/7). Найдите объём цилиндра.',
             'prompt_uz': 'Silindr asosining radiusi 7 sm, balandligi 10 sm (π≈22/7 deb oling). Silindr hajmini toping.',
-            'options_ru': ['3080', '1562', '1540', '1518'],
-            'options_uz': ['3080', '1562', '1540', '1518'],
+            'options_ru': ['3080.0', '1562', '1540', '1518'], 'options_uz': ['3080.0', '1562', '1540', '1518'],
             'correct_indices': [2],
         },
         {
@@ -1598,8 +1518,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Числовые последовательности', 'category_uz': 'Sonli qatorlar',
             'prompt_ru': 'Продолжите ряд: 2, 3, 5, 9, 17, ?',
             'prompt_uz': 'Qatorni davom ettiring: 2, 3, 5, 9, 17, ?',
-            'options_ru': ['34', '32', '38', '33'],
-            'options_uz': ['34', '32', '38', '33'],
+            'options_ru': ['34.0', '32', '38', '33'], 'options_uz': ['34.0', '32', '38', '33'],
             'correct_indices': [3],
         },
         {
@@ -1607,8 +1526,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Алгебра (теорема Виета)', 'category_uz': 'Algebra (Viyet teoremasi)',
             'prompt_ru': 'Найдите произведение корней уравнения x²+2x-15=0.',
             'prompt_uz': 'x²+2x-15=0 tenglamaning ildizlari koʻpaytmasini toping.',
-            'options_ru': ['-9', '-18', '-15', '-12'],
-            'options_uz': ['-9', '-18', '-15', '-12'],
+            'options_ru': ['-9.0', '-18', '-15', '-12'], 'options_uz': ['-9.0', '-18', '-15', '-12'],
             'correct_indices': [2],
         },
         {
@@ -1634,8 +1552,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Текстовые задачи (системы уравнений)', 'category_uz': 'Matnli masalalar (tenglamalar sistemasi)',
             'prompt_ru': 'Сумма двух чисел равна 120, а их разность равна 30. Найдите большее число.',
             'prompt_uz': 'Ikki sonning yigʻindisi 120 ga, ayirmasi esa 30 ga teng. Katta sonni toping.',
-            'options_ru': ['75', '80', '70', '85'],
-            'options_uz': ['75', '80', '70', '85'],
+            'options_ru': ['75', '80.0', '70', '85'], 'options_uz': ['75', '80.0', '70', '85'],
             'correct_indices': [0],
         },
         {
@@ -1643,8 +1560,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Числовые последовательности', 'category_uz': 'Sonli qatorlar',
             'prompt_ru': 'Продолжите ряд: 1, 2, 6, 24, 120, ?',
             'prompt_uz': 'Qatorni davom ettiring: 1, 2, 6, 24, 120, ?',
-            'options_ru': ['719', '720', '721', '725'],
-            'options_uz': ['719', '720', '721', '725'],
+            'options_ru': ['719.0', '720', '721', '725'], 'options_uz': ['719.0', '720', '721', '725'],
             'correct_indices': [1],
         },
         {
@@ -1652,8 +1568,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Числовые последовательности', 'category_uz': 'Sonli qatorlar',
             'prompt_ru': 'Продолжите ряд: 1, 1, 2, 3, 5, 8, ?',
             'prompt_uz': 'Qatorni davom ettiring: 1, 1, 2, 3, 5, 8, ?',
-            'options_ru': ['18', '12', '13', '14'],
-            'options_uz': ['18', '12', '13', '14'],
+            'options_ru': ['18.0', '12', '13', '14'], 'options_uz': ['18.0', '12', '13', '14'],
             'correct_indices': [2],
         },
         {
@@ -1679,8 +1594,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Теория чисел (остатки)', 'category_uz': 'Sonlar nazariyasi (qoldiqlar)',
             'prompt_ru': 'Число при делении на 2 даёт остаток 1, при делении на 3 — остаток 2, при делении на 5 — остаток 4. Число меньше 70. Чему оно равно?',
             'prompt_uz': 'Bir son 2 ga boʻlinganda 1 qoldiq, 3 ga boʻlinganda 2 qoldiq, 5 ga boʻlinganda 4 qoldiq beradi. Bu son 70 dan kichik. Bu son nechaga teng?',
-            'options_ru': ['29', '32', '27', '35'],
-            'options_uz': ['29', '32', '27', '35'],
+            'options_ru': ['29', '32.0', '27', '35'], 'options_uz': ['29', '32.0', '27', '35'],
             'correct_indices': [0],
         },
         {
@@ -1688,8 +1602,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Текстовые задачи (совместная работа)', 'category_uz': 'Matnli masalalar (ish unumdorligi)',
             'prompt_ru': 'Труба А наполняет бассейн за 6 часов, труба Б — за 12 часов. За сколько часов бассейн наполнится, если открыть обе трубы одновременно?',
             'prompt_uz': 'A quvur hovuzni 6 soatda, B quvur 12 soatda toʻldiradi. Ikkala quvur birga ochilsa, hovuz necha soatda toʻladi?',
-            'options_ru': ['5', '6', '3', '4'],
-            'options_uz': ['5', '6', '3', '4'],
+            'options_ru': ['5.0', '6', '3', '4'], 'options_uz': ['5.0', '6', '3', '4'],
             'correct_indices': [3],
         },
         {
@@ -1697,8 +1610,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Комбинаторика', 'category_uz': 'Kombinatorika',
             'prompt_ru': 'Сколькими способами можно выбрать 2 человека из 11 для комитета?',
             'prompt_uz': '11 kishidan 2 kishini qoʻmita uchun necha xil usulda tanlash mumkin?',
-            'options_ru': ['55', '63', '71', '47'],
-            'options_uz': ['55', '63', '71', '47'],
+            'options_ru': ['55', '63.0', '71', '47'], 'options_uz': ['55', '63.0', '71', '47'],
             'correct_indices': [0],
         },
         {
@@ -1706,8 +1618,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Текстовые задачи (движение)', 'category_uz': 'Matnli masalalar (harakat)',
             'prompt_ru': 'Два велосипедиста едут в одном направлении: первый со скоростью 30 км/ч, второй — 50 км/ч, отставая на 60 км. Через сколько часов второй догонит первого?',
             'prompt_uz': 'Ikki velosipedchi bir yoʻnalishda harakatlanmoqda: birinchisi 30 km/soat, ikkinchisi 50 km/soat tezlikda, orada 60 km masofa bor. Ikkinchisi birinchisiga necha soatdan keyin yetib oladi?',
-            'options_ru': ['3', '6', '2', '4'],
-            'options_uz': ['3', '6', '2', '4'],
+            'options_ru': ['3', '6.0', '2', '4'], 'options_uz': ['3', '6.0', '2', '4'],
             'correct_indices': [0],
         },
         {
@@ -1724,8 +1635,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Уравнения со степенями', 'category_uz': 'Daraja tenglamalari',
             'prompt_ru': 'Если 2ⁿ=64, чему равен n?',
             'prompt_uz': '2ⁿ=64 boʻlsa, n nechaga teng?',
-            'options_ru': ['6', '8', '5', '7'],
-            'options_uz': ['6', '8', '5', '7'],
+            'options_ru': ['6', '8.0', '5', '7'], 'options_uz': ['6', '8.0', '5', '7'],
             'correct_indices': [0],
         },
         {
@@ -1733,8 +1643,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Теория чисел (остатки)', 'category_uz': 'Sonlar nazariyasi (qoldiqlar)',
             'prompt_ru': 'Число при делении на 2 даёт остаток 1, при делении на 5 — остаток 3, при делении на 6 — остаток 5. Число меньше 80. Чему оно равно?',
             'prompt_uz': 'Bir son 2 ga boʻlinganda 1 qoldiq, 5 ga boʻlinganda 3 qoldiq, 6 ga boʻlinganda 5 qoldiq beradi. Bu son 80 dan kichik. Bu son nechaga teng?',
-            'options_ru': ['33', '26', '23', '21'],
-            'options_uz': ['33', '26', '23', '21'],
+            'options_ru': ['33.0', '26', '23', '21'], 'options_uz': ['33.0', '26', '23', '21'],
             'correct_indices': [2],
         },
         {
@@ -1742,8 +1651,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Алгебра (теорема Виета)', 'category_uz': 'Algebra (Viyet teoremasi)',
             'prompt_ru': 'Найдите произведение корней уравнения x²-3x-10=0.',
             'prompt_uz': 'x²-3x-10=0 tenglamaning ildizlari koʻpaytmasini toping.',
-            'options_ru': ['-13', '-4', '-10', '-7'],
-            'options_uz': ['-13', '-4', '-10', '-7'],
+            'options_ru': ['-13.0', '-4', '-10', '-7'], 'options_uz': ['-13.0', '-4', '-10', '-7'],
             'correct_indices': [2],
         },
         {
@@ -1751,8 +1659,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Текстовые задачи (системы уравнений)', 'category_uz': 'Matnli masalalar (tenglamalar sistemasi)',
             'prompt_ru': 'Сумма двух чисел равна 50, а их разность равна 10. Найдите большее число.',
             'prompt_uz': 'Ikki sonning yigʻindisi 50 ga, ayirmasi esa 10 ga teng. Katta sonni toping.',
-            'options_ru': ['30', '25', '35', '40'],
-            'options_uz': ['30', '25', '35', '40'],
+            'options_ru': ['30', '25.0', '35', '40'], 'options_uz': ['30', '25.0', '35', '40'],
             'correct_indices': [0],
         },
         {
@@ -1760,8 +1667,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Текстовые задачи (смеси)', 'category_uz': 'Matnli masalalar (aralashmalar)',
             'prompt_ru': 'Раствор А имеет концентрацию 20%, раствор Б — 60%. В каком отношении их нужно смешать, чтобы получить раствор с концентрацией 40%?',
             'prompt_uz': 'A eritmaning konsentratsiyasi 20%, B eritmaniki 60%. 40% li eritma olish uchun ularni qanday nisbatda aralashtirish kerak?',
-            'options_ru': ['3:1', '1:1', '1:2', '2:1'],
-            'options_uz': ['3:1', '1:1', '1:2', '2:1'],
+            'options_ru': ['30:10', '1:1', '1:2', '2:1'], 'options_uz': ['30:10', '1:1', '1:2', '2:1'],
             'correct_indices': [1],
         },
         {
@@ -1778,8 +1684,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Комбинаторика', 'category_uz': 'Kombinatorika',
             'prompt_ru': 'Сколькими способами можно выбрать 4 человека из 8 для комитета?',
             'prompt_uz': '8 kishidan 4 kishini qoʻmita uchun necha xil usulda tanlash mumkin?',
-            'options_ru': ['70', '86', '78', '62'],
-            'options_uz': ['70', '86', '78', '62'],
+            'options_ru': ['70', '86.0', '78', '62'], 'options_uz': ['70', '86.0', '78', '62'],
             'correct_indices': [0],
         },
         {
@@ -1787,8 +1692,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Текстовые задачи (движение)', 'category_uz': 'Matnli masalalar (harakat)',
             'prompt_ru': 'Автомобиль ехал со скоростью 60 км/ч в течение 2 ч, затем 90 км/ч в течение 1 ч. Найдите среднюю скорость за всю поездку.',
             'prompt_uz': 'Avtomobil 60 km/soat tezlik bilan 2 soat, keyin 90 km/soat bilan 1 soat yurdi. Butun sayohat davomidagi oʻrtacha tezlikni toping.',
-            'options_ru': ['75', '70', '72', '68'],
-            'options_uz': ['75', '70', '72', '68'],
+            'options_ru': ['75.0', '70', '72', '68'], 'options_uz': ['75.0', '70', '72', '68'],
             'correct_indices': [1],
         },
         {
@@ -1796,8 +1700,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Теория чисел', 'category_uz': 'Sonlar nazariyasi',
             'prompt_ru': 'Число делится на 6 и на 9, но не делится на 4. Какое из чисел подходит?',
             'prompt_uz': 'Bir son 6 ga va 9 ga boʻlinadi, lekin 4 ga boʻlinmaydi. Quyidagilarning qaysi biri mos keladi?',
-            'options_ru': ['54', '42', '45', '68'],
-            'options_uz': ['54', '42', '45', '68'],
+            'options_ru': ['54', '42.0', '45', '68'], 'options_uz': ['54', '42.0', '45', '68'],
             'correct_indices': [0],
         },
         {
@@ -1805,8 +1708,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Текстовые задачи (движение)', 'category_uz': 'Matnli masalalar (harakat)',
             'prompt_ru': 'Автомобиль ехал со скоростью 50 км/ч в течение 3 ч, затем 70 км/ч в течение 2 ч. Найдите среднюю скорость за всю поездку.',
             'prompt_uz': 'Avtomobil 50 km/soat tezlik bilan 3 soat, keyin 70 km/soat bilan 2 soat yurdi. Butun sayohat davomidagi oʻrtacha tezlikni toping.',
-            'options_ru': ['58', '60', '56', '63'],
-            'options_uz': ['58', '60', '56', '63'],
+            'options_ru': ['58', '60.0', '56', '63'], 'options_uz': ['58', '60.0', '56', '63'],
             'correct_indices': [0],
         },
         {
@@ -1814,8 +1716,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Текстовые задачи (системы уравнений)', 'category_uz': 'Matnli masalalar (tenglamalar sistemasi)',
             'prompt_ru': 'Сумма двух чисел равна 80, а их разность равна 20. Найдите большее число.',
             'prompt_uz': 'Ikki sonning yigʻindisi 80 ga, ayirmasi esa 20 ga teng. Katta sonni toping.',
-            'options_ru': ['60', '45', '55', '50'],
-            'options_uz': ['60', '45', '55', '50'],
+            'options_ru': ['60.0', '45', '55', '50'], 'options_uz': ['60.0', '45', '55', '50'],
             'correct_indices': [3],
         },
         {
@@ -1823,8 +1724,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Геометрия (объём)', 'category_uz': 'Geometriya (hajm)',
             'prompt_ru': 'Радиус основания цилиндра 14 см, высота 6 см (используйте π≈22/7). Найдите объём цилиндра.',
             'prompt_uz': 'Silindr asosining radiusi 14 sm, balandligi 6 sm (π≈22/7 deb oling). Silindr hajmini toping.',
-            'options_ru': ['3718', '7392', '3674', '3696'],
-            'options_uz': ['3718', '7392', '3674', '3696'],
+            'options_ru': ['3718.0', '7392', '3674', '3696'], 'options_uz': ['3718.0', '7392', '3674', '3696'],
             'correct_indices': [3],
         },
         {
@@ -1832,8 +1732,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Числовые последовательности', 'category_uz': 'Sonli qatorlar',
             'prompt_ru': 'Продолжите ряд: 3, 4, 7, 11, 18, ?',
             'prompt_uz': 'Qatorni davom ettiring: 3, 4, 7, 11, 18, ?',
-            'options_ru': ['30', '29', '28', '34'],
-            'options_uz': ['30', '29', '28', '34'],
+            'options_ru': ['30.0', '29', '28', '34'], 'options_uz': ['30.0', '29', '28', '34'],
             'correct_indices': [1],
         },
         {
@@ -1841,8 +1740,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Текстовые задачи (совместная работа)', 'category_uz': 'Matnli masalalar (ish unumdorligi)',
             'prompt_ru': 'Труба А наполняет бассейн за 8 часов, труба Б — за 24 часов. За сколько часов бассейн наполнится, если открыть обе трубы одновременно?',
             'prompt_uz': 'A quvur hovuzni 8 soatda, B quvur 24 soatda toʻldiradi. Ikkala quvur birga ochilsa, hovuz necha soatda toʻladi?',
-            'options_ru': ['5', '8', '7', '6'],
-            'options_uz': ['5', '8', '7', '6'],
+            'options_ru': ['5.0', '8', '7', '6'], 'options_uz': ['5.0', '8', '7', '6'],
             'correct_indices': [3],
         },
         {
@@ -1850,8 +1748,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Текстовые задачи (движение)', 'category_uz': 'Matnli masalalar (harakat)',
             'prompt_ru': 'Расстояние между городами 480 км. Два автомобиля выехали одновременно навстречу друг другу со скоростями 40 км/ч и 80 км/ч. Через сколько часов они встретятся?',
             'prompt_uz': 'Ikki shahar orasidagi masofa 480 km. Ikkita avtomobil bir vaqtda bir-biriga qarab 40 km/soat va 80 km/soat tezlik bilan yoʻlga chiqdi. Necha soatdan keyin uchrashadilar?',
-            'options_ru': ['4', '3', '5', '6'],
-            'options_uz': ['4', '3', '5', '6'],
+            'options_ru': ['4', '3.0', '5', '6'], 'options_uz': ['4', '3.0', '5', '6'],
             'correct_indices': [0],
         },
         {
@@ -1859,8 +1756,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Геометрия (формула Герона)', 'category_uz': 'Geometriya (Geron formulasi)',
             'prompt_ru': 'Стороны треугольника равны 13, 14 и 15 см. Найдите площадь треугольника.',
             'prompt_uz': 'Uchburchakning tomonlari 13, 14 va 15 sm. Uchburchak yuzini toping.',
-            'options_ru': ['78', '90', '96', '84'],
-            'options_uz': ['78', '90', '96', '84'],
+            'options_ru': ['78.0', '90', '96', '84'], 'options_uz': ['78.0', '90', '96', '84'],
             'correct_indices': [3],
         },
         {
@@ -1877,8 +1773,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Текстовые задачи (смеси)', 'category_uz': 'Matnli masalalar (aralashmalar)',
             'prompt_ru': 'Раствор А имеет концентрацию 10%, раствор Б — 40%. В каком отношении их нужно смешать, чтобы получить раствор с концентрацией 25%?',
             'prompt_uz': 'A eritmaning konsentratsiyasi 10%, B eritmaniki 40%. 25% li eritma olish uchun ularni qanday nisbatda aralashtirish kerak?',
-            'options_ru': ['1:1', '2:1', '3:1', '1:2'],
-            'options_uz': ['1:1', '2:1', '3:1', '1:2'],
+            'options_ru': ['1:1', '20:10', '3:1', '1:2'], 'options_uz': ['1:1', '20:10', '3:1', '1:2'],
             'correct_indices': [0],
         },
         {
@@ -1886,8 +1781,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Текстовые задачи (совместная работа)', 'category_uz': 'Matnli masalalar (ish unumdorligi)',
             'prompt_ru': 'Труба А наполняет бассейн за 10 часов, труба Б — за 15 часов. За сколько часов бассейн наполнится, если открыть обе трубы одновременно?',
             'prompt_uz': 'A quvur hovuzni 10 soatda, B quvur 15 soatda toʻldiradi. Ikkala quvur birga ochilsa, hovuz necha soatda toʻladi?',
-            'options_ru': ['6', '7', '5', '8'],
-            'options_uz': ['6', '7', '5', '8'],
+            'options_ru': ['6', '7.0', '5', '8'], 'options_uz': ['6', '7.0', '5', '8'],
             'correct_indices': [0],
         },
 ],
@@ -1898,8 +1792,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Силлогизм', 'category_uz': 'Sillogizm',
             'prompt_ru': 'Все книги полезны. Некоторые книги интересны. Значит:',
             'prompt_uz': "Barcha kitoblar foydali. Ba'zi kitoblar qiziqarli. Demak:",
-            'options_ru': ['Все интересные вещи — книги', 'Некоторые полезные вещи интересны', 'Книги бесполезны', 'Ничего из этого не верно'],
-            'options_uz': ["Barcha qiziqarli narsalar kitob", "Ba'zi foydali narsalar qiziqarli", 'Kitoblar foydasiz', "Hech biri to'g'ri emas"],
+            'options_ru': ['Все интересные вещи являются книгами', 'Некоторые полезные вещи являются интересными', 'Все книги совершенно бесполезны для читателей', 'Ничего из перечисленного выше не является верным'],
+            'options_uz': ['Barcha qiziqarli narsalar kitob hisoblanadi', "Ba'zi foydali narsalar qiziqarli bo'lishi mumkin", 'Kitoblarning barchasi butunlay foydasiz hisoblanadi', "Yuqoridagilarning hech biri to'g'ri emas"],
             'correct_indices': [1],
         },
         {
@@ -1955,14 +1849,8 @@ MCQ_QUESTIONS = {
                 "Agar barcha kitoblar bilim manbai bo'lsa, va ba'zi bilim manbalari qog'ozdan "
                 "tayyorlangan bo'lsa, quyidagilarning qaysi biri mutloq to'g'ri bo'ladi?"
             ),
-            'options_ru': [
-                'Все книги сделаны из бумаги.', 'Некоторые книги могут быть сделаны из бумаги.',
-                'Всё, что сделано из бумаги, — книга.', 'Книги и источники знаний — совершенно разные вещи.',
-            ],
-            'options_uz': [
-                "Barcha kitoblar qog'ozdan tayyorlangan.", "Ba'zi kitoblar qog'ozdan tayyorlangan bo'lishi mumkin.",
-                "Qog'ozdan tayyorlangan har bir narsa kitobdir.", 'Kitoblar va bilim manbalari umuman boshqa narsalar.',
-            ],
+            'options_ru': ['Все книги без исключения сделаны из бумаги.', 'Некоторые книги могут быть сделаны из бумаги.', 'Всё, что сделано из бумаги, обязательно является книгой.', 'Книги и источники знаний — совершенно разные и не связанные вещи.'],
+            'options_uz': ["Barcha kitoblar istisnosiz qog'ozdan tayyorlangan.", "Ba'zi kitoblar qog'ozdan tayyorlangan bo'lishi mumkin.", "Qog'ozdan tayyorlangan har bir narsa albatta kitobdir.", "Kitoblar va bilim manbalari umuman bog'liq bo'lmagan narsalar."],
             'correct_indices': [1],
         },
         {
@@ -1991,8 +1879,8 @@ MCQ_QUESTIONS = {
                 "Oila a'zolari haqida ma'lumot: Akmal Karimning o'g'li. Karim esa Sardorning akasi. "
                 "Sardor Jamshidning otasi. Jamshid Akmalga kim bo'ladi?"
             ),
-            'options_ru': ['Дядя', 'Племянник', 'Двоюродный брат', 'Старший брат'],
-            'options_uz': ['Amaki', 'Jiyan', 'Amakivachcha', 'Aka'],
+            'options_ru': ['Родной дядя со стороны родного отца', 'Родной племянник по крови', 'Двоюродный брат по отцовской линии', 'Родной старший брат по крови'],
+            'options_uz': ['Ota tomondan qondosh amaki', "Qondosh jiyan o'g'il", 'Ota tomondan amakivachcha', 'Qondosh katta aka'],
             'correct_indices': [2],
         },
         {
@@ -2026,14 +1914,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Формальная логика', 'category_uz': 'Formal mantiq',
             'prompt_ru': 'Какое из следующих утверждений всегда логически верно? «Если идёт дождь, улицы становятся мокрыми.»',
             'prompt_uz': 'Quyidagi mulohazalardan qaysi biri har doim mantiqan to\'g\'ri? "Agar yomg\'ir yog\'sa, ko\'chalar nam bo\'ladi."',
-            'options_ru': [
-                'Если улицы мокрые, значит, шёл дождь.', 'Если дождь не шёл, улицы не мокрые.',
-                'Если улицы не мокрые, значит, дождя не было.', 'Дождь идёт только для того, чтобы намочить улицы.',
-            ],
-            'options_uz': [
-                "Agar ko'chalar nam bo'lsa, demak yomg'ir yog'gan.", "Agar yomg'ir yog'magan bo'lsa, ko'chalar nam emas.",
-                "Agar ko'chalar nam bo'lmasa, demak yomg'ir yog'magan.", "Yomg'ir faqat ko'chalarni namlash uchun yog'adi.",
-            ],
+            'options_ru': ['Если улицы мокрые, значит, обязательно шёл дождь.', 'Если дождь не шёл, то улицы точно не мокрые.', 'Если улицы не мокрые, значит, дождя не было.', 'Дождь идёт только для того, чтобы намочить улицы города.'],
+            'options_uz': ["Agar ko'chalar nam bo'lsa, demak albatta yomg'ir yog'gan.", "Agar yomg'ir yog'magan bo'lsa, ko'chalar aniq nam emas.", "Agar ko'chalar nam bo'lmasa, demak yomg'ir yog'magan.", "Yomg'ir faqat shahar ko'chalarini namlash uchun yog'adi."],
             'correct_indices': [2],
         },
         {
@@ -2875,8 +2757,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Силлогизм', 'category_uz': 'Sillogizm',
             'prompt_ru': 'Все розы — цветы. Все цветы нуждаются в воде. Значит:',
             'prompt_uz': 'Barcha atirgullar - gullar. Barcha gullar suvga muhtoj. Demak:',
-            'options_ru': ['Все розы нуждаются в воде', 'Все цветы — розы', 'Некоторые цветы — не розы', 'Розы не нуждаются в воде'],
-            'options_uz': ['Barcha atirgullar suvga muhtoj', 'Barcha gullar atirgul', "Ba'zi gullar atirgul emas", 'Atirgullar suvga muhtoj emas'],
+            'options_ru': ['Все розы обязательно нуждаются в воде', 'Все цветы без исключения являются розами', 'Некоторые цветы вообще не являются розами', 'Розы совершенно не нуждаются в воде'],
+            'options_uz': ['Barcha atirgullar albatta suvga muhtoj', 'Barcha gullar istisnosiz atirgul hisoblanadi', "Ba'zi gullar umuman atirgul emas ekan", 'Atirgullar butunlay suvga muhtoj emas'],
             'correct_indices': [0],
         },
         {
@@ -2884,8 +2766,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Силлогизм', 'category_uz': 'Sillogizm',
             'prompt_ru': 'Ни одна рыба не является млекопитающим. Все киты — млекопитающие. Значит:',
             'prompt_uz': 'Hech bir baliq sut emizuvchi emas. Barcha kitlar sut emizuvchi. Demak:',
-            'options_ru': ['Ни один кит не является рыбой', 'Все киты — рыбы', 'Некоторые рыбы — киты', 'Все млекопитающие — рыбы'],
-            'options_uz': ['Hech bir kit baliq emas', 'Barcha kitlar baliq', "Ba'zi baliqlar kit", 'Barcha sut emizuvchilar baliq'],
+            'options_ru': ['Ни один кит вообще не является рыбой', 'Все киты на самом деле являются рыбами', 'Некоторые рыбы на самом деле являются китами', 'Все млекопитающие на самом деле являются рыбами'],
+            'options_uz': ['Hech bir kit umuman baliq emas ekan', 'Barcha kitlar aslida baliq hisoblanadi', "Ba'zi baliqlar aslida kit hisoblanadi", 'Barcha sut emizuvchilar aslida baliq hisoblanadi'],
             'correct_indices': [0],
         },
         {
@@ -2893,8 +2775,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Силлогизм', 'category_uz': 'Sillogizm',
             'prompt_ru': 'Все доктора — образованные люди. Некоторые образованные люди — учителя. Какой вывод обязательно верен?',
             'prompt_uz': "Barcha doktorlar bilimli odamlar. Ba'zi bilimli odamlar o'qituvchi. Qaysi xulosa albatta to'g'ri?",
-            'options_ru': ['Все доктора — учителя', 'Некоторые доктора точно являются учителями', 'Определённый вывод о связи докторов и учителей сделать нельзя', 'Ни один доктор не является учителем'],
-            'options_uz': ["Barcha doktorlar o'qituvchi", "Ba'zi doktorlar aniq o'qituvchi", "Doktorlar va o'qituvchilar aloqasi haqida aniq xulosa chiqarib bo'lmaydi", "Hech bir doktor o'qituvchi emas"],
+            'options_ru': ['Абсолютно все доктора без исключения являются учителями', 'Некоторые доктора точно являются учителями', 'Однозначный вывод о докторах и учителях сделать нельзя', 'Ни один доктор вообще не является учителем'],
+            'options_uz': ["Mutlaqo barcha doktorlar istisnosiz o'qituvchi hisoblanadi", "Ba'zi doktorlar aniq o'qituvchi ekan", "Doktorlar va o'qituvchilar orasidagi aniq bog'liqlik yo'q", "Hech bir doktor umuman o'qituvchi emas"],
             'correct_indices': [2],
         },
         {
@@ -2902,8 +2784,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Силлогизм', 'category_uz': 'Sillogizm',
             'prompt_ru': 'Все пингвины — птицы. Ни один пингвин не летает. Значит:',
             'prompt_uz': 'Barcha pingvinlar qush. Hech bir pingvin ucha olmaydi. Demak:',
-            'options_ru': ['Ни одна птица не летает', 'Некоторые птицы не летают', 'Все птицы — пингвины', 'Все птицы летают'],
-            'options_uz': ['Hech bir qush ucha olmaydi', "Ba'zi qushlar ucha olmaydi", 'Barcha qushlar pingvin', 'Barcha qushlar uchadi'],
+            'options_ru': ['Ни одна птица вообще не умеет летать', 'Некоторые птицы не умеют летать', 'Все птицы на самом деле являются пингвинами', 'Абсолютно все птицы умеют летать'],
+            'options_uz': ['Hech bir qush umuman ucha olmaydi', "Ba'zi qushlar ucha olmaydi", 'Barcha qushlar aslida pingvin hisoblanadi', 'Mutlaqo barcha qushlar ucha oladi'],
             'correct_indices': [1],
         },
         {
@@ -2920,8 +2802,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Силлогизм', 'category_uz': 'Sillogizm',
             'prompt_ru': 'Все студенты этой группы сдали экзамен. Никто из сдавших экзамен не получил двойку. Значит:',
             'prompt_uz': 'Bu guruhning barcha talabalari imtihonni topshirdi. Imtihonni topshirganlarning hech biri ikkilik olmadi. Demak:',
-            'options_ru': ['Ни один студент этой группы не получил двойку', 'Все студенты этой группы получили двойку', 'Некоторые студенты этой группы получили двойку', 'Из этого ничего не следует'],
-            'options_uz': ['Bu guruhning hech bir talabasi ikkilik olmagan', 'Bu guruhning barcha talabalari ikkilik olgan', "Bu guruhning ba'zi talabalari ikkilik olgan", 'Bundan hech narsa kelib chiqmaydi'],
+            'options_ru': ['Ни один студент этой группы не получил двойку', 'Все студенты этой группы получили двойку на экзамене', 'Некоторые студенты этой группы получили двойку', 'Из этого условия вообще ничего не следует'],
+            'options_uz': ['Bu guruhning hech bir talabasi ikkilik olmagan', 'Bu guruhning barcha talabalari imtihonda ikkilik olgan', "Bu guruhning ba'zi talabalari ikkilik olgan", 'Bu shartdan umuman hech narsa kelib chiqmaydi'],
             'correct_indices': [0],
         },
         {
@@ -2929,8 +2811,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Силлогизм', 'category_uz': 'Sillogizm',
             'prompt_ru': 'Все треугольники — многоугольники. Все многоугольники имеют углы. Значит:',
             'prompt_uz': "Barcha uchburchaklar ko'pburchak. Barcha ko'pburchaklarning burchaklari bor. Demak:",
-            'options_ru': ['У всех треугольников есть углы', 'У треугольников нет углов', 'Все многоугольники — треугольники', 'Некоторые треугольники не имеют углов'],
-            'options_uz': ['Barcha uchburchaklarning burchaklari bor', "Uchburchaklarning burchaklari yo'q", "Barcha ko'pburchaklar uchburchak", "Ba'zi uchburchaklarning burchagi yo'q"],
+            'options_ru': ['У всех треугольников обязательно есть углы', 'У треугольников вообще нет никаких углов', 'Все многоугольники на самом деле являются треугольниками', 'Некоторые треугольники вообще не имеют углов'],
+            'options_uz': ['Barcha uchburchaklarning albatta burchaklari bor', "Uchburchaklarning umuman hech qanday burchagi yo'q", "Barcha ko'pburchaklar aslida uchburchak hisoblanadi", "Ba'zi uchburchaklarning umuman burchagi yo'q"],
             'correct_indices': [0],
         },
         {
@@ -2956,8 +2838,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Силлогизм', 'category_uz': 'Sillogizm',
             'prompt_ru': 'Ни один рептилия не теплокровна. Все змеи — рептилии. Значит:',
             'prompt_uz': 'Hech bir sudralib yuruvchi issiq qonli emas. Barcha ilonlar sudralib yuruvchi. Demak:',
-            'options_ru': ['Ни одна змея не теплокровна', 'Все змеи теплокровны', 'Некоторые змеи теплокровны', 'Все теплокровные — змеи'],
-            'options_uz': ['Hech bir ilon issiq qonli emas', 'Barcha ilonlar issiq qonli', "Ba'zi ilonlar issiq qonli", 'Barcha issiq qonlilar ilon'],
+            'options_ru': ['Ни одна змея не является теплокровной', 'Все змеи являются теплокровными существами', 'Некоторые змеи являются теплокровными существами', 'Все теплокровные существа — это змеи'],
+            'options_uz': ['Hech bir ilon issiq qonli mavjudot emas', 'Barcha ilonlar, albatta, issiq qonli mavjudotdir', "Ba'zi ilonlar issiq qonli mavjudotdir", 'Barcha issiq qonli mavjudotlar ilondir'],
             'correct_indices': [0],
         },
         {
@@ -2965,8 +2847,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Силлогизм', 'category_uz': 'Sillogizm',
             'prompt_ru': 'Ни один честный человек не лжёт. Некоторые политики лгут. Значит:',
             'prompt_uz': "Hech bir halol odam yolg'on gapirmaydi. Ba'zi siyosatchilar yolg'on gapiradi. Demak:",
-            'options_ru': ['Некоторые политики не являются честными людьми', 'Все политики нечестны', 'Все честные люди — политики', 'Ни один политик не честен'],
-            'options_uz': ["Ba'zi siyosatchilar halol odam emas", 'Barcha siyosatchilar nohalol', 'Barcha halol odamlar siyosatchi', 'Hech bir siyosatchi halol emas'],
+            'options_ru': ['Некоторые политики не являются честными людьми', 'Все без исключения политики являются нечестными', 'Все честные люди обязательно являются политиками', 'Ни один политик вообще не является по-настоящему честным'],
+            'options_uz': ["Ba'zi siyosatchilar halol odam emas ekan", 'Istisnosiz barcha siyosatchilar nohalol', 'Barcha halol odamlar siyosatchi hisoblanadi', 'Hech bir siyosatchi umuman halol emas'],
             'correct_indices': [0],
         },
         {
@@ -2983,8 +2865,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Силлогизм', 'category_uz': 'Sillogizm',
             'prompt_ru': 'Ни один смартфон не является книгой. Некоторые подарки являются книгами. Значит:',
             'prompt_uz': "Hech bir smartfon kitob emas. Ba'zi sovg'alar kitob. Demak:",
-            'options_ru': ['Некоторые подарки не являются смартфонами', 'Все подарки — смартфоны', 'Ни один подарок не является смартфоном', 'Все книги — подарки'],
-            'options_uz': ["Ba'zi sovg'alar smartfon emas", "Barcha sovg'alar smartfon", "Hech bir sovg'a smartfon emas", "Barcha kitoblar sovg'a"],
+            'options_ru': ['Некоторые подарки не являются смартфонами', 'Все подарки без исключения являются смартфонами', 'Ни один подарок вообще не является смартфоном', 'Все книги без исключения являются подарками'],
+            'options_uz': ["Ba'zi sovg'alar smartfon emas ekan", "Istisnosiz barcha sovg'alar smartfon hisoblanadi", "Hech bir sovg'a umuman smartfon emas", "Barcha kitoblar istisnosiz sovg'a hisoblanadi"],
             'correct_indices': [0],
         },
         {
@@ -3001,8 +2883,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Силлогизм', 'category_uz': 'Sillogizm',
             'prompt_ru': 'Все члены клуба «Прогресс» — программисты. Ни один программист клуба не старше 40 лет. Азиз — член клуба «Прогресс». Значит:',
             'prompt_uz': "«Progress» klubining barcha a'zolari dasturchi. Klub dasturchilarining hech biri 40 yoshdan katta emas. Aziz — «Progress» klubi a'zosi. Demak:",
-            'options_ru': ['Азиз — программист не старше 40 лет', 'Азиз старше 40 лет', 'Азиз не программист', 'Нельзя сделать вывод об Азизе'],
-            'options_uz': ["Aziz — 40 yoshdan katta bo'lmagan dasturchi", 'Aziz 40 yoshdan katta', 'Aziz dasturchi emas', "Aziz haqida xulosa chiqarib bo'lmaydi"],
+            'options_ru': ['Азиз является программистом не старше 40 лет', 'Азиз наверняка окажется старше 40 лет по документам', 'Азиз точно не является программистом клуба', 'Об Азизе нельзя сделать никакого вывода'],
+            'options_uz': ["Aziz — 40 yoshdan katta bo'lmagan dasturchi ekan", 'Aziz aniq 40 yoshdan katta ekan', 'Aziz klubning dasturchisi emas ekan', "Aziz haqida hech qanday xulosa chiqarib bo'lmaydi"],
             'correct_indices': [0],
         },
         {
@@ -3010,8 +2892,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Силлогизм', 'category_uz': 'Sillogizm',
             'prompt_ru': 'Все юристы читали этот закон. Никто, кто не читал закона, не может участвовать в процессе. Карим не является юристом. Значит:',
             'prompt_uz': "Barcha yuristlar ushbu qonunni o'qigan. Qonunni o'qimagan hech kim jarayonda qatnasha olmaydi. Karim yurist emas. Demak:",
-            'options_ru': ['Карим точно не может участвовать в процессе', 'Карим точно читал закон', 'Нельзя сделать однозначный вывод об участии Карима в процессе', 'Карим точно является юристом'],
-            'options_uz': ['Karim aniq jarayonda qatnasha olmaydi', "Karim aniq qonunni o'qigan", "Karimning jarayonda qatnashishi haqida aniq xulosa chiqarib bo'lmaydi", 'Karim aniq yurist'],
+            'options_ru': ['Карим совершенно точно не может участвовать в этом судебном процессе', 'Карим наверняка читал этот закон раньше', 'Нельзя сделать однозначный вывод об участии Карима', 'Карим на самом деле точно является юристом'],
+            'options_uz': ['Karim sud jarayonida hech qanday holatda qatnasha olmaydi', "Karim bu qonunni albatta oldin o'qib chiqqan", "Karimning jarayonda qatnashishi haqida aniq xulosa yo'q", 'Karim aslida, hech shubhasiz, yurist ekan'],
             'correct_indices': [2],
         },
         {
@@ -3028,8 +2910,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Силлогизм', 'category_uz': 'Sillogizm',
             'prompt_ru': 'Все члены совета директоров подписали соглашение. Некоторые из тех, кто подписал соглашение, являются акционерами. Ни один акционер не может голосовать против бюджета. Джасур — член совета директоров. Можно ли утверждать, что Джасур не может голосовать против бюджета?',
             'prompt_uz': "Direktorlar kengashining barcha a'zolari kelishuvni imzolagan. Kelishuvni imzolaganlarning ba'zilari aksiyadorlar. Hech bir aksiyador byudjetga qarshi ovoz bera olmaydi. Jasur — direktorlar kengashi a'zosi. Jasur byudjetga qarshi ovoz bera olmaydi, deb tasdiqlash mumkinmi?",
-            'options_ru': ['Да, точно не может', 'Нет, нельзя утверждать — неизвестно, является ли Джасур акционером', 'Да, он обязательно акционер', 'Нет, он точно может голосовать против'],
-            'options_uz': ['Ha, aniq bera olmaydi', "Yo'q, tasdiqlab bo'lmaydi — Jasur aksiyadormi yoki yo'qmi noma'lum", 'Ha, u albatta aksiyador', "Yo'q, u albatta qarshi ovoz bera oladi"],
+            'options_ru': ['Да, он совершенно точно не может голосовать против бюджета компании', 'Нет, нельзя утверждать — неизвестно, акционер ли Джасур', 'Да, он определённо является акционером компании', 'Нет, он точно может свободно голосовать против'],
+            'options_uz': ['Ha, u byudjetga qarshi ovoz berish huquqiga umuman ega emas', "Yo'q, tasdiqlab bo'lmaydi — Jasur aksiyadormi, noma'lum", 'Ha, u albatta kompaniyaning aksiyadori hisoblanadi', "Yo'q, u erkin ravishda qarshi ovoz bera oladi"],
             'correct_indices': [1],
         },
         {
@@ -3037,8 +2919,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Вербальные аналогии', 'category_uz': "Og'zaki analogiyalar",
             'prompt_ru': 'Птица относится к Гнезду так же, как Пчела относится к:',
             'prompt_uz': "Qush Uyaga qanday munosabatda bo'lsa, Ari ham shunga o'xshab nimaga munosabatda bo'ladi:",
-            'options_ru': ['Мёд', 'Улей', 'Цветок', 'Крыло'],
-            'options_uz': ['Asal', 'Katak (uya)', 'Gul', 'Qanot'],
+            'options_ru': ['Ароматный цветочный мёд', 'Улей, где живёт пчела', 'Полевой ароматный цветок', 'Тонкое прозрачное крыло'],
+            'options_uz': ["Xushbo'y va shirin gul asali", 'Ari yashaydigan katak (uya)', "Dala o'sadigan xushbo'y gul", 'Yupqa va shaffof qanot qismi'],
             'correct_indices': [1],
         },
         {
@@ -3082,8 +2964,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Вербальные аналогии', 'category_uz': "Og'zaki analogiyalar",
             'prompt_ru': 'Час относится к Минуте так же, как Метр относится к:',
             'prompt_uz': "Soat Daqiqaga qanday munosabatda bo'lsa, Metr ham shunga o'xshab nimaga munosabatda bo'ladi:",
-            'options_ru': ['Километр', 'Сантиметр', 'Литр', 'Грамм'],
-            'options_uz': ['Kilometr', 'Santimetr', 'Litr', 'Gramm'],
+            'options_ru': ['Довольно дальний километр', 'Короткий сантиметр', 'Совсем небольшой литр', 'Очень лёгкий грамм'],
+            'options_uz': ['Uzoq masofadagi kilometr', 'Qisqa santimetr', 'Suyuq holatdagi litr', 'Yengil vaznli gramm'],
             'correct_indices': [1],
         },
         {
@@ -3091,8 +2973,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Вербальные аналогии', 'category_uz': "Og'zaki analogiyalar",
             'prompt_ru': 'Огонь относится к Теплу так же, как Лёд относится к:',
             'prompt_uz': "Olov Issiqlikka qanday munosabatda bo'lsa, Muz ham shunga o'xshab nimaga munosabatda bo'ladi:",
-            'options_ru': ['Вода', 'Холод', 'Снег', 'Зима'],
-            'options_uz': ['Suv', 'Sovuq', 'Qor', 'Qish'],
+            'options_ru': ['Обычная холодная вода', 'Сильный холод', 'Белый пушистый снег', 'Суровая морозная зима'],
+            'options_uz': ['Oddiy toza suv', 'Kuchli sovuq', 'Oppoq yumshoq qor', 'Sovuq ayozli qish'],
             'correct_indices': [1],
         },
         {
@@ -3100,8 +2982,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Вербальные аналогии', 'category_uz': "Og'zaki analogiyalar",
             'prompt_ru': 'Писатель относится к Книге так же, как Художник относится к:',
             'prompt_uz': "Yozuvchi Kitobga qanday munosabatda bo'lsa, Rassom ham shunga o'xshab nimaga munosabatda bo'ladi:",
-            'options_ru': ['Кисть', 'Картина', 'Музей', 'Краска'],
-            'options_uz': ["Cho'tka", 'Rasm', 'Muzey', "Bo'yoq"],
+            'options_ru': ['Тонкая кисть художника', 'Готовая картина', 'Известный городской музей', 'Яркая масляная краска'],
+            'options_uz': ["Ingichka cho'tka", 'Tayyor rasm', 'Shahar muzeyi', "Yorqin bo'yoq"],
             'correct_indices': [1],
         },
         {
@@ -3136,8 +3018,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Вербальные аналогии', 'category_uz': "Og'zaki analogiyalar",
             'prompt_ru': 'Океан относится к Капле так же, как Пустыня относится к:',
             'prompt_uz': "Okean Tomchiga qanday munosabatda bo'lsa, Sahro ham shunga o'xshab nimaga munosabatda bo'ladi:",
-            'options_ru': ['Оазис', 'Песчинка', 'Верблюд', 'Бархан'],
-            'options_uz': ['Vohа', 'Qum zarrasi', 'Tuya', 'Qum tepalik'],
+            'options_ru': ['Зелёный оазис', 'Мелкая песчинка', 'Выносливый верблюд', 'Высокий бархан'],
+            'options_uz': ['Yashil vohа', 'Mayda qum zarrasi', 'Chidamli tuya', 'Baland qum tepalik'],
             'correct_indices': [1],
         },
         {
@@ -3154,8 +3036,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Вербальные аналогии', 'category_uz': "Og'zaki analogiyalar",
             'prompt_ru': 'Бережливость относится к Расточительности так же, как Смелость относится к:',
             'prompt_uz': "Tejamkorlik Isrofgarchilikka qanday munosabatda bo'lsa, Jasorat ham shunga o'xshab nimaga munosabatda bo'ladi:",
-            'options_ru': ['Отвага', 'Трусость', 'Сила', 'Опасность'],
-            'options_uz': ['Botirlik', "Qo'rqoqlik", 'Kuch', 'Xavf'],
+            'options_ru': ['Дерзкая отвага', 'Робкая трусость', 'Физическая сила', 'Скрытая опасность'],
+            'options_uz': ['Haqiqiy jasur botirlik', "Yuraksiz qo'rqoqlik", 'Kundalik jismoniy kuch', 'Kutilmagan yashirin xavf'],
             'correct_indices': [1],
         },
         {
@@ -3217,8 +3099,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Логическая головоломка', 'category_uz': 'Mantiqiy topishmoq',
             'prompt_ru': 'Четыре коллеги — Отабек, Шерзод, Дилшод и Фаррух — работают в разных отделах: маркетинг, финансы, IT, продажи. Отабек не работает в IT и не в продажах. Шерзод работает в финансах. Дилшод работает в IT. В каком отделе работает Отабек?',
             'prompt_uz': "To'rt hamkasb — Otabek, Sherzod, Dilshod va Farrux — turli bo'limlarda ishlaydi: marketing, moliya, IT, savdo. Otabek IT'da ham, savdoda ham ishlamaydi. Sherzod moliyada ishlaydi. Dilshod IT'da ishlaydi. Otabek qaysi bo'limda ishlaydi?",
-            'options_ru': ['Маркетинг', 'Финансы', 'IT', 'Продажи'],
-            'options_uz': ['Marketing', 'Moliya', 'IT', 'Savdo'],
+            'options_ru': ['Отдел маркетинга компании', 'Финансовый отдел компании', 'Отдел информационных технологий', 'Отдел продаж компании'],
+            'options_uz': ["Kompaniyaning marketing bo'limi", "Kompaniyaning moliya va hisob-kitob bo'limi", "Axborot texnologiyalari (IT) bo'limi", "Kompaniyaning savdo va marketing bo'limi"],
             'correct_indices': [0],
         },
         {
@@ -3280,8 +3162,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Логическая головоломка', 'category_uz': 'Mantiqiy topishmoq',
             'prompt_ru': 'В забеге участвовали Карим, Лочин, Мурод и Нодир. Мурод финишировал первым. Нодир финишировал вторым. Лочин финишировал сразу после Карима. Кто финишировал последним?',
             'prompt_uz': "Poygada Karim, Lochin, Murod va Nodir qatnashdi. Murod birinchi bo'lib yakunladi. Nodir ikkinchi bo'lib yakunladi. Lochin Karimdan darhol keyin yakunladi. Kim oxirgi bo'lib yakunladi?",
-            'options_ru': ['Карим', 'Лочин', 'Мурод', 'Нодир'],
-            'options_uz': ['Karim', 'Lochin', 'Murod', 'Nodir'],
+            'options_ru': ['Карим по всем расчётам финишировал последним', 'Лочин финишировал самым последним', 'Мурод неожиданно пришёл к финишу первым', 'Нодир в итоге финишировал предпоследним'],
+            'options_uz': ['Karim yugurishni oxirgi tugatdi', 'Lochin eng oxirida yakunladi', 'Murod poygani birinchi tugatdi', 'Nodir poygani oldingi oxirida tugatdi'],
             'correct_indices': [1],
         },
         {
@@ -3316,8 +3198,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Логическая головоломка', 'category_uz': 'Mantiqiy topishmoq',
             'prompt_ru': 'В шахматном турнире Замира обыграла Иноятову. Иноятова обыграла Каримову. Каримова обыграла Замиру. Каждая сыграла с каждой по одному разу. Есть ли среди них абсолютный победитель — та, что выиграла у обеих других?',
             'prompt_uz': "Shaxmat turnirida Zamira Inoyatovani, Inoyatova Karimovani, Karimova esa Zamirani yutdi. Har biri boshqasi bilan bir martadan o'ynadi. Ularning orasida ikkalasini ham yutgan mutlaq g'olib bormi?",
-            'options_ru': ['Да, Замира', 'Да, Иноятова', 'Да, Каримова', 'Нет, абсолютного победителя нет — результаты образуют цикл'],
-            'options_uz': ['Ha, Zamira', 'Ha, Inoyatova', 'Ha, Karimova', "Yo'q, mutlaq g'olib yo'q — natijalar aylanma tsikl hosil qiladi"],
+            'options_ru': ['Да, безусловно абсолютным победителем является Замира', 'Да, безусловно абсолютным победителем является Иноятова', 'Да, безусловно и однозначно абсолютным победителем является Каримова', 'Нет, абсолютного победителя нет — результаты образуют цикл'],
+            'options_uz': ["Ha, mutlaqo aniq mutlaq g'olib bu Zamira hisoblanadi", "Ha, mutlaqo aniq mutlaq g'olib bu Inoyatova hisoblanadi", "Ha, hech qanday shubhasiz mutlaq g'olib aynan Karimova hisoblanadi", "Yo'q, mutlaq g'olib yo'q — natijalar aylanma tsikl hosil qiladi"],
             'correct_indices': [3],
         },
         {
@@ -3325,8 +3207,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Логическая головоломка', 'category_uz': 'Mantiqiy topishmoq',
             'prompt_ru': 'Три ящика подписаны «Гвозди», «Шурупы» и «Гвозди и шурупы», но все три подписи неверны. Вы открываете ящик с надписью «Гвозди и шурупы» и находите там только гвозди. Что находится в ящике с надписью «Шурупы»?',
             'prompt_uz': "Uchta quti «Mixlar», «Shuruplar» va «Mixlar va shuruplar» deb yozilgan, lekin barcha yozuvlar noto'g'ri. «Mixlar va shuruplar» yozuvli qutini ochsangiz, u yerda faqat mixlar bor ekan. «Shuruplar» yozuvli qutida nima bor?",
-            'options_ru': ['Только гвозди', 'Только шурупы', 'Гвозди и шурупы', 'Пусто'],
-            'options_uz': ['Faqat mixlar', 'Faqat shuruplar', 'Mixlar va shuruplar', "Bo'sh"],
+            'options_ru': ['В этом ящике только одни гвозди без каких-либо шурупов', 'В этом ящике только одни шурупы без каких-либо гвоздей', 'Гвозди вместе с шурупами одновременно', 'Ящик, вопреки ожиданиям, оказался совершенно пустым'],
+            'options_uz': ['Bu qutida faqat shuruplarsiz mixlar bor ekan', 'Bu qutida faqat mixlarsiz shuruplar bor ekan', "Bir vaqtning o'zida mixlar va shuruplar", "Quti, kutilmaganda, butunlay bo'sh chiqib qoldi"],
             'correct_indices': [2],
         },
         {
@@ -3334,8 +3216,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Логическая головоломка', 'category_uz': 'Mantiqiy topishmoq',
             'prompt_ru': 'Дочь сестры моей матери приходится мне кем?',
             'prompt_uz': "Onamning singlisining qizi menga kim bo'ladi?",
-            'options_ru': ['Сестра', 'Двоюродная сестра', 'Племянница', 'Тётя'],
-            'options_uz': ['Opa-singil', 'Amakivachcha (jiyanavachcha)', 'Jiyan', 'Xola'],
+            'options_ru': ['Родная сестра по крови и воспитанию', 'Двоюродная сестра по материнской линии', 'Родная племянница по материнской линии семьи', 'Родная тётя со стороны родной матери'],
+            'options_uz': ["Qondosh opa-singil, ya'ni bir onadan tug'ilgan", 'Ona tomondan amakivachcha (jiyanavachcha)', 'Qondosh jiyan qiz, amakivachcha emas', "Ona tomondan xola, singlisining o'zi"],
             'correct_indices': [1],
         },
         {
@@ -3352,8 +3234,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Рыцари и лжецы', 'category_uz': "Ritsarlar va yolg'onchilar",
             'prompt_ru': 'Из двух людей один всегда говорит правду, другой всегда лжёт. Первый говорит: «Я лжец». Возможно ли это?',
             'prompt_uz': "Ikki kishidan biri doim rost, ikkinchisi doim yolg'on gapiradi. Birinchisi: «Men yolg'onchiman» deydi. Bu mumkinmi?",
-            'options_ru': ['Да, если это правдолюб', 'Да, если это лжец', 'Нет, это невозможно — никто из них не может так сказать', 'Только по выходным'],
-            'options_uz': ["Ha, agar u rostgo'y bo'lsa", "Ha, agar u yolg'onchi bo'lsa", "Yo'q, bu mumkin emas — ularning hech biri buni deya olmaydi", 'Faqat dam olish kunlari'],
+            'options_ru': ['Да, это вполне возможно, если он окажется настоящим правдолюбом', 'Да, это возможно, если он лжец', 'Нет, невозможно — никто из них не может это сказать', 'Только по выходным дням это возможно'],
+            'options_uz': ["Ha, bu albatta mumkin, agar u chindan ham rostgo'y bo'lib chiqsa", "Ha, bu mumkin, agar u yolg'onchi bo'lsa", "Yo'q, bu mumkin emas — ularning hech biri deya olmaydi", 'Faqat dam olish kunlarida bu mumkin'],
             'correct_indices': [2],
         },
         {
@@ -3370,8 +3252,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Рыцари и лжецы', 'category_uz': "Ritsarlar va yolg'onchilar",
             'prompt_ru': 'На острове живут только рыцари (всегда говорят правду) и лжецы (всегда лгут). Житель А говорит: «Я рыцарь». Что можно сказать про А?',
             'prompt_uz': "Orolda faqat ritsarlar (doim rost gapiradi) va yolg'onchilar (doim yolg'on gapiradi) yashaydi. Aholi A: «Men ritsarman» deydi. A haqida nima deyish mumkin?",
-            'options_ru': ['А точно рыцарь', 'А точно лжец', 'Нельзя определить, рыцарь он или лжец', 'А не житель острова'],
-            'options_uz': ['A aniq ritsar', "A aniq yolg'onchi", "Ritsar yoki yolg'onchi ekanini aniqlab bo'lmaydi", 'A orol aholisi emas'],
+            'options_ru': ['А совершенно точно является рыцарем', 'А совершенно точно является лжецом', 'Нельзя определить, рыцарь он или лжец', 'А вообще не является жителем этого острова'],
+            'options_uz': ['A mutlaqo aniq ritsar hisoblanadi', "A aniq mutlaqo yolg'onchi ekanligi hisoblanadi, deb aytish mumkin", "Ritsar yoki yolg'onchi ekanini aniqlab bo'lmaydi", 'A umuman bu orolning aholisi emas'],
             'correct_indices': [2],
         },
         {
@@ -3379,8 +3261,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Рыцари и лжецы', 'category_uz': "Ritsarlar va yolg'onchilar",
             'prompt_ru': 'Житель Б говорит: «Я лжец». Кем может быть Б?',
             'prompt_uz': "Aholi B: «Men yolg'onchiman» deydi. B kim bo'lishi mumkin?",
-            'options_ru': ['Только рыцарем', 'Только лжецом', 'Такого жителя не может существовать', 'И рыцарем, и лжецом одновременно'],
-            'options_uz': ['Faqat ritsar', "Faqat yolg'onchi", "Bunday aholi mavjud bo'lishi mumkin emas", "Bir vaqtning o'zida ham ritsar, ham yolg'onchi"],
+            'options_ru': ['Б может быть только рыцарем', 'Б может быть только лжецом', 'Такого жителя вообще не может существовать', 'Б является одновременно и рыцарем, и лжецом'],
+            'options_uz': ["B faqat ritsar bo'lishi mumkin", "B faqat yolg'onchi bo'lishi mumkin", "Bunday aholi umuman mavjud bo'lishi mumkin emas", "B bir vaqtning o'zida ham ritsar, ham yolg'onchi"],
             'correct_indices': [2],
         },
         {
@@ -3397,8 +3279,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Рыцари и лжецы', 'category_uz': "Ritsarlar va yolg'onchilar",
             'prompt_ru': 'Вы встречаете троих островитян — Л, М, Н. Л говорит: «Все мы лжецы». Может ли это быть правдой?',
             'prompt_uz': "Siz uchta orol aholisi — L, M, N bilan uchrashasiz. L: «Hammamiz yolg'onchimiz» deydi. Bu rost bo'lishi mumkinmi?",
-            'options_ru': ['Да, все трое лжецы', 'Нет, невозможно, чтобы все были лжецами', 'Только Л лжец, остальные рыцари', 'Нельзя определить'],
-            'options_uz': ["Ha, uchalasi ham yolg'onchi", "Yo'q, hammasi yolg'onchi bo'lishi mumkin emas", "Faqat L yolg'onchi, qolganlari ritsar", "Aniqlab bo'lmaydi"],
+            'options_ru': ['Да, все трое из них являются лжецами', 'Нет, невозможно, чтобы все трое были лжецами', 'Только один Л является лжецом, остальные рыцари', 'По имеющимся данным этого нельзя определить'],
+            'options_uz': ["Ha, uchalasi ham yolg'onchi hisoblanadi", "Yo'q, uchalasi ham yolg'onchi bo'lishi mumkin emas", "Faqat L yolg'onchi, qolgan ikkitasi ritsar", "Mavjud ma'lumotlarga ko'ra buni hech qanday aniqlab bo'lmaydi"],
             'correct_indices': [1],
         },
         {
@@ -3451,8 +3333,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Рыцари и лжецы', 'category_uz': "Ritsarlar va yolg'onchilar",
             'prompt_ru': 'На острове рыцарей и лжецов трое — Я1, Я2, Я3 — говорят по кругу: Я1: «Я2 — лжец». Я2: «Я3 — лжец». Я3: «Я1 — лжец». Сколько из них рыцари?',
             'prompt_uz': "Ritsarlar va yolg'onchilar orolida uchta kishi — Ya1, Ya2, Ya3 — aylana bo'ylab shunday deyishadi: Ya1: «Ya2 — yolg'onchi». Ya2: «Ya3 — yolg'onchi». Ya3: «Ya1 — yolg'onchi». Ulardan nechtasi ritsar?",
-            'options_ru': ['Все трое рыцари', 'Все трое лжецы', 'Ровно один рыцарь', 'Такая ситуация невозможна на острове рыцарей и лжецов'],
-            'options_uz': ['Uchalasi ham ritsar', "Uchalasi ham yolg'onchi", 'Aynan bitta ritsar', "Ritsarlar va yolg'onchilar orolida bunday holat mumkin emas"],
+            'options_ru': ['Все трое из них являются рыцарями', 'Все трое из них являются лжецами', 'Среди них ровно один и только один самый настоящий рыцарь', 'Такая ситуация невозможна на острове рыцарей и лжецов'],
+            'options_uz': ['Uchalasi ham ritsar hisoblanadi', "Uchalasi ham yolg'onchi hisoblanadi", 'Ular orasida aynan va faqat bitta chinakam haqiqiy ritsar mavjud', "Bunday holat ritsarlar va yolg'onchilar orolida mumkin emas"],
             'correct_indices': [3],
         },
         {
@@ -3487,8 +3369,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Условная логика', 'category_uz': 'Shartli mantiq',
             'prompt_ru': 'Если Марат в Ташкенте, он посещает работу. Марат посещает работу. Можно ли утверждать, что Марат в Ташкенте?',
             'prompt_uz': "Agar Marat Toshkentda bo'lsa, u ishga boradi. Marat ishga bormoqda. Marat Toshkentda, deb tasdiqlash mumkinmi?",
-            'options_ru': ['Да, точно в Ташкенте', 'Нет, нельзя сделать однозначный вывод', 'Нет, он точно не в Ташкенте', 'Работа доказывает обратное'],
-            'options_uz': ['Ha, aniq Toshkentda', "Yo'q, aniq xulosa chiqarib bo'lmaydi", "Yo'q, u aniq Toshkentda emas", 'Ish bu aksini isbotlaydi'],
+            'options_ru': ['Да, он точно находится в Ташкенте', 'Нет, нельзя сделать однозначный вывод', 'Нет, он точно не находится в Ташкенте', 'Посещение работы доказывает обратное утверждение'],
+            'options_uz': ['Ha, u aniq Toshkentda joylashgan', "Yo'q, aniq xulosa chiqarib bo'lmaydi", "Yo'q, u aniq Toshkentda emas ekan", 'Ishga borishi buning aksini isbotlaydi'],
             'correct_indices': [1],
         },
         {
@@ -3496,8 +3378,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Условная логика', 'category_uz': 'Shartli mantiq',
             'prompt_ru': 'Если завод работает, потребляется электричество. Завод не работает. Что из этого следует про потребление электричества?',
             'prompt_uz': 'Agar zavod ishlasa, elektr sarflanadi. Zavod ishlamayapti. Elektr sarfi haqida bundan nima kelib chiqadi?',
-            'options_ru': ['Электричество точно не потребляется', 'Нельзя точно сказать, потребляется ли электричество', 'Электричество потребляется в двойном объёме', 'Завод сломан'],
-            'options_uz': ['Elektr aniq sarflanmaydi', "Elektr sarflanayotgani haqida aniq gapirib bo'lmaydi", 'Elektr ikki barobar sarflanadi', 'Zavod buzilgan'],
+            'options_ru': ['Электричество точно не потребляется заводом в этот момент', 'Нельзя точно сказать, потребляется ли электричество', 'Электричество потребляется в двойном объёме', 'Завод, судя по всему, полностью сломан'],
+            'options_uz': ['Elektr zavod tomonidan hech qanday holatda sarflanmaydi', "Elektr sarflanayotgani haqida aniq gapirib bo'lmaydi", "Elektr ikki barobar ko'p sarflanadi", "Zavod, ko'rinishidan, butunlay buzilgan"],
             'correct_indices': [1],
         },
         {
@@ -3514,8 +3396,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Условная логика', 'category_uz': 'Shartli mantiq',
             'prompt_ru': 'Все сотрудники, опоздавшие более 3 раз, получают выговор. Азамат получил выговор. Следует ли из этого, что Азамат опоздал более 3 раз?',
             'prompt_uz': "3 martadan ko'p kechikkan barcha xodimlar tanbeh oladi. Azamat tanbeh oldi. Bundan Azamat 3 martadan ko'p kechikkan, degan xulosa kelib chiqadimi?",
-            'options_ru': ['Да, обязательно опоздал', 'Нет, нельзя точно сказать — выговор мог быть по другой причине', 'Нет, он вообще не опаздывал', 'Выговор всегда за опоздания'],
-            'options_uz': ['Ha, albatta kechikkan', "Yo'q, aniq deb bo'lmaydi — tanbeh boshqa sabab bilan bo'lishi mumkin", "Yo'q, u umuman kechikmagan", 'Tanbeh doim kechikish uchun beriladi'],
+            'options_ru': ['Да, он совершенно точно опоздал более трёх раз подряд', 'Нет, точно сказать нельзя — причина могла быть иной', 'Нет, он согласно всем данным вообще никогда не опаздывал', 'Выговор всегда и исключительно выдаётся за опоздания сотрудников'],
+            'options_uz': ['Ha, u albatta 3 martadan ortiq kechikkan edi', "Yo'q, aniq deb bo'lmaydi — sabab boshqa bo'lishi mumkin", "Yo'q, u umuman hech qachon kechikmagan edi", "Tanbeh doim faqat va faqat kechikish sababli beriladi, boshqa sabab yo'q"],
             'correct_indices': [1],
         },
         {
@@ -3550,8 +3432,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Условная логика', 'category_uz': 'Shartli mantiq',
             'prompt_ru': 'Если студент сдал все экзамены, он получает диплом. Студент не получил диплом. Что из этого следует?',
             'prompt_uz': "Agar talaba barcha imtihonlarni topshirgan bo'lsa, u diplom oladi. Talaba diplom olmadi. Bundan nima kelib chiqadi?",
-            'options_ru': ['Студент не сдал все экзамены', 'Студент сдал все экзамены', 'Диплом потерян', 'Ничего определённого'],
-            'options_uz': ['Talaba barcha imtihonlarni topshirmagan', 'Talaba barcha imtihonlarni topshirgan', "Diplom yo'qolgan", 'Hech narsa aniq emas'],
+            'options_ru': ['Студент не сдал все экзамены полностью', 'Студент точно сдал все экзамены', 'Диплом был потерян по ошибке', 'Из этого ничего определённого не следует'],
+            'options_uz': ["Talaba barcha imtihonlarni to'liq topshirmagan", 'Talaba albatta barcha imtihonlarni topshirgan edi', "Diplom negadir xato bilan yo'qolib qolgan", 'Bundan hech qanday narsa aniq kelib chiqmaydi'],
             'correct_indices': [0],
         },
         {
@@ -3586,8 +3468,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Условная логика', 'category_uz': 'Shartli mantiq',
             'prompt_ru': 'Все программисты знают алгоритмы. Некоторые из тех, кто знает алгоритмы, работают в IT. Тимур работает в IT. Следует ли из этого, что Тимур — программист?',
             'prompt_uz': "Barcha dasturchilar algoritmlarni biladi. Algoritmlarni biladiganlarning ba'zilari IT'da ishlaydi. Temur IT'da ishlaydi. Bundan Temur dasturchi, degan xulosa kelib chiqadimi?",
-            'options_ru': ['Да, обязательно программист', 'Нет, нельзя сделать такой вывод', 'Нет, он точно не программист', 'Это зависит от зарплаты'],
-            'options_uz': ['Ha, albatta dasturchi', "Yo'q, bunday xulosa chiqarib bo'lmaydi", "Yo'q, u aniq dasturchi emas", "Bu maoshga bog'liq"],
+            'options_ru': ['Да, он обязательно является программистом', 'Нет, такой вывод сделать нельзя', 'Нет, он точно не является программистом', 'Это полностью зависит от размера зарплаты'],
+            'options_uz': ['Ha, u albatta dasturchi hisoblanadi, shubhasiz', "Yo'q, bunday xulosa chiqarib bo'lmaydi", "Yo'q, u hech qachon dasturchi emas ekan", "Bu masala to'liq maosh miqdoriga bog'liq"],
             'correct_indices': [1],
         },
         {
@@ -3595,8 +3477,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Классификация', 'category_uz': 'Tasniflash',
             'prompt_ru': 'Найдите лишнее слово: Яблоко, Банан, Морковь, Груша',
             'prompt_uz': "Ortiqcha so'zni toping: Olma, Banan, Sabzi, Nok",
-            'options_ru': ['Яблоко', 'Банан', 'Морковь', 'Груша'],
-            'options_uz': ['Olma', 'Banan', 'Sabzi', 'Nok'],
+            'options_ru': ['Очень сочное яблоко', 'Довольно спелый банан', 'Корнеплод морковь', 'Очень сочная груша'],
+            'options_uz': ['Juda sersuv olma', "To'liq pishgan banan", 'Ildizmeva sabzi', 'Juda sersuv nok'],
             'correct_indices': [2],
         },
         {
@@ -3694,8 +3576,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Классификация', 'category_uz': 'Tasniflash',
             'prompt_ru': 'Найдите лишнее слово: Лондон, Париж, Европа, Мадрид',
             'prompt_uz': "Ortiqcha so'zni toping: London, Parij, Yevropa, Madrid",
-            'options_ru': ['Лондон', 'Париж', 'Европа', 'Мадрид'],
-            'options_uz': ['London', 'Parij', 'Yevropa', 'Madrid'],
+            'options_ru': ['Крупный город Лондон', 'Крупный город Париж', 'Часть света Европа', 'Крупный город Мадрид'],
+            'options_uz': ['Mashhur London shahri', 'Mashhur Parij shahri', "Qit'a qismi Yevropa", 'Mashhur Madrid shahri'],
             'correct_indices': [2],
         },
         {
@@ -3721,8 +3603,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Пространственная логика', 'category_uz': 'Fazoviy mantiq',
             'prompt_ru': 'На листе бумаги нарисован квадрат. Если его повернуть на 45°, каким становится его внешний вид?',
             'prompt_uz': "Qog'ozda kvadrat chizilgan. Agar uni 45° ga aylantirsangiz, uning ko'rinishi qanday bo'ladi?",
-            'options_ru': ['Он становится ромбом (другой фигурой)', 'Он выглядит как повёрнутый квадрат («алмаз»), оставаясь квадратом', 'Он превращается в треугольник', 'Он становится кругом'],
-            'options_uz': ["U romb (boshqa shakl) bo'lib qoladi", "U aylantirilgan kvadrat («olmos») ko'rinishida bo'ladi, lekin kvadrat bo'lib qoladi", 'U uchburchakka aylanadi', 'U doiraga aylanadi'],
+            'options_ru': ['Он становится ромбом, то есть другой фигурой', 'Он выглядит как повёрнутый квадрат, оставаясь квадратом', 'Он полностью и совершенно бесповоротно превращается в треугольник', 'Он неожиданно становится идеальным кругом'],
+            'options_uz': ["U romb, ya'ni butunlay boshqa geometrik shaklga aylanadi", "U aylangan kvadrat («olmos») ko'rinishida bo'ladi", "U to'liq va qaytarilmas tarzda uchburchakka aylanadi", 'U kutilmaganda mukammal geometrik doiraga aylanadi'],
             'correct_indices': [1],
         },
         {
@@ -3775,8 +3657,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Пространственная логика', 'category_uz': 'Fazoviy mantiq',
             'prompt_ru': 'Часы показывают 3:15. На сколько градусов часовая стрелка сдвинута от отметки «3»?',
             'prompt_uz': "Soat 3:15 ni ko'rsatmoqda. Soat mili «3» belgisidan necha darajaga siljigan?",
-            'options_ru': ['0°', '7.5°', '15°', '30°'],
-            'options_uz': ['0°', '7.5°', '15°', '30°'],
+            'options_ru': ['Абсолютно ровно ноль градусов', 'Семь целых пять десятых градуса', 'Абсолютно ровно пятнадцать градусов', 'Абсолютно ровно тридцать градусов'],
+            'options_uz': ['Mutlaqo aniq nol daraja', "Yetti butun besh o'ndan daraja", "Mutlaqo aniq o'n besh butun daraja", "Mutlaqo aniq o'ttiz daraja"],
             'correct_indices': [1],
         },
         {
@@ -3811,8 +3693,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Семейная логика', 'category_uz': 'Oilaviy mantiq',
             'prompt_ru': 'Сын моего отца, который не является мной, — это мой:',
             'prompt_uz': "Otamning o'g'li, men emas, — bu mening:",
-            'options_ru': ['Брат', 'Отец', 'Дядя', 'Сын'],
-            'options_uz': ['Akam/ukam', 'Otam', 'Amakim', "O'g'lim"],
+            'options_ru': ['Родной брат по крови', 'Мой собственный отец', 'Родной дядя по отцовской линии', 'Мой собственный сын'],
+            'options_uz': ['Qondosh akam yoki ukam', "Aslida bu mening otam bo'ladi", "Aslida bu ota tomondan amakim bo'ladi", "Aslida bu mening o'g'lim bo'ladi"],
             'correct_indices': [0],
         },
         {
@@ -5982,16 +5864,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Определение проблемы', 'category_uz': 'Muammoni aniqlash',
             'prompt_ru': 'Какой самый первый и самый важный этап успешного решения проблемы?',
             'prompt_uz': 'Muammoni muvaffaqiyatli hal qilishning eng birinchi va eng muhim bosqichi qaysi?',
-            'options_ru': [
-                'Сразу составить план из нескольких решений',
-                'Чётко сформулировать проблему и проанализировать её первопричину',
-                'Попросить помощи у окружающих', 'Ждать, пока проблема решится сама собой',
-            ],
-            'options_uz': [
-                'Darhol bir nechta yechimlar rejasini yozish',
-                'Muammoni aniq taʼriflash va uning kelib chiqish ildizini (sababini) tahlil qilish',
-                'Atrofdagilardan yordam soʻrash', 'Muammoning oʻz-oʻzidan hal boʻlishini kutish',
-            ],
+            'options_ru': ['Сразу составить план из нескольких возможных решений, даже не разобравшись в сути самой проблемы', 'Чётко сформулировать проблему и проанализировать её первопричину', 'Попросить помощи у окружающих, не пытаясь сначала понять проблему самостоятельно', 'Ждать, пока проблема решится сама собой без каких-либо действий с вашей стороны'],
+            'options_uz': ['Darhol muammoning mohiyatini tushunib yetmasdan bir nechta yechimlar rejasini yozish', 'Muammoni aniq taʼriflash va uning kelib chiqish ildizini (sababini) tahlil qilish', 'Atrofdagilardan yordam soʻrab, muammoni oʻzi tahlil qilib oʻtirmaslik', 'Muammoning hech narsa qilmasdan oʻz-oʻzidan hal boʻlishini kutib turish'],
             'correct_indices': [1],
         },
         {
@@ -6005,16 +5879,8 @@ MCQ_QUESTIONS = {
                 'Guruh boʻlib ishlayotganingizda, loyihaning muhim qismiga masʼul boʻlgan guruhdoshingiz '
                 'belgilangan muddatga (dedlaynga) ulgura olmasligini aytdi. Qaysi harakat eng toʻgʻri muammoli yechim hisoblanadi?'
             ),
-            'options_ru': [
-                'Исключить его из группы и пожаловаться преподавателю',
-                'Перераспределить задачи между оставшимися членами группы и помочь ему завершить оставшуюся часть',
-                'Пропустить срок сдачи проекта', 'Сделать всю работу самому вместо него и перестать с ним разговаривать',
-            ],
-            'options_uz': [
-                'Uni guruhdan chetlashtirish va oʻqituvchiga shikoyat qilish',
-                'Guruhning qolgan aʼzolari oʻrtasida vazifalarni qayta taqsimlab, unga qolgan qismni yakunlashga koʻmaklashish',
-                'Loyihani topshirish muddatini oʻtkazib yuborish', 'Uning oʻrniga hamma ishni bir oʻzi bajarish va guruhdoshi bilan gaplashmay qoʻyish',
-            ],
+            'options_ru': ['Исключить его из группы и сразу пожаловаться преподавателю, не пытаясь решить проблему своими силами', 'Перераспределить задачи между оставшимися членами группы и помочь ему завершить оставшуюся часть', 'Пропустить срок сдачи проекта, ничего не предпринимая и не предупредив преподавателя заранее', 'Сделать всю работу самому вместо него и перестать с ним разговаривать, затаив на него обиду'],
+            'options_uz': ['Uni guruhdan darhol chetlashtirish va muammoni oʻzi hal qilishga urinmasdan oʻqituvchiga shikoyat qilish', 'Guruhning qolgan aʼzolari oʻrtasida vazifalarni qayta taqsimlab, unga qolgan qismni yakunlashga koʻmaklashish', 'Oʻqituvchiga oldindan xabar bermay, loyihani topshirish muddatini shunchaki oʻtkazib yuborish, vaziyat aynan nega yuzaga kelganini tushunib yetmasdan', 'Uning oʻrniga hamma ishni bir oʻzi bajarish va guruhdoshi bilan gaplashmay qoʻyish, ichida gina saqlash'],
             'correct_indices': [1],
         },
         {
@@ -6028,16 +5894,8 @@ MCQ_QUESTIONS = {
                 'Ilmiy tadqiqot yoki loyiha ustida ishlayotganingizda, kutilmaganda dastlabki gipotezangiz '
                 '(taxminingiz) mutloq xato boʻlib chiqdi. Bu vaziyatda nima qilasiz?'
             ),
-            'options_ru': [
-                'Полностью прекратите исследование', 'Подделаете реальные цифры и результаты, чтобы они соответствовали гипотезе',
-                'Примете неверный результат как научный факт, проанализируете причину ошибки и разработаете новую гипотезу',
-                'Свалите вину на лабораторное оборудование',
-            ],
-            'options_uz': [
-                'Tadqiqotni butunlay toʻxtatasiz', 'Gipotezaga mos kelishi uchun real raqamlar va natijalarni soxtalashtirasiz',
-                'Notoʻgʻri chiqqan natijani ham ilmiy fakt deb qabul qilib, xatolik sababini tahlil qilasiz va yangi gipoteza ishlab chiqasiz',
-                'Aybni laboratoriya jihozlariga agʻdaradi',
-            ],
+            'options_ru': ['Полностью прекратите исследование, посчитав, что дальнейшая работа уже не имеет смысла, что удобно в моменте, но не эффективно в долгосрочной перспективе', 'Подделаете реальные цифры и результаты, чтобы они соответствовали первоначальной гипотезе любой ценой', 'Примете неверный результат как научный факт, проанализируете причину ошибки и разработаете новую гипотезу', 'Свалите вину на лабораторное оборудование, не проверив реальную причину расхождения, лишь бы побыстрее закрыть вопрос'],
+            'options_uz': ['Tadqiqotni butunlay toʻxtatasiz, davom etishning maʼnosi qolmadi deb hisoblab, bu vaqtincha qulay boʻlsa-da, uzoq muddatda samarasiz', 'Gipotezaga har qanday yoʻl bilan mos kelishi uchun real raqamlar va natijalarni soxtalashtirasiz, vaziyat aynan nega yuzaga kelganini tushunib yetmasdan', 'Notoʻgʻri chiqqan natijani ham ilmiy fakt deb qabul qilib, xatolik sababini tahlil qilasiz va yangi gipoteza ishlab chiqasiz', 'Aybni haqiqiy sababni tekshirmasdan laboratoriya jihozlariga agʻdaradi, faqat masalani tezroq yopish uchun, bu bilan bevosita bogʻliq odamlarning fikrini soʻramasdan'],
             'correct_indices': [2],
         },
         {
@@ -6051,16 +5909,8 @@ MCQ_QUESTIONS = {
                 'Siz tayyorlagan dasturiy taʼminot yoki loyiha taqdimotiga hakamlar hayʼati juda keskin, salbiy '
                 'fikr bildirishdi. Konstruktiv muammo yechuvchi talabaning reaksiyasi qanday boʻladi?'
             ),
-            'options_ru': [
-                'Спорить с жюри, обвиняя их в некомпетентности',
-                'Отложить эмоции в сторону, выделить обоснованные пункты критики и составить план доработки проекта',
-                'Выбросить проект и больше не возвращаться к этой сфере', 'Проигнорировать критику и оставить проект без изменений',
-            ],
-            'options_uz': [
-                'Hakamlar hayʼati bilan tortishib, ularni maʼlumotsizlikda ayblaydi',
-                'Hissiyotlarni chetga surib, tanqidlardagi asosli punktlarni ajratib oladi va loyihani takomillashtirish rejasini tuzadi',
-                'Loyihani axlatga tashlab, boshqa bu sohaga qaytmaydi', 'Tanqidlarga eʼtibor bermay, loyihani oʻzgarishsiz qoldiradi',
-            ],
+            'options_ru': ['Спорить с жюри, обвиняя их в некомпетентности и предвзятом отношении к проекту, не разобравшись, почему ситуация возникла именно так', 'Отложить эмоции в сторону, выделить обоснованные пункты критики и составить план доработки проекта', 'Выбросить проект и больше никогда не возвращаться к этой сфере деятельности, лишь бы побыстрее закрыть вопрос', 'Проигнорировать критику и оставить проект без единого изменения, считая его идеальным, не привлекая к обсуждению тех, кого это касается напрямую'],
+            'options_uz': ['Hakamlar hayʼati bilan tortishib, ularni maʼlumotsizlikda va xolis emaslikda ayblaydi, vaziyat aynan nega yuzaga kelganini tushunib yetmasdan', 'Hissiyotlarni chetga surib, tanqidlardagi asosli punktlarni ajratib oladi va loyihani takomillashtirish rejasini tuzadi', 'Loyihani axlatga tashlab, boshqa hech qachon bu sohaga qaytmaslikka qaror qiladi, faqat masalani tezroq yopish uchun', 'Tanqidlarga umuman eʼtibor bermay, loyihani mutlaqo oʻzgarishsiz qoldiradi, bu bilan bevosita bogʻliq odamlarning fikrini soʻramasdan'],
             'correct_indices': [1],
         },
         {
@@ -6074,16 +5924,8 @@ MCQ_QUESTIONS = {
                 'Universitet kutubxonasida talabalar juda koʻp navbat kutib qolishmoqda va bu norozilik '
                 'tugʻdirmoqda. Ushbu muammoni tizimli hal qilish uchun qaysi yondashuv eng toʻgʻri?'
             ),
-            'options_ru': [
-                'Ограничить доступ студентов в библиотеку', 'Нанять охранника для наведения порядка в очереди',
-                'Проанализировать процесс и оцифровать выдачу/приём книг (внедрить QR-коды или электронный каталог)',
-                'Полностью закрыть библиотеку',
-            ],
-            'options_uz': [
-                'Kutubxonaga talabalarni kiritishni cheklash', 'Navbatda turganlarni tartibga solish uchun qoʻriqchi yollash',
-                'Jarayonni tahlil qilib, kitob olish/topshirishni raqamlashtirish (QR-kod yoki elektron katalog tizimini joriy etish)',
-                'Kutubxonani butunlay yopib qoʻyish',
-            ],
+            'options_ru': ['Ограничить доступ студентов в библиотеку, сократив часы её работы, что скорее усугубит ситуацию, чем поможет её решить', 'Нанять охранника для наведения порядка в очереди, не меняя сам процесс выдачи книг, лишь бы побыстрее закрыть вопрос', 'Проанализировать процесс и оцифровать выдачу/приём книг (внедрить QR-коды или электронный каталог)', 'Полностью закрыть библиотеку до устранения проблемы с очередями, хотя объективных оснований для такого выбора недостаточно'],
+            'options_uz': ['Kutubxonaga talabalarni kiritishni cheklab, ish vaqtini qisqartirish, bu holatni yaxshilash oʻrniga aksincha yomonlashtirishi mumkin', 'Navbatda turganlarni tartibga solish uchun qoʻriqchi yollash, jarayonning oʻzini oʻzgartirmasdan, faqat masalani tezroq yopish uchun', 'Jarayonni tahlil qilib, kitob olish/topshirishni raqamlashtirish (QR-kod yoki elektron katalog tizimini joriy etish)', 'Muammo hal boʻlgunga qadar kutubxonani butunlay yopib qoʻyish, garchi bunday tanlov uchun yetarli asos boʻlmasa-da'],
             'correct_indices': [2],
         },
         {
@@ -6097,16 +5939,8 @@ MCQ_QUESTIONS = {
                 'Imtihon topshirish jarayonida kompyuter tizimi toʻsatdan oʻchib qoldi va siz kiritgan barcha '
                 'javoblar oʻchib ketdi. Birinchi navbatda nima qilasiz?'
             ),
-            'options_ru': [
-                'Устроите скандал и уйдёте из здания, где проходит экзамен',
-                'Немедленно сообщите о ситуации проверяющему (или технику) и зафиксируете проблему актом',
-                'Попытаетесь сами разобрать компьютер и починить его', 'Будете просто сидеть и плакать',
-            ],
-            'options_uz': [
-                'Baqir-chaqir qilib, imtihon binosidan chiqib ketasiz',
-                'Vaziyatni darhol nazoratchiga (yoki texnik xodimga) xabar qilib, muammoni bayonnoma (akt) orqali qayd ettirasiz',
-                'Kompyuterni oʻzingiz ochib, tuzatishga harakat qilasiz', 'Yigʻlab oʻtiraverasiz',
-            ],
+            'options_ru': ['Устроите скандал и уйдёте из здания, где проходит экзамен, не сообщив никому о случившемся', 'Немедленно сообщите о ситуации проверяющему (или технику) и зафиксируете проблему актом', 'Попытаетесь сами разобрать компьютер и починить его прямо во время экзамена', 'Будете просто сидеть и плакать, ничего не предпринимая для решения ситуации'],
+            'options_uz': ['Baqir-chaqir qilib, hech kimga xabar bermasdan imtihon binosidan chiqib ketasiz, faqat masalani tezroq yopish uchun', 'Vaziyatni darhol nazoratchiga (yoki texnik xodimga) xabar qilib, muammoni bayonnoma (akt) orqali qayd ettirasiz', 'Kompyuterni oʻzingiz ochib, aynan imtihon vaqtida tuzatishga harakat qilasiz, garchi bunday tanlov uchun yetarli asos boʻlmasa-da', 'Hech narsa qilmasdan, shunchaki yigʻlab oʻtiraverasiz, bu esa tizimli emas, balki yuzaki yondashuvga xos'],
             'correct_indices': [1],
         },
         {
@@ -6120,14 +5954,8 @@ MCQ_QUESTIONS = {
                 'Agar muammoning yechimi haqida faqat bitta variant boʻlsa va guruh aʼzolari unga koʻr-koʻrona '
                 'ergashishayotgan boʻlsa, ushbu holat qanday salbiy kognitiv xatolikka olib kelishi mumkin?'
             ),
-            'options_ru': [
-                'К избытку информации', 'К групповому мышлению (Groupthink) — потере критического подхода',
-                'К алгоритмизации', 'К экономии времени',
-            ],
-            'options_uz': [
-                'Maʼlumotlar koʻpligiga', 'Guruhbozlik fikrlashi (Groupthink) — tanqidiy yondashuvning yoʻqolishi',
-                'Algoritmlashishga', 'Vaqtni tejashga',
-            ],
+            'options_ru': ['К избыточной перегрузке команды ненужной информацией, не привлекая к обсуждению тех, кого это касается напрямую', 'К групповому мышлению (Groupthink) — потере критического подхода', 'К излишней алгоритмизации всех последующих решений, что typично для поверхностного, а не системного подхода', 'К незначительной экономии времени на обсуждение, отказываясь от анализа в пользу самого простого варианта'],
+            'options_uz': ['Jamoaning keraksiz maʼlumotlar bilan ortiqcha yuklanishiga, bu bilan bevosita bogʻliq odamlarning fikrini soʻramasdan', 'Guruhbozlik fikrlashi (Groupthink) — tanqidiy yondashuvning yoʻqolishi', 'Keyingi barcha qarorlarning haddan tashqari algoritmlashishiga, bu esa tizimli emas, balki yuzaki yondashuvga xos', 'Muhokama uchun vaqtni sal-pal tejashga, tahlil qilish oʻrniga eng sodda variantni tanlab'],
             'correct_indices': [1],
         },
         {
@@ -6141,16 +5969,8 @@ MCQ_QUESTIONS = {
                 'Jamoada ikki yetakchi talaba oʻrtasida loyihani amalga oshirish strategiyasi boʻyicha '
                 'murosasiz nizo kelib chiqdi. Muammoni yechuvchi (mediator) sifatida qanday yoʻl tutasiz?'
             ),
-            'options_ru': [
-                'Встанете на сторону более сильного лидера', 'Отстраните обоих лидеров от проекта',
-                'Сведёте аргументы обеих сторон в таблицу и оцените по объективным критериям, что больше соответствует цели проекта',
-                'Оставите проблему без внимания',
-            ],
-            'options_uz': [
-                'Kuchliroq yetakchining tarafini olasiz', 'Ikkala yetakchini ham loyihadan chetlatasiz',
-                'Har ikki tomonning argumentlarini jadvalga solib, loyiha maqsadiga qaysi biri eng koʻp mos kelishini xolis mezonlar asosida baholaysiz',
-                'Muammoni oʻz holiga tashlab qoʻyasiz',
-            ],
+            'options_ru': ['Встанете на сторону того лидера, чьё мнение вам ближе по-человечески, хотя объективных оснований для такого выбора недостаточно', 'Отстраните обоих лидеров от проекта, чтобы конфликт прекратился сам собой, что typично для поверхностного, а не системного подхода', 'Сведёте аргументы обеих сторон в таблицу и оцените по объективным критериям, что больше соответствует цели проекта', 'Оставите проблему без внимания, надеясь, что конфликт утихнет сам, вместо того чтобы вникнуть в суть происходящего'],
+            'options_uz': ['Sizga insoniy jihatdan yaqinroq boʻlgan yetakchining tarafini olasiz, garchi bunday tanlov uchun yetarli asos boʻlmasa-da, bu esa tizimli emas, balki yuzaki yondashuvga xos', 'Nizo oʻz-oʻzidan tugashi uchun ikkala yetakchini ham loyihadan chetlatasiz, tahlil qilish oʻrniga eng sodda variantni tanlab', 'Har ikki tomonning argumentlarini jadvalga solib, loyiha maqsadiga qaysi biri eng koʻp mos kelishini xolis mezonlar asosida baholaysiz', 'Nizo oʻzi tinchishini umid qilib, muammoni oʻz holiga tashlab qoʻyasiz, vaziyatning mohiyatiga chuqur kirmasdan, bu qisqa muddatli yengillik bersa-da, ishni hal qilmaydi'],
             'correct_indices': [2],
         },
         {
@@ -6158,16 +5978,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Декомпозиция', 'category_uz': 'Dekompozitsiya',
             'prompt_ru': 'Что означает метод «Декомпозиции» при решении сложной математической или программистской задачи?',
             'prompt_uz': "Murakkab matematik yoki dasturlash masalasini yechishda 'Dekompozitsiya' metodi nimani anglatadi?",
-            'options_ru': [
-                'Полностью отказаться от решения задачи',
-                'Разделить большую и сложную проблему на более мелкие части (подзадачи), которые легче решать последовательно',
-                'Искать ответ на задачу в интернете', 'Рассказывать формулы наизусть',
-            ],
-            'options_uz': [
-                'Masalani yechishdan butunlay voz kechishni',
-                'Katta va murakkab muammoni ketma-ket yechilishi oson boʻlgan kichikroq boʻlaklarga (sub-muammolarga) boʻlishni',
-                'Masalaning javobini internetdan izlashni', 'Formulalarni yoddan aytib berishni',
-            ],
+            'options_ru': ['Полностью отказаться от решения задачи, посчитав её слишком сложной, что typично для поверхностного, а не системного подхода', 'Разделить большую и сложную проблему на более мелкие части (подзадачи), которые легче решать последовательно', 'Искать готовый ответ на задачу в интернете, не пытаясь понять её логику, вместо того чтобы вникнуть в суть происходящего', 'Рассказывать все известные формулы наизусть, не применяя их к задаче, что может дать кратковременное облегчение, но не решает дела'],
+            'options_uz': ['Masalani juda murakkab deb hisoblab, uni yechishdan butunlay voz kechishni, bu esa tizimli emas, balki yuzaki yondashuvga xos', 'Katta va murakkab muammoni ketma-ket yechilishi oson boʻlgan kichikroq boʻlaklarga (sub-muammolarga) boʻlishni', 'Masalaning tayyor javobini mantigʻini tushunmasdan internetdan izlashni, vaziyatning mohiyatiga chuqur kirmasdan', 'Masalaga taalluqli boʻlmasa ham, barcha formulalarni yoddan aytib berishni, bu qisqa muddatli yengillik bersa-da, ishni hal qilmaydi'],
             'correct_indices': [1],
         },
         {
@@ -6181,16 +5993,8 @@ MCQ_QUESTIONS = {
                 'Startup loyihangiz uchun investorlar oldida nutq soʻzlashingiz kerak, biroq sizga berilgan '
                 'vaqt kutilmaganda 15 daqiqadan 3 daqiqaga qisqartirildi. Muammoni qanday yechasiz?'
             ),
-            'options_ru': [
-                'Откажетесь от презентации из-за нехватки времени', 'Попытаетесь очень быстро проговорить стандартные слайды',
-                'Перейдёте в формат «Elevator Pitch» и объясните только проблему, ваше решение и экономическую выгоду проекта (самую суть)',
-                'Начнёте спорить с инвесторами, требуя не сокращать время',
-            ],
-            'options_uz': [
-                'Vaqt kamligi uchun taqdimot qilishdan bosh tortasiz', 'Standart slaydlarni juda tez gapirib oʻqishga harakat qilasiz',
-                "'Elevator Pitch' formatiga oʻtib, faqat muammo, sizning yechimingiz va loyihaning iqtisodiy foydasini (eng asosiy magʻzini) tushuntirasiz",
-                'Investorlardan vaqtni qisqartirmaslikni talab qilib bahslashasiz',
-            ],
+            'options_ru': ['Откажетесь от презентации вовсе, решив, что за 3 минуты рассказать нечего, оставляя реальную проблему нерешённой', 'Попытаетесь очень быстро проговорить все стандартные слайды, не пропуская ни одного, что не устраняет истинную причину проблемы', 'Перейдёте в формат «Elevator Pitch» и объясните только проблему, ваше решение и экономическую выгоду проекта (самую суть)', 'Начнёте спорить с инвесторами, требуя вернуть исходные 15 минут, даже не пытаясь разобраться в первопричине происходящего'],
+            'options_uz': ['3 daqiqada hech narsa aytib boʻlmaydi deb, taqdimotdan butunlay bosh tortasiz, haqiqiy muammoni hal qilinmagan holicha qoldirib', 'Hech bir slaydni qoldirmasdan, barchasini juda tez va notoʻgʻri urgʻular bilan gapirib oʻqishga harakat qilasiz, bu esa muammoning haqiqiy sababini bartaraf etmaydi', "'Elevator Pitch' formatiga oʻtib, faqat muammo, sizning yechimingiz va loyihaning iqtisodiy foydasini (eng asosiy magʻzini) tushuntirasiz", 'Investorlardan asl 15 daqiqani qaytarishni talab qilib bahslashasiz, vaziyatning tub sababini aniqlashga hatto urinib koʻrmasdan'],
             'correct_indices': [2],
         },
         {
@@ -6204,16 +6008,8 @@ MCQ_QUESTIONS = {
                 "Talabalarda oʻquv yili davomida surunkali charchoq va dars oʻzlashtirishning pasayishi "
                 "kuzatilmoqda. Ushbu muammoning haqiqiy sababini topish uchun '5 Nega?' metodi qanday ishlaydi?"
             ),
-            'options_ru': [
-                'Проведя со студентами 5 экзаменов',
-                'Последовательно задавая вопрос «Почему?» к каждой выявленной причине, дойдя до истинного корня проблемы (например, до неправильно составленного расписания)',
-                'Разделив проблему на 5 групп', 'Обсуждая проблему в течение 5 дней',
-            ],
-            'options_uz': [
-                'Talabalardan 5 marta imtihon olish orqali',
-                'Har bir aniqlangan sababga ketma-ket "Nima uchun?" savolini berish orqali muammoning tub ildiziga (masalan, notoʻgʻri tuzilgan dars jadvaliga) yetib borish',
-                'Muammoni 5 ta guruhga boʻlish orqali', 'Muammoni 5 kun davomida muhokama qilish orqali',
-            ],
+            'options_ru': ['Проведя со студентами подряд 5 дополнительных контрольных экзаменов, что не устраняет истинную причину проблемы, хотя это лишь временная мера, а не системное решение', 'Последовательно задавая вопрос «Почему?» к каждой выявленной причине, дойдя до истинного корня проблемы (например, до неправильно составленного расписания)', 'Разделив саму проблему условно на 5 равных групп для обсуждения, даже не пытаясь разобраться в первопричине происходящего, что перекладывает ответственность на других, а не решает вопрос', 'Обсуждая проблему на общем собрании в течение 5 дней подряд, полагаясь на удачу вместо продуманного анализа ситуации, не учитывая долгосрочные последствия такого решения'],
+            'options_uz': ['Talabalardan ketma-ket 5 marta qoʻshimcha imtihon olish orqali, bu esa muammoning haqiqiy sababini bartaraf etmaydi, garchi bu faqat vaqtinchalik chora boʻlib, tizimli yechim emas', 'Har bir aniqlangan sababga ketma-ket "Nima uchun?" savolini berish orqali muammoning tub ildiziga (masalan, notoʻgʻri tuzilgan dars jadvaliga) yetib borish', 'Muammoning oʻzini shartli ravishda 5 ta guruhga boʻlish orqali, vaziyatning tub sababini aniqlashga hatto urinib koʻrmasdan, bu esa haqiqiy yechim oʻrniga javobgarlikni boshqalarga yuklaydi', 'Muammoni umumiy yigʻilishda 5 kun davomida muhokama qilish orqali, vaziyatni puxta tahlil qilish oʻrniga omadga tayanib, bunday qarorning uzoq muddatli oqibatlarini eʼtiborga olmasdan'],
             'correct_indices': [1],
         },
         {
@@ -6227,16 +6023,8 @@ MCQ_QUESTIONS = {
                 'Siz ishlab chiqqan dasturiy vosita sinov imtihonida kutilgan natijani bermadi (talabalarning '
                 'bahosi koʻtarilmadi). Birinchi texnik qadamingiz nima boʻlishi kerak?'
             ),
-            'options_ru': [
-                'Полностью удалить программу', 'Свалить вину на уровень знаний студентов',
-                'Провести диагностику: собрать обратную связь, чтобы определить, какой модуль программы (методический, визуальный или тестовый) не работает',
-                'Заново испытать программу без изменений в другой группе',
-            ],
-            'options_uz': [
-                'Dasturni butunlay oʻchirib tashlash', 'Aybni talabalarning bilim darajasiga toʻnkash',
-                'Diagnostika oʻtkazish: Dasturning qaysi moduli (metodologik, vizual yoki test qismi) ish bermayotganini aniqlash uchun qayta aloqa (faydbek) yigʻish',
-                'Dasturni oʻzgartirmasdan boshqa guruhda qayta sinab koʻrish',
-            ],
+            'options_ru': ['Полностью удалить программу, посчитав саму идею неудачной, хотя это лишь временная мера, а не системное решение, даже не пытаясь разобраться в первопричине происходящего', 'Свалить вину на низкий уровень знаний студентов, не проверив саму программу, что перекладывает ответственность на других, а не решает вопрос', 'Провести диагностику: собрать обратную связь, чтобы определить, какой модуль программы (методический, визуальный или тестовый) не работает', 'Заново испытать программу без единого изменения в другой группе студентов, полагаясь на удачу вместо продуманного анализа ситуации'],
+            'options_uz': ['Gʻoyaning oʻzi muvaffaqiyatsiz deb hisoblab, dasturni butunlay oʻchirib tashlash, garchi bu faqat vaqtinchalik chora boʻlib, tizimli yechim emas', 'Dasturni tekshirmasdan aybni talabalarning bilim darajasiga toʻnkash, vaziyatning tub sababini aniqlashga hatto urinib koʻrmasdan, bu esa haqiqiy yechim oʻrniga javobgarlikni boshqalarga yuklaydi', 'Diagnostika oʻtkazish: Dasturning qaysi moduli (metodologik, vizual yoki test qismi) ish bermayotganini aniqlash uchun qayta aloqa (faydbek) yigʻish', 'Dasturga hech qanday oʻzgartirish kiritmasdan boshqa guruhda qayta sinab koʻrish, vaziyatni puxta tahlil qilish oʻrniga omadga tayanib, bunday qarorning uzoq muddatli oqibatlarini eʼtiborga olmasdan'],
             'correct_indices': [2],
         },
         {
@@ -6250,16 +6038,8 @@ MCQ_QUESTIONS = {
                 'Kursdoshingiz sizga tushunarsiz va chalkash muammoni aytib, yordam soʻradi. Uni toʻgʻri '
                 'tushunish va muammo yechimiga yoʻnaltirish uchun qaysi muloqot texnikasi kerak?'
             ),
-            'options_ru': [
-                'Дать свои советы, не выслушав его',
-                'Активное слушание — задавать вопросы и переспрашивать его слова своими словами (перефразирование), уточняя проблему',
-                'Не воспринимать проблему всерьёз', 'Сразу перевести разговор на другую тему',
-            ],
-            'options_uz': [
-                'Uni eshitmasdan oʻz maslahatlaringizni berish',
-                'Faol eshitish (Active listening) — savollar berish va uning gaplarini oʻz soʻzlaringiz bilan qayta soʻrab (parafraz), muammoni aniqlashtirish',
-                'Muammoni jiddiy qabul qilmaslik', 'Suhbatni darhol boshqa mavzuga burish',
-            ],
+            'options_ru': ['Сразу дать свои готовые советы, толком не выслушав его рассказ, даже не пытаясь разобраться в первопричине происходящего', 'Активное слушание — задавать вопросы и переспрашивать его слова своими словами (перефразирование), уточняя проблему', 'Не воспринимать его проблему всерьёз, посчитав её незначительной, полагаясь на удачу вместо продуманного анализа ситуации', 'Сразу перевести разговор на совершенно другую, более интересную тему, не учитывая долгосрочные последствия такого решения'],
+            'options_uz': ['Uning gapini oxirigacha eshitmasdan darhol oʻz maslahatlaringizni berish, vaziyatning tub sababini aniqlashga hatto urinib koʻrmasdan', 'Faol eshitish (Active listening) — savollar berish va uning gaplarini oʻz soʻzlaringiz bilan qayta soʻrab (parafraz), muammoni aniqlashtirish', 'Muammoni ahamiyatsiz deb hisoblab, uni jiddiy qabul qilmaslik, vaziyatni puxta tahlil qilish oʻrniga omadga tayanib, bunday qarorning uzoq muddatli oqibatlarini eʼtiborga olmasdan', 'Suhbatni darhol butunlay boshqa, qiziqroq mavzuga burish, jarayonga aloqador boshqa tomonlarning fikrini eʼtiborsiz qoldirib, vaznli qaror qabul qilish uchun yetarli fakt toʻplamasdan turib'],
             'correct_indices': [1],
         },
         {
@@ -6273,14 +6053,8 @@ MCQ_QUESTIONS = {
                 'Agar jamoada muammoni yechish davomida hamma aʼzolar faqat rahbarning fikrini maʼqullasa va '
                 'hech kim tanqidiy fikr bildirmasa, bu qanday sindrom hisoblanadi?'
             ),
-            'options_ru': [
-                'Профессионализм', 'Синдром «Да, начальник» (Yes-man) или конформизм',
-                'Алгоритмическое мышление', 'Латеральное мышление',
-            ],
-            'options_uz': [
-                'Professionalizm', '"Ha, janob" (Yes-man) sindromi yoki konformizm',
-                'Algoritmik fikrlash', 'Lateral fikrlash',
-            ],
+            'options_ru': ['Высокий уровень профессиональной дисциплины в команде', 'Синдром «Да, начальник» (Yes-man) или конформизм', 'Развитое алгоритмическое мышление всей команды', 'Нестандартное латеральное мышление всей группы'],
+            'options_uz': ['Jamoaning yuqori darajadagi kasbiy intizomi', '"Ha, janob" (Yes-man) sindromi yoki konformizm', 'Jamoaning rivojlangan algoritmik fikrlashi', 'Guruhning nostandart lateral fikrlashi, jarayonga aloqador boshqa tomonlarning fikrini eʼtiborsiz qoldirib'],
             'correct_indices': [1],
         },
         {
@@ -6294,16 +6068,8 @@ MCQ_QUESTIONS = {
                 'Agar biron-bir muammoning yechimi sizga bogʻliq boʻlmagan tashqi sabablar tufayli toʻxtab '
                 'qolsa (masalan, qonunchilik yoki rasmiy ruxsatnoma yoʻqligi), eng oqilona yoʻl nima?'
             ),
-            'options_ru': [
-                'Продолжить работу, даже нарушая правила',
-                'Временно заморозить эту часть проекта и развивать альтернативные модули, не требующие разрешения, или отправить официальные запросы',
-                'Полностью закрыть проект', 'Ничего не делать, выражая недовольство ситуацией',
-            ],
-            'options_uz': [
-                'Qoidalarni buzib boʻlsa ham ishni davom ettirish',
-                'Loyihaning oʻsha qismini vaqtincha muzlatib, ruxsat talab qilmaydigan muqobil modullarini rivojlantirish yoki rasmiy soʻrovlar yuborish',
-                'Loyihani butunlay yopish', 'Vaziyatdan norozi boʻlib, hech narsa qilmaslik',
-            ],
+            'options_ru': ['Продолжить работу, даже нарушая установленные правила и законодательство, полагаясь на удачу вместо продуманного анализа ситуации', 'Временно заморозить эту часть проекта и развивать альтернативные модули, не требующие разрешения, или отправить официальные запросы', 'Полностью закрыть весь проект из-за одного внешнего препятствия, игнорируя при этом мнение и интересы других вовлечённых сторон', 'Ничего не делать, лишь открыто выражая недовольство сложившейся ситуацией, не собрав предварительно достаточно фактов для взвешенного решения'],
+            'options_uz': ['Belgilangan qoidalar va qonunchilikni buzib boʻlsa ham ishni davom ettirish, vaziyatni puxta tahlil qilish oʻrniga omadga tayanib', 'Loyihaning oʻsha qismini vaqtincha muzlatib, ruxsat talab qilmaydigan muqobil modullarini rivojlantirish yoki rasmiy soʻrovlar yuborish', 'Bitta tashqi toʻsiq tufayli butun loyihani yopish, jarayonga aloqador boshqa tomonlarning fikrini eʼtiborsiz qoldirib, vaznli qaror qabul qilish uchun yetarli fakt toʻplamasdan turib', 'Vaziyatdan ochiqchasiga norozi boʻlib, hech qanday amaliy qadam tashlamaslik, bu muammoga oʻylab topilgan yechim emas, balki impulsiv reaksiya'],
             'correct_indices': [1],
         },
         {
@@ -6317,16 +6083,8 @@ MCQ_QUESTIONS = {
                 "Talabalarning dars qoldirish muammosini hal qilish uchun 'Nudge texnikasi' (Kichik turtki "
                 "berish mantiqi) qanday qoʻllanilishi mumkin?"
             ),
-            'options_ru': [
-                'Запугивать пропустивших занятия немедленным отчислением',
-                'Через автоматизированную систему отправлять студентам с полной посещаемостью интересные поощрительные сообщения и небольшие льготы (создавая позитивную среду)',
-                'Усложнить рейтинговую систему', 'Вызывать родителей в университет',
-            ],
-            'options_uz': [
-                'Dars qoldirganlarni darhol oʻqishdan haydash bilan qoʻrqitish',
-                'Darsga toʻliq kelgan talabalarga avtomatlashtirilgan tizim orqali qiziqarli ragʻbatlantiruvchi xabarlar va kichik imtiyozlar berish (ijobiy muhit yaratish)',
-                'Reyting tizimini murakkablashtirish', 'Ota-onalarini universitetga chaqirish',
-            ],
+            'options_ru': ['Запугивать пропустивших занятия немедленным отчислением из университета, не учитывая долгосрочные последствия такого решения, игнорируя при этом мнение и интересы других вовлечённых сторон', 'Через автоматизированную систему отправлять студентам с полной посещаемостью интересные поощрительные сообщения и небольшие льготы (создавая позитивную среду)', 'Усложнить рейтинговую систему, добавив дополнительные штрафные баллы, не собрав предварительно достаточно фактов для взвешенного решения, что является импульсивной реакцией, а не продуманным решением', 'Вызывать родителей всех прогульщиков в университет на беседу, решая лишь симптом, но не саму проблему по существу, что создаёт лишь видимость результата'],
+            'options_uz': ['Dars qoldirganlarni darhol universitetdan haydash bilan qoʻrqitish, bunday qarorning uzoq muddatli oqibatlarini eʼtiborga olmasdan, jarayonga aloqador boshqa tomonlarning fikrini eʼtiborsiz qoldirib', 'Darsga toʻliq kelgan talabalarga avtomatlashtirilgan tizim orqali qiziqarli ragʻbatlantiruvchi xabarlar va kichik imtiyozlar berish (ijobiy muhit yaratish)', 'Reyting tizimini qoʻshimcha jarima ballari bilan murakkablashtirish, vaznli qaror qabul qilish uchun yetarli fakt toʻplamasdan turib, bu muammoga oʻylab topilgan yechim emas, balki impulsiv reaksiya', 'Barcha dars qoldirganlarning ota-onalarini universitetga chaqirish, faqat alomatni yoʻqotib, muammoning oʻzini hal qilmasdan, bu esa faqat natija koʻrinishini yaratadi, xolos'],
             'correct_indices': [1],
         },
         {
@@ -6334,16 +6092,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Абстрактное мышление', 'category_uz': 'Abstrakt fikrlash',
             'prompt_ru': 'Когда «Абстрактное мышление» помогает при решении технической проблемы?',
             'prompt_uz': "Biror texnik muammoni yechishda 'Abstrakt fikrlash' qachon yordam beradi?",
-            'options_ru': [
-                'Только при работе с точными цифрами',
-                'Когда нужно отойти от мелких деталей проблемы и увидеть на макроуровне её общую структуру и связь с другими системами',
-                'Когда в процессе написания кода возникает ошибка', 'При подписании документов',
-            ],
-            'options_uz': [
-                'Faqat aniq raqamlar bilan ishlaganda',
-                "Muammoning mayda detallaridan uzoqlashib, uning umumiy tuzilishi va boshqa tizimlar bilan aloqasini makro-darajada ko'ra bilishda",
-                'Kod yozish jarayonida xatolik chiqqanda', 'Hujjatlarni imzolashda',
-            ],
+            'options_ru': ['Только при работе с очень точными цифрами и статистическими данными, игнорируя при этом мнение и интересы других вовлечённых сторон', 'Когда нужно отойти от мелких деталей проблемы и увидеть на макроуровне её общую структуру и связь с другими системами', 'Только в момент, когда в процессе написания кода возникает синтаксическая ошибка, что является импульсивной реакцией, а не продуманным решением', 'Исключительно при подписании официальных документов и договоров, решая лишь симптом, но не саму проблему по существу'],
+            'options_uz': ['Faqat juda aniq raqamlar va statistik maʼlumotlar bilan ishlaganda, jarayonga aloqador boshqa tomonlarning fikrini eʼtiborsiz qoldirib', "Muammoning mayda detallaridan uzoqlashib, uning umumiy tuzilishi va boshqa tizimlar bilan aloqasini makro-darajada ko'ra bilishda", 'Faqat kod yozish jarayonida sintaktik xatolik chiqqan paytda, bu muammoga oʻylab topilgan yechim emas, balki impulsiv reaksiya', 'Faqat rasmiy hujjatlar va shartnomalarni imzolashda, faqat alomatni yoʻqotib, muammoning oʻzini hal qilmasdan, bu esa faqat natija koʻrinishini yaratadi, xolos'],
             'correct_indices': [1],
         },
         {
@@ -6357,16 +6107,8 @@ MCQ_QUESTIONS = {
                 "Loyihani amalga oshirish jarayonida 'Kutilmagan fors-major' holat yuz berdi (masalan, "
                 "internet butunlay oʻchdi). Muammoni yechish koʻnikmasi yuqori boʻlgan rahbar birinchi boʻlib nima qiladi?"
             ),
-            'options_ru': [
-                'Впадает в панику и отменяет работу',
-                'Собирает команду и запускает план альтернативных действий, спрашивая: «Какие задачи мы можем выполнять в офлайн-режиме?»',
-                'Начинает судиться с интернет-провайдером', 'Отвечает всем, что подождёт, пока не появится интернет',
-            ],
-            'options_uz': [
-                'Vahima koʻtarib, ishni bekor qiladi',
-                'Jamoani toʻplab, "Oflayn rejimda qaysi topshiriqlarni bajarib turishimiz mumkin?" deb muqobil harakatlar rejasini ishga tushiradi',
-                'Internet provayderi bilan sudlashishni boshlaydi', 'Internet yonguncha barchaga javob berib yuboradi',
-            ],
+            'options_ru': ['Впадает в панику и полностью отменяет работу до появления интернета, не собрав предварительно достаточно фактов для взвешенного решения', 'Собирает команду и запускает план альтернативных действий, спрашивая: «Какие задачи мы можем выполнять в офлайн-режиме?»', 'Немедленно начинает судиться с интернет-провайдером из-за перебоя, решая лишь симптом, но не саму проблему по существу', 'Отвечает всем, что просто подождёт, пока снова не появится интернет, что создаёт лишь видимость результата, не проверив предположение на практике'],
+            'options_uz': ['Vahima koʻtarib, internet qaytguncha butun ishni bekor qiladi, vaznli qaror qabul qilish uchun yetarli fakt toʻplamasdan turib', 'Jamoani toʻplab, "Oflayn rejimda qaysi topshiriqlarni bajarib turishimiz mumkin?" deb muqobil harakatlar rejasini ishga tushiradi', 'Darhol internet provayderi bilan sudlashishni boshlaydi, faqat alomatni yoʻqotib, muammoning oʻzini hal qilmasdan, bu esa faqat natija koʻrinishini yaratadi, xolos', 'Internet yonguncha shunchaki kutamiz deb barchaga javob berib yuboradi, taxminni amalda tekshirib koʻrmasdan, murakkabroq, ammo zarur boʻlgan ishdan qochib'],
             'correct_indices': [1],
         },
         {
@@ -6374,16 +6116,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Логическое мышление', 'category_uz': 'Mantiqiy fikrlash',
             'prompt_ru': 'Как «Логические ошибки» (Fallacies) негативно влияют на решение проблем?',
             'prompt_uz': "'Mantiqiy xatolar' (Fallacies) muammoni yechishga qanday salbiy taʼsir koʻrsatadi?",
-            'options_ru': [
-                'Помогают быстрее решить проблему',
-                'Приводят к неверной трактовке фактов и принятию неверных/необоснованных решений под влиянием эмоций',
-                'Уточняют математические расчёты', 'Улучшают общение в команде',
-            ],
-            'options_uz': [
-                'Muammoni tezroq hal qilishga yordam beradi',
-                'Faktlarni notoʻgʻri talqin qilish va hissiyotlarga berilib, notoʻgʻri/asossiz qarorlar qabul qilishga olib keladi',
-                'Matematik hisob-kitoblarni aniqlashtiradi', 'Jamoada muloqotni yaxshilaydi',
-            ],
+            'options_ru': ['Помогают быстрее и легче прийти к какому-либо решению проблемы, что является импульсивной реакцией, а не продуманным решением', 'Приводят к неверной трактовке фактов и принятию неверных/необоснованных решений под влиянием эмоций', 'Помогают точнее провести математические расчёты в проекте, что создаёт лишь видимость результата', 'В целом улучшают атмосферу и общение внутри команды, не проверив предположение на практике, избегая при этом более сложной, но нужной работы'],
+            'options_uz': ['Muammoni tezroq va osonroq hal qilishga yordam beradi, bu muammoga oʻylab topilgan yechim emas, balki impulsiv reaksiya', 'Faktlarni notoʻgʻri talqin qilish va hissiyotlarga berilib, notoʻgʻri/asossiz qarorlar qabul qilishga olib keladi', 'Loyihadagi matematik hisob-kitoblarni aniqroq qiladi, bu esa faqat natija koʻrinishini yaratadi, xolos, taxminni amalda tekshirib koʻrmasdan', 'Umuman jamoa ichidagi muloqot muhitini yaxshilaydi, murakkabroq, ammo zarur boʻlgan ishdan qochib, bu vaqtincha qulay boʻlsa-da, uzoq muddatda samarasiz'],
             'correct_indices': [1],
         },
         {
@@ -6391,16 +6125,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Оценка результатов', 'category_uz': "Natijalarni baholash",
             'prompt_ru': 'После нахождения решения проблемы какой способ проверки его эффективности наиболее объективен?',
             'prompt_uz': 'Muammoning yechimini topgandan soʻng, uning samaradorligini tekshirishning eng xolis usuli qaysi?',
-            'options_ru': [
-                'Полагаться только на собственное мнение',
-                'Сравнить состояние «до проблемы» и «после проблемы» с помощью KPI (ключевых показателей эффективности) и конкретных метрик (цифр, опросов)',
-                'Сразу завершить проект и перейти к следующему', 'Услышать похвалу от других команд',
-            ],
-            'options_uz': [
-                'Faqat oʻz fikringizga ishonish',
-                'KPI (Asosiy samaradorlik koʻrsatkichlari) va aniq metrikalar (raqamlar, soʻrovnomalar) yordamida "Muammodan oldingi" va "Muammodan keyingi" holatni solishtirish',
-                'Loyihani darhol yakunlab, keyingi loyihaga oʻtib ketish', 'Boshqa jamoalardan maqtov eshitish',
-            ],
+            'options_ru': ['Полагаться только на собственное субъективное мнение о результате, что не устраняет истинную причину проблемы, хотя это лишь временная мера, а не системное решение', 'Сравнить состояние «до проблемы» и «после проблемы» с помощью KPI (ключевых показателей эффективности) и конкретных метрик (цифр, опросов)', 'Сразу завершить проект и перейти к следующему, не оценивая результат, даже не пытаясь разобраться в первопричине происходящего', 'Просто услышать устную похвалу от руководителей других команд, что перекладывает ответственность на других, а не решает вопрос'],
+            'options_uz': ['Natija haqida faqat oʻzingizning shaxsiy fikringizga ishonish, bu esa muammoning haqiqiy sababini bartaraf etmaydi, garchi bu faqat vaqtinchalik chora boʻlib, tizimli yechim emas', 'KPI (Asosiy samaradorlik koʻrsatkichlari) va aniq metrikalar (raqamlar, soʻrovnomalar) yordamida "Muammodan oldingi" va "Muammodan keyingi" holatni solishtirish', 'Natijani baholamasdan, loyihani darhol yakunlab keyingisiga oʻtish, vaziyatning tub sababini aniqlashga hatto urinib koʻrmasdan, bu esa haqiqiy yechim oʻrniga javobgarlikni boshqalarga yuklaydi', 'Shunchaki boshqa jamoa rahbarlaridan ogʻzaki maqtov eshitish, vaziyatni puxta tahlil qilish oʻrniga omadga tayanib, bunday qarorning uzoq muddatli oqibatlarini eʼtiborga olmasdan'],
             'correct_indices': [1],
         },
         {
@@ -6408,16 +6134,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Навыки будущего', 'category_uz': 'Kelajak koʻnikmalari',
             'prompt_ru': 'Почему навык «Решения проблем» (Problem-solving) считается самым востребованным качеством на рынке труда будущего?',
             'prompt_uz': "Nima uchun 'Muammoni yechish' (Problem-solving) koʻnikmasi kelajak mehnat bozorida eng talabgir xususiyat hisoblanadi?",
-            'options_ru': [
-                'Потому что люди с этим навыком никогда не ошибаются',
-                'Потому что мир и технологии меняются очень быстро, готовые шаблоны быстро устаревают, и растёт потребность в специалистах, находящих решения нестандартных проблем',
-                'Потому что это нужно только руководителям', 'Потому что это обязательный предмет в университетской программе',
-            ],
-            'options_uz': [
-                'Bu koʻnikmaga ega insonlar hech qachon xato qilishmagani uchun',
-                'Dunyo va texnologiyalar juda tez oʻzgarayotgani sababli, tayyor andozalar tezda eskiradi va nostandart muammolarga yechim topuvchi mutaxassislarga ehtiyoj yuqori boʻlib qolaveradi',
-                'Faqat rahbarlarga kerak boʻlgani uchun', 'Universitet dasturida majburiy fan boʻlgani uchun',
-            ],
+            'options_ru': ['Потому что люди с этим навыком якобы никогда не совершают ошибок, хотя это лишь временная мера, а не системное решение, даже не пытаясь разобраться в первопричине происходящего', 'Потому что мир и технологии меняются очень быстро, готовые шаблоны быстро устаревают, и растёт потребность в специалистах, находящих решения нестандартных проблем', 'Потому что этот навык нужен исключительно руководителям высшего звена, что перекладывает ответственность на других, а не решает вопрос, полагаясь на удачу вместо продуманного анализа ситуации', 'Потому что это всего лишь обязательный предмет в университетской программе, не учитывая долгосрочные последствия такого решения, игнорируя при этом мнение и интересы других вовлечённых сторон'],
+            'options_uz': ['Bu koʻnikmaga ega insonlar hech qachon xato qilishmaydi, deb notoʻgʻri oʻylangani uchun, garchi bu faqat vaqtinchalik chora boʻlib, tizimli yechim emas, vaziyatning tub sababini aniqlashga hatto urinib koʻrmasdan', 'Dunyo va texnologiyalar juda tez oʻzgarayotgani sababli, tayyor andozalar tezda eskiradi va nostandart muammolarga yechim topuvchi mutaxassislarga ehtiyoj yuqori boʻlib qolaveradi', 'Bu koʻnikma faqat yuqori lavozimdagi rahbarlarga kerak boʻlgani uchun, bu esa haqiqiy yechim oʻrniga javobgarlikni boshqalarga yuklaydi, vaziyatni puxta tahlil qilish oʻrniga omadga tayanib', 'Bu shunchaki universitet dasturidagi majburiy fanlardan biri boʻlgani uchun, bunday qarorning uzoq muddatli oqibatlarini eʼtiborga olmasdan, jarayonga aloqador boshqa tomonlarning fikrini eʼtiborsiz qoldirib'],
             'correct_indices': [1],
         },
         # -- Longer "[Vaziyat]" situational scenarios — 10 questions -----------------------
@@ -6432,18 +6150,8 @@ MCQ_QUESTIONS = {
                 "Kursdoshingiz bilan birgalikda muhim loyiha ustida ishlayapsiz. Ertaga loyihani topshirish "
                 "kuni, biroq u bugun to'satdan kasal bo'lib qoldi va o'ziga tegishli qismni yakunlay olmasligini aytdi. Sizning harakatingiz?"
             ),
-            'options_ru': [
-                'Умоляю преподавателя перенести сдачу проекта на следующую неделю.',
-                'Категорически требую от одногруппника закончить работу, даже несмотря на болезнь.',
-                'Беру выполненную им часть и сам самостоятельно завершаю недостающие важные места ради общей цели, даже если придётся не спать всю ночь.',
-                'Отказываюсь сдавать проект и сваливаю вину на одногруппника.',
-            ],
-            'options_uz': [
-                "Loyihani topshirishni keyingi haftaga qoldirishni so'rab o'qituvchiga yolvoraman.",
-                "Kursdoshimdan kasal bo'lsa ham ishni amallab tugatishini qat'iy talab qilaman.",
-                "U bajargan qismini olib, yetishmayotgan muhim joylarini jamoaviy maqsad uchun tuni bilan bo'lsa ham o'zim mustaqil yakunlayman.",
-                "Loyihani topshirishdan bosh tortaman va aybni kursdoshimga ag'daraman.",
-            ],
+            'options_ru': ['Умоляю преподавателя перенести сдачу проекта на следующую неделю, ссылаясь на болезнь одногруппника, хотя объективных оснований для такого выбора недостаточно.', 'Категорически требую от одногруппника закончить работу, даже несмотря на его болезнь и плохое самочувствие, что typично для поверхностного, а не системного подхода.', 'Беру выполненную им часть и сам самостоятельно завершаю недостающие важные места ради общей цели, даже если придётся не спать всю ночь.', 'Отказываюсь сдавать проект вовсе и открыто сваливаю всю вину на заболевшего одногруппника, вместо того чтобы вникнуть в суть происходящего.'],
+            'options_uz': ["Kursdoshim kasal bo'lgani uchun loyihani topshirishni keyingi haftaga qoldirishni so'rab o'qituvchiga yolvoraman, garchi bunday tanlov uchun yetarli asos boʻlmasa-da.", "Kursdoshimdan u qanchalik yomon his qilmasin, ishni amallab tugatishini qat'iy talab qilaman, bu esa tizimli emas, balki yuzaki yondashuvga xos.", "U bajargan qismini olib, yetishmayotgan muhim joylarini jamoaviy maqsad uchun tuni bilan bo'lsa ham o'zim mustaqil yakunlayman.", "Loyihani umuman topshirishdan bosh tortaman va butun aybni kasal kursdoshimga ag'daraman, vaziyatning mohiyatiga chuqur kirmasdan."],
             'correct_indices': [2],
         },
         {
@@ -6458,18 +6166,8 @@ MCQ_QUESTIONS = {
                 "Siz ishlab chiqqan yangi pedagogik dasturni darsda sinab ko'ryapsiz. Biroq talabalarning "
                 "yarmi dastur interfeysi murakkabligi sababli undan foydalanishga qiynalib, topshiriqlarni bajara olmayapti. Muammoni qanday hal qilasiz?"
             ),
-            'options_ru': [
-                'Обвиняю студентов в том, что они плохо изучили программу, и отказываюсь её менять.',
-                'Делаю использование программы обязательным, а тем, кто не справляется, ставлю низкую оценку.',
-                'Прямо на уроке даю простую поясняющую мини-инструкцию (визуальную схему) по сложным частям, а после урока упрощаю программу на основе отзывов пользователей.',
-                'Полностью удаляю программу и возвращаюсь к традиционной лекции.',
-            ],
-            'options_uz': [
-                "Talabalarni yaxshilab o'rganmaganlikda ayblab, dasturni o'zgartirishdan bosh tortaman.",
-                "Dasturdan foydalanishni majburiy qilib qo'yaman, kim bajara olmasa past baho qo'yaman.",
-                "Darsning o'zida qiyin bo'lgan qismlarni sodda tushuntiruvchi mini-qo'llanma (vizual sxema) beraman va darsdan so'ng foydalanuvchilar fikri (faydbek) asosida dasturni soddalashtiraman.",
-                "Dasturni butunlay o'chirib tashlab, an'anaviy ma'ruza darsiga qaytaman.",
-            ],
+            'options_ru': ['Обвиняю студентов в том, что они плохо изучили программу заранее, и отказываюсь что-либо в ней менять, что typично для поверхностного, а не системного подхода.', 'Делаю использование программы обязательным, а тем, кто не справляется, ставлю низкую оценку без права пересдачи, отказываясь от анализа в пользу самого простого варианта.', 'Прямо на уроке даю простую поясняющую мини-инструкцию (визуальную схему) по сложным частям, а после урока упрощаю программу на основе отзывов пользователей.', 'Полностью удаляю программу и возвращаюсь к привычной традиционной лекции без каких-либо изменений, что может дать кратковременное облегчение, но не решает дела.'],
+            'options_uz': ["Talabalarni dasturni oldindan yaxshilab o'rganmaganlikda ayblab, uni o'zgartirishdan butunlay bosh tortaman, bu esa tizimli emas, balki yuzaki yondashuvga xos, tahlil qilish oʻrniga eng sodda variantni tanlab.", "Dasturdan foydalanishni majburiy qilib qo'yaman, kim bajara olmasa qayta topshirish imkonisiz past baho qo'yaman, vaziyatning mohiyatiga chuqur kirmasdan, bu qisqa muddatli yengillik bersa-da, ishni hal qilmaydi.", "Darsning o'zida qiyin bo'lgan qismlarni sodda tushuntiruvchi mini-qo'llanma (vizual sxema) beraman va darsdan so'ng foydalanuvchilar fikri (faydbek) asosida dasturni soddalashtiraman.", "Dasturni butunlay o'chirib tashlab, hech narsa o'zgarmagandek an'anaviy ma'ruza darsiga qaytaman, kelajakda bu nimaga olib kelishini baholamasdan, faktlar emas, his-tuygʻular asosida ish tutib."],
             'correct_indices': [2],
         },
         {
@@ -6483,18 +6181,8 @@ MCQ_QUESTIONS = {
                 "Imtihon topshirayotgan paytingizda kompyuter tizimida nosozlik yuz berdi va siz oxirgi 20 "
                 "daqiqa davomida kiritgan barcha javoblaringiz o'chib ketdi. Vaqt tugashiga esa juda oz qoldi. Birinchi navbatda nima qilasiz?"
             ),
-            'options_ru': [
-                'Разнервничавшись, разобью монитор компьютера и выйду из аудитории.',
-                'Немедленно позову проверяющего или технического сотрудника в аудитории, зафиксирую проблему (составлю акт) и попрошу возможность пересдать.',
-                'Никому не сказав, за оставшееся короткое время наугад быстро отмечу все варианты.',
-                'Сам самостоятельно попытаюсь разобрать и починить компьютерную систему.',
-            ],
-            'options_uz': [
-                "Asabiylashib, kompyuter monitorini urib sindiraman va xonadan chiqib ketaman.",
-                "Darhol xonadagi nazoratchi yoki texnik xodimni chaqirib, muammoni qayd ettiraman (akt tuzaman) va qayta topshirish imkonini so'rayman.",
-                "Hech kimga aytmasdan, qolgan oz fursat ichida tavakkaliga hamma variantlarni tez-tez belgilab chiqaman.",
-                "Kompyuter tizimini o'zim mustaqil ravishda ichini ochib tuzatishga harakat qilaman.",
-            ],
+            'options_ru': ['Разнервничавшись из-за случившегося, разобью монитор компьютера и молча выйду из аудитории, отказываясь от анализа в пользу самого простого варианта.', 'Немедленно позову проверяющего или технического сотрудника в аудитории, зафиксирую проблему (составлю акт) и попрошу возможность пересдать.', 'Никому не сказав о сбое, за оставшееся короткое время наугад быстро отмечу все варианты ответов, что может дать кратковременное облегчение, но не решает дела.', 'Сам самостоятельно попытаюсь разобрать и починить компьютерную систему прямо во время экзамена, не оценив, к чему это приведёт в будущем.'],
+            'options_uz': ['Asabiylashib, kompyuter monitorini urib sindiraman va hech kimga aytmasdan xonadan chiqib ketaman, tahlil qilish oʻrniga eng sodda variantni tanlab.', "Darhol xonadagi nazoratchi yoki texnik xodimni chaqirib, muammoni qayd ettiraman (akt tuzaman) va qayta topshirish imkonini so'rayman.", 'Nosozlik haqida hech kimga aytmasdan, qolgan oz fursat ichida tavakkaliga hamma variantlarni tez-tez belgilab chiqaman, bu qisqa muddatli yengillik bersa-da, ishni hal qilmaydi.', "Kompyuter tizimini o'zim mustaqil ravishda, aynan imtihon vaqtida ichini ochib tuzatishga harakat qilaman, kelajakda bu nimaga olib kelishini baholamasdan."],
             'correct_indices': [1],
         },
         {
@@ -6509,18 +6197,8 @@ MCQ_QUESTIONS = {
                 "Jamoaviy loyihada siz yetakchisiz. Guruhdagi ikki iqtidorli talaba loyihani amalga oshirish "
                 "strategiyasi bo'yicha mutloq qarama-qarshi fikr bildirdi va o'rtada nizo kelib chiqdi. Ish to'xtab qoldi. Muammoni qanday yechasiz?"
             ),
-            'options_ru': [
-                'Поддержу мнение того, у кого выше авторитет в группе.',
-                'Исключу из группы обоих студентов за то, что не смогли разрешить конфликт.',
-                'Составлю таблицу для объективного анализа аргументов обеих сторон и предложу гибридное решение, объединив элементы, наиболее подходящие и эффективные для цели проекта.',
-                'Выберу совершенно случайный третий вариант, который понравится мне самому, не учитывая их мнение.',
-            ],
-            'options_uz': [
-                "Kimning guruhda obro'si balandroq bo'lsa, o'shaning fikrini qo'llab-quvvatlayman.",
-                "Nizoni hal qilolmaganliklari uchun ikkala talabani ham guruhdan haydayman.",
-                "Ikkala tomonning ham argumentlarini xolis tahlil qilish uchun jadval tuzaman va loyiha maqsadiga eng mos, samarali keladigan elementlarni birlashtirib, gibrid yechim taklif qilaman.",
-                "O'zimga yoqqan mutloq uchinchi tasodifiy yo'lni tanlayman va ularning fikrini inobatga olmayman.",
-            ],
+            'options_ru': ['Поддержу мнение того из студентов, у кого выше авторитет и влияние в группе, вместо того чтобы вникнуть в суть происходящего, что может дать кратковременное облегчение, но не решает дела.', 'Исключу из группы обоих студентов за то, что не смогли разрешить конфликт мирным путём, не оценив, к чему это приведёт в будущем, руководствуясь эмоциями, а не фактами.', 'Составлю таблицу для объективного анализа аргументов обеих сторон и предложу гибридное решение, объединив элементы, наиболее подходящие и эффективные для цели проекта.', 'Выберу совершенно случайный третий вариант, который понравится мне самому, не учитывая их мнение, хотя это никак не приближает к настоящему решению, просто чтобы снять с себя часть нагрузки.'],
+            'options_uz': ["Kimning guruhda obro'si balandroq bo'lsa, o'shaning fikrini boshqa dalil so'ramasdan qo'llab-quvvatlayman, vaziyatning mohiyatiga chuqur kirmasdan, bu qisqa muddatli yengillik bersa-da, ishni hal qilmaydi.", 'Nizoni hal qilolmaganliklari uchun ikkala talabani ham loyihadan va guruhdan haydayman, kelajakda bu nimaga olib kelishini baholamasdan, faktlar emas, his-tuygʻular asosida ish tutib.', 'Ikkala tomonning ham argumentlarini xolis tahlil qilish uchun jadval tuzaman va loyiha maqsadiga eng mos, samarali keladigan elementlarni birlashtirib, gibrid yechim taklif qilaman.', "O'zimga yoqqan mutloq uchinchi tasodifiy yo'lni tanlayman va ularning fikrini inobatga olmayman, garchi bu haqiqiy yechimga umuman yaqinlashtirmasa-da, shunchaki oʻz zimmasidagi yukni birozgina yengillashtirish uchun."],
             'correct_indices': [2],
         },
         {
@@ -6534,18 +6212,8 @@ MCQ_QUESTIONS = {
                 "Sizga bitiruv malakaviy ishi (dissertatsiya) uchun adabiyotlar ro'yxatini shakllantirish "
                 "topshirildi. Biroq siz qidirayotgan mavzu bo'yicha mahalliy manbalar va kitoblar deyarli yo'q ekanligi ma'lum bo'ldi. Qanday yo'l tutasiz?"
             ),
-            'options_ru': [
-                'Сочту тему слишком сложной и попрошу научного руководителя дать другую готовую тему.',
-                'Просто впишу в список названия совершенно других книг, близких к теме, подделав их.',
-                'Обращусь к международным научным базам (Scopus, Google Scholar, CyberLeninka), переведу и проанализирую работы зарубежных учёных.',
-                'Сдам работу некачественной и короткой, оправдываясь отсутствием материала по теме.',
-            ],
-            'options_uz': [
-                "Mavzuni juda qiyin deb hisoblab, ilmiy rahbarimdan boshqa tayyor mavzu berishini so'rayman.",
-                "Mavzuga yaqin bo'lgan mutloq boshqa kitoblarni shunchaki nomini ro'yxatga soxtalashtirib yozib qo'yaman.",
-                "Xalqaro ilmiy bazalarga (Scopus, Google Scholar, CyberLeninka) murojaat qilib, xorijiy olimlarning ishlarini tarjima qilaman va tahlilga tortaman.",
-                "Mavzu bo'yicha material yo'qligini bahona qilib, ishni sifatsiz va qisqa qilib topshiraman.",
-            ],
+            'options_ru': ['Сочту тему слишком сложной и попрошу научного руководителя дать другую, уже готовую и более лёгкую тему, что может дать кратковременное облегчение, но не решает дела.', 'Просто впишу в список названия совершенно других книг, близких к теме, подделав их авторов и выходные данные, не оценив, к чему это приведёт в будущем.', 'Обращусь к международным научным базам (Scopus, Google Scholar, CyberLeninka), переведу и проанализирую работы зарубежных учёных.', 'Сдам работу некачественной и короткой, оправдываясь полным отсутствием материала по теме исследования, хотя это никак не приближает к настоящему решению.'],
+            'options_uz': ["Mavzuni juda qiyin deb hisoblab, ilmiy rahbarimdan boshqa, tayyor va osonroq mavzu berishini so'rayman, bu qisqa muddatli yengillik bersa-da, ishni hal qilmaydi.", "Mavzuga yaqin bo'lgan mutloq boshqa kitoblarni ularning muallifi va chiqish maʼlumotlarini soxtalashtirib ro'yxatga yozib qo'yaman, kelajakda bu nimaga olib kelishini baholamasdan.", 'Xalqaro ilmiy bazalarga (Scopus, Google Scholar, CyberLeninka) murojaat qilib, xorijiy olimlarning ishlarini tarjima qilaman va tahlilga tortaman.', "Mavzu bo'yicha material yo'qligini bahona qilib, ishni sifatsiz va juda qisqa qilib topshiraman, garchi bu haqiqiy yechimga umuman yaqinlashtirmasa-da."],
             'correct_indices': [2],
         },
         {
@@ -6561,18 +6229,8 @@ MCQ_QUESTIONS = {
                 "oladigan bir xil andozadagi zerikarli mexanik ishni (ma'lumotlarni qo'lda jadvalga kiritishni) topshirdi. "
                 "Ushbu vaziyatda samarali yechimingiz qanday bo'ladi?"
             ),
-            'options_ru': [
-                'Из-за скуки перестану ходить на практику или буду просто тратить время впустую.',
-                'Изучу способы автоматизации этого механического процесса (с помощью формул Excel, макросов или небольших скриптов) и предложу руководителю проект оптимизации.',
-                'Пойду к руководителю и потребую давать мне не такую простую работу, а только крупные проекты.',
-                'Заплачу другому студенту-практиканту, чтобы он выполнил работу за меня.',
-            ],
-            'options_uz': [
-                "Ish juda zerikarli bo'lgani uchun amaliyotga bormay qo'yaman yoki vaqtni shunchaki o'tkazaman.",
-                "Ushbu mexanik jarayonni avtomatlashtirish yo'llarini (Excel formulalari, makroslar yoki kichik skriptlar yordamida) o'rganib chiqib, rahbarimga optimallashtirish loyihasini taklif qilaman.",
-                "Rahbarga borib, menga bunday oddiy ishlar emas, faqat katta loyihalar berishini talab qilaman.",
-                "Ishni boshqa bir amaliyotchi talabaga pul berib bajartiraman.",
-            ],
+            'options_ru': ['Из-за скуки перестану ходить на практику или буду просто тратить рабочее время впустую, не оценив, к чему это приведёт в будущем, руководствуясь эмоциями, а не фактами.', 'Изучу способы автоматизации этого механического процесса (с помощью формул Excel, макросов или небольших скриптов) и предложу руководителю проект оптимизации.', 'Пойду к руководителю и потребую давать мне не такую простую работу, а только крупные и интересные проекты, хотя это никак не приближает к настоящему решению.', 'Заплачу другому студенту-практиканту, чтобы он выполнял всю мою рутинную работу вместо меня, просто чтобы снять с себя часть нагрузки, не спрашивая мнения тех, кто лучше знает ситуацию.'],
+            'options_uz': ["Ish juda zerikarli bo'lgani uchun amaliyotga bormay qo'yaman yoki ish vaqtini shunchaki o'tkazaman, kelajakda bu nimaga olib kelishini baholamasdan, faktlar emas, his-tuygʻular asosida ish tutib.", "Ushbu mexanik jarayonni avtomatlashtirish yo'llarini (Excel formulalari, makroslar yoki kichik skriptlar yordamida) o'rganib chiqib, rahbarimga optimallashtirish loyihasini taklif qilaman.", 'Rahbarga borib, menga bunday oddiy ishlar emas, faqat katta va qiziqarli loyihalar berishini talab qilaman, garchi bu haqiqiy yechimga umuman yaqinlashtirmasa-da, shunchaki oʻz zimmasidagi yukni birozgina yengillashtirish uchun.', 'Butun ishimni boshqa bir amaliyotchi talabaga pul berib bajartiraman, vaziyatni yaxshiroq biladiganlarning fikrini soʻramasdan, bu birinchi qarashda mantiqiy koʻrinsa-da, asosiy narsani eʼtibordan chetda qoldiradi.'],
             'correct_indices': [1],
         },
         {
@@ -6586,18 +6244,8 @@ MCQ_QUESTIONS = {
                 "Startup loyihangizni investorlar oldida himoya qilishingiz kerak. Sizga 10 daqiqa vaqt "
                 "berilgan edi, biroq zalga kirganingizda vaqt kutilmaganda 2 daqiqaga qisqartirilganini aytishdi. Slaydlaringiz esa 20 tadan iborat. Nima qilasiz?"
             ),
-            'options_ru': [
-                'Расстроившись из-за сокращения времени, полностью откажусь от презентации.',
-                'Попытаюсь очень быстро проговорить все 20 слайдов, уложившись во время.',
-                'Пролистаю слайды и дам чёткий и лаконичный ответ только на 3 главных вопроса: в чём проблема, каково наше решение и какой доход принесёт проект (суть).',
-                'Начну спорить с инвесторами, требуя не сокращать время.',
-            ],
-            'options_uz': [
-                "Vaqt qisqarib ketganidan norozi bo'lib, taqdimot qilishdan butunlay voz kechaman.",
-                "20 ta slaydning hammasini juda tez gapirib, vaqtga sig'dirishga harakat qilaman.",
-                "Slaydlarni varaqlab o'tib, faqat eng asosiy 3 ta narsaga: Muammo nima, Bizning yechim qanday va Loyihaning qancha daromad keltiradi (mag'zi) degan savollarga aniq va lo'nda javob beraman.",
-                "Investorlardan vaqtni qisqartirmaslikni talab qilib, ular bilan bahslashaman.",
-            ],
+            'options_ru': ['Расстроившись из-за сокращения времени, полностью откажусь от презентации, посчитав это бессмысленным, руководствуясь эмоциями, а не фактами.', 'Попытаюсь очень быстро проговорить все 20 слайдов, уложившись в отведённое время, хотя это никак не приближает к настоящему решению, просто чтобы снять с себя часть нагрузки.', 'Пролистаю слайды и дам чёткий и лаконичный ответ только на 3 главных вопроса: в чём проблема, каково наше решение и какой доход принесёт проект (суть).', 'Начну спорить с инвесторами, требуя вернуть исходные 10 минут для выступления, не спрашивая мнения тех, кто лучше знает ситуацию, что выглядит логично на первый взгляд, но упускает главное.'],
+            'options_uz': ["Vaqt qisqarib ketganidan norozi bo'lib, taqdimot qilishdan butunlay voz kechaman, buni maʼnosiz deb hisoblab, faktlar emas, his-tuygʻular asosida ish tutib, garchi bu haqiqiy yechimga umuman yaqinlashtirmasa-da.", "20 ta slaydning hammasini juda tez gapirib, ajratilgan vaqtga sig'dirishga harakat qilaman, shunchaki oʻz zimmasidagi yukni birozgina yengillashtirish uchun, vaziyatni yaxshiroq biladiganlarning fikrini soʻramasdan.", "Slaydlarni varaqlab o'tib, faqat eng asosiy 3 ta narsaga: Muammo nima, Bizning yechim qanday va Loyihaning qancha daromad keltiradi (mag'zi) degan savollarga aniq va lo'nda javob beraman.", 'Investorlardan asl 10 daqiqani qaytarishni talab qilib, ular bilan bahslashaman, bu birinchi qarashda mantiqiy koʻrinsa-da, asosiy narsani eʼtibordan chetda qoldiradi, haqiqiy muammoni hal qilinmagan holicha qoldirib.'],
             'correct_indices': [2],
         },
         {
@@ -6612,18 +6260,8 @@ MCQ_QUESTIONS = {
                 "Siz pedagogik dasturiy vosita yaratdingiz va uni alpha-testing (dastlabki sinov) jarayonidan "
                 "o'tkazdingiz. Natijada dasturning mantiqiy algoritmlarida kutilmagan tizimli xatolik (bug) aniqlandi. Muammoni bartaraf etishda birinchi qadamingiz?"
             ),
-            'options_ru': [
-                'Сделаю вид, что не заметил ошибку, и продолжу продавать финальную версию программы.',
-                'Полностью удалю программу и начну писать весь код заново.',
-                'Применю метод декомпозиции: разделю код на модули для выявления проблемы и по логам диагностирую, какой именно алгоритмический критерий (условие) работает неправильно.',
-                'Свалю вину на компьютеры пользователей, тестировавших программу.',
-            ],
-            'options_uz': [
-                "Xatolikni sezmaganga olib, dasturning yakuniy versiyasini sotaveraman.",
-                "Dasturni butunlay o'chirib tashlab, hamma kodni boshidan yozishni boshlayman.",
-                "Dekompozitsiya metodini qo'llayman: muammoni aniqlash uchun kodni modullarga bo'lib, aynan qaysi algoritmik kriteriy (shart) xato ishlayotganini loglar orqali diagnostika qilaman.",
-                "Aybni dasturni sinab ko'rgan foydalanuvchilarning kompyuteriga ag'daraman.",
-            ],
+            'options_ru': ['Сделаю вид, что не заметил ошибку, и продолжу продавать финальную версию программы клиентам, хотя это никак не приближает к настоящему решению, просто чтобы снять с себя часть нагрузки.', 'Полностью удалю программу и начну писать весь код заново с нуля, потеряв все наработки, не спрашивая мнения тех, кто лучше знает ситуацию, что выглядит логично на первый взгляд, но упускает главное.', 'Применю метод декомпозиции: разделю код на модули для выявления проблемы и по логам диагностирую, какой именно алгоритмический критерий (условие) работает неправильно.', 'Свалю вину на компьютеры пользователей, тестировавших программу, не проверив сам код, оставляя реальную проблему нерешённой, что не устраняет истинную причину проблемы.'],
+            'options_uz': ['Xatolikni sezmaganga olib, dasturning yakuniy versiyasini mijozlarga sotaveraman, garchi bu haqiqiy yechimga umuman yaqinlashtirmasa-da, shunchaki oʻz zimmasidagi yukni birozgina yengillashtirish uchun.', "Dasturni butunlay o'chirib tashlab, barcha ishlanmalarni yo'qotib, hamma kodni boshidan yozishni boshlayman, vaziyatni yaxshiroq biladiganlarning fikrini soʻramasdan.", "Dekompozitsiya metodini qo'llayman: muammoni aniqlash uchun kodni modullarga bo'lib, aynan qaysi algoritmik kriteriy (shart) xato ishlayotganini loglar orqali diagnostika qilaman.", "Aybni kodni o'zim tekshirmasdan, dasturni sinab ko'rgan foydalanuvchilarning kompyuteriga ag'daraman, bu birinchi qarashda mantiqiy koʻrinsa-da, asosiy narsani eʼtibordan chetda qoldiradi."],
             'correct_indices': [2],
         },
         {
@@ -6639,18 +6277,8 @@ MCQ_QUESTIONS = {
                 "etishingiz kerak, biroq universitetda to'satdan elektr energiyasi (chiroq) butunlay o'chib qoldi. Internet ham, "
                 "proektor ham ishlamayapti. Seminarni qanday saqlab qolasiz?"
             ),
-            'options_ru': [
-                'Сославшись на отсутствие света, перенесу семинар на другой день и отпущу всех студентов.',
-                'Переведу семинар в интерактивный формат: нарисую идеи из презентационных слайдов на доске (или бумаге) и продолжу его в виде живой дискуссии со студентами (вопросы-ответы и мозговой штурм).',
-                'Заставлю студентов просто ждать в зале 2 часа, пока не включат свет.',
-                'Включу фонарик телефона и буду скучно зачитывать студентам текст из конспекта.',
-            ],
-            'options_uz': [
-                "Chiroq yo'qligini sabab qilib, seminarni boshqa kunga ko'chiraman va hamma talabalarga javob berib yuboraman.",
-                "Seminarni interaktiv formatga o'tkazaman: taqdimot slaydlaridagi g'oyalarni doskada (yoki qog'ozda) chizib, talabalar bilan jonli munozara (savol-javob va aqliy hujum) ko'rinishida davom ettiraman.",
-                "Chiroq yonguncha talabalarni zalda 2 soat shunchaki kutishga majbur qilaman.",
-                "Telefonim chirog'ini yoqib, konspektdagi matnlarni talabalarga zerikarli qilib o'qib beraman.",
-            ],
+            'options_ru': ['Сославшись на отсутствие света, перенесу семинар на другой, более удобный день и отпущу всех студентов по домам, просто чтобы снять с себя часть нагрузки, не спрашивая мнения тех, кто лучше знает ситуацию.', 'Переведу семинар в интерактивный формат: нарисую идеи из презентационных слайдов на доске (или бумаге) и продолжу его в виде живой дискуссии со студентами (вопросы-ответы и мозговой штурм).', 'Заставлю студентов просто сидеть и ждать в зале два часа, пока не включат свет, что выглядит логично на первый взгляд, но упускает главное, оставляя реальную проблему нерешённой.', 'Включу фонарик телефона и буду скучно и монотонно зачитывать студентам текст прямо из конспекта, что не устраняет истинную причину проблемы, хотя это лишь временная мера, а не системное решение.'],
+            'options_uz': ["Chiroq yo'qligini sabab qilib, seminarni boshqa, qulayroq kunga ko'chiraman va hamma talabalarga uyga borishga ruxsat beraman, shunchaki oʻz zimmasidagi yukni birozgina yengillashtirish uchun.", "Seminarni interaktiv formatga o'tkazaman: taqdimot slaydlaridagi g'oyalarni doskada (yoki qog'ozda) chizib, talabalar bilan jonli munozara (savol-javob va aqliy hujum) ko'rinishida davom ettiraman.", "Chiroq yonguncha talabalarni zalda ikki soat shunchaki o'tirib kutishga majbur qilaman, bu birinchi qarashda mantiqiy koʻrinsa-da, asosiy narsani eʼtibordan chetda qoldiradi, haqiqiy muammoni hal qilinmagan holicha qoldirib.", "Telefonim chirog'ini yoqib, konspektdagi matnlarni talabalarga zerikarli va bir maromda o'qib beraman, bu esa muammoning haqiqiy sababini bartaraf etmaydi, garchi bu faqat vaqtinchalik chora boʻlib, tizimli yechim emas."],
             'correct_indices': [1],
         },
         {
@@ -6664,18 +6292,8 @@ MCQ_QUESTIONS = {
                 "Siz guruh sardorisiz. Guruhdoshingiz darslarni muntazam qoldirmoqda va yakuniy imtihondan "
                 "yiqilish arafasida. Uni jazolash yoki o'qituvchiga sotish o'rniga, muammoni tizimli hal qilish uchun nima qilasiz?"
             ),
-            'options_ru': [
-                'Исключу его из группового чата и прекращу с ним общение.',
-                'Лично поговорю с ним, выясню истинную причину пропусков (возможно, материальные, семейные проблемы или проблемы со здоровьем) и организую от имени группы академическую помощь (консультации) для него.',
-                'Буду выполнять за него все занятия и задания, обманывая преподавателей.',
-                'Вообще не буду вмешиваться в ситуацию, считая это его личным делом.',
-            ],
-            'options_uz': [
-                "Uni guruh guruhidan chiqarib yuboraman va u bilan aloqani uzaman.",
-                "U bilan shaxsan suhbatlashib, dars qoldirishining tub sababini (balki moddiy, oilaviy yoki sog'liq muammosi borligini) aniqlayman va guruh nomidan unga akademik yordam (konsultatsiya) tashkil qilaman.",
-                "Uning o'rniga barcha dars va topshiriqlarni o'zim bajarib, o'qituvchilarni aldayman.",
-                "Vaziyatga umuman aralashmayman, chunki bu uning shaxsiy ishi deb hisoblayman.",
-            ],
+            'options_ru': ['Исключу его из группового чата и прекращу с ним всякое общение, не пытаясь узнать причину, игнорируя при этом мнение и интересы других вовлечённых сторон, не собрав предварительно достаточно фактов для взвешенного решения.', 'Лично поговорю с ним, выясню истинную причину пропусков (возможно, материальные, семейные проблемы или проблемы со здоровьем) и организую от имени группы академическую помощь (консультации) для него.', 'Буду выполнять за него все занятия и задания, обманывая преподавателей и создавая видимость его присутствия, что является импульсивной реакцией, а не продуманным решением, решая лишь симптом, но не саму проблему по существу.', 'Вообще не буду вмешиваться в ситуацию, считая это его сугубо личным делом, что создаёт лишь видимость результата, не проверив предположение на практике, избегая при этом более сложной, но нужной работы.'],
+            'options_uz': ['Uni guruh chatidan chiqarib yuboraman va sababini bilishga urinmasdan u bilan har qanday aloqani uzaman, jarayonga aloqador boshqa tomonlarning fikrini eʼtiborsiz qoldirib, vaznli qaror qabul qilish uchun yetarli fakt toʻplamasdan turib.', "U bilan shaxsan suhbatlashib, dars qoldirishining tub sababini (balki moddiy, oilaviy yoki sog'liq muammosi borligini) aniqlayman va guruh nomidan unga akademik yordam (konsultatsiya) tashkil qilaman.", "Uning o'rniga barcha dars va topshiriqlarni o'zim bajarib, o'qituvchilarni aldab, uning qatnashayotganday ko'rinishini yarataman, bu muammoga oʻylab topilgan yechim emas, balki impulsiv reaksiya.", 'Vaziyatga umuman aralashmayman, chunki bu butunlay uning shaxsiy ishi deb hisoblayman, faqat alomatni yoʻqotib, muammoning oʻzini hal qilmasdan, bu esa faqat natija koʻrinishini yaratadi, xolos.'],
             'correct_indices': [1],
         },
             {
@@ -6683,8 +6301,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Анализ первопричины', 'category_uz': 'Ildiz sabab tahlili',
             'prompt_ru': 'Сайт компании стал загружаться очень медленно. Технический директор предлагает сразу купить более мощный сервер. Какое действие правильнее сделать до этой покупки?',
             'prompt_uz': 'Kompaniya saytining yuklanishi juda sekinlashib qoldi. Texnik direktor darhol quvvatliroq server sotib olishni taklif qilmoqda. Ushbu xariddan oldin qanday harakat toʻgʻriroq boʻladi?',
-            'options_ru': ['Сразу заказать сервер помощнее, чтобы сэкономить время', 'Проанализировать логи и найти конкретную причину (например, неоптимизированный запрос к базе данных), а не лечить симптом', 'Уменьшить количество посетителей сайта', 'Полностью закрыть сайт на неделю'],
-            'options_uz': ['Vaqtni tejash uchun darhol quvvatliroq server buyurtma qilish', 'Loglarni tahlil qilib, aniq sababni (masalan, maʼlumotlar bazasiga yuborilgan optimallashtirilmagan soʻrovni) topish, alomat emas, sababni davolash', 'Saytga tashrif buyuruvchilar sonini kamaytirish', 'Saytni bir haftaga butunlay yopib qoʻyish'],
+            'options_ru': ['Сразу заказать сервер помощнее, чтобы сэкономить время, не разбираясь в истинной причине проблемы, отказываясь от анализа в пользу самого простого варианта', 'Проанализировать логи и найти конкретную причину (например, неоптимизированный запрос к базе данных), а не лечить симптом', 'Уменьшить количество посетителей сайта, ограничив к нему доступ, что может дать кратковременное облегчение, но не решает дела', 'Полностью закрыть сайт на неделю, пока проблема не решится сама, не оценив, к чему это приведёт в будущем, руководствуясь эмоциями, а не фактами'],
+            'options_uz': ['Vaqtni tejash uchun darhol quvvatliroq server buyurtma qilish, haqiqiy sababni aniqlamasdan turib, tahlil qilish oʻrniga eng sodda variantni tanlab', 'Loglarni tahlil qilib, aniq sababni (masalan, maʼlumotlar bazasiga yuborilgan optimallashtirilmagan soʻrovni) topish, alomat emas, sababni davolash', 'Saytga kirishni cheklab, tashrif buyuruvchilar sonini kamaytirish, bu qisqa muddatli yengillik bersa-da, ishni hal qilmaydi, kelajakda bu nimaga olib kelishini baholamasdan', 'Muammo oʻz-oʻzidan yechilishini kutib, saytni bir haftaga butunlay yopib qoʻyish, faktlar emas, his-tuygʻular asosida ish tutib, garchi bu haqiqiy yechimga umuman yaqinlashtirmasa-da'],
             'correct_indices': [1],
         },
         {
@@ -6692,8 +6310,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Анализ первопричины', 'category_uz': 'Ildiz sabab tahlili',
             'prompt_ru': 'На заводе один и тот же станок ломается уже в третий раз за месяц. Мастер каждый раз просто меняет сломанную деталь. Какой подход поможет решить проблему по-настоящему?',
             'prompt_uz': 'Zavodda bitta stanok bir oy ichida uchinchi marta buzilmoqda. Usta har safar shunchaki buzilgan qismni almashtiryapti. Muammoni chindan hal qilishga qaysi yondashuv yordam beradi?',
-            'options_ru': ['Продолжать менять деталь по мере поломки — это самое быстрое решение', 'Провести диагностику всей системы станка и ввести график планового технического обслуживания, чтобы устранить причину износа', 'Заменить станок на точно такой же новый', 'Уволить мастера, обслуживающего станок'],
-            'options_uz': ['Buzilgan sari qismni almashtirishda davom etish — bu eng tezkor yechim', 'Stanokning butun tizimini diagnostika qilib, yeyilish sababini bartaraf etish uchun rejali texnik xizmat koʻrsatish jadvalini joriy etish', 'Stanokni xuddi shunday yangisiga almashtirish', 'Stanokka xizmat koʻrsatuvchi ustani ishdan boʻshatish'],
+            'options_ru': ['Продолжать менять деталь по мере поломки — это самое быстрое, хоть и временное решение, вместо того чтобы вникнуть в суть происходящего', 'Провести диагностику всей системы станка и ввести график планового технического обслуживания, чтобы устранить причину износа', 'Заменить станок на точно такой же новый, не выяснив истинную причину поломок, не оценив, к чему это приведёт в будущем', 'Уволить мастера, обслуживающего станок, посчитав его попросту некомпетентным, руководствуясь эмоциями, а не фактами'],
+            'options_uz': ['Buzilgan sari qismni almashtirishda davom etish — bu eng tezkor, ammo vaqtinchalik yechim, vaziyatning mohiyatiga chuqur kirmasdan', 'Stanokning butun tizimini diagnostika qilib, yeyilish sababini bartaraf etish uchun rejali texnik xizmat koʻrsatish jadvalini joriy etish', 'Stanokni xuddi shunday yangisiga, sababini aniqlamasdan almashtirish, kelajakda bu nimaga olib kelishini baholamasdan, faktlar emas, his-tuygʻular asosida ish tutib', 'Stanokka xizmat koʻrsatuvchi ustani nokompetent deb ishdan boʻshatish, garchi bu haqiqiy yechimga umuman yaqinlashtirmasa-da, shunchaki oʻz zimmasidagi yukni birozgina yengillashtirish uchun'],
             'correct_indices': [1],
         },
         {
@@ -6701,8 +6319,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Анализ первопричины', 'category_uz': 'Ildiz sabab tahlili',
             'prompt_ru': 'В отделе продаж очень высокая текучесть кадров — сотрудники увольняются через 2-3 месяца. HR предлагает просто увеличить премию новичкам за первый месяц. Какая мера ближе к настоящей причине?',
             'prompt_uz': 'Savdo boʻlimida xodimlar aylanmasi juda yuqori — xodimlar 2-3 oydan keyin ishdan ketishmoqda. HR yangi xodimlarga birinchi oy uchun mukofot puli oshirishni taklif qilmoqda. Qaysi chora haqiqiy sababga yaqinroq?',
-            'options_ru': ['Провести откровенные exit-интервью с уволившимися, чтобы понять истинную причину (например, стиль управления руководителя)', 'Просто повысить премию за первый месяц работы', 'Нанимать ещё больше новых сотрудников про запас', 'Ничего не менять, так как это нормально для отдела продаж'],
-            'options_uz': ['Ishdan ketganlar bilan samimiy exit-intervyu oʻtkazib, haqiqiy sababni (masalan, rahbarning boshqaruv uslubini) aniqlash', 'Shunchaki birinchi oy ish haqi mukofotini oshirish', 'Zaxira uchun yanada koʻproq yangi xodim yollash', 'Hech narsani oʻzgartirmaslik, chunki bu savdo boʻlimi uchun normal holat'],
+            'options_ru': ['Провести откровенные exit-интервью с уволившимися, чтобы понять истинную причину (например, стиль управления руководителя)', 'Просто повысить премию за первый месяц работы, не выясняя истинную причину увольнений, не оценив, к чему это приведёт в будущем', 'Нанимать ещё больше новых сотрудников про запас, чтобы компенсировать текучесть, руководствуясь эмоциями, а не фактами', 'Ничего не менять, так как это давно уже считается нормой для отдела продаж, хотя это никак не приближает к настоящему решению'],
+            'options_uz': ['Ishdan ketganlar bilan samimiy exit-intervyu oʻtkazib, haqiqiy sababni (masalan, rahbarning boshqaruv uslubini) aniqlash', 'Shunchaki birinchi oy ish haqi mukofotini oshirish, haqiqiy sababni aniqlamasdan, kelajakda bu nimaga olib kelishini baholamasdan', 'Aylanmani qoplash uchun zaxiraga yanada koʻproq yangi xodim yollash, faktlar emas, his-tuygʻular asosida ish tutib', 'Hech narsani oʻzgartirmaslik, chunki bu allaqachon savdo boʻlimi uchun normaga aylangan, garchi bu haqiqiy yechimga umuman yaqinlashtirmasa-da'],
             'correct_indices': [0],
         },
         {
@@ -6710,8 +6328,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Анализ первопричины', 'category_uz': 'Ildiz sabab tahlili',
             'prompt_ru': 'Клиенты массово жалуются на позднюю доставку заказов. Менеджер предлагает просто нанять больше курьеров. Проверка показала, что курьеры простаивают, ожидая, пока склад соберёт заказ. В чём настоящая причина?',
             'prompt_uz': 'Mijozlar buyurtmalarning kech yetkazilishidan ommaviy shikoyat qilmoqda. Menejer shunchaki koʻproq kuryer yollashni taklif qilmoqda. Tekshiruv shuni koʻrsatdiki, kuryerlar ombor buyurtmani yigʻishini kutib bekorchi turishibdi. Haqiqiy sabab nimada?',
-            'options_ru': ['Курьеров слишком мало', 'Медленный и неэффективный процесс комплектации заказов на складе', 'Клиенты заказывают слишком много товаров', 'Погодные условия постоянно портятся'],
-            'options_uz': ['Kuryerlar juda kam', 'Ombordagi buyurtmalarni yigʻish jarayonining sekin va samarasizligi', 'Mijozlar juda koʻp mahsulot buyurtma qilishmoqda', 'Ob-havo sharoiti doimo yomonlashib turadi'],
+            'options_ru': ['Курьеров для доставки заказов клиентам явно слишком мало', 'Медленный и неэффективный процесс комплектации заказов на складе', 'Клиенты в последнее время заказывают слишком много товаров сразу', 'Погодные условия в этом сезоне постоянно портятся и мешают доставке'],
+            'options_uz': ['Mijozlarga buyurtma yetkazib beradigan kuryerlar aniq juda kam', 'Ombordagi buyurtmalarni yigʻish jarayonining sekin va samarasizligi', 'Mijozlar soʻnggi paytda bir yoʻla juda koʻp mahsulot buyurtma qilishmoqda', 'Bu mavsumda ob-havo sharoiti doimo yomonlashib, yetkazishga xalaqit bermoqda'],
             'correct_indices': [1],
         },
         {
@@ -6719,8 +6337,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Анализ первопричины', 'category_uz': 'Ildiz sabab tahlili',
             'prompt_ru': 'Автомобиль регулярно перегревается летом. Владелец каждый раз просто доливает воду в радиатор. Какой следующий диагностический шаг наиболее логичен для поиска первопричины?',
             'prompt_uz': 'Avtomobil yozda muntazam qizib ketmoqda. Egasi har safar shunchaki radiatorga suv qoʻshib qoʻyadi. Ildiz sababni topish uchun keyingi diagnostik qadam qaysi biri mantiqiy?',
-            'options_ru': ['Продолжать доливать воду каждый день', 'Проверить термостат, вентилятор охлаждения и герметичность системы на предмет утечки антифриза', 'Ездить только по ночам, когда прохладнее', 'Полностью отказаться от использования автомобиля'],
-            'options_uz': ['Har kuni suv qoʻshishda davom etish', 'Termostat, sovutish ventilyatori va antifriz sizib chiqayotganini aniqlash uchun tizimning germetikligini tekshirish', 'Faqat salqinroq boʻlgan tunda haydash', 'Avtomobildan foydalanishdan butunlay voz kechish'],
+            'options_ru': ['Продолжать доливать воду каждый день, не выясняя настоящую причину перегрева, руководствуясь эмоциями, а не фактами', 'Проверить термостат, вентилятор охлаждения и герметичность системы на предмет утечки антифриза', 'Ездить только по ночам, когда воздух прохладнее, просто чтобы снять с себя часть нагрузки', 'Полностью отказаться от использования автомобиля до конца лета, не спрашивая мнения тех, кто лучше знает ситуацию'],
+            'options_uz': ['Sababini aniqlamasdan har kuni shunchaki suv qoʻshishda davom etish, faktlar emas, his-tuygʻular asosida ish tutib', 'Termostat, sovutish ventilyatori va antifriz sizib chiqayotganini aniqlash uchun tizimning germetikligini tekshirish', 'Faqat havo salqinroq boʻlgan tunda haydash, shunchaki oʻz zimmasidagi yukni birozgina yengillashtirish uchun', 'Yoz tugaguncha avtomobildan foydalanishdan butunlay voz kechish, vaziyatni yaxshiroq biladiganlarning fikrini soʻramasdan'],
             'correct_indices': [1],
         },
         {
@@ -6728,8 +6346,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Анализ первопричины', 'category_uz': 'Ildiz sabab tahlili',
             'prompt_ru': 'Мобильное приложение стабильно падает (крашится) при нажатии на одну и ту же кнопку у части пользователей. Разработчик предлагает просто обернуть код в блок try/catch, чтобы скрыть ошибку. Почему это неверный подход?',
             'prompt_uz': 'Mobil ilova foydalanuvchilarning bir qismida aynan bitta tugmani bosganda muntazam qulab tushmoqda (crash). Dasturchi xatolikni yashirish uchun kodni try/catch blokiga oʻrashni taklif qilmoqda. Bu nima uchun notoʻgʻri yondashuv?',
-            'options_ru': ['Это ускорит релиз приложения', 'Ошибка (например, обращение к нулевому объекту) останется в коде и продолжит незаметно портить данные пользователей', 'Пользователям всё равно, работает кнопка или нет', 'try/catch — единственный способ исправить ошибку'],
-            'options_uz': ['Bu ilova relizini tezlashtiradi', 'Xatolik (masalan, null obyektga murojaat) kodda qolib, foydalanuvchi maʼlumotlarini sezilmagan holda buzishda davom etadi', 'Foydalanuvchilar uchun tugma ishlaydimi yoʻqmi — farqi yoʻq', 'try/catch xatoni tuzatishning yagona usuli'],
+            'options_ru': ['Это лишь ускорит релиз приложения, не решая саму проблему, хотя это никак не приближает к настоящему решению', 'Ошибка (например, обращение к нулевому объекту) останется в коде и продолжит незаметно портить данные пользователей', 'Пользователям якобы всё равно, работает эта кнопка или нет, не спрашивая мнения тех, кто лучше знает ситуацию', 'try/catch — это будто бы единственный способ исправить любую ошибку в коде, что выглядит логично на первый взгляд, но упускает главное'],
+            'options_uz': ['Bu shunchaki ilova relizini tezlashtiradi, muammoni hal qilmasdan, garchi bu haqiqiy yechimga umuman yaqinlashtirmasa-da', 'Xatolik (masalan, null obyektga murojaat) kodda qolib, foydalanuvchi maʼlumotlarini sezilmagan holda buzishda davom etadi', 'Foydalanuvchilar uchun bu tugma ishlaydimi yoʻqmi — aslida farqi yoʻq, vaziyatni yaxshiroq biladiganlarning fikrini soʻramasdan', 'try/catch xatoni tuzatishning yagona va toʻliq usuli hisoblanadi, bu birinchi qarashda mantiqiy koʻrinsa-da, asosiy narsani eʼtibordan chetda qoldiradi'],
             'correct_indices': [1],
         },
         {
@@ -6737,7 +6355,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Анализ первопричины', 'category_uz': 'Ildiz sabab tahlili',
             'prompt_ru': 'Бухгалтерия постоянно задерживает оплату счетов поставщикам, из-за чего компания платит штрафы. Проверка показала, что каждый счёт требует пять личных подписей на бумаге. Что является настоящей причиной задержек?',
             'prompt_uz': 'Buxgalteriya doimo yetkazib beruvchilarga toʻlovlarni kechiktirmoqda, natijada kompaniya jarima toʻlayapti. Tekshiruv har bir hisob-fakturaga qogʻozda beshta shaxsiy imzo talab qilinishini koʻrsatdi. Kechikishlarning haqiqiy sababi nima?',
-            'options_ru': ['Бухгалтеры слишком медленно работают', 'Громоздкий процесс согласования с избыточным количеством подписей', 'Поставщики присылают счета слишком поздно', 'В компании мало денег для оплаты'],
+            'options_ru': ['Бухгалтеры якобы слишком медленно и невнимательно работают с документами', 'Громоздкий процесс согласования с избыточным количеством подписей', 'Поставщики почти всегда присылают счета слишком поздно для оплаты', 'В компании сейчас попросту мало свободных денег для своевременной оплаты'],
             'options_uz': ['Buxgalterlar juda sekin ishlashadi', 'Ortiqcha imzolar bilan yuklangan ogʻir kelishuv jarayoni', 'Yetkazib beruvchilar hisob-fakturani juda kech yuborishadi', 'Kompaniyada toʻlash uchun pul kam'],
             'correct_indices': [1],
         },
@@ -6746,8 +6364,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Анализ первопричины', 'category_uz': 'Ildiz sabab tahlili',
             'prompt_ru': 'Многие сотрудники офиса жалуются на регулярные головные боли к концу рабочего дня. Руководство раздало всем обезболивающие таблетки. Какой шаг вернее устранит причину проблемы?',
             'prompt_uz': 'Ofis xodimlarining koʻpchiligi ish kunining oxiriga kelib muntazam bosh ogʻrigʻidan shikoyat qilmoqda. Rahbariyat hammaga ogʻriq qoldiruvchi tabletka tarqatdi. Muammo sababini toʻgʻriroq bartaraf etadigan qadam qaysi?',
-            'options_ru': ['Раздавать таблетки в двойной дозе', 'Проверить вентиляцию, освещение и уровень CO2 в офисе, ведь духота — частая причина головных болей', 'Сократить рабочий день на 5 минут', 'Отправить всех сотрудников к неврологу'],
-            'options_uz': ['Tabletkalarni ikki barobar dozada tarqatish', 'Ofisdagi shamollatish, yoritish va CO2 darajasini tekshirish, chunki dimiqlik bosh ogʻrigʻining koʻp uchraydigan sababi', 'Ish kunini 5 daqiqaga qisqartirish', 'Barcha xodimlarni nevropatologga yuborish'],
+            'options_ru': ['Раздавать всем сотрудникам обезболивающие таблетки в увеличенной двойной дозе, не спрашивая мнения тех, кто лучше знает ситуацию', 'Проверить вентиляцию, освещение и уровень CO2 в офисе, ведь духота — частая причина головных болей', 'Сократить рабочий день всего на символические 5 минут, оставляя реальную проблему нерешённой', 'Отправить сразу всех сотрудников офиса на приём к неврологу, что не устраняет истинную причину проблемы'],
+            'options_uz': ['Barcha xodimlarga ogʻriq qoldiruvchi tabletkalarni ikki barobar oshirilgan dozada tarqatish, vaziyatni yaxshiroq biladiganlarning fikrini soʻramasdan', 'Ofisdagi shamollatish, yoritish va CO2 darajasini tekshirish, chunki dimiqlik bosh ogʻrigʻining koʻp uchraydigan sababi', 'Ish kunini atigi ramziy 5 daqiqaga qisqartirish, haqiqiy muammoni hal qilinmagan holicha qoldirib, bu esa muammoning haqiqiy sababini bartaraf etmaydi', 'Ofisdagi barcha xodimlarni birdaniga nevropatologga yuborish, garchi bu faqat vaqtinchalik chora boʻlib, tizimli yechim emas'],
             'correct_indices': [1],
         },
         {
@@ -6755,8 +6373,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Анализ первопричины', 'category_uz': 'Ildiz sabab tahlili',
             'prompt_ru': 'Продажи популярного товара резко упали в третьем квартале. Первая реакция маркетолога — увеличить рекламный бюджет. Но выяснилось, что склад несколько недель не пополнял этот товар. В чём реальная причина падения продаж?',
             'prompt_uz': 'Mashhur mahsulot sotuvi uchinchi chorakda keskin tushib ketdi. Marketologning birinchi reaksiyasi reklama byudjetini oshirish boʻldi. Biroq maʼlum boʻldiki, ombor bir necha hafta davomida bu mahsulotni toʻldirmagan. Sotuv pasayishining haqiqiy sababi nimada?',
-            'options_ru': ['Недостаточно рекламы', 'Товара просто не было в наличии на складе для продажи', 'Клиенты потеряли интерес к бренду', 'Конкуренты снизили цены'],
-            'options_uz': ['Reklama yetarli emas', 'Sotish uchun mahsulot omborda umuman mavjud emas edi', 'Mijozlar brendga qiziqishni yoʻqotdi', 'Raqobatchilar narxni tushirdi'],
+            'options_ru': ['Рекламного бюджета в этом квартале было явно недостаточно', 'Товара просто не было в наличии на складе для продажи', 'Клиенты за последний месяц резко потеряли интерес к бренду', 'Конкуренты как раз в этот период резко снизили свои цены'],
+            'options_uz': ['Bu chorakda reklama byudjeti aniq yetarli boʻlmadi', 'Sotish uchun mahsulot omborda umuman mavjud emas edi', 'Mijozlar soʻnggi bir oyda brendga qiziqishni keskin yoʻqotdi', 'Raqobatchilar aynan shu davrda narxlarini keskin tushirdi'],
             'correct_indices': [1],
         },
         {
@@ -6764,8 +6382,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Анализ первопричины', 'category_uz': 'Ildiz sabab tahlili',
             'prompt_ru': 'Команда разработчиков систематически не укладывается в сроки спринтов. Скрам-мастер предлагает просто продлить каждый спринт на неделю. Что вернее решит проблему на будущее?',
             'prompt_uz': 'Dasturchilar jamoasi tizimli ravishda sprint muddatlariga ulgurmayapti. Skram-master shunchaki har bir sprintni bir haftaga uzaytirishni taklif qilmoqda. Kelajakda muammoni nima toʻgʻriroq hal qiladi?',
-            'options_ru': ['Просто продлевать спринты бесконечно', 'Проанализировать точность оценки задач (story points) и улучшить процесс планирования, чтобы находить реалистичный объём работы', 'Заставлять команду работать сверхурочно каждую неделю', 'Отменить спринты и работать без всякого плана'],
-            'options_uz': ['Sprintlarni cheksiz uzaytiraverish', 'Vazifalarni baholash aniqligini (story point) tahlil qilib, real hajmni topish uchun rejalashtirish jarayonini yaxshilash', 'Jamoani har hafta ortiqcha ishlashga majburlash', 'Sprintlarni bekor qilib, hech qanday rejasiz ishlash'],
+            'options_ru': ['Просто продлевать длительность каждого спринта бесконечно, что является импульсивной реакцией, а не продуманным решением', 'Проанализировать точность оценки задач (story points) и улучшить процесс планирования, чтобы находить реалистичный объём работы', 'Заставлять команду работать сверхурочно каждую неделю без выходных, что создаёт лишь видимость результата, не проверив предположение на практике', 'Отменить спринты вовсе и работать дальше вообще без всякого плана, избегая при этом более сложной, но нужной работы, что удобно в моменте, но не эффективно в долгосрочной перспективе'],
+            'options_uz': ['Har bir sprint davomiyligini shunchaki cheksiz uzaytiraverish, bu muammoga oʻylab topilgan yechim emas, balki impulsiv reaksiya', 'Vazifalarni baholash aniqligini (story point) tahlil qilib, real hajmni topish uchun rejalashtirish jarayonini yaxshilash', 'Jamoani har hafta dam olish kunlarisiz ortiqcha ishlashga majburlash, bu esa faqat natija koʻrinishini yaratadi, xolos', 'Sprintlarni butunlay bekor qilib, hech qanday rejasiz ishlashda davom etish, taxminni amalda tekshirib koʻrmasdan'],
             'correct_indices': [1],
         },
         {
@@ -6773,8 +6391,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Анализ первопричины', 'category_uz': 'Ildiz sabab tahlili',
             'prompt_ru': 'В ресторане несколько посетителей отравились одним и тем же блюдом за неделю. Администратор хочет просто убрать блюдо из меню навсегда. Какой шаг нужен в первую очередь для устранения реальной причины?',
             'prompt_uz': 'Restoranda bir hafta ichida bir nechta mijoz bir xil taomdan zaharlandi. Administrator taomni menyudan butunlay olib tashlamoqchi. Haqiqiy sababni bartaraf etish uchun avvalo qaysi qadam kerak?',
-            'options_ru': ['Проверить условия хранения и температурный режим ингредиентов на кухне, а не только удалить блюдо', 'Просто убрать блюдо из меню и ничего не проверять', 'Уволить повара, который готовил это блюдо', 'Извиниться перед клиентами и продолжить готовить как раньше'],
-            'options_uz': ['Faqat taomni olib tashlash emas, oshxonadagi ingredientlarni saqlash sharoiti va harorat rejimini tekshirish', 'Shunchaki taomni menyudan olib tashlab, hech narsani tekshirmaslik', 'Bu taomni tayyorlagan oshpazni ishdan boʻshatish', 'Mijozlardan uzr soʻrab, avvalgidek pishirishda davom etish'],
+            'options_ru': ['Проверить условия хранения и температурный режим ингредиентов на кухне, а не только удалить блюдо', 'Просто убрать блюдо из меню, ничего дальше не проверяя и не выясняя причину, что создаёт лишь видимость результата', 'Немедленно уволить повара, который готовил именно это блюдо, не проверив предположение на практике', 'Извиниться перед клиентами и продолжить готовить как раньше, ничего не меняя на кухне, избегая при этом более сложной, но нужной работы'],
+            'options_uz': ['Faqat taomni olib tashlash emas, oshxonadagi ingredientlarni saqlash sharoiti va harorat rejimini tekshirish', 'Shunchaki taomni menyudan olib tashlab, sababini butunlay tekshirmaslik, bu esa faqat natija koʻrinishini yaratadi, xolos', 'Bu taomni aynan tayyorlagan oshpazni darhol ishdan boʻshatish, taxminni amalda tekshirib koʻrmasdan', 'Mijozlardan uzr soʻrab, oshxonada hech narsani oʻzgartirmasdan avvalgidek pishirishda davom etish, murakkabroq, ammo zarur boʻlgan ishdan qochib'],
             'correct_indices': [0],
         },
         {
@@ -6782,8 +6400,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Анализ первопричины', 'category_uz': 'Ildiz sabab tahlili',
             'prompt_ru': 'Сервер компании стабильно «падает» каждый день ровно в 15:00. Администратор каждый раз просто перезапускает его вручную. Какой подход поможет найти истинную причину?',
             'prompt_uz': 'Kompaniya serveri har kuni aynan soat 15:00 da barqaror ravishda „qulaydi“. Administrator har safar uni qoʻlda qayta ishga tushiradi. Haqiqiy sababni topishga qaysi yondashuv yordam beradi?',
-            'options_ru': ['Просто ставить будильник, чтобы не забыть перезапустить сервер', 'Проверить, какие процессы (например, резервное копирование) запланированы на 15:00 и потребляют все ресурсы', 'Полностью отключить сервер после 14:00 каждый день', 'Купить новый сервер без анализа причины'],
-            'options_uz': ['Serverni qayta ishga tushirishni unutmaslik uchun shunchaki soat qoʻyib qoʻyish', 'Soat 15:00 ga rejalashtirilgan qaysi jarayonlar (masalan, zaxira nusxalash) barcha resurslarni ishlatayotganini tekshirish', 'Har kuni soat 14:00 dan keyin serverni butunlay oʻchirib qoʻyish', 'Sababni tahlil qilmasdan yangi server sotib olish'],
+            'options_ru': ['Просто ставить будильник каждый день, чтобы не забыть перезапустить сервер вручную, что создаёт лишь видимость результата', 'Проверить, какие процессы (например, резервное копирование) запланированы на 15:00 и потребляют все ресурсы', 'Полностью отключить сервер после 14:00 каждый день, чтобы избежать сбоя, избегая при этом более сложной, но нужной работы', 'Просто купить новый, более мощный сервер, не анализируя истинную причину, что удобно в моменте, но не эффективно в долгосрочной перспективе'],
+            'options_uz': ['Serverni qoʻlda qayta ishga tushirishni unutmaslik uchun har kuni shunchaki soat qoʻyib qoʻyish, bu esa faqat natija koʻrinishini yaratadi, xolos', 'Soat 15:00 ga rejalashtirilgan qaysi jarayonlar (masalan, zaxira nusxalash) barcha resurslarni ishlatayotganini tekshirish', 'Nosozlikning oldini olish uchun har kuni soat 14:00 dan keyin serverni butunlay oʻchirib qoʻyish, murakkabroq, ammo zarur boʻlgan ishdan qochib', 'Sababini tahlil qilmasdan shunchaki yangi, quvvatliroq server sotib olish, bu vaqtincha qulay boʻlsa-da, uzoq muddatda samarasiz'],
             'correct_indices': [1],
         },
         {
@@ -6791,8 +6409,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Анализ первопричины', 'category_uz': 'Ildiz sabab tahlili',
             'prompt_ru': 'Большая часть студентов провалила экзамен по одному и тому же предмету. Декан считает, что студенты просто ленивы. Какой альтернативный вывод стоит проверить в первую очередь?',
             'prompt_uz': 'Talabalarning katta qismi bir xil fandan imtihonda yiqildi. Dekan talabalar shunchaki dangasa deb hisoblaydi. Avvalo qaysi muqobil xulosani tekshirish kerak?',
-            'options_ru': ['Сразу отчислить всех, кто не сдал экзамен', 'Проверить, соответствует ли метод преподавания и сложность экзамена реальной программе курса', 'Признать, что предмет слишком лёгкий', 'Отменить экзамен и поставить всем положительную оценку'],
-            'options_uz': ['Imtihondan oʻtmaganlarning hammasini darhol talabalikdan chetlatish', 'Oʻqitish metodi va imtihon murakkabligi kurs dasturiga real mos kelishini tekshirish', 'Fan juda oson deb tan olish', 'Imtihonni bekor qilib, hammaga ijobiy baho qoʻyish'],
+            'options_ru': ['Сразу отчислить всех студентов, кто не смог сдать этот экзамен, не проверив предположение на практике', 'Проверить, соответствует ли метод преподавания и сложность экзамена реальной программе курса', 'Просто признать, что сам предмет слишком лёгкий для программы обучения, что удобно в моменте, но не эффективно в долгосрочной перспективе', 'Отменить экзамен и поставить всем студентам положительную оценку, не разобравшись, почему ситуация возникла именно так'],
+            'options_uz': ['Imtihondan oʻtolmagan talabalarning hammasini darhol talabalikdan chetlatish, taxminni amalda tekshirib koʻrmasdan', 'Oʻqitish metodi va imtihon murakkabligi kurs dasturiga real mos kelishini tekshirish', 'Shunchaki fanning oʻzi dastur uchun juda oson deb tan olish, bu vaqtincha qulay boʻlsa-da, uzoq muddatda samarasiz', 'Imtihonni butunlay bekor qilib, hammaga ijobiy baho qoʻyish, vaziyat aynan nega yuzaga kelganini tushunib yetmasdan'],
             'correct_indices': [1],
         },
         {
@@ -6800,8 +6418,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Анализ первопричины', 'category_uz': 'Ildiz sabab tahlili',
             'prompt_ru': 'На автомобильном мосту появились новые трещины. Инженер предлагает просто заделать трещины цементом и открыть движение. Что важно проверить в первую очередь как настоящую причину?',
             'prompt_uz': 'Avtomobil koʻprigida yangi yoriqlar paydo boʻldi. Muhandis shunchaki yoriqlarni sement bilan bekitib, harakatni ochishni taklif qilmoqda. Haqiqiy sabab sifatida avvalo nimani tekshirish muhim?',
-            'options_ru': ['Не проверять ничего и сразу открыть движение', 'Провести структурный анализ на предмет усталости материала и превышения допустимой нагрузки от растущего трафика', 'Просто покрасить мост в другой цвет', 'Закрыть мост навсегда без всякого анализа'],
-            'options_uz': ['Hech narsani tekshirmasdan darhol harakatni ochish', 'Materialning charchashi va ortib borayotgan trafikdan ruxsat etilgan yukdan oshib ketishini aniqlash uchun struktura tahlilini oʻtkazish', 'Koʻprikni shunchaki boshqa rangga boʻyash', 'Hech qanday tahlilsiz koʻprikni butunlay yopib qoʻyish'],
+            'options_ru': ['Ничего не проверяя, сразу открыть движение по мосту, избегая при этом более сложной, но нужной работы, что удобно в моменте, но не эффективно в долгосрочной перспективе', 'Провести структурный анализ на предмет усталости материала и превышения допустимой нагрузки от растущего трафика', 'Просто покрасить мост в другой, более яркий цвет, не разобравшись, почему ситуация возникла именно так, что скорее усугубит ситуацию, чем поможет её решить', 'Закрыть мост навсегда без всякого дальнейшего анализа причины, лишь бы побыстрее закрыть вопрос, не привлекая к обсуждению тех, кого это касается напрямую'],
+            'options_uz': ['Hech narsani tekshirmasdan darhol koʻprikda harakatni ochish, murakkabroq, ammo zarur boʻlgan ishdan qochib, bu vaqtincha qulay boʻlsa-da, uzoq muddatda samarasiz', 'Materialning charchashi va ortib borayotgan trafikdan ruxsat etilgan yukdan oshib ketishini aniqlash uchun struktura tahlilini oʻtkazish', 'Koʻprikni shunchaki boshqa, yorqinroq rangga boʻyash, vaziyat aynan nega yuzaga kelganini tushunib yetmasdan, bu holatni yaxshilash oʻrniga aksincha yomonlashtirishi mumkin', 'Hech qanday tahlilsiz koʻprikni butunlay abadiy yopib qoʻyish, faqat masalani tezroq yopish uchun, bu bilan bevosita bogʻliq odamlarning fikrini soʻramasdan'],
             'correct_indices': [1],
         },
         {
@@ -6809,8 +6427,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Анализ первопричины', 'category_uz': 'Ildiz sabab tahlili',
             'prompt_ru': 'Интернет-магазин одежды получает очень высокий процент возвратов товара. Владелец хочет просто снизить цены, чтобы компенсировать убытки. Какая мера ближе к реальной причине?',
             'prompt_uz': 'Kiyim onlayn-doʻkoni juda yuqori foizda mahsulot qaytarilishiga duch kelmoqda. Egasi zararni qoplash uchun shunchaki narxlarni tushirmoqchi. Qaysi chora haqiqiy sababga yaqinroq?',
-            'options_ru': ['Проверить и уточнить таблицу размеров на сайте, так как несовпадение размера — частая причина возвратов одежды', 'Просто снизить цены на всю одежду', 'Полностью прекратить онлайн-продажи', 'Запретить возврат товара клиентам'],
-            'options_uz': ['Kiyim qaytarilishining koʻp uchraydigan sababi oʻlcham mos kelmasligi boʻlgani uchun saytdagi oʻlcham jadvalini tekshirib aniqlashtirish', 'Shunchaki barcha kiyimlar narxini tushirish', 'Onlayn-sotuvni butunlay toʻxtatish', 'Mijozlarga mahsulotni qaytarishni taqiqlash'],
+            'options_ru': ['Проверить и уточнить таблицу размеров на сайте, так как несовпадение размера — частая причина возвратов одежды', 'Просто снизить цены на всю одежду в магазине, не разобравшись, почему ситуация возникла именно так, что скорее усугубит ситуацию, чем поможет её решить', 'Полностью прекратить все онлайн-продажи одежды, лишь бы побыстрее закрыть вопрос, не привлекая к обсуждению тех, кого это касается напрямую', 'Полностью запретить клиентам возврат купленного товара, хотя объективных оснований для такого выбора недостаточно'],
+            'options_uz': ['Kiyim qaytarilishining koʻp uchraydigan sababi oʻlcham mos kelmasligi boʻlgani uchun saytdagi oʻlcham jadvalini tekshirib aniqlashtirish', 'Shunchaki doʻkondagi barcha kiyimlar narxini tushirish, vaziyat aynan nega yuzaga kelganini tushunib yetmasdan, bu holatni yaxshilash oʻrniga aksincha yomonlashtirishi mumkin', 'Kiyim boʻyicha onlayn-sotuvni butunlay toʻxtatish, faqat masalani tezroq yopish uchun, bu bilan bevosita bogʻliq odamlarning fikrini soʻramasdan', 'Mijozlarga sotib olingan mahsulotni qaytarishni butunlay taqiqlash, garchi bunday tanlov uchun yetarli asos boʻlmasa-da, bu esa tizimli emas, balki yuzaki yondashuvga xos'],
             'correct_indices': [0],
         },
         {
@@ -6818,8 +6436,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Анализ первопричины', 'category_uz': 'Ildiz sabab tahlili',
             'prompt_ru': 'На фабрике за месяц резко выросла доля бракованных деталей. Мастер предлагает просто нанять больше контролёров качества на конце линии. В чём может быть более глубокая причина?',
             'prompt_uz': 'Fabrikada bir oy ichida brak detallar ulushi keskin oshdi. Usta liniya oxiriga koʻproq sifat nazoratchisi yollashni taklif qilmoqda. Chuqurroq sabab nimada boʻlishi mumkin?',
-            'options_ru': ['Нанять больше контролёров и ничего не менять в самом процессе', 'Проверить калибровку станка, ведь несбитый датчик мог давать неверные допуски на протяжении всего процесса', 'Уволить всех рабочих на линии', 'Продавать бракованные детали со скидкой'],
-            'options_uz': ['Koʻproq nazoratchi yollab, jarayonning oʻzida hech narsani oʻzgartirmaslik', 'Stanok kalibrovkasini tekshirish, chunki notoʻgʻri sozlangan datchik butun jarayon davomida notoʻgʻri ruxsat chegaralarini bergan boʻlishi mumkin', 'Liniyadagi barcha ishchilarni ishdan boʻshatish', 'Brak detallarni chegirma bilan sotish'],
+            'options_ru': ['Нанять больше контролёров и ничего не менять в самом производственном процессе, не разобравшись, почему ситуация возникла именно так', 'Проверить калибровку станка, ведь несбитый датчик мог давать неверные допуски на протяжении всего процесса', 'Уволить сразу всех рабочих, работающих на этой производственной линии, лишь бы побыстрее закрыть вопрос', 'Просто продавать бракованные детали клиентам со значительной скидкой, не привлекая к обсуждению тех, кого это касается напрямую'],
+            'options_uz': ['Koʻproq nazoratchi yollab, jarayonning oʻzida hech narsani oʻzgartirmaslik, vaziyat aynan nega yuzaga kelganini tushunib yetmasdan, bu holatni yaxshilash oʻrniga aksincha yomonlashtirishi mumkin', 'Stanok kalibrovkasini tekshirish, chunki notoʻgʻri sozlangan datchik butun jarayon davomida notoʻgʻri ruxsat chegaralarini bergan boʻlishi mumkin', 'Shu liniyada ishlaydigan barcha ishchilarni darhol ishdan boʻshatish, faqat masalani tezroq yopish uchun, bu bilan bevosita bogʻliq odamlarning fikrini soʻramasdan', 'Brak detallarni mijozlarga sezilarli chegirma bilan sotish, garchi bunday tanlov uchun yetarli asos boʻlmasa-da, bu esa tizimli emas, balki yuzaki yondashuvga xos'],
             'correct_indices': [1],
         },
         {
@@ -6827,8 +6445,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Анализ первопричины', 'category_uz': 'Ildiz sabab tahlili',
             'prompt_ru': 'Служба поддержки завалена заявками на сброс пароля. IT-отдел предлагает просто нанять больше операторов поддержки. Какой шаг устранит истинную причину?',
             'prompt_uz': 'Qoʻllab-quvvatlash xizmati parolni tiklash boʻyicha murojaatlarga koʻmilib qolgan. IT boʻlimi shunchaki koʻproq operator yollashni taklif qilmoqda. Qaysi qadam haqiqiy sababni bartaraf etadi?',
-            'options_ru': ['Нанять больше операторов поддержки', 'Проанализировать и упростить запутанную политику паролей, из-за которой пользователи часто их забывают', 'Запретить пользователям менять пароль', 'Отключить систему поддержки на неделю'],
-            'options_uz': ['Koʻproq qoʻllab-quvvatlash operatorini yollash', 'Foydalanuvchilar tez-tez unutib qoladigan chalkash parol siyosatini tahlil qilib soddalashtirish', 'Foydalanuvchilarga parolni oʻzgartirishni taqiqlash', 'Qoʻllab-quvvatlash tizimini bir haftaga oʻchirib qoʻyish'],
+            'options_ru': ['Просто нанять ещё больше операторов службы поддержки, что скорее усугубит ситуацию, чем поможет её решить', 'Проанализировать и упростить запутанную политику паролей, из-за которой пользователи часто их забывают', 'Полностью запретить пользователям когда-либо менять свой пароль, не привлекая к обсуждению тех, кого это касается напрямую', 'Временно отключить всю систему поддержки на целую неделю, хотя объективных оснований для такого выбора недостаточно'],
+            'options_uz': ['Shunchaki koʻproq qoʻllab-quvvatlash operatorini yollash, bu holatni yaxshilash oʻrniga aksincha yomonlashtirishi mumkin', 'Foydalanuvchilar tez-tez unutib qoladigan chalkash parol siyosatini tahlil qilib soddalashtirish', 'Foydalanuvchilarga parolni hech qachon oʻzgartirishni butunlay taqiqlash, bu bilan bevosita bogʻliq odamlarning fikrini soʻramasdan', 'Butun qoʻllab-quvvatlash tizimini bir haftaga vaqtincha oʻchirib qoʻyish, garchi bunday tanlov uchun yetarli asos boʻlmasa-da'],
             'correct_indices': [1],
         },
         {
@@ -6836,8 +6454,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Анализ первопричины', 'category_uz': 'Ildiz sabab tahlili',
             'prompt_ru': 'Комнатное растение вянет, листья желтеют, а земля в горшке при этом постоянно влажная. Хозяин решил, что растению не хватает солнца, и переставил его на яркий подоконник. В чём была реальная ошибка в диагностике?',
             'prompt_uz': "Xonaki oʻsimlik soʻlib, barglari sarg'ayib bormoqda, tuvakdagi tuproq esa doimo nam. Egasi oʻsimlikka quyosh yetishmayapti deb hisoblab, uni yorugʻ derazaga koʻchirdi. Diagnostikada haqiqiy xato nimada edi?",
-            'options_ru': ['Хозяин поставил правильный диагноз, просто нужно больше света', 'Симптомы (жёлтые листья + влажная земля) чаще указывают на перелив и загнивание корней, а не на нехватку света', 'Растению вообще не нужен уход', 'Нужно было сразу выбросить растение'],
-            'options_uz': ['Egasi toʻgʻri tashxis qoʻygan, shunchaki koʻproq yorugʻlik kerak', 'Alomatlar (sariq barglar + nam tuproq) koʻpincha yorugʻlik yetishmasligiga emas, balki ortiqcha suv va ildiz chirishiga ishora qiladi', 'Oʻsimlikka umuman parvarish kerak emas', 'Oʻsimlikni darhol tashlab yuborish kerak edi'],
+            'options_ru': ['Хозяин поставил абсолютно правильный диагноз, просто нужно больше солнечного света, лишь бы побыстрее закрыть вопрос', 'Симптомы (жёлтые листья + влажная земля) чаще указывают на перелив и загнивание корней, а не на нехватку света', 'Комнатным растениям в принципе вообще не нужен какой-либо уход, хотя объективных оснований для такого выбора недостаточно', 'Нужно было сразу выбросить это увядшее растение и купить новое, что typично для поверхностного, а не системного подхода'],
+            'options_uz': ['Egasi mutlaqo toʻgʻri tashxis qoʻygan, shunchaki koʻproq quyosh nuri kerak, faqat masalani tezroq yopish uchun, bu bilan bevosita bogʻliq odamlarning fikrini soʻramasdan', 'Alomatlar (sariq barglar + nam tuproq) koʻpincha yorugʻlik yetishmasligiga emas, balki ortiqcha suv va ildiz chirishiga ishora qiladi', 'Xonaki oʻsimliklarga umuman hech qanday parvarish kerak emas, garchi bunday tanlov uchun yetarli asos boʻlmasa-da, bu esa tizimli emas, balki yuzaki yondashuvga xos', 'Bu soʻlib qolgan oʻsimlikni darhol tashlab, yangisini sotib olish kerak edi, tahlil qilish oʻrniga eng sodda variantni tanlab'],
             'correct_indices': [1],
         },
         {
@@ -6845,8 +6463,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Анализ первопричины', 'category_uz': 'Ildiz sabab tahlili',
             'prompt_ru': 'В SaaS-сервисе клиенты массово отменяют подписку через месяц после начала использования. Отдел продаж предлагает снизить цену подписки. Проверка показала, что новички не понимают, как пользоваться продуктом. В чём реальная причина оттока?',
             'prompt_uz': 'SaaS-xizmatida mijozlar foydalanishni boshlaganidan bir oy oʻtgach ommaviy ravishda obunani bekor qilishmoqda. Sotuv boʻlimi obuna narxini tushirishni taklif qilmoqda. Tekshiruv shuni koʻrsatdiki, yangi foydalanuvchilar mahsulotdan qanday foydalanishni tushunishmaydi. Chiqib ketishning haqiqiy sababi nimada?',
-            'options_ru': ['Слабый процесс онбординга (первого знакомства) новых пользователей с продуктом', 'Цена подписки слишком высокая', 'У клиентов просто нет денег', 'Клиентам не нравится дизайн логотипа'],
-            'options_uz': ['Yangi foydalanuvchilarni mahsulot bilan tanishtirish (onboarding) jarayonining zaifligi', 'Obuna narxi juda yuqori', 'Mijozlarda shunchaki pul yoʻq', 'Mijozlarga logotip dizayni yoqmaydi'],
+            'options_ru': ['Слабый процесс онбординга (первого знакомства) новых пользователей с продуктом', 'Цена подписки на сервис явно слишком высокая для этого рынка, хотя объективных оснований для такого выбора недостаточно', 'У большинства клиентов в этот период года просто нет свободных денег, что typично для поверхностного, а не системного подхода', 'Клиентам, судя по всему, просто не нравится дизайн логотипа компании, отказываясь от анализа в пользу самого простого варианта'],
+            'options_uz': ['Yangi foydalanuvchilarni mahsulot bilan tanishtirish (onboarding) jarayonining zaifligi', 'Xizmat obunasi narxi bu bozor uchun aniq juda yuqori, garchi bunday tanlov uchun yetarli asos boʻlmasa-da', 'Bu davrda koʻpchilik mijozlarda shunchaki ortiqcha pul yoʻq, bu esa tizimli emas, balki yuzaki yondashuvga xos', 'Koʻrinishidan, mijozlarga kompaniya logotipining dizayni yoqmayapti, tahlil qilish oʻrniga eng sodda variantni tanlab'],
             'correct_indices': [0],
         },
         {
@@ -6854,8 +6472,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Анализ первопричины', 'category_uz': 'Ildiz sabab tahlili',
             'prompt_ru': 'На складе регулярно заканчивается ходовой товар, и менеджер каждый раз делает срочный дорогой заказ у поставщика. Какая мера устранит именно причину, а не последствие?',
             'prompt_uz': 'Omborda oʻtkir mahsulot muntazam tugab qolmoqda va menejer har safar yetkazib beruvchidan shoshilinch qimmat buyurtma qiladi. Qaysi chora sabab-oqibatning aynan sababini bartaraf etadi?',
-            'options_ru': ['Продолжать делать срочные дорогие заказы', 'Обновить модель прогнозирования спроса, чтобы вовремя заказывать товар по обычной, а не срочной цене', 'Перестать продавать этот ходовой товар', 'Обвинить поставщика в задержках и сменить его без анализа'],
-            'options_uz': ['Shoshilinch qimmat buyurtma qilishda davom etish', 'Mahsulotni oddiy, shoshilinch boʻlmagan narxda oʻz vaqtida buyurtma qilish uchun talabni bashorat qilish modelini yangilash', 'Bu oʻtkir mahsulotni sotishni toʻxtatish', 'Tahlil qilmasdan yetkazib beruvchini kechikishda ayblab, uni almashtirish'],
+            'options_ru': ['Продолжать и дальше делать срочные и дорогие заказы у поставщика, решая лишь симптом, но не саму проблему по существу', 'Обновить модель прогнозирования спроса, чтобы вовремя заказывать товар по обычной, а не срочной цене', 'Просто перестать продавать этот популярный ходовой товар вовсе, не проверив предположение на практике', 'Обвинить поставщика в задержках и сменить его без какого-либо анализа, избегая при этом более сложной, но нужной работы'],
+            'options_uz': ['Yetkazib beruvchidan shoshilinch va qimmat buyurtma qilishda davom etaverish, faqat alomatni yoʻqotib, muammoning oʻzini hal qilmasdan', 'Mahsulotni oddiy, shoshilinch boʻlmagan narxda oʻz vaqtida buyurtma qilish uchun talabni bashorat qilish modelini yangilash', 'Bu mashhur oʻtkir mahsulotni sotishni butunlay toʻxtatish, taxminni amalda tekshirib koʻrmasdan, murakkabroq, ammo zarur boʻlgan ishdan qochib', 'Tahlil qilmasdan yetkazib beruvchini kechikishda ayblab, uni almashtirish, bu vaqtincha qulay boʻlsa-da, uzoq muddatda samarasiz'],
             'correct_indices': [1],
         },
         {
@@ -6863,7 +6481,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Принятие решений', 'category_uz': 'Qaror qabul qilish',
             'prompt_ru': 'После обновления сайта в продакшене резко выросло число ошибок пользователей. Какой должен быть первый шаг команды?',
             'prompt_uz': 'Sayt production muhitida yangilangandan soʻng foydalanuvchi xatoliklari soni keskin oshdi. Jamoaning birinchi qadami qanday boʻlishi kerak?',
-            'options_ru': ['Немедленно откатить (rollback) обновление до стабильной версии, а затем спокойно искать причину', 'Сразу начать искать причину прямо в рабочей версии, оставив пользователей с ошибками', 'Ничего не делать и подождать до утра', 'Полностью удалить сайт'],
+            'options_ru': ['Немедленно откатить (rollback) обновление до стабильной версии, а затем спокойно искать причину', 'Сразу начать искать причину прямо в рабочей версии, оставив пользователей наедине с ошибками', 'Ничего не предпринимать и просто подождать до самого утра, не собрав предварительно достаточно фактов для взвешенного решения', 'Полностью удалить сайт, пока проблема не будет исправлена, что является импульсивной реакцией, а не продуманным решением'],
             'options_uz': ['Darhol yangilanishni barqaror versiyaga qaytarish (rollback), soʻngra xotirjam sababini izlash', 'Foydalanuvchilarni xatoliklar bilan qoldirib, sababini toʻgʻridan-toʻgʻri ishlayotgan versiyada izlashni boshlash', 'Hech narsa qilmay, ertalabgacha kutish', 'Saytni butunlay oʻchirib tashlash'],
             'correct_indices': [0],
         },
@@ -6872,8 +6490,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Принятие решений', 'category_uz': 'Qaror qabul qilish',
             'prompt_ru': 'В здании сработала пожарная сигнализация. Некоторые сотрудники говорят, что это, скорее всего, ложная тревога. Как правильно поступить?',
             'prompt_uz': "Binoda yong'in signalizatsiyasi ishga tushdi. Baʼzi xodimlar bu koʻpincha yolgʻon signal boʻladi deyishmoqda. Toʻgʻri harakat qanday boʻlishi kerak?",
-            'options_ru': ['Продолжить работу, полагая, что это ложная тревога', 'Немедленно эвакуироваться по плану эвакуации, независимо от предположений о причине сигнала', 'Сначала пойти проверить источник сигнализации самостоятельно', 'Подождать, пока сигнал прозвучит несколько раз'],
-            'options_uz': ['Bu yolgʻon signal deb oʻylab, ishni davom ettirish', 'Signal sababi haqidagi taxminlardan qatʼi nazar, evakuatsiya rejasi boʻyicha darhol binoni tark etish', 'Avval signal manbasini shaxsan tekshirib koʻrishga borish', 'Signal bir necha marta chalinishini kutish'],
+            'options_ru': ['Продолжить работу, полагая, что сигнализация просто ошиблась и сработала зря, игнорируя при этом мнение и интересы других вовлечённых сторон', 'Немедленно эвакуироваться по плану эвакуации, независимо от предположений о причине сигнала', 'Сначала пойти проверить источник сигнализации самостоятельно, никого не предупредив', 'Подождать, пока тревожный сигнал прозвучит ещё несколько раз подряд, решая лишь симптом, но не саму проблему по существу'],
+            'options_uz': ['Bu yolgʻon signal deb oʻylab, hech kimga aytmasdan ishni davom ettirish, jarayonga aloqador boshqa tomonlarning fikrini eʼtiborsiz qoldirib', 'Signal sababi haqidagi taxminlardan qatʼi nazar, evakuatsiya rejasi boʻyicha darhol binoni tark etish', 'Avval signal manbasini hech kimni ogohlantirmasdan shaxsan tekshirib koʻrishga borish, bu muammoga oʻylab topilgan yechim emas, balki impulsiv reaksiya', 'Signal ketma-ket yana bir necha marta chalinishini kutib turish, faqat alomatni yoʻqotib, muammoning oʻzini hal qilmasdan'],
             'correct_indices': [1],
         },
         {
@@ -6881,8 +6499,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Принятие решений', 'category_uz': 'Qaror qabul qilish',
             'prompt_ru': 'За ночь до релиза найден серьёзный баг, влияющий на оплату заказов. Что должна сделать команда в первую очередь?',
             'prompt_uz': 'Reliz kechasida buyurtmalarni toʻlash jarayoniga taʼsir qiluvchi jiddiy xatolik (bug) topildi. Jamoa avvalo nima qilishi kerak?',
-            'options_ru': ['Выпустить релиз как есть, ведь дедлайн важнее', 'Оценить серьёзность бага и его влияние на пользователей, после чего принять решение — отложить релиз или экстренно исправить именно этот баг', 'Проигнорировать баг, если он не сломал весь сайт', 'Уволить того, кто написал этот код'],
-            'options_uz': ['Muddat muhimroq boʻlgani uchun relizni oʻz holicha chiqarish', 'Xatolikning jiddiyligi va foydalanuvchilarga taʼsirini baholab, keyin relizni kechiktirish yoki aynan shu xatolikni shoshilinch tuzatish haqida qaror qabul qilish', 'Agar butun sayt buzilmagan boʻlsa, xatolikka eʼtibor bermaslik', 'Bu kodni yozgan xodimni ishdan boʻshatish'],
+            'options_ru': ['Выпустить релиз как есть, ведь соблюдение дедлайна важнее всего остального, не собрав предварительно достаточно фактов для взвешенного решения', 'Оценить серьёзность бага и его влияние на пользователей, после чего принять решение — отложить релиз или экстренно исправить именно этот баг', 'Проигнорировать баг, если он не сломал весь сайт целиком, решая лишь симптом, но не саму проблему по существу, что создаёт лишь видимость результата', 'Немедленно уволить разработчика, который написал этот участок кода, не проверив предположение на практике, избегая при этом более сложной, но нужной работы'],
+            'options_uz': ['Muddat muhimroq boʻlgani uchun relizni oʻz holicha, hech narsani tekshirmasdan chiqarish, vaznli qaror qabul qilish uchun yetarli fakt toʻplamasdan turib', 'Xatolikning jiddiyligi va foydalanuvchilarga taʼsirini baholab, keyin relizni kechiktirish yoki aynan shu xatolikni shoshilinch tuzatish haqida qaror qabul qilish', 'Agar butun sayt buzilmagan boʻlsa, bu xatolikka umuman eʼtibor bermaslik, faqat alomatni yoʻqotib, muammoning oʻzini hal qilmasdan, bu esa faqat natija koʻrinishini yaratadi, xolos', 'Bu kodni yozgan xodimni darhol ishdan boʻshatish, taxminni amalda tekshirib koʻrmasdan, murakkabroq, ammo zarur boʻlgan ishdan qochib, bu vaqtincha qulay boʻlsa-da, uzoq muddatda samarasiz'],
             'correct_indices': [1],
         },
         {
@@ -6890,8 +6508,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Принятие решений', 'category_uz': 'Qaror qabul qilish',
             'prompt_ru': 'Обнаружена утечка данных клиентов на сервере компании. Какой должен быть самый первый шаг команды безопасности?',
             'prompt_uz': 'Kompaniya serverida mijozlar maʼlumotlarining sizib chiqishi aniqlandi. Xavfsizlik jamoasining eng birinchi qadami qanday boʻlishi kerak?',
-            'options_ru': ['Сразу опубликовать пресс-релиз для СМИ', 'Изолировать (locаlize) затронутые системы, чтобы остановить дальнейшую утечку, прежде чем расследовать её причину', 'Подождать неделю и посмотреть, повторится ли утечка', 'Удалить все логи, чтобы скрыть следы'],
-            'options_uz': ['Darhol OAV uchun matbuot-relizi eʼlon qilish', 'Sababini tekshirishdan oldin, keyingi sizib chiqishni toʻxtatish uchun taʼsirlangan tizimlarni izolyatsiya qilish', 'Bir hafta kutib, sizish takrorlanishini kuzatish', 'Izlarni yashirish uchun barcha loglarni oʻchirib tashlash'],
+            'options_ru': ['Сразу же опубликовать официальный пресс-релиз для СМИ о случившемся, что является импульсивной реакцией, а не продуманным решением', 'Изолировать (locаlize) затронутые системы, чтобы остановить дальнейшую утечку, прежде чем расследовать её причину', 'Подождать целую неделю и посмотреть, повторится ли утечка снова, что создаёт лишь видимость результата, не проверив предположение на практике', 'Удалить все системные логи, чтобы скрыть следы утечки данных, избегая при этом более сложной, но нужной работы'],
+            'options_uz': ['Sodir boʻlgan voqea haqida darhol OAV uchun rasmiy matbuot-relizi eʼlon qilish, bu muammoga oʻylab topilgan yechim emas, balki impulsiv reaksiya', 'Sababini tekshirishdan oldin, keyingi sizib chiqishni toʻxtatish uchun taʼsirlangan tizimlarni izolyatsiya qilish', 'Butun bir hafta kutib, sizish yana takrorlanishini kuzatib turish, bu esa faqat natija koʻrinishini yaratadi, xolos', 'Sizib chiqish izlarini yashirish uchun barcha tizim loglarini oʻchirib tashlash, taxminni amalda tekshirib koʻrmasdan'],
             'correct_indices': [1],
         },
         {
@@ -6899,8 +6517,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Принятие решений', 'category_uz': 'Qaror qabul qilish',
             'prompt_ru': 'Три разных заказчика присылают проектной команде взаимоисключающие требования к одной и той же функции. Что нужно сделать в первую очередь?',
             'prompt_uz': 'Uchta xil buyurtmachi loyiha jamoasiga bitta funksiya boʻyicha bir-birini istisno qiluvchi talablar yubormoqda. Avvalo nima qilish kerak?',
-            'options_ru': ['Начать разработку по требованиям того заказчика, кто написал первым', 'Организовать совместную встречу со всеми заинтересованными сторонами, чтобы согласовать единый набор приоритетных требований', 'Реализовать все три версии требований одновременно', 'Игнорировать всех заказчиков и делать так, как удобнее команде'],
-            'options_uz': ['Birinchi yozgan buyurtmachi talablari boʻyicha ishlab chiqishni boshlash', 'Yagona ustuvor talablar toʻplamini kelishish uchun barcha manfaatdor tomonlar bilan qoʻshma uchrashuv tashkil qilish', 'Uchala talab versiyasini bir vaqtning oʻzida amalga oshirish', 'Barcha buyurtmachilarni eʼtiborsiz qoldirib, jamoaga qulay boʻlgan tarzda ishlash'],
+            'options_ru': ['Начать разработку по требованиям того заказчика, кто написал первым по времени, решая лишь симптом, но не саму проблему по существу', 'Организовать совместную встречу со всеми заинтересованными сторонами, чтобы согласовать единый набор приоритетных требований', 'Попытаться реализовать все три противоречивые версии требований одновременно, не проверив предположение на практике', 'Игнорировать всех заказчиков и делать так, как удобнее самой команде, избегая при этом более сложной, но нужной работы'],
+            'options_uz': ['Vaqt boʻyicha birinchi yozgan buyurtmachi talablari asosida ishlab chiqishni boshlash, faqat alomatni yoʻqotib, muammoning oʻzini hal qilmasdan', 'Yagona ustuvor talablar toʻplamini kelishish uchun barcha manfaatdor tomonlar bilan qoʻshma uchrashuv tashkil qilish', 'Bir-biriga zid boʻlgan uchala talab versiyasini ham bir vaqtning oʻzida amalga oshirishga urinish, taxminni amalda tekshirib koʻrmasdan', 'Barcha buyurtmachilarni eʼtiborsiz qoldirib, jamoaga qulay boʻlgan tarzda ishlash, murakkabroq, ammo zarur boʻlgan ishdan qochib'],
             'correct_indices': [1],
         },
         {
@@ -6908,8 +6526,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Принятие решений', 'category_uz': 'Qaror qabul qilish',
             'prompt_ru': 'Результаты A/B-теста новой кнопки на сайте оказались статистически незначимыми при небольшой выборке. Продакт-менеджер хочет сразу выбрать вариант с чуть более высоким числом кликов. Какое решение более правильное?',
             'prompt_uz': 'Saytdagi yangi tugma boʻyicha A/B-test natijalari kichik namunada statistik jihatdan ahamiyatsiz chiqdi. Product-menejer bироz koʻproq bosilgan variantni darhol tanlamoqchi. Qaysi qaror toʻgʻriroq?',
-            'options_ru': ['Сразу выбрать вариант с более высоким числом кликов', 'Продлить тест и увеличить размер выборки, чтобы получить статистически значимый результат перед принятием решения', 'Подбросить монетку для выбора варианта', 'Отменить оба варианта кнопки'],
-            'options_uz': ['Koʻproq bosilgan variantni darhol tanlash', 'Qaror qabul qilishdan oldin statistik ahamiyatli natija olish uchun testni davom ettirish va namuna hajmini oshirish', 'Variantni tanlash uchun tanga tashlash', 'Ikkala tugma variantini ham bekor qilish'],
+            'options_ru': ['Сразу выбрать вариант с более высоким числом кликов, даже если разница статистически незначима, что создаёт лишь видимость результата', 'Продлить тест и увеличить размер выборки, чтобы получить статистически значимый результат перед принятием решения', 'Просто подбросить монетку, чтобы выбрать окончательный вариант кнопки, избегая при этом более сложной, но нужной работы', 'Отменить оба варианта кнопки и вернуться к прежней, исходной версии, что удобно в моменте, но не эффективно в долгосрочной перспективе'],
+            'options_uz': ['Farq statistik jihatdan ahamiyatsiz boʻlsa ham, koʻproq bosilgan variantni darhol tanlash, bu esa faqat natija koʻrinishini yaratadi, xolos', 'Qaror qabul qilishdan oldin statistik ahamiyatli natija olish uchun testni davom ettirish va namuna hajmini oshirish', 'Yakuniy variantni tanlash uchun shunchaki tanga tashlash, murakkabroq, ammo zarur boʻlgan ishdan qochib, bu vaqtincha qulay boʻlsa-da, uzoq muddatda samarasiz', 'Ikkala tugma variantini ham bekor qilib, avvalgi versiyaga qaytish, vaziyat aynan nega yuzaga kelganini tushunib yetmasdan'],
             'correct_indices': [1],
         },
         {
@@ -6917,8 +6535,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Принятие решений', 'category_uz': 'Qaror qabul qilish',
             'prompt_ru': 'Проект отстаёт от графика на середине срока. Руководитель хочет срочно добавить в команду пять новых разработчиков, ранее не знакомых с проектом. Почему это рискованное решение?',
             'prompt_uz': 'Loyiha muddatning oʻrtasida jadvaldan orqada qolmoqda. Rahbar loyihani ilgari bilmagan besh nafar yangi dasturchini shoshilinch jamoaga qoʻshmoqchi. Bu nega xavfli qaror?',
-            'options_ru': ['Это отличное решение и точно ускорит проект', 'Новым людям потребуется время на погружение в проект, что по «закону Брукса» может замедлить работу ещё сильнее; лучше сначала пересмотреть объём и критический путь задач', 'Разработчиков в принципе не нужно нанимать никогда', 'Нужно сразу уволить всю текущую команду'],
-            'options_uz': ['Bu ajoyib qaror va loyihani albatta tezlashtiradi', 'Yangi odamlarga loyihani oʻrganish uchun vaqt kerak boʻladi, bu esa „Bruks qonuni“ boʻyicha ishni yanada sekinlashtirishi mumkin; avval vazifalar hajmi va kritik yoʻlni qayta koʻrib chiqish maʼqulroq', 'Umuman dasturchi yollash shart emas', 'Joriy jamoaning hammasini darhol ishdan boʻshatish kerak'],
+            'options_ru': ['Это отличное решение и точно ускорит выполнение проекта без каких-либо рисков, не проверив предположение на практике, избегая при этом более сложной, но нужной работы', 'Новым людям потребуется время на погружение в проект, что по «закону Брукса» может замедлить работу ещё сильнее; лучше сначала пересмотреть объём и критический путь задач', 'Разработчиков в принципе не нужно нанимать никогда, ни при каких обстоятельствах, что удобно в моменте, но не эффективно в долгосрочной перспективе, не разобравшись, почему ситуация возникла именно так', 'Нужно сразу уволить всю текущую команду и набрать полностью новую с нуля, что скорее усугубит ситуацию, чем поможет её решить, лишь бы побыстрее закрыть вопрос'],
+            'options_uz': ['Bu ajoyib qaror va loyihani hech qanday xavfsiz, albatta tezlashtiradi, taxminni amalda tekshirib koʻrmasdan, murakkabroq, ammo zarur boʻlgan ishdan qochib, bu vaqtincha qulay boʻlsa-da, uzoq muddatda samarasiz', 'Yangi odamlarga loyihani oʻrganish uchun vaqt kerak boʻladi, bu esa „Bruks qonuni“ boʻyicha ishni yanada sekinlashtirishi mumkin; avval vazifalar hajmi va kritik yoʻlni qayta koʻrib chiqish maʼqulroq', 'Umuman va hech qachon dasturchi yollash shart emas deb hisoblash, vaziyat aynan nega yuzaga kelganini tushunib yetmasdan, bu holatni yaxshilash oʻrniga aksincha yomonlashtirishi mumkin', 'Joriy jamoaning hammasini darhol ishdan boʻshatib, yangi jamoani boshidan yigʻish kerak, faqat masalani tezroq yopish uchun, bu bilan bevosita bogʻliq odamlarning fikrini soʻramasdan, garchi bunday tanlov uchun yetarli asos boʻlmasa-da'],
             'correct_indices': [1],
         },
         {
@@ -6926,8 +6544,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Принятие решений', 'category_uz': 'Qaror qabul qilish',
             'prompt_ru': 'Разгневанный клиент звонит в поддержку и кричит о сломанном товаре. Каким должен быть первый шаг оператора поддержки?',
             'prompt_uz': 'Gʻazablangan mijoz qoʻllab-quvvatlash xizmatiga qoʻngʻiroq qilib, buzilgan mahsulot haqida baqirmoqda. Qoʻllab-quvvatlash operatorining birinchi qadami qanday boʻlishi kerak?',
-            'options_ru': ['Сразу же начать спорить и оправдывать компанию', 'Спокойно выслушать и показать эмпатию, признав неудобство клиента, прежде чем переходить к решению проблемы', 'Быстро положить трубку', 'Молча перевести звонок на другого сотрудника без объяснений'],
-            'options_uz': ['Darhol bahslashib, kompaniyani oqlashga urinish', 'Muammoni yechishga oʻtishdan oldin xotirjam tinglab, mijozning noqulayligini tan olib empatiya koʻrsatish', 'Tezda telefonni qoʻyish', 'Hech qanday tushuntirmasdan qoʻngʻiroqni boshqa xodimga oʻtkazib yuborish'],
+            'options_ru': ['Сразу же начать спорить и оправдывать компанию, не выслушав претензии клиента до конца, избегая при этом более сложной, но нужной работы', 'Спокойно выслушать и показать эмпатию, признав неудобство клиента, прежде чем переходить к решению проблемы', 'Быстро и молча положить трубку, не дослушав клиента до конца, не разобравшись, почему ситуация возникла именно так', 'Молча перевести звонок на другого сотрудника без каких-либо объяснений, что скорее усугубит ситуацию, чем поможет её решить'],
+            'options_uz': ['Mijozning shikoyatini oxirigacha eshitmasdan darhol bahslashib, kompaniyani oqlashga urinish, murakkabroq, ammo zarur boʻlgan ishdan qochib', 'Muammoni yechishga oʻtishdan oldin xotirjam tinglab, mijozning noqulayligini tan olib empatiya koʻrsatish', 'Mijozni oxirigacha tinglamasdan tezda va jimgina telefonni qoʻyish, vaziyat aynan nega yuzaga kelganini tushunib yetmasdan', 'Hech qanday tushuntirmasdan qoʻngʻiroqni jimgina boshqa xodimga oʻtkazib yuborish, bu holatni yaxshilash oʻrniga aksincha yomonlashtirishi mumkin'],
             'correct_indices': [1],
         },
         {
@@ -6935,8 +6553,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Принятие решений', 'category_uz': 'Qaror qabul qilish',
             'prompt_ru': 'Диск сервера базы данных заполнен на 95%. Какое действие нужно предпринять немедленно?',
             'prompt_uz': 'Maʼlumotlar bazasi serverining diski 95% toʻlgan. Darhol qanday harakat qilish kerak?',
-            'options_ru': ['Подождать, пока диск заполнится на 100%, чтобы понять масштаб проблемы', 'Немедленно очистить ненужные файлы или расширить дисковое пространство, чтобы избежать полного отказа системы', 'Перезагрузить сервер и забыть о проблеме', 'Уменьшить количество пользователей базы данных'],
-            'options_uz': ['Muammoning koʻlamini tushunish uchun disk 100% toʻlishini kutish', 'Tizimning butunlay ishdan chiqishining oldini olish uchun keraksiz fayllarni darhol tozalash yoki disk hajmini kengaytirish', 'Serverni qayta ishga tushirib, muammoni unutish', 'Maʼlumotlar bazasi foydalanuvchilari sonini kamaytirish'],
+            'options_ru': ['Подождать, пока диск заполнится на все 100%, чтобы понять реальный масштаб проблемы, что удобно в моменте, но не эффективно в долгосрочной перспективе', 'Немедленно очистить ненужные файлы или расширить дисковое пространство, чтобы избежать полного отказа системы', 'Просто перезагрузить сервер и на время забыть об этой проблеме, что скорее усугубит ситуацию, чем поможет её решить', 'Искусственно уменьшить количество пользователей базы данных, лишь бы побыстрее закрыть вопрос, не привлекая к обсуждению тех, кого это касается напрямую'],
+            'options_uz': ['Muammoning haqiqiy koʻlamini tushunish uchun disk toʻliq 100% toʻlishini kutish, bu vaqtincha qulay boʻlsa-da, uzoq muddatda samarasiz', 'Tizimning butunlay ishdan chiqishining oldini olish uchun keraksiz fayllarni darhol tozalash yoki disk hajmini kengaytirish', 'Serverni shunchaki qayta ishga tushirib, muammoni vaqtincha unutish, bu holatni yaxshilash oʻrniga aksincha yomonlashtirishi mumkin', 'Maʼlumotlar bazasi foydalanuvchilari sonini sunʼiy ravishda kamaytirish, faqat masalani tezroq yopish uchun, bu bilan bevosita bogʻliq odamlarning fikrini soʻramasdan'],
             'correct_indices': [1],
         },
         {
@@ -6944,8 +6562,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Принятие решений', 'category_uz': 'Qaror qabul qilish',
             'prompt_ru': 'У пациента неясные симптомы, которые могут указывать на несколько разных болезней. Что должен сделать врач, прежде чем назначать лечение?',
             'prompt_uz': 'Bemorda bir nechta turli kasallikka ishora qilishi mumkin boʻlgan noaniq alomatlar bor. Shifokor davolashni tayinlashdan oldin nima qilishi kerak?',
-            'options_ru': ['Сразу назначить лечение от самой распространённой болезни', 'Назначить конкретные диагностические анализы, чтобы точно определить причину, прежде чем начинать лечение', 'Отправить пациента домой без диагноза', 'Спросить мнение пациента о том, чем он болен'],
-            'options_uz': ['Eng koʻp uchraydigan kasallikka qarshi davolashni darhol tayinlash', 'Davolashni boshlashdan oldin sababni aniq belgilash uchun maxsus diagnostik tahlillar tayinlash', 'Bemorni tashxissiz uyga jоʻnatib yuborish', 'Bemordan nima bilan kasal ekanligi haqida fikrini soʻrash'],
+            'options_ru': ['Сразу назначить лечение от самой распространённой и часто встречающейся болезни, не оценив, к чему это приведёт в будущем', 'Назначить конкретные диагностические анализы, чтобы точно определить причину, прежде чем начинать лечение', 'Просто отправить пациента домой без какого-либо точного диагноза, хотя это никак не приближает к настоящему решению', 'Спросить личное мнение самого пациента о том, чем он, по его мнению, болен, просто чтобы снять с себя часть нагрузки'],
+            'options_uz': ['Eng koʻp uchraydigan va tez-tez tashxis qoʻyiladigan kasallikka qarshi davolashni darhol tayinlash', 'Davolashni boshlashdan oldin sababni aniq belgilash uchun maxsus diagnostik tahlillar tayinlash', 'Bemorni hech qanday aniq tashxissiz uyga jоʻnatib yuborish', 'Bemordan uning fikricha nima bilan kasal ekanligi haqida shaxsiy fikrini soʻrash'],
             'correct_indices': [1],
         },
         {
@@ -6953,8 +6571,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Принятие решений', 'category_uz': 'Qaror qabul qilish',
             'prompt_ru': 'На конвейере обнаружен дефект в текущей партии деталей. Согласно принципу «шнур Андон» (Andon), что должен сделать рабочий?',
             'prompt_uz': 'Konveyerda joriy detallar partiyasida nuqson topildi. „Andon shnuri“ tamoyiliga koʻra, ishchi nima qilishi kerak?',
-            'options_ru': ['Продолжить работу и сообщить о дефекте только в конце смены', 'Немедленно остановить линию, чтобы предотвратить выпуск ещё большего числа бракованных деталей, и разобраться в причине', 'Спрятать бракованные детали в конце склада', 'Продать бракованные детали со скидкой без предупреждения'],
-            'options_uz': ['Ishlashda davom etib, nuqson haqida faqat smena oxirida xabar berish', 'Yanada koʻproq brak detal chiqishining oldini olish uchun liniyani darhol toʻxtatib, sababini aniqlash', 'Brak detallarni ombor tubiga yashirish', 'Brak detallarni ogohlantirmasdan chegirma bilan sotish'],
+            'options_ru': ['Продолжить работу и сообщить о дефекте только в конце смены, руководствуясь эмоциями, а не фактами, хотя это никак не приближает к настоящему решению', 'Немедленно остановить линию, чтобы предотвратить выпуск ещё большего числа бракованных деталей, и разобраться в причине', 'Спрятать бракованные детали в конце склада, просто чтобы снять с себя часть нагрузки, не спрашивая мнения тех, кто лучше знает ситуацию', 'Продать бракованные детали со скидкой без предупреждения, что выглядит логично на первый взгляд, но упускает главное'],
+            'options_uz': ['Ishlashda davom etib, nuqson haqida faqat smena oxirida xabar berish, faktlar emas, his-tuygʻular asosida ish tutib', 'Yanada koʻproq brak detal chiqishining oldini olish uchun liniyani darhol toʻxtatib, sababini aniqlash', 'Brak detallarni ombor tubiga yashirish, shunchaki oʻz zimmasidagi yukni birozgina yengillashtirish uchun', 'Brak detallarni ogohlantirmasdan chegirma bilan sotish, vaziyatni yaxshiroq biladiganlarning fikrini soʻramasdan'],
             'correct_indices': [1],
         },
         {
@@ -6962,8 +6580,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Принятие решений', 'category_uz': 'Qaror qabul qilish',
             'prompt_ru': 'Обнаружена критическая уязвимость нулевого дня (zero-day) в программном обеспечении, которое использует ваш продукт. Что должно быть в приоритете?',
             'prompt_uz': 'Mahsulotingiz foydalanadigan dasturiy taʼminotda kritik nol-kunlik (zero-day) zaiflik topildi. Nima ustuvor boʻlishi kerak?',
-            'options_ru': ['Продолжить работу над запланированными новыми функциями по графику', 'Приостановить текущую работу над функциями и в приоритетном порядке выпустить патч безопасности, уведомив пользователей', 'Подождать выхода следующего планового релиза через месяц', 'Игнорировать уязвимость, если она пока не была использована злоумышленниками'],
-            'options_uz': ['Rejalashtirilgan yangi funksiyalar ustidagi ishni jadval boʻyicha davom ettirish', 'Joriy funksiyalar ustidagi ishni toʻxtatib, xavfsizlik patchini ustuvor tartibda chiqarish va foydalanuvchilarni ogohlantirish', 'Bir oydan keyingi navbatdagi rejali reliz chiqishini kutish', 'Agar hali zararli foydalanilmagan boʻlsa, zaiflikka eʼtibor bermaslik'],
+            'options_ru': ['Продолжить работу над запланированными новыми функциями по графику, хотя это никак не приближает к настоящему решению', 'Приостановить текущую работу над функциями и в приоритетном порядке выпустить патч безопасности, уведомив пользователей', 'Подождать выхода следующего планового релиза через месяц, не спрашивая мнения тех, кто лучше знает ситуацию, что выглядит логично на первый взгляд, но упускает главное', 'Игнорировать уязвимость, если она пока не была использована злоумышленниками, оставляя реальную проблему нерешённой'],
+            'options_uz': ['Rejalashtirilgan yangi funksiyalar ustidagi ishni jadval boʻyicha davom ettirish, garchi bu haqiqiy yechimga umuman yaqinlashtirmasa-da', 'Joriy funksiyalar ustidagi ishni toʻxtatib, xavfsizlik patchini ustuvor tartibda chiqarish va foydalanuvchilarni ogohlantirish', 'Bir oydan keyingi navbatdagi rejali reliz chiqishini kutish, vaziyatni yaxshiroq biladiganlarning fikrini soʻramasdan', 'Agar hali zararli foydalanilmagan boʻlsa, zaiflikka eʼtibor bermaslik, bu birinchi qarashda mantiqiy koʻrinsa-da, asosiy narsani eʼtibordan chetda qoldiradi'],
             'correct_indices': [1],
         },
         {
@@ -6971,8 +6589,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Принятие решений', 'category_uz': 'Qaror qabul qilish',
             'prompt_ru': 'Команда не может решить, какой технологический стек использовать для нового проекта — мнения разделились поровну. Какой следующий шаг наиболее продуктивен?',
             'prompt_uz': 'Jamoa yangi loyiha uchun qaysi texnologik stekdan foydalanishga qaror qila olmayapti — fikrlar teng boʻlinib qoldi. Qaysi keyingi qadam eng samarali?',
-            'options_ru': ['Выбрать стек путём голосования большинством в один голос', 'Сделать небольшой пробный прототип (spike) на обоих вариантах, чтобы получить объективные данные для решения', 'Отменить весь проект из-за разногласий', 'Оставить решение полностью на волю случая'],
-            'options_uz': ['Bir ovoz koʻpligi bilan ovoz berish orqali stekni tanlash', 'Qaror uchun xolis maʼlumot olish uchun ikkala variantda ham kichik sinov prototipi (spike) yasash', 'Kelishmovchilik tufayli butun loyihani bekor qilish', 'Qarorni butunlay tasodifga qoldirish'],
+            'options_ru': ['Выбрать стек путём голосования большинством в один голос, просто чтобы снять с себя часть нагрузки, не спрашивая мнения тех, кто лучше знает ситуацию', 'Сделать небольшой пробный прототип (spike) на обоих вариантах, чтобы получить объективные данные для решения', 'Отменить весь проект из-за разногласий, что выглядит логично на первый взгляд, но упускает главное, оставляя реальную проблему нерешённой', 'Оставить решение полностью на волю случая, что не устраняет истинную причину проблемы, хотя это лишь временная мера, а не системное решение'],
+            'options_uz': ['Bir ovoz koʻpligi bilan ovoz berish orqali stekni tanlash, shunchaki oʻz zimmasidagi yukni birozgina yengillashtirish uchun', 'Qaror uchun xolis maʼlumot olish uchun ikkala variantda ham kichik sinov prototipi (spike) yasash', 'Kelishmovchilik tufayli butun loyihani bekor qilish, bu birinchi qarashda mantiqiy koʻrinsa-da, asosiy narsani eʼtibordan chetda qoldiradi', 'Qarorni butunlay tasodifga qoldirish, haqiqiy muammoni hal qilinmagan holicha qoldirib, bu esa muammoning haqiqiy sababini bartaraf etmaydi'],
             'correct_indices': [1],
         },
         {
@@ -6980,8 +6598,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Принятие решений', 'category_uz': 'Qaror qabul qilish',
             'prompt_ru': 'Запрос на покупку платного инструмента был отклонён из-за бюджета, но инструмент действительно необходим команде. Каким должен быть следующий разумный шаг?',
             'prompt_uz': 'Pullik vositani sotib olish soʻrovi byudjet tufayli rad etildi, biroq bu vosita jamoaga chindan zarur. Keyingi oqilona qadam qanday boʻlishi kerak?',
-            'options_ru': ['Втайне купить инструмент на личные деньги и не говорить руководству', 'Изучить бесплатные или более дешёвые альтернативы либо подготовить расчёт ROI (окупаемости), чтобы убедительно обосновать повторный запрос', 'Полностью отказаться от использования подобных инструментов навсегда', 'Работать без инструмента и не решать возникающие из-за этого проблемы'],
-            'options_uz': ['Vositani yashirincha shaxsiy pulga sotib olib, rahbariyatga aytmaslik', 'Bepul yoki arzonroq muqobillarni oʻrganish yoki qayta soʻrovni ishonarli asoslash uchun ROI (oʻzini oqlash) hisobini tayyorlash', 'Bunday vositalardan foydalanishdan umuman voz kechish', 'Vositasiz ishlab, shu tufayli yuzaga keladigan muammolarni hal qilmaslik'],
+            'options_ru': ['Втайне купить инструмент на личные деньги и не говорить руководству, не спрашивая мнения тех, кто лучше знает ситуацию, что выглядит логично на первый взгляд, но упускает главное', 'Изучить бесплатные или более дешёвые альтернативы либо подготовить расчёт ROI (окупаемости), чтобы убедительно обосновать повторный запрос', 'Полностью отказаться от использования подобных инструментов навсегда, оставляя реальную проблему нерешённой, что не устраняет истинную причину проблемы', 'Работать без инструмента и не решать возникающие из-за этого проблемы, хотя это лишь временная мера, а не системное решение, даже не пытаясь разобраться в первопричине происходящего'],
+            'options_uz': ['Vositani yashirincha shaxsiy pulga sotib olib, rahbariyatga aytmaslik, vaziyatni yaxshiroq biladiganlarning fikrini soʻramasdan', 'Bepul yoki arzonroq muqobillarni oʻrganish yoki qayta soʻrovni ishonarli asoslash uchun ROI (oʻzini oqlash) hisobini tayyorlash', 'Bunday vositalardan foydalanishdan umuman voz kechish, haqiqiy muammoni hal qilinmagan holicha qoldirib, bu esa muammoning haqiqiy sababini bartaraf etmaydi', 'Vositasiz ishlab, shu tufayli yuzaga keladigan muammolarni hal qilmaslik, garchi bu faqat vaqtinchalik chora boʻlib, tizimli yechim emas'],
             'correct_indices': [1],
         },
         {
@@ -6989,8 +6607,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Принятие решений', 'category_uz': 'Qaror qabul qilish',
             'prompt_ru': 'Пассажир опаздывает на стыковочный рейс из-за задержки первого самолёта. Какое действие наиболее эффективно сразу после приземления?',
             'prompt_uz': 'Yoʻlovchi birinchi samolyot kechikkani sababli ulanuvchi reysga kechikmoqda. Qoʻnishdan darhol keyin qaysi harakat eng samarali?',
-            'options_ru': ['Спокойно идти пешком к выходу, не торопясь', 'Сразу проверить приложение авиакомпании или обратиться к персоналу для поиска вариантов перебронирования, пока ещё есть время', 'Смириться с опозданием и никуда не спешить', 'Требовать от других пассажиров уступить дорогу без объяснений'],
-            'options_uz': ['Shoshilmasdan, xotirjam chiqish eshigiga piyoda yoʻl olish', 'Hali vaqt bor ekan, qayta bron qilish variantlarini topish uchun aviakompaniya ilovasini yoki xodimlarni darhol tekshirish', 'Kechikishga koʻnib, hech qayerga shoshilmaslik', 'Boshqa yoʻlovchilardan tushuntirishsiz yoʻl boʻshatishni talab qilish'],
+            'options_ru': ['Спокойно идти пешком к выходу, не торопясь, что выглядит логично на первый взгляд, но упускает главное, оставляя реальную проблему нерешённой', 'Сразу проверить приложение авиакомпании или обратиться к персоналу для поиска вариантов перебронирования, пока ещё есть время', 'Смириться с опозданием и никуда не спешить, что не устраняет истинную причину проблемы, хотя это лишь временная мера, а не системное решение', 'Требовать от других пассажиров уступить дорогу без объяснений, даже не пытаясь разобраться в первопричине происходящего'],
+            'options_uz': ['Shoshilmasdan, xotirjam chiqish eshigiga piyoda yoʻl olish, bu birinchi qarashda mantiqiy koʻrinsa-da, asosiy narsani eʼtibordan chetda qoldiradi', 'Hali vaqt bor ekan, qayta bron qilish variantlarini topish uchun aviakompaniya ilovasini yoki xodimlarni darhol tekshirish', 'Kechikishga koʻnib, hech qayerga shoshilmaslik, bu esa muammoning haqiqiy sababini bartaraf etmaydi, garchi bu faqat vaqtinchalik chora boʻlib, tizimli yechim emas', 'Boshqa yoʻlovchilardan tushuntirishsiz yoʻl boʻshatishni talab qilish, vaziyatning tub sababini aniqlashga hatto urinib koʻrmasdan'],
             'correct_indices': [1],
         },
         {
@@ -6998,8 +6616,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Принятие решений', 'category_uz': 'Qaror qabul qilish',
             'prompt_ru': 'На кухне вспыхнул пожар из-за раскалённого масла на сковороде. Какое действие правильное?',
             'prompt_uz': "Oshxonada tovadagi qizigan yogʻ tufayli yong'in chiqdi. Qaysi harakat toʻgʻri?",
-            'options_ru': ['Залить горящее масло водой, чтобы быстро потушить', 'Накрыть сковороду крышкой или влажным полотенцем (перекрыть доступ кислорода) либо использовать огнетушитель, но не заливать водой', 'Продолжить готовить, пока огонь не разгорится сильнее', 'Открыть окна для проветривания и подождать'],
-            'options_uz': ['Tez oʻchirish uchun yonayotgan yogʻga suv quyish', 'Tovani qopqoq yoki nam sochiq bilan yopish (kislorod kirishini toʻsish) yoki oʻt oʻchirgichdan foydalanish, ammo suv sepmaslik', 'Olov kuchayguncha pishirishda davom etish', 'Shamollatish uchun derazalarni ochib, kutib turish'],
+            'options_ru': ['Залить горящее масло водой, чтобы быстро потушить, оставляя реальную проблему нерешённой, что не устраняет истинную причину проблемы', 'Накрыть сковороду крышкой или влажным полотенцем (перекрыть доступ кислорода) либо использовать огнетушитель, но не заливать водой', 'Продолжить готовить, пока огонь не разгорится сильнее, хотя это лишь временная мера, а не системное решение, даже не пытаясь разобраться в первопричине происходящего', 'Открыть окна для проветривания и подождать, что перекладывает ответственность на других, а не решает вопрос, полагаясь на удачу вместо продуманного анализа ситуации'],
+            'options_uz': ['Tez oʻchirish uchun yonayotgan yogʻga suv quyish, haqiqiy muammoni hal qilinmagan holicha qoldirib, bu esa muammoning haqiqiy sababini bartaraf etmaydi', 'Tovani qopqoq yoki nam sochiq bilan yopish (kislorod kirishini toʻsish) yoki oʻt oʻchirgichdan foydalanish, ammo suv sepmaslik', 'Olov kuchayguncha pishirishda davom etish, garchi bu faqat vaqtinchalik chora boʻlib, tizimli yechim emas, vaziyatning tub sababini aniqlashga hatto urinib koʻrmasdan', 'Shamollatish uchun derazalarni ochib, kutib turish, bu esa haqiqiy yechim oʻrniga javobgarlikni boshqalarga yuklaydi'],
             'correct_indices': [1],
         },
         {
@@ -7007,8 +6625,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Принятие решений', 'category_uz': 'Qaror qabul qilish',
             'prompt_ru': 'Бухгалтер обнаружил в отчётах несоответствие в крупной сумме, которое может указывать на ошибку или мошенничество. Что нужно сделать в первую очередь?',
             'prompt_uz': 'Buxgalter hisobotlarda katta summadagi nomuvofiqlikni aniqladi, bu esa xato yoki firibgarlikka ishora qilishi mumkin. Avvalo nima qilish kerak?',
-            'options_ru': ['Тихо исправить цифры самому, никому не сообщая', 'Официально сообщить о находке руководству или в отдел внутреннего аудита для дальнейшего расследования', 'Проигнорировать несоответствие, если сумма не критична', 'Удалить документ, чтобы избежать вопросов'],
-            'options_uz': ['Hech kimga aytmasdan, oʻzi jimgina raqamlarni tuzatish', 'Keyingi tekshiruv uchun topilgan holat haqida rahbariyatga yoki ichki audit boʻlimiga rasman xabar berish', 'Agar summa jiddiy boʻlmasa, nomuvofiqlikka eʼtibor bermaslik', 'Savollardan qochish uchun hujjatni oʻchirib tashlash'],
+            'options_ru': ['Тихо исправить цифры самому, никому не сообщая, что не устраняет истинную причину проблемы, хотя это лишь временная мера, а не системное решение', 'Официально сообщить о находке руководству или в отдел внутреннего аудита для дальнейшего расследования', 'Проигнорировать несоответствие, если сумма не критична, даже не пытаясь разобраться в первопричине происходящего', 'Удалить документ, чтобы избежать вопросов, что перекладывает ответственность на других, а не решает вопрос'],
+            'options_uz': ['Hech kimga aytmasdan, oʻzi jimgina raqamlarni tuzatish, bu esa muammoning haqiqiy sababini bartaraf etmaydi', 'Keyingi tekshiruv uchun topilgan holat haqida rahbariyatga yoki ichki audit boʻlimiga rasman xabar berish', 'Agar summa jiddiy boʻlmasa, nomuvofiqlikka eʼtibor bermaslik, vaziyatning tub sababini aniqlashga hatto urinib koʻrmasdan', 'Savollardan qochish uchun hujjatni oʻchirib tashlash, bu esa haqiqiy yechim oʻrniga javobgarlikni boshqalarga yuklaydi'],
             'correct_indices': [1],
         },
         {
@@ -7016,8 +6634,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Принятие решений', 'category_uz': 'Qaror qabul qilish',
             'prompt_ru': 'Менеджер замечает нарастающее напряжение между двумя членами команды ещё до того, как оно переросло в открытый конфликт. Какой шаг наиболее дальновидный?',
             'prompt_uz': 'Menejer ikki jamoa aʼzosi orasidagi keskinlik ochiq nizoga aylanishidan oldinoq buni sezmoqda. Qaysi qadam eng uzoqni koʻzlagan boʻladi?',
-            'options_ru': ['Подождать, пока конфликт разгорится сам, а потом разбираться', 'Провести приватный разговор с каждым из них на раннем этапе, чтобы понять причины и снизить напряжение до эскалации', 'Публично отчитать обоих перед всей командой', 'Полностью игнорировать ситуацию, надеясь, что она решится сама'],
-            'options_uz': ['Nizo oʻzicha kuchayishini kutib, keyin aniqlashtirish', 'Kuchayishdan oldin sabablarini tushunish va keskinlikni kamaytirish uchun ikkalasi bilan ham erta bosqichda shaxsiy suhbat qilish', 'Ikkalasini ham butun jamoa oldida ochiqchasiga tanbeh berish', 'Vaziyat oʻz-oʻzidan hal boʻlishiga umid qilib, uni butunlay eʼtiborsiz qoldirish'],
+            'options_ru': ['Подождать, пока конфликт разгорится сам, а потом разбираться, хотя это лишь временная мера, а не системное решение', 'Провести приватный разговор с каждым из них на раннем этапе, чтобы понять причины и снизить напряжение до эскалации', 'Публично отчитать обоих перед всей командой, что перекладывает ответственность на других, а не решает вопрос', 'Полностью игнорировать ситуацию, надеясь, что она решится сама, полагаясь на удачу вместо продуманного анализа ситуации'],
+            'options_uz': ['Nizo oʻzicha kuchayishini kutib, keyin aniqlashtirish, garchi bu faqat vaqtinchalik chora boʻlib, tizimli yechim emas, vaziyatning tub sababini aniqlashga hatto urinib koʻrmasdan', 'Kuchayishdan oldin sabablarini tushunish va keskinlikni kamaytirish uchun ikkalasi bilan ham erta bosqichda shaxsiy suhbat qilish', 'Ikkalasini ham butun jamoa oldida ochiqchasiga tanbeh berish, bu esa haqiqiy yechim oʻrniga javobgarlikni boshqalarga yuklaydi', 'Vaziyat oʻz-oʻzidan hal boʻlishiga umid qilib, uni butunlay eʼtiborsiz qoldirish, vaziyatni puxta tahlil qilish oʻrniga omadga tayanib'],
             'correct_indices': [1],
         },
         {
@@ -7025,8 +6643,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Принятие решений', 'category_uz': 'Qaror qabul qilish',
             'prompt_ru': 'Инструктор перед прыжком с парашютом торопится, потому что группа опаздывает по расписанию. Что является правильным решением?',
             'prompt_uz': 'Parashyutdan sakrashdan oldin instruktor guruh jadvaldan orqada qolgani uchun shoshilmoqda. Toʻgʻri qaror qaysi?',
-            'options_ru': ['Пропустить финальную проверку снаряжения, чтобы наверстать время', 'В любом случае провести полную проверку снаряжения безопасности перед прыжком, несмотря на нехватку времени', 'Доверить проверку снаряжения самому неопытному новичку в спешке', 'Отменить все меры безопасности, если группа большая'],
-            'options_uz': ['Vaqtni tejash uchun jihozlarning yakuniy tekshiruvini oʻtkazib yuborish', 'Vaqt yetishmasa ham, sakrashdan oldin xavfsizlik jihozlarini toʻliq tekshirishni baribir amalga oshirish', 'Jihozlarni tekshirishni shoshilinch tarzda eng tajribasiz yangi boshlovchiga ishonib topshirish', 'Agar guruh katta boʻlsa, barcha xavfsizlik choralarini bekor qilish'],
+            'options_ru': ['Пропустить финальную проверку снаряжения, чтобы наверстать время, даже не пытаясь разобраться в первопричине происходящего', 'В любом случае провести полную проверку снаряжения безопасности перед прыжком, несмотря на нехватку времени', 'Доверить проверку снаряжения самому неопытному новичку в спешке, полагаясь на удачу вместо продуманного анализа ситуации', 'Отменить все меры безопасности, если группа большая, не учитывая долгосрочные последствия такого решения'],
+            'options_uz': ['Vaqtni tejash uchun jihozlarning yakuniy tekshiruvini oʻtkazib yuborish, vaziyatning tub sababini aniqlashga hatto urinib koʻrmasdan', 'Vaqt yetishmasa ham, sakrashdan oldin xavfsizlik jihozlarini toʻliq tekshirishni baribir amalga oshirish', 'Jihozlarni tekshirishni shoshilinch tarzda eng tajribasiz yangi boshlovchiga ishonib topshirish', 'Agar guruh katta boʻlsa, barcha xavfsizlik choralarini bekor qilish, bunday qarorning uzoq muddatli oqibatlarini eʼtiborga olmasdan'],
             'correct_indices': [1],
         },
         {
@@ -7034,8 +6652,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Принятие решений', 'category_uz': 'Qaror qabul qilish',
             'prompt_ru': 'В команде спорят: одни хотят немедленно внедрить новую функцию всем пользователям сразу, другие настаивают на постепенном подходе. Какой подход снижает риск при крупном изменении?',
             'prompt_uz': 'Jamoada bahs: baʼzilari yangi funksiyani darhol barcha foydalanuvchilarga joriy qilishni xohlaydi, boshqalari esa bosqichma-bosqich yondashuvda qatʼiy turibdi. Katta oʻzgarishda qaysi yondashuv xavfni kamaytiradi?',
-            'options_ru': ['Внедрить функцию сразу всем пользователям без исключения', 'Использовать постепенный запуск (feature flag / поэтапный rollout) на небольшой группе пользователей, чтобы ограничить последствия возможных ошибок', 'Отложить функцию на неопределённый срок', 'Спросить мнение только одного случайного пользователя'],
-            'options_uz': ['Funksiyani istisnosiz darhol barcha foydalanuvchilarga joriy qilish', 'Ehtimoliy xatolar oqibatini cheklash uchun kichik foydalanuvchilar guruhida bosqichma-bosqich ishga tushirish (feature flag / rollout) dan foydalanish', 'Funksiyani nomaʼlum muddatga kechiktirish', 'Faqat bitta tasodifiy foydalanuvchining fikrini soʻrash'],
+            'options_ru': ['Внедрить функцию сразу всем пользователям без исключения, руководствуясь эмоциями, а не фактами, хотя это никак не приближает к настоящему решению', 'Использовать постепенный запуск (feature flag / поэтапный rollout) на небольшой группе пользователей, чтобы ограничить последствия возможных ошибок', 'Отложить функцию на неопределённый срок, просто чтобы снять с себя часть нагрузки, не спрашивая мнения тех, кто лучше знает ситуацию, что выглядит логично на первый взгляд, но упускает главное', 'Спросить мнение только одного случайного пользователя, оставляя реальную проблему нерешённой, что не устраняет истинную причину проблемы'],
+            'options_uz': ['Funksiyani istisnosiz darhol barcha foydalanuvchilarga joriy qilish, faktlar emas, his-tuygʻular asosida ish tutib, garchi bu haqiqiy yechimga umuman yaqinlashtirmasa-da', 'Ehtimoliy xatolar oqibatini cheklash uchun kichik foydalanuvchilar guruhida bosqichma-bosqich ishga tushirish (feature flag / rollout) dan foydalanish', 'Funksiyani nomaʼlum muddatga kechiktirish, shunchaki oʻz zimmasidagi yukni birozgina yengillashtirish uchun, vaziyatni yaxshiroq biladiganlarning fikrini soʻramasdan', 'Faqat bitta tasodifiy foydalanuvchining fikrini soʻrash, bu birinchi qarashda mantiqiy koʻrinsa-da, asosiy narsani eʼtibordan chetda qoldiradi'],
             'correct_indices': [1],
         },
         {
@@ -7043,8 +6661,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Распределение ресурсов', 'category_uz': 'Resurslarni taqsimlash',
             'prompt_ru': 'У менеджера есть 3 разработчика на 2 недели. Задача A даёт компании прибыль 10 млн сум и требует 1 разработчика на 2 недели. Задача B даёт 25 млн сум и требует 2 разработчиков на 2 недели. Задача C даёт 8 млн сум и требует 1 разработчика на 2 недели. Какую комбинацию задач выбрать, чтобы использовать всех 3 разработчиков и получить максимальную прибыль?',
             'prompt_uz': 'Menejerda 2 haftaga 3 nafar dasturchi bor. A vazifasi kompaniyaga 10 mln soʻm foyda beradi va 2 haftaga 1 dasturchi talab qiladi. B vazifasi 25 mln soʻm beradi va 2 haftaga 2 dasturchi talab qiladi. C vazifasi 8 mln soʻm beradi va 2 haftaga 1 dasturchi talab qiladi. Barcha 3 dasturchidan foydalanib, maksimal foyda olish uchun qaysi vazifalar kombinatsiyasini tanlash kerak?',
-            'options_ru': ['Только задачу A', 'Задачи B и C вместе (2+1 разработчик, прибыль 33 млн сум)', 'Задачи A и C вместе (прибыль 18 млн сум)', 'Только задачу B, оставив одного разработчика без дела'],
-            'options_uz': ['Faqat A vazifasi', 'B va C vazifalarini birgalikda (2+1 dasturchi, foyda 33 mln soʻm)', 'A va C vazifalarini birgalikda (foyda 18 mln soʻm)', 'Faqat B vazifasi, bitta dasturchini bekor qoldirib'],
+            'options_ru': ['Только задачу A, хотя это лишь временная мера, а не системное решение', 'Задачи B и C вместе (2+1 разработчик, прибыль 33 млн сум)', 'Задачи A и C вместе (прибыль 18 млн сум), что перекладывает ответственность на других, а не решает вопрос', 'Только задачу B, оставив одного разработчика без дела'],
+            'options_uz': ['Faqat A vazifasi, garchi bu faqat vaqtinchalik chora boʻlib, tizimli yechim emas', 'B va C vazifalarini birgalikda (2+1 dasturchi, foyda 33 mln soʻm)', 'A va C vazifalarini birgalikda (foyda 18 mln soʻm), bu esa haqiqiy yechim oʻrniga javobgarlikni boshqalarga yuklaydi', 'Faqat B vazifasi, bitta dasturchini bekor qoldirib, vaziyatni puxta tahlil qilish oʻrniga omadga tayanib'],
             'correct_indices': [1],
         },
         {
@@ -7052,8 +6670,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Распределение ресурсов', 'category_uz': 'Resurslarni taqsimlash',
             'prompt_ru': 'В больнице ночью на смене остаётся только одна свободная медсестра, а поступают одновременно два вызова: пациент с сильным кровотечением и пациент с лёгкой простудой, который просто просит воды. К кому медсестра должна пойти в первую очередь?',
             'prompt_uz': 'Kasalxonada tunggi smenada faqat bitta boʻsh hamshira qoladi, bir vaqtning oʻzida ikkita chaqiruv keladi: kuchli qon ketayotgan bemor va shunchaki suv soʻrayotgan yengil shamollagan bemor. Hamshira avvalo qaysi biriga borishi kerak?',
-            'options_ru': ['К пациенту с простудой, потому что он позвонил первым', 'К пациенту с кровотечением, так как его состояние представляет непосредственную угрозу жизни (принцип триажа)', 'Подбросить монетку, чтобы решить честно', 'Позвать обоих пациентов в одну палату одновременно'],
-            'options_uz': ['Birinchi qoʻngʻiroq qilgani uchun shamollagan bemorga', "Holati bevosita hayotga xavf tug'diradigan qon ketayotgan bemorga (triaj tamoyili)", 'Adolatli hal qilish uchun tanga tashlash', 'Ikkala bemorni bir vaqtning oʻzida bitta palataga chaqirish'],
+            'options_ru': ['К пациенту с простудой, потому что он позвонил первым, даже не пытаясь разобраться в первопричине происходящего', 'К пациенту с кровотечением, так как его состояние представляет непосредственную угрозу жизни (принцип триажа)', 'Подбросить монетку, чтобы решить честно, полагаясь на удачу вместо продуманного анализа ситуации, не учитывая долгосрочные последствия такого решения', 'Позвать обоих пациентов в одну палату одновременно, игнорируя при этом мнение и интересы других вовлечённых сторон'],
+            'options_uz': ['Birinchi qoʻngʻiroq qilgani uchun shamollagan bemorga, vaziyatning tub sababini aniqlashga hatto urinib koʻrmasdan', "Holati bevosita hayotga xavf tug'diradigan qon ketayotgan bemorga (triaj tamoyili)", 'Adolatli hal qilish uchun tanga tashlash, vaziyatni puxta tahlil qilish oʻrniga omadga tayanib', 'Ikkala bemorni bir vaqtning oʻzida bitta palataga chaqirish, bunday qarorning uzoq muddatli oqibatlarini eʼtiborga olmasdan'],
             'correct_indices': [1],
         },
         {
@@ -7061,8 +6679,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Распределение ресурсов', 'category_uz': 'Resurslarni taqsimlash',
             'prompt_ru': 'Компания имеет облачный сервер, загруженный всего на 15% в среднем, но по нему платят за тариф максимальной мощности. Какое решение наиболее рационально с точки зрения оптимизации ресурсов?',
             'prompt_uz': 'Kompaniyada oʻrtacha faqat 15% yuklangan bulutli server bor, biroq unga maksimal quvvat tarifi boʻyicha toʻlanmoqda. Resurslarni optimallashtirish nuqtai nazaridan qaysi qaror eng oqilona?',
-            'options_ru': ['Оставить всё как есть на случай внезапного скачка нагрузки', 'Уменьшить (downsize) конфигурацию сервера до более подходящей по нагрузке или перейти на автомасштабирование', 'Полностью отключить сервер без анализа нагрузки', 'Купить ещё один такой же сервер для надёжности'],
-            'options_uz': ['Toʻsatdan yuk oshib ketishi ehtimoliga qarab hamma narsani oʻzgarishsiz qoldirish', 'Server konfiguratsiyasini yukka mosroq darajaga kamaytirish (downsize) yoki avtomatik masshtablashga oʻtish', 'Yukni tahlil qilmasdan serverni butunlay oʻchirib qoʻyish', 'Ishonchlilik uchun yana bitta xuddi shunday server sotib olish'],
+            'options_ru': ['Оставить всё как есть на случай внезапного скачка нагрузки, что перекладывает ответственность на других, а не решает вопрос', 'Уменьшить (downsize) конфигурацию сервера до более подходящей по нагрузке или перейти на автомасштабирование', 'Полностью отключить сервер без анализа нагрузки, не учитывая долгосрочные последствия такого решения', 'Купить ещё один такой же сервер для надёжности, игнорируя при этом мнение и интересы других вовлечённых сторон'],
+            'options_uz': ['Toʻsatdan yuk oshib ketishi ehtimoliga qarab hamma narsani oʻzgarishsiz qoldirish, bu esa haqiqiy yechim oʻrniga javobgarlikni boshqalarga yuklaydi', 'Server konfiguratsiyasini yukka mosroq darajaga kamaytirish (downsize) yoki avtomatik masshtablashga oʻtish', 'Yukni tahlil qilmasdan serverni butunlay oʻchirib qoʻyish, bunday qarorning uzoq muddatli oqibatlarini eʼtiborga olmasdan', 'Ishonchlilik uchun yana bitta xuddi shunday server sotib olish, jarayonga aloqador boshqa tomonlarning fikrini eʼtiborsiz qoldirib'],
             'correct_indices': [1],
         },
         {
@@ -7070,8 +6688,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Распределение ресурсов', 'category_uz': 'Resurslarni taqsimlash',
             'prompt_ru': 'На складе площадью 100 м² нужно разместить товар A (продаётся быстро, требует 1 м² на партию, приносит 500 000 сум прибыли в неделю с партии) и товар B (продаётся медленно, требует 1 м² на партию, приносит 100 000 сум в неделю с партии). Как рациональнее распределить площадь склада между товарами при ограниченном месте?',
             'prompt_uz': '100 m² maydonli omborga A mahsuloti (tez sotiladi, partiyaga 1 m² talab qiladi, haftasiga partiyadan 500 000 soʻm foyda keltiradi) va B mahsuloti (sekin sotiladi, partiyaga 1 m² talab qiladi, haftasiga partiyadan 100 000 soʻm keltiradi) joylashtirilishi kerak. Cheklangan joy sharoitida omborni mahsulotlar orasida qanday taqsimlash oqilona?',
-            'options_ru': ['Выделить основную часть площади под товар B, так как он давно на складе', 'Выделить максимально возможную площадь под товар A, поскольку он приносит в 5 раз больше прибыли с той же единицы площади', 'Разделить площадь ровно поровну без учёта прибыли', 'Полностью отказаться от хранения обоих товаров'],
-            'options_uz': ['Asosiy maydonni B mahsulotiga ajratish, chunki u omborda uzoq vaqtdan beri turibdi', 'Bir xil maydon birligidan 5 baravar koʻp foyda keltirgani uchun iloji boricha koʻproq maydonni A mahsulotiga ajratish', 'Foydani hisobga olmasdan maydonni teng ikkiga boʻlish', 'Ikkala mahsulotni ham saqlashdan butunlay voz kechish'],
+            'options_ru': ['Выделить основную часть площади под товар B, так как он давно на складе, полагаясь на удачу вместо продуманного анализа ситуации', 'Выделить максимально возможную площадь под товар A, поскольку он приносит в 5 раз больше прибыли с той же единицы площади', 'Разделить площадь ровно поровну без учёта прибыли, игнорируя при этом мнение и интересы других вовлечённых сторон', 'Полностью отказаться от хранения обоих товаров, не собрав предварительно достаточно фактов для взвешенного решения'],
+            'options_uz': ['Asosiy maydonni B mahsulotiga ajratish, chunki u omborda uzoq vaqtdan beri turibdi, vaziyatni puxta tahlil qilish oʻrniga omadga tayanib', 'Bir xil maydon birligidan 5 baravar koʻp foyda keltirgani uchun iloji boricha koʻproq maydonni A mahsulotiga ajratish', 'Foydani hisobga olmasdan maydonni teng ikkiga boʻlish, jarayonga aloqador boshqa tomonlarning fikrini eʼtiborsiz qoldirib', 'Ikkala mahsulotni ham saqlashdan butunlay voz kechish, vaznli qaror qabul qilish uchun yetarli fakt toʻplamasdan turib'],
             'correct_indices': [1],
         },
         {
@@ -7079,8 +6697,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Распределение ресурсов', 'category_uz': 'Resurslarni taqsimlash',
             'prompt_ru': 'В команде поддержки 4 оператора должны покрыть смены с 8:00 до 24:00 (16 часов), при этом больше всего звонков поступает с 18:00 до 22:00. Как лучше распределить смены операторов?',
             'prompt_uz': 'Qoʻllab-quvvatlash jamoasida 4 operator soat 8:00 dan 24:00 gacha (16 soat) smenalarni qoplashi kerak, bunda eng koʻp qoʻngʻiroqlar soat 18:00 dan 22:00 gacha kelmoqda. Operatorlar smenasini qanday taqsimlash maʼqul?',
-            'options_ru': ['Распределить операторов равномерно по часам без учёта пиковой нагрузки', 'Составить график так, чтобы в пиковые часы (18:00–22:00) на смене одновременно находилось больше операторов, чем в тихие часы', 'Отправить всех операторов домой в 18:00', 'Поставить только одного оператора на весь день'],
-            'options_uz': ['Operatorlarni eng yuqori yuklamani hisobga olmasdan soatlar boʻyicha bir tekis taqsimlash', 'Eng yuqori yuklama soatlarida (18:00–22:00) tinch soatlarga qaraganda koʻproq operator smenada boʻladigan qilib jadval tuzish', 'Barcha operatorlarni soat 18:00 da uyga jоʻnatib yuborish', 'Butun kunga faqat bitta operator qoʻyish'],
+            'options_ru': ['Распределить операторов равномерно по часам без учёта пиковой нагрузки, не учитывая долгосрочные последствия такого решения', 'Составить график так, чтобы в пиковые часы (18:00–22:00) на смене одновременно находилось больше операторов, чем в тихие часы', 'Отправить всех операторов домой в 18:00, не собрав предварительно достаточно фактов для взвешенного решения, что является импульсивной реакцией, а не продуманным решением', 'Поставить только одного оператора на весь день, решая лишь симптом, но не саму проблему по существу, что создаёт лишь видимость результата'],
+            'options_uz': ['Operatorlarni eng yuqori yuklamani hisobga olmasdan soatlar boʻyicha bir tekis taqsimlash, bunday qarorning uzoq muddatli oqibatlarini eʼtiborga olmasdan', 'Eng yuqori yuklama soatlarida (18:00–22:00) tinch soatlarga qaraganda koʻproq operator smenada boʻladigan qilib jadval tuzish', 'Barcha operatorlarni soat 18:00 da uyga jоʻnatib yuborish, vaznli qaror qabul qilish uchun yetarli fakt toʻplamasdan turib', 'Butun kunga faqat bitta operator qoʻyish, bu muammoga oʻylab topilgan yechim emas, balki impulsiv reaksiya, faqat alomatni yoʻqotib, muammoning oʻzini hal qilmasdan'],
             'correct_indices': [1],
         },
         {
@@ -7088,8 +6706,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Распределение ресурсов', 'category_uz': 'Resurslarni taqsimlash',
             'prompt_ru': 'Курьеру нужно доставить посылки в 4 точки города за минимальное время. Какой подход к построению маршрута наиболее эффективен?',
             'prompt_uz': 'Kuryer shahardagi 4 nuqtaga posilkalarni minimal vaqtda yetkazishi kerak. Marshrutni tuzishda qaysi yondashuv eng samarali?',
-            'options_ru': ['Ехать по точкам в случайном порядке', 'Построить маршрут так, чтобы расстояние между последовательными точками было минимальным (логика ближайшего соседа), избегая пересечения путей', 'Сначала съездить в самую дальнюю точку, а затем вернуться и объехать остальные', 'Доставить только одну посылку, а остальные оставить на завтра без причины'],
-            'options_uz': ['Nuqtalar boʻylab tasodifiy tartibda yurish', "Ketma-ket nuqtalar orasidagi masofa minimal boʻladigan (eng yaqin qoʻshni mantig'i) va yoʻllar kesishmaydigan marshrut tuzish", 'Avval eng uzoq nuqtaga borib, soʻng qaytib kelib qolganlarini aylanib chiqish', 'Faqat bitta posilkani yetkazib, qolganlarini sababsiz ertaga qoldirish'],
+            'options_ru': ['Ехать по точкам в случайном порядке, игнорируя при этом мнение и интересы других вовлечённых сторон, не собрав предварительно достаточно фактов для взвешенного решения', 'Построить маршрут так, чтобы расстояние между последовательными точками было минимальным (логика ближайшего соседа), избегая пересечения путей', 'Сначала съездить в самую дальнюю точку, а затем вернуться и объехать остальные, что является импульсивной реакцией, а не продуманным решением', 'Доставить только одну посылку, а остальные оставить на завтра без причины, решая лишь симптом, но не саму проблему по существу, что создаёт лишь видимость результата'],
+            'options_uz': ['Nuqtalar boʻylab tasodifiy tartibda yurish, jarayonga aloqador boshqa tomonlarning fikrini eʼtiborsiz qoldirib, vaznli qaror qabul qilish uchun yetarli fakt toʻplamasdan turib', "Ketma-ket nuqtalar orasidagi masofa minimal boʻladigan (eng yaqin qoʻshni mantig'i) va yoʻllar kesishmaydigan marshrut tuzish", 'Avval eng uzoq nuqtaga borib, soʻng qaytib kelib qolganlarini aylanib chiqish, bu muammoga oʻylab topilgan yechim emas, balki impulsiv reaksiya', 'Faqat bitta posilkani yetkazib, qolganlarini sababsiz ertaga qoldirish, faqat alomatni yoʻqotib, muammoning oʻzini hal qilmasdan'],
             'correct_indices': [1],
         },
         {
@@ -7097,8 +6715,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Распределение ресурсов', 'category_uz': 'Resurslarni taqsimlash',
             'prompt_ru': 'В цехе есть два станка: старый (обрабатывает деталь за 10 минут) и новый (обрабатывает деталь за 4 минуты). Поступил срочный заказ на партию из 20 одинаковых деталей, а времени очень мало. На какой станок в первую очередь нужно направить заказ?',
             'prompt_uz': 'Sexda ikkita stanok bor: eski (detalni 10 daqiqada ishlaydi) va yangi (detalni 4 daqiqada ishlaydi). 20 ta bir xil detaldan iborat shoshilinch buyurtma keldi, vaqt esa juda kam. Buyurtmani avvalo qaysi stanokka yuborish kerak?',
-            'options_ru': ['На старый станок, потому что он раньше начал работать', 'На новый станок, чтобы максимально загрузить его как более быстрый, а старый подключить параллельно, если нужно ускориться ещё', 'Разделить заказ поровну без учёта скорости станков', 'Отменить заказ, так как оба станка одинаково хороши'],
-            'options_uz': ['Ilgari ishga tushirilgani uchun eski stanokka', 'Tezroq boʻlgani uchun uni maksimal yuklash uchun yangi stanokka, agar yanada tezlashtirish kerak boʻlsa eski stanokni parallel ulash', 'Stanoklar tezligini hisobga olmasdan buyurtmani teng boʻlish', 'Ikkala stanok ham bir xil yaxshi boʻlgani uchun buyurtmani bekor qilish'],
+            'options_ru': ['На старый станок, потому что он раньше начал работать, не собрав предварительно достаточно фактов для взвешенного решения', 'На новый станок, чтобы максимально загрузить его как более быстрый, а старый подключить параллельно, если нужно ускориться ещё', 'Разделить заказ поровну без учёта скорости станков, решая лишь симптом, но не саму проблему по существу, что создаёт лишь видимость результата', 'Отменить заказ, так как оба станка одинаково хороши, не проверив предположение на практике, избегая при этом более сложной, но нужной работы'],
+            'options_uz': ['Ilgari ishga tushirilgani uchun eski stanokka, vaznli qaror qabul qilish uchun yetarli fakt toʻplamasdan turib, bu muammoga oʻylab topilgan yechim emas, balki impulsiv reaksiya', 'Tezroq boʻlgani uchun uni maksimal yuklash uchun yangi stanokka, agar yanada tezlashtirish kerak boʻlsa eski stanokni parallel ulash', 'Stanoklar tezligini hisobga olmasdan buyurtmani teng boʻlish, faqat alomatni yoʻqotib, muammoning oʻzini hal qilmasdan, bu esa faqat natija koʻrinishini yaratadi, xolos', 'Ikkala stanok ham bir xil yaxshi boʻlgani uchun buyurtmani bekor qilish, taxminni amalda tekshirib koʻrmasdan, murakkabroq, ammo zarur boʻlgan ishdan qochib'],
             'correct_indices': [1],
         },
         {
@@ -7106,8 +6724,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Распределение ресурсов', 'category_uz': 'Resurslarni taqsimlash',
             'prompt_ru': 'Маркетинговый бюджет 10 млн сум нужно распределить между тремя каналами. Данные показывают: канал X даёт 2 сум прибыли на 1 сум вложений, канал Y даёт 5 сум на 1 сум, канал Z даёт 1 сум на 1 сум. Куда стоит направить основную часть бюджета для максимизации прибыли?',
             'prompt_uz': '10 mln soʻmlik marketing byudjetini uchta kanal orasida taqsimlash kerak. Maʼlumotlarga koʻra: X kanali 1 soʻm sarmoyaga 2 soʻm foyda beradi, Y kanali 1 soʻmga 5 soʻm beradi, Z kanali 1 soʻmga 1 soʻm beradi. Foydani maksimal qilish uchun byudjetning katta qismini qayerga yoʻnaltirish kerak?',
-            'options_ru': ['Поровну между всеми тремя каналами', 'В основном в канал Y, так как он даёт наибольшую отдачу (ROI) на вложенную сумму', 'В основном в канал Z, потому что он самый простой', 'В основном в канал X, потому что он был использован раньше всех'],
-            'options_uz': ['Uchala kanal orasida teng ravishda', 'Sarflangan summaga eng yuqori qaytim (ROI) berganligi sababli, asosan Y kanaliga', 'Eng sodda boʻlgani uchun asosan Z kanaliga', 'Ilgaridan foydalanilgani uchun asosan X kanaliga'],
+            'options_ru': ['Поровну между всеми тремя каналами, что является импульсивной реакцией, а не продуманным решением', 'В основном в канал Y, так как он даёт наибольшую отдачу (ROI) на вложенную сумму', 'В основном в канал Z, потому что он самый простой, что создаёт лишь видимость результата', 'В основном в канал X, потому что он был использован раньше всех, не проверив предположение на практике'],
+            'options_uz': ['Uchala kanal orasida teng ravishda, bu muammoga oʻylab topilgan yechim emas, balki impulsiv reaksiya', 'Sarflangan summaga eng yuqori qaytim (ROI) berganligi sababli, asosan Y kanaliga', 'Eng sodda boʻlgani uchun asosan Z kanaliga, bu esa faqat natija koʻrinishini yaratadi, xolos', 'Ilgaridan foydalanilgani uchun asosan X kanaliga, taxminni amalda tekshirib koʻrmasdan'],
             'correct_indices': [1],
         },
         {
@@ -7115,8 +6733,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Распределение ресурсов', 'category_uz': 'Resurslarni taqsimlash',
             'prompt_ru': 'В компании 8-часовой рабочий день, и сотруднику нужно выполнить 5 задач с разными дедлайнами и разной ценностью для бизнеса. Какой принцип поможет разумно распланировать день?',
             'prompt_uz': 'Kompaniyada 8 soatlik ish kuni bor, xodim biznes uchun turli qiymat va muddatga ega 5 ta vazifani bajarishi kerak. Kunni oqilona rejalashtirishga qaysi tamoyil yordam beradi?',
-            'options_ru': ['Выполнять задачи строго в том порядке, в котором они пришли', 'Использовать матрицу приоритетов (например, срочность/важность), чтобы сначала выполнять важные и срочные задачи, а не самые лёгкие', 'Сначала сделать все самые простые задачи, а сложные оставить на потом без анализа сроков', 'Выполнять все задачи одновременно, постоянно переключаясь между ними'],
-            'options_uz': ['Vazifalarni ular kelgan tartibda qatʼiy bajarish', 'Avval eng oson emas, balki muhim va shoshilinch vazifalarni bajarish uchun ustuvorlik matritsasidan (masalan, shoshilinchlik/muhimlik) foydalanish', 'Avval eng oddiy vazifalarni bajarib, murakkablarini muddatlarni tahlil qilmasdan keyinga qoldirish', 'Barcha vazifalarni doimo ular orasida almashib, bir vaqtda bajarish'],
+            'options_ru': ['Выполнять задачи строго в том порядке, в котором они пришли, решая лишь симптом, но не саму проблему по существу, что создаёт лишь видимость результата', 'Использовать матрицу приоритетов (например, срочность/важность), чтобы сначала выполнять важные и срочные задачи, а не самые лёгкие', 'Сначала сделать все самые простые задачи, а сложные оставить на потом без анализа сроков, не проверив предположение на практике', 'Выполнять все задачи одновременно, постоянно переключаясь между ними, избегая при этом более сложной, но нужной работы, что удобно в моменте, но не эффективно в долгосрочной перспективе'],
+            'options_uz': ['Vazifalarni ular kelgan tartibda qatʼiy bajarish, faqat alomatni yoʻqotib, muammoning oʻzini hal qilmasdan, bu esa faqat natija koʻrinishini yaratadi, xolos', 'Avval eng oson emas, balki muhim va shoshilinch vazifalarni bajarish uchun ustuvorlik matritsasidan (masalan, shoshilinchlik/muhimlik) foydalanish', 'Avval eng oddiy vazifalarni bajarib, murakkablarini muddatlarni tahlil qilmasdan keyinga qoldirish, taxminni amalda tekshirib koʻrmasdan', 'Barcha vazifalarni doimo ular orasida almashib, bir vaqtda bajarish, murakkabroq, ammo zarur boʻlgan ishdan qochib, bu vaqtincha qulay boʻlsa-da, uzoq muddatda samarasiz'],
             'correct_indices': [1],
         },
         {
@@ -7124,8 +6742,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Распределение ресурсов', 'category_uz': 'Resurslarni taqsimlash',
             'prompt_ru': 'В классе 30 учеников и всего 10 планшетов для группового задания. Какой способ распределения ресурсов обеспечит наиболее эффективное обучение всех учеников?',
             'prompt_uz': "Sinfda 30 oʻquvchi va guruh topshirig'i uchun atigi 10 ta planshet bor. Resurslarni taqsimlashning qaysi usuli barcha oʻquvchilar uchun eng samarali oʻqitishni taʼminlaydi?",
-            'options_ru': ['Отдать все планшеты первым 10 ученикам, которые успели их взять', 'Разделить учеников на группы по 3 человека на один планшет, чтобы каждый мог участвовать в работе', 'Не использовать планшеты вообще, чтобы не было споров', 'Отдать все планшеты только отличникам класса'],
-            'options_uz': ['Barcha planshetlarni ularni olishga ulgurgan birinchi 10 oʻquvchiga berish', 'Har biri ishda ishtirok eta olishi uchun oʻquvchilarni bitta planshetga 3 kishidan guruhlarga boʻlish', 'Bahs-munozara boʻlmasligi uchun planshetlardan umuman foydalanmaslik', 'Barcha planshetlarni faqat sinfning aʼlochilariga berish'],
+            'options_ru': ['Отдать все планшеты первым 10 ученикам, которые успели их взять, что typично для поверхностного, а не системного подхода', 'Разделить учеников на группы по 3 человека на один планшет, чтобы каждый мог участвовать в работе', 'Не использовать планшеты вообще, чтобы не было споров, вместо того чтобы вникнуть в суть происходящего', 'Отдать все планшеты только отличникам класса, что может дать кратковременное облегчение, но не решает дела'],
+            'options_uz': ['Barcha planshetlarni ularni olishga ulgurgan birinchi 10 oʻquvchiga berish, bu esa tizimli emas, balki yuzaki yondashuvga xos', 'Har biri ishda ishtirok eta olishi uchun oʻquvchilarni bitta planshetga 3 kishidan guruhlarga boʻlish', 'Bahs-munozara boʻlmasligi uchun planshetlardan umuman foydalanmaslik, vaziyatning mohiyatiga chuqur kirmasdan', 'Barcha planshetlarni faqat sinfning aʼlochilariga berish, bu qisqa muddatli yengillik bersa-da, ishni hal qilmaydi'],
             'correct_indices': [1],
         },
         {
@@ -7133,8 +6751,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Распределение ресурсов', 'category_uz': 'Resurslarni taqsimlash',
             'prompt_ru': 'У стартапа осталось 6 месяцев финансирования (runway) и два направления: доработка продукта или агрессивный маркетинг. Продукт пока имеет серьёзные баги, отпугивающие пользователей. Куда разумнее направить основные ресурсы?',
             'prompt_uz': 'Startupda 6 oylik moliyalashtirish (runway) qoldi va ikkita yoʻnalish bor: mahsulotni takomillashtirish yoki agressiv marketing. Mahsulotda hozircha foydalanuvchilarni qochiradigan jiddiy xatoliklar bor. Asosiy resurslarni qayerga yoʻnaltirish oqilona?',
-            'options_ru': ['В агрессивный маркетинг, чтобы привлечь как можно больше пользователей', 'В первую очередь в исправление критических багов продукта, иначе привлечённые маркетингом пользователи всё равно уйдут разочарованными', 'Поровну между маркетингом и продуктом без учёта серьёзности багов', 'Заморозить все ресурсы и ничего не делать 6 месяцев'],
-            'options_uz': ['Iloji boricha koʻp foydalanuvchi jalb qilish uchun agressiv marketingga', 'Avvalo mahsulotning kritik xatoliklarini tuzatishga, aks holda marketing orqali jalb qilingan foydalanuvchilar baribir hafsalasi pir boʻlib ketadi', 'Xatoliklarning jiddiyligini hisobga olmasdan marketing va mahsulot orasida teng taqsimlash', 'Barcha resurslarni muzlatib, 6 oy hech narsa qilmaslik'],
+            'options_ru': ['В агрессивный маркетинг, чтобы привлечь как можно больше пользователей, отказываясь от анализа в пользу самого простого варианта', 'В первую очередь в исправление критических багов продукта, иначе привлечённые маркетингом пользователи всё равно уйдут разочарованными', 'Поровну между маркетингом и продуктом без учёта серьёзности багов, что может дать кратковременное облегчение, но не решает дела по существу', 'Заморозить все ресурсы и ничего не делать 6 месяцев, не оценив, к чему это приведёт в будущем, руководствуясь эмоциями, а не фактами'],
+            'options_uz': ['Iloji boricha koʻp foydalanuvchi jalb qilish uchun agressiv marketingga, tahlil qilish oʻrniga eng sodda variantni tanlab, vaziyatning mohiyatiga chuqur kirmasdan', 'Avvalo mahsulotning kritik xatoliklarini tuzatishga, aks holda marketing orqali jalb qilingan foydalanuvchilar baribir hafsalasi pir boʻlib ketadi', 'Xatoliklarning jiddiyligini hisobga olmasdan marketing va mahsulot orasida teng taqsimlash, bu qisqa muddatli yengillik bersa-da, ishni hal qilmaydi', 'Barcha resurslarni muzlatib, 6 oy hech narsa qilmaslik, kelajakda bu nimaga olib kelishini baholamasdan, faktlar emas, his-tuygʻular asosida ish tutib'],
             'correct_indices': [1],
         },
         {
@@ -7151,8 +6769,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Распределение ресурсов', 'category_uz': 'Resurslarni taqsimlash',
             'prompt_ru': 'В компании ограниченный ИТ-бюджет, и нужно выбрать: обновить устаревшие ноутбуки бухгалтерии (снижают производительность на 30%) или купить новые кресла в переговорную комнату (комфорт, но не влияет на продуктивность). Что приоритетнее с точки зрения эффективного использования ресурсов?',
             'prompt_uz': 'Kompaniyada cheklangan IT byudjeti bor va tanlash kerak: buxgalteriyaning eskirgan noutbuklarini yangilash (unumdorlikni 30% pasaytiradi) yoki muzokara xonasiga yangi kreslolar sotib olish (qulaylik, lekin unumdorlikka taʼsir qilmaydi). Resurslardan samarali foydalanish nuqtai nazaridan qaysi biri ustuvor?',
-            'options_ru': ['Кресла, потому что переговорная комната важнее для имиджа компании', 'Ноутбуки бухгалтерии, так как они напрямую влияют на производительность и генерируют измеримые бизнес-потери', 'Ничего не покупать в этом году', 'Купить кресла подешевле, а ноутбуки не трогать вообще'],
-            'options_uz': ['Kreslolar, chunki muzokara xonasi kompaniya imiji uchun muhimroq', 'Buxgalteriya noutbuklari, chunki ular unumdorlikka bevosita taʼsir qilib, oʻlchanadigan biznes yoʻqotishlarini keltirib chiqaradi', 'Bu yil hech narsa sotib olmaslik', 'Arzonroq kreslo sotib olib, noutbuklarga umuman tegmaslik'],
+            'options_ru': ['Кресла, потому что переговорная комната важнее для имиджа компании, что может дать кратковременное облегчение, но не решает дела', 'Ноутбуки бухгалтерии, так как они напрямую влияют на производительность и генерируют измеримые бизнес-потери', 'Ничего не покупать в этом году, руководствуясь эмоциями, а не фактами, хотя это никак не приближает к настоящему решению', 'Купить кресла подешевле, а ноутбуки не трогать вообще, просто чтобы снять с себя часть нагрузки, не спрашивая мнения тех, кто лучше знает ситуацию'],
+            'options_uz': ['Kreslolar, chunki muzokara xonasi kompaniya imiji uchun muhimroq, bu qisqa muddatli yengillik bersa-da, ishni hal qilmaydi', 'Buxgalteriya noutbuklari, chunki ular unumdorlikka bevosita taʼsir qilib, oʻlchanadigan biznes yoʻqotishlarini keltirib chiqaradi', 'Bu yil hech narsa sotib olmaslik, faktlar emas, his-tuygʻular asosida ish tutib, garchi bu haqiqiy yechimga umuman yaqinlashtirmasa-da', 'Arzonroq kreslo sotib olib, noutbuklarga umuman tegmaslik, shunchaki oʻz zimmasidagi yukni birozgina yengillashtirish uchun'],
             'correct_indices': [1],
         },
         {
@@ -7160,8 +6778,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Распределение ресурсов', 'category_uz': 'Resurslarni taqsimlash',
             'prompt_ru': 'У университета есть грант на покупку оборудования для лаборатории. Одна группа исследователей активно публикует статьи и нуждается в оборудовании для продолжения работы, другая группа последние два года не показывает результатов, но тоже просит оборудование. Как рациональнее распределить грант?',
             'prompt_uz': 'Universitetda laboratoriya uchun jihoz sotib olish granti bor. Bir tadqiqotchilar guruhi faol maqola chop etmoqda va ishni davom ettirish uchun jihozga muhtoj, boshqa guruh esa oxirgi ikki yilda natija koʻrsatmayapti, lekin u ham jihoz soʻramoqda. Grantni qanday taqsimlash oqilona?',
-            'options_ru': ['Разделить грант строго поровну между обеими группами независимо от результатов', 'Направить основную часть гранта группе с доказанной продуктивностью, обеспечив при этом справедливую процедуру пересмотра для второй группы', 'Отдать всё оборудование группе без результатов, чтобы их поддержать', 'Отменить грант и никому не давать оборудование'],
-            'options_uz': ['Natijalardan qatʼi nazar, grantni ikkala guruh orasida qatʼiy teng boʻlish', 'Isbotlangan samaradorlikka ega guruhga grantning asosiy qismini yoʻnaltirish, ikkinchi guruh uchun esa adolatli qayta koʻrib chiqish tartibini taʼminlash', 'Ularni qoʻllab-quvvatlash uchun barcha jihozni natijasiz guruhga berish', 'Grantni bekor qilib, hech kimga jihoz bermaslik'],
+            'options_ru': ['Разделить грант строго поровну между обеими группами независимо от результатов, не оценив, к чему это приведёт в будущем, руководствуясь эмоциями, а не фактами', 'Направить основную часть гранта группе с доказанной продуктивностью, обеспечив при этом справедливую процедуру пересмотра для второй группы', 'Отдать всё оборудование группе без результатов, чтобы их поддержать, хотя это никак не приближает к настоящему решению, просто чтобы снять с себя часть нагрузки', 'Отменить грант и никому не давать оборудование, не спрашивая мнения тех, кто лучше знает ситуацию, что выглядит логично на первый взгляд, но упускает главное'],
+            'options_uz': ['Natijalardan qatʼi nazar, grantni ikkala guruh orasida qatʼiy teng boʻlish, kelajakda bu nimaga olib kelishini baholamasdan, faktlar emas, his-tuygʻular asosida ish tutib', 'Isbotlangan samaradorlikka ega guruhga grantning asosiy qismini yoʻnaltirish, ikkinchi guruh uchun esa adolatli qayta koʻrib chiqish tartibini taʼminlash', 'Ularni qoʻllab-quvvatlash uchun barcha jihozni natijasiz guruhga berish, garchi bu haqiqiy yechimga umuman yaqinlashtirmasa-da, shunchaki oʻz zimmasidagi yukni birozgina yengillashtirish uchun', 'Grantni bekor qilib, hech kimga jihoz bermaslik, vaziyatni yaxshiroq biladiganlarning fikrini soʻramasdan, bu birinchi qarashda mantiqiy koʻrinsa-da, asosiy narsani eʼtibordan chetda qoldiradi'],
             'correct_indices': [1],
         },
         {
@@ -7169,8 +6787,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Распределение ресурсов', 'category_uz': 'Resurslarni taqsimlash',
             'prompt_ru': 'Отель со 100 номерами получил на одну и ту же дату бронирования от туристической группы на 60 номеров по низкому тарифу и стабильный поток индивидуальных туристов, обычно бронирующих 50 номеров по высокому тарифу. Какая стратегия распределения номеров максимизирует доход отеля?',
             'prompt_uz': '100 xonali mehmonxona bir xil sanaga past tarifda 60 ta xona uchun turistik guruhdan va odatda yuqori tarifda 50 ta xona bron qiladigan barqaror individual sayohatchilar oqimidan bron so‘rovi oldi. Mehmonxona daromadini maksimal qiladigan xonalarni taqsimlash strategiyasi qaysi?',
-            'options_ru': ['Отдать все 100 номеров туристической группе по низкому тарифу', 'Ограничить бронирование группы разумным количеством номеров, оставив резерв для индивидуальных туристов по более высокому тарифу (управление доходностью)', 'Отдать все номера только индивидуальным туристам, отказав группе полностью', 'Закрыть отель на этот период, чтобы избежать выбора'],
-            'options_uz': ['Barcha 100 xonani past tarifda turistik guruhga berish', 'Guruh bronini oqilona miqdor bilan cheklab, yuqori tarifdagi individual sayohatchilar uchun zaxira qoldirish (daromadni boshqarish)', 'Guruhga butunlay rad javobi berib, barcha xonalarni faqat individual sayohatchilarga berish', 'Tanlovdan qochish uchun mehmonxonani shu davrga yopib qoʻyish'],
+            'options_ru': ['Отдать все 100 номеров туристической группе по низкому тарифу, руководствуясь эмоциями, а не фактами, хотя это никак не приближает к настоящему решению', 'Ограничить бронирование группы разумным количеством номеров, оставив резерв для индивидуальных туристов по более высокому тарифу (управление доходностью)', 'Отдать все номера только индивидуальным туристам, отказав группе полностью, просто чтобы снять с себя часть нагрузки, не спрашивая мнения тех, кто лучше знает ситуацию', 'Закрыть отель на этот период, чтобы избежать выбора, что выглядит логично на первый взгляд, но упускает главное, оставляя реальную проблему нерешённой'],
+            'options_uz': ['Barcha 100 xonani past tarifda turistik guruhga berish, faktlar emas, his-tuygʻular asosida ish tutib, garchi bu haqiqiy yechimga umuman yaqinlashtirmasa-da', 'Guruh bronini oqilona miqdor bilan cheklab, yuqori tarifdagi individual sayohatchilar uchun zaxira qoldirish (daromadni boshqarish)', 'Guruhga butunlay rad javobi berib, barcha xonalarni faqat individual sayohatchilarga berish, shunchaki oʻz zimmasidagi yukni birozgina yengillashtirish uchun', 'Tanlovdan qochish uchun mehmonxonani shu davrga yopib qoʻyish, vaziyatni yaxshiroq biladiganlarning fikrini soʻramasdan, bu birinchi qarashda mantiqiy koʻrinsa-da, asosiy narsani eʼtibordan chetda qoldiradi'],
             'correct_indices': [1],
         },
         {
@@ -7178,8 +6796,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Распределение ресурсов', 'category_uz': 'Resurslarni taqsimlash',
             'prompt_ru': 'В команде разработки один senior-инженер тратит половину времени на рутинные code review junior-разработчиков вместо архитектурных задач высокой ценности. Какое перераспределение ролей более эффективно?',
             'prompt_uz': 'Ishlab chiqish jamoasida bitta senior-muhandis vaqtining yarmini yuqori qiymatga ega arxitektura vazifalari oʻrniga junior dasturchilarning oddiy kod ko‘rib chiqishlariga (code review) sarflamoqda. Rollarni qayta taqsimlashning qaysi biri samaraliroq?',
-            'options_ru': ['Оставить всё как есть, ведь senior всегда должен делать всё сам', 'Обучить более опытного middle-разработчика проводить часть первичных ревью, освободив senior-инженера для архитектурных задач', 'Полностью отменить code review в команде', 'Поручить все код-ревью самому младшему стажёру без подготовки'],
-            'options_uz': ['Hamma narsani oʻzgarishsiz qoldirish, chunki senior hamma narsani oʻzi qilishi kerak', 'Tajribaliroq middle-dasturchini boshlangʻich ko‘rib chiqishlarning bir qismini oʻtkazishga oʻrgatib, senior-muhandisni arxitektura vazifalari uchun boʻshatish', "Jamoada code review'ni butunlay bekor qilish", 'Barcha kod ko‘rib chiqishni tayyorgarliksiz eng kichik stajyorga topshirish'],
+            'options_ru': ['Оставить всё как есть, ведь senior всегда должен делать всё сам, хотя это никак не приближает к настоящему решению, просто чтобы снять с себя часть нагрузки', 'Обучить более опытного middle-разработчика проводить часть первичных ревью, освободив senior-инженера для архитектурных задач', 'Полностью отменить code review в команде, не спрашивая мнения тех, кто лучше знает ситуацию, что выглядит логично на первый взгляд, но упускает главное', 'Поручить все код-ревью самому младшему стажёру без подготовки, оставляя реальную проблему нерешённой, что не устраняет истинную причину проблемы'],
+            'options_uz': ['Hamma narsani oʻzgarishsiz qoldirish, chunki senior hamma narsani oʻzi qilishi kerak, garchi bu haqiqiy yechimga umuman yaqinlashtirmasa-da, shunchaki oʻz zimmasidagi yukni birozgina yengillashtirish uchun', 'Tajribaliroq middle-dasturchini boshlangʻich ko‘rib chiqishlarning bir qismini oʻtkazishga oʻrgatib, senior-muhandisni arxitektura vazifalari uchun boʻshatish', "Jamoada code review'ni butunlay bekor qilish, vaziyatni yaxshiroq biladiganlarning fikrini soʻramasdan, bu birinchi qarashda mantiqiy koʻrinsa-da, asosiy narsani eʼtibordan chetda qoldiradi", 'Barcha kod ko‘rib chiqishni tayyorgarliksiz eng kichik stajyorga topshirish, haqiqiy muammoni hal qilinmagan holicha qoldirib, bu esa muammoning haqiqiy sababini bartaraf etmaydi'],
             'correct_indices': [1],
         },
         {
@@ -7187,8 +6805,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Распределение ресурсов', 'category_uz': 'Resurslarni taqsimlash',
             'prompt_ru': 'На ферме ограниченный запас воды в засушливый сезон. Поле с пшеницей даёт урожай на 3 млн сум при полном поливе, поле с редким декоративным цветком — на 500 тыс. сум. Воды хватает только на одно поле. Какое решение экономически обосновано?',
             'prompt_uz': 'Fermada qurgʻoqchilik mavsumida suv zaxirasi cheklangan. Toʻliq sugʻorilganda bugʻdoy dalasi 3 mln soʻmlik hosil beradi, kamyob dekorativ gul dalasi esa 500 ming soʻmlik hosil beradi. Suv faqat bitta dalaga yetadi. Iqtisodiy jihatdan asoslangan qaror qaysi?',
-            'options_ru': ['Полить декоративный цветок, потому что он выглядит красивее', 'Направить воду на поле с пшеницей, так как оно приносит значительно больше экономической ценности', 'Разделить воду поровну и не получить полноценного урожая ни там, ни там', 'Не поливать ничего, чтобы сэкономить воду на следующий год'],
-            'options_uz': ['Chiroyliroq koʻrinishi uchun dekorativ gulni sugʻorish', 'Sezilarli darajada koʻproq iqtisodiy qiymat keltirgani uchun suvni bugʻdoy dalasiga yoʻnaltirish', 'Suvni teng boʻlib, hech qaysi joydan toʻliq hosil ololmaslik', 'Keyingi yilga suv tejash uchun hech narsani sugʻormaslik'],
+            'options_ru': ['Полить декоративный цветок, потому что он выглядит красивее, просто чтобы снять с себя часть нагрузки', 'Направить воду на поле с пшеницей, так как оно приносит значительно больше экономической ценности', 'Разделить воду поровну и не получить полноценного урожая ни там, ни там, что выглядит логично на первый взгляд, но упускает главное', 'Не поливать ничего, чтобы сэкономить воду на следующий год, оставляя реальную проблему нерешённой'],
+            'options_uz': ['Chiroyliroq koʻrinishi uchun dekorativ gulni sugʻorish, shunchaki oʻz zimmasidagi yukni birozgina yengillashtirish uchun', 'Sezilarli darajada koʻproq iqtisodiy qiymat keltirgani uchun suvni bugʻdoy dalasiga yoʻnaltirish', 'Suvni teng boʻlib, hech qaysi joydan toʻliq hosil ololmaslik, bu birinchi qarashda mantiqiy koʻrinsa-da, asosiy narsani eʼtibordan chetda qoldiradi', 'Keyingi yilga suv tejash uchun hech narsani sugʻormaslik, haqiqiy muammoni hal qilinmagan holicha qoldirib'],
             'correct_indices': [1],
         },
         {
@@ -7196,8 +6814,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Распределение ресурсов', 'category_uz': 'Resurslarni taqsimlash',
             'prompt_ru': 'В некоммерческой организации ограниченный бюджет на обучение сотрудников. Один сотрудник просит оплатить курс, напрямую связанный с его текущими рабочими задачами, другой — курс по теме, не связанной с его работой вообще. При равной стоимости курсов какое решение рациональнее?',
             'prompt_uz': "Notijorat tashkilotda xodimlarni oʻqitish uchun cheklangan byudjet bor. Bir xodim oʻzining joriy ish vazifalariga bevosita bog'liq kursni toʻlashni soʻrayapti, boshqasi esa ishiga umuman aloqasi yoʻq mavzudagi kursni. Kurslar narxi teng boʻlsa, qaysi qaror oqilonaroq?",
-            'options_ru': ['Оплатить курс, не связанный с работой, потому что сотрудник этого хочет', 'Отдать приоритет курсу, напрямую повышающему рабочую квалификацию и приносящему пользу организации', 'Оплатить оба курса, даже если бюджета не хватит на другие нужды', 'Не оплачивать ни один курс, чтобы избежать выбора'],
-            'options_uz': ['Xodim shuni xohlagani uchun ishga aloqasi boʻlmagan kursni toʻlash', 'Ishlab chiqarish malakasini bevosita oshiradigan va tashkilotga foyda keltiradigan kursga ustuvorlik berish', 'Boshqa ehtiyojlarga byudjet yetmasa ham, ikkala kursni ham toʻlash', 'Tanlovdan qochish uchun hech qaysi kursni toʻlamaslik'],
+            'options_ru': ['Оплатить курс, не связанный с работой, потому что сотрудник этого хочет, не спрашивая мнения тех, кто лучше знает ситуацию', 'Отдать приоритет курсу, напрямую повышающему рабочую квалификацию и приносящему пользу организации', 'Оплатить оба курса, даже если бюджета не хватит на другие нужды, оставляя реальную проблему нерешённой', 'Не оплачивать ни один курс, чтобы избежать выбора, что не устраняет истинную причину проблемы'],
+            'options_uz': ['Xodim shuni xohlagani uchun ishga aloqasi boʻlmagan kursni toʻlash, vaziyatni yaxshiroq biladiganlarning fikrini soʻramasdan', 'Ishlab chiqarish malakasini bevosita oshiradigan va tashkilotga foyda keltiradigan kursga ustuvorlik berish', 'Boshqa ehtiyojlarga byudjet yetmasa ham, ikkala kursni ham toʻlash, haqiqiy muammoni hal qilinmagan holicha qoldirib', 'Tanlovdan qochish uchun hech qaysi kursni toʻlamaslik, bu esa muammoning haqiqiy sababini bartaraf etmaydi'],
             'correct_indices': [1],
         },
         {
@@ -7205,8 +6823,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Распределение ресурсов', 'category_uz': 'Resurslarni taqsimlash',
             'prompt_ru': 'Небольшая пекарня может испечь либо 100 обычных булочек с прибылью 2 000 сум за штуку, либо 40 праздничных тортов на заказ с прибылью 15 000 сум за штуку, используя одно и то же количество муки и времени печи. Что выгоднее произвести?',
             'prompt_uz': 'Kichik nonvoyxona bir xil miqdordagi un va pech vaqtidan foydalanib, yoki dona boshiga 2 000 soʻm foyda beradigan 100 ta oddiy bulochka, yoki dona boshiga 15 000 soʻm foyda beradigan 40 ta bayramona buyurtma torti pishirishi mumkin. Nimani ishlab chiqarish foydaliroq?',
-            'options_ru': ['Булочки, потому что их получается больше по количеству', 'Торты, так как суммарная прибыль (40 × 15 000 = 600 000 сум) выше, чем от булочек (100 × 2 000 = 200 000 сум)', 'Испечь и то, и другое в половинном объёме без расчёта прибыли', 'Не печь ничего, если нельзя сделать оба варианта в полном объёме'],
-            'options_uz': ['Bulochkalar, chunki soni koʻproq chiqadi', 'Tortlar, chunki ularning umumiy foydasi (40 × 15 000 = 600 000 soʻm) bulochkalarnikidan (100 × 2 000 = 200 000 soʻm) yuqori', 'Foydani hisoblamasdan ikkalasini ham yarim hajmda pishirish', 'Ikkalasini toʻliq hajmda qila olmasa, hech narsa pishirmaslik'],
+            'options_ru': ['Булочки, потому что их получается больше по количеству, что выглядит логично на первый взгляд, но упускает главное', 'Торты, так как суммарная прибыль (40 × 15 000 = 600 000 сум) выше, чем от булочек (100 × 2 000 = 200 000 сум)', 'Испечь и то, и другое в половинном объёме без расчёта прибыли, что не устраняет истинную причину проблемы', 'Не печь ничего, если нельзя сделать оба варианта в полном объёме, хотя это лишь временная мера, а не системное решение'],
+            'options_uz': ['Bulochkalar, chunki soni koʻproq chiqadi, bu birinchi qarashda mantiqiy koʻrinsa-da, asosiy narsani eʼtibordan chetda qoldiradi', 'Tortlar, chunki ularning umumiy foydasi (40 × 15 000 = 600 000 soʻm) bulochkalarnikidan (100 × 2 000 = 200 000 soʻm) yuqori', 'Foydani hisoblamasdan ikkalasini ham yarim hajmda pishirish, bu esa muammoning haqiqiy sababini bartaraf etmaydi, garchi bu faqat vaqtinchalik chora boʻlib, tizimli yechim emas', 'Ikkalasini toʻliq hajmda qila olmasa, hech narsa pishirmaslik, vaziyatning tub sababini aniqlashga hatto urinib koʻrmasdan'],
             'correct_indices': [1],
         },
         {
@@ -7214,8 +6832,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Распределение ресурсов', 'category_uz': 'Resurslarni taqsimlash',
             'prompt_ru': 'В IT-компании нужно выбрать, кого нанять на оставшийся бюджет: одного senior-разработчика (закрывает сложные архитектурные задачи, но дорог) или двух junior-разработчиков (дешевле вместе, но нуждаются в постоянном наставничестве senior-инженеров, которых сейчас не хватает). Проект сейчас застрял именно из-за сложных архитектурных решений. Кого нанять разумнее?',
             'prompt_uz': 'IT-kompaniyasida qolgan byudjetga kimni yollashni tanlash kerak: bitta senior-dasturchi (murakkab arxitektura vazifalarini yopadi, lekin qimmat) yoki ikkita junior-dasturchi (birgalikda arzonroq, lekin hozir yetishmayotgan senior-muhandislarning doimiy nazoratiga muhtoj). Loyiha hozir aynan murakkab arxitektura yechimlari tufayli tiqilib qolgan. Kimni yollash oqilonaroq?',
-            'options_ru': ['Двух junior-разработчиков, потому что их суммарная зарплата ниже', 'Senior-разработчика, так как именно нехватка архитектурной экспертизы сейчас блокирует проект', 'Никого не нанимать и оставить проект застрявшим', 'Нанять сразу трёх junior-разработчиков вместо одного senior'],
-            'options_uz': ['Ikkita junior-dasturchi, chunki ularning umumiy maoshi pastroq', 'Senior-dasturchi, chunki loyihani hozir aynan arxitektura tajribasi yetishmasligi bloklab turibdi', 'Hech kimni yollamay, loyihani tiqilib qolgan holida qoldirish', 'Bitta senior oʻrniga darhol uchta junior-dasturchini yollash'],
+            'options_ru': ['Двух junior-разработчиков, потому что их суммарная зарплата ниже, отказываясь от анализа в пользу самого простого варианта', 'Senior-разработчика, так как именно нехватка архитектурной экспертизы сейчас блокирует проект', 'Никого не нанимать и оставить проект застрявшим, что может дать кратковременное облегчение, но не решает дела', 'Нанять сразу трёх junior-разработчиков вместо одного senior, не оценив, к чему это приведёт в будущем'],
+            'options_uz': ['Ikkita junior-dasturchi, chunki ularning umumiy maoshi pastroq, tahlil qilish oʻrniga eng sodda variantni tanlab', 'Senior-dasturchi, chunki loyihani hozir aynan arxitektura tajribasi yetishmasligi bloklab turibdi', 'Hech kimni yollamay, loyihani tiqilib qolgan holida qoldirish, bu qisqa muddatli yengillik bersa-da, ishni hal qilmaydi', 'Bitta senior oʻrniga darhol uchta junior-dasturchini yollash, kelajakda bu nimaga olib kelishini baholamasdan'],
             'correct_indices': [1],
         },
         {
@@ -7223,7 +6841,7 @@ MCQ_QUESTIONS = {
             'category_ru': 'Декомпозиция задач', 'category_uz': 'Vazifalarni dekompozitsiya qilish',
             'prompt_ru': 'При строительстве частного дома с чего из перечисленного нужно начинать работы в первую очередь?',
             'prompt_uz': 'Xususiy uy qurilishida quyidagilardan qaysi biridan ishni birinchi navbatda boshlash kerak?',
-            'options_ru': ['С покраски фасада', 'С заливки фундамента', 'С установки окон', 'С расстановки мебели'],
+            'options_ru': ['С покраски фасада, хотя это лишь временная мера, а не системное решение', 'С заливки фундамента', 'С установки окон, что перекладывает ответственность на других, а не решает вопрос', 'С расстановки мебели'],
             'options_uz': ['Fasadni boʻyashdan', 'Poydevor quyishdan', 'Deraza oʻrnatishdan', 'Mebel joylashtirishdan'],
             'correct_indices': [1],
         },
@@ -7232,8 +6850,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Декомпозиция задач', 'category_uz': 'Vazifalarni dekompozitsiya qilish',
             'prompt_ru': 'При написании крупного исследовательского эссе какой шаг должен идти сразу после выбора темы, перед написанием самого текста?',
             'prompt_uz': 'Katta tadqiqot esse yozishda mavzu tanlangandan soʻng, matnning oʻzini yozishdan oldin qaysi qadam kelishi kerak?',
-            'options_ru': ['Сразу писать заключение', 'Составить структурированный план (план-конспект) с основными тезисами и аргументами', 'Отправить работу на проверку', 'Придумать красивое оформление обложки'],
-            'options_uz': ['Darhol xulosani yozish', 'Asosiy tezis va argumentlar bilan tuzilgan reja (konspekt) tuzish', 'Ishni tekshiruvga yuborish', 'Chiroyli muqova dizaynini oʻylab topish'],
+            'options_ru': ['Сразу писать заключение, даже не пытаясь разобраться в первопричине происходящего', 'Составить структурированный план (план-конспект) с основными тезисами и аргументами', 'Отправить работу на проверку, полагаясь на удачу вместо продуманного анализа ситуации', 'Придумать красивое оформление обложки, не учитывая долгосрочные последствия такого решения'],
+            'options_uz': ['Darhol xulosani yozish, vaziyatning tub sababini aniqlashga hatto urinib koʻrmasdan', 'Asosiy tezis va argumentlar bilan tuzilgan reja (konspekt) tuzish', 'Ishni tekshiruvga yuborish, vaziyatni puxta tahlil qilish oʻrniga omadga tayanib', 'Chiroyli muqova dizaynini oʻylab topish, bunday qarorning uzoq muddatli oqibatlarini eʼtiborga olmasdan'],
             'correct_indices': [1],
         },
         {
@@ -7241,8 +6859,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Декомпозиция задач', 'category_uz': 'Vazifalarni dekompozitsiya qilish',
             'prompt_ru': 'Разработчику нужно найти, какой из 500 коммитов в истории git ввёл баг. Какой метод декомпозиции задачи наиболее эффективен вместо проверки всех коммитов подряд?',
             'prompt_uz': 'Dasturchi git tarixidagi 500 ta commitning qaysi biri xatolikni kiritganini topishi kerak. Barcha commitlarni ketma-ket tekshirishdan koʻra vazifani dekompozitsiya qilishning qaysi usuli samaraliroq?',
-            'options_ru': ['Проверять коммиты подряд с самого первого', 'Использовать бинарный поиск (например, git bisect) — делить историю пополам на каждом шаге, сокращая проверку до логарифмического числа шагов', 'Переписать весь код заново, не разбираясь в истории', 'Спросить у каждого разработчика, помнит ли он, что натворил'],
-            'options_uz': ['Commitlarni birinchisidan boshlab ketma-ket tekshirish', 'Ikkilik qidiruv (masalan, git bisect) dan foydalanish — har qadamda tarixni ikkiga boʻlib, tekshiruvni logarifmik songa qisqartirish', 'Tarixni tushunmasdan butun kodni qaytadan yozish', 'Har bir dasturchidan nima qilganini eslaydimi deb soʻrash'],
+            'options_ru': ['Проверять коммиты подряд с самого первого, что перекладывает ответственность на других, а не решает вопрос, полагаясь на удачу вместо продуманного анализа ситуации', 'Использовать бинарный поиск (например, git bisect) — делить историю пополам на каждом шаге, сокращая проверку до логарифмического числа шагов', 'Переписать весь код заново, не разбираясь в истории, не учитывая долгосрочные последствия такого решения, игнорируя при этом мнение и интересы других вовлечённых сторон', 'Спросить у каждого разработчика, помнит ли он, что натворил, не собрав предварительно достаточно фактов для взвешенного решения, что является импульсивной реакцией, а не продуманным решением'],
+            'options_uz': ['Commitlarni birinchisidan boshlab ketma-ket tekshirish, bu esa haqiqiy yechim oʻrniga javobgarlikni boshqalarga yuklaydi, vaziyatni puxta tahlil qilish oʻrniga omadga tayanib', 'Ikkilik qidiruv (masalan, git bisect) dan foydalanish — har qadamda tarixni ikkiga boʻlib, tekshiruvni logarifmik songa qisqartirish', 'Tarixni tushunmasdan butun kodni qaytadan yozish, bunday qarorning uzoq muddatli oqibatlarini eʼtiborga olmasdan, jarayonga aloqador boshqa tomonlarning fikrini eʼtiborsiz qoldirib', 'Har bir dasturchidan nima qilganini eslaydimi deb soʻrash, vaznli qaror qabul qilish uchun yetarli fakt toʻplamasdan turib'],
             'correct_indices': [1],
         },
         {
@@ -7250,8 +6868,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Декомпозиция задач', 'category_uz': 'Vazifalarni dekompozitsiya qilish',
             'prompt_ru': 'Организатору конференции нужно решить множество взаимосвязанных задач: место проведения, спикеры, реклама, кейтеринг. Какую задачу логичнее всего решить в первую очередь, так как от неё зависят остальные?',
             'prompt_uz': 'Konferensiya tashkilotchisi bir-biriga bogʻliq koʻplab vazifalarni hal qilishi kerak: oʻtkazish joyi, spikerlar, reklama, keytering. Qolganlari shunga bogʻliq boʻlgani uchun qaysi vazifani birinchi hal qilish mantiqiy?',
-            'options_ru': ['Кейтеринг (меню на банкете)', 'Место и дату проведения, так как от них зависит доступность спикеров, объём рекламы и договорённость с кейтерингом', 'Дизайн раздаточных материалов', 'Цвет бейджиков участников'],
-            'options_uz': ['Keytering (bankyet menyusi)', 'Oʻtkazish joyi va sanasi, chunki spikerlarning boʻsh vaqti, reklama hajmi va keytering bilan kelishuv shunga bogʻliq', 'Tarqatma materiallar dizayni', 'Ishtirokchilar bejiklarining rangi'],
+            'options_ru': ['Кейтеринг (меню на банкете), полагаясь на удачу вместо продуманного анализа ситуации, не учитывая долгосрочные последствия такого решения', 'Место и дату проведения, так как от них зависит доступность спикеров, объём рекламы и договорённость с кейтерингом', 'Дизайн раздаточных материалов, игнорируя при этом мнение и интересы других вовлечённых сторон, не собрав предварительно достаточно фактов для взвешенного решения', 'Цвет бейджиков участников, что является импульсивной реакцией, а не продуманным решением, решая лишь симптом, но не саму проблему по существу'],
+            'options_uz': ['Keytering (bankyet menyusi), vaziyatni puxta tahlil qilish oʻrniga omadga tayanib, bunday qarorning uzoq muddatli oqibatlarini eʼtiborga olmasdan', 'Oʻtkazish joyi va sanasi, chunki spikerlarning boʻsh vaqti, reklama hajmi va keytering bilan kelishuv shunga bogʻliq', 'Tarqatma materiallar dizayni, jarayonga aloqador boshqa tomonlarning fikrini eʼtiborsiz qoldirib, vaznli qaror qabul qilish uchun yetarli fakt toʻplamasdan turib', 'Ishtirokchilar bejiklarining rangi, bu muammoga oʻylab topilgan yechim emas, balki impulsiv reaksiya, faqat alomatni yoʻqotib, muammoning oʻzini hal qilmasdan'],
             'correct_indices': [1],
         },
         {
@@ -7259,8 +6877,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Декомпозиция задач', 'category_uz': 'Vazifalarni dekompozitsiya qilish',
             'prompt_ru': 'Компания решила перевести устаревшую монолитную систему на микросервисную архитектуру. Какой первый шаг декомпозиции наиболее правильный, вместо переписывания всего кода сразу с нуля?',
             'prompt_uz': 'Kompaniya eskirgan monolit tizimini mikroservis arxitekturasiga oʻtkazishga qaror qildi. Butun kodni bir zumda noldan qaytadan yozish oʻrniga dekompozitsiyaning qaysi birinchi qadami toʻgʻri?',
-            'options_ru': ['Выключить старую систему и сразу запустить новую', 'Определить логические предметные области (bounded contexts) внутри системы и постепенно выделять их в отдельные независимые сервисы', 'Просто скопировать весь код в новый репозиторий без изменений', 'Нанять новую команду и уволить старую, не передавая знания'],
-            'options_uz': ['Eski tizimni oʻchirib, darhol yangisini ishga tushirish', 'Tizim ichidagi mantiqiy predmet sohalarini (bounded context) aniqlab, ularni bosqichma-bosqich alohida mustaqil servislarga ajratish', 'Butun kodni oʻzgartirmasdan yangi repozitoriyga koʻchirish', 'Bilim uzatmasdan yangi jamoa yollab, eskisini ishdan boʻshatish'],
+            'options_ru': ['Выключить старую систему и сразу запустить новую, не учитывая долгосрочные последствия такого решения, игнорируя при этом мнение и интересы других вовлечённых сторон', 'Определить логические предметные области (bounded contexts) внутри системы и постепенно выделять их в отдельные независимые сервисы', 'Просто скопировать весь код в новый репозиторий без изменений, не собрав предварительно достаточно фактов для взвешенного решения', 'Нанять новую команду и уволить старую, не передавая знания, что является импульсивной реакцией, а не продуманным решением'],
+            'options_uz': ['Eski tizimni oʻchirib, darhol yangisini ishga tushirish, bunday qarorning uzoq muddatli oqibatlarini eʼtiborga olmasdan, jarayonga aloqador boshqa tomonlarning fikrini eʼtiborsiz qoldirib', 'Tizim ichidagi mantiqiy predmet sohalarini (bounded context) aniqlab, ularni bosqichma-bosqich alohida mustaqil servislarga ajratish', 'Butun kodni oʻzgartirmasdan yangi repozitoriyga koʻchirish, vaznli qaror qabul qilish uchun yetarli fakt toʻplamasdan turib', 'Bilim uzatmasdan yangi jamoa yollab, eskisini ishdan boʻshatish, bu muammoga oʻylab topilgan yechim emas, balki impulsiv reaksiya'],
             'correct_indices': [1],
         },
         {
@@ -7268,8 +6886,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Декомпозиция задач', 'category_uz': 'Vazifalarni dekompozitsiya qilish',
             'prompt_ru': 'Инженер-программист объясняет новичку принцип сортировки слиянием (merge sort). Какая идея лучше всего описывает суть этого алгоритма декомпозиции?',
             'prompt_uz': 'Dasturiy taʼminot muhandisi yangi boshlovchiga birlashtirib saralash (merge sort) tamoyilini tushuntirmoqda. Qaysi gʻoya ushbu dekompozitsiya algoritmi mohiyatini eng yaxshi tasvirlaydi?',
-            'options_ru': ['Проверять каждый элемент списка по одному без всякого деления', 'Рекурсивно делить массив на всё более мелкие части, сортировать их по отдельности, а затем аккуратно сливать в единый отсортированный результат', 'Случайным образом менять местами элементы, пока список не станет отсортированным', 'Сортировать только первую половину списка, а вторую оставить как есть'],
-            'options_uz': ['Roʻyxatning har bir elementini boʻlmasdan birma-bir tekshirish', 'Massivni rekursiv ravishda tobora kichikroq qismlarga boʻlib, ularni alohida saralab, keyin ehtiyotkorlik bilan yagona saralangan natijaga birlashtirish', 'Roʻyxat saralanguncha elementlarni tasodifiy almashtirish', 'Roʻyxatning faqat birinchi yarmini saralab, ikkinchisini oʻzgarishsiz qoldirish'],
+            'options_ru': ['Проверять каждый элемент списка по одному без всякого деления, игнорируя при этом мнение и интересы других вовлечённых сторон, не собрав предварительно достаточно фактов для взвешенного решения', 'Рекурсивно делить массив на всё более мелкие части, сортировать их по отдельности, а затем аккуратно сливать в единый отсортированный результат', 'Случайным образом менять местами элементы, пока список не станет отсортированным, что является импульсивной реакцией, а не продуманным решением', 'Сортировать только первую половину списка, а вторую оставить как есть, решая лишь симптом, но не саму проблему по существу, что создаёт лишь видимость результата'],
+            'options_uz': ['Roʻyxatning har bir elementini boʻlmasdan birma-bir tekshirish, jarayonga aloqador boshqa tomonlarning fikrini eʼtiborsiz qoldirib, vaznli qaror qabul qilish uchun yetarli fakt toʻplamasdan turib', 'Massivni rekursiv ravishda tobora kichikroq qismlarga boʻlib, ularni alohida saralab, keyin ehtiyotkorlik bilan yagona saralangan natijaga birlashtirish', 'Roʻyxat saralanguncha elementlarni tasodifiy almashtirish, bu muammoga oʻylab topilgan yechim emas, balki impulsiv reaksiya, faqat alomatni yoʻqotib, muammoning oʻzini hal qilmasdan', 'Roʻyxatning faqat birinchi yarmini saralab, ikkinchisini oʻzgarishsiz qoldirish, bu esa faqat natija koʻrinishini yaratadi, xolos, taxminni amalda tekshirib koʻrmasdan'],
             'correct_indices': [1],
         },
         {
@@ -7277,8 +6895,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Декомпозиция задач', 'category_uz': 'Vazifalarni dekompozitsiya qilish',
             'prompt_ru': 'На сборочной линии обнаружено, что общая скорость производства ограничена одной конкретной станцией, где рабочие не успевают за темпом остальных. Какой принцип декомпозиции процесса поможет решить проблему?',
             'prompt_uz': 'Yigʻish liniyasida umumiy ishlab chiqarish tezligi ishchilar boshqalarning tempiga ulgurmayotgan aynan bitta stansiya bilan cheklanganligi aniqlandi. Jarayonni dekompozitsiya qilish tamoyili muammoni hal qilishga qanday yordam beradi?',
-            'options_ru': ['Ускорить все станции одновременно без анализа', 'Определить узкое место (bottleneck) — станцию, ограничивающую скорость всей линии, — и направить туда дополнительные ресурсы или изменить процесс именно там', 'Полностью остановить всю линию навсегда', 'Уволить рабочих на самой быстрой станции'],
-            'options_uz': ['Tahlilsiz barcha stansiyalarni bir vaqtda tezlashtirish', 'Butun liniya tezligini cheklovchi tor joyni (bottleneck) — stansiyani aniqlab, aynan oʻsha yerga qoʻshimcha resurs yoʻnaltirish yoki jarayonni oʻzgartirish', 'Butun liniyani butunlay toʻxtatib qoʻyish', 'Eng tez ishlaydigan stansiyadagi ishchilarni boʻshatish'],
+            'options_ru': ['Ускорить все станции одновременно без анализа, не собрав предварительно достаточно фактов для взвешенного решения, что является импульсивной реакцией, а не продуманным решением', 'Определить узкое место (bottleneck) — станцию, ограничивающую скорость всей линии, — и направить туда дополнительные ресурсы или изменить процесс именно там', 'Полностью остановить всю линию навсегда, решая лишь симптом, но не саму проблему по существу, что создаёт лишь видимость результата, не проверив предположение на практике', 'Уволить рабочих на самой быстрой станции, избегая при этом более сложной, но нужной работы, что удобно в моменте, но не эффективно в долгосрочной перспективе'],
+            'options_uz': ['Tahlilsiz barcha stansiyalarni bir vaqtda tezlashtirish, vaznli qaror qabul qilish uchun yetarli fakt toʻplamasdan turib, bu muammoga oʻylab topilgan yechim emas, balki impulsiv reaksiya', 'Butun liniya tezligini cheklovchi tor joyni (bottleneck) — stansiyani aniqlab, aynan oʻsha yerga qoʻshimcha resurs yoʻnaltirish yoki jarayonni oʻzgartirish', 'Butun liniyani butunlay toʻxtatib qoʻyish, faqat alomatni yoʻqotib, muammoning oʻzini hal qilmasdan, bu esa faqat natija koʻrinishini yaratadi, xolos', 'Eng tez ishlaydigan stansiyadagi ishchilarni boʻshatish, taxminni amalda tekshirib koʻrmasdan, murakkabroq, ammo zarur boʻlgan ishdan qochib, bu vaqtincha qulay boʻlsa-da, uzoq muddatda samarasiz'],
             'correct_indices': [1],
         },
         {
@@ -7286,8 +6904,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Декомпозиция задач', 'category_uz': 'Vazifalarni dekompozitsiya qilish',
             'prompt_ru': 'При ремонте квартиры нужно провести электропроводку, поставить натяжной потолок и зашить стены гипсокартоном. В каком порядке логичнее выполнить эти работы?',
             'prompt_uz': 'Kvartira taʼmirida elektr simlarini oʻtkazish, tarang shift oʻrnatish va devorlarni gipsokarton bilan yopish kerak. Bu ishlarni qaysi tartibda bajarish mantiqiy?',
-            'options_ru': ['Сначала зашить стены гипсокартоном, потом тянуть проводку сквозь него', 'Сначала проложить электропроводку, а уже затем закрывать стены гипсокартоном и монтировать потолок', 'Сразу монтировать натяжной потолок, а проводку и стены отложить на потом', 'Порядок совершенно не имеет значения'],
-            'options_uz': ['Avval devorlarni gipsokarton bilan yopib, keyin simlarni undan oʻtkazish', 'Avval elektr simlarini oʻtkazib, keyin devorlarni gipsokarton bilan yopish va shiftni oʻrnatish', 'Darhol tarang shiftni oʻrnatib, sim va devorlarni keyinga qoldirish', 'Tartibning umuman ahamiyati yoʻq'],
+            'options_ru': ['Сначала зашить стены гипсокартоном, потом тянуть проводку сквозь него, что является импульсивной реакцией, а не продуманным решением', 'Сначала проложить электропроводку, а уже затем закрывать стены гипсокартоном и монтировать потолок', 'Сразу монтировать натяжной потолок, а проводку и стены отложить на потом, что создаёт лишь видимость результата', 'Порядок совершенно не имеет значения, не проверив предположение на практике, избегая при этом более сложной, но нужной работы'],
+            'options_uz': ['Avval devorlarni gipsokarton bilan yopib, keyin simlarni undan oʻtkazish, bu muammoga oʻylab topilgan yechim emas, balki impulsiv reaksiya', 'Avval elektr simlarini oʻtkazib, keyin devorlarni gipsokarton bilan yopish va shiftni oʻrnatish', 'Darhol tarang shiftni oʻrnatib, sim va devorlarni keyinga qoldirish, bu esa faqat natija koʻrinishini yaratadi, xolos', 'Tartibning umuman ahamiyati yoʻq, taxminni amalda tekshirib koʻrmasdan, murakkabroq, ammo zarur boʻlgan ishdan qochib'],
             'correct_indices': [1],
         },
         {
@@ -7295,8 +6913,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Декомпозиция задач', 'category_uz': 'Vazifalarni dekompozitsiya qilish',
             'prompt_ru': 'Аналитику нужно построить конвейер обработки данных (data pipeline) из сырых логов в готовый отчёт. Какой правильный порядок трёх основных этапов?',
             'prompt_uz': 'Tahlilchi xom loglardan tayyor hisobotgacha maʼlumotlarni qayta ishlash konveyerini (data pipeline) qurishi kerak. Uchta asosiy bosqichning toʻgʻri tartibi qaysi?',
-            'options_ru': ['Загрузка (Load) → Извлечение (Extract) → Трансформация (Transform)', 'Извлечение данных (Extract) → Трансформация/очистка данных (Transform) → Загрузка в хранилище (Load)', 'Трансформация (Transform) → Загрузка (Load) → Извлечение (Extract)', 'Все три этапа выполняются одновременно в случайном порядке'],
-            'options_uz': ['Yuklash (Load) → Ajratib olish (Extract) → Transformatsiya (Transform)', 'Maʼlumotlarni ajratib olish (Extract) → Transformatsiya/tozalash (Transform) → Ombor(ga) yuklash (Load)', 'Transformatsiya (Transform) → Yuklash (Load) → Ajratib olish (Extract)', 'Uchala bosqich ham tasodifiy tartibda bir vaqtda bajariladi'],
+            'options_ru': ['Загрузка (Load) → Извлечение (Extract) → Трансформация (Transform), решая лишь симптом, но не саму проблему по существу', 'Извлечение данных (Extract) → Трансформация/очистка данных (Transform) → Загрузка в хранилище (Load)', 'Трансформация (Transform) → Загрузка (Load) → Извлечение (Extract), не проверив предположение на практике', 'Все три этапа выполняются одновременно в случайном порядке, избегая при этом более сложной, но нужной работы'],
+            'options_uz': ['Yuklash (Load) → Ajratib olish (Extract) → Transformatsiya (Transform), faqat alomatni yoʻqotib, muammoning oʻzini hal qilmasdan', 'Maʼlumotlarni ajratib olish (Extract) → Transformatsiya/tozalash (Transform) → Ombor(ga) yuklash (Load)', 'Transformatsiya (Transform) → Yuklash (Load) → Ajratib olish (Extract), taxminni amalda tekshirib koʻrmasdan', 'Uchala bosqich ham tasodifiy tartibda bir vaqtda bajariladi, murakkabroq, ammo zarur boʻlgan ishdan qochib'],
             'correct_indices': [1],
         },
         {
@@ -7304,8 +6922,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Декомпозиция задач', 'category_uz': 'Vazifalarni dekompozitsiya qilish',
             'prompt_ru': 'HR-специалисту нужно разработать программу адаптации новых сотрудников. Какой первый шаг декомпозиции этой большой задачи наиболее правильный?',
             'prompt_uz': 'HR-mutaxassisi yangi xodimlarni moslashtirish (adaptatsiya) dasturini ishlab chiqishi kerak. Ushbu katta vazifani dekompozitsiya qilishning birinchi qadami qaysi toʻgʻri?',
-            'options_ru': ['Сразу закупить подарки для новичков', 'Разбить процесс адаптации на этапы по времени (первый день, первая неделя, первый месяц) с конкретными задачами на каждом', 'Отправить всем новичкам одно длинное письмо со всей информацией сразу', 'Полностью отменить программу адаптации, чтобы сэкономить время'],
-            'options_uz': ["Darhol yangi xodimlarga sovg'a xarid qilish", 'Moslashtirish jarayonini vaqt boʻyicha bosqichlarga (birinchi kun, birinchi hafta, birinchi oy) va har biriga aniq vazifalarga boʻlish', 'Barcha yangi xodimlarga bir vaqtning oʻzida barcha maʼlumot bilan uzun bitta xat yuborish', 'Vaqtni tejash uchun moslashtirish dasturini butunlay bekor qilish'],
+            'options_ru': ['Сразу закупить подарки для новичков, что typично для поверхностного, а не системного подхода, отказываясь от анализа в пользу самого простого варианта', 'Разбить процесс адаптации на этапы по времени (первый день, первая неделя, первый месяц) с конкретными задачами на каждом', 'Отправить всем новичкам одно длинное письмо со всей информацией сразу, вместо того чтобы вникнуть в суть происходящего', 'Полностью отменить программу адаптации, чтобы сэкономить время, что может дать кратковременное облегчение, но не решает дела'],
+            'options_uz': ["Darhol yangi xodimlarga sovg'a xarid qilish, bu esa tizimli emas, balki yuzaki yondashuvga xos, tahlil qilish oʻrniga eng sodda variantni tanlab", 'Moslashtirish jarayonini vaqt boʻyicha bosqichlarga (birinchi kun, birinchi hafta, birinchi oy) va har biriga aniq vazifalarga boʻlish', 'Barcha yangi xodimlarga bir vaqtning oʻzida barcha maʼlumot bilan uzun bitta xat yuborish, vaziyatning mohiyatiga chuqur kirmasdan', 'Vaqtni tejash uchun moslashtirish dasturini butunlay bekor qilish, bu qisqa muddatli yengillik bersa-da, ishni hal qilmaydi'],
             'correct_indices': [1],
         },
         {
@@ -7313,8 +6931,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Декомпозиция задач', 'category_uz': 'Vazifalarni dekompozitsiya qilish',
             'prompt_ru': 'Ученику нужно решить систему из двух уравнений с двумя неизвестными. Какой подход декомпозиции задачи является стандартным математическим методом?',
             'prompt_uz': "Oʻquvchi ikki noma'lumli ikkita tenglama tizimini yechishi kerak. Vazifani dekompozitsiya qilishning qaysi yondashuvi standart matematik usul hisoblanadi?",
-            'options_ru': ['Угадывать значения переменных наугад', 'Выразить одну переменную через другую в одном уравнении (метод подстановки), сведя задачу к уравнению с одной неизвестной', 'Полностью проигнорировать второе уравнение', 'Сложить оба уравнения без всякой цели'],
-            'options_uz': ['Oʻzgaruvchilar qiymatini tasodifiy taxmin qilish', "Bitta tenglamada bir oʻzgaruvchini ikkinchisi orqali ifodalab (oʻrniga qoʻyish usuli), masalani bitta noma'lumli tenglamaga keltirish", 'Ikkinchi tenglamani butunlay eʼtiborsiz qoldirish', 'Ikkala tenglamani maqsadsiz qoʻshib qoʻyish'],
+            'options_ru': ['Угадывать значения переменных наугад, отказываясь от анализа в пользу самого простого варианта, вместо того чтобы вникнуть в суть происходящего', 'Выразить одну переменную через другую в одном уравнении (метод подстановки), сведя задачу к уравнению с одной неизвестной', 'Полностью проигнорировать второе уравнение, что может дать кратковременное облегчение, но не решает дела, не оценив, к чему это приведёт в будущем', 'Сложить оба уравнения без всякой цели, руководствуясь эмоциями, а не фактами, хотя это никак не приближает к настоящему решению'],
+            'options_uz': ['Oʻzgaruvchilar qiymatini tasodifiy taxmin qilish, tahlil qilish oʻrniga eng sodda variantni tanlab, vaziyatning mohiyatiga chuqur kirmasdan', "Bitta tenglamada bir oʻzgaruvchini ikkinchisi orqali ifodalab (oʻrniga qoʻyish usuli), masalani bitta noma'lumli tenglamaga keltirish", 'Ikkinchi tenglamani butunlay eʼtiborsiz qoldirish, bu qisqa muddatli yengillik bersa-da, ishni hal qilmaydi, kelajakda bu nimaga olib kelishini baholamasdan', 'Ikkala tenglamani maqsadsiz qoʻshib qoʻyish, faktlar emas, his-tuygʻular asosida ish tutib, garchi bu haqiqiy yechimga umuman yaqinlashtirmasa-da'],
             'correct_indices': [1],
         },
         {
@@ -7322,8 +6940,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Декомпозиция задач', 'category_uz': 'Vazifalarni dekompozitsiya qilish',
             'prompt_ru': 'При организации свадебного мероприятия задача огромна и многосоставна. Какой инструмент управления проектами лучше всего помогает разбить её на связанные подзадачи с временными зависимостями?',
             'prompt_uz': 'Toʻy tadbirini tashkil qilishda vazifa juda katta va koʻp qismli. Loyihani boshqarish vositalaridan qaysi biri uni vaqt bogʻliqliklariga ega vazifalarga boʻlishga eng yaxshi yordam beradi?',
-            'options_ru': ['Список покупок без сроков', 'Диаграмма Ганта (Gantt chart) с указанием сроков и зависимостей между подзадачами (например, аренда зала должна быть подтверждена раньше рассылки приглашений)', 'Устная договорённость без записей', 'Один общий список без разделения на этапы'],
-            'options_uz': ['Muddatsiz xaridlar roʻyxati', "Vazifalar orasidagi muddat va bog'liqliklarni koʻrsatuvchi Gantt diagrammasi (masalan, zal ijarasi taklifnomalarni yuborishdan oldin tasdiqlanishi kerak)", "Yozuvsiz og'zaki kelishuv", 'Bosqichlarga boʻlinmagan bitta umumiy roʻyxat'],
+            'options_ru': ['Список покупок без сроков, вместо того чтобы вникнуть в суть происходящего, что может дать кратковременное облегчение, но не решает дела, не оценив, к чему это приведёт в будущем', 'Диаграмма Ганта (Gantt chart) с указанием сроков и зависимостей между подзадачами (например, аренда зала должна быть подтверждена раньше рассылки приглашений)', 'Устная договорённость без записей, руководствуясь эмоциями, а не фактами, хотя это никак не приближает к настоящему решению, просто чтобы снять с себя часть нагрузки', 'Один общий список без разделения на этапы, не спрашивая мнения тех, кто лучше знает ситуацию, что выглядит логично на первый взгляд, но упускает главное'],
+            'options_uz': ['Muddatsiz xaridlar roʻyxati, vaziyatning mohiyatiga chuqur kirmasdan, bu qisqa muddatli yengillik bersa-da, ishni hal qilmaydi, kelajakda bu nimaga olib kelishini baholamasdan', "Vazifalar orasidagi muddat va bog'liqliklarni koʻrsatuvchi Gantt diagrammasi (masalan, zal ijarasi taklifnomalarni yuborishdan oldin tasdiqlanishi kerak)", "Yozuvsiz og'zaki kelishuv, faktlar emas, his-tuygʻular asosida ish tutib, garchi bu haqiqiy yechimga umuman yaqinlashtirmasa-da, shunchaki oʻz zimmasidagi yukni birozgina yengillashtirish uchun", 'Bosqichlarga boʻlinmagan bitta umumiy roʻyxat, vaziyatni yaxshiroq biladiganlarning fikrini soʻramasdan, bu birinchi qarashda mantiqiy koʻrinsa-da, asosiy narsani eʼtibordan chetda qoldiradi'],
             'correct_indices': [1],
         },
         {
@@ -7331,8 +6949,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Декомпозиция задач', 'category_uz': 'Vazifalarni dekompozitsiya qilish',
             'prompt_ru': 'Команда готовит крупную научную статью для публикации. Какой порядок работы над разделами статьи наиболее логичен с точки зрения зависимости содержания?',
             'prompt_uz': "Jamoa nashr uchun katta ilmiy maqola tayyorlamoqda. Maqola boʻlimlari ustida ishlash tartibi mazmun bog'liqligi nuqtai nazaridan qaysi biri eng mantiqiy?",
-            'options_ru': ['Сначала написать список литературы, а потом придумать, о чём вообще писать статью', 'Сначала провести исследование и собрать данные, затем описать методологию и результаты, и лишь после этого писать введение и выводы', 'Написать заключение прежде, чем получены результаты исследования', 'Порядок разделов не имеет никакого значения для качества статьи'],
-            'options_uz': ['Avval adabiyotlar roʻyxatini yozib, keyin maqola nima haqida boʻlishini oʻylab topish', 'Avval tadqiqot oʻtkazib, maʼlumot toʻplash, soʻng metodologiya va natijalarni tasvirlash, va faqat shundan keyin kirish va xulosalarni yozish', 'Tadqiqot natijalari olinmasdan oldin xulosani yozish', 'Boʻlimlar tartibi maqola sifati uchun hech qanday ahamiyatga ega emas'],
+            'options_ru': ['Сначала написать список литературы, а потом придумать, о чём вообще писать статью, что может дать кратковременное облегчение, но не решает дела', 'Сначала провести исследование и собрать данные, затем описать методологию и результаты, и лишь после этого писать введение и выводы', 'Написать заключение прежде, чем получены результаты исследования, руководствуясь эмоциями, а не фактами, хотя это никак не приближает к настоящему решению', 'Порядок разделов не имеет никакого значения для качества статьи, просто чтобы снять с себя часть нагрузки, не спрашивая мнения тех, кто лучше знает ситуацию'],
+            'options_uz': ['Avval adabiyotlar roʻyxatini yozib, keyin maqola nima haqida boʻlishini oʻylab topish, bu qisqa muddatli yengillik bersa-da, ishni hal qilmaydi', 'Avval tadqiqot oʻtkazib, maʼlumot toʻplash, soʻng metodologiya va natijalarni tasvirlash, va faqat shundan keyin kirish va xulosalarni yozish', 'Tadqiqot natijalari olinmasdan oldin xulosani yozish, faktlar emas, his-tuygʻular asosida ish tutib, garchi bu haqiqiy yechimga umuman yaqinlashtirmasa-da', 'Boʻlimlar tartibi maqola sifati uchun hech qanday ahamiyatga ega emas, shunchaki oʻz zimmasidagi yukni birozgina yengillashtirish uchun'],
             'correct_indices': [1],
         },
         {
@@ -7340,8 +6958,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Декомпозиция задач', 'category_uz': 'Vazifalarni dekompozitsiya qilish',
             'prompt_ru': 'Начинающий предприниматель хочет запустить сложный продукт сразу со всеми возможными функциями. Какой подход декомпозиции более разумен для снижения риска?',
             'prompt_uz': 'Yangi tadbirkor murakkab mahsulotni darhol barcha mumkin boʻlgan funksiyalar bilan ishga tushirmoqchi. Xavfni kamaytirish uchun dekompozitsiya qilishning qaysi yondashuvi oqilonaroq?',
-            'options_ru': ['Разработать все функции сразу и выпустить продукт целиком через год', 'Выделить минимально жизнеспособный продукт (MVP) с самой важной функцией, запустить его, собрать обратную связь и постепенно добавлять остальное', 'Не запускать продукт вообще, если не готовы все функции', 'Запустить продукт без единой работающей функции'],
-            'options_uz': ['Barcha funksiyalarni bir vaqtda ishlab chiqib, mahsulotni bir yildan keyin toʻliq chiqarish', 'Eng muhim funksiyaga ega minimal yashovchan mahsulotni (MVP) ajratib, uni ishga tushirish, fikr-mulohaza toʻplash va qolganlarini bosqichma-bosqich qoʻshish', 'Barcha funksiyalar tayyor boʻlmasa, mahsulotni umuman chiqarmaslik', 'Ishlaydigan bitta ham funksiyasiz mahsulotni ishga tushirish'],
+            'options_ru': ['Разработать все функции сразу и выпустить продукт целиком через год, не оценив, к чему это приведёт в будущем, руководствуясь эмоциями, а не фактами', 'Выделить минимально жизнеспособный продукт (MVP) с самой важной функцией, запустить его, собрать обратную связь и постепенно добавлять остальное', 'Не запускать продукт вообще, если не готовы все функции, хотя это никак не приближает к настоящему решению, просто чтобы снять с себя часть нагрузки', 'Запустить продукт без единой работающей функции, не спрашивая мнения тех, кто лучше знает ситуацию, что выглядит логично на первый взгляд, но упускает главное'],
+            'options_uz': ['Barcha funksiyalarni bir vaqtda ishlab chiqib, mahsulotni bir yildan keyin toʻliq chiqarish, kelajakda bu nimaga olib kelishini baholamasdan, faktlar emas, his-tuygʻular asosida ish tutib', 'Eng muhim funksiyaga ega minimal yashovchan mahsulotni (MVP) ajratib, uni ishga tushirish, fikr-mulohaza toʻplash va qolganlarini bosqichma-bosqich qoʻshish', 'Barcha funksiyalar tayyor boʻlmasa, mahsulotni umuman chiqarmaslik, garchi bu haqiqiy yechimga umuman yaqinlashtirmasa-da, shunchaki oʻz zimmasidagi yukni birozgina yengillashtirish uchun', 'Ishlaydigan bitta ham funksiyasiz mahsulotni ishga tushirish, vaziyatni yaxshiroq biladiganlarning fikrini soʻramasdan, bu birinchi qarashda mantiqiy koʻrinsa-da, asosiy narsani eʼtibordan chetda qoldiradi'],
             'correct_indices': [1],
         },
         {
@@ -7349,8 +6967,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Декомпозиция задач', 'category_uz': 'Vazifalarni dekompozitsiya qilish',
             'prompt_ru': 'Большая математическая задача содержит сложное выражение с несколькими вложенными скобками и операциями. Какой принцип декомпозиции нужно применить при её решении?',
             'prompt_uz': 'Katta matematik masalada bir nechta ichma-ich qavslar va amallarga ega murakkab ifoda bor. Uni yechishda qaysi dekompozitsiya tamoyilini qoʻllash kerak?',
-            'options_ru': ['Решать выражение в случайном порядке операций', 'Разбить выражение на более простые части, вычисляя сначала содержимое самых внутренних скобок, соблюдая порядок математических операций', 'Проигнорировать скобки и решать слева направо без правил', 'Округлить все числа перед вычислениями для упрощения'],
-            'options_uz': ['Ifodani amallarning tasodifiy tartibida yechish', 'Ifodani soddaroq qismlarga boʻlib, matematik amallar tartibiga rioya qilgan holda avval eng ichki qavslar mazmunini hisoblash', 'Qavslarni eʼtiborsiz qoldirib, chapdan oʻngga qoidasiz yechish', 'Hisob-kitobdan oldin soddalashtirish uchun barcha sonlarni yaxlitlash'],
+            'options_ru': ['Решать выражение в случайном порядке операций, руководствуясь эмоциями, а не фактами, хотя это никак не приближает к настоящему решению', 'Разбить выражение на более простые части, вычисляя сначала содержимое самых внутренних скобок, соблюдая порядок математических операций', 'Проигнорировать скобки и решать слева направо без правил, просто чтобы снять с себя часть нагрузки, не спрашивая мнения тех, кто лучше знает ситуацию', 'Округлить все числа перед вычислениями для упрощения, что выглядит логично на первый взгляд, но упускает главное, оставляя реальную проблему нерешённой'],
+            'options_uz': ['Ifodani amallarning tasodifiy tartibida yechish, faktlar emas, his-tuygʻular asosida ish tutib, garchi bu haqiqiy yechimga umuman yaqinlashtirmasa-da', 'Ifodani soddaroq qismlarga boʻlib, matematik amallar tartibiga rioya qilgan holda avval eng ichki qavslar mazmunini hisoblash', 'Qavslarni eʼtiborsiz qoldirib, chapdan oʻngga qoidasiz yechish, shunchaki oʻz zimmasidagi yukni birozgina yengillashtirish uchun', 'Hisob-kitobdan oldin soddalashtirish uchun barcha sonlarni yaxlitlash, vaziyatni yaxshiroq biladiganlarning fikrini soʻramasdan'],
             'correct_indices': [1],
         },
         {
@@ -7358,8 +6976,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Порядок устранения неполадок', 'category_uz': 'Nosozliklarni bartaraf etish tartibi',
             'prompt_ru': 'Компьютер не включается вообще — нет ни звука вентиляторов, ни света индикаторов. Какая проверка должна быть первой?',
             'prompt_uz': 'Kompyuter umuman yoqilmayapti — na ventilyator ovozi, na indikator yorugʻligi bor. Qaysi tekshiruv birinchi boʻlishi kerak?',
-            'options_ru': ['Сразу разобрать компьютер и менять материнскую плату', 'Проверить, подключён ли кабель питания к розетке и работает ли сама розетка', 'Немедленно нести компьютер в сервисный центр', 'Полностью переустановить операционную систему'],
-            'options_uz': ['Darhol kompyuterni ochib, ona platani almashtirish', 'Quvvat kabeli rozetkaga ulanganini va rozetkaning oʻzi ishlayotganini tekshirish', 'Kompyuterni darhol servis markaziga olib borish', 'Operatsion tizimni butunlay qayta oʻrnatish'],
+            'options_ru': ['Сразу разобрать компьютер и менять материнскую плату, хотя это лишь временная мера, а не системное решение', 'Проверить, подключён ли кабель питания к розетке и работает ли сама розетка', 'Немедленно нести компьютер в сервисный центр, что перекладывает ответственность на других, а не решает вопрос', 'Полностью переустановить операционную систему, полагаясь на удачу вместо продуманного анализа ситуации'],
+            'options_uz': ['Darhol kompyuterni ochib, ona platani almashtirish, garchi bu faqat vaqtinchalik chora boʻlib, tizimli yechim emas', 'Quvvat kabeli rozetkaga ulanganini va rozetkaning oʻzi ishlayotganini tekshirish', 'Kompyuterni darhol servis markaziga olib borish, bu esa haqiqiy yechim oʻrniga javobgarlikni boshqalarga yuklaydi', 'Operatsion tizimni butunlay qayta oʻrnatish, vaziyatni puxta tahlil qilish oʻrniga omadga tayanib'],
             'correct_indices': [1],
         },
         {
@@ -7367,8 +6985,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Порядок устранения неполадок', 'category_uz': 'Nosozliklarni bartaraf etish tartibi',
             'prompt_ru': 'Дома пропал интернет на всех устройствах одновременно. Что нужно сделать в первую очередь, прежде чем звонить провайдеру?',
             'prompt_uz': 'Uyda barcha qurilmalarda internet bir vaqtning oʻzida yoʻqoldi. Provayderga qoʻngʻiroq qilishdan oldin avvalo nima qilish kerak?',
-            'options_ru': ['Сразу купить новый роутер', 'Перезагрузить роутер (выключить и включить), это часто решает временные сбои', 'Немедленно расторгнуть договор с провайдером', 'Ждать неделю без каких-либо действий'],
-            'options_uz': ['Darhol yangi router sotib olish', 'Routerni qayta ishga tushirish (oʻchirib-yoqish), bu koʻpincha vaqtinchalik nosozliklarni hal qiladi', 'Provayder bilan shartnomani darhol bekor qilish', 'Hech qanday harakat qilmasdan bir hafta kutish'],
+            'options_ru': ['Сразу купить новый роутер, даже не пытаясь разобраться в первопричине происходящего', 'Перезагрузить роутер (выключить и включить), это часто решает временные сбои', 'Немедленно расторгнуть договор с провайдером, полагаясь на удачу вместо продуманного анализа ситуации', 'Ждать неделю без каких-либо действий, не учитывая долгосрочные последствия такого решения'],
+            'options_uz': ['Darhol yangi router sotib olish, vaziyatning tub sababini aniqlashga hatto urinib koʻrmasdan', 'Routerni qayta ishga tushirish (oʻchirib-yoqish), bu koʻpincha vaqtinchalik nosozliklarni hal qiladi', 'Provayder bilan shartnomani darhol bekor qilish, vaziyatni puxta tahlil qilish oʻrniga omadga tayanib', 'Hech qanday harakat qilmasdan bir hafta kutish, bunday qarorning uzoq muddatli oqibatlarini eʼtiborga olmasdan'],
             'correct_indices': [1],
         },
         {
@@ -7376,8 +6994,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Порядок устранения неполадок', 'category_uz': 'Nosozliklarni bartaraf etish tartibi',
             'prompt_ru': 'Принтер не печатает документ. Прежде чем переустанавливать драйверы, что нужно проверить сначала?',
             'prompt_uz': 'Printer hujjatni chop etmayapti. Drayverlarni qayta oʻrnatishdan oldin avvalo nimani tekshirish kerak?',
-            'options_ru': ['Наличие бумаги и картриджа, а также подключение принтера к сети/компьютеру', 'Сразу полностью удалить принтер и купить новый', 'Обновить операционную систему компьютера целиком', 'Позвонить в техподдержку производителя без всякой проверки'],
-            'options_uz': ['Qogʻoz va kartrijning borligini, shuningdek printerning tarmoq/kompyuterga ulanganligini', 'Darhol printerni butunlay olib tashlab, yangisini sotib olish', 'Kompyuterning butun operatsion tizimini yangilash', 'Hech qanday tekshiruvsiz ishlab chiqaruvchining texnik yordamiga qoʻngʻiroq qilish'],
+            'options_ru': ['Наличие бумаги и картриджа, а также подключение принтера к сети/компьютеру', 'Сразу полностью удалить принтер и купить новый, полагаясь на удачу вместо продуманного анализа ситуации', 'Обновить операционную систему компьютера целиком, не учитывая долгосрочные последствия такого решения', 'Позвонить в техподдержку производителя без всякой проверки, игнорируя при этом мнение и интересы других вовлечённых сторон'],
+            'options_uz': ['Qogʻoz va kartrijning borligini, shuningdek printerning tarmoq/kompyuterga ulanganligini', 'Darhol printerni butunlay olib tashlab, yangisini sotib olish, vaziyatni puxta tahlil qilish oʻrniga omadga tayanib', 'Kompyuterning butun operatsion tizimini yangilash, bunday qarorning uzoq muddatli oqibatlarini eʼtiborga olmasdan', 'Hech qanday tekshiruvsiz ishlab chiqaruvchining texnik yordamiga qoʻngʻiroq qilish'],
             'correct_indices': [0],
         },
         {
@@ -7385,8 +7003,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Порядок устранения неполадок', 'category_uz': 'Nosozliklarni bartaraf etish tartibi',
             'prompt_ru': 'Автомобиль не заводится, но при повороте ключа слышны слабые щелчки. Что вернее всего проверить в первую очередь?',
             'prompt_uz': 'Avtomobil ishga tushmayapti, lekin kalitni burganda zaif shiqillash eshitiladi. Avvalo aynan nimani tekshirish toʻgʻriroq?',
-            'options_ru': ['Сразу менять стартер, не проверяя ничего другого', 'Проверить заряд и клеммы аккумулятора, так как слабые щелчки часто указывают именно на разряженную батарею', 'Проверить давление в шинах', 'Полностью заменить двигатель'],
-            'options_uz': ['Boshqa hech narsani tekshirmasdan darhol starterni almashtirish', 'Akkumulyator zaryadi va klemmalarini tekshirish, chunki zaif shiqillash koʻpincha aynan quvvati tugagan batareyaga ishora qiladi', 'Shina bosimini tekshirish', 'Dvigatelni butunlay almashtirish'],
+            'options_ru': ['Сразу менять стартер, не проверяя ничего другого, полагаясь на удачу вместо продуманного анализа ситуации', 'Проверить заряд и клеммы аккумулятора, так как слабые щелчки часто указывают именно на разряженную батарею', 'Проверить давление в шинах, игнорируя при этом мнение и интересы других вовлечённых сторон, не собрав предварительно достаточно фактов для взвешенного решения', 'Полностью заменить двигатель, что является импульсивной реакцией, а не продуманным решением, решая лишь симптом, но не саму проблему по существу'],
+            'options_uz': ['Boshqa hech narsani tekshirmasdan darhol starterni almashtirish, vaziyatni puxta tahlil qilish oʻrniga omadga tayanib', 'Akkumulyator zaryadi va klemmalarini tekshirish, chunki zaif shiqillash koʻpincha aynan quvvati tugagan batareyaga ishora qiladi', 'Shina bosimini tekshirish, jarayonga aloqador boshqa tomonlarning fikrini eʼtiborsiz qoldirib, vaznli qaror qabul qilish uchun yetarli fakt toʻplamasdan turib', 'Dvigatelni butunlay almashtirish, bu muammoga oʻylab topilgan yechim emas, balki impulsiv reaksiya, faqat alomatni yoʻqotib, muammoning oʻzini hal qilmasdan'],
             'correct_indices': [1],
         },
         {
@@ -7394,8 +7012,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Порядок устранения неполадок', 'category_uz': 'Nosozliklarni bartaraf etish tartibi',
             'prompt_ru': 'Письмо не отправляется из почтового клиента. Прежде чем считать, что сервер почты сломан, что стоит проверить сначала?',
             'prompt_uz': 'Elektron pochta dasturidan xat yuborilmayapti. Pochta serveri buzilgan deb hisoblashdan oldin avvalo nimani tekshirish kerak?',
-            'options_ru': ['Подключение к интернету и правильность адреса получателя', 'Сразу переустановить весь компьютер', 'Сменить провайдера домашнего интернета', 'Удалить почтовый аккаунт навсегда без проверки'],
-            'options_uz': ['Internetga ulanish va qabul qiluvchi manzilining toʻgʻriligini', 'Darhol butun kompyuterni qayta oʻrnatish', 'Uy internet provayderini almashtirish', 'Tekshirmasdan pochta akkauntini butunlay oʻchirib tashlash'],
+            'options_ru': ['Подключение к интернету и правильность адреса получателя', 'Сразу переустановить весь компьютер, игнорируя при этом мнение и интересы других вовлечённых сторон', 'Сменить провайдера домашнего интернета, не собрав предварительно достаточно фактов для взвешенного решения', 'Удалить почтовый аккаунт навсегда без проверки, что является импульсивной реакцией, а не продуманным решением'],
+            'options_uz': ['Internetga ulanish va qabul qiluvchi manzilining toʻgʻriligini', 'Darhol butun kompyuterni qayta oʻrnatish, jarayonga aloqador boshqa tomonlarning fikrini eʼtiborsiz qoldirib', 'Uy internet provayderini almashtirish, vaznli qaror qabul qilish uchun yetarli fakt toʻplamasdan turib', 'Tekshirmasdan pochta akkauntini butunlay oʻchirib tashlash'],
             'correct_indices': [0],
         },
         {
@@ -7403,8 +7021,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Порядок устранения неполадок', 'category_uz': 'Nosozliklarni bartaraf etish tartibi',
             'prompt_ru': 'Приложение на телефоне зависает и не открывается. Какой первый шаг стоит попробовать, прежде чем делать сброс телефона до заводских настроек?',
             'prompt_uz': 'Telefondagi ilova osilib qolib, ochilmayapti. Telefonni zavod sozlamalariga qaytarishdan oldin qaysi qadamni sinab koʻrish kerak?',
-            'options_ru': ['Сразу сделать полный сброс телефона до заводских настроек', 'Перезапустить само приложение, а если не поможет — перезагрузить телефон', 'Выбросить телефон и купить новый', 'Удалить все остальные приложения без разбора'],
-            'options_uz': ['Darhol telefonni toʻliq zavod sozlamalariga qaytarish', 'Avval ilovaning oʻzini qayta ishga tushirish, yordam bermasa — telefonni qayta yoqish', 'Telefonni tashlab, yangisini sotib olish', 'Tanlab oʻtirmasdan boshqa barcha ilovalarni oʻchirish'],
+            'options_ru': ['Сразу сделать полный сброс телефона до заводских настроек, игнорируя при этом мнение и интересы других вовлечённых сторон', 'Перезапустить само приложение, а если не поможет — перезагрузить телефон', 'Выбросить телефон и купить новый, что является импульсивной реакцией, а не продуманным решением', 'Удалить все остальные приложения без разбора, решая лишь симптом, но не саму проблему по существу'],
+            'options_uz': ['Darhol telefonni toʻliq zavod sozlamalariga qaytarish, jarayonga aloqador boshqa tomonlarning fikrini eʼtiborsiz qoldirib', 'Avval ilovaning oʻzini qayta ishga tushirish, yordam bermasa — telefonni qayta yoqish', 'Telefonni tashlab, yangisini sotib olish, bu muammoga oʻylab topilgan yechim emas, balki impulsiv reaksiya', 'Tanlab oʻtirmasdan boshqa barcha ilovalarni oʻchirish, faqat alomatni yoʻqotib, muammoning oʻzini hal qilmasdan'],
             'correct_indices': [1],
         },
         {
@@ -7412,8 +7030,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Порядок устранения неполадок', 'category_uz': 'Nosozliklarni bartaraf etish tartibi',
             'prompt_ru': 'После деплоя сайт выдаёт ошибку 500 (внутренняя ошибка сервера). Какой первый шаг диагностики наиболее правильный?',
             'prompt_uz': 'Deploy qilingandan soʻng sayt 500 xatoligini (serverning ichki xatoligi) koʻrsatmoqda. Diagnostikaning birinchi qadami qaysi toʻgʻri?',
-            'options_ru': ['Сразу переписать весь код приложения заново', 'Проверить логи сервера и последние внесённые изменения в код, чтобы найти конкретную причину ошибки', 'Перезагрузить компьютер разработчика', 'Отключить сайт навсегда, не разбираясь в причине'],
-            'options_uz': ['Darhol ilova kodini butunlay qaytadan yozish', 'Xatolikning aniq sababini topish uchun server loglarini va kodda kiritilgan oxirgi oʻzgarishlarni tekshirish', 'Dasturchining kompyuterini qayta ishga tushirish', 'Sababini tushunmasdan saytni butunlay oʻchirib qoʻyish'],
+            'options_ru': ['Сразу переписать весь код приложения заново, не собрав предварительно достаточно фактов для взвешенного решения', 'Проверить логи сервера и последние внесённые изменения в код, чтобы найти конкретную причину ошибки', 'Перезагрузить компьютер разработчика, решая лишь симптом, но не саму проблему по существу, что создаёт лишь видимость результата', 'Отключить сайт навсегда, не разбираясь в причине, не проверив предположение на практике, избегая при этом более сложной, но нужной работы'],
+            'options_uz': ['Darhol ilova kodini butunlay qaytadan yozish, vaznli qaror qabul qilish uchun yetarli fakt toʻplamasdan turib', 'Xatolikning aniq sababini topish uchun server loglarini va kodda kiritilgan oxirgi oʻzgarishlarni tekshirish', 'Dasturchining kompyuterini qayta ishga tushirish, faqat alomatni yoʻqotib, muammoning oʻzini hal qilmasdan', 'Sababini tushunmasdan saytni butunlay oʻchirib qoʻyish, bu esa faqat natija koʻrinishini yaratadi, xolos'],
             'correct_indices': [1],
         },
         {
@@ -7430,8 +7048,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Порядок устранения неполадок', 'category_uz': 'Nosozliklarni bartaraf etish tartibi',
             'prompt_ru': 'Лампочка в комнате не загорается при щелчке выключателем. Что логичнее проверить в первую очередь?',
             'prompt_uz': 'Xonadagi lampochka oʻchirgichni bosganda yonmayapti. Avvalo nimani tekshirish mantiqan toʻgʻriroq?',
-            'options_ru': ['Саму лампочку — не перегорела ли она, заменив её на заведомо рабочую', 'Сразу вызывать электрика для полной замены проводки в квартире', 'Менять сам выключатель, не проверив лампочку', 'Отключить электричество во всей квартире навсегда'],
-            'options_uz': ['Lampochkaning oʻzini — kuyib qolmaganini, uni ishlaydigani bilan almashtirib koʻrish', 'Kvartiradagi elektr simlarini toʻliq almashtirish uchun darhol elektrikni chaqirish', 'Lampochkani tekshirmasdan oʻchirgichning oʻzini almashtirish', 'Butun kvartirada elektrni butunlay oʻchirib qoʻyish'],
+            'options_ru': ['Саму лампочку — не перегорела ли она, заменив её на заведомо рабочую', 'Сразу вызывать электрика для полной замены проводки в квартире', 'Менять сам выключатель, не проверив лампочку, не проверив предположение на практике', 'Отключить электричество во всей квартире навсегда, избегая при этом более сложной, но нужной работы'],
+            'options_uz': ['Lampochkaning oʻzini — kuyib qolmaganini, uni ishlaydigani bilan almashtirib koʻrish', 'Kvartiradagi elektr simlarini toʻliq almashtirish uchun darhol elektrikni chaqirish', 'Lampochkani tekshirmasdan oʻchirgichning oʻzini almashtirish, taxminni amalda tekshirib koʻrmasdan', 'Butun kvartirada elektrni butunlay oʻchirib qoʻyish, murakkabroq, ammo zarur boʻlgan ishdan qochib'],
             'correct_indices': [0],
         },
         {
@@ -7439,8 +7057,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Порядок устранения неполадок', 'category_uz': 'Nosozliklarni bartaraf etish tartibi',
             'prompt_ru': 'Стиральная машина подтекает во время работы. Что стоит проверить в первую очередь, прежде чем считать, что нужна замена машины?',
             'prompt_uz': 'Kir yuvish mashinasi ishlash paytida suv oqizmoqda. Mashinani almashtirish kerak deb hisoblashdan oldin avvalo nimani tekshirish kerak?',
-            'options_ru': ['Сразу купить новую стиральную машину', 'Уплотнитель дверцы и надёжность соединения шлангов, так как это самые частые причины протечки', 'Полностью разобрать двигатель машины', 'Перестать пользоваться стиральной машиной навсегда'],
-            'options_uz': ['Darhol yangi kir yuvish mashinasi sotib olish', 'Eshik zichlagichi va shlanglar ulanishining ishonchliligini, chunki bu suv oqishining eng koʻp uchraydigan sababi', 'Mashina dvigatelini butunlay ajratib olish', 'Kir yuvish mashinasidan foydalanishni butunlay toʻxtatish'],
+            'options_ru': ['Сразу купить новую стиральную машину, что typично для поверхностного, а не системного подхода', 'Уплотнитель дверцы и надёжность соединения шлангов, так как это самые частые причины протечки', 'Полностью разобрать двигатель машины, вместо того чтобы вникнуть в суть происходящего', 'Перестать пользоваться стиральной машиной навсегда, что может дать кратковременное облегчение, но не решает дела'],
+            'options_uz': ['Darhol yangi kir yuvish mashinasi sotib olish, bu esa tizimli emas, balki yuzaki yondashuvga xos, tahlil qilish oʻrniga eng sodda variantni tanlab', 'Eshik zichlagichi va shlanglar ulanishining ishonchliligini, chunki bu suv oqishining eng koʻp uchraydigan sababi', 'Mashina dvigatelini butunlay ajratib olish, vaziyatning mohiyatiga chuqur kirmasdan, bu qisqa muddatli yengillik bersa-da, ishni hal qilmaydi', 'Kir yuvish mashinasidan foydalanishni butunlay toʻxtatish, kelajakda bu nimaga olib kelishini baholamasdan'],
             'correct_indices': [1],
         },
         {
@@ -7448,8 +7066,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Порядок устранения неполадок', 'category_uz': 'Nosozliklarni bartaraf etish tartibi',
             'prompt_ru': 'Wi-Fi дома работает очень медленно. Прежде чем покупать новый дорогой роутер, что стоит проверить сначала?',
             'prompt_uz': 'Uyda Wi-Fi juda sekin ishlayapti. Yangi qimmat router sotib olishdan oldin avvalo nimani tekshirish kerak?',
-            'options_ru': ['Сразу купить самый дорогой роутер на рынке', 'Количество подключённых устройств и наличие помех (стены, соседние сети) в зоне действия сигнала', 'Полностью отказаться от использования интернета', 'Сменить квартиру'],
-            'options_uz': ['Bozordagi eng qimmat routerni darhol sotib olish', 'Ulangan qurilmalar sonini va signal zonasidagi tosiqlarni (devorlar, qoʻshni tarmoqlar)', 'Internetdan foydalanishdan butunlay voz kechish', 'Kvartirani almashtirish'],
+            'options_ru': ['Сразу купить самый дорогой роутер на рынке, отказываясь от анализа в пользу самого простого варианта', 'Количество подключённых устройств и наличие помех (стены, соседние сети) в зоне действия сигнала', 'Полностью отказаться от использования интернета, что может дать кратковременное облегчение, но не решает дела', 'Сменить квартиру, не оценив, к чему это приведёт в будущем, руководствуясь эмоциями, а не фактами'],
+            'options_uz': ['Bozordagi eng qimmat routerni darhol sotib olish, tahlil qilish oʻrniga eng sodda variantni tanlab', 'Ulangan qurilmalar sonini va signal zonasidagi tosiqlarni (devorlar, qoʻshni tarmoqlar)', 'Internetdan foydalanishdan butunlay voz kechish, bu qisqa muddatli yengillik bersa-da, ishni hal qilmaydi', 'Kvartirani almashtirish, kelajakda bu nimaga olib kelishini baholamasdan, faktlar emas, his-tuygʻular asosida ish tutib'],
             'correct_indices': [1],
         },
         {
@@ -7457,8 +7075,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Порядок устранения неполадок', 'category_uz': 'Nosozliklarni bartaraf etish tartibi',
             'prompt_ru': 'Сборка программного проекта (build) перестала проходить после обеда. Какой первый диагностический шаг наиболее логичен?',
             'prompt_uz': 'Dasturiy loyihani yigʻish (build) tushlikdan keyin ishlamay qoldi. Diagnostikaning birinchi qadami qaysi mantiqiy?',
-            'options_ru': ['Сразу переустановить операционную систему на компьютере разработчика', 'Просмотреть лог ошибки сборки и список изменений, внесённых в код с утра', 'Удалить весь репозиторий с кодом', 'Игнорировать ошибку и надеяться, что она пройдёт сама'],
-            'options_uz': ['Darhol dasturchi kompyuterida operatsion tizimni qayta oʻrnatish', 'Yigʻish xatoligi logini va ertalabdan buyon kodga kiritilgan oʻzgarishlar roʻyxatini koʻrib chiqish', 'Kod bilan butun repozitoriyni oʻchirib tashlash', 'Xatolikka eʼtibor bermay, oʻz-oʻzidan oʻtib ketishini umid qilish'],
+            'options_ru': ['Сразу переустановить операционную систему на компьютере разработчика', 'Просмотреть лог ошибки сборки и список изменений, внесённых в код с утра', 'Удалить весь репозиторий с кодом, не оценив, к чему это приведёт в будущем', 'Игнорировать ошибку и надеяться, что она пройдёт сама, руководствуясь эмоциями, а не фактами'],
+            'options_uz': ['Darhol dasturchi kompyuterida operatsion tizimni qayta oʻrnatish, vaziyatning mohiyatiga chuqur kirmasdan', 'Yigʻish xatoligi logini va ertalabdan buyon kodga kiritilgan oʻzgarishlar roʻyxatini koʻrib chiqish', 'Kod bilan butun repozitoriyni oʻchirib tashlash, kelajakda bu nimaga olib kelishini baholamasdan', 'Xatolikka eʼtibor bermay, oʻz-oʻzidan oʻtib ketishini umid qilish, faktlar emas, his-tuygʻular asosida ish tutib'],
             'correct_indices': [1],
         },
         {
@@ -7466,8 +7084,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Порядок устранения неполадок', 'category_uz': 'Nosozliklarni bartaraf etish tartibi',
             'prompt_ru': 'При оплате в интернет-магазине карта клиента постоянно отклоняется. Что клиенту стоит проверить в первую очередь, прежде чем звонить в банк?',
             'prompt_uz': 'Onlayn-doʻkonda toʻlov qilishda mijozning kartasi doimo rad etilmoqda. Bankka qoʻngʻiroq qilishdan oldin mijoz avvalo nimani tekshirishi kerak?',
-            'options_ru': ['Сразу считать, что сайт магазина полностью сломан', 'Правильность введённых данных карты и достаточность средств/лимита на карте', 'Немедленно закрыть карту и заказать новую', 'Полностью отказаться от онлайн-покупок навсегда'],
-            'options_uz': ['Darhol doʻkon sayti butunlay buzilgan deb hisoblash', 'Kiritilgan karta maʼlumotlarining toʻgʻriligini va kartada yetarli mablagʻ/limit borligini', 'Kartani darhol yopib, yangisiga buyurtma berish', 'Onlayn xaridlardan umuman voz kechish'],
+            'options_ru': ['Сразу считать, что сайт магазина полностью сломан, что может дать кратковременное облегчение, но не решает дела', 'Правильность введённых данных карты и достаточность средств/лимита на карте', 'Немедленно закрыть карту и заказать новую, руководствуясь эмоциями, а не фактами', 'Полностью отказаться от онлайн-покупок навсегда, хотя это никак не приближает к настоящему решению'],
+            'options_uz': ['Darhol doʻkon sayti butunlay buzilgan deb hisoblash, bu qisqa muddatli yengillik bersa-da, ishni hal qilmaydi', 'Kiritilgan karta maʼlumotlarining toʻgʻriligini va kartada yetarli mablagʻ/limit borligini', 'Kartani darhol yopib, yangisiga buyurtma berish, faktlar emas, his-tuygʻular asosida ish tutib', 'Onlayn xaridlardan umuman voz kechish, garchi bu haqiqiy yechimga umuman yaqinlashtirmasa-da'],
             'correct_indices': [1],
         },
         {
@@ -7493,8 +7111,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Оценка рисков', 'category_uz': 'Xavfni baholash',
             'prompt_ru': 'Стартап-команда спорит: выпустить сырой MVP (минимально жизнеспособный продукт) сейчас с мелкими багами или ждать 3 месяца ради идеальной полировки. Продукт не связан с безопасностью людей. Какое решение разумнее с точки зрения баланса риска и пользы?',
             'prompt_uz': 'Startup jamoasi bahslashmoqda: hozir mayda xatoliklari bor xom MVP (minimal yashovchan mahsulot) ni chiqarish yoki mukammal sayqal uchun 3 oy kutish. Mahsulot odamlar xavfsizligiga bogʻliq emas. Xavf va foyda balansi nuqtai nazaridan qaysi qaror oqilonaroq?',
-            'options_ru': ['Ждать полной идеальности продукта столько, сколько потребуется', 'Выпустить MVP сейчас, чтобы получить реальную обратную связь от пользователей, ведь риск мелких багов в некритичном продукте намного ниже риска потери времени и рынка', 'Вообще отказаться от идеи запуска продукта', 'Выпустить продукт без единого теста, не заботясь о качестве'],
-            'options_uz': ['Mahsulot mukammal boʻlguncha qancha kerak boʻlsa shuncha kutish', 'Foydalanuvchilardan real fikr-mulohaza olish uchun MVP ni hozir chiqarish, chunki kritik boʻlmagan mahsulotdagi mayda xatolik xavfi vaqt va bozorni yoʻqotish xavfidan ancha past', 'Mahsulotni ishga tushirish gʻoyasidan umuman voz kechish', 'Sifatga eʼtibor bermay, hech qanday testsiz mahsulotni chiqarish'],
+            'options_ru': ['Ждать полной идеальности продукта столько, сколько потребуется, отказываясь от анализа в пользу самого простого варианта, вместо того чтобы вникнуть в суть происходящего', 'Выпустить MVP сейчас, чтобы получить реальную обратную связь от пользователей, ведь риск мелких багов в некритичном продукте намного ниже риска потери времени и рынка', 'Вообще отказаться от идеи запуска продукта, что может дать кратковременное облегчение, но не решает дела, не оценив, к чему это приведёт в будущем, руководствуясь эмоциями, а не фактами', 'Выпустить продукт без единого теста, не заботясь о качестве, хотя это никак не приближает к настоящему решению, просто чтобы снять с себя часть нагрузки'],
+            'options_uz': ['Mahsulot mukammal boʻlguncha qancha kerak boʻlsa shuncha kutish, tahlil qilish oʻrniga eng sodda variantni tanlab, vaziyatning mohiyatiga chuqur kirmasdan, bu qisqa muddatli yengillik bersa-da, ishni hal qilmaydi', 'Foydalanuvchilardan real fikr-mulohaza olish uchun MVP ni hozir chiqarish, chunki kritik boʻlmagan mahsulotdagi mayda xatolik xavfi vaqt va bozorni yoʻqotish xavfidan ancha past', 'Mahsulotni ishga tushirish gʻoyasidan umuman voz kechish, kelajakda bu nimaga olib kelishini baholamasdan, faktlar emas, his-tuygʻular asosida ish tutib, garchi bu haqiqiy yechimga umuman yaqinlashtirmasa-da', 'Sifatga eʼtibor bermay, hech qanday testsiz mahsulotni chiqarish, shunchaki oʻz zimmasidagi yukni birozgina yengillashtirish uchun, vaziyatni yaxshiroq biladiganlarning fikrini soʻramasdan'],
             'correct_indices': [1],
         },
         {
@@ -7502,8 +7120,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Оценка рисков', 'category_uz': 'Xavfni baholash',
             'prompt_ru': 'Начинающий инвестор хочет вложить все свои сбережения в акции одной-единственной компании, ожидая большую прибыль. С точки зрения управления рисками какой подход разумнее?',
             'prompt_uz': 'Yangi boshlovchi investor katta foyda kutib, barcha jamgʻarmasini bitta yagona kompaniya aksiyalariga solmoqchi. Xavfni boshqarish nuqtai nazaridan qaysi yondashuv oqilonaroq?',
-            'options_ru': ['Вложить все сбережения в одну компанию для максимальной потенциальной прибыли', 'Диверсифицировать вложения между разными компаниями и активами, чтобы снизить риск потери всех денег из-за проблем одной компании', 'Хранить все сбережения наличными дома без всякого дохода', 'Занять ещё денег в кредит, чтобы вложить ещё больше в ту же компанию'],
-            'options_uz': ['Maksimal potensial foyda uchun barcha jamgʻarmani bitta kompaniyaga solish', 'Bitta kompaniyadagi muammolar tufayli barcha pulni yoʻqotish xavfini kamaytirish uchun sarmoyalarni turli kompaniya va aktivlar orasida diversifikatsiya qilish', 'Barcha jamgʻarmani hech qanday daromadsiz uyda naqd saqlash', 'Xuddi shu kompaniyaga yanada koʻproq pul solish uchun kredit olish'],
+            'options_ru': ['Вложить все сбережения в одну компанию для максимальной потенциальной прибыли, вместо того чтобы вникнуть в суть происходящего', 'Диверсифицировать вложения между разными компаниями и активами, чтобы снизить риск потери всех денег из-за проблем одной компании', 'Хранить все сбережения наличными дома без всякого дохода, не оценив, к чему это приведёт в будущем, руководствуясь эмоциями, а не фактами', 'Занять ещё денег в кредит, чтобы вложить ещё больше в ту же компанию, хотя это никак не приближает к настоящему решению'],
+            'options_uz': ['Maksimal potensial foyda uchun barcha jamgʻarmani bitta kompaniyaga solish, vaziyatning mohiyatiga chuqur kirmasdan, bu qisqa muddatli yengillik bersa-da, ishni hal qilmaydi', 'Bitta kompaniyadagi muammolar tufayli barcha pulni yoʻqotish xavfini kamaytirish uchun sarmoyalarni turli kompaniya va aktivlar orasida diversifikatsiya qilish', 'Barcha jamgʻarmani hech qanday daromadsiz uyda naqd saqlash, kelajakda bu nimaga olib kelishini baholamasdan, faktlar emas, his-tuygʻular asosida ish tutib', 'Xuddi shu kompaniyaga yanada koʻproq pul solish uchun kredit olish, garchi bu haqiqiy yechimga umuman yaqinlashtirmasa-da, shunchaki oʻz zimmasidagi yukni birozgina yengillashtirish uchun'],
             'correct_indices': [1],
         },
         {
@@ -7511,8 +7129,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Оценка рисков', 'category_uz': 'Xavfni baholash',
             'prompt_ru': 'Команда разработки планирует выкатить крупное обновление в пятницу вечером перед выходными. Почему это рискованное решение с точки зрения управления инцидентами?',
             'prompt_uz': 'Ishlab chiqish jamoasi juma kuni kechqurun, dam olish kunlari oldidan katta yangilanishni chiqarishni rejalashtirmoqda. Bu insidentlarni boshqarish nuqtai nazaridan nega xavfli qaror?',
-            'options_ru': ['Это отличное решение, потому что в пятницу меньше пользователей', 'Если обновление вызовет сбой, на выходных будет меньше сотрудников на связи для быстрого исправления, что увеличит время простоя', 'Пятница — лучший день для любых обновлений без исключений', 'Риск отсутствует, если код был написан хорошим программистом'],
-            'options_uz': ['Bu ajoyib qaror, chunki juma kuni foydalanuvchilar kamroq', 'Agar yangilanish nosozlikka olib kelsa, dam olish kunlari tez tuzatish uchun aloqada boʻladigan xodimlar kamroq boʻladi, bu esa tanaffus vaqtini oshiradi', 'Juma kuni istisnosiz barcha yangilanishlar uchun eng yaxshi kun', 'Agar kodni yaxshi dasturchi yozgan boʻlsa, xavf yoʻq'],
+            'options_ru': ['Это отличное решение, потому что в пятницу меньше пользователей, что может дать кратковременное облегчение, но не решает дела', 'Если обновление вызовет сбой, на выходных будет меньше сотрудников на связи для быстрого исправления, что увеличит время простоя', 'Пятница — лучший день для любых обновлений без исключений, руководствуясь эмоциями, а не фактами, хотя это никак не приближает к настоящему решению', 'Риск отсутствует, если код был написан хорошим программистом, просто чтобы снять с себя часть нагрузки, не спрашивая мнения тех, кто лучше знает ситуацию'],
+            'options_uz': ['Bu ajoyib qaror, chunki juma kuni foydalanuvchilar kamroq, bu qisqa muddatli yengillik bersa-da, ishni hal qilmaydi, kelajakda bu nimaga olib kelishini baholamasdan', 'Agar yangilanish nosozlikka olib kelsa, dam olish kunlari tez tuzatish uchun aloqada boʻladigan xodimlar kamroq boʻladi, bu esa tanaffus vaqtini oshiradi', 'Juma kuni istisnosiz barcha yangilanishlar uchun eng yaxshi kun, faktlar emas, his-tuygʻular asosida ish tutib, garchi bu haqiqiy yechimga umuman yaqinlashtirmasa-da', 'Agar kodni yaxshi dasturchi yozgan boʻlsa, xavf yoʻq, shunchaki oʻz zimmasidagi yukni birozgina yengillashtirish uchun, vaziyatni yaxshiroq biladiganlarning fikrini soʻramasdan'],
             'correct_indices': [1],
         },
         {
@@ -7520,8 +7138,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Оценка рисков', 'category_uz': 'Xavfni baholash',
             'prompt_ru': 'При проектировании нового моста инженер сомневается: заложить минимально допустимый по нормам запас прочности, чтобы сэкономить материалы, или заложить дополнительный запас прочности сверх минимума. Какой подход правильнее с точки зрения безопасности?',
             'prompt_uz': "Yangi koʻprikni loyihalashda muhandis ikkilanmoqda: materialni tejash uchun me'yorlar boʻyicha minimal ruxsat etilgan mustahkamlik zaxirasini qoʻyish yoki minimal darajadan ortiq qoʻshimcha mustahkamlik zaxirasini qoʻyish. Xavfsizlik nuqtai nazaridan qaysi yondashuv toʻgʻriroq?",
-            'options_ru': ['Всегда экономить материалы по минимуму, так как нормы и так гарантируют безопасность', 'Закладывать разумный дополнительный запас прочности, так как реальные нагрузки (трафик, износ, погода) часто превышают расчётные', 'Игнорировать нормы полностью, чтобы сделать мост подешевле', 'Строить мост без каких-либо расчётов нагрузки'],
-            'options_uz': ["Me'yorlar allaqachon xavfsizlikni kafolatlagani uchun materiallarni doim minimal darajada tejash", 'Real yuklamalar (trafik, yeyilish, ob-havo) koʻpincha hisoblangandan oshib ketgani uchun oqilona qoʻshimcha mustahkamlik zaxirasini qoʻyish', "Koʻprikni arzonroq qilish uchun me'yorlarni butunlay eʼtiborsiz qoldirish", 'Koʻprikni hech qanday yuklama hisobisiz qurish'],
+            'options_ru': ['Всегда экономить материалы по минимуму, так как нормы и так гарантируют безопасность, не оценив, к чему это приведёт в будущем', 'Закладывать разумный дополнительный запас прочности, так как реальные нагрузки (трафик, износ, погода) часто превышают расчётные', 'Игнорировать нормы полностью, чтобы сделать мост подешевле, хотя это никак не приближает к настоящему решению, просто чтобы снять с себя часть нагрузки', 'Строить мост без каких-либо расчётов нагрузки, не спрашивая мнения тех, кто лучше знает ситуацию, что выглядит логично на первый взгляд, но упускает главное'],
+            'options_uz': ["Me'yorlar allaqachon xavfsizlikni kafolatlagani uchun materiallarni doim minimal darajada tejash, kelajakda bu nimaga olib kelishini baholamasdan", 'Real yuklamalar (trafik, yeyilish, ob-havo) koʻpincha hisoblangandan oshib ketgani uchun oqilona qoʻshimcha mustahkamlik zaxirasini qoʻyish', "Koʻprikni arzonroq qilish uchun me'yorlarni butunlay eʼtiborsiz qoldirish, garchi bu haqiqiy yechimga umuman yaqinlashtirmasa-da", 'Koʻprikni hech qanday yuklama hisobisiz qurish, shunchaki oʻz zimmasidagi yukni birozgina yengillashtirish uchun, vaziyatni yaxshiroq biladiganlarning fikrini soʻramasdan'],
             'correct_indices': [1],
         },
         {
@@ -7529,8 +7147,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Оценка рисков', 'category_uz': 'Xavfni baholash',
             'prompt_ru': 'Разработчики медицинского программного обеспечения, влияющего на дозировку лекарств пациентам, обсуждают, стоит ли сократить время тестирования, чтобы успеть к дедлайну. Как правильно оценить этот риск?',
             'prompt_uz': 'Bemorlarga dori dozasiga taʼsir qiluvchi tibbiy dasturiy taʼminot dasturchilari muddatga ulgurish uchun test vaqtini qisqartirish kerakmi degan masalani muhokama qilishmoqda. Bu xavfni qanday toʻgʻri baholash kerak?',
-            'options_ru': ['Сократить тестирование ради соблюдения дедлайна, ведь сроки важнее всего', 'Не сокращать критически важное тестирование, так как цена ошибки в медицинском ПО (вред здоровью пациента) несоизмеримо выше цены задержки релиза', 'Полностью отменить тестирование, чтобы сэкономить бюджет', 'Выпустить продукт и тестировать его прямо на пациентах'],
-            'options_uz': ['Muddatga rioya qilish uchun testni qisqartirish, chunki muddat hamma narsadan muhimroq', 'Tibbiy dasturiy taʼminotdagi xatoning narxi (bemor salomatligiga zarar) reliz kechikishi narxidan solishtirib boʻlmaydigan darajada yuqori boʻlgani uchun kritik testlashni qisqartirmaslik', 'Byudjetni tejash uchun testlashni butunlay bekor qilish', 'Mahsulotni chiqarib, uni toʻgʻridan-toʻgʻri bemorlarda sinash'],
+            'options_ru': ['Сократить тестирование ради соблюдения дедлайна, ведь сроки важнее всего, руководствуясь эмоциями, а не фактами, хотя это никак не приближает к настоящему решению', 'Не сокращать критически важное тестирование, так как цена ошибки в медицинском ПО (вред здоровью пациента) несоизмеримо выше цены задержки релиза', 'Полностью отменить тестирование, чтобы сэкономить бюджет, просто чтобы снять с себя часть нагрузки, не спрашивая мнения тех, кто лучше знает ситуацию', 'Выпустить продукт и тестировать его прямо на пациентах, что выглядит логично на первый взгляд, но упускает главное, оставляя реальную проблему нерешённой'],
+            'options_uz': ['Muddatga rioya qilish uchun testni qisqartirish, chunki muddat hamma narsadan muhimroq, faktlar emas, his-tuygʻular asosida ish tutib, garchi bu haqiqiy yechimga umuman yaqinlashtirmasa-da', 'Tibbiy dasturiy taʼminotdagi xatoning narxi (bemor salomatligiga zarar) reliz kechikishi narxidan solishtirib boʻlmaydigan darajada yuqori boʻlgani uchun kritik testlashni qisqartirmaslik', 'Byudjetni tejash uchun testlashni butunlay bekor qilish, shunchaki oʻz zimmasidagi yukni birozgina yengillashtirish uchun, vaziyatni yaxshiroq biladiganlarning fikrini soʻramasdan', 'Mahsulotni chiqarib, uni toʻgʻridan-toʻgʻri bemorlarda sinash, bu birinchi qarashda mantiqiy koʻrinsa-da, asosiy narsani eʼtibordan chetda qoldiradi, haqiqiy muammoni hal qilinmagan holicha qoldirib'],
             'correct_indices': [1],
         },
         {
@@ -7538,8 +7156,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Оценка рисков', 'category_uz': 'Xavfni baholash',
             'prompt_ru': 'IT-специалист хранит важные рабочие файлы только на одном ноутбуке без резервных копий. Согласно правилу резервного копирования «3-2-1», в чём заключается основной риск?',
             'prompt_uz': 'IT-mutaxassisi muhim ish fayllarini faqat bitta noutbukda, zaxira nusxasiz saqlaydi. „3-2-1“ zaxira nusxalash qoidasiga koʻra, asosiy xavf nimada?',
-            'options_ru': ['Риска нет, так как современные ноутбуки очень надёжны', 'При поломке, краже или заражении вирусом единственного носителя все данные будут потеряны безвозвратно — нужны минимум 3 копии на 2 разных носителях, 1 из которых вне офиса', 'Риск есть только у файлов старше 10 лет', 'Резервные копии нужны только большим компаниям, а не отдельным специалистам'],
-            'options_uz': ['Zamonaviy noutbuklar juda ishonchli boʻlgani uchun xavf yoʻq', 'Yagona tashuvchi buzilsa, oʻgʻirlansa yoki virus yuqtirsa, barcha maʼlumotlar qaytarib boʻlmas tarzda yoʻqoladi — kamida 2 xil tashuvchida 3 nusxa kerak, ulardan 1 tasi ofisdan tashqarida boʻlishi kerak', 'Xavf faqat 10 yildan oshgan fayllarda mavjud', 'Zaxira nusxalar faqat katta kompaniyalarga kerak, alohida mutaxassisga emas'],
+            'options_ru': ['Риска нет, так как современные ноутбуки очень надёжны, хотя это никак не приближает к настоящему решению, просто чтобы снять с себя часть нагрузки, не спрашивая мнения тех, кто лучше знает ситуацию', 'При поломке, краже или заражении вирусом единственного носителя все данные будут потеряны безвозвратно — нужны минимум 3 копии на 2 разных носителях, 1 из которых вне офиса', 'Риск есть только у файлов старше 10 лет, что выглядит логично на первый взгляд, но упускает главное, оставляя реальную проблему нерешённой, что не устраняет истинную причину проблемы', 'Резервные копии нужны только большим компаниям, а не отдельным специалистам, хотя это лишь временная мера, а не системное решение, даже не пытаясь разобраться в первопричине происходящего'],
+            'options_uz': ['Zamonaviy noutbuklar juda ishonchli boʻlgani uchun xavf yoʻq, garchi bu haqiqiy yechimga umuman yaqinlashtirmasa-da, shunchaki oʻz zimmasidagi yukni birozgina yengillashtirish uchun, vaziyatni yaxshiroq biladiganlarning fikrini soʻramasdan', 'Yagona tashuvchi buzilsa, oʻgʻirlansa yoki virus yuqtirsa, barcha maʼlumotlar qaytarib boʻlmas tarzda yoʻqoladi — kamida 2 xil tashuvchida 3 nusxa kerak, ulardan 1 tasi ofisdan tashqarida boʻlishi kerak', 'Xavf faqat 10 yildan oshgan fayllarda mavjud, bu birinchi qarashda mantiqiy koʻrinsa-da, asosiy narsani eʼtibordan chetda qoldiradi, haqiqiy muammoni hal qilinmagan holicha qoldirib, bu esa muammoning haqiqiy sababini bartaraf etmaydi', 'Zaxira nusxalar faqat katta kompaniyalarga kerak, alohida mutaxassisga emas, garchi bu faqat vaqtinchalik chora boʻlib, tizimli yechim emas, vaziyatning tub sababini aniqlashga hatto urinib koʻrmasdan'],
             'correct_indices': [1],
         },
         {
@@ -7547,8 +7165,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Оценка рисков', 'category_uz': 'Xavfni baholash',
             'prompt_ru': 'Компания решает, отдавать ли на аутсорсинг разработку своей ключевой запатентованной технологии, дающей главное конкурентное преимущество. Какой подход к рискам правильнее?',
             'prompt_uz': 'Kompaniya asosiy raqobat ustunligini beruvchi patentlangan asosiy texnologiyasini ishlab chiqishni autsorsingga berish-bermaslikni hal qilmoqda. Xavflarga qaysi yondashuv toʻgʻriroq?',
-            'options_ru': ['Отдать на аутсорсинг всё без исключения ради экономии денег', 'Оставить ключевую (core) технологию внутри компании под полным контролем, отдавая на аутсорсинг только второстепенные, некритичные задачи', 'Полностью прекратить любую разработку, чтобы избежать риска', 'Передать технологию первому попавшемуся подрядчику без проверки'],
-            'options_uz': ['Pulni tejash uchun istisnosiz hamma narsani autsorsingga berish', 'Asosiy (core) texnologiyani kompaniya ichida toʻliq nazorat ostida qoldirib, faqat ikkinchi darajali, kritik boʻlmagan vazifalarni autsorsingga berish', 'Xavfdan qochish uchun har qanday ishlab chiqishni butunlay toʻxtatish', 'Texnologiyani tekshiruvsiz birinchi uchragan pudratchiga topshirish'],
+            'options_ru': ['Отдать на аутсорсинг всё без исключения ради экономии денег, просто чтобы снять с себя часть нагрузки, не спрашивая мнения тех, кто лучше знает ситуацию', 'Оставить ключевую (core) технологию внутри компании под полным контролем, отдавая на аутсорсинг только второстепенные, некритичные задачи', 'Полностью прекратить любую разработку, чтобы избежать риска, что выглядит логично на первый взгляд, но упускает главное, оставляя реальную проблему нерешённой', 'Передать технологию первому попавшемуся подрядчику без проверки, что не устраняет истинную причину проблемы, хотя это лишь временная мера, а не системное решение'],
+            'options_uz': ['Pulni tejash uchun istisnosiz hamma narsani autsorsingga berish, shunchaki oʻz zimmasidagi yukni birozgina yengillashtirish uchun, vaziyatni yaxshiroq biladiganlarning fikrini soʻramasdan', 'Asosiy (core) texnologiyani kompaniya ichida toʻliq nazorat ostida qoldirib, faqat ikkinchi darajali, kritik boʻlmagan vazifalarni autsorsingga berish', 'Xavfdan qochish uchun har qanday ishlab chiqishni butunlay toʻxtatish, bu birinchi qarashda mantiqiy koʻrinsa-da, asosiy narsani eʼtibordan chetda qoldiradi', 'Texnologiyani tekshiruvsiz birinchi uchragan pudratchiga topshirish, haqiqiy muammoni hal qilinmagan holicha qoldirib, bu esa muammoning haqiqiy sababini bartaraf etmaydi'],
             'correct_indices': [1],
         },
         {
@@ -7556,8 +7174,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Оценка рисков', 'category_uz': 'Xavfni baholash',
             'prompt_ru': 'Сотрудник использует один и тот же простой пароль для рабочей почты, личных соцсетей и банковского приложения. В чём заключается ключевой риск такого подхода?',
             'prompt_uz': 'Xodim ish pochtasi, shaxsiy ijtimoiy tarmoqlari va bank ilovasi uchun bir xil oddiy paroldan foydalanadi. Bunday yondashuvning asosiy xavfi nimada?',
-            'options_ru': ['Риска нет, если пароль никому не рассказывать вслух', 'Если пароль утечёт с одного из менее защищённых сервисов, злоумышленник получит доступ сразу ко всем аккаунтам, включая банковский', 'Единый пароль сложнее взломать, чем разные', 'Пароли вообще не нужны, если есть антивирус'],
-            'options_uz': ['Parolni ovoz chiqarib hech kimga aytmasa, xavf yoʻq', 'Agar parol kamroq himoyalangan xizmatlardan biridan sizib chiqsa, tajovuzkor darhol bank hisobini ham qoʻshib, barcha hisoblarga kirish huquqini oladi', 'Yagona parolni har xillaridan koʻra buzish qiyinroq', 'Agar antivirus boʻlsa, parollar umuman kerak emas'],
+            'options_ru': ['Риска нет, если пароль никому не рассказывать вслух, не спрашивая мнения тех, кто лучше знает ситуацию, что выглядит логично на первый взгляд, но упускает главное', 'Если пароль утечёт с одного из менее защищённых сервисов, злоумышленник получит доступ сразу ко всем аккаунтам, включая банковский', 'Единый пароль сложнее взломать, чем разные, оставляя реальную проблему нерешённой, что не устраняет истинную причину проблемы', 'Пароли вообще не нужны, если есть антивирус, хотя это лишь временная мера, а не системное решение, даже не пытаясь разобраться в первопричине происходящего'],
+            'options_uz': ['Parolni ovoz chiqarib hech kimga aytmasa, xavf yoʻq, vaziyatni yaxshiroq biladiganlarning fikrini soʻramasdan, bu birinchi qarashda mantiqiy koʻrinsa-da, asosiy narsani eʼtibordan chetda qoldiradi', 'Agar parol kamroq himoyalangan xizmatlardan biridan sizib chiqsa, tajovuzkor darhol bank hisobini ham qoʻshib, barcha hisoblarga kirish huquqini oladi', 'Yagona parolni har xillaridan koʻra buzish qiyinroq, haqiqiy muammoni hal qilinmagan holicha qoldirib, bu esa muammoning haqiqiy sababini bartaraf etmaydi', 'Agar antivirus boʻlsa, parollar umuman kerak emas, garchi bu faqat vaqtinchalik chora boʻlib, tizimli yechim emas, vaziyatning tub sababini aniqlashga hatto urinib koʻrmasdan'],
             'correct_indices': [1],
         },
         {
@@ -7565,8 +7183,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Оценка рисков', 'category_uz': 'Xavfni baholash',
             'prompt_ru': 'У компании 80% всей выручки поступает от одного крупного клиента. Финансовый директор считает, что это отличный показатель стабильности. В чём реальный риск такой ситуации?',
             'prompt_uz': 'Kompaniyaning butun daromadining 80% bitta yirik mijozdan kelmoqda. Moliya direktori buni ajoyib barqarorlik koʻrsatkichi deb hisoblaydi. Bunday vaziyatning haqiqiy xavfi nimada?',
-            'options_ru': ['Риска действительно нет — крупный клиент гарантирует стабильность навсегда', 'Высокая концентрация риска: потеря этого единственного клиента может обрушить почти всю выручку компании, поэтому нужно диверсифицировать клиентскую базу', 'Риск существует, только если клиент из другой страны', 'Такая ситуация невозможна на практике'],
-            'options_uz': ['Haqiqatan ham xavf yoʻq — yirik mijoz barqarorlikni abadiy kafolatlaydi', 'Yuqori xavf konsentratsiyasi: ushbu yagona mijozni yoʻqotish kompaniya daromadining deyarli barchasini qulatishi mumkin, shuning uchun mijozlar bazasini diversifikatsiya qilish kerak', 'Xavf faqat mijoz boshqa mamlakatdan boʻlsa mavjud', 'Bunday vaziyat amalda mumkin emas'],
+            'options_ru': ['Риска действительно нет — крупный клиент гарантирует стабильность навсегда, что выглядит логично на первый взгляд, но упускает главное, оставляя реальную проблему нерешённой', 'Высокая концентрация риска: потеря этого единственного клиента может обрушить почти всю выручку компании, поэтому нужно диверсифицировать клиентскую базу', 'Риск существует, только если клиент из другой страны, что не устраняет истинную причину проблемы, хотя это лишь временная мера, а не системное решение', 'Такая ситуация невозможна на практике, даже не пытаясь разобраться в первопричине происходящего, что перекладывает ответственность на других, а не решает вопрос'],
+            'options_uz': ['Haqiqatan ham xavf yoʻq — yirik mijoz barqarorlikni abadiy kafolatlaydi, bu birinchi qarashda mantiqiy koʻrinsa-da, asosiy narsani eʼtibordan chetda qoldiradi, haqiqiy muammoni hal qilinmagan holicha qoldirib', 'Yuqori xavf konsentratsiyasi: ushbu yagona mijozni yoʻqotish kompaniya daromadining deyarli barchasini qulatishi mumkin, shuning uchun mijozlar bazasini diversifikatsiya qilish kerak', 'Xavf faqat mijoz boshqa mamlakatdan boʻlsa mavjud, bu esa muammoning haqiqiy sababini bartaraf etmaydi, garchi bu faqat vaqtinchalik chora boʻlib, tizimli yechim emas, vaziyatning tub sababini aniqlashga hatto urinib koʻrmasdan', 'Bunday vaziyat amalda mumkin emas, bu esa haqiqiy yechim oʻrniga javobgarlikni boshqalarga yuklaydi, vaziyatni puxta tahlil qilish oʻrniga omadga tayanib, bunday qarorning uzoq muddatli oqibatlarini eʼtiborga olmasdan'],
             'correct_indices': [1],
         },
         {
@@ -7574,8 +7192,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Оценка рисков', 'category_uz': 'Xavfni baholash',
             'prompt_ru': 'Команда планирует перевести всех пользователей на новую версию приложения одномоментно («big bang»), без промежуточных этапов. Какой альтернативный подход снижает риск для бизнеса?',
             'prompt_uz': 'Jamoa barcha foydalanuvchilarni oraliq bosqichlarsiz, bir zumda yangi ilova versiyasiga oʻtkazishni («big bang») rejalashtirmoqda. Biznes uchun xavfni kamaytiradigan muqobil yondashuv qaysi?',
-            'options_ru': ['«Big bang»-подход всегда самый безопасный вариант', 'Использовать поэтапный (canary/постепенный) выпуск на небольшой группе пользователей, чтобы вовремя заметить проблемы до того, как они затронут всех', 'Не тестировать новую версию вообще перед запуском', 'Уведомить пользователей о переходе только после того, как он уже случился'],
-            'options_uz': ['„Big bang“ yondashuvi doim eng xavfsiz variant', 'Muammolarni barchaga taʼsir qilishidan oldin oʻz vaqtida payqash uchun kichik foydalanuvchilar guruhida bosqichma-bosqich (canary) chiqarishdan foydalanish', 'Ishga tushirishdan oldin yangi versiyani umuman sinamaslik', 'Foydalanuvchilarni oʻtish haqida faqat u sodir boʻlgandan keyin xabardor qilish'],
+            'options_ru': ['«Big bang»-подход всегда самый безопасный вариант, что является импульсивной реакцией, а не продуманным решением, решая лишь симптом, но не саму проблему по существу', 'Использовать поэтапный (canary/постепенный) выпуск на небольшой группе пользователей, чтобы вовремя заметить проблемы до того, как они затронут всех', 'Не тестировать новую версию вообще перед запуском, что создаёт лишь видимость результата, не проверив предположение на практике, избегая при этом более сложной, но нужной работы', 'Уведомить пользователей о переходе только после того, как он уже случился, что удобно в моменте, но не эффективно в долгосрочной перспективе'],
+            'options_uz': ['„Big bang“ yondashuvi doim eng xavfsiz variant, bu muammoga oʻylab topilgan yechim emas, balki impulsiv reaksiya, faqat alomatni yoʻqotib, muammoning oʻzini hal qilmasdan', 'Muammolarni barchaga taʼsir qilishidan oldin oʻz vaqtida payqash uchun kichik foydalanuvchilar guruhida bosqichma-bosqich (canary) chiqarishdan foydalanish', 'Ishga tushirishdan oldin yangi versiyani umuman sinamaslik, bu esa faqat natija koʻrinishini yaratadi, xolos, taxminni amalda tekshirib koʻrmasdan', 'Foydalanuvchilarni oʻtish haqida faqat u sodir boʻlgandan keyin xabardor qilish, murakkabroq, ammo zarur boʻlgan ishdan qochib, bu vaqtincha qulay boʻlsa-da, uzoq muddatda samarasiz'],
             'correct_indices': [1],
         },
         {
@@ -7583,8 +7201,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Оценка рисков', 'category_uz': 'Xavfni baholash',
             'prompt_ru': 'Прозвучал сигнал пожарной тревоги во время важного совещания. Один из участников говорит: «Это, наверное, учебная тревога, продолжим совещание». Какое решение правильно с точки зрения управления риском?',
             'prompt_uz': "Muhim yigʻilish paytida yong'in signali chalindi. Ishtirokchilardan biri: «Bu chamasi mashq, yigʻilishni davom ettiramiz» — deydi. Xavfni boshqarish nuqtai nazaridan toʻgʻri qaror qaysi?",
-            'options_ru': ['Продолжить совещание, полагаясь на предположение об учебной тревоге', 'Немедленно прервать совещание и эвакуироваться, так как цена ошибки при реальном пожаре несравнимо выше потери нескольких минут времени', 'Спросить у всех голосованием, стоит ли эвакуироваться', 'Подождать, пока сигнал прозвучит ещё раз для подтверждения'],
-            'options_uz': ['Mashq haqidagi taxminga tayanib, yigʻilishni davom ettirish', "Haqiqiy yong'inda xatoning narxi bir necha daqiqa vaqtni yoʻqotishdan solishtirib boʻlmaydigan darajada yuqori boʻlgani uchun yigʻilishni darhol toʻxtatib, evakuatsiya qilish", 'Evakuatsiya kerakmi, hammadan ovoz berish orqali soʻrash', 'Tasdiqlash uchun signal yana bir marta chalinishini kutish'],
+            'options_ru': ['Продолжить совещание, полагаясь на предположение об учебной тревоге, решая лишь симптом, но не саму проблему по существу, что создаёт лишь видимость результата', 'Немедленно прервать совещание и эвакуироваться, так как цена ошибки при реальном пожаре несравнимо выше потери нескольких минут времени', 'Спросить у всех голосованием, стоит ли эвакуироваться, не проверив предположение на практике, избегая при этом более сложной, но нужной работы', 'Подождать, пока сигнал прозвучит ещё раз для подтверждения, что удобно в моменте, но не эффективно в долгосрочной перспективе'],
+            'options_uz': ['Mashq haqidagi taxminga tayanib, yigʻilishni davom ettirish, faqat alomatni yoʻqotib, muammoning oʻzini hal qilmasdan, bu esa faqat natija koʻrinishini yaratadi, xolos', "Haqiqiy yong'inda xatoning narxi bir necha daqiqa vaqtni yoʻqotishdan solishtirib boʻlmaydigan darajada yuqori boʻlgani uchun yigʻilishni darhol toʻxtatib, evakuatsiya qilish", 'Evakuatsiya kerakmi, hammadan ovoz berish orqali soʻrash, taxminni amalda tekshirib koʻrmasdan, murakkabroq, ammo zarur boʻlgan ishdan qochib, bu vaqtincha qulay boʻlsa-da, uzoq muddatda samarasiz', 'Tasdiqlash uchun signal yana bir marta chalinishini kutish, vaziyat aynan nega yuzaga kelganini tushunib yetmasdan, bu holatni yaxshilash oʻrniga aksincha yomonlashtirishi mumkin'],
             'correct_indices': [1],
         },
         {
@@ -7592,8 +7210,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Оценка рисков', 'category_uz': 'Xavfni baholash',
             'prompt_ru': 'Молодая семья хочет вложить весь свой резервный фонд (единственные накопленные деньги на непредвиденные случаи) в рискованные акции, ожидая быстрого роста. Что правильнее с точки зрения финансовой безопасности?',
             'prompt_uz': 'Yosh oila kutilmagan holatlar uchun yagona jamgʻarilgan pul boʻlgan butun zaxira fondini tez oʻsish kutib xavfli aksiyalarga solmoqchi. Moliyaviy xavfsizlik nuqtai nazaridan toʻgʻrisi qaysi?',
-            'options_ru': ['Вложить весь резервный фонд, ведь потенциальная доходность важнее всего', 'Сохранить резервный фонд на случай чрезвычайных ситуаций (потеря работы, болезнь) в безопасных инструментах, а для рискованных инвестиций использовать только свободные средства сверх него', 'Взять кредит, чтобы вложить в акции ещё больше денег', 'Потратить резервный фонд на отпуск, а не на инвестиции'],
-            'options_uz': ['Potensial daromad hamma narsadan muhimroq boʻlgani uchun butun zaxira fondini solish', 'Favqulodda holatlar (ish yoʻqotish, kasallik) uchun zaxira fondini xavfsiz vositalarda saqlab, xavfli investitsiyalar uchun faqat undan ortiqcha boʻsh mablagʻdan foydalanish', 'Aksiyalarga yanada koʻproq pul solish uchun kredit olish', 'Zaxira fondini investitsiya emas, taʼtilga sarflash'],
+            'options_ru': ['Вложить весь резервный фонд, ведь потенциальная доходность важнее всего, что создаёт лишь видимость результата, не проверив предположение на практике, избегая при этом более сложной, но нужной работы', 'Сохранить резервный фонд на случай чрезвычайных ситуаций (потеря работы, болезнь) в безопасных инструментах, а для рискованных инвестиций использовать только свободные средства сверх него', 'Взять кредит, чтобы вложить в акции ещё больше денег, что удобно в моменте, но не эффективно в долгосрочной перспективе, не разобравшись, почему ситуация возникла именно так', 'Потратить резервный фонд на отпуск, а не на инвестиции, что скорее усугубит ситуацию, чем поможет её решить, лишь бы побыстрее закрыть вопрос, не привлекая к обсуждению тех, кого это касается напрямую'],
+            'options_uz': ['Potensial daromad hamma narsadan muhimroq boʻlgani uchun butun zaxira fondini solish, bu esa faqat natija koʻrinishini yaratadi, xolos, taxminni amalda tekshirib koʻrmasdan', 'Favqulodda holatlar (ish yoʻqotish, kasallik) uchun zaxira fondini xavfsiz vositalarda saqlab, xavfli investitsiyalar uchun faqat undan ortiqcha boʻsh mablagʻdan foydalanish', 'Aksiyalarga yanada koʻproq pul solish uchun kredit olish, murakkabroq, ammo zarur boʻlgan ishdan qochib, bu vaqtincha qulay boʻlsa-da, uzoq muddatda samarasiz, vaziyat aynan nega yuzaga kelganini tushunib yetmasdan', 'Zaxira fondini investitsiya emas, taʼtilga sarflash, bu holatni yaxshilash oʻrniga aksincha yomonlashtirishi mumkin, faqat masalani tezroq yopish uchun, bu bilan bevosita bogʻliq odamlarning fikrini soʻramasdan'],
             'correct_indices': [1],
         },
         {
@@ -7601,8 +7219,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Оценка рисков', 'category_uz': 'Xavfni baholash',
             'prompt_ru': 'В компании обнаружена известная уязвимость безопасности в используемой библиотеке. Патч уже выпущен разработчиками библиотеки. Какое решение правильнее с точки зрения риска?',
             'prompt_uz': 'Kompaniyada foydalanilayotgan kutubxonada maʼlum xavfsizlik zaifligi topildi. Kutubxona ishlab chiquvchilari allaqachon patch chiqarishgan. Xavf nuqtai nazaridan toʻgʻri qaror qaysi?',
-            'options_ru': ['Подождать до следующего планового релиза продукта через несколько месяцев', 'Установить патч безопасности как можно скорее, так как известная уязвимость — лёгкая цель для злоумышленников', 'Игнорировать уязвимость, если атак пока не было', 'Удалить библиотеку без замены, оставив часть функциональности сломанной'],
-            'options_uz': ['Bir necha oydan keyingi navbatdagi rejali mahsulot relizini kutish', 'Xavfsizlik patchini imkon qadar tezroq oʻrnatish, chunki maʼlum zaiflik tajovuzkorlar uchun oson nishon', 'Agar hozircha hujum boʻlmagan boʻlsa, zaiflikka eʼtibor bermaslik', 'Kutubxonani almashtirmasdan olib tashlab, funksiyaning bir qismini buzilgan holda qoldirish'],
+            'options_ru': ['Подождать до следующего планового релиза продукта через несколько месяцев, не проверив предположение на практике', 'Установить патч безопасности как можно скорее, так как известная уязвимость — лёгкая цель для злоумышленников', 'Игнорировать уязвимость, если атак пока не было, что удобно в моменте, но не эффективно в долгосрочной перспективе', 'Удалить библиотеку без замены, оставив часть функциональности сломанной, не разобравшись, почему ситуация возникла именно так'],
+            'options_uz': ['Bir necha oydan keyingi navbatdagi rejali mahsulot relizini kutish, taxminni amalda tekshirib koʻrmasdan', 'Xavfsizlik patchini imkon qadar tezroq oʻrnatish, chunki maʼlum zaiflik tajovuzkorlar uchun oson nishon', 'Agar hozircha hujum boʻlmagan boʻlsa, zaiflikka eʼtibor bermaslik, bu vaqtincha qulay boʻlsa-da, uzoq muddatda samarasiz', 'Kutubxonani almashtirmasdan olib tashlab, funksiyaning bir qismini buzilgan holda qoldirish, vaziyat aynan nega yuzaga kelganini tushunib yetmasdan'],
             'correct_indices': [1],
         },
         {
@@ -7610,8 +7228,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Оценка рисков', 'category_uz': 'Xavfni baholash',
             'prompt_ru': 'Небольшая пекарня рассматривает страхование помещения от пожара. Годовая страховка стоит 500 000 сум, а ремонт помещения после пожара обошёлся бы в 200 млн сум. Какое решение более разумно с точки зрения управления риском?',
             'prompt_uz': "Kichik nonvoyxona binoni yong'indan sugʻurtalashni koʻrib chiqmoqda. Yillik sugʻurta 500 000 soʻmga tushadi, yong'indan keyin binoni taʼmirlash esa 200 mln soʻmga tushadi. Xavfni boshqarish nuqtai nazaridan qaysi qaror oqilonaroq?",
-            'options_ru': ['Не страховаться, чтобы сэкономить 500 000 сум в год', 'Оформить страховку, так как относительно небольшая регулярная плата защищает от катастрофического финансового ущерба, вероятность которого хоть и мала, но существует', 'Застраховать помещение только после того, как пожар уже произошёл', 'Занять деньги на ремонт заранее вместо страховки'],
-            'options_uz': ['Yiliga 500 000 soʻmni tejash uchun sugʻurtalanmaslik', 'Sugʻurta rasmiylashtirish, chunki nisbatan kichik muntazam toʻlov ehtimoli kam boʻlsa-da mavjud boʻlgan halokatli moliyaviy zarardan himoya qiladi', "Binoni faqat yong'in allaqachon sodir boʻlgandan keyin sugʻurtalash", 'Sugʻurta oʻrniga taʼmirlash uchun oldindan qarz olish'],
+            'options_ru': ['Не страховаться, чтобы сэкономить 500 000 сум в год, избегая при этом более сложной, но нужной работы, что удобно в моменте, но не эффективно в долгосрочной перспективе', 'Оформить страховку, так как относительно небольшая регулярная плата защищает от катастрофического финансового ущерба, вероятность которого хоть и мала, но существует', 'Застраховать помещение только после того, как пожар уже произошёл, не разобравшись, почему ситуация возникла именно так, что скорее усугубит ситуацию, чем поможет её решить', 'Занять деньги на ремонт заранее вместо страховки, лишь бы побыстрее закрыть вопрос, не привлекая к обсуждению тех, кого это касается напрямую, хотя объективных оснований для такого выбора недостаточно'],
+            'options_uz': ['Yiliga 500 000 soʻmni tejash uchun sugʻurtalanmaslik, murakkabroq, ammo zarur boʻlgan ishdan qochib, bu vaqtincha qulay boʻlsa-da, uzoq muddatda samarasiz', 'Sugʻurta rasmiylashtirish, chunki nisbatan kichik muntazam toʻlov ehtimoli kam boʻlsa-da mavjud boʻlgan halokatli moliyaviy zarardan himoya qiladi', "Binoni faqat yong'in allaqachon sodir boʻlgandan keyin sugʻurtalash, vaziyat aynan nega yuzaga kelganini tushunib yetmasdan, bu holatni yaxshilash oʻrniga aksincha yomonlashtirishi mumkin", 'Sugʻurta oʻrniga taʼmirlash uchun oldindan qarz olish, faqat masalani tezroq yopish uchun, bu bilan bevosita bogʻliq odamlarning fikrini soʻramasdan'],
             'correct_indices': [1],
         },
         {
@@ -7619,8 +7237,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Оценка рисков', 'category_uz': 'Xavfni baholash',
             'prompt_ru': 'Хирург перед операцией торопится, потому что расписание плотное, и хочет пропустить финальную проверку контрольного списка (checklist) инструментов. Какое решение правильно с точки зрения риска?',
             'prompt_uz': 'Jarroh operatsiyadan oldin jadval zich boʻlgani uchun shoshilib, asboblar tekshiruv roʻyxatining (checklist) yakuniy tekshiruvini oʻtkazib yubormoqchi. Xavf nuqtai nazaridan toʻgʻri qaror qaysi?',
-            'options_ru': ['Пропустить проверку ради экономии нескольких минут', 'Всегда выполнять полную проверку контрольного списка перед операцией, так как цена ошибки (вред здоровью пациента) несравнимо выше, чем потеря нескольких минут', 'Поручить проверку самому неопытному члену команды без контроля', 'Проверять список только раз в неделю, а не перед каждой операцией'],
-            'options_uz': ['Bir necha daqiqani tejash uchun tekshiruvni oʻtkazib yuborish', 'Xatoning narxi (bemor salomatligiga zarar) bir necha daqiqani yoʻqotishdan solishtirib boʻlmaydigan darajada yuqori boʻlgani uchun operatsiyadan oldin har doim toʻliq tekshiruv roʻyxatini bajarish', 'Tekshiruvni nazoratsiz eng tajribasiz jamoa aʼzosiga topshirish', 'Roʻyxatni har operatsiyadan oldin emas, haftasiga bir marta tekshirish'],
+            'options_ru': ['Пропустить проверку ради экономии нескольких минут, что удобно в моменте, но не эффективно в долгосрочной перспективе, не разобравшись, почему ситуация возникла именно так', 'Всегда выполнять полную проверку контрольного списка перед операцией, так как цена ошибки (вред здоровью пациента) несравнимо выше, чем потеря нескольких минут', 'Поручить проверку самому неопытному члену команды без контроля, что скорее усугубит ситуацию, чем поможет её решить, лишь бы побыстрее закрыть вопрос', 'Проверять список только раз в неделю, а не перед каждой операцией, не привлекая к обсуждению тех, кого это касается напрямую, хотя объективных оснований для такого выбора недостаточно'],
+            'options_uz': ['Bir necha daqiqani tejash uchun tekshiruvni oʻtkazib yuborish, bu vaqtincha qulay boʻlsa-da, uzoq muddatda samarasiz, vaziyat aynan nega yuzaga kelganini tushunib yetmasdan, bu holatni yaxshilash oʻrniga aksincha yomonlashtirishi mumkin', 'Xatoning narxi (bemor salomatligiga zarar) bir necha daqiqani yoʻqotishdan solishtirib boʻlmaydigan darajada yuqori boʻlgani uchun operatsiyadan oldin har doim toʻliq tekshiruv roʻyxatini bajarish', 'Tekshiruvni nazoratsiz eng tajribasiz jamoa aʼzosiga topshirish, faqat masalani tezroq yopish uchun, bu bilan bevosita bogʻliq odamlarning fikrini soʻramasdan, garchi bunday tanlov uchun yetarli asos boʻlmasa-da', 'Roʻyxatni har operatsiyadan oldin emas, haftasiga bir marta tekshirish, bu esa tizimli emas, balki yuzaki yondashuvga xos, tahlil qilish oʻrniga eng sodda variantni tanlab, vaziyatning mohiyatiga chuqur kirmasdan'],
             'correct_indices': [1],
         },
         {
@@ -7628,8 +7246,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Принцип Парето (80/20)', 'category_uz': 'Pareto tamoyili (80/20)',
             'prompt_ru': 'Анализ обращений в службу поддержки показал: 20% типов ошибок вызывают 80% всех жалоб клиентов. Согласно принципу Парето, на что команде разработки стоит направить основные усилия?',
             'prompt_uz': 'Qoʻllab-quvvatlash xizmatiga murojaatlar tahlili shuni koʻrsatdiki: xatoliklar turlarining 20% barcha mijoz shikoyatlarining 80% ini keltirib chiqaradi. Pareto tamoyiliga koʻra, ishlab chiqish jamoasi asosiy kuchini nimaga yoʻnaltirishi kerak?',
-            'options_ru': ['Равномерно распределить усилия по всем типам ошибок без приоритета', 'В первую очередь устранить именно эти немногочисленные, но самые проблемные 20% типов ошибок', 'Игнорировать все жалобы клиентов', 'Заняться исключительно редкими и малозначимыми ошибками'],
-            'options_uz': ['Kuchni ustuvorliksiz barcha xatolik turlariga bir tekis taqsimlash', 'Avvalo aynan mana shu kam sonli, lekin eng muammoli 20% xatolik turlarini bartaraf etish', 'Mijozlarning barcha shikoyatlariga eʼtibor bermaslik', 'Faqat kamdan-kam va ahamiyatsiz xatoliklar bilan shugʻullanish'],
+            'options_ru': ['Равномерно распределить усилия по всем типам ошибок без приоритета, отказываясь от анализа в пользу самого простого варианта', 'В первую очередь устранить именно эти немногочисленные, но самые проблемные 20% типов ошибок', 'Игнорировать все жалобы клиентов, что может дать кратковременное облегчение, но не решает дела', 'Заняться исключительно редкими и малозначимыми ошибками, не оценив, к чему это приведёт в будущем'],
+            'options_uz': ['Kuchni ustuvorliksiz barcha xatolik turlariga bir tekis taqsimlash, tahlil qilish oʻrniga eng sodda variantni tanlab', 'Avvalo aynan mana shu kam sonli, lekin eng muammoli 20% xatolik turlarini bartaraf etish', 'Mijozlarning barcha shikoyatlariga eʼtibor bermaslik, bu qisqa muddatli yengillik bersa-da, ishni hal qilmaydi', 'Faqat kamdan-kam va ahamiyatsiz xatoliklar bilan shugʻullanish, kelajakda bu nimaga olib kelishini baholamasdan'],
             'correct_indices': [1],
         },
         {
@@ -7637,8 +7255,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Принцип Парето (80/20)', 'category_uz': 'Pareto tamoyili (80/20)',
             'prompt_ru': 'В компании выяснилось, что 20% клиентов приносят 80% всей прибыли. Какое управленческое решение логично вытекает из этого по принципу Парето?',
             'prompt_uz': 'Kompaniyada mijozlarning 20% umumiy foydaning 80% ini keltirishi aniqlandi. Pareto tamoyiliga koʻra, bundan qanday boshqaruv qarori mantiqan kelib chiqadi?',
-            'options_ru': ['Одинаково относиться ко всем клиентам без всякой приоритизации', 'Уделить особое внимание удержанию и удовлетворённости именно этой ключевой группы клиентов, приносящей основную прибыль', 'Полностью отказаться от работы с этими клиентами', 'Сосредоточиться только на привлечении новых клиентов, игнорируя текущих ключевых'],
-            'options_uz': ['Barcha mijozlarga hech qanday ustuvorliksiz bir xil munosabatda boʻlish', 'Asosiy foydani keltiruvchi aynan mana shu asosiy mijozlar guruhini ushlab qolish va ularning qoniqishiga alohida eʼtibor qaratish', 'Bu mijozlar bilan ishlashdan butunlay voz kechish', 'Joriy asosiy mijozlarni eʼtiborsiz qoldirib, faqat yangi mijozlarni jalb qilishga eʼtibor qaratish'],
+            'options_ru': ['Одинаково относиться ко всем клиентам без всякой приоритизации, вместо того чтобы вникнуть в суть происходящего', 'Уделить особое внимание удержанию и удовлетворённости именно этой ключевой группы клиентов, приносящей основную прибыль', 'Полностью отказаться от работы с этими клиентами, не оценив, к чему это приведёт в будущем, руководствуясь эмоциями, а не фактами', 'Сосредоточиться только на привлечении новых клиентов, игнорируя текущих ключевых, хотя это никак не приближает к настоящему решению'],
+            'options_uz': ['Barcha mijozlarga hech qanday ustuvorliksiz bir xil munosabatda boʻlish, vaziyatning mohiyatiga chuqur kirmasdan, bu qisqa muddatli yengillik bersa-da, ishni hal qilmaydi', 'Asosiy foydani keltiruvchi aynan mana shu asosiy mijozlar guruhini ushlab qolish va ularning qoniqishiga alohida eʼtibor qaratish', 'Bu mijozlar bilan ishlashdan butunlay voz kechish, kelajakda bu nimaga olib kelishini baholamasdan, faktlar emas, his-tuygʻular asosida ish tutib', 'Joriy asosiy mijozlarni eʼtiborsiz qoldirib, faqat yangi mijozlarni jalb qilishga eʼtibor qaratish, garchi bu haqiqiy yechimga umuman yaqinlashtirmasa-da'],
             'correct_indices': [1],
         },
         {
@@ -7646,8 +7264,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Принцип Парето (80/20)', 'category_uz': 'Pareto tamoyili (80/20)',
             'prompt_ru': 'На фабрике диаграмма Парето по причинам брака показала, что «неправильная настройка станка» и «низкое качество сырья» вместе составляют 78% всех дефектов, а остальные 8 причин — оставшиеся 22%. С чего начать улучшение качества?',
             'prompt_uz': 'Fabrikada brak sabablari boʻyicha Pareto diagrammasi „stanokning notoʻgʻri sozlanishi“ va „xom ashyo sifatining pastligi“ birgalikda barcha nuqsonlarning 78% ini tashkil qilishini koʻrsatdi, qolgan 8 sabab esa 22% ni. Sifatni yaxshilashni nimadan boshlash kerak?',
-            'options_ru': ['С устранения этих двух главных причин, дающих наибольший эффект при наименьших усилиях', 'С равномерной работы сразу над всеми 10 причинами одновременно', 'С самой редкой и незначительной из всех причин', 'С полной остановки фабрики без анализа причин'],
-            'options_uz': ['Eng kam kuch bilan eng katta samara beradigan ushbu ikki asosiy sababni bartaraf etishdan', 'Barcha 10 sabab ustida bir vaqtning oʻzida bir tekis ishlashdan', 'Barcha sabablar ichida eng kam uchraydigan va ahamiyatsizidan', 'Sabablarni tahlil qilmasdan fabrikani butunlay toʻxtatishdan'],
+            'options_ru': ['С устранения этих двух главных причин, дающих наибольший эффект при наименьших усилиях', 'С равномерной работы сразу над всеми 10 причинами одновременно, не оценив, к чему это приведёт в будущем', 'С самой редкой и незначительной из всех причин, руководствуясь эмоциями, а не фактами', 'С полной остановки фабрики без анализа причин, хотя это никак не приближает к настоящему решению'],
+            'options_uz': ['Eng kam kuch bilan eng katta samara beradigan ushbu ikki asosiy sababni bartaraf etishdan', 'Barcha 10 sabab ustida bir vaqtning oʻzida bir tekis ishlashdan, kelajakda bu nimaga olib kelishini baholamasdan', 'Barcha sabablar ichida eng kam uchraydigan va ahamiyatsizidan, faktlar emas, his-tuygʻular asosida ish tutib', 'Sabablarni tahlil qilmasdan fabrikani butunlay toʻxtatishdan, garchi bu haqiqiy yechimga umuman yaqinlashtirmasa-da'],
             'correct_indices': [0],
         },
         {
@@ -7655,8 +7273,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Принцип Парето (80/20)', 'category_uz': 'Pareto tamoyili (80/20)',
             'prompt_ru': 'Сотрудник обнаружил, что несколько ключевых задач в его списке дел приносят гораздо больше пользы бизнесу, чем все остальные мелкие задачи вместе взятые. Как правильно распределить своё рабочее время согласно принципу Парето?',
             'prompt_uz': 'Xodim ishlar roʻyxatidagi bir nechta asosiy vazifalar barcha boshqa mayda vazifalarning yigʻindisidan biznesga ancha koʻproq foyda keltirishini payqadi. Pareto tamoyiliga koʻra ish vaqtini qanday toʻgʻri taqsimlash kerak?',
-            'options_ru': ['Тратить основное время на мелкие, но лёгкие задачи для количества', 'Сосредоточить основную часть времени и энергии именно на этих немногих задачах с наибольшей ценностью', 'Распределять время строго поровну между всеми задачами без исключения', 'Полностью игнорировать список задач и работать хаотично'],
-            'options_uz': ['Asosiy vaqtni son uchun mayda, ammo oson vazifalarga sarflash', 'Vaqt va energiyaning katta qismini aynan eng katta qiymatga ega ushbu kam sonli vazifalarga jamlash', 'Vaqtni istisnosiz barcha vazifalar orasida qatʼiy teng taqsimlash', 'Vazifalar roʻyxatini butunlay eʼtiborsiz qoldirib, tartibsiz ishlash'],
+            'options_ru': ['Тратить основное время на мелкие, но лёгкие задачи для количества, не оценив, к чему это приведёт в будущем', 'Сосредоточить основную часть времени и энергии именно на этих немногих задачах с наибольшей ценностью', 'Распределять время строго поровну между всеми задачами без исключения, хотя это никак не приближает к настоящему решению', 'Полностью игнорировать список задач и работать хаотично, просто чтобы снять с себя часть нагрузки'],
+            'options_uz': ['Asosiy vaqtni son uchun mayda, ammo oson vazifalarga sarflash, kelajakda bu nimaga olib kelishini baholamasdan', 'Vaqt va energiyaning katta qismini aynan eng katta qiymatga ega ushbu kam sonli vazifalarga jamlash', 'Vaqtni istisnosiz barcha vazifalar orasida qatʼiy teng taqsimlash, garchi bu haqiqiy yechimga umuman yaqinlashtirmasa-da', 'Vazifalar roʻyxatini butunlay eʼtiborsiz qoldirib, tartibsiz ishlash, shunchaki oʻz zimmasidagi yukni birozgina yengillashtirish uchun'],
             'correct_indices': [1],
         },
         {
@@ -7664,8 +7282,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Принцип Парето (80/20)', 'category_uz': 'Pareto tamoyili (80/20)',
             'prompt_ru': 'Анализ веб-аналитики сайта показал, что 3 из 40 страниц генерируют 80% всего трафика. Куда логично направить усилия по SEO-оптимизации в первую очередь?',
             'prompt_uz': 'Sayt veb-analitikasi tahlili 40 ta sahifadan 3 tasi barcha trafikning 80% ini yaratayotganini koʻrsatdi. SEO-optimallashtirish boʻyicha kuchni avvalo qayerga yoʻnaltirish mantiqiy?',
-            'options_ru': ['На все 40 страниц одинаково, не выделяя лидеров', 'В первую очередь на эти 3 ключевые страницы, так как их улучшение принесёт максимальный эффект', 'Только на страницы, которые вообще не получают трафика', 'Полностью удалить эти 3 популярные страницы'],
-            'options_uz': ['Yetakchilarni ajratmasdan barcha 40 ta sahifaga bir xilda', 'Avvalo aynan mana shu 3 ta asosiy sahifaga, chunki ularni yaxshilash maksimal samara beradi', 'Faqat umuman trafik olmayotgan sahifalarga', 'Ushbu 3 ta mashhur sahifani butunlay oʻchirib tashlash'],
+            'options_ru': ['На все 40 страниц одинаково, не выделяя лидеров, руководствуясь эмоциями, а не фактами', 'В первую очередь на эти 3 ключевые страницы, так как их улучшение принесёт максимальный эффект', 'Только на страницы, которые вообще не получают трафика, просто чтобы снять с себя часть нагрузки', 'Полностью удалить эти 3 популярные страницы, не спрашивая мнения тех, кто лучше знает ситуацию'],
+            'options_uz': ['Yetakchilarni ajratmasdan barcha 40 ta sahifaga bir xilda, faktlar emas, his-tuygʻular asosida ish tutib', 'Avvalo aynan mana shu 3 ta asosiy sahifaga, chunki ularni yaxshilash maksimal samara beradi', 'Faqat umuman trafik olmayotgan sahifalarga, shunchaki oʻz zimmasidagi yukni birozgina yengillashtirish uchun', 'Ushbu 3 ta mashhur sahifani butunlay oʻchirib tashlash, vaziyatni yaxshiroq biladiganlarning fikrini soʻramasdan'],
             'correct_indices': [1],
         },
         {
@@ -7673,8 +7291,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Принцип Парето (80/20)', 'category_uz': 'Pareto tamoyili (80/20)',
             'prompt_ru': 'При ABC-анализе склада (расширении принципа Парето) товары категории «A» составляют всего 20% ассортимента, но дают 80% оборота. Как логичнее контролировать запасы этих товаров?',
             'prompt_uz': 'Ombor ABC-tahlilida (Pareto tamoyilining kengaytmasi) „A“ toifasidagi mahsulotlar assortimentning atigi 20% ini tashkil qiladi, lekin aylanmaning 80% ini beradi. Ushbu mahsulotlar zaxirasini nazorat qilish qanday mantiqiyroq?',
-            'options_ru': ['Вести такой же редкий и упрощённый учёт, как и для остальных товаров', 'Вести самый строгий, частый и точный учёт именно этих товаров, так как ошибки с ними наиболее дорого обходятся бизнесу', 'Вообще не учитывать эти товары', 'Учитывать только товары категории «C» с наименьшим оборотом'],
-            'options_uz': ['Qolgan mahsulotlar kabi kamdan-kam va soddalashtirilgan hisobni yuritish', "Xatolar biznesga eng qimmatga tushadigan aynan shu mahsulotlar uchun eng qat'iy, tez-tez va aniq hisobni yuritish", 'Bu mahsulotlarni umuman hisobga olmaslik', 'Faqat eng kam aylanmaga ega „C“ toifadagi mahsulotlarni hisobga olish'],
+            'options_ru': ['Вести такой же редкий и упрощённый учёт, как и для остальных товаров, хотя это никак не приближает к настоящему решению', 'Вести самый строгий, частый и точный учёт именно этих товаров, так как ошибки с ними наиболее дорого обходятся бизнесу', 'Вообще не учитывать эти товары, не спрашивая мнения тех, кто лучше знает ситуацию, что выглядит логично на первый взгляд, но упускает главное', 'Учитывать только товары категории «C» с наименьшим оборотом, оставляя реальную проблему нерешённой, что не устраняет истинную причину проблемы'],
+            'options_uz': ['Qolgan mahsulotlar kabi kamdan-kam va soddalashtirilgan hisobni yuritish, garchi bu haqiqiy yechimga umuman yaqinlashtirmasa-da', "Xatolar biznesga eng qimmatga tushadigan aynan shu mahsulotlar uchun eng qat'iy, tez-tez va aniq hisobni yuritish", 'Bu mahsulotlarni umuman hisobga olmaslik, vaziyatni yaxshiroq biladiganlarning fikrini soʻramasdan, bu birinchi qarashda mantiqiy koʻrinsa-da, asosiy narsani eʼtibordan chetda qoldiradi', 'Faqat eng kam aylanmaga ega „C“ toifadagi mahsulotlarni hisobga olish, haqiqiy muammoni hal qilinmagan holicha qoldirib'],
             'correct_indices': [1],
         },
         {
@@ -7682,8 +7300,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Принцип Парето (80/20)', 'category_uz': 'Pareto tamoyili (80/20)',
             'prompt_ru': 'Данные краш-репортов мобильного приложения показывают, что 85% всех сбоев происходит всего на трёх устаревших моделях телефонов. Куда команде QA стоит направить основную часть тестирования?',
             'prompt_uz': 'Mobil ilova nosozlik hisobotlari maʼlumotlari barcha qulashlarning 85% atigi uchta eskirgan telefon modelida sodir boʻlishini koʻrsatmoqda. QA jamoasi test qilishning katta qismini qayerga yoʻnaltirishi kerak?',
-            'options_ru': ['Тестировать только на самых новых флагманских моделях', 'Сосредоточить основное тестирование именно на этих трёх проблемных моделях, дающих подавляющее большинство сбоев', 'Тестировать все модели телефонов абсолютно одинаковое количество времени', 'Прекратить тестирование приложения вообще'],
-            'options_uz': ['Faqat eng yangi flagman modellarida sinash', 'Nosozliklarning katta koʻpchiligini beruvchi aynan mana shu uchta muammoli modelga asosiy testlashni jamlash', 'Barcha telefon modellarini mutlaqo bir xil vaqt davomida sinash', 'Ilovani sinashni umuman toʻxtatish'],
+            'options_ru': ['Тестировать только на самых новых флагманских моделях, просто чтобы снять с себя часть нагрузки, не спрашивая мнения тех, кто лучше знает ситуацию', 'Сосредоточить основное тестирование именно на этих трёх проблемных моделях, дающих подавляющее большинство сбоев', 'Тестировать все модели телефонов абсолютно одинаковое количество времени, что выглядит логично на первый взгляд, но упускает главное', 'Прекратить тестирование приложения вообще, оставляя реальную проблему нерешённой, что не устраняет истинную причину проблемы'],
+            'options_uz': ['Faqat eng yangi flagman modellarida sinash, shunchaki oʻz zimmasidagi yukni birozgina yengillashtirish uchun', 'Nosozliklarning katta koʻpchiligini beruvchi aynan mana shu uchta muammoli modelga asosiy testlashni jamlash', 'Barcha telefon modellarini mutlaqo bir xil vaqt davomida sinash, bu birinchi qarashda mantiqiy koʻrinsa-da, asosiy narsani eʼtibordan chetda qoldiradi', 'Ilovani sinashni umuman toʻxtatish, haqiqiy muammoni hal qilinmagan holicha qoldirib, bu esa muammoning haqiqiy sababini bartaraf etmaydi'],
             'correct_indices': [1],
         },
         {
@@ -7691,8 +7309,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Принцип Парето (80/20)', 'category_uz': 'Pareto tamoyili (80/20)',
             'prompt_ru': 'Маркетинговый анализ показал, что один рекламный канал из пяти приносит 80% всех новых клиентов, а остальные четыре — лишь 20%. Как логичнее скорректировать бюджет?',
             'prompt_uz': 'Marketing tahlili beshta reklama kanalidan bittasi barcha yangi mijozlarning 80% ini, qolgan toʻrttasi esa faqat 20% ini keltirishini koʻrsatdi. Byudjetni qanday moslashtirish mantiqiyroq?',
-            'options_ru': ['Оставить бюджет распределённым поровну между всеми пятью каналами', 'Перераспределить основную часть бюджета в пользу самого результативного канала, сократив расходы на менее эффективные', 'Полностью убрать бюджет с самого результативного канала', 'Вложить весь бюджет только в самый слабый канал'],
-            'options_uz': ['Byudjetni barcha besh kanal orasida teng taqsimlangan holda qoldirish', 'Kamroq samarali kanallarga xarajatlarni qisqartirib, byudjetning katta qismini eng samarali kanal foydasiga qayta taqsimlash', 'Byudjetni eng samarali kanaldan butunlay olib tashlash', 'Butun byudjetni faqat eng zaif kanalga solish'],
+            'options_ru': ['Оставить бюджет распределённым поровну между всеми пятью каналами, не спрашивая мнения тех, кто лучше знает ситуацию', 'Перераспределить основную часть бюджета в пользу самого результативного канала, сократив расходы на менее эффективные', 'Полностью убрать бюджет с самого результативного канала, оставляя реальную проблему нерешённой, что не устраняет истинную причину проблемы', 'Вложить весь бюджет только в самый слабый канал, хотя это лишь временная мера, а не системное решение, даже не пытаясь разобраться в первопричине происходящего'],
+            'options_uz': ['Byudjetni barcha besh kanal orasida teng taqsimlangan holda qoldirish, vaziyatni yaxshiroq biladiganlarning fikrini soʻramasdan', 'Kamroq samarali kanallarga xarajatlarni qisqartirib, byudjetning katta qismini eng samarali kanal foydasiga qayta taqsimlash', 'Byudjetni eng samarali kanaldan butunlay olib tashlash, haqiqiy muammoni hal qilinmagan holicha qoldirib, bu esa muammoning haqiqiy sababini bartaraf etmaydi', 'Butun byudjetni faqat eng zaif kanalga solish, garchi bu faqat vaqtinchalik chora boʻlib, tizimli yechim emas, vaziyatning tub sababini aniqlashga hatto urinib koʻrmasdan'],
             'correct_indices': [1],
         },
         {
@@ -7700,8 +7318,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Принцип Парето (80/20)', 'category_uz': 'Pareto tamoyili (80/20)',
             'prompt_ru': 'Диаграмма Парето по дефектам качества показывает: причина №1 — 45%, причина №2 — 30%, причины №3-8 — по 4-5% каждая. Какие причины команде качества стоит атаковать в первую очередь?',
             'prompt_uz': 'Sifat nuqsonlari boʻyicha Pareto diagrammasi koʻrsatadi: sabab №1 — 45%, sabab №2 — 30%, sabab №3-8 — har biri 4-5%. Sifat jamoasi avvalo qaysi sabablarga hujum qilishi kerak?',
-            'options_ru': ['Причины №3-8, потому что их больше по количеству', 'Причины №1 и №2, так как вместе они дают 75% всех дефектов при работе всего над двумя пунктами', 'Все причины абсолютно одновременно и с равным вниманием', 'Ни одну из причин, а просто увеличить контроль на выходе линии'],
-            'options_uz': ['№3-8 sabablar, chunki ular soni koʻproq', '№1 va №2 sabablar, chunki faqat ikkita band ustida ishlash bilan ular birgalikda barcha nuqsonlarning 75% ini beradi', 'Barcha sabablarga mutlaqo bir vaqtda va teng eʼtibor bilan', 'Hech qaysi sababga emas, shunchaki liniya chiqishida nazoratni kuchaytirish'],
+            'options_ru': ['Причины №3-8, потому что их больше по количеству, что выглядит логично на первый взгляд, но упускает главное', 'Причины №1 и №2, так как вместе они дают 75% всех дефектов при работе всего над двумя пунктами', 'Все причины абсолютно одновременно и с равным вниманием, что не устраняет истинную причину проблемы', 'Ни одну из причин, а просто увеличить контроль на выходе линии, хотя это лишь временная мера, а не системное решение'],
+            'options_uz': ['№3-8 sabablar, chunki ular soni koʻproq, bu birinchi qarashda mantiqiy koʻrinsa-da, asosiy narsani eʼtibordan chetda qoldiradi', '№1 va №2 sabablar, chunki faqat ikkita band ustida ishlash bilan ular birgalikda barcha nuqsonlarning 75% ini beradi', 'Barcha sabablarga mutlaqo bir vaqtda va teng eʼtibor bilan, bu esa muammoning haqiqiy sababini bartaraf etmaydi', 'Hech qaysi sababga emas, shunchaki liniya chiqishida nazoratni kuchaytirish, garchi bu faqat vaqtinchalik chora boʻlib, tizimli yechim emas'],
             'correct_indices': [1],
         },
         {
@@ -7709,8 +7327,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Принцип Парето (80/20)', 'category_uz': 'Pareto tamoyili (80/20)',
             'prompt_ru': 'Скрам-команда заметила, что 20% элементов в бэклоге проекта блокируют выполнение 80% остальных зависимых задач. Как логичнее приоритизировать спринт?',
             'prompt_uz': 'Skram-jamoa loyiha backlogidagi elementlarning 20% qolgan bogʻliq vazifalarning 80% ini bloklashini payqadi. Sprintni ustuvorlashtirish qanday mantiqiyroq?',
-            'options_ru': ['Оставить приоритеты в случайном порядке, не обращая внимания на зависимости', 'Взять в приоритет именно эти блокирующие 20% задач в первую очередь, чтобы разблокировать выполнение остальной части бэклога', 'Сначала выполнить самые простые задачи, игнорируя зависимости', 'Полностью удалить блокирующие задачи из бэклога без анализа'],
-            'options_uz': ['Bogʻliqliklarga eʼtibor bermay, ustuvorliklarni tasodifiy tartibda qoldirish', 'Backlogning qolgan qismini blokdan chiqarish uchun avvalo aynan mana shu bloklovchi 20% vazifalarni ustuvor deb olish', 'Bogʻliqliklarni eʼtiborsiz qoldirib, avval eng oddiy vazifalarni bajarish', 'Tahlil qilmasdan bloklovchi vazifalarni backlogdan butunlay oʻchirib tashlash'],
+            'options_ru': ['Оставить приоритеты в случайном порядке, не обращая внимания на зависимости, что является импульсивной реакцией, а не продуманным решением', 'Взять в приоритет именно эти блокирующие 20% задач в первую очередь, чтобы разблокировать выполнение остальной части бэклога', 'Сначала выполнить самые простые задачи, игнорируя зависимости, что создаёт лишь видимость результата, не проверив предположение на практике', 'Полностью удалить блокирующие задачи из бэклога без анализа, избегая при этом более сложной, но нужной работы, что удобно в моменте, но не эффективно в долгосрочной перспективе'],
+            'options_uz': ['Bogʻliqliklarga eʼtibor bermay, ustuvorliklarni tasodifiy tartibda qoldirish, bu muammoga oʻylab topilgan yechim emas, balki impulsiv reaksiya', 'Backlogning qolgan qismini blokdan chiqarish uchun avvalo aynan mana shu bloklovchi 20% vazifalarni ustuvor deb olish', 'Bogʻliqliklarni eʼtiborsiz qoldirib, avval eng oddiy vazifalarni bajarish, bu esa faqat natija koʻrinishini yaratadi, xolos', 'Tahlil qilmasdan bloklovchi vazifalarni backlogdan butunlay oʻchirib tashlash, taxminni amalda tekshirib koʻrmasdan'],
             'correct_indices': [1],
         },
         {
@@ -7718,8 +7336,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Анализ затрат и выгод', 'category_uz': 'Xarajat-foyda tahlili',
             'prompt_ru': 'Новый станок стоит 24 млн сум и экономит компании 2 млн сум в месяц на ручном труде. Станок планируют использовать минимум 3 года. Стоит ли покупать станок с точки зрения окупаемости?',
             'prompt_uz': 'Yangi stanok 24 mln soʻmga tushadi va kompaniyaga qoʻlda ishlab chiqarishda oyiga 2 mln soʻm tejaydi. Stanokni kamida 3 yil ishlatish rejalashtirilgan. Oʻzini oqlash nuqtai nazaridan stanokni sotib olish kerakmi?',
-            'options_ru': ['Нет, станок никогда себя не окупит', 'Да — станок окупится за 12 месяцев, а затем ещё 2 года будет приносить чистую экономию', 'Нет, потому что первоначальная цена слишком высокая в принципе', 'Да, но только если компания получит кредит под большие проценты'],
-            'options_uz': ['Yoʻq, stanok hech qachon oʻzini oqlamaydi', 'Ha — stanok 12 oyda oʻzini oqlaydi va keyingi 2 yil davomida sof tejamkorlik keltiradi', 'Yoʻq, chunki boshlangʻich narx umuman juda yuqori', 'Ha, lekin faqat kompaniya yuqori foizli kredit olsa'],
+            'options_ru': ['Нет, станок никогда себя не окупит, что перекладывает ответственность на других, а не решает вопрос', 'Да — станок окупится за 12 месяцев, а затем ещё 2 года будет приносить чистую экономию', 'Нет, потому что первоначальная цена слишком высокая в принципе, не учитывая долгосрочные последствия такого решения', 'Да, но только если компания получит кредит под большие проценты, игнорируя при этом мнение и интересы других вовлечённых сторон'],
+            'options_uz': ['Yoʻq, stanok hech qachon oʻzini oqlamaydi, bu esa haqiqiy yechim oʻrniga javobgarlikni boshqalarga yuklaydi', 'Ha — stanok 12 oyda oʻzini oqlaydi va keyingi 2 yil davomida sof tejamkorlik keltiradi', 'Yoʻq, chunki boshlangʻich narx umuman juda yuqori, bunday qarorning uzoq muddatli oqibatlarini eʼtiborga olmasdan', 'Ha, lekin faqat kompaniya yuqori foizli kredit olsa, jarayonga aloqador boshqa tomonlarning fikrini eʼtiborsiz qoldirib'],
             'correct_indices': [1],
         },
         {
@@ -7727,8 +7345,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Анализ затрат и выгод', 'category_uz': 'Xarajat-foyda tahlili',
             'prompt_ru': 'Компания рассматривает обучающий курс за 5 млн сум для менеджера, после которого его эффективность, по оценкам, вырастет и принесёт дополнительно около 15 млн сум прибыли компании за год. Разумно ли оплатить курс?',
             'prompt_uz': 'Kompaniya menejer uchun 5 mln soʻmlik oʻquv kursini koʻrib chiqmoqda, bundan keyin uning samaradorligi oshib, kompaniyaga yiliga taxminan 15 mln soʻm qoʻshimcha foyda keltirishi baholanmoqda. Kursni toʻlash oqilonami?',
-            'options_ru': ['Нет, обучение сотрудников никогда не окупается', 'Да, ожидаемая выгода (15 млн) существенно превышает затраты (5 млн), что даёт хороший возврат инвестиций', 'Нет, потому что 5 млн сум — это слишком большая сумма в принципе', 'Да, но только если менеджер потом уволится'],
-            'options_uz': ['Yoʻq, xodimlarni oʻqitish hech qachon oʻzini oqlamaydi', 'Ha, kutilayotgan foyda (15 mln) xarajatdan (5 mln) sezilarli darajada oshib, yaxshi investitsiya qaytimini beradi', 'Yoʻq, chunki 5 mln soʻm umuman juda katta summa', 'Ha, lekin faqat menejer keyin ishdan ketsa'],
+            'options_ru': ['Нет, обучение сотрудников никогда не окупается, полагаясь на удачу вместо продуманного анализа ситуации', 'Да, ожидаемая выгода (15 млн) существенно превышает затраты (5 млн), что даёт хороший возврат инвестиций', 'Нет, потому что 5 млн сум — это слишком большая сумма в принципе, игнорируя при этом мнение и интересы других вовлечённых сторон', 'Да, но только если менеджер потом уволится, не собрав предварительно достаточно фактов для взвешенного решения'],
+            'options_uz': ['Yoʻq, xodimlarni oʻqitish hech qachon oʻzini oqlamaydi, vaziyatni puxta tahlil qilish oʻrniga omadga tayanib', 'Ha, kutilayotgan foyda (15 mln) xarajatdan (5 mln) sezilarli darajada oshib, yaxshi investitsiya qaytimini beradi', 'Yoʻq, chunki 5 mln soʻm umuman juda katta summa, jarayonga aloqador boshqa tomonlarning fikrini eʼtiborsiz qoldirib', 'Ha, lekin faqat menejer keyin ishdan ketsa, vaznli qaror qabul qilish uchun yetarli fakt toʻplamasdan turib'],
             'correct_indices': [1],
         },
         {
@@ -7736,8 +7354,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Анализ затрат и выгод', 'category_uz': 'Xarajat-foyda tahlili',
             'prompt_ru': 'Автоматизация ручного процесса ввода данных обойдётся в 10 млн сум разово, но сэкономит 40 часов рабочего времени сотрудников в месяц (что эквивалентно примерно 2 млн сум в месяц). Стоит ли автоматизировать процесс?',
             'prompt_uz': 'Qoʻlda maʼlumot kiritish jarayonini avtomatlashtirish bir martalik 10 mln soʻmga tushadi, lekin xodimlarning oyiga 40 soat ish vaqtini tejaydi (bu taxminan oyiga 2 mln soʻmga teng). Jarayonni avtomatlashtirish kerakmi?',
-            'options_ru': ['Нет, автоматизация всегда невыгодна для маленьких задач', 'Да — вложение окупится примерно за 5 месяцев, после чего экономия времени будет чистой выгодой', 'Нет, потому что 10 млн сум — слишком большая сумма для любой компании', 'Да, но только если процесс займёт больше 40 часов в месяц'],
-            'options_uz': ['Yoʻq, avtomatlashtirish kichik vazifalar uchun doim foydasiz', 'Ha — sarmoya taxminan 5 oyda oʻzini oqlaydi, shundan keyin vaqt tejash sof foyda boʻladi', 'Yoʻq, chunki 10 mln soʻm har qanday kompaniya uchun juda katta summa', 'Ha, lekin faqat jarayon oyiga 40 soatdan koʻproq vaqt olsa'],
+            'options_ru': ['Нет, автоматизация всегда невыгодна для маленьких задач, не учитывая долгосрочные последствия такого решения', 'Да — вложение окупится примерно за 5 месяцев, после чего экономия времени будет чистой выгодой', 'Нет, потому что 10 млн сум — слишком большая сумма для любой компании, не собрав предварительно достаточно фактов для взвешенного решения', 'Да, но только если процесс займёт больше 40 часов в месяц, что является импульсивной реакцией, а не продуманным решением'],
+            'options_uz': ['Yoʻq, avtomatlashtirish kichik vazifalar uchun doim foydasiz, bunday qarorning uzoq muddatli oqibatlarini eʼtiborga olmasdan', 'Ha — sarmoya taxminan 5 oyda oʻzini oqlaydi, shundan keyin vaqt tejash sof foyda boʻladi', 'Yoʻq, chunki 10 mln soʻm har qanday kompaniya uchun juda katta summa, vaznli qaror qabul qilish uchun yetarli fakt toʻplamasdan turib', 'Ha, lekin faqat jarayon oyiga 40 soatdan koʻproq vaqt olsa, bu muammoga oʻylab topilgan yechim emas, balki impulsiv reaksiya'],
             'correct_indices': [1],
         },
         {
@@ -7745,8 +7363,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Анализ затрат и выгод', 'category_uz': 'Xarajat-foyda tahlili',
             'prompt_ru': 'Компании нужен грузовой автомобиль на 6 месяцев для одного крупного проекта. Аренда стоит 1,5 млн сум в месяц, покупка нового автомобиля — 60 млн сум. С точки зрения затрат на этот конкретный проект что разумнее?',
             'prompt_uz': 'Kompaniyaga bitta yirik loyiha uchun 6 oyga yuk mashinasi kerak. Ijaraga olish oyiga 1,5 mln soʻmga tushadi, yangi mashina sotib olish esa 60 mln soʻmga. Aynan shu loyiha xarajatlari nuqtai nazaridan qaysi biri oqilonaroq?',
-            'options_ru': ['Купить новый автомобиль за 60 млн сум', 'Арендовать автомобиль, так как аренда за 6 месяцев (9 млн сум) значительно дешевле покупки для разового проекта', 'Не использовать автомобиль вообще и отказаться от проекта', 'Купить подержанный автомобиль без всякого расчёта затрат'],
-            'options_uz': ['60 mln soʻmga yangi mashina sotib olish', 'Mashinani ijaraga olish, chunki bir martalik loyiha uchun 6 oylik ijara (9 mln soʻm) sotib olishdan ancha arzon', 'Mashinadan umuman foydalanmasdan loyihadan voz kechish', 'Xarajatlarni hisoblamasdan ishlatilgan mashina sotib olish'],
+            'options_ru': ['Купить новый автомобиль за 60 млн сум, игнорируя при этом мнение и интересы других вовлечённых сторон, не собрав предварительно достаточно фактов для взвешенного решения', 'Арендовать автомобиль, так как аренда за 6 месяцев (9 млн сум) значительно дешевле покупки для разового проекта', 'Не использовать автомобиль вообще и отказаться от проекта, что является импульсивной реакцией, а не продуманным решением', 'Купить подержанный автомобиль без всякого расчёта затрат, решая лишь симптом, но не саму проблему по существу'],
+            'options_uz': ['60 mln soʻmga yangi mashina sotib olish, jarayonga aloqador boshqa tomonlarning fikrini eʼtiborsiz qoldirib', 'Mashinani ijaraga olish, chunki bir martalik loyiha uchun 6 oylik ijara (9 mln soʻm) sotib olishdan ancha arzon', 'Mashinadan umuman foydalanmasdan loyihadan voz kechish, bu muammoga oʻylab topilgan yechim emas, balki impulsiv reaksiya', 'Xarajatlarni hisoblamasdan ishlatilgan mashina sotib olish, faqat alomatni yoʻqotib, muammoning oʻzini hal qilmasdan'],
             'correct_indices': [1],
         },
         {
@@ -7754,8 +7372,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Анализ затрат и выгод', 'category_uz': 'Xarajat-foyda tahlili',
             'prompt_ru': 'Плановое техническое обслуживание оборудования стоит 3 млн сум в год. Один незапланированный простой из-за поломки в среднем обходится компании в 20 млн сум и случается раз в 2 года при отсутствии обслуживания. Стоит ли делать плановое обслуживание?',
             'prompt_uz': 'Jihozning rejali texnik xizmat koʻrsatishi yiliga 3 mln soʻmga tushadi. Xizmat koʻrsatilmasa, buzilish tufayli rejalashtirilmagan bitta toʻxtash oʻrtacha kompaniyaga 20 mln soʻmga tushadi va 2 yilda bir marta sodir boʻladi. Rejali xizmat koʻrsatish kerakmi?',
-            'options_ru': ['Нет, обслуживание — лишняя трата денег', 'Да — плановое обслуживание за 2 года (6 млн сум) заметно дешевле ожидаемых потерь от поломки (20 млн сум за тот же период)', 'Нет, потому что поломка может вообще не случиться', 'Да, но обслуживание нужно делать раз в 10 лет'],
-            'options_uz': ['Yoʻq, xizmat koʻrsatish ortiqcha pul sarfi', 'Ha — 2 yillik rejali xizmat koʻrsatish (6 mln soʻm) shu davrdagi kutilayotgan buzilish zararidan (20 mln soʻm) sezilarli darajada arzon', 'Yoʻq, chunki buzilish umuman sodir boʻlmasligi mumkin', 'Ha, lekin xizmat koʻrsatish 10 yilda bir marta qilinishi kerak'],
+            'options_ru': ['Нет, обслуживание — лишняя трата денег, не собрав предварительно достаточно фактов для взвешенного решения, что является импульсивной реакцией, а не продуманным решением', 'Да — плановое обслуживание за 2 года (6 млн сум) заметно дешевле ожидаемых потерь от поломки (20 млн сум за тот же период)', 'Нет, потому что поломка может вообще не случиться, решая лишь симптом, но не саму проблему по существу, что создаёт лишь видимость результата', 'Да, но обслуживание нужно делать раз в 10 лет, не проверив предположение на практике, избегая при этом более сложной, но нужной работы'],
+            'options_uz': ['Yoʻq, xizmat koʻrsatish ortiqcha pul sarfi, vaznli qaror qabul qilish uchun yetarli fakt toʻplamasdan turib, bu muammoga oʻylab topilgan yechim emas, balki impulsiv reaksiya', 'Ha — 2 yillik rejali xizmat koʻrsatish (6 mln soʻm) shu davrdagi kutilayotgan buzilish zararidan (20 mln soʻm) sezilarli darajada arzon', 'Yoʻq, chunki buzilish umuman sodir boʻlmasligi mumkin, faqat alomatni yoʻqotib, muammoning oʻzini hal qilmasdan, bu esa faqat natija koʻrinishini yaratadi, xolos', 'Ha, lekin xizmat koʻrsatish 10 yilda bir marta qilinishi kerak, taxminni amalda tekshirib koʻrmasdan, murakkabroq, ammo zarur boʻlgan ishdan qochib'],
             'correct_indices': [1],
         },
         {
@@ -7763,8 +7381,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Анализ затрат и выгод', 'category_uz': 'Xarajat-foyda tahlili',
             'prompt_ru': 'Компания рассматривает передачу бухгалтерии на аутсорсинг за 4 млн сум в месяц вместо содержания штатного бухгалтера за 5 млн сум в месяц (зарплата, налоги, рабочее место). При этом качество услуг аутсорсинговой фирмы подтверждено хорошими отзывами. Какое решение выгоднее по затратам?',
             'prompt_uz': 'Kompaniya oyiga 5 mln soʻm turadigan shtatdagi buxgalterni saqlash (maosh, soliq, ish oʻrni) oʻrniga buxgalteriyani oyiga 4 mln soʻmga autsorsingga berishni koʻrib chiqmoqda. Bunda autsorsing firmasining xizmat sifati yaxshi sharhlar bilan tasdiqlangan. Xarajatlar boʻyicha qaysi qaror foydaliroq?',
-            'options_ru': ['Содержать штатного бухгалтера, потому что это престижнее', 'Перейти на аутсорсинг, так как он на 1 млн сум в месяц дешевле при сопоставимом качестве услуг', 'Уволить бухгалтерию и не вести учёт вообще', 'Нанять сразу двух штатных бухгалтеров'],
-            'options_uz': ['Bu obroʻliroq boʻlgani uchun shtatdagi buxgalterni saqlash', 'Solishtirma sifatda oyiga 1 mln soʻmga arzon boʻlgani uchun autsorsingga oʻtish', 'Buxgalteriyani ishdan boʻshatib, hisobni umuman yuritmaslik', 'Darhol ikkita shtatdagi buxgalter yollash'],
+            'options_ru': ['Содержать штатного бухгалтера, потому что это престижнее, что является импульсивной реакцией, а не продуманным решением', 'Перейти на аутсорсинг, так как он на 1 млн сум в месяц дешевле при сопоставимом качестве услуг', 'Уволить бухгалтерию и не вести учёт вообще, что создаёт лишь видимость результата, не проверив предположение на практике', 'Нанять сразу двух штатных бухгалтеров, избегая при этом более сложной, но нужной работы'],
+            'options_uz': ['Bu obroʻliroq boʻlgani uchun shtatdagi buxgalterni saqlash, bu muammoga oʻylab topilgan yechim emas, balki impulsiv reaksiya', 'Solishtirma sifatda oyiga 1 mln soʻmga arzon boʻlgani uchun autsorsingga oʻtish', 'Buxgalteriyani ishdan boʻshatib, hisobni umuman yuritmaslik, bu esa faqat natija koʻrinishini yaratadi, xolos', 'Darhol ikkita shtatdagi buxgalter yollash, taxminni amalda tekshirib koʻrmasdan'],
             'correct_indices': [1],
         },
         {
@@ -7772,8 +7390,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Анализ затрат и выгод', 'category_uz': 'Xarajat-foyda tahlili',
             'prompt_ru': 'Расширенная гарантия на бытовую технику стоит 300 000 сум и покрывает ремонт в течение 2 лет. Статистика производителя показывает, что вероятность серьёзной поломки в этот период — менее 2%, а сам ремонт обычно стоит около 400 000 сум. Стоит ли покупать расширенную гарантию именно для этой техники?',
             'prompt_uz': 'Maishiy texnika uchun kengaytirilgan kafolat 300 000 soʻmga tushadi va 2 yil davomida taʼmirlashni qoplaydi. Ishlab chiqaruvchi statistikasi bu davrda jiddiy buzilish ehtimoli 2% dan kamligini koʻrsatadi, taʼmirlashning oʻzi esa odatda taxminan 400 000 soʻmga tushadi. Aynan shu texnika uchun kengaytirilgan kafolat sotib olish kerakmi?',
-            'options_ru': ['Да, гарантию нужно покупать всегда без всяких расчётов', 'Скорее нет — при вероятности поломки менее 2% ожидаемая выгода от гарантии (около 8 000 сум) значительно меньше её цены (300 000 сум)', 'Да, потому что ремонт технически сложен', 'Нет, потому что гарантии — это всегда мошенничество'],
-            'options_uz': ['Ha, kafolatni har qanday hisob-kitobsiz doim sotib olish kerak', 'Koʻproq ehtimol yoʻq — buzilish ehtimoli 2% dan kam boʻlganda kafolatdan kutilgan foyda (taxminan 8 000 soʻm) uning narxidan (300 000 soʻm) ancha kam', 'Ha, chunki taʼmirlash texnik jihatdan murakkab', 'Yoʻq, chunki kafolatlar doim firibgarlik'],
+            'options_ru': ['Да, гарантию нужно покупать всегда без всяких расчётов, решая лишь симптом, но не саму проблему по существу, что создаёт лишь видимость результата', 'Скорее нет — при вероятности поломки менее 2% ожидаемая выгода от гарантии (около 8 000 сум) значительно меньше её цены (300 000 сум)', 'Да, потому что ремонт технически сложен, не проверив предположение на практике, избегая при этом более сложной, но нужной работы', 'Нет, потому что гарантии — это всегда мошенничество, что удобно в моменте, но не эффективно в долгосрочной перспективе, не разобравшись, почему ситуация возникла именно так'],
+            'options_uz': ['Ha, kafolatni har qanday hisob-kitobsiz doim sotib olish kerak, faqat alomatni yoʻqotib, muammoning oʻzini hal qilmasdan, bu esa faqat natija koʻrinishini yaratadi, xolos', 'Koʻproq ehtimol yoʻq — buzilish ehtimoli 2% dan kam boʻlganda kafolatdan kutilgan foyda (taxminan 8 000 soʻm) uning narxidan (300 000 soʻm) ancha kam', 'Ha, chunki taʼmirlash texnik jihatdan murakkab, taxminni amalda tekshirib koʻrmasdan, murakkabroq, ammo zarur boʻlgan ishdan qochib, bu vaqtincha qulay boʻlsa-da, uzoq muddatda samarasiz', 'Yoʻq, chunki kafolatlar doim firibgarlik, vaziyat aynan nega yuzaga kelganini tushunib yetmasdan, bu holatni yaxshilash oʻrniga aksincha yomonlashtirishi mumkin'],
             'correct_indices': [1],
         },
         {
@@ -7781,8 +7399,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Анализ затрат и выгод', 'category_uz': 'Xarajat-foyda tahlili',
             'prompt_ru': 'Компания рассматривает переход с локального сервера (обслуживание которого стоит 8 млн сум в год) на облачный хостинг (5 млн сум в год при сопоставимой мощности и надёжности). Что выгоднее по затратам при равном качестве услуги?',
             'prompt_uz': 'Kompaniya lokal serverdan (uning xizmat koʻrsatishi yiliga 8 mln soʻmga tushadi) bulutli hostingga (bir xil quvvat va ishonchlilikda yiliga 5 mln soʻm) oʻtishni koʻrib chiqmoqda. Xizmat sifati teng boʻlsa, xarajatlar boʻyicha qaysi biri foydaliroq?',
-            'options_ru': ['Остаться на локальном сервере, потому что «так привычнее»', 'Перейти на облачный хостинг, так как он на 3 млн сум в год дешевле при равном качестве', 'Отказаться от любого хостинга вообще', 'Использовать сразу оба варианта одновременно без анализа выгоды'],
-            'options_uz': ['Odatlanilgan boʻlgani uchun lokal serverda qolish', 'Bir xil sifatda yiliga 3 mln soʻm arzon boʻlgani uchun bulutli hostingga oʻtish', 'Har qanday hostingdan umuman voz kechish', 'Foydani tahlil qilmasdan ikkala variantdan bir vaqtda foydalanish'],
+            'options_ru': ['Остаться на локальном сервере, потому что «так привычнее», что создаёт лишь видимость результата', 'Перейти на облачный хостинг, так как он на 3 млн сум в год дешевле при равном качестве', 'Отказаться от любого хостинга вообще, избегая при этом более сложной, но нужной работы', 'Использовать сразу оба варианта одновременно без анализа выгоды, что удобно в моменте, но не эффективно в долгосрочной перспективе'],
+            'options_uz': ['Odatlanilgan boʻlgani uchun lokal serverda qolish, bu esa faqat natija koʻrinishini yaratadi, xolos', 'Bir xil sifatda yiliga 3 mln soʻm arzon boʻlgani uchun bulutli hostingga oʻtish', 'Har qanday hostingdan umuman voz kechish, murakkabroq, ammo zarur boʻlgan ishdan qochib', 'Foydani tahlil qilmasdan ikkala variantdan bir vaqtda foydalanish, bu vaqtincha qulay boʻlsa-da, uzoq muddatda samarasiz'],
             'correct_indices': [1],
         },
         {
@@ -7790,8 +7408,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Анализ затрат и выгод', 'category_uz': 'Xarajat-foyda tahlili',
             'prompt_ru': 'Сверхурочная работа команды в последнюю неделю проекта обойдётся в 3 млн сум дополнительных выплат, но позволит уложиться в дедлайн и избежать штрафа за просрочку в 15 млн сум. Стоит ли платить за сверхурочные?',
             'prompt_uz': 'Loyihaning oxirgi haftasida jamoaning ortiqcha ishlashi 3 mln soʻm qoʻshimcha toʻlovga tushadi, lekin bu muddatga ulgurish va kechikish uchun 15 mln soʻmlik jarimadan qochishga imkon beradi. Ortiqcha ish uchun toʻlash kerakmi?',
-            'options_ru': ['Нет, сверхурочные — это всегда невыгодно', 'Да — стоимость сверхурочных (3 млн) значительно ниже штрафа за просрочку (15 млн), поэтому выгода очевидна', 'Нет, потому что сотрудники и так должны работать бесплатно сверх нормы', 'Да, но только если штраф за просрочку меньше 1 млн сум'],
-            'options_uz': ['Yoʻq, ortiqcha ish har doim foydasiz', 'Ha — ortiqcha ish narxi (3 mln) kechikish jarimasidan (15 mln) sezilarli darajada past, shuning uchun foyda aniq', "Yoʻq, chunki xodimlar shunday ham me'yordan tashqari bepul ishlashi kerak", 'Ha, lekin faqat kechikish jarimasi 1 mln soʻmdan kam boʻlsa'],
+            'options_ru': ['Нет, сверхурочные — это всегда невыгодно, не проверив предположение на практике, избегая при этом более сложной, но нужной работы', 'Да — стоимость сверхурочных (3 млн) значительно ниже штрафа за просрочку (15 млн), поэтому выгода очевидна', 'Нет, потому что сотрудники и так должны работать бесплатно сверх нормы, что удобно в моменте, но не эффективно в долгосрочной перспективе', 'Да, но только если штраф за просрочку меньше 1 млн сум, не разобравшись, почему ситуация возникла именно так'],
+            'options_uz': ['Yoʻq, ortiqcha ish har doim foydasiz, taxminni amalda tekshirib koʻrmasdan, murakkabroq, ammo zarur boʻlgan ishdan qochib', 'Ha — ortiqcha ish narxi (3 mln) kechikish jarimasidan (15 mln) sezilarli darajada past, shuning uchun foyda aniq', "Yoʻq, chunki xodimlar shunday ham me'yordan tashqari bepul ishlashi kerak, bu vaqtincha qulay boʻlsa-da, uzoq muddatda samarasiz", 'Ha, lekin faqat kechikish jarimasi 1 mln soʻmdan kam boʻlsa, vaziyat aynan nega yuzaga kelganini tushunib yetmasdan'],
             'correct_indices': [1],
         },
         {
@@ -7799,8 +7417,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Анализ затрат и выгод', 'category_uz': 'Xarajat-foyda tahlili',
             'prompt_ru': 'Внедрение системы контроля качества на производстве стоит 12 млн сум в год, но, по расчётам, предотвратит брак и возвраты продукции на сумму около 30 млн сум в год. Стоит ли внедрять систему?',
             'prompt_uz': 'Ishlab chiqarishda sifat nazorati tizimini joriy etish yiliga 12 mln soʻmga tushadi, lekin hisob-kitoblarga koʻra, yiliga taxminan 30 mln soʻmlik brak va mahsulot qaytarishlarining oldini oladi. Tizimni joriy etish kerakmi?',
-            'options_ru': ['Нет, любая новая система — лишние расходы', 'Да — предотвращённые потери (30 млн) существенно превышают затраты на систему (12 млн), что даёт чистую выгоду около 18 млн сум в год', 'Нет, потому что 12 млн сум — слишком много для контроля качества', 'Да, но только если брак уже случился хотя бы 100 раз'],
-            'options_uz': ['Yoʻq, har qanday yangi tizim ortiqcha xarajat', 'Ha — oldini olingan yoʻqotishlar (30 mln) tizim xarajatlaridan (12 mln) sezilarli darajada oshib, yiliga taxminan 18 mln soʻm sof foyda beradi', 'Yoʻq, chunki sifat nazorati uchun 12 mln soʻm juda koʻp', 'Ha, lekin faqat brak kamida 100 marta sodir boʻlgan boʻlsa'],
+            'options_ru': ['Нет, любая новая система — лишние расходы, вместо того чтобы вникнуть в суть происходящего, что может дать кратковременное облегчение, но не решает дела', 'Да — предотвращённые потери (30 млн) существенно превышают затраты на систему (12 млн), что даёт чистую выгоду около 18 млн сум в год', 'Нет, потому что 12 млн сум — слишком много для контроля качества, не оценив, к чему это приведёт в будущем, руководствуясь эмоциями, а не фактами', 'Да, но только если брак уже случился хотя бы 100 раз, хотя это никак не приближает к настоящему решению, просто чтобы снять с себя часть нагрузки'],
+            'options_uz': ['Yoʻq, har qanday yangi tizim ortiqcha xarajat, vaziyatning mohiyatiga chuqur kirmasdan, bu qisqa muddatli yengillik bersa-da, ishni hal qilmaydi', 'Ha — oldini olingan yoʻqotishlar (30 mln) tizim xarajatlaridan (12 mln) sezilarli darajada oshib, yiliga taxminan 18 mln soʻm sof foyda beradi', 'Yoʻq, chunki sifat nazorati uchun 12 mln soʻm juda koʻp, kelajakda bu nimaga olib kelishini baholamasdan, faktlar emas, his-tuygʻular asosida ish tutib', 'Ha, lekin faqat brak kamida 100 marta sodir boʻlgan boʻlsa, garchi bu haqiqiy yechimga umuman yaqinlashtirmasa-da, shunchaki oʻz zimmasidagi yukni birozgina yengillashtirish uchun'],
             'correct_indices': [1],
         },
         {
@@ -7808,8 +7426,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Анализ затрат и выгод', 'category_uz': 'Xarajat-foyda tahlili',
             'prompt_ru': 'Компания рассматривает выплату удерживающего бонуса ценному сотруднику в размере 6 млн сум, чтобы он не уволился. Поиск и обучение нового специалиста на его место обошлись бы примерно в 20 млн сум с учётом потери продуктивности на время адаптации. Что выгоднее?',
             'prompt_uz': 'Kompaniya qadrli xodimning ishdan ketmasligi uchun unga 6 mln soʻm miqdorida ushlab qolish mukofotini toʻlashni koʻrib chiqmoqda. Uning oʻrniga yangi mutaxassis topish va oʻqitish moslashuv davridagi unumdorlik yoʻqotilishini hisobga olganda taxminan 20 mln soʻmga tushadi. Qaysi biri foydaliroq?',
-            'options_ru': ['Отпустить сотрудника и нанять нового без всяких расчётов', 'Выплатить удерживающий бонус, так как он значительно дешевле полной стоимости замены сотрудника', 'Не платить ничего и не искать замену, оставив вакансию пустой', 'Заплатить бонус в 3 раза больше стоимости замены'],
-            'options_uz': ['Xodimni qoʻyib yuborib, hech qanday hisob-kitobsiz yangisini yollash', 'Ushlab qolish mukofotini toʻlash, chunki u xodimni toʻliq almashtirish narxidan sezilarli darajada arzon', 'Hech narsa toʻlamasdan va almashtiruvchi qidirmasdan, vakansiyani boʻsh qoldirish', 'Mukofotni almashtirish narxidan 3 barobar koʻp toʻlash'],
+            'options_ru': ['Отпустить сотрудника и нанять нового без всяких расчётов, что может дать кратковременное облегчение, но не решает дела', 'Выплатить удерживающий бонус, так как он значительно дешевле полной стоимости замены сотрудника', 'Не платить ничего и не искать замену, оставив вакансию пустой, руководствуясь эмоциями, а не фактами', 'Заплатить бонус в 3 раза больше стоимости замены, хотя это никак не приближает к настоящему решению'],
+            'options_uz': ['Xodimni qoʻyib yuborib, hech qanday hisob-kitobsiz yangisini yollash, bu qisqa muddatli yengillik bersa-da, ishni hal qilmaydi', 'Ushlab qolish mukofotini toʻlash, chunki u xodimni toʻliq almashtirish narxidan sezilarli darajada arzon', 'Hech narsa toʻlamasdan va almashtiruvchi qidirmasdan, vakansiyani boʻsh qoldirish, faktlar emas, his-tuygʻular asosida ish tutib', 'Mukofotni almashtirish narxidan 3 barobar koʻp toʻlash, garchi bu haqiqiy yechimga umuman yaqinlashtirmasa-da'],
             'correct_indices': [1],
         },
         {
@@ -7817,8 +7435,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Анализ затрат и выгод', 'category_uz': 'Xarajat-foyda tahlili',
             'prompt_ru': 'Рекламная кампания в социальных сетях стоит 2 млн сум и, по прогнозам на основе прошлых похожих кампаний, принесёт продаж на 3,5 млн сум прибыли. Стоит ли запускать кампанию?',
             'prompt_uz': 'Ijtimoiy tarmoqlardagi reklama kampaniyasi 2 mln soʻmga tushadi va oldingi shunga oʻxshash kampaniyalar asosidagi bashoratlarga koʻra, 3,5 mln soʻmlik foyda keltiradigan sotuvlarga olib keladi. Kampaniyani ishga tushirish kerakmi?',
-            'options_ru': ['Нет, реклама в соцсетях никогда не окупается', 'Да — прогнозируемая прибыль (3,5 млн) превышает затраты (2 млн), что даёт положительную чистую выгоду', 'Нет, потому что прогнозы никогда не сбываются на 100%', 'Да, но только если конкуренты тоже запустят такую же кампанию'],
-            'options_uz': ['Yoʻq, ijtimoiy tarmoqlardagi reklama hech qachon oʻzini oqlamaydi', 'Ha — bashorat qilingan foyda (3,5 mln) xarajatlardan (2 mln) yuqori boʻlib, ijobiy sof foyda beradi', 'Yoʻq, chunki bashoratlar hech qachon 100% amalga oshmaydi', 'Ha, lekin faqat raqobatchilar ham xuddi shunday kampaniya ishga tushirsa'],
+            'options_ru': ['Нет, реклама в соцсетях никогда не окупается, не оценив, к чему это приведёт в будущем, руководствуясь эмоциями, а не фактами', 'Да — прогнозируемая прибыль (3,5 млн) превышает затраты (2 млн), что даёт положительную чистую выгоду', 'Нет, потому что прогнозы никогда не сбываются на 100%, хотя это никак не приближает к настоящему решению', 'Да, но только если конкуренты тоже запустят такую же кампанию, просто чтобы снять с себя часть нагрузки'],
+            'options_uz': ['Yoʻq, ijtimoiy tarmoqlardagi reklama hech qachon oʻzini oqlamaydi, kelajakda bu nimaga olib kelishini baholamasdan', 'Ha — bashorat qilingan foyda (3,5 mln) xarajatlardan (2 mln) yuqori boʻlib, ijobiy sof foyda beradi', 'Yoʻq, chunki bashoratlar hech qachon 100% amalga oshmaydi, garchi bu haqiqiy yechimga umuman yaqinlashtirmasa-da', 'Ha, lekin faqat raqobatchilar ham xuddi shunday kampaniya ishga tushirsa, shunchaki oʻz zimmasidagi yukni birozgina yengillashtirish uchun'],
             'correct_indices': [1],
         },
         {
@@ -7826,8 +7444,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Анализ затрат и выгод', 'category_uz': 'Xarajat-foyda tahlili',
             'prompt_ru': 'Энергоэффективные окна для офиса стоят на 15 млн сум дороже обычных, но экономят 2,5 млн сум в год на отоплении и кондиционировании. Через сколько лет окупятся такие окна и стоит ли их ставить, если офис планируют использовать минимум 10 лет?',
             'prompt_uz': 'Ofis uchun energiya tejamkor derazalar oddiylaridan 15 mln soʻm qimmatga tushadi, lekin isitish va sovutishda yiliga 2,5 mln soʻm tejaydi. Ofisni kamida 10 yil ishlatish rejalashtirilgan boʻlsa, bunday derazalar necha yilda oʻzini oqlaydi va ularni oʻrnatish kerakmi?',
-            'options_ru': ['Окупятся за 1 год, ставить точно не стоит', 'Окупятся за 6 лет, после чего ещё 4 года будут приносить чистую экономию — ставить стоит', 'Никогда не окупятся, ставить не стоит', 'Окупятся за 6 лет, но это слишком долго при любом сроке использования офиса'],
-            'options_uz': ['1 yilda oʻzini oqlaydi, oʻrnatish shart emas', '6 yilda oʻzini oqlaydi, shundan keyin yana 4 yil sof tejamkorlik keltiradi — oʻrnatish maʼqul', 'Hech qachon oʻzini oqlamaydi, oʻrnatish shart emas', '6 yilda oʻzini oqlaydi, lekin bu ofisdan foydalanishning har qanday muddati uchun juda uzoq'],
+            'options_ru': ['Окупятся за 1 год, ставить точно не стоит, руководствуясь эмоциями, а не фактами', 'Окупятся за 6 лет, после чего ещё 4 года будут приносить чистую экономию — ставить стоит', 'Никогда не окупятся, ставить не стоит, просто чтобы снять с себя часть нагрузки, не спрашивая мнения тех, кто лучше знает ситуацию', 'Окупятся за 6 лет, но это слишком долго при любом сроке использования офиса, что выглядит логично на первый взгляд, но упускает главное'],
+            'options_uz': ['1 yilda oʻzini oqlaydi, oʻrnatish shart emas, faktlar emas, his-tuygʻular asosida ish tutib', '6 yilda oʻzini oqlaydi, shundan keyin yana 4 yil sof tejamkorlik keltiradi — oʻrnatish maʼqul', 'Hech qachon oʻzini oqlamaydi, oʻrnatish shart emas, shunchaki oʻz zimmasidagi yukni birozgina yengillashtirish uchun', '6 yilda oʻzini oqlaydi, lekin bu ofisdan foydalanishning har qanday muddati uchun juda uzoq'],
             'correct_indices': [1],
         },
         {
@@ -7835,8 +7453,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Анализ затрат и выгод', 'category_uz': 'Xarajat-foyda tahlili',
             'prompt_ru': 'Компания решает, покупать ли лицензию на профессиональное ПО за 4 млн сум в год или продолжать работать в бесплатной, но заметно менее удобной программе, из-за которой сотрудники теряют примерно 10 часов в месяц (что эквивалентно около 1 млн сум потерь). Какое решение выгоднее в моменте?',
             'prompt_uz': 'Kompaniya professional dasturiy taʼminot litsenziyasini yiliga 4 mln soʻmga sotib olish yoki bepul, lekin sezilarli darajada noqulayroq dasturda ishlashni davom ettirishni hal qilmoqda, bu esa xodimlarning oyiga taxminan 10 soatini yoʻqotishga olib keladi (bu taxminan 1 mln soʻm yoʻqotishga teng). Hozirgi holatda qaysi qaror foydaliroq?',
-            'options_ru': ['Купить лицензию, потому что платное всегда лучше', 'Остаться на бесплатной программе, чтобы избежать любых новых расходов, не считая потерь времени', 'Купить лицензию, так как годовые потери от медленной работы (около 12 млн сум) значительно превышают стоимость лицензии (4 млн сум)', 'Не делать ничего и терпеть потери бесконечно'],
-            'options_uz': ['Litsenziya sotib olish, chunki pullik har doim yaxshiroq', 'Vaqt yoʻqotishlarini hisobga olmasdan, har qanday yangi xarajatdan qochish uchun bepul dasturda qolish', 'Litsenziya sotib olish, chunki sekin ishlashdan yillik yoʻqotishlar (taxminan 12 mln soʻm) litsenziya narxidan (4 mln soʻm) sezilarli darajada yuqori', 'Hech narsa qilmasdan yoʻqotishlarga cheksiz chidash'],
+            'options_ru': ['Купить лицензию, потому что платное всегда лучше, хотя это никак не приближает к настоящему решению, просто чтобы снять с себя часть нагрузки', 'Остаться на бесплатной программе, чтобы избежать любых новых расходов, не считая потерь времени, не спрашивая мнения тех, кто лучше знает ситуацию', 'Купить лицензию, так как годовые потери от медленной работы (около 12 млн сум) значительно превышают стоимость лицензии (4 млн сум)', 'Не делать ничего и терпеть потери бесконечно, что выглядит логично на первый взгляд, но упускает главное, оставляя реальную проблему нерешённой'],
+            'options_uz': ['Litsenziya sotib olish, chunki pullik har doim yaxshiroq, garchi bu haqiqiy yechimga umuman yaqinlashtirmasa-da, shunchaki oʻz zimmasidagi yukni birozgina yengillashtirish uchun', 'Vaqt yoʻqotishlarini hisobga olmasdan, har qanday yangi xarajatdan qochish uchun bepul dasturda qolish, vaziyatni yaxshiroq biladiganlarning fikrini soʻramasdan', 'Litsenziya sotib olish, chunki sekin ishlashdan yillik yoʻqotishlar (taxminan 12 mln soʻm) litsenziya narxidan (4 mln soʻm) sezilarli darajada yuqori', 'Hech narsa qilmasdan yoʻqotishlarga cheksiz chidash, bu birinchi qarashda mantiqiy koʻrinsa-da, asosiy narsani eʼtibordan chetda qoldiradi'],
             'correct_indices': [2],
         },
         {
@@ -7844,8 +7462,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Анализ затрат и выгод', 'category_uz': 'Xarajat-foyda tahlili',
             'prompt_ru': 'Небольшая компания рассматривает переезд в офис с более высокой арендой (+3 млн сум в месяц), расположенный ближе к ключевым клиентам, что, по оценке отдела продаж, увеличит число личных встреч и принесёт дополнительно около 6 млн сум прибыли в месяц. Стоит ли переезжать?',
             'prompt_uz': 'Kichik kompaniya asosiy mijozlarga yaqinroq joylashgan, ijarasi yuqoriroq (+3 mln soʻm oyiga) ofisga koʻchishni koʻrib chiqmoqda, savdo boʻlimi bahosiga koʻra bu shaxsiy uchrashuvlar sonini oshirib, oyiga taxminan qoʻshimcha 6 mln soʻm foyda keltiradi. Koʻchish kerakmi?',
-            'options_ru': ['Нет, аренда подорожает — этого достаточно, чтобы отказаться', 'Да — ожидаемая дополнительная прибыль (6 млн) превышает дополнительные расходы на аренду (3 млн), что даёт чистую выгоду', 'Нет, потому что переезды всегда сопряжены с рисками, а значит невыгодны', 'Да, но только если старый офис сгорит'],
-            'options_uz': ['Yoʻq, ijara qimmatlashadi — bu voz kechish uchun yetarli', 'Ha — kutilayotgan qoʻshimcha foyda (6 mln) qoʻshimcha ijara xarajatlaridan (3 mln) oshib, sof foyda beradi', 'Yoʻq, chunki koʻchishlar doim xavf bilan bogʻliq, demak foydasiz', 'Ha, lekin faqat eski ofis yonib ketsa'],
+            'options_ru': ['Нет, аренда подорожает — этого достаточно, чтобы отказаться, просто чтобы снять с себя часть нагрузки, не спрашивая мнения тех, кто лучше знает ситуацию', 'Да — ожидаемая дополнительная прибыль (6 млн) превышает дополнительные расходы на аренду (3 млн), что даёт чистую выгоду', 'Нет, потому что переезды всегда сопряжены с рисками, а значит невыгодны, что выглядит логично на первый взгляд, но упускает главное', 'Да, но только если старый офис сгорит, оставляя реальную проблему нерешённой, что не устраняет истинную причину проблемы'],
+            'options_uz': ['Yoʻq, ijara qimmatlashadi — bu voz kechish uchun yetarli, shunchaki oʻz zimmasidagi yukni birozgina yengillashtirish uchun', 'Ha — kutilayotgan qoʻshimcha foyda (6 mln) qoʻshimcha ijara xarajatlaridan (3 mln) oshib, sof foyda beradi', 'Yoʻq, chunki koʻchishlar doim xavf bilan bogʻliq, demak foydasiz, bu birinchi qarashda mantiqiy koʻrinsa-da, asosiy narsani eʼtibordan chetda qoldiradi', 'Ha, lekin faqat eski ofis yonib ketsa, haqiqiy muammoni hal qilinmagan holicha qoldirib, bu esa muammoning haqiqiy sababini bartaraf etmaydi'],
             'correct_indices': [1],
         },
         {
@@ -8015,8 +7633,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Встречное движение', 'category_uz': 'Qarama-qarshi harakat',
             'prompt_ru': 'Расстояние между пунктами «склад» и «завод» — 420 км. Из них навстречу друг другу одновременно выезжают два грузовика со скоростями 70 км/ч и 80 км/ч. Через сколько часов они встретятся?',
             'prompt_uz': '«склад» va «завод» punktlari orasidagi masofa 420 km. Ulardan bir vaqtning oʻzida bir-biriga qarama-qarshi tomon ikkita yuk mashinasi mos ravishda 70 km/soat va 80 km/soat tezlikda joʻnaydi. Ular necha soatdan keyin uchrashadi?',
-            'options_ru': ['6 ч', '5.6 ч', '2.8 ч', '42 ч'],
-            'options_uz': ['6 soat', '5.6 soat', '2.8 soat', '42 soat'],
+            'options_ru': ['6 ч, не собрав предварительно достаточно фактов для взвешенного решения', '5.6 ч', '2.8 ч', '42 ч'],
+            'options_uz': ['6 soat, vaznli qaror qabul qilish uchun yetarli fakt toʻplamasdan turib', '5.6 soat', '2.8 soat', '42 soat'],
             'correct_indices': [2],
         },
         {
@@ -8024,8 +7642,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Встречное движение', 'category_uz': 'Qarama-qarshi harakat',
             'prompt_ru': 'Расстояние между пунктами «посёлок X» и «посёлок Y» — 150 км. Из них навстречу друг другу одновременно выезжают два курьера на мотоциклах со скоростями 25 км/ч и 35 км/ч. Через сколько часов они встретятся?',
             'prompt_uz': '«посёлок X» va «посёлок Y» punktlari orasidagi masofa 150 km. Ulardan bir vaqtning oʻzida bir-biriga qarama-qarshi tomon ikkita kuryer mototsiklda mos ravishda 25 km/soat va 35 km/soat tezlikda joʻnaydi. Ular necha soatdan keyin uchrashadi?',
-            'options_ru': ['6 ч', '15 ч', '5 ч', '2.5 ч'],
-            'options_uz': ['6 soat', '15 soat', '5 soat', '2.5 soat'],
+            'options_ru': ['6 ч, что является импульсивной реакцией, а не продуманным решением', '15 ч', '5 ч, что создаёт лишь видимость результата', '2.5 ч'],
+            'options_uz': ['6 soat, bu muammoga oʻylab topilgan yechim emas, balki impulsiv reaksiya', '15 soat', '5 soat, bu esa faqat natija koʻrinishini yaratadi, xolos', '2.5 soat'],
             'correct_indices': [3],
         },
         {
@@ -8087,8 +7705,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Точка безубыточности', 'category_uz': 'Zararsizlik nuqtasi',
             'prompt_ru': 'Мастерская по ремонту телефонов имеет постоянные (фиксированные) расходы 12 000 000 сум в месяц. Себестоимость одного ремонта составляет 8 000 сум, а продаётся она за 20 000 сум. Сколько единиц нужно продать в месяц, чтобы выйти на точку безубыточности (полностью покрыть расходы)?',
             'prompt_uz': 'Telefon taʼmirlash ustaxonasining oyiga doimiy (fiksirlangan) xarajati 12 000 000 soʻm. Bitta taʼmirlashning tannarxi 8 000 soʻm, sotilish narxi esa 20 000 soʻm. Zararsizlik nuqtasiga chiqish (xarajatlarni toʻliq qoplash) uchun oyiga nechta birlik sotish kerak?',
-            'options_ru': ['429 шт.', '1 000 шт.', '600 шт.', '1 500 шт.'],
-            'options_uz': ['429 dona', '1 000 dona', '600 dona', '1 500 dona'],
+            'options_ru': ['429 шт, что скорее усугубит ситуацию, чем поможет её решить.', '1 000 шт.', '600 шт, не привлекая к обсуждению тех, кого это касается напрямую.', '1 500 шт.'],
+            'options_uz': ['429 dona, bu holatni yaxshilash oʻrniga aksincha yomonlashtirishi mumkin', '1 000 dona', '600 dona, bu bilan bevosita bogʻliq odamlarning fikrini soʻramasdan', '1 500 dona'],
             'correct_indices': [1],
         },
         {
@@ -8186,8 +7804,8 @@ MCQ_QUESTIONS = {
             'category_ru': 'Средняя скорость', 'category_uz': 'Oʻrtacha tezlik',
             'prompt_ru': 'Курьер едет от склада до магазина со скоростью 50 км/ч, а обратно тем же маршрутом — со скоростью 100 км/ч. Какова его средняя скорость на всём пути туда и обратно?',
             'prompt_uz': 'Kuryer ombordan doʻkongacha 50 km/soat tezlikda boradi, orqaga esa xuddi shu yoʻnalish boʻylab 100 km/soat tezlikda qaytadi. Uning borish-kelish yoʻlidagi oʻrtacha tezligi qancha boʻladi?',
-            'options_ru': ['100 км/ч', '75 км/ч', '50 км/ч', '66.7 км/ч'],
-            'options_uz': ['100 km/soat', '75 km/soat', '50 km/soat', '66.7 km/soat'],
+            'options_ru': ['100 км/ч', '75 км/ч, не собрав предварительно достаточно фактов для взвешенного решения', '50 км/ч, что является импульсивной реакцией, а не продуманным решением', '66.7 км/ч'],
+            'options_uz': ['100 km/soat', '75 km/soat, vaznli qaror qabul qilish uchun yetarli fakt toʻplamasdan turib', '50 km/soat, bu muammoga oʻylab topilgan yechim emas, balki impulsiv reaksiya', '66.7 km/soat'],
             'correct_indices': [3],
         },
         {
