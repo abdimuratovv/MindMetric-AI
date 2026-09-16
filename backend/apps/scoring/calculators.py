@@ -12,7 +12,9 @@ text for the requested `lang`, so callers that only need to compare bands
 Note: apps.scoring.achievements.TIER_THRESHOLDS (bronze/silver/gold badges)
 intentionally keeps its own 55/70/85 cutoffs — see that module's docstring.
 """
-from .constants import FIELD_WEIGHTS, PROGRAMMING_APTITUDE_WEIGHTS
+from .constants import FIELD_WEIGHTS, INDICATOR_CHOICES, PROGRAMMING_APTITUDE_WEIGHTS
+
+TOTAL_INDICATOR_COUNT = len(INDICATOR_CHOICES)
 
 _TIERS = [
     (81, 'high', {'ru': 'Высокий', 'uz': 'Yuqori'}, '#2E7052', '#DCEFE2'),
@@ -81,11 +83,21 @@ def verdict_for(score: int, lang: str) -> dict:
 
 
 def compute_overall_score(indicator_scores) -> int:
-    """indicator_scores: iterable of ints. Mirrors renderVals()'s `overallScore` mean."""
+    """
+    indicator_scores: iterable of ints, one per completed indicator.
+
+    Mean of completed scores, scaled down by how much of the full 10-indicator
+    profile is actually done (completed / TOTAL_INDICATOR_COUNT). Without this
+    scaling, acing 2 of 10 indicators reads as a 100 overall score — a
+    misleadingly "finished" verdict this early. Scaling means the headline
+    number only approaches 100 as the student nears full completion.
+    """
     scores = list(indicator_scores)
     if not scores:
         return 0
-    return round(sum(scores) / len(scores))
+    mean = sum(scores) / len(scores)
+    completion = len(scores) / TOTAL_INDICATOR_COUNT
+    return round(mean * completion)
 
 
 # Below this many completed indicators (of 10), a field recommendation would be
@@ -129,10 +141,11 @@ def compute_programming_aptitude(scores_by_key: dict):
     scores_by_key: {indicator_key: score} for completed indicators only.
 
     Weighted mean over PROGRAMMING_APTITUDE_WEIGHTS, normalized by whatever
-    weight is actually completed so far — same "only average what's done"
-    principle as compute_overall_score's plain mean. Returns None (not 0)
-    when nothing scorable has been completed yet, so callers can tell "no
-    data" apart from a genuine floor score.
+    weight is actually completed so far — unlike compute_overall_score, this
+    is not scaled down by overall completion, since it only ever draws from a
+    handful of indicators anyway (see PROGRAMMING_APTITUDE_WEIGHTS). Returns
+    None (not 0) when nothing scorable has been completed yet, so callers can
+    tell "no data" apart from a genuine floor score.
     """
     done_weight = sum(w for k, w in PROGRAMMING_APTITUDE_WEIGHTS.items() if k in scores_by_key)
     if done_weight == 0:
