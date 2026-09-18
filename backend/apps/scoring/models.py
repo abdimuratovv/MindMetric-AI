@@ -46,8 +46,9 @@ class IndicatorScore(models.Model):
     screens ({{ indicators }}, {{ indicatorsDetail }}). Written once per
     indicator when the assessment that feeds it completes — cognitive (MCQ)
     indicators from their question bank, algorithmic additionally blends in a
-    coding-task phase (see apps.scoring.state_tracker._score_hybrid), behavioral
-    indicators from Likert self-report.
+    coding-task phase (see apps.scoring.state_tracker._score_hybrid), and
+    teamwork/patience/learning_speed from their SJT, anagram and learn-and-apply
+    tasks.
     """
 
     student = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='indicator_scores', on_delete=models.CASCADE)

@@ -8,15 +8,8 @@ from rest_framework.views import APIView
 
 from apps.accounts.models import StudentProfile, User
 from apps.accounts.permissions import IsAdmin
-from apps.assessments.models import (
-    AssessmentAttempt, BehavioralCategory, BehavioralItem, CognitiveQuestion, LearningModule, SjtScenario,
-)
-from apps.assessments.serializers import (
-    AdminBehavioralItemCreateSerializer,
-    AdminBehavioralItemUpdateSerializer,
-    AdminCognitiveQuestionCreateSerializer,
-    AdminCognitiveQuestionUpdateSerializer,
-)
+from apps.assessments.models import AnagramItem, AssessmentAttempt, CognitiveQuestion, LearningModule, SjtScenario
+from apps.assessments.serializers import AdminCognitiveQuestionCreateSerializer, AdminCognitiveQuestionUpdateSerializer
 from apps.i18n import get_language
 from apps.reviews.models import TeacherReview
 from apps.reviews.status import status_style
@@ -24,16 +17,15 @@ from apps.scoring import calculators
 from apps.scoring.constants import FIELD_CHOICES, FIELD_LABELS, INDICATOR_CHOICES, INDICATOR_LABELS
 from apps.scoring.models import FieldRecommendation, IndicatorScore, OverallScore
 
-# indicator keys whose assessment uses the MCQ question bank (CognitiveQuestion) or
-# the learning modules (LearningModule/Item); every other indicator uses the Likert
-# self-report pattern (BehavioralCategory/Item).
-MCQ_INDICATOR_KEYS = {t.value for t in AssessmentAttempt.MCQ_TYPES}
+# Indicator keys served by the learning / SJT / anagram patterns; every other
+# indicator uses the MCQ question bank (CognitiveQuestion).
 LEARNING_INDICATOR_KEYS = {t.value for t in AssessmentAttempt.LEARNING_TYPES}
 SJT_INDICATOR_KEYS = {t.value for t in AssessmentAttempt.SJT_TYPES}
+ANAGRAM_INDICATOR_KEYS = {t.value for t in AssessmentAttempt.ANAGRAM_TYPES}
 
-# CognitiveResponse/BehavioralResponse both use on_delete=PROTECT against these
-# models, so a question/item a student has already answered can't be deleted —
-# surfaced verbatim as {detail} by the frontend's api client.
+# CognitiveResponse uses on_delete=PROTECT against CognitiveQuestion, so a question
+# a student has already answered can't be deleted — surfaced verbatim as {detail}
+# by the frontend's api client.
 CANNOT_DELETE_MESSAGE = {
     'ru': 'Этот вопрос уже содержит ответы студентов, его нельзя удалить.',
     'uz': "Bu savolga talabalar javob bergan, uni o'chirib bo'lmaydi.",
@@ -74,14 +66,6 @@ def _serialize_learning_module(module, lang):
         ],
     }
 
-
-def _serialize_likert(item, lang):
-    return {
-        'id': item.id,
-        'prompt': getattr(item, f'text_{lang}'),
-        'textRu': item.text_ru, 'textUz': item.text_uz,
-        'reverseScored': item.reverse_scored,
-    }
 
 # NOTE: {{ k.delta }} in the mockup ("+64 this week", "+1.8 vs last term") compares
 # against a prior period. A real implementation needs a periodic snapshot
@@ -318,10 +302,11 @@ class QuestionBankView(APIView):
     only thing standing between this and the whole answer key leaking, so it
     must never be relaxed to a broader permission.
 
-    Each row carries both the language-picked display value *and* the raw
-    ru/uz pair (promptRu/promptUz etc.) — QuestionBankMcqDetailView/
-    QuestionBankLikertDetailView below PATCH those same `id`s, and the edit
-    form needs both languages at once rather than one fetch per language.
+    Each MCQ row carries both the language-picked display value *and* the raw
+    ru/uz pair (promptRu/promptUz etc.) — QuestionBankMcqDetailView below
+    PATCHes those same `id`s, and the edit form needs both languages at once
+    rather than one fetch per language. Learning/SJT/anagram groups are
+    read-only here (their content is seeded from apps.assessments.*_content).
     """
 
     permission_classes = [IsAdmin]
@@ -362,20 +347,27 @@ class QuestionBankView(APIView):
                     'questions': [],
                 })
                 continue
-            if key in MCQ_INDICATOR_KEYS:
-                questions = CognitiveQuestion.objects.filter(indicator_key=key).order_by('difficulty')
-                serialized = [_serialize_mcq(q, lang) for q in questions]
-                group_type = 'mcq'
-            else:
-                category = BehavioralCategory.objects.filter(key=key.upper()).prefetch_related('items').first()
-                items = category.items.all() if category else []
-                serialized = [_serialize_likert(item, lang) for item in items]
-                group_type = 'likert'
+            if key in ANAGRAM_INDICATOR_KEYS:
+                anagrams = [
+                    {'id': a.id, 'language': a.language, 'difficulty': a.difficulty, 'letters': a.letters, 'answers': a.answers}
+                    for a in AnagramItem.objects.filter(is_active=True)
+                ]
+                groups.append({
+                    'key': key,
+                    'label': INDICATOR_LABELS[lang][key],
+                    'type': 'anagram',
+                    'questionCount': len(anagrams),
+                    'anagrams': anagrams,
+                    'questions': [],
+                })
+                continue
 
+            questions = CognitiveQuestion.objects.filter(indicator_key=key).order_by('difficulty')
+            serialized = [_serialize_mcq(q, lang) for q in questions]
             groups.append({
                 'key': key,
                 'label': INDICATOR_LABELS[lang][key],
-                'type': group_type,
+                'type': 'mcq',
                 'questionCount': len(serialized),
                 'questions': serialized,
             })
@@ -410,40 +402,6 @@ class QuestionBankMcqDetailView(APIView):
         question = get_object_or_404(CognitiveQuestion, pk=pk)
         try:
             question.delete()
-        except ProtectedError:
-            lang = get_language(request)
-            return Response({'detail': CANNOT_DELETE_MESSAGE[lang]}, status=status.HTTP_409_CONFLICT)
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-class QuestionBankLikertListView(APIView):
-    """POST /api/admin/question-bank/likert/ — create a new BehavioralItem under a Likert indicator."""
-
-    permission_classes = [IsAdmin]
-
-    def post(self, request):
-        serializer = AdminBehavioralItemCreateSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        item = serializer.save()
-        return Response(_serialize_likert(item, get_language(request)), status=status.HTTP_201_CREATED)
-
-
-class QuestionBankLikertDetailView(APIView):
-    """PATCH/DELETE /api/admin/question-bank/likert/<id>/ — edit or remove one BehavioralItem row."""
-
-    permission_classes = [IsAdmin]
-
-    def patch(self, request, pk):
-        item = get_object_or_404(BehavioralItem, pk=pk)
-        serializer = AdminBehavioralItemUpdateSerializer(item, data=request.data, partial=True)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(_serialize_likert(item, get_language(request)))
-
-    def delete(self, request, pk):
-        item = get_object_or_404(BehavioralItem, pk=pk)
-        try:
-            item.delete()
         except ProtectedError:
             lang = get_language(request)
             return Response({'detail': CANNOT_DELETE_MESSAGE[lang]}, status=status.HTTP_409_CONFLICT)

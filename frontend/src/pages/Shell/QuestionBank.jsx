@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import {
-  createLikertItem, createMcqQuestion, deleteLikertItem, deleteMcqQuestion,
-  getQuestionBank, updateLikertItem, updateMcqQuestion,
+  createMcqQuestion, deleteMcqQuestion, getQuestionBank, updateMcqQuestion,
 } from '../../api/admin.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
 
@@ -28,7 +27,6 @@ const emptyMcqDraft = () => ({
   correctIndices: [],
   difficulty: '0',
 });
-const emptyLikertDraft = () => ({ textRu: '', textUz: '', reverseScored: false });
 
 const CODE_BOX = {
   margin: '0 0 8px', padding: '8px 12px', borderRadius: '8px', background: '#F1F5F7',
@@ -41,6 +39,34 @@ const RATING_STYLE = {
   2: { bg: 'rgba(189,91,76,0.05)', color: '#3B444A' },
   1: { bg: '#F6E0DC', color: '#8A3A2E' },
 };
+
+const ANAGRAM_TIERS = ['easy', 'medium', 'hard', 'unsolvable'];
+
+function Anagrams({ anagrams, t }) {
+  return (
+    <div style={{ padding: '0 22px 20px', display: 'flex', flexDirection: 'column', gap: '14px' }}>
+      {['uz', 'ru'].map((language) => (
+        <div key={language} style={{ padding: '16px 18px', borderRadius: '14px', background: 'rgba(255,255,255,0.55)', border: '1px solid rgba(31,55,75,0.08)' }}>
+          <div style={{ fontSize: '13px', fontWeight: 700, color: '#161F24', marginBottom: '12px' }}>{t(`questionBank.anagramLanguage.${language}`)}</div>
+          {ANAGRAM_TIERS.map((tier) => (
+            <div key={tier} style={{ marginBottom: '10px' }}>
+              <div style={{ ...FIELD_LABEL, color: tier === 'unsolvable' ? '#BD5B4C' : '#939EA3' }}>{t(`questionBank.anagramTier.${tier}`)}</div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                {anagrams.filter((a) => a.language === language && a.difficulty === tier).map((a) => (
+                  <span key={a.id} style={{
+                    fontSize: '12px', padding: '4px 10px', borderRadius: '8px', letterSpacing: '0.04em',
+                    background: tier === 'unsolvable' ? '#F6E0DC' : 'rgba(31,55,75,0.05)',
+                    color: tier === 'unsolvable' ? '#8A3A2E' : '#3B444A', fontWeight: 600,
+                  }}>{a.answers.length ? a.answers.join(' / ') : a.letters}</span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+}
 
 function SjtScenarios({ scenarios, t }) {
   return (
@@ -147,17 +173,13 @@ export default function QuestionBank() {
   function startEdit(group, q) {
     setSaveError(null);
     setEditing({ groupKey: group.key, id: q.id });
-    if (group.type === 'mcq') {
-      setDraft({
-        categoryRu: q.categoryRu, categoryUz: q.categoryUz,
-        promptRu: q.promptRu, promptUz: q.promptUz,
-        optionsRu: [...q.optionsRu], optionsUz: [...q.optionsUz],
-        correctIndices: [...q.correctIndices],
-        difficulty: String(q.difficulty),
-      });
-    } else {
-      setDraft({ textRu: q.textRu, textUz: q.textUz, reverseScored: q.reverseScored });
-    }
+    setDraft({
+      categoryRu: q.categoryRu, categoryUz: q.categoryUz,
+      promptRu: q.promptRu, promptUz: q.promptUz,
+      optionsRu: [...q.optionsRu], optionsUz: [...q.optionsUz],
+      correctIndices: [...q.correctIndices],
+      difficulty: String(q.difficulty),
+    });
   }
 
   function cancelEdit() {
@@ -188,20 +210,13 @@ export default function QuestionBank() {
     setSaving(true);
     setSaveError(null);
     try {
-      let updated;
-      if (group.type === 'mcq') {
-        updated = await updateMcqQuestion(q.id, {
-          category_ru: draft.categoryRu, category_uz: draft.categoryUz,
-          prompt_ru: draft.promptRu, prompt_uz: draft.promptUz,
-          options_ru: draft.optionsRu, options_uz: draft.optionsUz,
-          correct_indices: draft.correctIndices,
-          difficulty: Number(draft.difficulty) || 0,
-        });
-      } else {
-        updated = await updateLikertItem(q.id, {
-          text_ru: draft.textRu, text_uz: draft.textUz, reverse_scored: draft.reverseScored,
-        });
-      }
+      const updated = await updateMcqQuestion(q.id, {
+        category_ru: draft.categoryRu, category_uz: draft.categoryUz,
+        prompt_ru: draft.promptRu, prompt_uz: draft.promptUz,
+        options_ru: draft.optionsRu, options_uz: draft.optionsUz,
+        correct_indices: draft.correctIndices,
+        difficulty: Number(draft.difficulty) || 0,
+      });
       setGroups((prev) => prev.map((g) => (
         g.key !== group.key ? g : { ...g, questions: g.questions.map((row) => (row.id === q.id ? updated : row)) }
       )));
@@ -217,7 +232,7 @@ export default function QuestionBank() {
   function startCreate(group) {
     setCreateError(null);
     setCreatingGroupKey(group.key);
-    setNewDraft(group.type === 'mcq' ? emptyMcqDraft() : emptyLikertDraft());
+    setNewDraft(emptyMcqDraft());
   }
 
   function cancelCreate() {
@@ -270,23 +285,15 @@ export default function QuestionBank() {
     setCreating(true);
     setCreateError(null);
     try {
-      let created;
-      if (group.type === 'mcq') {
-        created = await createMcqQuestion({
-          indicator_key: group.key,
-          category_ru: newDraft.categoryRu, category_uz: newDraft.categoryUz,
-          question_type: newDraft.questionType,
-          prompt_ru: newDraft.promptRu, prompt_uz: newDraft.promptUz,
-          options_ru: newDraft.optionsRu, options_uz: newDraft.optionsUz,
-          correct_indices: newDraft.correctIndices,
-          difficulty: Number(newDraft.difficulty) || 0,
-        });
-      } else {
-        created = await createLikertItem({
-          indicator_key: group.key,
-          text_ru: newDraft.textRu, text_uz: newDraft.textUz, reverse_scored: newDraft.reverseScored,
-        });
-      }
+      const created = await createMcqQuestion({
+        indicator_key: group.key,
+        category_ru: newDraft.categoryRu, category_uz: newDraft.categoryUz,
+        question_type: newDraft.questionType,
+        prompt_ru: newDraft.promptRu, prompt_uz: newDraft.promptUz,
+        options_ru: newDraft.optionsRu, options_uz: newDraft.optionsUz,
+        correct_indices: newDraft.correctIndices,
+        difficulty: Number(newDraft.difficulty) || 0,
+      });
       setGroups((prev) => prev.map((g) => (
         g.key !== group.key ? g : { ...g, questions: [...g.questions, created], questionCount: g.questionCount + 1 }
       )));
@@ -303,8 +310,7 @@ export default function QuestionBank() {
     setDeleting(true);
     setDeleteError(null);
     try {
-      if (group.type === 'mcq') await deleteMcqQuestion(q.id);
-      else await deleteLikertItem(q.id);
+      await deleteMcqQuestion(q.id);
       setGroups((prev) => prev.map((g) => (
         g.key !== group.key ? g : { ...g, questions: g.questions.filter((row) => row.id !== q.id), questionCount: g.questionCount - 1 }
       )));
@@ -344,8 +350,7 @@ export default function QuestionBank() {
                     <div style={{ fontSize: '12px', color: '#939EA3', marginTop: '2px' }}>
                       {g.type === 'learning'
                         ? `${t('questionBank.typeLearning')} · ${t('questionBank.moduleCount')(g.moduleCount)}`
-                        : g.type === 'sjt' ? t('questionBank.typeSjt')
-                          : g.type === 'mcq' ? t('questionBank.typeMcq') : t('questionBank.typeLikert')} · {t('questionBank.questionCount')(g.questionCount)}
+                        : t(`questionBank.${{ sjt: 'typeSjt', anagram: 'typeAnagram', mcq: 'typeMcq' }[g.type]}`)} · {t('questionBank.questionCount')(g.questionCount)}
                     </div>
                   </div>
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#556269" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
@@ -356,7 +361,8 @@ export default function QuestionBank() {
 
                 {open && g.type === 'learning' && <LearningModules modules={g.modules} t={t} />}
                 {open && g.type === 'sjt' && <SjtScenarios scenarios={g.scenarios} t={t} />}
-                {open && g.type !== 'learning' && g.type !== 'sjt' && (
+                {open && g.type === 'anagram' && <Anagrams anagrams={g.anagrams} t={t} />}
+                {open && g.type === 'mcq' && (
                   <div style={{ padding: '0 22px 20px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
                     {g.questions.length === 0 && creatingGroupKey !== g.key && (
                       <div style={{ padding: '20px 0', textAlign: 'center', color: '#939EA3', fontSize: '13px' }}>{t('questionBank.empty')}</div>
@@ -430,12 +436,6 @@ export default function QuestionBank() {
                                 </div>
                               )}
 
-                              {g.type === 'likert' && (
-                                <div style={{ fontSize: '11.5px', color: '#939EA3' }}>
-                                  {t('questionBank.likertScaleNote')}
-                                  {q.reverseScored && <span style={{ marginLeft: '8px', fontWeight: 700, color: '#B8862F' }}>· {t('questionBank.reverseScoredBadge')}</span>}
-                                </div>
-                              )}
                             </>
                           )}
 
@@ -491,25 +491,6 @@ export default function QuestionBank() {
                             </div>
                           )}
 
-                          {isEditing && g.type === 'likert' && (
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '10px' }}>
-                                <div>
-                                  <label style={FIELD_LABEL}>{t('questionBank.promptRuLabel')}</label>
-                                  <textarea rows={2} style={{ ...INPUT, resize: 'vertical' }} value={draft.textRu} onChange={(e) => setDraft((p) => ({ ...p, textRu: e.target.value }))} />
-                                </div>
-                                <div>
-                                  <label style={FIELD_LABEL}>{t('questionBank.promptUzLabel')}</label>
-                                  <textarea rows={2} style={{ ...INPUT, resize: 'vertical' }} value={draft.textUz} onChange={(e) => setDraft((p) => ({ ...p, textUz: e.target.value }))} />
-                                </div>
-                              </div>
-                              <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', color: '#3B444A', cursor: 'pointer' }}>
-                                <input type="checkbox" checked={draft.reverseScored} onChange={(e) => setDraft((p) => ({ ...p, reverseScored: e.target.checked }))} />
-                                {t('questionBank.reverseScoredToggle')}
-                              </label>
-                            </div>
-                          )}
-
                           {isEditing && (
                             <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '12px' }}>
                               <button className="mm-btn" disabled={saving} onClick={() => saveEdit(g, q)} style={{
@@ -529,7 +510,6 @@ export default function QuestionBank() {
 
                     {creatingGroupKey === g.key ? (
                       <div style={{ padding: '16px 18px', borderRadius: '14px', background: 'rgba(46,85,112,0.06)', border: '1px dashed rgba(46,85,112,0.35)' }}>
-                        {g.type === 'mcq' ? (
                           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                             <div>
                               <label style={FIELD_LABEL}>{t('questionBank.questionTypeLabel')}</label>
@@ -597,24 +577,6 @@ export default function QuestionBank() {
                               <input type="number" step="0.05" style={INPUT} value={newDraft.difficulty} onChange={(e) => setNewDraft((p) => ({ ...p, difficulty: e.target.value }))} />
                             </div>
                           </div>
-                        ) : (
-                          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '10px' }}>
-                              <div>
-                                <label style={FIELD_LABEL}>{t('questionBank.promptRuLabel')}</label>
-                                <textarea rows={2} style={{ ...INPUT, resize: 'vertical' }} value={newDraft.textRu} onChange={(e) => setNewDraft((p) => ({ ...p, textRu: e.target.value }))} />
-                              </div>
-                              <div>
-                                <label style={FIELD_LABEL}>{t('questionBank.promptUzLabel')}</label>
-                                <textarea rows={2} style={{ ...INPUT, resize: 'vertical' }} value={newDraft.textUz} onChange={(e) => setNewDraft((p) => ({ ...p, textUz: e.target.value }))} />
-                              </div>
-                            </div>
-                            <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', color: '#3B444A', cursor: 'pointer' }}>
-                              <input type="checkbox" checked={newDraft.reverseScored} onChange={(e) => setNewDraft((p) => ({ ...p, reverseScored: e.target.checked }))} />
-                              {t('questionBank.reverseScoredToggle')}
-                            </label>
-                          </div>
-                        )}
 
                         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '12px' }}>
                           <button className="mm-btn" disabled={creating} onClick={() => submitCreate(g)} style={{

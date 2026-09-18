@@ -1,5 +1,6 @@
 import random
 
+from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import get_object_or_404
 from rest_framework import status
@@ -15,9 +16,9 @@ from apps.scoring.views import serialize_achievement
 
 from .coding_sandbox import run_test_cases
 from .models import (
+    AnagramItem,
+    AnagramResponse,
     AssessmentAttempt,
-    BehavioralCategory,
-    BehavioralResponse,
     CodingProblem,
     CodingSubmission,
     CognitiveQuestion,
@@ -27,11 +28,7 @@ from .models import (
     SjtResponse,
     SjtScenario,
 )
-from .serializers import (
-    BehavioralCategorySerializer,
-    CodingProblemSerializer,
-    CognitiveQuestionSerializer,
-)
+from .serializers import CodingProblemSerializer, CognitiveQuestionSerializer
 
 MCQ_QUESTION_CAP = 40  # questions per MCQ-pattern indicator (math/logic/creative/problem_solving/attention/iq)
 ALGORITHMIC_MCQ_CAP = 20  # algorithmic's MCQ phase — its other 20 items are coding tasks, see CODING_TASK_CAP
@@ -48,12 +45,6 @@ def _mcq_cap(kind: str) -> int:
 def _mcq_time_limit(kind: str) -> int:
     return ALGORITHMIC_MCQ_TIME_LIMIT_SECONDS if kind == AssessmentAttempt.Type.ALGORITHMIC else MCQ_TIME_LIMIT_SECONDS
 
-# Mirrors {{ behavioralError }} — the only free-text message this app emits itself.
-ALL_STATEMENTS_REQUIRED = {
-    'ru': 'Пожалуйста, ответьте на все утверждения перед отправкой.',
-    'uz': "Iltimos, yuborishdan oldin barcha bayonotlarga javob bering.",
-}
-
 ANSWER_REQUIRED = {
     'ru': 'Пожалуйста, дайте ответ.',
     'uz': 'Iltimos, javob bering.',
@@ -69,7 +60,7 @@ def _valid_kind(kind: str, allowed: frozenset) -> str:
 
 def _completion_response(result: dict, lang: str) -> Response:
     """
-    Shared by Submit{Mcq,Coding,Likert}View — `result` is StudentStateTracker.
+    Shared by every Submit*View — `result` is StudentStateTracker.
     complete_attempt()'s {score, achievement}. Feeds the frontend's post-submit
     completion screen: the score just earned on this indicator, plus a badge
     payload only when this submission newly earned/upgraded one.
@@ -342,81 +333,6 @@ class SubmitCodingView(APIView):
         if done_count < CODING_TASK_CAP:
             return Response({'phase': 'next', 'cpNumber': done_count + 1, 'cpTotal': CODING_TASK_CAP})
 
-        result = StudentStateTracker().complete_attempt(attempt)
-        return _completion_response(result, get_language(request))
-
-
-# -- Likert pattern: patience --------------------------------------------------------------
-
-class StartLikertAttemptView(APIView):
-    """POST /api/assessments/likert/<kind>/start/"""
-
-    permission_classes = [IsStudent, HasCompletedProfile]
-
-    def post(self, request, kind):
-        kind = _valid_kind(kind, AssessmentAttempt.LIKERT_TYPES)
-        tracker = StudentStateTracker()
-        attempt = tracker.start_or_restart_attempt(request.user, kind)
-        return Response({
-            'assessment_type': attempt.assessment_type,
-            'status': attempt.status,
-            'time_remaining_seconds': attempt.time_remaining_seconds,
-        })
-
-
-class LikertItemsView(APIView):
-    """
-    GET /api/assessments/likert/<kind>/items/ — {{ behavioralGroups }}, scoped to
-    the single BehavioralCategory matching `kind` (kind.upper() == category.key).
-    Returned as a 1-element list so the frontend's existing `groups.map()` needs
-    no restructuring.
-    """
-
-    permission_classes = [IsStudent]
-
-    def get(self, request, kind):
-        kind = _valid_kind(kind, AssessmentAttempt.LIKERT_TYPES)
-        categories = BehavioralCategory.objects.filter(key=kind.upper()).prefetch_related('items')
-        return Response(
-            BehavioralCategorySerializer(categories, many=True, context={'lang': get_language(request)}).data
-        )
-
-
-class AnswerLikertView(APIView):
-    """PATCH /api/assessments/likert/<kind>/answer/ {item_id, value} — autosave."""
-
-    permission_classes = [IsStudent]
-
-    def patch(self, request, kind):
-        kind = _valid_kind(kind, AssessmentAttempt.LIKERT_TYPES)
-        attempt = get_object_or_404(AssessmentAttempt, student=request.user, assessment_type=kind)
-        BehavioralResponse.objects.update_or_create(
-            attempt=attempt, item_id=request.data['item_id'], cycle=attempt.attempt_cycle,
-            defaults={'scale_value': int(request.data['value'])},
-        )
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-class SubmitLikertView(APIView):
-    """
-    POST /api/assessments/likert/<kind>/submit/ — completeness check + finalize.
-
-    Returns {score, achievement}, same shape as SubmitMcqView — see
-    _completion_response.
-    """
-
-    permission_classes = [IsStudent]
-
-    def post(self, request, kind):
-        kind = _valid_kind(kind, AssessmentAttempt.LIKERT_TYPES)
-        attempt = get_object_or_404(AssessmentAttempt, student=request.user, assessment_type=kind)
-        category = BehavioralCategory.objects.filter(key=kind.upper()).prefetch_related('items').first()
-        total_items = category.items.count() if category else 0
-        if attempt.behavioral_responses.filter(cycle=attempt.attempt_cycle).count() < total_items:
-            return Response(
-                {'detail': ALL_STATEMENTS_REQUIRED[get_language(request)]},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
         result = StudentStateTracker().complete_attempt(attempt)
         return _completion_response(result, get_language(request))
 
@@ -700,6 +616,159 @@ class SubmitSjtView(APIView):
 
     def post(self, request):
         attempt = _sjt_attempt(request)
+        result = StudentStateTracker().complete_attempt(attempt)
+        return _completion_response(result, get_language(request))
+
+
+# -- Anagram pattern: patience -------------------------------------------------------------
+
+# Serving order: easy warm-up first, then unsolvable sets hidden among medium/hard ones.
+ANAGRAM_SLOTS = ['easy', 'easy', 'easy', 'medium', 'medium', 'unsolvable', 'medium', 'hard', 'unsolvable', 'hard', 'hard', 'unsolvable']
+ANAGRAM_MAX_ACTIVE_MS = 10 * 60 * 1000
+
+
+def _anagram_attempt(request):
+    return get_object_or_404(AssessmentAttempt, student=request.user, assessment_type=AssessmentAttempt.Type.PATIENCE)
+
+
+def _ensure_anagram_plan(attempt, lang) -> list[int]:
+    """Fills ANAGRAM_SLOTS in the student's language, preferring items never served in a past cycle."""
+    plan = attempt.anagram_plan or {}
+    if plan.get('cycle') == attempt.attempt_cycle and plan.get('items'):
+        return plan['items']
+
+    # Every served item ends up with a response (the attempt can't finish until each
+    # is solved or skipped), so responses alone tell us what past cycles showed.
+    seen_ids = set(AnagramResponse.objects.filter(attempt=attempt).values_list('item_id', flat=True))
+    pools = {}
+    for item in AnagramItem.objects.filter(language=lang, is_active=True):
+        pools.setdefault(item.difficulty, []).append(item.id)
+
+    chosen = []
+    for difficulty in ANAGRAM_SLOTS:
+        candidates = [i for i in pools.get(difficulty, []) if i not in chosen]
+        fresh = [i for i in candidates if i not in seen_ids]
+        pool = fresh or candidates
+        if pool:
+            chosen.append(random.choice(pool))
+    attempt.anagram_plan = {'cycle': attempt.attempt_cycle, 'items': chosen}
+    attempt.save(update_fields=['anagram_plan'])
+    return chosen
+
+
+def _anagram_current(attempt, item_ids):
+    finished = set(
+        attempt.anagram_responses.filter(cycle=attempt.attempt_cycle)
+        .filter(Q(solved=True) | Q(skipped=True)).values_list('item_id', flat=True)
+    )
+    for index, item_id in enumerate(item_ids):
+        if item_id not in finished:
+            return index, item_id
+    return None, None
+
+
+def _scrambled(item) -> list[str]:
+    letters = list(item.letters)
+    for _ in range(20):
+        random.shuffle(letters)
+        if ''.join(letters) not in item.answers and ''.join(letters) != item.letters:
+            break
+    return letters
+
+
+def _anagram_response(attempt, item, active_ms):
+    response, _ = AnagramResponse.objects.get_or_create(attempt=attempt, item=item, cycle=attempt.attempt_cycle)
+    if active_ms is not None:
+        response.active_ms = max(response.active_ms, min(int(active_ms), ANAGRAM_MAX_ACTIVE_MS))
+    return response
+
+
+def _current_anagram_item(request, attempt):
+    item_ids = _ensure_anagram_plan(attempt, get_language(request))
+    _, current_id = _anagram_current(attempt, item_ids)
+    item_id = request.data.get('item_id')
+    if current_id is None or str(item_id) != str(current_id):
+        raise Http404('Not the current anagram')
+    return AnagramItem.objects.get(id=current_id)
+
+
+class StartAnagramView(APIView):
+    """POST /api/assessments/anagram/start/"""
+
+    permission_classes = [IsStudent, HasCompletedProfile]
+
+    def post(self, request):
+        attempt = StudentStateTracker().start_or_restart_attempt(request.user, AssessmentAttempt.Type.PATIENCE)
+        _ensure_anagram_plan(attempt, get_language(request))
+        return Response({'assessment_type': attempt.assessment_type, 'status': attempt.status})
+
+
+class CurrentAnagramView(APIView):
+    """
+    GET /api/assessments/anagram/current/ — the next unfinished anagram as shuffled
+    letter tiles. Never reveals answers or which items are unsolvable.
+    """
+
+    permission_classes = [IsStudent]
+
+    def get(self, request):
+        attempt = _anagram_attempt(request)
+        item_ids = _ensure_anagram_plan(attempt, get_language(request))
+        index, item_id = _anagram_current(attempt, item_ids)
+        if item_id is None:
+            return Response({'item': None, 'number': len(item_ids), 'total': len(item_ids)})
+        item = AnagramItem.objects.get(id=item_id)
+        response = attempt.anagram_responses.filter(item=item, cycle=attempt.attempt_cycle).first()
+        return Response({
+            'item': {'id': item.id, 'letters': _scrambled(item), 'activeMs': response.active_ms if response else 0},
+            'number': index + 1,
+            'total': len(item_ids),
+        })
+
+
+class GuessAnagramView(APIView):
+    """POST /api/assessments/anagram/guess/ {item_id, guess, active_ms} → {correct}"""
+
+    permission_classes = [IsStudent]
+
+    def post(self, request):
+        attempt = _anagram_attempt(request)
+        item = _current_anagram_item(request, attempt)
+        guess = str(request.data.get('guess', '')).strip().upper()
+        response = _anagram_response(attempt, item, request.data.get('active_ms'))
+        correct = guess in item.answers
+        if correct:
+            response.solved = True
+        elif sorted(guess) == sorted(item.letters) and guess not in response.guesses:
+            response.guesses = [*response.guesses, guess]
+        response.save()
+        return Response({'correct': correct})
+
+
+class SkipAnagramView(APIView):
+    """POST /api/assessments/anagram/skip/ {item_id, active_ms}"""
+
+    permission_classes = [IsStudent]
+
+    def post(self, request):
+        attempt = _anagram_attempt(request)
+        item = _current_anagram_item(request, attempt)
+        response = _anagram_response(attempt, item, request.data.get('active_ms'))
+        response.skipped = True
+        response.save()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class SubmitAnagramView(APIView):
+    """POST /api/assessments/anagram/submit/ — finalizes once every anagram is solved or skipped."""
+
+    permission_classes = [IsStudent]
+
+    def post(self, request):
+        attempt = _anagram_attempt(request)
+        item_ids = _ensure_anagram_plan(attempt, get_language(request))
+        if _anagram_current(attempt, item_ids)[1] is not None:
+            return Response({'detail': ANSWER_REQUIRED[get_language(request)]}, status=status.HTTP_400_BAD_REQUEST)
         result = StudentStateTracker().complete_attempt(attempt)
         return _completion_response(result, get_language(request))
 

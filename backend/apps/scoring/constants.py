@@ -6,7 +6,8 @@ apps.scoring itself depends on apps.assessments, not the other way around.
 
 The 10 keys are the product's indicator set — each maps 1:1 to one of the 10
 assessment cards (apps.assessments.models.AssessmentAttempt.Type): 6 MCQ
-indicators, 1 coding indicator, 3 self-report (Likert) indicators.
+indicators, 1 MCQ+coding indicator, and teamwork/patience/learning_speed with
+their own task formats (SJT, anagrams, learn-and-apply).
 """
 
 # Internal Django choice labels — used only for admin/DB introspection, never

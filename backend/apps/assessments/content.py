@@ -13,18 +13,14 @@ Shape:
   adaptive engine. Six of the seven indicators carry 200 questions each;
   'algorithmic' is the exception with 100 curated MCQ, because it is the only
   hybrid indicator and pairs its MCQ pool with a 100-task coding pool
-  (CODING_PROBLEMS below) — 1300 MCQ + 100 coding tasks in total. Self-report
-  Likert indicators are intentionally excluded from this expansion — see
-  LIKERT_CATEGORIES below.
+  (CODING_PROBLEMS below) — 1300 MCQ + 100 coding tasks in total.
 - CODING_PROBLEMS: the coding-task pool (100 tasks across three difficulty
   tiers), run after algorithmic's MCQ phase (AssessmentAttempt.HYBRID_TYPES)
   and blended into that one indicator's score alongside it — see
   apps.scoring.state_tracker._score_hybrid.
-- LIKERT_CATEGORIES: dict keyed by one of AssessmentAttempt.LIKERT_TYPES'
-  values (patience), each a dict with a display
-  label plus a list of Likert statement items (reverse_scored flips the
-  1-5 scale before averaging into the indicator — see
-  apps.scoring.state_tracker._score_likert).
+
+teamwork, patience and learning_speed have their own content modules
+(sjt_content, anagram_content, learning_content).
 
 Load with:  python manage.py seed_assessment_content
 """
@@ -15720,31 +15716,3 @@ CODING_PROBLEMS = [
         ],
     },
 ]
-
-LIKERT_CATEGORIES = {
-    'patience': {
-        'label_ru': "ТЕРПЕНИЕ И НАСТОЙЧИВОСТЬ", 'label_uz': "SABR-TOQAT VA QAT'IYATLILIK",
-        'items': [
-            {
-                'key': 'patience_positive_1', 'reverse_scored': False,
-                'text_ru': 'Я продолжаю работать над задачей даже после нескольких неудачных попыток.',
-                'text_uz': 'Bir necha muvaffaqiyatsiz urinishdan keyin ham masala ustida ishlashda davom etaman.',
-            },
-            {
-                'key': 'patience_negative_1', 'reverse_scored': True,
-                'text_ru': 'Я расстраиваюсь и хочу всё бросить, когда что-то не работает с первого раза.',
-                'text_uz': "Biror narsa birinchi urinishda ishlamasa, tushkunlikka tushib, to'xtatib qo'yishni xohlayman.",
-            },
-            {
-                'key': 'patience_positive_2', 'reverse_scored': False,
-                'text_ru': 'Я сохраняю спокойствие, когда решение задачи занимает намного больше времени, чем ожидалось.',
-                'text_uz': "Masalani yechish kutilganidan ancha ko'p vaqt olganda ham xotirjamligimni saqlayman.",
-            },
-            {
-                'key': 'patience_negative_2', 'reverse_scored': True,
-                'text_ru': 'Я склонен переключаться на другую задачу, если эта кажется слишком долгой.',
-                'text_uz': "Agar masala juda uzoq davom etayotgandek tuyulsa, boshqa vazifaga o'tishga moyilman.",
-            },
-        ],
-    },
-}

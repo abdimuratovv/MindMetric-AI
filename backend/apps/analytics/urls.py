@@ -12,6 +12,4 @@ urlpatterns = [
     path('question-bank/', views.QuestionBankView.as_view(), name='admin-question-bank'),
     path('question-bank/mcq/', views.QuestionBankMcqListView.as_view(), name='admin-question-bank-mcq-list'),
     path('question-bank/mcq/<int:pk>/', views.QuestionBankMcqDetailView.as_view(), name='admin-question-bank-mcq-detail'),
-    path('question-bank/likert/', views.QuestionBankLikertListView.as_view(), name='admin-question-bank-likert-list'),
-    path('question-bank/likert/<int:pk>/', views.QuestionBankLikertDetailView.as_view(), name='admin-question-bank-likert-detail'),
 ]

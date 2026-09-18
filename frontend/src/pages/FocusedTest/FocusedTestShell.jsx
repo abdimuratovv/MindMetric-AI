@@ -3,18 +3,16 @@ import { useState } from 'react';
 import { pauseAttempt } from '../../api/assessments.js';
 import { ASSESSMENT_PATTERN } from '../../constants/assessments.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
+import Anagram from './Anagram.jsx';
 import Hybrid from './Hybrid.jsx';
 import Learning from './Learning.jsx';
-import Likert from './Likert.jsx';
 import Mcq from './Mcq.jsx';
 import Sjt from './Sjt.jsx';
 
 /**
  * Header/timer/progress bar shared by all ten focused-test screens, plus the
- * pattern-based dispatch (mcq/hybrid/likert) that picks which generalized
- * screen component handles the current `screen` type — see
- * constants/assessments.js's ASSESSMENT_PATTERN, mirroring
- * apps.assessments.models.AssessmentAttempt's MCQ_TYPES/HYBRID_TYPES/LIKERT_TYPES.
+ * pattern-based dispatch that picks which generalized screen component handles
+ * the current `screen` type — see constants/assessments.js's ASSESSMENT_PATTERN.
  */
 export default function FocusedTestShell({ screen, goTo }) {
   const [progress, setProgress] = useState({ pct: '0%', timeRemainingSeconds: null });
@@ -67,7 +65,7 @@ export default function FocusedTestShell({ screen, goTo }) {
 
       {pattern === 'mcq' && <Mcq assessmentType={screen} goTo={goTo} onProgress={setProgress} />}
       {pattern === 'hybrid' && <Hybrid goTo={goTo} onProgress={setProgress} />}
-      {pattern === 'likert' && <Likert assessmentType={screen} goTo={goTo} onProgress={setProgress} />}
+      {pattern === 'anagram' && <Anagram goTo={goTo} onProgress={setProgress} />}
       {pattern === 'learning' && <Learning goTo={goTo} onProgress={setProgress} />}
       {pattern === 'sjt' && <Sjt goTo={goTo} onProgress={setProgress} />}
     </div>

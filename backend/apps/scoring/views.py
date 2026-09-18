@@ -297,7 +297,7 @@ class AnalyticsDetailView(APIView):
 
 def serialize_achievement(achievement: Achievement, lang: str) -> dict:
     """Shared shape for both AchievementListView's rows and the {achievement} field
-    Submit{Mcq,Coding,Likert}View echo back right after a badge is earned/upgraded."""
+    Submit*View endpoints echo back right after a badge is earned/upgraded."""
     return {
         'key': achievement.indicator_key,
         'label': INDICATOR_LABELS[lang][achievement.indicator_key],

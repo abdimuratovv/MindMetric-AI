@@ -4,7 +4,7 @@ import { ACHIEVEMENT_ICON_ANIMATIONS, ACHIEVEMENT_TIER_COLORS, ASSESSMENT_ICONS 
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
 
 /**
- * Shown right after an indicator's test is submitted (Mcq/Coding/Likert), on
+ * Shown right after an indicator's test is submitted (any focused-test pattern), on
  * top of everything else, before the student is routed back to the selection
  * screen. Always shows the score just earned on this one indicator; when the
  * submission crossed a new badge tier, `achievement` is set and a badge

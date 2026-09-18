@@ -2,21 +2,15 @@ import uuid
 
 from rest_framework import serializers
 
-from .models import (
-    AssessmentAttempt,
-    BehavioralCategory,
-    BehavioralItem,
-    CodingProblem,
-    CognitiveQuestion,
-)
+from .models import AssessmentAttempt, CodingProblem, CognitiveQuestion
 
 # indicator keys the admin question-bank create form is allowed to attach a new
-# CognitiveQuestion to — mirrors apps.analytics.views.MCQ_INDICATOR_KEYS.
+# CognitiveQuestion to.
 MCQ_INDICATOR_KEYS = {t.value for t in AssessmentAttempt.MCQ_TYPES}
 
 
 def _new_content_key(prefix):
-    """Stable, collision-free `key` for an admin-created question/item — seed
+    """Stable, collision-free `key` for an admin-created question — seed
     content uses hand-picked keys like 'math-easy-1', so admin-created rows
     are tagged distinctly to avoid ever colliding with a future seed run."""
     return f'{prefix}-admin-{uuid.uuid4().hex[:10]}'
@@ -134,39 +128,6 @@ class AdminCognitiveQuestionCreateSerializer(_McqInvariantsMixin, serializers.Mo
         return CognitiveQuestion.objects.create(**validated_data)
 
 
-class AdminBehavioralItemUpdateSerializer(serializers.ModelSerializer):
-    """PATCH body for apps.analytics.views.QuestionBankLikertDetailView."""
-
-    class Meta:
-        model = BehavioralItem
-        fields = ['text_ru', 'text_uz', 'reverse_scored']
-
-
-class AdminBehavioralItemCreateSerializer(serializers.ModelSerializer):
-    """POST body for apps.analytics.views.QuestionBankLikertListView — creates a
-    new BehavioralItem under an existing Likert indicator's category, appended
-    after the category's current last item."""
-
-    indicator_key = serializers.CharField(write_only=True)
-
-    class Meta:
-        model = BehavioralItem
-        fields = ['indicator_key', 'text_ru', 'text_uz', 'reverse_scored']
-
-    def validate_indicator_key(self, value):
-        if not BehavioralCategory.objects.filter(key=value.upper()).exists():
-            raise serializers.ValidationError('Unknown Likert indicator.')
-        return value
-
-    def create(self, validated_data):
-        indicator_key = validated_data.pop('indicator_key')
-        category = BehavioralCategory.objects.get(key=indicator_key.upper())
-        last_order = max((o for o in category.items.values_list('order', flat=True)), default=0)
-        return BehavioralItem.objects.create(
-            category=category, key=_new_content_key(indicator_key), order=last_order + 1, **validated_data,
-        )
-
-
 class CodingProblemSerializer(serializers.ModelSerializer):
     """{{ codingProblem.* }} — hidden test cases withheld."""
 
@@ -194,28 +155,3 @@ class CodingProblemSerializer(serializers.ModelSerializer):
 
     def get_starter_code(self, obj):
         return getattr(obj, f'starter_code_{self.context["lang"]}')
-
-
-class BehavioralItemSerializer(serializers.ModelSerializer):
-    text = serializers.SerializerMethodField()
-
-    class Meta:
-        model = BehavioralItem
-        fields = ['id', 'text', 'order', 'reverse_scored']
-
-    def get_text(self, obj):
-        return getattr(obj, f'text_{self.context["lang"]}')
-
-
-class BehavioralCategorySerializer(serializers.ModelSerializer):
-    """One entry of {{ behavioralGroups }}."""
-
-    items = BehavioralItemSerializer(many=True, read_only=True)
-    label = serializers.SerializerMethodField()
-
-    class Meta:
-        model = BehavioralCategory
-        fields = ['id', 'key', 'label', 'items']
-
-    def get_label(self, obj):
-        return getattr(obj, f'label_{self.context["lang"]}')

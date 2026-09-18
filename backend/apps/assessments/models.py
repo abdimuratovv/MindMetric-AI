@@ -111,7 +111,12 @@ class CodingProblem(models.Model):
 
 
 class BehavioralCategory(models.Model):
-    """One of BEHAVIORAL_GROUPS' categories, e.g. PERSISTENCE, COLLABORATION."""
+    """
+    Legacy: the Likert self-report pattern teamwork/patience/learning_speed used
+    before SJT/anagram/learning replaced it. Nothing reads these rows anymore;
+    they (and BehavioralItem/BehavioralResponse) are kept only so past students'
+    answers aren't lost.
+    """
 
     key = models.CharField(max_length=30, unique=True)
     label_ru = models.CharField(max_length=60)
@@ -127,7 +132,7 @@ class BehavioralCategory(models.Model):
 
 
 class BehavioralItem(models.Model):
-    """One Likert statement within a BehavioralCategory."""
+    """Legacy Likert statement within a BehavioralCategory — see BehavioralCategory."""
 
     key = models.SlugField(max_length=60, unique=True)
     category = models.ForeignKey(BehavioralCategory, related_name='items', on_delete=models.CASCADE)
@@ -224,6 +229,34 @@ class SjtScenario(models.Model):
         return f'[{self.key}] {self.situation_ru[:50]}'
 
 
+class AnagramItem(models.Model):
+    """
+    One anagram for the patience indicator. Words are language-specific content
+    (a Russian student gets Russian words), so each row has one `language` instead
+    of a _ru/_uz pair. Unsolvable items have no `answers` — their letters form no
+    word, and time/attempts spent on them is the core persistence signal.
+    """
+
+    class Difficulty(models.TextChoices):
+        EASY = 'easy', 'Easy'
+        MEDIUM = 'medium', 'Medium'
+        HARD = 'hard', 'Hard'
+        UNSOLVABLE = 'unsolvable', 'Unsolvable'
+
+    key = models.SlugField(max_length=60, unique=True)
+    language = models.CharField(max_length=2, choices=[('ru', 'Russian'), ('uz', 'Uzbek')])
+    difficulty = models.CharField(max_length=10, choices=Difficulty.choices)
+    letters = models.CharField(max_length=20, help_text='Uppercase letters to rearrange (shuffled again when served).')
+    answers = models.JSONField(default=list, blank=True, help_text='Accepted uppercase words; empty = unsolvable.')
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ['language', 'difficulty', 'key']
+
+    def __str__(self):
+        return f'[{self.key}] {self.letters}'
+
+
 class AssessmentAttempt(models.Model):
     """
     One student's attempt at one of the ten indicator-specific assessment
@@ -232,11 +265,11 @@ class AssessmentAttempt(models.Model):
     `completed{}` flags gating "View my results" — see apps.scoring.state_tracker.
 
     Each type maps 1:1 to an indicator key (apps.scoring.constants.INDICATOR_CHOICES)
-    and to one of three reusable UI/scoring patterns — MCQ_TYPES (timed,
-    difficulty-matched question bank), LIKERT_TYPES (self-report statements), and
-    the MCQ pattern followed by a coding run/submit phase for HYBRID_TYPES (a
-    subset of MCQ_TYPES — see below). Views/state_tracker dispatch on these sets
-    rather than hardcoding all ten types individually.
+    and to one reusable UI/scoring pattern — MCQ_TYPES (timed, difficulty-matched
+    question bank), HYBRID_TYPES (a subset of MCQ_TYPES whose MCQ phase is
+    followed by a coding phase), LEARNING_TYPES, SJT_TYPES and ANAGRAM_TYPES.
+    Views/state_tracker dispatch on these sets rather than hardcoding all ten
+    types individually.
     """
 
     class Type(models.TextChoices):
@@ -259,7 +292,9 @@ class AssessmentAttempt(models.Model):
     MCQ_TYPES = frozenset({
         Type.MATH, Type.LOGIC, Type.ALGORITHMIC, Type.CREATIVE, Type.PROBLEM_SOLVING, Type.ATTENTION, Type.IQ,
     })
-    LIKERT_TYPES = frozenset({Type.PATIENCE})
+    # Persistence on progressively harder anagrams, some unsolvable — see
+    # AnagramItem and state_tracker._score_anagram.
+    ANAGRAM_TYPES = frozenset({Type.PATIENCE})
     # Situational judgment test: pick the best and worst action per scenario —
     # see SjtScenario and state_tracker._score_sjt.
     SJT_TYPES = frozenset({Type.TEAMWORK})
@@ -301,6 +336,8 @@ class AssessmentAttempt(models.Model):
     # LEARNING_TYPES only: {"cycle": n, "modules": [module_id, ...]} — the modules
     # picked for cycle n, in order. Re-picked whenever the cycle no longer matches.
     learning_plan = models.JSONField(default=dict, blank=True)
+    # ANAGRAM_TYPES only: {"cycle": n, "items": [anagram_id, ...]} in serving order.
+    anagram_plan = models.JSONField(default=dict, blank=True)
 
     class Meta:
         constraints = [
@@ -407,6 +444,27 @@ class SjtResponse(models.Model):
     class Meta:
         constraints = [
             models.UniqueConstraint(fields=['attempt', 'scenario', 'cycle'], name='one_sjt_response_per_scenario_per_cycle'),
+        ]
+
+
+class AnagramResponse(models.Model):
+    """Created on the first guess; finished once `solved` or `skipped` is set."""
+
+    attempt = models.ForeignKey(AssessmentAttempt, related_name='anagram_responses', on_delete=models.CASCADE)
+    item = models.ForeignKey(AnagramItem, on_delete=models.PROTECT)
+    solved = models.BooleanField(default=False)
+    skipped = models.BooleanField(default=False)
+    guesses = models.JSONField(default=list, help_text='Distinct wrong guesses, in order.')
+    active_ms = models.PositiveIntegerField(
+        default=0, help_text='Client-measured time the student was actually working on this item (tab visible, recent input).',
+    )
+    responded_at = models.DateTimeField(auto_now=True)
+    # See CognitiveResponse.cycle.
+    cycle = models.PositiveIntegerField(default=1)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['attempt', 'item', 'cycle'], name='one_anagram_response_per_item_per_cycle'),
         ]
 
 

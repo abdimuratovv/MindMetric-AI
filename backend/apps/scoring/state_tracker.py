@@ -5,7 +5,7 @@ session survives a refresh. See ARCHITECTURE.md §5.
 """
 from django.utils import timezone
 
-from apps.assessments.models import AssessmentAttempt, BehavioralResponse, CodingSubmission
+from apps.assessments.models import AssessmentAttempt, CodingSubmission
 from apps.i18n import DEFAULT_LANGUAGE
 
 from . import achievements, calculators
@@ -25,6 +25,14 @@ def sjt_points(ratings: list[int], best_index: int, worst_index: int) -> float:
     return SJT_BEST_POINTS[ratings[best_index]] + SJT_WORST_POINTS[ratings[worst_index]]
 
 
+# Anagram effort saturates at this much active time / this many distinct wrong
+# guesses on one item, so waiting it out indefinitely earns nothing extra.
+ANAGRAM_EFFORT_TARGET_MS = {'easy': 45_000, 'medium': 60_000, 'hard': 90_000, 'unsolvable': 90_000}
+ANAGRAM_EFFORT_TARGET_GUESSES = {'easy': 3, 'medium': 4, 'hard': 6, 'unsolvable': 6}
+# Unsolvable items carry the most weight: only persistence can score there.
+ANAGRAM_GROUP_WEIGHTS = {'unsolvable': 0.5, 'hard': 0.35, 'warmup': 0.15}
+
+
 class StudentStateTracker:
     def get_or_create_attempt(self, student, assessment_type: str) -> AssessmentAttempt:
         attempt, _ = AssessmentAttempt.objects.get_or_create(
@@ -34,7 +42,7 @@ class StudentStateTracker:
 
     def start_or_restart_attempt(self, student, assessment_type: str, *, time_remaining_seconds=None) -> AssessmentAttempt:
         """
-        Shared by Start{Mcq,Likert,Coding}AttemptView. There's exactly one
+        Shared by every Start*View. There's exactly one
         AssessmentAttempt row per (student, assessment_type) — the "Retake" button
         reuses it rather than creating a new one. A COMPLETED attempt's prior answers
         are no longer deleted here: they're left in place, tagged with the
@@ -113,8 +121,8 @@ class StudentStateTracker:
             result = self._score_hybrid(attempt)
         elif attempt.assessment_type in AssessmentAttempt.MCQ_TYPES:
             result = self._score_mcq(attempt)
-        elif attempt.assessment_type in AssessmentAttempt.LIKERT_TYPES:
-            result = self._score_likert(attempt)
+        elif attempt.assessment_type in AssessmentAttempt.ANAGRAM_TYPES:
+            result = self._score_anagram(attempt)
         elif attempt.assessment_type in AssessmentAttempt.LEARNING_TYPES:
             result = self._score_learning(attempt)
         elif attempt.assessment_type in AssessmentAttempt.SJT_TYPES:
@@ -176,21 +184,32 @@ class StudentStateTracker:
         score = round(0.4 * attempt.mcq_phase_score + 0.6 * coding_score)
         return self._upsert_indicator_score(attempt.student, 'algorithmic', score)
 
-    def _score_likert(self, attempt: AssessmentAttempt) -> dict:
-        # Each Likert-pattern attempt is scoped to exactly one BehavioralCategory
-        # (kind.upper() == category.key), so every response feeds the same
-        # indicator: attempt.assessment_type itself.
-        responses = attempt.behavioral_responses.filter(cycle=attempt.attempt_cycle).select_related('item')
-        values = []
-        for response in responses:
-            value = response.scale_value
-            if response.item.reverse_scored:
-                value = 6 - value  # 1..5 scale flip
-            values.append(value)
-        if not values:
+    def _score_anagram(self, attempt: AssessmentAttempt) -> dict:
+        """
+        Each item is worth 1 if solved; otherwise its effort — 70% active time and
+        30% distinct wrong guesses, each capped at its difficulty's target. Speed on
+        solved items is deliberately ignored. Items are averaged per group
+        (unsolvable / hard / easy+medium warm-up) and the groups weighted by
+        ANAGRAM_GROUP_WEIGHTS.
+        """
+        responses = attempt.anagram_responses.filter(cycle=attempt.attempt_cycle).select_related('item')
+        groups = {}
+        for r in responses:
+            difficulty = r.item.difficulty
+            if r.solved:
+                value = 1.0
+            else:
+                time_part = min(1.0, r.active_ms / ANAGRAM_EFFORT_TARGET_MS[difficulty])
+                guess_part = min(1.0, len(r.guesses) / ANAGRAM_EFFORT_TARGET_GUESSES[difficulty])
+                value = 0.7 * time_part + 0.3 * guess_part
+            group = difficulty if difficulty in ('unsolvable', 'hard') else 'warmup'
+            groups.setdefault(group, []).append(value)
+        if not groups:
             return {'score': None, 'achievement': None}
-        avg = sum(values) / len(values)  # 1..5
-        score = round((avg - 1) / 4 * 100)  # scale to 0..100
+
+        total_weight = sum(ANAGRAM_GROUP_WEIGHTS[g] for g in groups)
+        weighted = sum(ANAGRAM_GROUP_WEIGHTS[g] * sum(v) / len(v) for g, v in groups.items())
+        score = round(100 * weighted / total_weight)
         return self._upsert_indicator_score(attempt.student, attempt.assessment_type, score)
 
     def _score_learning(self, attempt: AssessmentAttempt) -> dict:

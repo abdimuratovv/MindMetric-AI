@@ -13,6 +13,3 @@ export const getQuestionBank = () => api.get('/admin/question-bank/');
 export const createMcqQuestion = (payload) => api.post('/admin/question-bank/mcq/', payload);
 export const updateMcqQuestion = (id, payload) => api.patch(`/admin/question-bank/mcq/${id}/`, payload);
 export const deleteMcqQuestion = (id) => api.delete(`/admin/question-bank/mcq/${id}/`);
-export const createLikertItem = (payload) => api.post('/admin/question-bank/likert/', payload);
-export const updateLikertItem = (id, payload) => api.patch(`/admin/question-bank/likert/${id}/`, payload);
-export const deleteLikertItem = (id) => api.delete(`/admin/question-bank/likert/${id}/`);

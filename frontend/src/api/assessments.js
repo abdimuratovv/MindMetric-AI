@@ -51,19 +51,25 @@ export const answerSjt = (scenarioId, bestIndex, worstIndex, responseTimeMs) =>
   });
 export const submitSjt = () => api.post('/assessments/sjt/submit/', {});
 
-/** Likert pattern — patience. */
-export const startLikert = (type) => api.post(`/assessments/likert/${type}/start/`, {});
-export const getLikertItems = (type) => api.get(`/assessments/likert/${type}/items/`);
-export const answerLikert = (type, itemId, value) =>
-  api.patch(`/assessments/likert/${type}/answer/`, { item_id: itemId, value });
-export const submitLikert = (type) => api.post(`/assessments/likert/${type}/submit/`, {});
+/**
+ * Anagram pattern — patience. getAnagramCurrent returns {item: {id, letters, activeMs}, number, total}
+ * or item: null when every anagram is solved or skipped. `activeMs` is the time the student
+ * was actually working on the item (tab visible, recent input) — resumed from the server on refresh.
+ */
+export const startAnagram = () => api.post('/assessments/anagram/start/', {});
+export const getAnagramCurrent = () => api.get('/assessments/anagram/current/');
+export const guessAnagram = (itemId, guess, activeMs) =>
+  api.post('/assessments/anagram/guess/', { item_id: itemId, guess, active_ms: activeMs });
+export const skipAnagram = (itemId, activeMs) =>
+  api.post('/assessments/anagram/skip/', { item_id: itemId, active_ms: activeMs });
+export const submitAnagram = () => api.post('/assessments/anagram/submit/', {});
 
 /** Generic "start" dispatcher used by StudentSelection's card list. `hybrid`
  * (algorithmic) always begins at its MCQ phase, same as plain `mcq` types —
  * Hybrid.jsx's own Coding phase calls startCoding() once that phase is reached. */
 export const startAssessment = (type, pattern) => {
   if (pattern === 'mcq' || pattern === 'hybrid') return startMcq(type);
-  if (pattern === 'likert') return startLikert(type);
+  if (pattern === 'anagram') return startAnagram();
   if (pattern === 'learning') return startLearning();
   if (pattern === 'sjt') return startSjt();
   return startCoding();

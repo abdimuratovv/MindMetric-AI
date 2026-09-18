@@ -12,11 +12,12 @@ from django.db import transaction
 from django.utils import timezone
 
 from apps.accounts.models import StudentProfile
-from apps.assessments.content import CODING_PROBLEMS, LIKERT_CATEGORIES, MCQ_QUESTIONS
+from apps.assessments.anagram_content import ANAGRAM_ITEMS
+from apps.assessments.content import CODING_PROBLEMS, MCQ_QUESTIONS
 from apps.assessments.feedback_content import QUESTION_FEEDBACK
 from apps.assessments.learning_content import LEARNING_MODULES
 from apps.assessments.models import (
-    BehavioralCategory, BehavioralItem, CodingProblem, CognitiveQuestion, LearningItem, LearningModule, SjtScenario,
+    AnagramItem, CodingProblem, CognitiveQuestion, LearningItem, LearningModule, SjtScenario,
 )
 from apps.assessments.sjt_content import SJT_SCENARIOS
 from apps.i18n import DEFAULT_LANGUAGE
@@ -46,15 +47,15 @@ INDICATOR_KEYS = [
 
 
 class Command(BaseCommand):
-    help = 'Seed assessment content (questions/problem/likert items) and demo accounts.'
+    help = 'Seed assessment content (questions, coding tasks, learning modules, SJT, anagrams) and demo accounts.'
 
     @transaction.atomic
     def handle(self, *args, **options):
         self._seed_mcq_questions()
         self._seed_coding_problem()
-        self._seed_likert_categories()
         self._seed_learning_modules()
         self._seed_sjt_scenarios()
+        self._seed_anagrams()
         reviewer = self._seed_demo_accounts()
         self._seed_roster(reviewer)
         self.stdout.write(self.style.SUCCESS('Seed complete.'))
@@ -103,24 +104,6 @@ class Command(BaseCommand):
             )
         self.stdout.write(f'  {len(CODING_PROBLEMS)} coding problems (algorithmic)')
 
-    def _seed_likert_categories(self):
-        item_count = 0
-        for order, (indicator_key, category) in enumerate(LIKERT_CATEGORIES.items()):
-            category_row, _ = BehavioralCategory.objects.update_or_create(
-                key=indicator_key.upper(),
-                defaults={'label_ru': category['label_ru'], 'label_uz': category['label_uz'], 'order': order},
-            )
-            for item_order, item in enumerate(category['items']):
-                BehavioralItem.objects.update_or_create(
-                    key=item['key'],
-                    defaults={
-                        'category': category_row, 'text_ru': item['text_ru'], 'text_uz': item['text_uz'],
-                        'order': item_order, 'reverse_scored': item['reverse_scored'],
-                    },
-                )
-                item_count += 1
-        self.stdout.write(f'  {len(LIKERT_CATEGORIES)} likert categories, {item_count} items')
-
     def _seed_learning_modules(self):
         item_count = 0
         for module in LEARNING_MODULES:
@@ -161,6 +144,17 @@ class Command(BaseCommand):
                 },
             )
         self.stdout.write(f'  {len(SJT_SCENARIOS)} SJT scenarios (teamwork)')
+
+    def _seed_anagrams(self):
+        for item in ANAGRAM_ITEMS:
+            AnagramItem.objects.update_or_create(
+                key=item['key'],
+                defaults={
+                    'language': item['language'], 'difficulty': item['difficulty'],
+                    'letters': item['letters'], 'answers': item['answers'], 'is_active': True,
+                },
+            )
+        self.stdout.write(f'  {len(ANAGRAM_ITEMS)} anagrams (patience)')
 
     def _seed_demo_accounts(self):
         student, _ = User.objects.update_or_create(

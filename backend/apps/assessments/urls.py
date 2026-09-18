@@ -29,11 +29,12 @@ urlpatterns = [
     path('sjt/answer/', views.AnswerSjtView.as_view(), name='sjt-answer'),
     path('sjt/submit/', views.SubmitSjtView.as_view(), name='sjt-submit'),
 
-    # Likert pattern: patience
-    path('likert/<str:kind>/start/', views.StartLikertAttemptView.as_view(), name='likert-start'),
-    path('likert/<str:kind>/items/', views.LikertItemsView.as_view(), name='likert-items'),
-    path('likert/<str:kind>/answer/', views.AnswerLikertView.as_view(), name='likert-answer'),
-    path('likert/<str:kind>/submit/', views.SubmitLikertView.as_view(), name='likert-submit'),
+    # Anagram pattern: patience
+    path('anagram/start/', views.StartAnagramView.as_view(), name='anagram-start'),
+    path('anagram/current/', views.CurrentAnagramView.as_view(), name='anagram-current'),
+    path('anagram/guess/', views.GuessAnagramView.as_view(), name='anagram-guess'),
+    path('anagram/skip/', views.SkipAnagramView.as_view(), name='anagram-skip'),
+    path('anagram/submit/', views.SubmitAnagramView.as_view(), name='anagram-submit'),
 
     path('<str:assessment_type>/pause/', views.PauseAttemptView.as_view(), name='attempt-pause'),
 ]
