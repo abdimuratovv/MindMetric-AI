@@ -11,6 +11,9 @@ from apps.i18n import DEFAULT_LANGUAGE
 from . import achievements, calculators
 from .models import Achievement, FieldRecommendation, IndicatorScore, OverallScore
 
+# Per-item answer time (seconds) that still earns full speed credit, by block.
+LEARNING_BLOCK_TARGET_SECONDS = {1: 30, 2: 45, 3: 60}
+
 
 class StudentStateTracker:
     def get_or_create_attempt(self, student, assessment_type: str) -> AssessmentAttempt:
@@ -102,6 +105,8 @@ class StudentStateTracker:
             result = self._score_mcq(attempt)
         elif attempt.assessment_type in AssessmentAttempt.LIKERT_TYPES:
             result = self._score_likert(attempt)
+        elif attempt.assessment_type in AssessmentAttempt.LEARNING_TYPES:
+            result = self._score_learning(attempt)
 
         self._recompute_overall_score(attempt.student)
         return result
@@ -174,6 +179,46 @@ class StudentStateTracker:
             return {'score': None, 'achievement': None}
         avg = sum(values) / len(values)  # 1..5
         score = round((avg - 1) / 4 * 100)  # scale to 0..100
+        return self._upsert_indicator_score(attempt.student, attempt.assessment_type, score)
+
+    def _score_learning(self, attempt: AssessmentAttempt) -> dict:
+        """
+        Per module, then averaged across modules:
+          - 50% learning gain from block 1 to block 3 — normalized gain
+            (acc3 - acc1) / (1 - acc1), floored at 0; a student already perfect in
+            block 1 has no room to gain, so their block-3 accuracy stands in for it.
+          - 30% block-3 accuracy (the hardest block, after two rounds of feedback).
+          - 20% speed on correctly answered items: full credit within the block's
+            target time, tapering linearly to 0 at 3x the target.
+        """
+        responses = attempt.learning_responses.filter(cycle=attempt.attempt_cycle).select_related('item')
+        by_module = {}
+        for r in responses:
+            by_module.setdefault(r.item.module_id, []).append(r)
+        if not by_module:
+            return {'score': None, 'achievement': None}
+
+        module_scores = []
+        for rows in by_module.values():
+            def accuracy(block):
+                block_rows = [r for r in rows if r.item.block == block]
+                return sum(r.is_correct for r in block_rows) / len(block_rows) if block_rows else 0.0
+
+            acc1, acc3 = accuracy(1), accuracy(3)
+            gain = acc3 if acc1 >= 1 else max(0.0, (acc3 - acc1) / (1 - acc1))
+
+            speed_factors = []
+            for r in rows:
+                if not r.is_correct:
+                    continue
+                target = LEARNING_BLOCK_TARGET_SECONDS[r.item.block]
+                elapsed = r.response_time_ms / 1000 if r.response_time_ms is not None else target
+                speed_factors.append(1.0 if elapsed <= target else max(0.0, 1 - (elapsed - target) / (2 * target)))
+            speed = sum(speed_factors) / len(speed_factors) if speed_factors else 0.0
+
+            module_scores.append(0.5 * gain + 0.3 * acc3 + 0.2 * speed)
+
+        score = round(100 * sum(module_scores) / len(module_scores))
         return self._upsert_indicator_score(attempt.student, attempt.assessment_type, score)
 
     def _upsert_indicator_score(self, student, indicator_key: str, score: int) -> dict:

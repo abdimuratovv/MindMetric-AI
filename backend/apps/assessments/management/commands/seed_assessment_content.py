@@ -14,7 +14,10 @@ from django.utils import timezone
 from apps.accounts.models import StudentProfile
 from apps.assessments.content import CODING_PROBLEMS, LIKERT_CATEGORIES, MCQ_QUESTIONS
 from apps.assessments.feedback_content import QUESTION_FEEDBACK
-from apps.assessments.models import BehavioralCategory, BehavioralItem, CodingProblem, CognitiveQuestion
+from apps.assessments.learning_content import LEARNING_MODULES
+from apps.assessments.models import (
+    BehavioralCategory, BehavioralItem, CodingProblem, CognitiveQuestion, LearningItem, LearningModule,
+)
 from apps.i18n import DEFAULT_LANGUAGE
 from apps.reviews.models import TeacherReview
 from apps.scoring.models import IndicatorScore, OverallScore
@@ -49,6 +52,7 @@ class Command(BaseCommand):
         self._seed_mcq_questions()
         self._seed_coding_problem()
         self._seed_likert_categories()
+        self._seed_learning_modules()
         reviewer = self._seed_demo_accounts()
         self._seed_roster(reviewer)
         self.stdout.write(self.style.SUCCESS('Seed complete.'))
@@ -114,6 +118,35 @@ class Command(BaseCommand):
                 )
                 item_count += 1
         self.stdout.write(f'  {len(LIKERT_CATEGORIES)} likert categories, {item_count} items')
+
+    def _seed_learning_modules(self):
+        item_count = 0
+        for module in LEARNING_MODULES:
+            module_row, _ = LearningModule.objects.update_or_create(
+                key=module['key'],
+                defaults={
+                    'family': module['family'],
+                    'title_ru': module['title_ru'], 'title_uz': module['title_uz'],
+                    'rules_ru': module['rules_ru'], 'rules_uz': module['rules_uz'],
+                    'study_seconds': module.get('study_seconds', 90), 'is_active': True,
+                },
+            )
+            per_block = {}
+            for item in module['items']:
+                per_block[item['block']] = per_block.get(item['block'], 0) + 1
+                order = per_block[item['block']]
+                LearningItem.objects.update_or_create(
+                    key=f"{module['key']}-b{item['block']}-{order}",
+                    defaults={
+                        'module': module_row, 'block': item['block'], 'order': order,
+                        'prompt_ru': item['prompt_ru'], 'prompt_uz': item['prompt_uz'], 'code': item['code'],
+                        'options_ru': item['options_ru'], 'options_uz': item['options_uz'],
+                        'correct_index': item['correct_index'],
+                        'explanation_ru': item['explanation_ru'], 'explanation_uz': item['explanation_uz'],
+                    },
+                )
+                item_count += 1
+        self.stdout.write(f'  {len(LEARNING_MODULES)} learning modules, {item_count} items (learning_speed)')
 
     def _seed_demo_accounts(self):
         student, _ = User.objects.update_or_create(

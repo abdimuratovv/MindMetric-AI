@@ -146,6 +146,61 @@ class BehavioralItem(models.Model):
         return self.text_ru[:50]
 
 
+class LearningModule(models.Model):
+    """
+    One novel mini-system (invented symbol operations, an invented pseudocode, an
+    artificial grammar) the learning_speed indicator teaches from scratch and then
+    tests in three feedback blocks — so every student starts from the same zero
+    and the score reflects how fast they learn, not what they already knew.
+    """
+
+    class Family(models.TextChoices):
+        SYMBOLS = 'symbols', 'Symbol language'
+        PSEUDOCODE = 'pseudocode', 'Pseudocode'
+        GRAMMAR = 'grammar', 'Artificial grammar'
+
+    key = models.SlugField(max_length=60, unique=True)
+    family = models.CharField(max_length=12, choices=Family.choices)
+    title_ru = models.CharField(max_length=120)
+    title_uz = models.CharField(max_length=120)
+    rules_ru = models.JSONField(default=list, help_text='Ordered rule lines shown on the study screen.')
+    rules_uz = models.JSONField(default=list)
+    study_seconds = models.PositiveSmallIntegerField(default=90)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ['family', 'key']
+
+    def __str__(self):
+        return self.title_ru
+
+
+class LearningItem(models.Model):
+    """One single-choice question inside a LearningModule's block (1..3, harder each block)."""
+
+    key = models.SlugField(max_length=60, unique=True)
+    module = models.ForeignKey(LearningModule, related_name='items', on_delete=models.CASCADE)
+    block = models.PositiveSmallIntegerField()
+    order = models.PositiveSmallIntegerField(default=0)
+    prompt_ru = models.TextField()
+    prompt_uz = models.TextField()
+    # Language-neutral expression/program rendered in monospace under the prompt.
+    code = models.TextField(blank=True, default='')
+    options_ru = models.JSONField(default=list)
+    options_uz = models.JSONField(default=list)
+    correct_index = models.PositiveSmallIntegerField()
+    # Shown only on the feedback screen after the block is finished — this is the
+    # "learn from your mistakes" step the indicator is actually measuring.
+    explanation_ru = models.TextField(blank=True, default='')
+    explanation_uz = models.TextField(blank=True, default='')
+
+    class Meta:
+        ordering = ['module', 'block', 'order']
+
+    def __str__(self):
+        return f'[{self.key}] {self.prompt_ru[:50]}'
+
+
 class AssessmentAttempt(models.Model):
     """
     One student's attempt at one of the ten indicator-specific assessment
@@ -181,7 +236,10 @@ class AssessmentAttempt(models.Model):
     MCQ_TYPES = frozenset({
         Type.MATH, Type.LOGIC, Type.ALGORITHMIC, Type.CREATIVE, Type.PROBLEM_SOLVING, Type.ATTENTION, Type.IQ,
     })
-    LIKERT_TYPES = frozenset({Type.TEAMWORK, Type.PATIENCE, Type.LEARNING_SPEED})
+    LIKERT_TYPES = frozenset({Type.TEAMWORK, Type.PATIENCE})
+    # Study a novel mini-system, then apply it across three blocks with feedback
+    # between them — see LearningModule and state_tracker._score_learning.
+    LEARNING_TYPES = frozenset({Type.LEARNING_SPEED})
     # Subset of MCQ_TYPES whose MCQ phase doesn't finalize the attempt on its own —
     # SubmitMcqView instead calls StudentStateTracker.finish_mcq_phase and hands off
     # to the coding pattern (CodingProblem/CodingSubmission, Start/Run/SubmitCodingView)
@@ -214,6 +272,9 @@ class AssessmentAttempt(models.Model):
     # "answered already this run" (cycle == attempt_cycle) apart from "seen in a past
     # attempt" (any earlier cycle) and avoid re-serving the latter while pool allows.
     attempt_cycle = models.PositiveIntegerField(default=1)
+    # LEARNING_TYPES only: {"cycle": n, "modules": [module_id, ...]} — the modules
+    # picked for cycle n, in order. Re-picked whenever the cycle no longer matches.
+    learning_plan = models.JSONField(default=dict, blank=True)
 
     class Meta:
         constraints = [
@@ -288,6 +349,22 @@ class CodingSubmission(models.Model):
     elapsed_ms = models.PositiveIntegerField(null=True, blank=True)
     # See CognitiveResponse.cycle.
     cycle = models.PositiveIntegerField(default=1)
+
+
+class LearningResponse(models.Model):
+    attempt = models.ForeignKey(AssessmentAttempt, related_name='learning_responses', on_delete=models.CASCADE)
+    item = models.ForeignKey(LearningItem, on_delete=models.PROTECT)
+    selected_index = models.PositiveSmallIntegerField()
+    is_correct = models.BooleanField()
+    response_time_ms = models.PositiveIntegerField(null=True, blank=True)
+    responded_at = models.DateTimeField(auto_now_add=True)
+    # See CognitiveResponse.cycle.
+    cycle = models.PositiveIntegerField(default=1)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['attempt', 'item', 'cycle'], name='one_learning_response_per_item_per_cycle'),
+        ]
 
 
 class BehavioralResponse(models.Model):

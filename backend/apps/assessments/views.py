@@ -21,6 +21,9 @@ from .models import (
     CodingProblem,
     CodingSubmission,
     CognitiveQuestion,
+    LearningItem,
+    LearningModule,
+    LearningResponse,
 )
 from .serializers import (
     BehavioralCategorySerializer,
@@ -341,7 +344,7 @@ class SubmitCodingView(APIView):
         return _completion_response(result, get_language(request))
 
 
-# -- Likert pattern: teamwork / patience / learning_speed ----------------------------------
+# -- Likert pattern: teamwork / patience ---------------------------------------------------
 
 class StartLikertAttemptView(APIView):
     """POST /api/assessments/likert/<kind>/start/"""
@@ -412,6 +415,193 @@ class SubmitLikertView(APIView):
                 {'detail': ALL_STATEMENTS_REQUIRED[get_language(request)]},
                 status=status.HTTP_400_BAD_REQUEST,
             )
+        result = StudentStateTracker().complete_attempt(attempt)
+        return _completion_response(result, get_language(request))
+
+
+# -- Learning pattern: learning_speed ------------------------------------------------------
+
+LEARNING_FAMILY_ORDER = [
+    LearningModule.Family.SYMBOLS, LearningModule.Family.PSEUDOCODE, LearningModule.Family.GRAMMAR,
+]
+LEARNING_BLOCKS = (1, 2, 3)
+
+
+def _learning_attempt(request):
+    return get_object_or_404(
+        AssessmentAttempt, student=request.user, assessment_type=AssessmentAttempt.Type.LEARNING_SPEED,
+    )
+
+
+def _ensure_learning_plan(attempt) -> list[int]:
+    """One module per family for this cycle, preferring modules never seen in a past cycle."""
+    plan = attempt.learning_plan or {}
+    if plan.get('cycle') == attempt.attempt_cycle and plan.get('modules'):
+        return plan['modules']
+
+    seen_ids = set(
+        LearningResponse.objects.filter(attempt=attempt).values_list('item__module_id', flat=True)
+    )
+    module_ids = []
+    for family in LEARNING_FAMILY_ORDER:
+        candidates = list(LearningModule.objects.filter(family=family, is_active=True).values_list('id', flat=True))
+        fresh = [m for m in candidates if m not in seen_ids]
+        pool = fresh or candidates
+        if pool:
+            module_ids.append(random.choice(pool))
+    attempt.learning_plan = {'cycle': attempt.attempt_cycle, 'modules': module_ids}
+    attempt.save(update_fields=['learning_plan'])
+    return module_ids
+
+
+def _learning_items_by_module(module_ids):
+    items = LearningItem.objects.filter(module_id__in=module_ids).order_by('block', 'order')
+    by_module = {mid: [] for mid in module_ids}
+    for item in items:
+        by_module[item.module_id].append(item)
+    return by_module
+
+
+def _learning_position(attempt, module_ids):
+    """First (module, block) with an unanswered item this cycle, or None when everything is answered."""
+    answered = set(
+        attempt.learning_responses.filter(cycle=attempt.attempt_cycle).values_list('item_id', flat=True)
+    )
+    by_module = _learning_items_by_module(module_ids)
+    for index, module_id in enumerate(module_ids):
+        items = by_module[module_id]
+        for block in LEARNING_BLOCKS:
+            pending = [i for i in items if i.block == block and i.id not in answered]
+            if pending:
+                started = any(i.id in answered for i in items)
+                return {'index': index, 'module_id': module_id, 'block': block, 'pending': pending, 'started': started}
+    return None
+
+
+def _serialize_learning_item(item, lang):
+    return {
+        'id': item.id,
+        'prompt': getattr(item, f'prompt_{lang}'),
+        'code': item.code,
+        'options': getattr(item, f'options_{lang}'),
+    }
+
+
+class StartLearningView(APIView):
+    """POST /api/assessments/learning/start/"""
+
+    permission_classes = [IsStudent, HasCompletedProfile]
+
+    def post(self, request):
+        attempt = StudentStateTracker().start_or_restart_attempt(request.user, AssessmentAttempt.Type.LEARNING_SPEED)
+        _ensure_learning_plan(attempt)
+        return Response({'assessment_type': attempt.assessment_type, 'status': attempt.status})
+
+
+class LearningStateView(APIView):
+    """
+    GET /api/assessments/learning/state/ — where the student is: the module being
+    studied/tested, the current block and its still-unanswered items. `phase` is
+    'study' before the module's first answer (show the rules screen), 'block' after.
+    """
+
+    permission_classes = [IsStudent]
+
+    def get(self, request):
+        attempt = _learning_attempt(request)
+        module_ids = _ensure_learning_plan(attempt)
+        lang = get_language(request)
+        total = LearningItem.objects.filter(module_id__in=module_ids).count()
+        answered = attempt.learning_responses.filter(cycle=attempt.attempt_cycle).count()
+
+        position = _learning_position(attempt, module_ids)
+        if position is None:
+            return Response({'done': True, 'answered': answered, 'total': total})
+
+        module = LearningModule.objects.get(id=position['module_id'])
+        return Response({
+            'done': False,
+            'phase': 'block' if position['started'] else 'study',
+            'module': {
+                'id': module.id,
+                'title': getattr(module, f'title_{lang}'),
+                'rules': getattr(module, f'rules_{lang}'),
+                'studySeconds': module.study_seconds,
+            },
+            'moduleNumber': position['index'] + 1,
+            'moduleTotal': len(module_ids),
+            'block': position['block'],
+            'blockTotal': len(LEARNING_BLOCKS),
+            'blockSize': LearningItem.objects.filter(module_id=module.id, block=position['block']).count(),
+            'items': [_serialize_learning_item(i, lang) for i in position['pending']],
+            'answered': answered,
+            'total': total,
+        })
+
+
+class AnswerLearningView(APIView):
+    """
+    POST /api/assessments/learning/answer/ {item_id, selected_index, response_time_ms}
+
+    Correctness is withheld until the item's whole block is answered; the answer
+    that completes a block returns that block's feedback (correct answer +
+    explanation per item). An answer can't be changed once recorded.
+    """
+
+    permission_classes = [IsStudent]
+
+    def post(self, request):
+        attempt = _learning_attempt(request)
+        module_ids = _ensure_learning_plan(attempt)
+        item = get_object_or_404(LearningItem, id=request.data.get('item_id'), module_id__in=module_ids)
+        selected_index = request.data.get('selected_index')
+        if selected_index is None:
+            return Response({'detail': ANSWER_REQUIRED[get_language(request)]}, status=status.HTTP_400_BAD_REQUEST)
+        response_time_ms = request.data.get('response_time_ms')
+
+        LearningResponse.objects.get_or_create(
+            attempt=attempt, item=item, cycle=attempt.attempt_cycle,
+            defaults={
+                'selected_index': int(selected_index),
+                'is_correct': int(selected_index) == item.correct_index,
+                'response_time_ms': int(response_time_ms) if response_time_ms is not None else None,
+            },
+        )
+
+        block_items = list(LearningItem.objects.filter(module_id=item.module_id, block=item.block).order_by('order'))
+        responses = {
+            r.item_id: r for r in attempt.learning_responses.filter(
+                cycle=attempt.attempt_cycle, item__in=block_items,
+            )
+        }
+        if len(responses) < len(block_items):
+            return Response({'block_complete': False, 'feedback': None, 'done': False})
+
+        lang = get_language(request)
+        feedback = [
+            {
+                **_serialize_learning_item(i, lang),
+                'selectedIndex': responses[i.id].selected_index,
+                'correctIndex': i.correct_index,
+                'isCorrect': responses[i.id].is_correct,
+                'explanation': getattr(i, f'explanation_{lang}'),
+            }
+            for i in block_items
+        ]
+        done = _learning_position(attempt, module_ids) is None
+        return Response({'block_complete': True, 'feedback': feedback, 'done': done})
+
+
+class SubmitLearningView(APIView):
+    """POST /api/assessments/learning/submit/ — finalizes once every item is answered."""
+
+    permission_classes = [IsStudent]
+
+    def post(self, request):
+        attempt = _learning_attempt(request)
+        module_ids = _ensure_learning_plan(attempt)
+        if _learning_position(attempt, module_ids) is not None:
+            return Response({'detail': ANSWER_REQUIRED[get_language(request)]}, status=status.HTTP_400_BAD_REQUEST)
         result = StudentStateTracker().complete_attempt(attempt)
         return _completion_response(result, get_language(request))
 

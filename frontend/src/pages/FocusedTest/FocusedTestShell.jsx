@@ -4,6 +4,7 @@ import { pauseAttempt } from '../../api/assessments.js';
 import { ASSESSMENT_PATTERN } from '../../constants/assessments.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import Hybrid from './Hybrid.jsx';
+import Learning from './Learning.jsx';
 import Likert from './Likert.jsx';
 import Mcq from './Mcq.jsx';
 
@@ -66,6 +67,7 @@ export default function FocusedTestShell({ screen, goTo }) {
       {pattern === 'mcq' && <Mcq assessmentType={screen} goTo={goTo} onProgress={setProgress} />}
       {pattern === 'hybrid' && <Hybrid goTo={goTo} onProgress={setProgress} />}
       {pattern === 'likert' && <Likert assessmentType={screen} goTo={goTo} onProgress={setProgress} />}
+      {pattern === 'learning' && <Learning goTo={goTo} onProgress={setProgress} />}
     </div>
   );
 }

@@ -21,7 +21,7 @@ Shape:
   and blended into that one indicator's score alongside it — see
   apps.scoring.state_tracker._score_hybrid.
 - LIKERT_CATEGORIES: dict keyed by one of AssessmentAttempt.LIKERT_TYPES'
-  values (teamwork/patience/learning_speed), each a dict with a display
+  values (teamwork/patience), each a dict with a display
   label plus a list of Likert statement items (reverse_scored flips the
   1-5 scale before averaging into the indicator — see
   apps.scoring.state_tracker._score_likert).
@@ -15769,31 +15769,6 @@ LIKERT_CATEGORIES = {
                 'key': 'patience_negative_2', 'reverse_scored': True,
                 'text_ru': 'Я склонен переключаться на другую задачу, если эта кажется слишком долгой.',
                 'text_uz': "Agar masala juda uzoq davom etayotgandek tuyulsa, boshqa vazifaga o'tishga moyilman.",
-            },
-        ],
-    },
-    'learning_speed': {
-        'label_ru': 'СКОРОСТЬ ОБУЧЕНИЯ', 'label_uz': "O'RGANISH TEZLIGI",
-        'items': [
-            {
-                'key': 'learning_speed_positive_1', 'reverse_scored': False,
-                'text_ru': 'Я быстро схватываю новые понятия после одного объяснения.',
-                'text_uz': "Yangi tushunchalarni bir marta tushuntirilgandan keyin tez o'zlashtiraman.",
-            },
-            {
-                'key': 'learning_speed_negative_1', 'reverse_scored': True,
-                'text_ru': 'Мне нужно несколько повторений, чтобы разобраться в новой теме.',
-                'text_uz': "Yangi mavzuni tushunish uchun menga bir necha marta takrorlash kerak bo'ladi.",
-            },
-            {
-                'key': 'learning_speed_positive_2', 'reverse_scored': False,
-                'text_ru': 'Я легко переношу то, что выучил, на новые и незнакомые задачи.',
-                'text_uz': "O'rgangan narsalarimni yangi va notanish masalalarga oson qo'llay olaman.",
-            },
-            {
-                'key': 'learning_speed_negative_2', 'reverse_scored': True,
-                'text_ru': 'Я часто отстаю от группы, когда мы переходим к новой теме.',
-                'text_uz': "Yangi mavzuga o'tganimizda ko'pincha guruhdan orqada qolib ketaman.",
             },
         ],
     },

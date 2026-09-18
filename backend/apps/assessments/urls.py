@@ -17,7 +17,13 @@ urlpatterns = [
     path('coding/run/', views.RunCodingView.as_view(), name='coding-run'),
     path('coding/submit/', views.SubmitCodingView.as_view(), name='coding-submit'),
 
-    # Likert pattern: teamwork, patience, learning_speed
+    # Learning pattern: learning_speed
+    path('learning/start/', views.StartLearningView.as_view(), name='learning-start'),
+    path('learning/state/', views.LearningStateView.as_view(), name='learning-state'),
+    path('learning/answer/', views.AnswerLearningView.as_view(), name='learning-answer'),
+    path('learning/submit/', views.SubmitLearningView.as_view(), name='learning-submit'),
+
+    # Likert pattern: teamwork, patience
     path('likert/<str:kind>/start/', views.StartLikertAttemptView.as_view(), name='likert-start'),
     path('likert/<str:kind>/items/', views.LikertItemsView.as_view(), name='likert-items'),
     path('likert/<str:kind>/answer/', views.AnswerLikertView.as_view(), name='likert-answer'),

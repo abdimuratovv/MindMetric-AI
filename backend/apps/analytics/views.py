@@ -8,7 +8,9 @@ from rest_framework.views import APIView
 
 from apps.accounts.models import StudentProfile, User
 from apps.accounts.permissions import IsAdmin
-from apps.assessments.models import AssessmentAttempt, BehavioralCategory, BehavioralItem, CognitiveQuestion
+from apps.assessments.models import (
+    AssessmentAttempt, BehavioralCategory, BehavioralItem, CognitiveQuestion, LearningModule,
+)
 from apps.assessments.serializers import (
     AdminBehavioralItemCreateSerializer,
     AdminBehavioralItemUpdateSerializer,
@@ -22,9 +24,11 @@ from apps.scoring import calculators
 from apps.scoring.constants import FIELD_CHOICES, FIELD_LABELS, INDICATOR_CHOICES, INDICATOR_LABELS
 from apps.scoring.models import FieldRecommendation, IndicatorScore, OverallScore
 
-# indicator keys whose assessment uses the MCQ question bank (CognitiveQuestion);
-# every other indicator uses the Likert self-report pattern (BehavioralCategory/Item).
+# indicator keys whose assessment uses the MCQ question bank (CognitiveQuestion) or
+# the learning modules (LearningModule/Item); every other indicator uses the Likert
+# self-report pattern (BehavioralCategory/Item).
 MCQ_INDICATOR_KEYS = {t.value for t in AssessmentAttempt.MCQ_TYPES}
+LEARNING_INDICATOR_KEYS = {t.value for t in AssessmentAttempt.LEARNING_TYPES}
 
 # CognitiveResponse/BehavioralResponse both use on_delete=PROTECT against these
 # models, so a question/item a student has already answered can't be deleted —
@@ -47,6 +51,26 @@ def _serialize_mcq(question, lang):
         'optionsRu': question.options_ru, 'optionsUz': question.options_uz,
         'correctIndices': question.correct_indices,
         'difficulty': question.difficulty,
+    }
+
+
+def _serialize_learning_module(module, lang):
+    return {
+        'id': module.id,
+        'title': getattr(module, f'title_{lang}'),
+        'rules': getattr(module, f'rules_{lang}'),
+        'items': [
+            {
+                'id': item.id,
+                'block': item.block,
+                'prompt': getattr(item, f'prompt_{lang}'),
+                'code': item.code,
+                'options': getattr(item, f'options_{lang}'),
+                'correctIndices': [item.correct_index],
+                'explanation': getattr(item, f'explanation_{lang}'),
+            }
+            for item in module.items.all()
+        ],
     }
 
 
@@ -305,6 +329,19 @@ class QuestionBankView(APIView):
         lang = get_language(request)
         groups = []
         for key, _ in INDICATOR_CHOICES:
+            if key in LEARNING_INDICATOR_KEYS:
+                modules = LearningModule.objects.filter(is_active=True).prefetch_related('items')
+                serialized_modules = [_serialize_learning_module(m, lang) for m in modules]
+                groups.append({
+                    'key': key,
+                    'label': INDICATOR_LABELS[lang][key],
+                    'type': 'learning',
+                    'questionCount': sum(len(m['items']) for m in serialized_modules),
+                    'moduleCount': len(serialized_modules),
+                    'modules': serialized_modules,
+                    'questions': [],
+                })
+                continue
             if key in MCQ_INDICATOR_KEYS:
                 questions = CognitiveQuestion.objects.filter(indicator_key=key).order_by('difficulty')
                 serialized = [_serialize_mcq(q, lang) for q in questions]

@@ -28,7 +28,18 @@ export const runCode = (problemId, code) => api.post('/assessments/coding/run/',
 export const submitCoding = (problemId, code, elapsedMs) =>
   api.post('/assessments/coding/submit/', { problem_id: problemId, code, elapsed_ms: elapsedMs });
 
-/** Likert pattern — teamwork, patience, learning_speed. */
+/**
+ * Learning pattern — learning_speed. getLearningState returns the current module
+ * (rules), block and its unanswered items; the answer that completes a block
+ * returns that block's feedback.
+ */
+export const startLearning = () => api.post('/assessments/learning/start/', {});
+export const getLearningState = () => api.get('/assessments/learning/state/');
+export const answerLearning = (itemId, selectedIndex, responseTimeMs) =>
+  api.post('/assessments/learning/answer/', { item_id: itemId, selected_index: selectedIndex, response_time_ms: responseTimeMs });
+export const submitLearning = () => api.post('/assessments/learning/submit/', {});
+
+/** Likert pattern — teamwork, patience. */
 export const startLikert = (type) => api.post(`/assessments/likert/${type}/start/`, {});
 export const getLikertItems = (type) => api.get(`/assessments/likert/${type}/items/`);
 export const answerLikert = (type, itemId, value) =>
@@ -41,6 +52,7 @@ export const submitLikert = (type) => api.post(`/assessments/likert/${type}/subm
 export const startAssessment = (type, pattern) => {
   if (pattern === 'mcq' || pattern === 'hybrid') return startMcq(type);
   if (pattern === 'likert') return startLikert(type);
+  if (pattern === 'learning') return startLearning();
   return startCoding();
 };
 

@@ -30,6 +30,52 @@ const emptyMcqDraft = () => ({
 });
 const emptyLikertDraft = () => ({ textRu: '', textUz: '', reverseScored: false });
 
+const CODE_BOX = {
+  margin: '0 0 8px', padding: '8px 12px', borderRadius: '8px', background: '#F1F5F7',
+  fontFamily: "'JetBrains Mono','Consolas',monospace", fontSize: '12.5px', whiteSpace: 'pre-wrap',
+};
+
+function LearningModules({ modules, t }) {
+  return (
+    <div style={{ padding: '0 22px 20px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      {modules.map((m) => (
+        <div key={m.id} style={{ padding: '16px 18px', borderRadius: '14px', background: 'rgba(255,255,255,0.55)', border: '1px solid rgba(31,55,75,0.08)' }}>
+          <div style={{ fontSize: '14px', fontWeight: 700, color: '#161F24', marginBottom: '10px' }}>{m.title}</div>
+          <div style={{ padding: '10px 14px', borderRadius: '10px', background: 'rgba(62,126,166,0.08)', marginBottom: '12px' }}>
+            <div style={{ ...FIELD_LABEL, color: '#2E5570' }}>{t('questionBank.rulesLabel')}</div>
+            <ol style={{ margin: 0, paddingLeft: '18px', fontSize: '12.5px', color: '#3B444A', lineHeight: 1.6 }}>
+              {m.rules.map((rule, i) => <li key={i}>{rule}</li>)}
+            </ol>
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            {m.items.map((q) => (
+              <div key={q.id} style={{ padding: '12px 14px', borderRadius: '10px', background: 'rgba(31,55,75,0.03)' }}>
+                <div style={{ fontSize: '11px', fontWeight: 700, color: '#939EA3', marginBottom: '4px' }}>{t('questionBank.blockShort')(q.block)}</div>
+                <div style={{ fontSize: '13px', fontWeight: 600, color: '#161F24', marginBottom: '6px' }}>{q.prompt}</div>
+                {q.code && <pre style={CODE_BOX}>{q.code}</pre>}
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: q.explanation ? '6px' : 0 }}>
+                  {q.options.map((opt, oi) => {
+                    const correct = q.correctIndices.includes(oi);
+                    return (
+                      <span key={oi} style={{
+                        fontSize: '12px', padding: '4px 10px', borderRadius: '8px',
+                        background: correct ? '#DCEFE2' : 'rgba(31,55,75,0.05)', color: correct ? '#1F4B39' : '#3B444A', fontWeight: correct ? 700 : 400,
+                      }}>{correct ? '✓ ' : ''}{opt}</span>
+                    );
+                  })}
+                </div>
+                {q.explanation && (
+                  <div style={{ fontSize: '11.5px', color: '#556269' }}>{t('questionBank.explanationLabel')}: {q.explanation}</div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 /**
  * Admin-only view over every indicator's full question/answer bank, with
  * inline editing, creation, and deletion — replaces the old static
@@ -262,7 +308,9 @@ export default function QuestionBank() {
                   <div>
                     <div style={{ fontSize: '15px', fontWeight: 700, color: '#161F24' }}>{g.label}</div>
                     <div style={{ fontSize: '12px', color: '#939EA3', marginTop: '2px' }}>
-                      {g.type === 'mcq' ? t('questionBank.typeMcq') : t('questionBank.typeLikert')} · {t('questionBank.questionCount')(g.questionCount)}
+                      {g.type === 'learning'
+                        ? `${t('questionBank.typeLearning')} · ${t('questionBank.moduleCount')(g.moduleCount)}`
+                        : g.type === 'mcq' ? t('questionBank.typeMcq') : t('questionBank.typeLikert')} · {t('questionBank.questionCount')(g.questionCount)}
                     </div>
                   </div>
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#556269" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
@@ -271,7 +319,8 @@ export default function QuestionBank() {
                   </svg>
                 </button>
 
-                {open && (
+                {open && g.type === 'learning' && <LearningModules modules={g.modules} t={t} />}
+                {open && g.type !== 'learning' && (
                   <div style={{ padding: '0 22px 20px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
                     {g.questions.length === 0 && creatingGroupKey !== g.key && (
                       <div style={{ padding: '20px 0', textAlign: 'center', color: '#939EA3', fontSize: '13px' }}>{t('questionBank.empty')}</div>
