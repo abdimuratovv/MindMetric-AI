@@ -22,9 +22,7 @@ services:
       - key: CORS_ALLOWED_ORIGINS
         value: https://mindmetric-frontend.onrender.com
       - key: DATABASE_URL
-        fromDatabase:
-          name: mindmetric-db
-          property: connectionString
+        sync: false
       - key: LIVEKIT_URL
         sync: false
       - key: LIVEKIT_API_KEY
