@@ -1,10 +1,9 @@
 """
 Recomputes OverallScore (and the field recommendation alongside it) for every
 student with at least one IndicatorScore, using the current calculators.py
-logic. Needed one-off after a formula change — e.g. compute_overall_score
-now scales by completed/total indicators instead of averaging only what's
-done, so already-stored scores from before that change are stale until the
-student's next answer triggers a live recompute.
+logic. Stored scores otherwise only refresh on a student's next answer, so
+this runs on every Render build (idempotent) to keep them in step with any
+formula change.
 
 Usage:
     python manage.py recompute_overall_scores
