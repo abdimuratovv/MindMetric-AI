@@ -201,6 +201,29 @@ class LearningItem(models.Model):
         return f'[{self.key}] {self.prompt_ru[:50]}'
 
 
+class SjtScenario(models.Model):
+    """
+    One situational-judgment item for the teamwork indicator: a team situation with
+    four plausible actions. `ratings` is the expert effectiveness of each option
+    (4 = most effective … 1 = least), same order as options_ru/options_uz — the
+    student picks the best and the worst action and is scored against it.
+    """
+
+    key = models.SlugField(max_length=60, unique=True)
+    situation_ru = models.TextField()
+    situation_uz = models.TextField()
+    options_ru = models.JSONField(default=list)
+    options_uz = models.JSONField(default=list)
+    ratings = models.JSONField(default=list, help_text='Expert rating per option, a permutation of [1, 2, 3, 4].')
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ['key']
+
+    def __str__(self):
+        return f'[{self.key}] {self.situation_ru[:50]}'
+
+
 class AssessmentAttempt(models.Model):
     """
     One student's attempt at one of the ten indicator-specific assessment
@@ -236,7 +259,10 @@ class AssessmentAttempt(models.Model):
     MCQ_TYPES = frozenset({
         Type.MATH, Type.LOGIC, Type.ALGORITHMIC, Type.CREATIVE, Type.PROBLEM_SOLVING, Type.ATTENTION, Type.IQ,
     })
-    LIKERT_TYPES = frozenset({Type.TEAMWORK, Type.PATIENCE})
+    LIKERT_TYPES = frozenset({Type.PATIENCE})
+    # Situational judgment test: pick the best and worst action per scenario —
+    # see SjtScenario and state_tracker._score_sjt.
+    SJT_TYPES = frozenset({Type.TEAMWORK})
     # Study a novel mini-system, then apply it across three blocks with feedback
     # between them — see LearningModule and state_tracker._score_learning.
     LEARNING_TYPES = frozenset({Type.LEARNING_SPEED})
@@ -364,6 +390,23 @@ class LearningResponse(models.Model):
     class Meta:
         constraints = [
             models.UniqueConstraint(fields=['attempt', 'item', 'cycle'], name='one_learning_response_per_item_per_cycle'),
+        ]
+
+
+class SjtResponse(models.Model):
+    attempt = models.ForeignKey(AssessmentAttempt, related_name='sjt_responses', on_delete=models.CASCADE)
+    scenario = models.ForeignKey(SjtScenario, on_delete=models.PROTECT)
+    best_index = models.PositiveSmallIntegerField()
+    worst_index = models.PositiveSmallIntegerField()
+    points = models.FloatField(help_text='-2..2 — see state_tracker.sjt_points.')
+    response_time_ms = models.PositiveIntegerField(null=True, blank=True)
+    responded_at = models.DateTimeField(auto_now_add=True)
+    # See CognitiveResponse.cycle.
+    cycle = models.PositiveIntegerField(default=1)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['attempt', 'scenario', 'cycle'], name='one_sjt_response_per_scenario_per_cycle'),
         ]
 
 

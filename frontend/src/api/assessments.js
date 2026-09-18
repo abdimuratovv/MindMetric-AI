@@ -39,7 +39,19 @@ export const answerLearning = (itemId, selectedIndex, responseTimeMs) =>
   api.post('/assessments/learning/answer/', { item_id: itemId, selected_index: selectedIndex, response_time_ms: responseTimeMs });
 export const submitLearning = () => api.post('/assessments/learning/submit/', {});
 
-/** Likert pattern — teamwork, patience. */
+/**
+ * SJT pattern — teamwork. getSjtNext returns {scenario: {id, situation, options: [{index, text}]}, number, total}
+ * (options arrive shuffled; answers send back each option's original `index`), or scenario: null when done.
+ */
+export const startSjt = () => api.post('/assessments/sjt/start/', {});
+export const getSjtNext = () => api.get('/assessments/sjt/next/');
+export const answerSjt = (scenarioId, bestIndex, worstIndex, responseTimeMs) =>
+  api.post('/assessments/sjt/answer/', {
+    scenario_id: scenarioId, best_index: bestIndex, worst_index: worstIndex, response_time_ms: responseTimeMs,
+  });
+export const submitSjt = () => api.post('/assessments/sjt/submit/', {});
+
+/** Likert pattern — patience. */
 export const startLikert = (type) => api.post(`/assessments/likert/${type}/start/`, {});
 export const getLikertItems = (type) => api.get(`/assessments/likert/${type}/items/`);
 export const answerLikert = (type, itemId, value) =>
@@ -53,6 +65,7 @@ export const startAssessment = (type, pattern) => {
   if (pattern === 'mcq' || pattern === 'hybrid') return startMcq(type);
   if (pattern === 'likert') return startLikert(type);
   if (pattern === 'learning') return startLearning();
+  if (pattern === 'sjt') return startSjt();
   return startCoding();
 };
 

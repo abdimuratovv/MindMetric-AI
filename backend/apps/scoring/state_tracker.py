@@ -14,6 +14,16 @@ from .models import Achievement, FieldRecommendation, IndicatorScore, OverallSco
 # Per-item answer time (seconds) that still earns full speed credit, by block.
 LEARNING_BLOCK_TARGET_SECONDS = {1: 30, 2: 45, 3: 60}
 
+# SJT points per pick, keyed by the picked option's expert rating (4 best … 1 worst).
+# Choosing the expert-worst as "best" (or vice versa) costs a point, so random
+# guessing averages ~0.25 of 2 per scenario rather than half marks.
+SJT_BEST_POINTS = {4: 1.0, 3: 0.5, 2: 0.0, 1: -1.0}
+SJT_WORST_POINTS = {1: 1.0, 2: 0.5, 3: 0.0, 4: -1.0}
+
+
+def sjt_points(ratings: list[int], best_index: int, worst_index: int) -> float:
+    return SJT_BEST_POINTS[ratings[best_index]] + SJT_WORST_POINTS[ratings[worst_index]]
+
 
 class StudentStateTracker:
     def get_or_create_attempt(self, student, assessment_type: str) -> AssessmentAttempt:
@@ -107,6 +117,8 @@ class StudentStateTracker:
             result = self._score_likert(attempt)
         elif attempt.assessment_type in AssessmentAttempt.LEARNING_TYPES:
             result = self._score_learning(attempt)
+        elif attempt.assessment_type in AssessmentAttempt.SJT_TYPES:
+            result = self._score_sjt(attempt)
 
         self._recompute_overall_score(attempt.student)
         return result
@@ -219,6 +231,14 @@ class StudentStateTracker:
             module_scores.append(0.5 * gain + 0.3 * acc3 + 0.2 * speed)
 
         score = round(100 * sum(module_scores) / len(module_scores))
+        return self._upsert_indicator_score(attempt.student, attempt.assessment_type, score)
+
+    def _score_sjt(self, attempt: AssessmentAttempt) -> dict:
+        """Share of the maximum 2 points per scenario, floored at 0 — see sjt_points."""
+        points = list(attempt.sjt_responses.filter(cycle=attempt.attempt_cycle).values_list('points', flat=True))
+        if not points:
+            return {'score': None, 'achievement': None}
+        score = round(100 * max(0.0, sum(points)) / (2 * len(points)))
         return self._upsert_indicator_score(attempt.student, attempt.assessment_type, score)
 
     def _upsert_indicator_score(self, student, indicator_key: str, score: int) -> dict:

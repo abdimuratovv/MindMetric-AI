@@ -15,7 +15,7 @@ export const ASSESSMENT_TYPES = [
 
 export const ASSESSMENT_PATTERN = {
   math: 'mcq', logic: 'mcq', algorithmic: 'hybrid', creative: 'mcq', problem_solving: 'mcq', attention: 'mcq', iq: 'mcq',
-  teamwork: 'likert', patience: 'likert', learning_speed: 'learning',
+  teamwork: 'sjt', patience: 'likert', learning_speed: 'learning',
 };
 
 /**

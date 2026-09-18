@@ -7,6 +7,7 @@ import Hybrid from './Hybrid.jsx';
 import Learning from './Learning.jsx';
 import Likert from './Likert.jsx';
 import Mcq from './Mcq.jsx';
+import Sjt from './Sjt.jsx';
 
 /**
  * Header/timer/progress bar shared by all ten focused-test screens, plus the
@@ -68,6 +69,7 @@ export default function FocusedTestShell({ screen, goTo }) {
       {pattern === 'hybrid' && <Hybrid goTo={goTo} onProgress={setProgress} />}
       {pattern === 'likert' && <Likert assessmentType={screen} goTo={goTo} onProgress={setProgress} />}
       {pattern === 'learning' && <Learning goTo={goTo} onProgress={setProgress} />}
+      {pattern === 'sjt' && <Sjt goTo={goTo} onProgress={setProgress} />}
     </div>
   );
 }

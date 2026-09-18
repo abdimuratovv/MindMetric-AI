@@ -9,7 +9,7 @@ from rest_framework.views import APIView
 from apps.accounts.models import StudentProfile, User
 from apps.accounts.permissions import IsAdmin
 from apps.assessments.models import (
-    AssessmentAttempt, BehavioralCategory, BehavioralItem, CognitiveQuestion, LearningModule,
+    AssessmentAttempt, BehavioralCategory, BehavioralItem, CognitiveQuestion, LearningModule, SjtScenario,
 )
 from apps.assessments.serializers import (
     AdminBehavioralItemCreateSerializer,
@@ -29,6 +29,7 @@ from apps.scoring.models import FieldRecommendation, IndicatorScore, OverallScor
 # self-report pattern (BehavioralCategory/Item).
 MCQ_INDICATOR_KEYS = {t.value for t in AssessmentAttempt.MCQ_TYPES}
 LEARNING_INDICATOR_KEYS = {t.value for t in AssessmentAttempt.LEARNING_TYPES}
+SJT_INDICATOR_KEYS = {t.value for t in AssessmentAttempt.SJT_TYPES}
 
 # CognitiveResponse/BehavioralResponse both use on_delete=PROTECT against these
 # models, so a question/item a student has already answered can't be deleted —
@@ -329,6 +330,25 @@ class QuestionBankView(APIView):
         lang = get_language(request)
         groups = []
         for key, _ in INDICATOR_CHOICES:
+            if key in SJT_INDICATOR_KEYS:
+                scenarios = [
+                    {
+                        'id': s.id,
+                        'situation': getattr(s, f'situation_{lang}'),
+                        'options': getattr(s, f'options_{lang}'),
+                        'ratings': s.ratings,
+                    }
+                    for s in SjtScenario.objects.filter(is_active=True)
+                ]
+                groups.append({
+                    'key': key,
+                    'label': INDICATOR_LABELS[lang][key],
+                    'type': 'sjt',
+                    'questionCount': len(scenarios),
+                    'scenarios': scenarios,
+                    'questions': [],
+                })
+                continue
             if key in LEARNING_INDICATOR_KEYS:
                 modules = LearningModule.objects.filter(is_active=True).prefetch_related('items')
                 serialized_modules = [_serialize_learning_module(m, lang) for m in modules]

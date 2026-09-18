@@ -23,7 +23,13 @@ urlpatterns = [
     path('learning/answer/', views.AnswerLearningView.as_view(), name='learning-answer'),
     path('learning/submit/', views.SubmitLearningView.as_view(), name='learning-submit'),
 
-    # Likert pattern: teamwork, patience
+    # SJT pattern: teamwork
+    path('sjt/start/', views.StartSjtView.as_view(), name='sjt-start'),
+    path('sjt/next/', views.NextSjtView.as_view(), name='sjt-next'),
+    path('sjt/answer/', views.AnswerSjtView.as_view(), name='sjt-answer'),
+    path('sjt/submit/', views.SubmitSjtView.as_view(), name='sjt-submit'),
+
+    # Likert pattern: patience
     path('likert/<str:kind>/start/', views.StartLikertAttemptView.as_view(), name='likert-start'),
     path('likert/<str:kind>/items/', views.LikertItemsView.as_view(), name='likert-items'),
     path('likert/<str:kind>/answer/', views.AnswerLikertView.as_view(), name='likert-answer'),

@@ -21,7 +21,7 @@ Shape:
   and blended into that one indicator's score alongside it — see
   apps.scoring.state_tracker._score_hybrid.
 - LIKERT_CATEGORIES: dict keyed by one of AssessmentAttempt.LIKERT_TYPES'
-  values (teamwork/patience), each a dict with a display
+  values (patience), each a dict with a display
   label plus a list of Likert statement items (reverse_scored flips the
   1-5 scale before averaging into the indicator — see
   apps.scoring.state_tracker._score_likert).
@@ -15722,31 +15722,6 @@ CODING_PROBLEMS = [
 ]
 
 LIKERT_CATEGORIES = {
-    'teamwork': {
-        'label_ru': 'КОМАНДНАЯ РАБОТА', 'label_uz': 'JAMOAVIY ISH',
-        'items': [
-            {
-                'key': 'teamwork_positive_1', 'reverse_scored': False,
-                'text_ru': 'Мне нравится объяснять свои рассуждения товарищам по команде при решении задачи.',
-                'text_uz': "Masalani yechishda o'z fikrlash yo'limni jamoadoshlarga tushuntirishni yoqtiraman.",
-            },
-            {
-                'key': 'teamwork_negative_1', 'reverse_scored': True,
-                'text_ru': 'Я предпочитаю решать задачи полностью самостоятельно.',
-                'text_uz': "Masalalarni butunlay yolg'iz hal qilishni afzal ko'raman.",
-            },
-            {
-                'key': 'teamwork_positive_2', 'reverse_scored': False,
-                'text_ru': 'Я с готовностью помогаю товарищам по команде, когда они застревают.',
-                'text_uz': "Jamoadoshlarim qiynalganda ularga yordam berishga tayyorman.",
-            },
-            {
-                'key': 'teamwork_negative_2', 'reverse_scored': True,
-                'text_ru': 'Мне сложно доверить часть задачи другому человеку в команде.',
-                'text_uz': "Jamoada vazifaning bir qismini boshqa odamga ishonib topshirish men uchun qiyin.",
-            },
-        ],
-    },
     'patience': {
         'label_ru': "ТЕРПЕНИЕ И НАСТОЙЧИВОСТЬ", 'label_uz': "SABR-TOQAT VA QAT'IYATLILIK",
         'items': [

@@ -35,6 +35,40 @@ const CODE_BOX = {
   fontFamily: "'JetBrains Mono','Consolas',monospace", fontSize: '12.5px', whiteSpace: 'pre-wrap',
 };
 
+const RATING_STYLE = {
+  4: { bg: '#DCEFE2', color: '#1F4B39' },
+  3: { bg: 'rgba(46,112,82,0.06)', color: '#3B444A' },
+  2: { bg: 'rgba(189,91,76,0.05)', color: '#3B444A' },
+  1: { bg: '#F6E0DC', color: '#8A3A2E' },
+};
+
+function SjtScenarios({ scenarios, t }) {
+  return (
+    <div style={{ padding: '0 22px 20px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+      {scenarios.map((s, i) => (
+        <div key={s.id} style={{ padding: '16px 18px', borderRadius: '14px', background: 'rgba(255,255,255,0.55)', border: '1px solid rgba(31,55,75,0.08)' }}>
+          <div style={{ fontSize: '11.5px', fontWeight: 700, color: '#939EA3', marginBottom: '6px' }}>#{i + 1}</div>
+          <div style={{ fontSize: '13.5px', color: '#161F24', fontWeight: 600, marginBottom: '10px' }}>{s.situation}</div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+            {s.options
+              .map((opt, oi) => ({ opt, rating: s.ratings[oi] }))
+              .sort((a, b) => b.rating - a.rating)
+              .map(({ opt, rating }) => (
+                <div key={rating} style={{
+                  display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '10px',
+                  padding: '7px 10px', borderRadius: '8px', background: RATING_STYLE[rating].bg,
+                }}>
+                  <span style={{ fontSize: '12.5px', color: RATING_STYLE[rating].color, fontWeight: rating === 4 || rating === 1 ? 700 : 400 }}>{opt}</span>
+                  <span style={{ fontSize: '10.5px', fontWeight: 700, color: RATING_STYLE[rating].color, flexShrink: 0 }}>{t('questionBank.ratingLabel')(rating)}</span>
+                </div>
+              ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function LearningModules({ modules, t }) {
   return (
     <div style={{ padding: '0 22px 20px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
@@ -310,7 +344,8 @@ export default function QuestionBank() {
                     <div style={{ fontSize: '12px', color: '#939EA3', marginTop: '2px' }}>
                       {g.type === 'learning'
                         ? `${t('questionBank.typeLearning')} · ${t('questionBank.moduleCount')(g.moduleCount)}`
-                        : g.type === 'mcq' ? t('questionBank.typeMcq') : t('questionBank.typeLikert')} · {t('questionBank.questionCount')(g.questionCount)}
+                        : g.type === 'sjt' ? t('questionBank.typeSjt')
+                          : g.type === 'mcq' ? t('questionBank.typeMcq') : t('questionBank.typeLikert')} · {t('questionBank.questionCount')(g.questionCount)}
                     </div>
                   </div>
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#556269" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
@@ -320,7 +355,8 @@ export default function QuestionBank() {
                 </button>
 
                 {open && g.type === 'learning' && <LearningModules modules={g.modules} t={t} />}
-                {open && g.type !== 'learning' && (
+                {open && g.type === 'sjt' && <SjtScenarios scenarios={g.scenarios} t={t} />}
+                {open && g.type !== 'learning' && g.type !== 'sjt' && (
                   <div style={{ padding: '0 22px 20px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
                     {g.questions.length === 0 && creatingGroupKey !== g.key && (
                       <div style={{ padding: '20px 0', textAlign: 'center', color: '#939EA3', fontSize: '13px' }}>{t('questionBank.empty')}</div>

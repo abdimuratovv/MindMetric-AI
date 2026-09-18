@@ -16,8 +16,9 @@ from apps.assessments.content import CODING_PROBLEMS, LIKERT_CATEGORIES, MCQ_QUE
 from apps.assessments.feedback_content import QUESTION_FEEDBACK
 from apps.assessments.learning_content import LEARNING_MODULES
 from apps.assessments.models import (
-    BehavioralCategory, BehavioralItem, CodingProblem, CognitiveQuestion, LearningItem, LearningModule,
+    BehavioralCategory, BehavioralItem, CodingProblem, CognitiveQuestion, LearningItem, LearningModule, SjtScenario,
 )
+from apps.assessments.sjt_content import SJT_SCENARIOS
 from apps.i18n import DEFAULT_LANGUAGE
 from apps.reviews.models import TeacherReview
 from apps.scoring.models import IndicatorScore, OverallScore
@@ -53,6 +54,7 @@ class Command(BaseCommand):
         self._seed_coding_problem()
         self._seed_likert_categories()
         self._seed_learning_modules()
+        self._seed_sjt_scenarios()
         reviewer = self._seed_demo_accounts()
         self._seed_roster(reviewer)
         self.stdout.write(self.style.SUCCESS('Seed complete.'))
@@ -147,6 +149,18 @@ class Command(BaseCommand):
                 )
                 item_count += 1
         self.stdout.write(f'  {len(LEARNING_MODULES)} learning modules, {item_count} items (learning_speed)')
+
+    def _seed_sjt_scenarios(self):
+        for scenario in SJT_SCENARIOS:
+            SjtScenario.objects.update_or_create(
+                key=scenario['key'],
+                defaults={
+                    'situation_ru': scenario['situation_ru'], 'situation_uz': scenario['situation_uz'],
+                    'options_ru': scenario['options_ru'], 'options_uz': scenario['options_uz'],
+                    'ratings': scenario['ratings'], 'is_active': True,
+                },
+            )
+        self.stdout.write(f'  {len(SJT_SCENARIOS)} SJT scenarios (teamwork)')
 
     def _seed_demo_accounts(self):
         student, _ = User.objects.update_or_create(

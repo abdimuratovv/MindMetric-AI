@@ -10,7 +10,7 @@ from rest_framework.views import APIView
 from apps.accounts.permissions import HasCompletedProfile, IsStudent
 from apps.i18n import get_language
 from apps.scoring.engine import AdaptiveTestingEngine
-from apps.scoring.state_tracker import StudentStateTracker
+from apps.scoring.state_tracker import StudentStateTracker, sjt_points
 from apps.scoring.views import serialize_achievement
 
 from .coding_sandbox import run_test_cases
@@ -24,6 +24,8 @@ from .models import (
     LearningItem,
     LearningModule,
     LearningResponse,
+    SjtResponse,
+    SjtScenario,
 )
 from .serializers import (
     BehavioralCategorySerializer,
@@ -344,7 +346,7 @@ class SubmitCodingView(APIView):
         return _completion_response(result, get_language(request))
 
 
-# -- Likert pattern: teamwork / patience ---------------------------------------------------
+# -- Likert pattern: patience --------------------------------------------------------------
 
 class StartLikertAttemptView(APIView):
     """POST /api/assessments/likert/<kind>/start/"""
@@ -602,6 +604,102 @@ class SubmitLearningView(APIView):
         module_ids = _ensure_learning_plan(attempt)
         if _learning_position(attempt, module_ids) is not None:
             return Response({'detail': ANSWER_REQUIRED[get_language(request)]}, status=status.HTTP_400_BAD_REQUEST)
+        result = StudentStateTracker().complete_attempt(attempt)
+        return _completion_response(result, get_language(request))
+
+
+# -- SJT pattern: teamwork -----------------------------------------------------------------
+
+SJT_SCENARIO_CAP = 10
+
+SJT_PICK_BOTH = {
+    'ru': 'Выберите и самое правильное, и самое неправильное действие — это должны быть разные варианты.',
+    'uz': "Eng to'g'ri va eng noto'g'ri harakatni tanlang — ular turli variantlar bo'lishi kerak.",
+}
+
+
+def _sjt_attempt(request):
+    return get_object_or_404(AssessmentAttempt, student=request.user, assessment_type=AssessmentAttempt.Type.TEAMWORK)
+
+
+class StartSjtView(APIView):
+    """POST /api/assessments/sjt/start/"""
+
+    permission_classes = [IsStudent, HasCompletedProfile]
+
+    def post(self, request):
+        attempt = StudentStateTracker().start_or_restart_attempt(request.user, AssessmentAttempt.Type.TEAMWORK)
+        return Response({'assessment_type': attempt.assessment_type, 'status': attempt.status})
+
+
+class NextSjtView(APIView):
+    """
+    GET /api/assessments/sjt/next/ — a scenario not answered this cycle, preferring
+    ones never seen in a past cycle. Options are shuffled per request; each carries
+    its original `index`, which is what the answer endpoint expects back.
+    Returns {scenario: null} once SJT_SCENARIO_CAP scenarios are answered.
+    """
+
+    permission_classes = [IsStudent]
+
+    def get(self, request):
+        attempt = _sjt_attempt(request)
+        answered_ids = set(
+            attempt.sjt_responses.filter(cycle=attempt.attempt_cycle).values_list('scenario_id', flat=True)
+        )
+        cap = min(SJT_SCENARIO_CAP, SjtScenario.objects.filter(is_active=True).count())
+        if len(answered_ids) >= cap:
+            return Response({'scenario': None, 'number': len(answered_ids), 'total': cap})
+
+        seen_ids = set(SjtResponse.objects.filter(attempt=attempt).values_list('scenario_id', flat=True))
+        candidates = list(SjtScenario.objects.filter(is_active=True).exclude(id__in=answered_ids))
+        fresh = [s for s in candidates if s.id not in seen_ids]
+        scenario = random.choice(fresh or candidates)
+
+        lang = get_language(request)
+        options = [{'index': i, 'text': text} for i, text in enumerate(getattr(scenario, f'options_{lang}'))]
+        random.shuffle(options)
+        return Response({
+            'scenario': {'id': scenario.id, 'situation': getattr(scenario, f'situation_{lang}'), 'options': options},
+            'number': len(answered_ids) + 1,
+            'total': cap,
+        })
+
+
+class AnswerSjtView(APIView):
+    """POST /api/assessments/sjt/answer/ {scenario_id, best_index, worst_index, response_time_ms}"""
+
+    permission_classes = [IsStudent]
+
+    def post(self, request):
+        attempt = _sjt_attempt(request)
+        scenario = get_object_or_404(SjtScenario, id=request.data.get('scenario_id'), is_active=True)
+        best, worst = request.data.get('best_index'), request.data.get('worst_index')
+        valid = range(len(scenario.ratings))
+        if best is None or worst is None or int(best) not in valid or int(worst) not in valid or int(best) == int(worst):
+            return Response({'detail': SJT_PICK_BOTH[get_language(request)]}, status=status.HTTP_400_BAD_REQUEST)
+        response_time_ms = request.data.get('response_time_ms')
+
+        SjtResponse.objects.get_or_create(
+            attempt=attempt, scenario=scenario, cycle=attempt.attempt_cycle,
+            defaults={
+                'best_index': int(best), 'worst_index': int(worst),
+                'points': sjt_points(scenario.ratings, int(best), int(worst)),
+                'response_time_ms': int(response_time_ms) if response_time_ms is not None else None,
+            },
+        )
+        answered = attempt.sjt_responses.filter(cycle=attempt.attempt_cycle).count()
+        cap = min(SJT_SCENARIO_CAP, SjtScenario.objects.filter(is_active=True).count())
+        return Response({'answered': answered, 'is_last': answered >= cap})
+
+
+class SubmitSjtView(APIView):
+    """POST /api/assessments/sjt/submit/"""
+
+    permission_classes = [IsStudent]
+
+    def post(self, request):
+        attempt = _sjt_attempt(request)
         result = StudentStateTracker().complete_attempt(attempt)
         return _completion_response(result, get_language(request))
 
