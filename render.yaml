@@ -1,9 +1,3 @@
-databases:
-  - name: mindmetric-db
-    plan: free
-    databaseName: mindmetric
-    user: mindmetric
-
 services:
   - type: web
     name: mindmetric-backend
