@@ -16,9 +16,13 @@ export function setToken(token) {
   else localStorage.removeItem(TOKEN_KEY);
 }
 
+// Credential endpoints never need a token; a stale one would be rejected by
+// JWTAuthentication ("Given token not valid for any token type") before AllowAny applies.
+const TOKENLESS_PATHS = ['/auth/login/', '/auth/register/'];
+
 async function request(method, path, body) {
   const headers = { 'Content-Type': 'application/json', 'X-Language': getStoredLanguage() };
-  const token = getToken();
+  const token = TOKENLESS_PATHS.includes(path) ? null : getToken();
   if (token) headers.Authorization = `Bearer ${token}`;
 
   const res = await fetch(`/api${path}`, {
