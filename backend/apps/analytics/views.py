@@ -288,7 +288,10 @@ STUDENT_LIST_ORDERINGS = {
     'score': ('score', False), '-score': ('score', True),
     'status': ('status', False), '-status': ('status', True),
     'date': ('date', False), '-date': ('date', True),
+    'progress': ('progress', False), '-progress': ('progress', True),
 }
+STUDENT_LEVEL_KEYS = {'foundational', 'developing', 'high', 'none'}  # 'none' = no score yet
+STUDENT_STATUS_KEYS = {'reviewed', 'flagged', 'pending'}
 
 
 def _positive_int(raw, default, maximum=None):
@@ -316,6 +319,10 @@ def _student_entries(request, lang):
     )
 
     scores = dict(OverallScore.objects.filter(student__in=students).values_list('student_id', 'score'))
+    progress = dict(
+        IndicatorScore.objects.filter(student__in=students)
+        .values_list('student_id').annotate(n=Count('indicator_key', distinct=True))
+    )
     review_status = {}
     for review in TeacherReview.objects.filter(student__in=students).order_by('id'):
         review_status.setdefault(review.student_id, review.status)  # first review per student, as before
@@ -323,7 +330,8 @@ def _student_entries(request, lang):
     entries = []
     for student in students:
         score = scores.get(student.id)
-        style = status_style(review_status.get(student.id, 'pending'), lang)
+        status_key = review_status.get(student.id, 'pending')
+        style = status_style(status_key, lang)
         level = calculators.band_for(score, lang) if score is not None else None
         name = student.get_full_name() or student.email
         entries.append(({
@@ -332,13 +340,23 @@ def _student_entries(request, lang):
             'program': student.program,
             'group': student.group_name or '',
             'score': score,
+            'progress': progress.get(student.id, 0), 'progressTotal': len(INDICATOR_CHOICES),
             'levelLabel': level['band'] if level else None,
             'levelBg': level['bg'] if level else None, 'levelColor': level['color'] if level else None,
             'statusLabel': style['label'], 'statusBg': style['bg'], 'statusColor': style['color'],
             'date': _format_date(student.last_activity, lang) if student.last_activity else None,
         }, {
             'name': name.lower(), 'score': score, 'status': style['label'], 'date': student.last_activity,
+            'progress': progress.get(student.id, 0),
+            'levelKey': level['key'] if level else 'none', 'statusKey': status_key,
         }))
+
+    level_filter = request.query_params.get('level', '')
+    if level_filter in STUDENT_LEVEL_KEYS:
+        entries = [e for e in entries if e[1]['levelKey'] == level_filter]
+    status_filter = request.query_params.get('status', '')
+    if status_filter in STUDENT_STATUS_KEYS:
+        entries = [e for e in entries if e[1]['statusKey'] == status_filter]
 
     field, descending = STUDENT_LIST_ORDERINGS.get(request.query_params.get('ordering', ''), ('name', False))
     entries.sort(key=lambda e: e[1]['name'])  # stable tiebreak for every ordering
@@ -350,7 +368,7 @@ def _student_entries(request, lang):
 
 class AdminStudentListView(APIView):
     """
-    GET /api/admin/students/?search=&faculty=&course=&group=&ordering=&page=&pageSize=
+    GET /api/admin/students/?search=&faculty=&course=&group=&level=&status=&ordering=&page=&pageSize=
     — feeds the student results table, returned as {results, total, page, pageSize}.
     Rows with no value for the sorted field (e.g. no score yet) always sort last.
     """
@@ -411,8 +429,8 @@ class AdminStudentDetailView(APIView):
 
 
 CSV_HEADERS = {
-    'ru': ['Студент', 'Группа', 'Балл', 'Уровень', 'Статус', 'Дата'],
-    'uz': ['Talaba', 'Guruh', 'Ball', 'Daraja', 'Holat', 'Sana'],
+    'ru': ['Студент', 'Группа', 'Балл', 'Уровень', 'Показатели', 'Статус', 'Дата'],
+    'uz': ['Talaba', 'Guruh', 'Ball', 'Daraja', "Ko'rsatkichlar", 'Holat', 'Sana'],
 }
 
 
@@ -432,7 +450,7 @@ class AdminStudentExportView(APIView):
             writer.writerow([
                 _csv_safe(row['name']), _csv_safe(row['group'] or row['program']),
                 '' if row['score'] is None else row['score'],
-                row['levelLabel'] or '', row['statusLabel'], row['date'] or '',
+                row['levelLabel'] or '', f"{row['progress']} / {row['progressTotal']}", row['statusLabel'], row['date'] or '',
             ])
         return response
 

@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 
-import { downloadStudentsCsv, getAdminKpis, getAdminStudents, getInstitutionSettings, getCohortDistribution, getFacultyActivity, getFieldDistribution, getStudentFilterOptions } from '../../api/admin.js';
+import { getAdminKpis, getAdminStudents, getInstitutionSettings, getCohortDistribution, getFacultyActivity, getFieldDistribution, getStudentFilterOptions } from '../../api/admin.js';
 import StudentFilters from '../../components/StudentFilters.jsx';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
+import { CARD, PAGER_BUTTON } from '../../components/adminStyles.js';
 import { INITIAL_ADMIN_VIEW } from '../../state/useAppState.js';
 
 const SHIMMER = {
@@ -10,31 +11,20 @@ const SHIMMER = {
   backgroundSize: '800px 100%', animation: 'mm-shimmer 1.4s infinite linear',
 };
 
-const CARD = { padding: '24px 26px', borderRadius: '20px', background: 'rgba(255,255,255,0.6)', border: '1px solid rgba(255,255,255,0.85)', backdropFilter: 'blur(14px)' };
-const TABLE_COLUMNS = '2fr 1fr 0.8fr 1.2fr 1fr 0.9fr';
-const PAGE_SIZE = 10;
-// Numbers and dates read best newest/highest first; text columns start A→Z.
-const SORT_FIRST_DIRECTION = { name: 'asc', status: 'asc', score: 'desc', date: 'desc' };
-
-const PAGER_BUTTON = (disabled) => ({
-  padding: '8px 14px', borderRadius: '10px', border: '1px solid rgba(31,55,75,0.14)', background: 'rgba(255,255,255,0.8)',
-  fontSize: '13px', fontFamily: 'Manrope', fontWeight: 600, color: disabled ? '#939EA3' : '#1F374B',
-  cursor: disabled ? 'default' : 'pointer', opacity: disabled ? 0.6 : 1,
-});
+const PREVIEW_ROWS = 5;
+const PREVIEW_COLUMNS = '2fr 0.8fr 1.2fr 0.9fr';
 
 /** Institution dashboard. The faculty/course/group filters narrow every widget on the page, not just the table. */
-export default function AdminOverview({ onOpenStudent, view, setView }) {
+export default function AdminOverview({ onOpenStudent, onViewAll, view, setView }) {
   const [loading, setLoading] = useState(true);
   const [adminKpis, setAdminKpis] = useState([]);
   const [distributionBars, setDistributionBars] = useState([]);
   const [fieldDistributionBars, setFieldDistributionBars] = useState([]);
   const [facultyActivity, setFacultyActivity] = useState([]);
-  const [students, setStudents] = useState({ results: [], total: 0, page: 1, pageSize: PAGE_SIZE });
-  const [searchFocused, setSearchFocused] = useState(false);
+  const [recent, setRecent] = useState([]);
   const [filterOptions, setFilterOptions] = useState({ faculties: [], courses: [], groups: [] });
-  const { search: adminSearch, filters, sort, page } = view;
+  const { filters } = view;
   const [institution, setInstitution] = useState({ name: '', academicTerm: '' });
-  const [exporting, setExporting] = useState(false);
   const { t, language } = useLanguage();
 
   useEffect(() => {
@@ -54,49 +44,17 @@ export default function AdminOverview({ onOpenStudent, view, setView }) {
     return () => { cancelled = true; };
   }, [filters, language]);
 
-  // Student table: additionally reacts to search, sorting and paging.
+  // Latest results preview — the full roster lives on the Students screen.
   useEffect(() => {
     let cancelled = false;
-    const ordering = sort.direction === 'desc' ? `-${sort.field}` : sort.field;
-    getAdminStudents({ search: adminSearch, ordering, page, pageSize: PAGE_SIZE, ...filters })
-      .then((data) => { if (!cancelled) setStudents(data); });
+    getAdminStudents({ ordering: '-date', page: 1, pageSize: PREVIEW_ROWS, ...filters })
+      .then((data) => { if (!cancelled) setRecent(data.results); });
     return () => { cancelled = true; };
-  }, [filters, adminSearch, sort, page, language]);
+  }, [filters, language]);
 
-  const updateFilter = (key, value) => setView((v) => ({ ...v, filters: { ...v.filters, [key]: value }, page: 1 }));
-  const resetFilters = () => setView((v) => ({ ...v, filters: INITIAL_ADMIN_VIEW.filters, page: 1 }));
-  const updateSearch = (value) => setView((v) => ({ ...v, search: value, page: 1 }));
-  const setPage = (next) => setView((v) => ({ ...v, page: next }));
-  const toggleSort = (field) => setView((v) => ({
-    ...v,
-    sort: v.sort.field === field
-      ? { field, direction: v.sort.direction === 'asc' ? 'desc' : 'asc' }
-      : { field, direction: SORT_FIRST_DIRECTION[field] },
-    page: 1,
-  }));
-
-  const exportCsv = async () => {
-    setExporting(true);
-    try {
-      await downloadStudentsCsv({ search: adminSearch, ordering: sort.direction === 'desc' ? `-${sort.field}` : sort.field, ...filters });
-    } catch {
-      // Nothing useful to show for a failed download beyond re-enabling the button.
-    } finally {
-      setExporting(false);
-    }
-  };
-
+  const updateFilter = (key, value) => setView((v) => ({ ...v, filters: { ...v.filters, [key]: value } }));
+  const resetFilters = () => setView((v) => ({ ...v, filters: INITIAL_ADMIN_VIEW.filters }));
   const filtersActive = Object.values(filters).some(Boolean);
-  const pageCount = Math.max(1, Math.ceil(students.total / students.pageSize));
-
-  const sortHeader = (field, label) => (
-    <button
-      type="button" onClick={() => toggleSort(field)}
-      style={{ all: 'unset', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px', color: sort.field === field ? '#1F374B' : '#939EA3' }}
-    >
-      {label}<span aria-hidden="true">{sort.field === field ? (sort.direction === 'asc' ? '▲' : '▼') : ''}</span>
-    </button>
-  );
 
   return (
     <div style={{ animation: 'mm-fade-up 0.4s ease both' }}>
@@ -127,70 +85,36 @@ export default function AdminOverview({ onOpenStudent, view, setView }) {
           </div>
 
           <div style={{ ...CARD, padding: '22px 26px', marginBottom: '20px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px', marginBottom: '16px' }}>
-              <div style={{ display: 'flex', alignItems: 'baseline', gap: '10px', flexWrap: 'wrap' }}>
-                <h3 style={{ fontSize: '15px', fontWeight: 700, color: '#161F24', margin: 0 }}>{t('admin.recentAssessments')}</h3>
-                <span style={{ fontSize: '12.5px', color: '#939EA3' }}>{t('admin.totalStudents')(students.total)}</span>
-              </div>
-              <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
-              <button type="button" onClick={exportCsv} disabled={exporting || students.total === 0} style={PAGER_BUTTON(exporting || students.total === 0)}>{t('admin.exportCsv')}</button>
-              <input
-                value={adminSearch}
-                onChange={(e) => updateSearch(e.target.value)}
-                onFocus={() => setSearchFocused(true)}
-                onBlur={() => setSearchFocused(false)}
-                placeholder={t('common.searchStudents')}
-                style={{
-                  padding: '9px 14px', borderRadius: '10px',
-                  border: `1px solid ${searchFocused ? '#2E5570' : 'rgba(31,55,75,0.14)'}`,
-                  boxShadow: searchFocused ? '0 0 0 3px rgba(46,85,112,0.14)' : 'none',
-                  transition: 'border-color 0.15s ease, box-shadow 0.15s ease',
-                  fontSize: '13px', fontFamily: 'Manrope', outline: 'none', background: 'rgba(255,255,255,0.8)',
-                  width: '220px', maxWidth: '100%',
-                }}
-              />
-              </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', flexWrap: 'wrap', gap: '10px', marginBottom: '16px' }}>
+              <h3 style={{ fontSize: '15px', fontWeight: 700, color: '#161F24', margin: 0 }}>{t('admin.recentAssessments')}</h3>
+              <button type="button" onClick={onViewAll} style={{ border: 'none', background: 'none', color: '#2E5570', fontWeight: 700, fontSize: '13px', cursor: 'pointer', padding: 0 }}>{t('admin.viewAll')}</button>
             </div>
             <div style={{ overflowX: 'auto' }}>
-              <div style={{ minWidth: '700px' }}>
-                <div style={{ display: 'grid', gridTemplateColumns: TABLE_COLUMNS, gap: '10px', padding: '0 6px 10px', fontSize: '11.5px', fontWeight: 700, color: '#939EA3', borderBottom: '1px solid rgba(31,55,75,0.08)' }}>
-                  {sortHeader('name', t('admin.tableStudent'))}
-                  <span>{t('admin.tableGroup')}</span>
-                  {sortHeader('score', t('admin.tableScore'))}
-                  <span>{t('admin.tableLevel')}</span>
-                  {sortHeader('status', t('admin.tableStatus'))}
-                  {sortHeader('date', t('admin.tableDate'))}
+              <div style={{ minWidth: '520px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: PREVIEW_COLUMNS, gap: '10px', padding: '0 6px 10px', fontSize: '11.5px', fontWeight: 700, color: '#939EA3', borderBottom: '1px solid rgba(31,55,75,0.08)' }}>
+                  <span>{t('admin.tableStudent')}</span><span>{t('admin.tableScore')}</span><span>{t('admin.tableLevel')}</span><span>{t('admin.tableDate')}</span>
                 </div>
-                {students.results.map((s, i) => (
+                {recent.map((s) => (
                   <div
-                    key={s.id ?? i} role="button" tabIndex={0}
+                    key={s.id} role="button" tabIndex={0}
                     onClick={() => onOpenStudent(s.id)}
                     onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onOpenStudent(s.id); } }}
-                    style={{ display: 'grid', gridTemplateColumns: TABLE_COLUMNS, gap: '10px', padding: '13px 6px', fontSize: '13px', color: '#3B444A', borderBottom: '1px solid rgba(31,55,75,0.05)', alignItems: 'center', cursor: 'pointer' }}
+                    style={{ display: 'grid', gridTemplateColumns: PREVIEW_COLUMNS, gap: '10px', padding: '13px 6px', fontSize: '13px', color: '#3B444A', borderBottom: '1px solid rgba(31,55,75,0.05)', alignItems: 'center', cursor: 'pointer' }}
                   >
                     <span style={{ fontWeight: 600, color: '#161F24' }}>{s.name}</span>
-                    <span>{s.group || s.program || '—'}</span>
                     <span style={{ fontWeight: 700, color: '#1F374B' }}>{s.score ?? '—'}</span>
                     <span>
                       {s.levelLabel
                         ? <span style={{ fontSize: '11px', fontWeight: 700, padding: '3px 10px', borderRadius: '100px', background: s.levelBg, color: s.levelColor }}>{s.levelLabel}</span>
                         : '—'}
                     </span>
-                    <span><span style={{ fontSize: '11px', fontWeight: 700, padding: '3px 10px', borderRadius: '100px', background: s.statusBg, color: s.statusColor }}>{s.statusLabel}</span></span>
                     <span style={{ color: '#939EA3' }}>{s.date ?? '—'}</span>
                   </div>
                 ))}
               </div>
             </div>
-            {students.results.length === 0 && (
-              <div style={{ padding: '40px 0', textAlign: 'center', color: '#939EA3', fontSize: '13px' }}>{t('admin.noMatch')(adminSearch)}</div>
-            )}
-            {pageCount > 1 && (
-              <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: '12px', marginTop: '16px' }}>
-                <span style={{ fontSize: '12.5px', color: '#939EA3' }}>{t('admin.pageInfo')(students.page, pageCount)}</span>
-                <button type="button" disabled={students.page <= 1} onClick={() => setPage(students.page - 1)} style={PAGER_BUTTON(students.page <= 1)}>{t('admin.pagePrev')}</button>
-                <button type="button" disabled={students.page >= pageCount} onClick={() => setPage(students.page + 1)} style={PAGER_BUTTON(students.page >= pageCount)}>{t('admin.pageNext')}</button>
-              </div>
+            {recent.length === 0 && (
+              <div style={{ padding: '32px 0', textAlign: 'center', color: '#939EA3', fontSize: '13px' }}>{t('admin.noRecent')}</div>
             )}
           </div>
 

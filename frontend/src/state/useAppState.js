@@ -21,11 +21,20 @@ function resolveLandingScreen(user) {
  * (see StudentStateTracker) or in the owning page component's own local
  * state, fetched fresh each time that screen mounts.
  */
-export const INITIAL_ADMIN_VIEW = {
+const NO_FILTERS = { faculty: '', course: '', group: '' };
+
+// Dashboard: just the faculty/course/group filters that narrow its widgets.
+export const INITIAL_ADMIN_VIEW = { filters: NO_FILTERS };
+
+// Students roster: filters, search, sort and paging.
+export const INITIAL_STUDENTS_VIEW = {
   search: '',
-  filters: { faculty: '', course: '', group: '' },
+  filters: NO_FILTERS,
+  level: '',
+  status: '',
   sort: { field: 'name', direction: 'asc' },
   page: 1,
+  pageSize: 10,
 };
 
 export function useAppState() {
@@ -39,6 +48,8 @@ export function useAppState() {
   const [selectedStudentId, setSelectedStudentId] = useState(null); // admin's open student report
   // Dashboard filters/search/sort/page live here (not in AdminOverview) so they survive opening a student and coming back.
   const [adminView, setAdminView] = useState(INITIAL_ADMIN_VIEW);
+  const [studentsView, setStudentsView] = useState(INITIAL_STUDENTS_VIEW);
+  const [studentReturnScreen, setStudentReturnScreen] = useState('admin'); // where "back" leads from a student report
 
   // The mockup has no equivalent of this — its `state` lived only in memory,
   // so a refresh always dropped back to Welcome. A real JWT survives a
@@ -55,9 +66,10 @@ export function useAppState() {
   const goTo = useCallback((next) => setScreen(next), []);
 
   const openStudent = useCallback((id) => {
+    setStudentReturnScreen(screen === 'adminStudents' ? 'adminStudents' : 'admin');
     setSelectedStudentId(id);
     setScreen('adminStudent');
-  }, []);
+  }, [screen]);
 
   const enterCall = useCallback((callInfo) => {
     setScreenBeforeCall(screen);
@@ -85,8 +97,9 @@ export function useAppState() {
     setUser(null);
     setActiveCall(null);
     setAdminView(INITIAL_ADMIN_VIEW);
+    setStudentsView(INITIAL_STUDENTS_VIEW);
     setScreen('welcome');
   }, []);
 
-  return { screen, goTo, openStudent, selectedStudentId, adminView, setAdminView, user, onLoginSuccess, onProfileCompleted, logout, activeCall, enterCall, leaveCall };
+  return { screen, goTo, openStudent, selectedStudentId, adminView, setAdminView, studentsView, setStudentsView, studentReturnScreen, user, onLoginSuccess, onProfileCompleted, logout, activeCall, enterCall, leaveCall };
 }
