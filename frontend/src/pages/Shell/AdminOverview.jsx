@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { downloadStudentsCsv, getAdminKpis, getAdminStudents, getInstitutionSettings, getCohortDistribution, getFacultyActivity, getFieldDistribution, getStudentFilterOptions } from '../../api/admin.js';
 import StudentFilters from '../../components/StudentFilters.jsx';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
+import { INITIAL_ADMIN_VIEW } from '../../state/useAppState.js';
 
 const SHIMMER = {
   background: 'linear-gradient(90deg,#EDF2F3 0%,#F7F9FA 50%,#EDF2F3 100%)',
@@ -22,19 +23,16 @@ const PAGER_BUTTON = (disabled) => ({
 });
 
 /** Institution dashboard. The faculty/course/group filters narrow every widget on the page, not just the table. */
-export default function AdminOverview({ onOpenStudent }) {
+export default function AdminOverview({ onOpenStudent, view, setView }) {
   const [loading, setLoading] = useState(true);
   const [adminKpis, setAdminKpis] = useState([]);
   const [distributionBars, setDistributionBars] = useState([]);
   const [fieldDistributionBars, setFieldDistributionBars] = useState([]);
   const [facultyActivity, setFacultyActivity] = useState([]);
-  const [adminSearch, setAdminSearch] = useState('');
   const [students, setStudents] = useState({ results: [], total: 0, page: 1, pageSize: PAGE_SIZE });
   const [searchFocused, setSearchFocused] = useState(false);
-  const [filters, setFilters] = useState({ faculty: '', course: '', group: '' });
   const [filterOptions, setFilterOptions] = useState({ faculties: [], courses: [], groups: [] });
-  const [sort, setSort] = useState({ field: 'name', direction: 'asc' });
-  const [page, setPage] = useState(1);
+  const { search: adminSearch, filters, sort, page } = view;
   const [institution, setInstitution] = useState({ name: '', academicTerm: '' });
   const [exporting, setExporting] = useState(false);
   const { t, language } = useLanguage();
@@ -65,15 +63,17 @@ export default function AdminOverview({ onOpenStudent }) {
     return () => { cancelled = true; };
   }, [filters, adminSearch, sort, page, language]);
 
-  const updateFilter = (key, value) => { setFilters((f) => ({ ...f, [key]: value })); setPage(1); };
-  const resetFilters = () => { setFilters({ faculty: '', course: '', group: '' }); setPage(1); };
-  const updateSearch = (value) => { setAdminSearch(value); setPage(1); };
-  const toggleSort = (field) => {
-    setSort((s) => (s.field === field
-      ? { field, direction: s.direction === 'asc' ? 'desc' : 'asc' }
-      : { field, direction: SORT_FIRST_DIRECTION[field] }));
-    setPage(1);
-  };
+  const updateFilter = (key, value) => setView((v) => ({ ...v, filters: { ...v.filters, [key]: value }, page: 1 }));
+  const resetFilters = () => setView((v) => ({ ...v, filters: INITIAL_ADMIN_VIEW.filters, page: 1 }));
+  const updateSearch = (value) => setView((v) => ({ ...v, search: value, page: 1 }));
+  const setPage = (next) => setView((v) => ({ ...v, page: next }));
+  const toggleSort = (field) => setView((v) => ({
+    ...v,
+    sort: v.sort.field === field
+      ? { field, direction: v.sort.direction === 'asc' ? 'desc' : 'asc' }
+      : { field, direction: SORT_FIRST_DIRECTION[field] },
+    page: 1,
+  }));
 
   const exportCsv = async () => {
     setExporting(true);

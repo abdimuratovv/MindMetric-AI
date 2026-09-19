@@ -41,7 +41,7 @@ const NAV_CONFIGS = {
  * sidebar) plus the content-area router (lines 138-514) that swaps in the
  * screen matching `screen`.
  */
-export default function AppShell({ screen, goTo, openStudent, selectedStudentId, user, logout, enterCall }) {
+export default function AppShell({ screen, goTo, openStudent, selectedStudentId, adminView, setAdminView, user, logout, enterCall }) {
   const { t } = useLanguage();
   const [navOpen, setNavOpen] = useState(false);
   const role = user?.role || 'student';
@@ -196,7 +196,7 @@ export default function AppShell({ screen, goTo, openStudent, selectedStudentId,
         {screen === 'achievements' && <Achievements />}
         {screen === 'analytics' && <Analytics goTo={goTo} />}
         {screen === 'teacherReview' && <TeacherReview enterCall={enterCall} />}
-        {screen === 'admin' && <AdminOverview onOpenStudent={openStudent} />}
+        {screen === 'admin' && <AdminOverview onOpenStudent={openStudent} view={adminView} setView={setAdminView} />}
         {screen === 'adminStudent' && <AdminStudentDetail studentId={selectedStudentId} onBack={() => goTo('admin')} />}
         {screen === 'questionBank' && <QuestionBank />}
         {screen === 'adminSettings' && <AdminSettings />}
