@@ -1,7 +1,7 @@
 """
 Pure functions originally ported 1:1 from the mockup's `tierFor()` / `bandFor()`
 (MindMetric AI.dc.html lines 681-693); thresholds/copy have since diverged from
-that file (3-tier rubric: 0-60/61-80/81-100) and calculators.py is now the
+that file (3-tier rubric: 0-55/56-79/80-100) and calculators.py is now the
 single source of truth server-side.
 
 Each returns a `key` (stable, language-independent — used for bucketing,
@@ -17,8 +17,8 @@ from .constants import FIELD_WEIGHTS, INDICATOR_CHOICES, PROGRAMMING_APTITUDE_WE
 TOTAL_INDICATOR_COUNT = len(INDICATOR_CHOICES)
 
 _TIERS = [
-    (81, 'high', {'ru': 'Высокий', 'uz': 'Yuqori'}, '#2E7052', '#DCEFE2'),
-    (61, 'developing', {'ru': 'Развивающийся', 'uz': 'Rivojlanayotgan'}, '#B8862F', '#F5E9D3'),
+    (80, 'high', {'ru': 'Высокий', 'uz': 'Yuqori'}, '#2E7052', '#DCEFE2'),
+    (56, 'developing', {'ru': 'Развивающийся', 'uz': 'Rivojlanayotgan'}, '#B8862F', '#F5E9D3'),
     (0, 'foundational', {'ru': 'Слабый', 'uz': 'Iqtidorsiz'}, '#BD5B4C', '#F6E0DC'),
 ]
 
@@ -26,8 +26,8 @@ _TIERS = [
 # results screen (see verdict_for) — so these read as "how much", not "whether".
 # The whether/not question is answered once, by APTITUDE_THRESHOLD.
 _BANDS = [
-    (81, 'high', {'ru': 'Высокий уровень', 'uz': 'Yuqori daraja'}, '#DCEFE2', '#1F4B39'),
-    (61, 'developing', {'ru': 'Развивающийся уровень', 'uz': 'Rivojlanayotgan daraja'}, '#F5E9D3', '#B8862F'),
+    (80, 'high', {'ru': 'Высокий уровень', 'uz': 'Yuqori daraja'}, '#DCEFE2', '#1F4B39'),
+    (56, 'developing', {'ru': 'Развивающийся уровень', 'uz': 'Rivojlanayotgan daraja'}, '#F5E9D3', '#B8862F'),
     (0, 'foundational', {'ru': 'Начальный уровень', 'uz': "Boshlang'ich daraja"}, '#F6E0DC', '#BD5B4C'),
 ]
 
@@ -35,7 +35,7 @@ _BANDS = [
 # Deliberately its own constant rather than `_BANDS[-2][0]` — the verdict is the
 # product's primary claim, so re-cutting the degree bands later must not silently
 # move the line between "iqtidorli" and "iqtidorli emas".
-APTITUDE_THRESHOLD = 61
+APTITUDE_THRESHOLD = 56
 
 # Russian intentionally phrases the verdict about the *finding* ("aptitude was /
 # was not identified") rather than labeling the student, which is the register
@@ -49,8 +49,8 @@ _VERDICTS = {
 # {{ distributionBars }} bucket headings — short form of each band, keyed by
 # the same stable `key` as _BANDS above.
 BAND_SHORT_LABELS = {
-    'ru': {'foundational': 'Слабый', 'developing': 'Развивающийся', 'high': 'Высокий'},
-    'uz': {'foundational': 'Iqtidorsiz', 'developing': 'Rivojlanayotgan', 'high': 'Yuqori'},
+    'ru': {'foundational': 'Начальный (0–55)', 'developing': 'Средний (56–79)', 'high': 'Высокий (80–100)'},
+    'uz': {'foundational': "Boshlang'ich (0–55)", 'developing': "O'rta (56–79)", 'high': 'Yuqori (80–100)'},
 }
 
 
