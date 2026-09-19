@@ -29,6 +29,7 @@ export function useAppState() {
   // both via enterCall(). See pages/VideoCall/VideoCallPage.jsx.
   const [activeCall, setActiveCall] = useState(null);
   const [screenBeforeCall, setScreenBeforeCall] = useState('selection');
+  const [selectedStudentId, setSelectedStudentId] = useState(null); // admin's open student report
 
   // The mockup has no equivalent of this — its `state` lived only in memory,
   // so a refresh always dropped back to Welcome. A real JWT survives a
@@ -43,6 +44,11 @@ export function useAppState() {
   }, []);
 
   const goTo = useCallback((next) => setScreen(next), []);
+
+  const openStudent = useCallback((id) => {
+    setSelectedStudentId(id);
+    setScreen('adminStudent');
+  }, []);
 
   const enterCall = useCallback((callInfo) => {
     setScreenBeforeCall(screen);
@@ -72,5 +78,5 @@ export function useAppState() {
     setScreen('welcome');
   }, []);
 
-  return { screen, goTo, user, onLoginSuccess, onProfileCompleted, logout, activeCall, enterCall, leaveCall };
+  return { screen, goTo, openStudent, selectedStudentId, user, onLoginSuccess, onProfileCompleted, logout, activeCall, enterCall, leaveCall };
 }

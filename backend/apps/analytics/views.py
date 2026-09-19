@@ -1,5 +1,8 @@
-from django.db.models import Avg, Count, Max, Q
+import csv
+
+from django.db.models import Avg, Count, F, Max, Q
 from django.db.models.deletion import ProtectedError
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.permissions import AllowAny
@@ -16,6 +19,9 @@ from apps.reviews.status import status_style
 from apps.scoring import calculators
 from apps.scoring.constants import FIELD_CHOICES, FIELD_LABELS, INDICATOR_CHOICES, INDICATOR_LABELS
 from apps.scoring.models import FieldRecommendation, IndicatorScore, OverallScore
+from apps.scoring.views import build_results_mistakes, build_results_summary
+
+from .models import InstitutionSettings
 
 # Indicator keys served by the learning / SJT / anagram patterns; every other
 # indicator uses the MCQ question bank (CognitiveQuestion).
@@ -87,6 +93,21 @@ def _format_date(dt, lang: str) -> str:
     return f'{MONTH_ABBR[lang][dt.month - 1]} {dt.day}'
 
 
+def _scoped_students(request):
+    """Students narrowed by the faculty/course/group query params. Every admin
+    overview widget goes through this so the dashboard filters apply page-wide."""
+    students = User.objects.filter(role=User.Role.STUDENT)
+    for param, lookup in (
+        ('faculty', 'student_profile__faculty'),
+        ('course', 'student_profile__course'),
+        ('group', 'student_profile__group'),
+    ):
+        value = request.query_params.get(param, '')
+        if value:
+            students = students.filter(**{lookup: value})
+    return students
+
+
 class PublicStatsView(APIView):
     """
     GET /api/public/stats/ — feeds the welcome screen's {{ welcomeStats }} tiles.
@@ -123,24 +144,29 @@ class AdminKpiView(APIView):
 
     def get(self, request):
         lang = get_language(request)
-        total_assessed = OverallScore.objects.count()
-        avg_score = OverallScore.objects.aggregate(avg=Avg('score'))['avg'] or 0
-        total_attempts = AssessmentAttempt.objects.count()
-        completed_attempts = AssessmentAttempt.objects.filter(status=AssessmentAttempt.Status.COMPLETED).count()
+        students = _scoped_students(request)
+        scores = OverallScore.objects.filter(student__in=students)
+        total_assessed = scores.count()
+        total_students = students.count()
+        avg_score = scores.aggregate(avg=Avg('score'))['avg'] or 0
+        attempts = AssessmentAttempt.objects.filter(student__in=students)
+        total_attempts = attempts.count()
+        completed_attempts = attempts.filter(status=AssessmentAttempt.Status.COMPLETED).count()
         completion_rate = round(100 * completed_attempts / total_attempts) if total_attempts else 0
-        flagged = TeacherReview.objects.filter(flagged=True).count()
-        flagged_unresolved = TeacherReview.objects.filter(flagged=True, submitted=False).count()
+        reviews = TeacherReview.objects.filter(student__in=students)
+        flagged = reviews.filter(flagged=True).count()
+        flagged_unresolved = reviews.filter(flagged=True, submitted=False).count()
 
         labels = {
-            'ru': ['Всего оценено', 'Средний балл способностей', 'Доля завершения', 'Отмечено для проверки'],
-            'uz': ['Jami baholandi', "O'rtacha qobiliyat balli", 'Yakunlanish darajasi', 'Koʼrib chiqish uchun belgilangan'],
+            'ru': ['Оценено студентов', 'Средний балл', 'Доля завершённых тестов', 'Ожидают проверки'],
+            'uz': ['Baholangan talabalar', "O'rtacha ball", 'Tugallangan testlar ulushi', 'Tekshiruvni kutayotganlar'],
         }[lang]
         unresolved_suffix = {'ru': 'не решено', 'uz': 'hal qilinmagan'}[lang]
 
         return Response([
-            {'label': labels[0], 'value': f'{total_assessed:,}', 'delta': NO_PRIOR_PERIOD[lang], 'deltaColor': '#93A39A'},
-            {'label': labels[1], 'value': f'{avg_score:.1f}', 'delta': NO_PRIOR_PERIOD[lang], 'deltaColor': '#93A39A'},
-            {'label': labels[2], 'value': f'{completion_rate}%', 'delta': NO_PRIOR_PERIOD[lang], 'deltaColor': '#93A39A'},
+            {'label': labels[0], 'value': f'{total_assessed:,} / {total_students:,}', 'delta': '', 'deltaColor': '#93A39A'},
+            {'label': labels[1], 'value': f'{avg_score:.1f} / 100', 'delta': '', 'deltaColor': '#93A39A'},
+            {'label': labels[2], 'value': f'{completion_rate}%', 'delta': '', 'deltaColor': '#93A39A'},
             {'label': labels[3], 'value': str(flagged), 'delta': f'{flagged_unresolved} {unresolved_suffix}', 'deltaColor': '#B8862F'},
         ])
 
@@ -152,7 +178,7 @@ class CohortDistributionView(APIView):
 
     def get(self, request):
         lang = get_language(request)
-        scores = list(OverallScore.objects.values_list('score', flat=True))
+        scores = list(OverallScore.objects.filter(student__in=_scoped_students(request)).values_list('score', flat=True))
         total = len(scores) or 1
         bucket_order = ['foundational', 'developing', 'high']
         buckets = {k: 0 for k in bucket_order}
@@ -164,7 +190,7 @@ class CohortDistributionView(APIView):
         short_labels = calculators.BAND_SHORT_LABELS[lang]
         return Response([
             {
-                'label': short_labels[key], 'pctLabel': f'{round(100 * count / total)}%',
+                'label': short_labels[key], 'count': count, 'pctLabel': f'{round(100 * count / total)}%',
                 'barHeight': f'{round(100 * count / max_count)}%', 'color': colors[key],
             }
             for key, count in buckets.items()
@@ -192,7 +218,7 @@ class FieldDistributionView(APIView):
     def get(self, request):
         lang = get_language(request)
         top_keys = list(
-            FieldRecommendation.objects.filter(is_confident=True).values_list('top_field_key', flat=True)
+            FieldRecommendation.objects.filter(is_confident=True, student__in=_scoped_students(request)).values_list('top_field_key', flat=True)
         )
         total = len(top_keys) or 1
         buckets = {key: 0 for key, _ in FIELD_CHOICES}
@@ -217,7 +243,7 @@ class FacultyActivityView(APIView):
 
     def get(self, request):
         rows = (
-            TeacherReview.objects.filter(submitted=True)
+            TeacherReview.objects.filter(submitted=True, student__in=_scoped_students(request))
             .values('reviewer__first_name', 'reviewer__last_name')
             .annotate(count=Count('id'))
             .order_by('-count')
@@ -254,43 +280,190 @@ class StudentFilterOptionsView(APIView):
         })
 
 
+STUDENT_LIST_DEFAULT_PAGE_SIZE = 10
+STUDENT_LIST_MAX_PAGE_SIZE = 50
+# `?ordering=` values -> (sort field, descending). Unlisted values fall back to name.
+STUDENT_LIST_ORDERINGS = {
+    'name': ('name', False), '-name': ('name', True),
+    'score': ('score', False), '-score': ('score', True),
+    'status': ('status', False), '-status': ('status', True),
+    'date': ('date', False), '-date': ('date', True),
+}
+
+
+def _positive_int(raw, default, maximum=None):
+    try:
+        value = int(raw)
+    except (TypeError, ValueError):
+        return default
+    if value < 1:
+        return default
+    return min(value, maximum) if maximum else value
+
+
+def _student_entries(request, lang):
+    """(row, sort values) per student for the current search/filters, already ordered
+    per `?ordering=`. Shared by the paginated list and the CSV export."""
+    search = request.query_params.get('search', '')
+    students = _scoped_students(request)
+    if search:
+        students = students.filter(
+            Q(first_name__icontains=search) | Q(last_name__icontains=search)
+        )
+    students = students.annotate(
+        last_activity=Max('attempts__completed_at'),
+        group_name=F('student_profile__group'),
+    )
+
+    scores = dict(OverallScore.objects.filter(student__in=students).values_list('student_id', 'score'))
+    review_status = {}
+    for review in TeacherReview.objects.filter(student__in=students).order_by('id'):
+        review_status.setdefault(review.student_id, review.status)  # first review per student, as before
+
+    entries = []
+    for student in students:
+        score = scores.get(student.id)
+        style = status_style(review_status.get(student.id, 'pending'), lang)
+        level = calculators.band_for(score, lang) if score is not None else None
+        name = student.get_full_name() or student.email
+        entries.append(({
+            'id': student.id,
+            'name': name,
+            'program': student.program,
+            'group': student.group_name or '',
+            'score': score,
+            'levelLabel': level['band'] if level else None,
+            'levelBg': level['bg'] if level else None, 'levelColor': level['color'] if level else None,
+            'statusLabel': style['label'], 'statusBg': style['bg'], 'statusColor': style['color'],
+            'date': _format_date(student.last_activity, lang) if student.last_activity else None,
+        }, {
+            'name': name.lower(), 'score': score, 'status': style['label'], 'date': student.last_activity,
+        }))
+
+    field, descending = STUDENT_LIST_ORDERINGS.get(request.query_params.get('ordering', ''), ('name', False))
+    entries.sort(key=lambda e: e[1]['name'])  # stable tiebreak for every ordering
+    present = [e for e in entries if e[1][field] is not None]
+    missing = [e for e in entries if e[1][field] is None]
+    present.sort(key=lambda e: e[1][field], reverse=descending)
+    return present + missing
+
+
 class AdminStudentListView(APIView):
-    """GET /api/admin/students/?search=&faculty=&course=&group= — feeds the {{ adminStudents }} recent-assessments table."""
+    """
+    GET /api/admin/students/?search=&faculty=&course=&group=&ordering=&page=&pageSize=
+    — feeds the student results table, returned as {results, total, page, pageSize}.
+    Rows with no value for the sorted field (e.g. no score yet) always sort last.
+    """
+
+    permission_classes = [IsAdmin]
+
+    def get(self, request):
+        entries = _student_entries(request, get_language(request))
+        page_size = _positive_int(request.query_params.get('pageSize'), STUDENT_LIST_DEFAULT_PAGE_SIZE, STUDENT_LIST_MAX_PAGE_SIZE)
+        total = len(entries)
+        last_page = max(1, -(-total // page_size))
+        page = min(_positive_int(request.query_params.get('page'), 1), last_page)
+        start = (page - 1) * page_size
+        return Response({
+            'results': [row for row, _ in entries[start:start + page_size]],
+            'total': total, 'page': page, 'pageSize': page_size,
+        })
+
+
+class AdminStudentDetailView(APIView):
+    """
+    GET /api/admin/students/<id>/ — one student's full result report for the admin
+    (same summary/mistakes payloads the student sees on their own results screen),
+    plus their profile and the teacher-review state.
+    """
+
+    permission_classes = [IsAdmin]
+
+    def get(self, request, pk):
+        lang = get_language(request)
+        student = get_object_or_404(User, pk=pk, role=User.Role.STUDENT)
+        profile = StudentProfile.objects.filter(user=student).first()
+        review = TeacherReview.objects.filter(student=student).select_related('reviewer').first()
+        style = status_style(review.status if review else 'pending', lang)
+        last_activity = AssessmentAttempt.objects.filter(student=student).aggregate(last=Max('completed_at'))['last']
+        reviewer_name = review.reviewer.get_full_name() if review and review.reviewer else ''
+        return Response({
+            'student': {
+                'id': student.id,
+                'name': student.get_full_name() or student.email,
+                'email': student.email,
+                'program': student.program,
+                'faculty': profile.faculty if profile else '',
+                'course': profile.course if profile else '',
+                'group': profile.group if profile else '',
+                'specialization': profile.specialization if profile else '',
+                'lastActivity': _format_date(last_activity, lang) if last_activity else None,
+            },
+            'review': {
+                'statusLabel': style['label'], 'statusBg': style['bg'], 'statusColor': style['color'],
+                'comment': review.comment if review else '',
+                'reviewerName': reviewer_name,
+                'submittedAt': _format_date(review.submitted_at, lang) if review and review.submitted_at else None,
+            },
+            'summary': build_results_summary(student, lang),
+            'mistakes': build_results_mistakes(student, lang),
+        })
+
+
+CSV_HEADERS = {
+    'ru': ['Студент', 'Группа', 'Балл', 'Уровень', 'Статус', 'Дата'],
+    'uz': ['Talaba', 'Guruh', 'Ball', 'Daraja', 'Holat', 'Sana'],
+}
+
+
+class AdminStudentExportView(APIView):
+    """GET /api/admin/students/export/ — the whole filtered/searched/sorted list (not one page) as CSV."""
 
     permission_classes = [IsAdmin]
 
     def get(self, request):
         lang = get_language(request)
-        search = request.query_params.get('search', '')
-        students = User.objects.filter(role=User.Role.STUDENT)
-        if search:
-            students = students.filter(
-                Q(first_name__icontains=search) | Q(last_name__icontains=search)
-            )
-        faculty = request.query_params.get('faculty', '')
-        if faculty:
-            students = students.filter(student_profile__faculty=faculty)
-        course = request.query_params.get('course', '')
-        if course:
-            students = students.filter(student_profile__course=course)
-        group = request.query_params.get('group', '')
-        if group:
-            students = students.filter(student_profile__group=group)
-        students = students.annotate(last_activity=Max('attempts__completed_at'))
+        response = HttpResponse(content_type='text/csv; charset=utf-8')
+        response['Content-Disposition'] = 'attachment; filename="students.csv"'
+        response.write('\ufeff')  # BOM so Excel opens the Cyrillic/Uzbek text as UTF-8
+        writer = csv.writer(response)
+        writer.writerow(CSV_HEADERS[lang])
+        for row, _ in _student_entries(request, lang):
+            writer.writerow([
+                _csv_safe(row['name']), _csv_safe(row['group'] or row['program']),
+                '' if row['score'] is None else row['score'],
+                row['levelLabel'] or '', row['statusLabel'], row['date'] or '',
+            ])
+        return response
 
-        rows = []
-        for student in students:
-            overall = OverallScore.objects.filter(student=student).first()
-            review = TeacherReview.objects.filter(student=student).first()
-            style = status_style(review.status if review else 'pending', lang)
-            rows.append({
-                'name': student.get_full_name() or student.email,
-                'program': student.program,
-                'score': overall.score if overall else None,
-                'statusLabel': style['label'], 'statusBg': style['bg'], 'statusColor': style['color'],
-                'date': _format_date(student.last_activity, lang) if student.last_activity else None,
-            })
-        return Response(rows)
+
+def _csv_safe(value):
+    """Neutralize spreadsheet formula injection: names/groups are student-typed free text."""
+    return f"'{value}" if value and value[0] in '=+-@\t\r' else value
+
+
+class AdminSettingsView(APIView):
+    """GET/PATCH /api/admin/settings/ — institution name and academic term shown on the dashboard header."""
+
+    permission_classes = [IsAdmin]
+
+    @staticmethod
+    def _payload(obj):
+        return {'name': obj.name, 'academicTerm': obj.academic_term}
+
+    def get(self, request):
+        return Response(self._payload(InstitutionSettings.load()))
+
+    def patch(self, request):
+        obj = InstitutionSettings.load()
+        for key, field, limit in (('name', 'name', 160), ('academicTerm', 'academic_term', 80)):
+            if key in request.data:
+                value = str(request.data[key] or '').strip()
+                if len(value) > limit:
+                    return Response({'detail': f'{key}: max {limit}'}, status=status.HTTP_400_BAD_REQUEST)
+                setattr(obj, field, value)
+        obj.save()
+        return Response(self._payload(obj))
 
 
 class QuestionBankView(APIView):

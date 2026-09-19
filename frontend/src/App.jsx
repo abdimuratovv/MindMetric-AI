@@ -8,7 +8,7 @@ import VideoCallPage from './pages/VideoCall/VideoCallPage.jsx';
 import Welcome from './pages/Welcome.jsx';
 import { useAppState } from './state/useAppState.js';
 
-const SHELL_SCREENS = ['selection', 'results', 'achievements', 'analytics', 'teacherReview', 'admin', 'questionBank'];
+const SHELL_SCREENS = ['selection', 'results', 'achievements', 'analytics', 'teacherReview', 'admin', 'questionBank', 'adminSettings', 'adminStudent'];
 
 /**
  * Top-level router. Mirrors the mockup's four mutually-exclusive `sc-if`
@@ -18,7 +18,7 @@ const SHELL_SCREENS = ['selection', 'results', 'achievements', 'analytics', 'tea
  * (no sidebar), same tier as the assessment-type branch below it.
  */
 export default function App() {
-  const { screen, goTo, user, onLoginSuccess, onProfileCompleted, logout, activeCall, enterCall, leaveCall } = useAppState();
+  const { screen, goTo, openStudent, selectedStudentId, user, onLoginSuccess, onProfileCompleted, logout, activeCall, enterCall, leaveCall } = useAppState();
 
   return (
     <PageBackground>
@@ -32,7 +32,7 @@ export default function App() {
       {ASSESSMENT_TYPES.includes(screen) && <FocusedTestShell screen={screen} goTo={goTo} />}
       {screen === 'videoCall' && <VideoCallPage call={activeCall} onLeave={leaveCall} />}
       {SHELL_SCREENS.includes(screen) && (
-        <AppShell screen={screen} goTo={goTo} user={user} logout={logout} enterCall={enterCall} />
+        <AppShell screen={screen} goTo={goTo} openStudent={openStudent} selectedStudentId={selectedStudentId} user={user} logout={logout} enterCall={enterCall} />
       )}
     </PageBackground>
   );

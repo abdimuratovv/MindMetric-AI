@@ -55,3 +55,20 @@ export function buildQuery(params) {
   const s = qs.toString();
   return s ? `?${s}` : '';
 }
+
+/** Authenticated file download (the JWT can't ride on a plain <a href>): fetches `path` and saves it under `filename`. */
+export async function downloadFile(path, filename) {
+  const headers = { 'X-Language': getStoredLanguage() };
+  const token = getToken();
+  if (token) headers.Authorization = `Bearer ${token}`;
+  const res = await fetch(`/api${path}`, { headers });
+  if (!res.ok) throw new Error(`Download failed: ${res.status}`);
+  const url = URL.createObjectURL(await res.blob());
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(url);
+}

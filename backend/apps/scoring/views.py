@@ -151,6 +151,61 @@ def serialize_field_recommendation(recommendation: FieldRecommendation | None, l
     }
 
 
+def build_results_summary(student, lang: str) -> dict:
+    """The results-screen payload for `student` — shared by the student's own
+    endpoint and the admin student-detail endpoint (apps.analytics)."""
+    overall = OverallScore.objects.filter(student=student).first()
+    scores_by_key = {
+        row.indicator_key: row.score
+        for row in IndicatorScore.objects.filter(student=student)
+    }
+
+    indicators = []
+    for key, _ in INDICATOR_CHOICES:
+        score = scores_by_key.get(key)
+        if score is None:
+            indicators.append({
+                'key': key,
+                'label': INDICATOR_LABELS[lang][key],
+                'score': None,
+                'tier': NOT_COMPLETED_LABEL[lang],
+                'color': NOT_COMPLETED_COLOR,
+                'pct': '0%',
+                'completed': False,
+            })
+            continue
+        tier = calculators.tier_for(score, lang)
+        indicators.append({
+            'key': key,
+            'label': INDICATOR_LABELS[lang][key],
+            'score': score,
+            'tier': tier['tier'],
+            'color': tier['color'],
+            'pct': f'{score}%',
+            'completed': True,
+        })
+
+    overall_score = overall.score if overall else 0
+    band_info = calculators.band_for(overall_score, lang)
+    verdict_info = calculators.verdict_for(overall_score, lang)
+    field_recommendation = FieldRecommendation.objects.filter(student=student).first()
+
+    return {
+        'overallScore': overall_score,
+        'verdict': verdict_info['verdict'],
+        'verdictBg': verdict_info['bg'],
+        'verdictColor': verdict_info['color'],
+        'isTalented': verdict_info['talented'],
+        'band': band_info['band'],
+        'bandColor': band_info['color'],
+        'bandExplanation': BAND_EXPLANATIONS[lang][band_info['key']],
+        'indicators': indicators,
+        'overallExplanation': OVERALL_EXPLANATIONS[lang][band_info['key']],
+        'programmingAptitudeScore': overall.programming_aptitude_score if overall else None,
+        'fieldRecommendations': serialize_field_recommendation(field_recommendation, lang),
+    }
+
+
 class ResultsSummaryView(APIView):
     """
     GET /api/results/summary/
@@ -173,57 +228,7 @@ class ResultsSummaryView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        lang = get_language(request)
-        overall = OverallScore.objects.filter(student=request.user).first()
-        scores_by_key = {
-            row.indicator_key: row.score
-            for row in IndicatorScore.objects.filter(student=request.user)
-        }
-
-        indicators = []
-        for key, _ in INDICATOR_CHOICES:
-            score = scores_by_key.get(key)
-            if score is None:
-                indicators.append({
-                    'key': key,
-                    'label': INDICATOR_LABELS[lang][key],
-                    'score': None,
-                    'tier': NOT_COMPLETED_LABEL[lang],
-                    'color': NOT_COMPLETED_COLOR,
-                    'pct': '0%',
-                    'completed': False,
-                })
-                continue
-            tier = calculators.tier_for(score, lang)
-            indicators.append({
-                'key': key,
-                'label': INDICATOR_LABELS[lang][key],
-                'score': score,
-                'tier': tier['tier'],
-                'color': tier['color'],
-                'pct': f'{score}%',
-                'completed': True,
-            })
-
-        overall_score = overall.score if overall else 0
-        band_info = calculators.band_for(overall_score, lang)
-        verdict_info = calculators.verdict_for(overall_score, lang)
-        field_recommendation = FieldRecommendation.objects.filter(student=request.user).first()
-
-        return Response({
-            'overallScore': overall_score,
-            'verdict': verdict_info['verdict'],
-            'verdictBg': verdict_info['bg'],
-            'verdictColor': verdict_info['color'],
-            'isTalented': verdict_info['talented'],
-            'band': band_info['band'],
-            'bandColor': band_info['color'],
-            'bandExplanation': BAND_EXPLANATIONS[lang][band_info['key']],
-            'indicators': indicators,
-            'overallExplanation': OVERALL_EXPLANATIONS[lang][band_info['key']],
-            'programmingAptitudeScore': overall.programming_aptitude_score if overall else None,
-            'fieldRecommendations': serialize_field_recommendation(field_recommendation, lang),
-        })
+        return Response(build_results_summary(request.user, get_language(request)))
 
 
 class AnalyticsDetailView(APIView):
@@ -310,6 +315,41 @@ def serialize_achievement(achievement: Achievement, lang: str) -> dict:
     }
 
 
+def build_results_mistakes(student, lang: str) -> list:
+    """Typical-mistakes groups for `student` (see ResultsMistakesView)."""
+    responses = (
+        CognitiveResponse.objects
+        .filter(
+            attempt__student=student,
+            attempt__status=AssessmentAttempt.Status.COMPLETED,
+            correctness__lt=1.0,
+        )
+        .exclude(**{f'question__feedback_{lang}': ''})
+        .select_related('question')
+        .order_by('question__indicator_key', '-responded_at')
+    )
+
+    grouped = {}
+    for response in responses:
+        question = response.question
+        key = question.indicator_key
+        entry = grouped.setdefault(key, {
+            'indicatorKey': key,
+            'indicatorLabel': INDICATOR_LABELS[lang][key],
+            'items': [],
+        })
+        entry['items'].append({
+            'prompt': getattr(question, f'prompt_{lang}'),
+            'feedback': getattr(question, f'feedback_{lang}'),
+        })
+
+    mistakes = list(grouped.values())
+    for entry in mistakes:
+        entry['count'] = len(entry['items'])
+
+    return mistakes
+
+
 class ResultsMistakesView(APIView):
     """
     GET /api/results/mistakes/
@@ -331,38 +371,7 @@ class ResultsMistakesView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        lang = get_language(request)
-        responses = (
-            CognitiveResponse.objects
-            .filter(
-                attempt__student=request.user,
-                attempt__status=AssessmentAttempt.Status.COMPLETED,
-                correctness__lt=1.0,
-            )
-            .exclude(**{f'question__feedback_{lang}': ''})
-            .select_related('question')
-            .order_by('question__indicator_key', '-responded_at')
-        )
-
-        grouped = {}
-        for response in responses:
-            question = response.question
-            key = question.indicator_key
-            entry = grouped.setdefault(key, {
-                'indicatorKey': key,
-                'indicatorLabel': INDICATOR_LABELS[lang][key],
-                'items': [],
-            })
-            entry['items'].append({
-                'prompt': getattr(question, f'prompt_{lang}'),
-                'feedback': getattr(question, f'feedback_{lang}'),
-            })
-
-        mistakes = list(grouped.values())
-        for entry in mistakes:
-            entry['count'] = len(entry['items'])
-
-        return Response({'mistakes': mistakes})
+        return Response({'mistakes': build_results_mistakes(request.user, get_language(request))})
 
 
 class AchievementListView(APIView):
