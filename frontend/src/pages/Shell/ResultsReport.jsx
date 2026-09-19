@@ -4,13 +4,12 @@ import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import { polar } from '../../theme/tokens.js';
 
 /**
- * The results report body (score card, radar, indicator bars, recommended fields,
- * typical mistakes, explanation). Shared by the student's own Results screen and
- * the admin's per-student view — `data` is the /results/summary/ payload and
- * `mistakes` the grouped list. `onViewAnalytics` is omitted where the detailed
- * analytics screen doesn't apply (admin view), which hides that link.
+ * The results report body (score card, radar, recommended fields, typical mistakes,
+ * explanation). Shared by the student's own Results screen and the admin's
+ * per-student view — `data` is the /results/summary/ payload and `mistakes` the
+ * grouped list.
  */
-export default function ResultsReport({ data, mistakes, onViewAnalytics }) {
+export default function ResultsReport({ data, mistakes }) {
   const [hoverIdx, setHoverIdx] = useState(null);
   const { t } = useLanguage();
 
@@ -132,33 +131,6 @@ export default function ResultsReport({ data, mistakes, onViewAnalytics }) {
               </div>
             ))}
           </div>
-        </div>
-      </div>
-
-      <div style={{
-        padding: '26px 30px', borderRadius: '22px', background: 'rgba(255,255,255,0.62)', border: '1px solid rgba(255,255,255,0.85)',
-        backdropFilter: 'blur(16px)', boxShadow: '0 10px 30px rgba(31,55,75,0.06)', marginBottom: '22px',
-      }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-          <h3 style={{ fontSize: '16px', fontWeight: 700, color: '#161F24', margin: 0 }}>{t('results.indicatorBreakdown')}</h3>
-          {onViewAnalytics && (
-            <button className="mm-btn" onClick={onViewAnalytics} style={{ border: 'none', background: 'none', color: '#2E5570', fontWeight: 700, fontSize: '13px', cursor: 'pointer' }}>
-              {t('results.viewDetailedAnalytics')}
-            </button>
-          )}
-        </div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-          {indicators.map((ind) => (
-            <div key={ind.key} style={{ opacity: ind.completed ? 1 : 0.7 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', marginBottom: '6px' }}>
-                <span style={{ fontWeight: 600, color: '#161F24' }}>{ind.label}</span>
-                <span style={{ fontWeight: 700, color: ind.color }}>{ind.completed ? `${ind.score} · ${ind.tier}` : ind.tier}</span>
-              </div>
-              <div style={{ height: '8px', borderRadius: '100px', background: '#EAF2F5', overflow: 'hidden' }}>
-                <div style={{ height: '100%', width: ind.pct, background: ind.color, borderRadius: '100px' }} />
-              </div>
-            </div>
-          ))}
         </div>
       </div>
 
