@@ -263,11 +263,7 @@ export default function Auth({ onLoginSuccess, onGoWelcome }) {
           </div>
         )}
 
-        {authMode === 'login' && (
-          <div style={{ display: 'flex', justifyContent: 'flex-end', margin: '6px 0 20px' }}>
-            <a href="#" style={{ fontSize: '12px', fontWeight: 600, textDecoration: 'none' }}>{t('auth.forgotPassword')}</a>
-          </div>
-        )}
+        {authMode === 'login' && <div style={{ height: '20px' }} />}
 
         <button
           className="mm-btn"
