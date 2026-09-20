@@ -30,6 +30,11 @@ export const getCodingProblem = () => api.get('/assessments/coding/problem/');
 export const runCode = (problemId, code) => api.post('/assessments/coding/run/', { problem_id: problemId, code });
 export const submitCoding = (problemId, code, elapsedMs) =>
   api.post('/assessments/coding/submit/', { problem_id: problemId, code, elapsed_ms: elapsedMs });
+/** Same endpoint with no problem_id — "finish the coding phase" when getCodingProblem
+ * has no task left to serve (the cap was lowered under an attempt already past it, or
+ * the pool ran dry). Mirrors Mcq.jsx's submitMcq() on a null question; without it the
+ * student is stranded on a screen that can never load a problem. */
+export const finishCoding = () => api.post('/assessments/coding/submit/', {});
 
 /**
  * Learning pattern — learning_speed. getLearningState returns the current module

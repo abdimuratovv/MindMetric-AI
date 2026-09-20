@@ -34,17 +34,27 @@ from .serializers import CodingProblemSerializer, CognitiveQuestionSerializer
 # Question counts and time limits are admin-tunable — see apps.assessments.limits.
 
 
-def _mcq_cap(kind: str) -> int:
-    return limits.mcq_cap(kind)
+def _mcq_cap(attempt) -> int:
+    """Read off the attempt, not the live setting — see limits.for_attempt."""
+    return limits.for_attempt(attempt, 'questions')
 
 
 def _mcq_time_limit(kind: str) -> int:
+    """Live setting on purpose: this is only ever read to *start* a sitting, and
+    start_or_restart_attempt then snapshots it onto time_remaining_seconds."""
     return limits.mcq_time_limit_seconds(kind)
 
 
 ANSWER_REQUIRED = {
     'ru': 'Пожалуйста, дайте ответ.',
     'uz': 'Iltimos, javob bering.',
+}
+
+# SubmitCodingView's no-problem_id ("finish the coding phase") call, rejected because
+# there is in fact another task left to solve.
+CODING_NOT_FINISHED = {
+    'ru': 'Остались нерешённые задачи.',
+    'uz': 'Yechilmagan topshiriqlar qoldi.',
 }
 
 
@@ -126,7 +136,7 @@ class NextMcqQuestionView(APIView):
     def get(self, request, kind):
         kind = _valid_kind(kind, AssessmentAttempt.MCQ_TYPES)
         attempt = get_object_or_404(AssessmentAttempt, student=request.user, assessment_type=kind)
-        cap = _mcq_cap(kind)
+        cap = _mcq_cap(attempt)
         answered = attempt.cognitive_responses.filter(cycle=attempt.attempt_cycle).count()
         if answered >= cap:
             return Response({'question': None, 'cqNumber': answered, 'cqTotal': cap})
@@ -177,7 +187,7 @@ class AnswerMcqView(APIView):
         return Response({
             'correctness': response.correctness,
             'answered': answered,
-            'is_last': answered >= _mcq_cap(kind),
+            'is_last': answered >= _mcq_cap(attempt),
             'time_remaining_seconds': attempt.time_remaining_seconds,
         })
 
@@ -230,16 +240,46 @@ class StartCodingView(APIView):
         })
 
 
+def _pick_coding_problem(attempt):
+    """
+    Shared by CodingProblemView (serve the next task) and SubmitCodingView (check that a
+    "finish the phase" call is legitimate). Returns (problem, done_count, cap), where
+    `problem` is None once there is nothing left to serve — either this cycle already has
+    `cap` distinct final submissions, or the active pool is exhausted. Both can happen
+    mid-attempt without the student doing anything: lowering `codingTasks` in the admin
+    settings or deactivating problems shrinks what's left under an attempt already in
+    progress, which is why "no problem left" has to be a finishable state rather than an
+    error (it used to strand the student on an unrecoverable screen).
+
+    Prefers problems never seen in any past cycle of this same attempt, falling back to
+    allowing a repeat only once that's exhausted — same history-aware, randomized approach
+    as AdaptiveTestingEngine.select_next_question, just without the IRT ranking (coding
+    problems aren't difficulty-calibrated).
+    """
+    cap = limits.for_attempt(attempt, 'codingTasks')
+    done_ids = set(
+        attempt.coding_submissions.filter(cycle=attempt.attempt_cycle, is_final=True)
+        .values_list('problem_id', flat=True)
+    )
+    if len(done_ids) >= cap:
+        return None, len(done_ids), cap
+
+    seen_ids = set(
+        CodingSubmission.objects.filter(attempt=attempt, is_final=True).values_list('problem_id', flat=True)
+    )
+    candidates = list(CodingProblem.objects.filter(is_active=True).exclude(id__in=done_ids))
+    fresh = [p for p in candidates if p.id not in seen_ids]
+    pool = fresh or candidates
+    return (random.choice(pool) if pool else None), len(done_ids), cap
+
+
 class CodingProblemView(APIView):
     """
     GET /api/assessments/coding/problem/ — the next coding task in algorithmic's
-    coding phase (mirrors NextMcqQuestionView's cqNumber/cqTotal as cpNumber/cpTotal).
-    Excludes problems this cycle already has a final submission for, preferring ones
-    never seen in any past cycle of this same attempt (falling back to allowing a
-    repeat only once that's exhausted) — same history-aware, randomized approach as
-    AdaptiveTestingEngine.select_next_question, just without the IRT ranking (coding
-    problems aren't difficulty-calibrated). Returns {problem: null, ...} once
-    the configured number of distinct problems have a final submission this cycle.
+    coding phase (mirrors NextMcqQuestionView's cqNumber/cqTotal as cpNumber/cpTotal),
+    picked by _pick_coding_problem. Returns {problem: null, ...} once there's nothing
+    left to serve; the frontend then finalizes the attempt through SubmitCodingView
+    with no problem_id, the same way Mcq.jsx submits on a null question.
     """
 
     permission_classes = [IsStudent]
@@ -248,24 +288,11 @@ class CodingProblemView(APIView):
         attempt = get_object_or_404(
             AssessmentAttempt, student=request.user, assessment_type=AssessmentAttempt.Type.ALGORITHMIC,
         )
-        done_ids = set(
-            attempt.coding_submissions.filter(cycle=attempt.attempt_cycle, is_final=True)
-            .values_list('problem_id', flat=True)
-        )
-        if len(done_ids) >= limits.coding_task_cap():
-            return Response({'problem': None, 'cpNumber': len(done_ids), 'cpTotal': limits.coding_task_cap()})
-
-        seen_ids = set(
-            CodingSubmission.objects.filter(attempt=attempt, is_final=True).values_list('problem_id', flat=True)
-        )
-        candidates = list(CodingProblem.objects.filter(is_active=True).exclude(id__in=done_ids))
-        fresh = [p for p in candidates if p.id not in seen_ids]
-        pool = fresh or candidates
-        problem = random.choice(pool) if pool else None
+        problem, done_count, cap = _pick_coding_problem(attempt)
         return Response({
             'problem': CodingProblemSerializer(problem, context={'lang': get_language(request)}).data if problem else None,
-            'cpNumber': len(done_ids) + 1,
-            'cpTotal': limits.coding_task_cap(),
+            'cpNumber': done_count if problem is None else done_count + 1,
+            'cpTotal': cap,
         })
 
 
@@ -306,6 +333,13 @@ class SubmitCodingView(APIView):
     shown -> submitted, mirroring AnswerMcqView's response_time_ms — feeds this
     problem's time_factor in state_tracker._score_hybrid).
 
+    Posting *without* problem_id instead means "finish the coding phase": nothing is
+    recorded, the attempt is just finalized. That's the only way out when
+    CodingProblemView has no task left to serve but the cap was never reached through
+    submissions — e.g. an admin lowered `codingTasks` below what this attempt had
+    already done, or the active pool ran dry. Rejected with 400 while a task is still
+    servable, so it can't be used to cut a sitting short.
+
     Returns {phase: 'next', cpNumber, cpTotal} until the configured number of distinct problems
     have a final submission this cycle — the frontend then fetches the next one via
     CodingProblemView, same shape as SubmitMcqView's {phase: 'coding'} hand-off. Once
@@ -319,7 +353,19 @@ class SubmitCodingView(APIView):
         attempt = get_object_or_404(
             AssessmentAttempt, student=request.user, assessment_type=AssessmentAttempt.Type.ALGORITHMIC,
         )
-        problem = get_object_or_404(CodingProblem, id=request.data.get('problem_id'), is_active=True)
+        problem_id = request.data.get('problem_id')
+        if problem_id is None:
+            # "Finish the phase" — there's no solution to record, only the attempt to
+            # finalize. Legitimate only when nothing is left to serve, so re-run
+            # CodingProblemView's own check instead of trusting the client.
+            if _pick_coding_problem(attempt)[0] is not None:
+                return Response(
+                    {'detail': CODING_NOT_FINISHED[get_language(request)]}, status=status.HTTP_400_BAD_REQUEST,
+                )
+            result = StudentStateTracker().complete_attempt(attempt)
+            return _completion_response(result, get_language(request))
+
+        problem = get_object_or_404(CodingProblem, id=problem_id, is_active=True)
         code = request.data.get('code', '')
         elapsed_ms = request.data.get('elapsed_ms')
 
@@ -336,8 +382,9 @@ class SubmitCodingView(APIView):
             attempt.coding_submissions.filter(cycle=attempt.attempt_cycle, is_final=True)
             .values('problem_id').distinct().count()
         )
-        if done_count < limits.coding_task_cap():
-            return Response({'phase': 'next', 'cpNumber': done_count + 1, 'cpTotal': limits.coding_task_cap()})
+        cap = limits.for_attempt(attempt, 'codingTasks')
+        if done_count < cap:
+            return Response({'phase': 'next', 'cpNumber': done_count + 1, 'cpTotal': cap})
 
         result = StudentStateTracker().complete_attempt(attempt)
         return _completion_response(result, get_language(request))
@@ -567,7 +614,7 @@ class NextSjtView(APIView):
         answered_ids = set(
             attempt.sjt_responses.filter(cycle=attempt.attempt_cycle).values_list('scenario_id', flat=True)
         )
-        cap = min(limits.sjt_scenario_cap(), SjtScenario.objects.filter(is_active=True).count())
+        cap = min(limits.for_attempt(attempt, 'questions'), SjtScenario.objects.filter(is_active=True).count())
         if len(answered_ids) >= cap:
             return Response({'scenario': None, 'number': len(answered_ids), 'total': cap})
 
@@ -609,7 +656,7 @@ class AnswerSjtView(APIView):
             },
         )
         answered = attempt.sjt_responses.filter(cycle=attempt.attempt_cycle).count()
-        cap = min(limits.sjt_scenario_cap(), SjtScenario.objects.filter(is_active=True).count())
+        cap = min(limits.for_attempt(attempt, 'questions'), SjtScenario.objects.filter(is_active=True).count())
         return Response({'answered': answered, 'is_last': answered >= cap})
 
 

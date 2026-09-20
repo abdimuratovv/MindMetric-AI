@@ -333,6 +333,13 @@ class AssessmentAttempt(models.Model):
     # "answered already this run" (cycle == attempt_cycle) apart from "seen in a past
     # attempt" (any earlier cycle) and avoid re-serving the latter while pool allows.
     attempt_cycle = models.PositiveIntegerField(default=1)
+    # {field: int} from apps.assessments.limits.snapshot(), frozen when this attempt (or
+    # this retake of it) started. The admin can retune question counts at any time; this
+    # is what keeps a sitting already under way running on the numbers it began with,
+    # with the new ones picked up on the next start. Empty for attempts that predate the
+    # field and for indicators with nothing tunable — limits.for_attempt falls back to
+    # the live setting in both cases.
+    config_snapshot = models.JSONField(default=dict, blank=True)
     # LEARNING_TYPES only: {"cycle": n, "modules": [module_id, ...]} — the modules
     # picked for cycle n, in order. Re-picked whenever the cycle no longer matches.
     learning_plan = models.JSONField(default=dict, blank=True)

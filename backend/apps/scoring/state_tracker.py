@@ -5,6 +5,7 @@ session survives a refresh. See ARCHITECTURE.md §5.
 """
 from django.utils import timezone
 
+from apps.assessments import limits
 from apps.assessments.models import AssessmentAttempt, CodingSubmission
 from apps.i18n import DEFAULT_LANGUAGE
 
@@ -63,6 +64,10 @@ class StudentStateTracker:
         if attempt.status == AssessmentAttempt.Status.NOT_STARTED:
             attempt.status = AssessmentAttempt.Status.IN_PROGRESS
             attempt.started_at = timezone.now()
+            # Question counts are admin-tunable mid-term, so pin the ones this sitting
+            # runs on here (limits.for_attempt reads them back) — the same reason
+            # time_remaining_seconds is snapshotted rather than recomputed per request.
+            attempt.config_snapshot = limits.snapshot(assessment_type)
             if time_remaining_seconds is not None:
                 attempt.time_remaining_seconds = time_remaining_seconds
             attempt.save()

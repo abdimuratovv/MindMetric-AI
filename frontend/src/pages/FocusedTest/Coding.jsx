@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-import { getCodingProblem, runCode as apiRunCode, startCoding, submitCoding as apiSubmitCoding } from '../../api/assessments.js';
+import { finishCoding, getCodingProblem, runCode as apiRunCode, startCoding, submitCoding as apiSubmitCoding } from '../../api/assessments.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import CompletionOverlay from './CompletionOverlay.jsx';
 
@@ -59,7 +59,14 @@ export default function Coding({ goTo, onProgress }) {
       try {
         const [, next] = await Promise.all([startCoding(), getCodingProblem()]);
         if (cancelled) return;
-        if (!next.problem) throw new Error('no coding problem');
+        // Nothing left to serve — the phase is already over (see _pick_coding_problem
+        // on the backend). Finalize instead of waiting for a problem that will never
+        // arrive, exactly as Mcq.jsx submits when getMcqNextQuestion returns none.
+        if (!next.problem) {
+          const result = await finishCoding();
+          if (!cancelled) setCompletion(result);
+          return;
+        }
         setProblem(next.problem);
         setCode(next.problem.starter_code || '');
         setCpNumber(next.cpNumber);
@@ -134,8 +141,14 @@ export default function Coding({ goTo, onProgress }) {
       const result = await apiSubmitCoding(problem.id, code, elapsedMs);
       if (result.phase === 'next') {
         const next = await getCodingProblem();
+        // The cap can shrink mid-sitting (an admin lowering codingTasks), so "one more
+        // to go" a moment ago can still come back empty — finish rather than blank out.
+        if (!next.problem) {
+          setCompletion(await finishCoding());
+          return;
+        }
         setProblem(next.problem);
-        setCode(next.problem?.starter_code || '');
+        setCode(next.problem.starter_code || '');
         setCpNumber(next.cpNumber);
         setCpTotal(next.cpTotal);
         setHasRun(false);

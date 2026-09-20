@@ -9,8 +9,9 @@ Fields per indicator:
   codingTasks  — algorithmic only: coding tasks in its second phase
   minutes      — hard time limit for the MCQ phase (MCQ types + algorithmic). Teamwork,
                  patience, learning_speed and the coding phase have no total timer.
-A retake or a fresh start picks up new values; attempts already in progress keep
-the time they were started with.
+A retake or a fresh start picks up new values; an attempt already in progress keeps
+every number it started with — start_or_restart_attempt freezes the effective config
+onto AssessmentAttempt.config_snapshot and `for_attempt` reads it back from there.
 """
 
 MCQ_KEYS = ('math', 'logic', 'creative', 'problem_solving', 'attention', 'iq')
@@ -51,6 +52,30 @@ def get_all_config() -> dict:
         key: {field: stored.get(key, {}).get(field, default) for field, default in fields.items()}
         for key, fields in DEFAULTS.items()
     }
+
+
+def snapshot(indicator: str) -> dict:
+    """The effective config to freeze onto an attempt as it starts. Empty for the
+    indicators with nothing tunable (patience, learning_speed), which keeps this safe
+    to call for every Type without special-casing the caller."""
+    return dict(get_config(indicator)) if indicator in DEFAULTS else {}
+
+
+def for_attempt(attempt, field: str) -> int:
+    """
+    One tunable as *this attempt* started with it, not as the admin has it set right
+    now. A student partway through 20 coding tasks shouldn't suddenly owe 5 because an
+    admin moved the dial underneath them — worse, lowering it below what they'd already
+    done used to leave nothing left to serve and no way to finish (see
+    views._pick_coding_problem).
+
+    Attempts started before config_snapshot existed carry an empty one and fall back to
+    the live setting, exactly as every attempt behaved before.
+    """
+    snapshot = attempt.config_snapshot or {}
+    if field in snapshot:
+        return snapshot[field]
+    return get_config(attempt.assessment_type)[field]
 
 
 def mcq_cap(indicator: str) -> int:
