@@ -37,6 +37,8 @@ export default function Coding({ goTo, onProgress }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [codeFocused, setCodeFocused] = useState(false);
   const [completion, setCompletion] = useState(null);
+  const [loadError, setLoadError] = useState(false);
+  const [loadAttempt, setLoadAttempt] = useState(0);
   const { t } = useLanguage();
   // When the current problem was first shown — sent back as elapsed_ms so
   // state_tracker._score_hybrid can factor solve time into that problem's score.
@@ -46,17 +48,29 @@ export default function Coding({ goTo, onProgress }) {
   // element scrolled in lockstep with it (same font size and line-height).
   const gutterRef = useRef(null);
 
+  // Both calls fire together — the problem lookup doesn't depend on start's result
+  // (the attempt row already exists from the MCQ phase), so running them in sequence
+  // only doubled the wait. Cold starts / dropped requests used to leave this screen
+  // blank forever, so a failure now surfaces a retry instead.
   useEffect(() => {
+    let cancelled = false;
+    setLoadError(false);
     (async () => {
-      await startCoding();
-      const next = await getCodingProblem();
-      setProblem(next.problem);
-      setCode(next.problem?.starter_code || '');
-      setCpNumber(next.cpNumber);
-      setCpTotal(next.cpTotal);
-      problemShownAtRef.current = Date.now();
+      try {
+        const [, next] = await Promise.all([startCoding(), getCodingProblem()]);
+        if (cancelled) return;
+        if (!next.problem) throw new Error('no coding problem');
+        setProblem(next.problem);
+        setCode(next.problem.starter_code || '');
+        setCpNumber(next.cpNumber);
+        setCpTotal(next.cpTotal);
+        problemShownAtRef.current = Date.now();
+      } catch {
+        if (!cancelled) setLoadError(true);
+      }
     })();
-  }, []);
+    return () => { cancelled = true; };
+  }, [loadAttempt]);
 
   useEffect(() => {
     onProgress({ pct: `${Math.round((cpNumber / cpTotal) * 100)}%`, timeRemainingSeconds: null });
@@ -73,7 +87,32 @@ export default function Coding({ goTo, onProgress }) {
     );
   }
 
-  if (!problem) return null;
+  if (!problem) {
+    return (
+      <div style={{
+        display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+        gap: '16px', padding: '80px 24px', textAlign: 'center', color: '#3B444A', fontSize: '14.5px',
+      }}>
+        {loadError ? (
+          <>
+            <span>{t('coding.loadError')}</span>
+            <button
+              className="mm-btn"
+              onClick={() => setLoadAttempt((n) => n + 1)}
+              style={{
+                padding: '10px 22px', borderRadius: '100px', border: 'none', cursor: 'pointer',
+                background: '#2E5570', color: '#fff', fontFamily: 'Manrope, sans-serif', fontWeight: 800, fontSize: '13px',
+              }}>{t('coding.retry')}</button>
+          </>
+        ) : (
+          <>
+            <span className="mm-spinner mm-spinner-dark" style={{ width: '22px', height: '22px' }} />
+            <span>{t('coding.loading')}</span>
+          </>
+        )}
+      </div>
+    );
+  }
 
   const busy = isRunning || isSubmitting;
 
