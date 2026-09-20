@@ -21,9 +21,13 @@ DEFAULTS = {
     'teamwork': {'questions': 10},
 }
 
-# (min, max) per field.
-BOUNDS = {'questions': (5, 100), 'codingTasks': (1, 50), 'minutes': (1, 180)}
-BOUNDS_BY_KEY = {'teamwork': {'questions': (1, 30)}}
+# (min, max) per field. The upper bounds are capped by what the banks can actually
+# serve: 100 coding tasks (content.CODING_PROBLEMS) and 100 SJT scenarios
+# (sjt_content.SJT_SCENARIOS) — both pools can now be scheduled whole. The MCQ
+# pools are larger still (200 per indicator, 100 for algorithmic), so 'questions'
+# stays at 100 as a sitting-length cap rather than a bank-size one.
+BOUNDS = {'questions': (5, 100), 'codingTasks': (1, 100), 'minutes': (1, 180)}
+BOUNDS_BY_KEY = {'teamwork': {'questions': (1, 100)}}
 
 
 def bounds(indicator: str, field: str) -> tuple[int, int]:
