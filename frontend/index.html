@@ -50,6 +50,46 @@ a:hover { color: #1F374B; }
   .mm-badge-icon, .mm-badge-icon * { animation: none !important; }
 }
 
+/* --- Focused-test "save & exit" pill (FocusedTestShell.jsx) --- */
+.mm-exit-btn:hover:not(:disabled) { background: rgba(255,255,255,0.95) !important; border-color: rgba(31,55,75,0.22) !important; color: #1F374B !important; box-shadow: 0 6px 16px rgba(31,55,75,0.12) !important; }
+.mm-exit-btn:hover:not(:disabled) .mm-exit-arrow { transform: translateX(-3px); }
+.mm-exit-btn:focus-visible { outline: 2px solid #2E5570; outline-offset: 2px; }
+.mm-exit-arrow { transition: transform 0.18s ease; }
+@media (max-width: 560px) { .mm-exit-label { display: none; } .mm-exit-label-short { display: inline !important; } }
+
+/* --- Coding phase (FocusedTest/Coding.jsx) --- */
+.mm-code-layout { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0,0.95fr) minmax(0,1.05fr); gap: 1px; background: rgba(31,55,75,0.1); }
+.mm-code-brief { min-height: 0; overflow-y: auto; }
+.mm-code-editor { min-height: 0; display: flex; flex-direction: column; }
+@media (max-width: 900px) {
+  .mm-code-layout { grid-template-columns: 1fr; overflow-y: auto; }
+  .mm-code-brief { overflow-y: visible; }
+  .mm-code-editor { min-height: 68vh; }
+}
+.mm-code-surface { flex: 1; min-height: 160px; display: flex; overflow: hidden; position: relative; }
+.mm-code-results { max-height: 132px; overflow-y: auto; }
+@media (max-height: 760px) { .mm-code-results { max-height: 84px; } }
+.mm-code-gutter {
+  flex-shrink: 0; padding: 20px 10px 20px 18px; text-align: right; user-select: none; overflow: hidden;
+  font-family: ui-monospace, Menlo, monospace; font-size: 13.5px; line-height: 22px;
+  color: rgba(234,242,245,0.28); background: rgba(255,255,255,0.02); border-right: 1px solid rgba(255,255,255,0.06);
+}
+.mm-code-input {
+  flex: 1; min-width: 0; background: transparent; border: none; outline: none; color: #EAF2F5; caret-color: #8FBCD9;
+  font-family: ui-monospace, Menlo, monospace; font-size: 13.5px; line-height: 22px; padding: 20px 22px 20px 16px;
+  resize: none; tab-size: 2;
+}
+.mm-code-input::placeholder { color: rgba(234,242,245,0.3); }
+.mm-code-scroll::-webkit-scrollbar, .mm-code-input::-webkit-scrollbar { width: 10px; height: 10px; }
+.mm-code-scroll::-webkit-scrollbar-thumb, .mm-code-input::-webkit-scrollbar-thumb { background: rgba(143,188,217,0.22); border-radius: 100px; border: 3px solid transparent; background-clip: content-box; }
+.mm-code-scroll::-webkit-scrollbar-thumb:hover, .mm-code-input::-webkit-scrollbar-thumb:hover { background: rgba(143,188,217,0.4); background-clip: content-box; }
+.mm-code-scroll::-webkit-scrollbar-track, .mm-code-input::-webkit-scrollbar-track { background: transparent; }
+.mm-code-ghost:hover:not(:disabled) { background: rgba(255,255,255,0.09) !important; border-color: rgba(255,255,255,0.32) !important; }
+.mm-code-primary:hover:not(:disabled) { background: #A6CCE4 !important; box-shadow: 0 8px 20px rgba(143,188,217,0.28); }
+.mm-code-reset:hover:not(:disabled) { color: #EAF2F5 !important; background: rgba(255,255,255,0.07) !important; }
+.mm-btn:focus-visible { outline: 2px solid #8FBCD9; outline-offset: 2px; }
+.mm-test-row { animation: mm-fade-up 0.22s ease both; }
+
 /* --- Mobile responsive layout (AppShell sidebar -> off-canvas drawer) --- */
 .mm-shell-topbar { display: none; }
 @media (max-width: 860px) {

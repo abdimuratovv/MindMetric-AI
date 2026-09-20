@@ -46,12 +46,27 @@ export default function FocusedTestShell({ screen, goTo }) {
         borderBottom: '1px solid rgba(31,55,75,0.08)', background: 'rgba(255,255,255,0.4)', backdropFilter: 'blur(14px)',
       }}>
         <button
-          className="mm-btn"
+          className="mm-btn mm-exit-btn"
           disabled={isExiting}
           onClick={exitTest}
-          style={{ border: 'none', background: 'none', color: '#556269', fontWeight: 600, fontSize: '13px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '7px', flexShrink: 0 }}>
-          {isExiting && <span className="mm-spinner mm-spinner-dark" />}
-          {t('focusedTest.saveExit')}
+          title={t('focusedTest.saveExitHint')}
+          aria-label={t('focusedTest.saveExit')}
+          style={{
+            display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0, cursor: 'pointer',
+            padding: '9px 16px 9px 13px', borderRadius: '100px',
+            border: '1px solid rgba(31,55,75,0.14)', background: 'rgba(255,255,255,0.72)',
+            color: '#3B444A', fontFamily: 'Manrope, sans-serif', fontWeight: 700, fontSize: '12.5px',
+            boxShadow: '0 2px 8px rgba(31,55,75,0.06)', transition: 'transform 0.12s ease, background 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, color 0.18s ease',
+          }}>
+          {isExiting
+            ? <span className="mm-spinner mm-spinner-dark" style={{ width: '14px', height: '14px' }} />
+            : (
+              <svg className="mm-exit-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M15 21h3a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-3" /><path d="M10 17l-5-5 5-5" /><path d="M15 12H5" />
+              </svg>
+            )}
+          <span className="mm-exit-label">{t('focusedTest.saveExit')}</span>
+          <span className="mm-exit-label-short" style={{ display: 'none' }}>{t('focusedTest.saveExitShort')}</span>
         </button>
         <div style={{
           fontWeight: 700, fontSize: '13.5px', color: '#161F24', flex: 1, minWidth: 0, textAlign: 'center',
