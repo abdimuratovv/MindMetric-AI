@@ -11,7 +11,10 @@ from rest_framework.views import APIView
 
 from apps.accounts.models import StudentProfile, User
 from apps.accounts.permissions import IsAdmin
-from apps.assessments.models import AnagramItem, AssessmentAttempt, CognitiveQuestion, LearningModule, SjtScenario
+from apps.assessments import limits
+from apps.assessments.models import (
+    AnagramItem, AssessmentAttempt, CodingProblem, CognitiveQuestion, LearningModule, SjtScenario,
+)
 from apps.assessments.serializers import AdminCognitiveQuestionCreateSerializer, AdminCognitiveQuestionUpdateSerializer
 from apps.i18n import get_language
 from apps.reviews.models import TeacherReview
@@ -461,13 +464,40 @@ def _csv_safe(value):
 
 
 class AdminSettingsView(APIView):
-    """GET/PATCH /api/admin/settings/ — institution name and academic term shown on the dashboard header."""
+    """
+    GET/PATCH /api/admin/settings/ — institution name and academic term shown on the
+    dashboard header, plus per-indicator question counts / time limits
+    (`assessmentConfig`, see apps.assessments.limits). GET also returns the
+    `assessmentLimits` the form needs: each field's default and bounds, and how many
+    questions the bank actually holds (a count above that can't be served).
+    """
 
     permission_classes = [IsAdmin]
 
     @staticmethod
-    def _payload(obj):
-        return {'name': obj.name, 'academicTerm': obj.academic_term}
+    def _limits():
+        bank = {
+            key: CognitiveQuestion.objects.filter(indicator_key=key).count() for key in limits.MCQ_KEYS
+        }
+        bank['algorithmic'] = CognitiveQuestion.objects.filter(indicator_key='algorithmic').count()
+        bank['teamwork'] = SjtScenario.objects.filter(is_active=True).count()
+        result = {}
+        for key, fields in limits.DEFAULTS.items():
+            result[key] = {
+                'fields': {
+                    field: {'default': default, 'min': limits.bounds(key, field)[0], 'max': limits.bounds(key, field)[1]}
+                    for field, default in fields.items()
+                },
+                'bank': bank[key],
+            }
+        result['algorithmic']['codingBank'] = CodingProblem.objects.filter(is_active=True).count()
+        return result
+
+    def _payload(self, obj):
+        return {
+            'name': obj.name, 'academicTerm': obj.academic_term,
+            'assessmentConfig': limits.get_all_config(), 'assessmentLimits': self._limits(),
+        }
 
     def get(self, request):
         return Response(self._payload(InstitutionSettings.load()))
@@ -480,6 +510,14 @@ class AdminSettingsView(APIView):
                 if len(value) > limit:
                     return Response({'detail': f'{key}: max {limit}'}, status=status.HTTP_400_BAD_REQUEST)
                 setattr(obj, field, value)
+        if 'assessmentConfig' in request.data:
+            clean, error = limits.validate(request.data['assessmentConfig'])
+            if error:
+                return Response({'detail': error}, status=status.HTTP_400_BAD_REQUEST)
+            obj.assessment_config = {
+                **(obj.assessment_config or {}),
+                **{key: {**(obj.assessment_config or {}).get(key, {}), **fields} for key, fields in clean.items()},
+            }
         obj.save()
         return Response(self._payload(obj))
 

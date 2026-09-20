@@ -6,6 +6,8 @@ class InstitutionSettings(models.Model):
 
     name = models.CharField(max_length=160, blank=True)
     academic_term = models.CharField(max_length=80, blank=True)
+    # {indicator: {questions, codingTasks, minutes}} overrides — see apps.assessments.limits.
+    assessment_config = models.JSONField(default=dict, blank=True)
 
     class Meta:
         verbose_name_plural = 'Institution settings'

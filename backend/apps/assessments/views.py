@@ -14,6 +14,7 @@ from apps.scoring.engine import AdaptiveTestingEngine
 from apps.scoring.state_tracker import StudentStateTracker, sjt_points
 from apps.scoring.views import serialize_achievement
 
+from . import limits
 from .coding_sandbox import run_test_cases
 from .models import (
     AnagramItem,
@@ -30,20 +31,16 @@ from .models import (
 )
 from .serializers import CodingProblemSerializer, CognitiveQuestionSerializer
 
-MCQ_QUESTION_CAP = 40  # questions per MCQ-pattern indicator (math/logic/creative/problem_solving/attention/iq)
-ALGORITHMIC_MCQ_CAP = 20  # algorithmic's MCQ phase — its other 20 items are coding tasks, see CODING_TASK_CAP
-CODING_TASK_CAP = 20  # coding tasks in algorithmic's coding phase
-MCQ_SECONDS_PER_QUESTION = 60  # pacing baseline both time limits below scale from
-MCQ_TIME_LIMIT_SECONDS = MCQ_QUESTION_CAP * MCQ_SECONDS_PER_QUESTION  # 40 min, non-algorithmic MCQ indicators
-ALGORITHMIC_MCQ_TIME_LIMIT_SECONDS = ALGORITHMIC_MCQ_CAP * MCQ_SECONDS_PER_QUESTION  # 20 min, algorithmic's MCQ phase
+# Question counts and time limits are admin-tunable — see apps.assessments.limits.
 
 
 def _mcq_cap(kind: str) -> int:
-    return ALGORITHMIC_MCQ_CAP if kind == AssessmentAttempt.Type.ALGORITHMIC else MCQ_QUESTION_CAP
+    return limits.mcq_cap(kind)
 
 
 def _mcq_time_limit(kind: str) -> int:
-    return ALGORITHMIC_MCQ_TIME_LIMIT_SECONDS if kind == AssessmentAttempt.Type.ALGORITHMIC else MCQ_TIME_LIMIT_SECONDS
+    return limits.mcq_time_limit_seconds(kind)
+
 
 ANSWER_REQUIRED = {
     'ru': 'Пожалуйста, дайте ответ.',
@@ -88,6 +85,15 @@ class AssessmentStatusView(APIView):
         return Response(StudentStateTracker().get_resume_state(request.user))
 
 
+class AssessmentConfigView(APIView):
+    """GET /api/assessments/config/ — effective question counts / time limits per indicator, for the selection cards."""
+
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        return Response(limits.get_all_config())
+
+
 # -- MCQ pattern: math / logic / creative / problem_solving / attention / iq --------------
 
 class StartMcqAttemptView(APIView):
@@ -111,7 +117,7 @@ class NextMcqQuestionView(APIView):
     GET /api/assessments/mcq/<kind>/next-question/
 
     Delegates to AdaptiveTestingEngine.select_next_question. Returns null when
-    the attempt has reached MCQ_QUESTION_CAP answered questions, which the
+    the attempt has reached the indicator's question cap, which the
     frontend treats the same way as "last question" (Next → "Submit test").
     """
 
@@ -233,7 +239,7 @@ class CodingProblemView(APIView):
     repeat only once that's exhausted) — same history-aware, randomized approach as
     AdaptiveTestingEngine.select_next_question, just without the IRT ranking (coding
     problems aren't difficulty-calibrated). Returns {problem: null, ...} once
-    CODING_TASK_CAP distinct problems have a final submission this cycle.
+    the configured number of distinct problems have a final submission this cycle.
     """
 
     permission_classes = [IsStudent]
@@ -246,8 +252,8 @@ class CodingProblemView(APIView):
             attempt.coding_submissions.filter(cycle=attempt.attempt_cycle, is_final=True)
             .values_list('problem_id', flat=True)
         )
-        if len(done_ids) >= CODING_TASK_CAP:
-            return Response({'problem': None, 'cpNumber': len(done_ids), 'cpTotal': CODING_TASK_CAP})
+        if len(done_ids) >= limits.coding_task_cap():
+            return Response({'problem': None, 'cpNumber': len(done_ids), 'cpTotal': limits.coding_task_cap()})
 
         seen_ids = set(
             CodingSubmission.objects.filter(attempt=attempt, is_final=True).values_list('problem_id', flat=True)
@@ -259,7 +265,7 @@ class CodingProblemView(APIView):
         return Response({
             'problem': CodingProblemSerializer(problem, context={'lang': get_language(request)}).data if problem else None,
             'cpNumber': len(done_ids) + 1,
-            'cpTotal': CODING_TASK_CAP,
+            'cpTotal': limits.coding_task_cap(),
         })
 
 
@@ -269,7 +275,7 @@ class RunCodingView(APIView):
 
     Executes `code` against `problem_id`'s *sample* (non-hidden) test cases via
     apps.assessments.coding_sandbox and returns {{ testResults }} shape. Doesn't
-    count toward CODING_TASK_CAP or state_tracker._score_hybrid — only "Submit
+    count toward the coding-task cap or state_tracker._score_hybrid — only "Submit
     solution" (is_final=True) rows do.
     """
 
@@ -300,7 +306,7 @@ class SubmitCodingView(APIView):
     shown -> submitted, mirroring AnswerMcqView's response_time_ms — feeds this
     problem's time_factor in state_tracker._score_hybrid).
 
-    Returns {phase: 'next', cpNumber, cpTotal} until CODING_TASK_CAP distinct problems
+    Returns {phase: 'next', cpNumber, cpTotal} until the configured number of distinct problems
     have a final submission this cycle — the frontend then fetches the next one via
     CodingProblemView, same shape as SubmitMcqView's {phase: 'coding'} hand-off. Once
     the cap is reached this finalizes the attempt instead, returning {score,
@@ -330,8 +336,8 @@ class SubmitCodingView(APIView):
             attempt.coding_submissions.filter(cycle=attempt.attempt_cycle, is_final=True)
             .values('problem_id').distinct().count()
         )
-        if done_count < CODING_TASK_CAP:
-            return Response({'phase': 'next', 'cpNumber': done_count + 1, 'cpTotal': CODING_TASK_CAP})
+        if done_count < limits.coding_task_cap():
+            return Response({'phase': 'next', 'cpNumber': done_count + 1, 'cpTotal': limits.coding_task_cap()})
 
         result = StudentStateTracker().complete_attempt(attempt)
         return _completion_response(result, get_language(request))
@@ -526,8 +532,6 @@ class SubmitLearningView(APIView):
 
 # -- SJT pattern: teamwork -----------------------------------------------------------------
 
-SJT_SCENARIO_CAP = 10
-
 SJT_PICK_BOTH = {
     'ru': 'Выберите и самое правильное, и самое неправильное действие — это должны быть разные варианты.',
     'uz': "Eng to'g'ri va eng noto'g'ri harakatni tanlang — ular turli variantlar bo'lishi kerak.",
@@ -553,7 +557,7 @@ class NextSjtView(APIView):
     GET /api/assessments/sjt/next/ — a scenario not answered this cycle, preferring
     ones never seen in a past cycle. Options are shuffled per request; each carries
     its original `index`, which is what the answer endpoint expects back.
-    Returns {scenario: null} once SJT_SCENARIO_CAP scenarios are answered.
+    Returns {scenario: null} once the configured number of scenarios are answered.
     """
 
     permission_classes = [IsStudent]
@@ -563,7 +567,7 @@ class NextSjtView(APIView):
         answered_ids = set(
             attempt.sjt_responses.filter(cycle=attempt.attempt_cycle).values_list('scenario_id', flat=True)
         )
-        cap = min(SJT_SCENARIO_CAP, SjtScenario.objects.filter(is_active=True).count())
+        cap = min(limits.sjt_scenario_cap(), SjtScenario.objects.filter(is_active=True).count())
         if len(answered_ids) >= cap:
             return Response({'scenario': None, 'number': len(answered_ids), 'total': cap})
 
@@ -605,7 +609,7 @@ class AnswerSjtView(APIView):
             },
         )
         answered = attempt.sjt_responses.filter(cycle=attempt.attempt_cycle).count()
-        cap = min(SJT_SCENARIO_CAP, SjtScenario.objects.filter(is_active=True).count())
+        cap = min(limits.sjt_scenario_cap(), SjtScenario.objects.filter(is_active=True).count())
         return Response({'answered': answered, 'is_last': answered >= cap})
 
 

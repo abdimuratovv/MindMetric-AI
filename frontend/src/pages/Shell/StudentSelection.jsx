@@ -1,22 +1,35 @@
 import { useEffect, useState } from 'react';
 
-import { getStatus, startAssessment } from '../../api/assessments.js';
+import { getAssessmentConfig, getStatus, startAssessment } from '../../api/assessments.js';
 import { ASSESSMENT_ICONS, ASSESSMENT_PATTERN, ASSESSMENT_TYPES } from '../../constants/assessments.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
 
 /** Ported (extended to 10 indicator-specific cards) from MindMetric AI.dc.html lines 140-169 (`isSelection`). */
 export default function StudentSelection({ user, goTo }) {
   const [statusByType, setStatusByType] = useState(null);
+  const [config, setConfig] = useState(null);
   const [startingKey, setStartingKey] = useState(null);
   const { t } = useLanguage();
 
   const refresh = () => getStatus().then(setStatusByType);
-  useEffect(() => { refresh(); }, []);
+  useEffect(() => {
+    refresh();
+    getAssessmentConfig().then(setConfig).catch(() => {}); // cards fall back to the static i18n text
+  }, []);
 
   if (!statusByType) return null;
 
   const anyCompleted = statusByType.any_completed;
   const studentFirstName = (user?.name || '').split(' ')[0];
+
+  const durationLabel = (key, meta) => {
+    const c = config?.[key];
+    if (!c) return meta.duration;
+    const fmt = t('durationFmt');
+    if (key === 'algorithmic') return fmt.algorithmic(c.minutes, c.questions, c.codingTasks);
+    if (key === 'teamwork') return fmt.sjt(c.questions);
+    return c.minutes ? fmt.mcq(c.minutes, c.questions) : meta.duration;
+  };
 
   const assessments = ASSESSMENT_TYPES.map((key) => {
     const attemptStatus = statusByType[key]?.status;
@@ -26,7 +39,7 @@ export default function StudentSelection({ user, goTo }) {
     const icon = ASSESSMENT_ICONS[key];
     return {
       key, ...icon,
-      title: meta.title, desc: meta.desc, duration: meta.duration,
+      title: meta.title, desc: meta.desc, duration: durationLabel(key, meta),
       statusLabel: done
         ? t('selection.statusCompleted')
         : inProgress ? t('selection.statusInProgress') : t('selection.statusAvailable'),

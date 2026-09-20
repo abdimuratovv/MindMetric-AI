@@ -4,6 +4,7 @@ from . import views
 
 urlpatterns = [
     path('status/', views.AssessmentStatusView.as_view(), name='assessment-status'),
+    path('config/', views.AssessmentConfigView.as_view(), name='assessment-config'),
 
     # MCQ pattern: math, logic, creative, problem_solving, attention, iq
     path('mcq/<str:kind>/start/', views.StartMcqAttemptView.as_view(), name='mcq-start'),

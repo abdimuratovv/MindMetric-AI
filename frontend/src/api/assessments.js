@@ -1,5 +1,8 @@
 import { api } from './client.js';
 
+/** Effective per-indicator question counts / time limits ({math: {questions, minutes}, ...}). */
+export const getAssessmentConfig = () => api.get('/assessments/config/');
+
 /** Selection screen — {{ assessments }} status badges. */
 export const getStatus = () => api.get('/assessments/status/');
 
