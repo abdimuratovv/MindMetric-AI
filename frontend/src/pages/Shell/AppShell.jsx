@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import logoIcon from '../../assets/logo-icon.png';
 import { getActiveCall, joinCall } from '../../api/videocalls.js';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
+import { useSupportUnread } from '../../state/useSupportPolling.js';
 import Achievements from './Achievements.jsx';
 import AdminOverview from './AdminOverview.jsx';
 import AdminStudentDetail from './AdminStudentDetail.jsx';
@@ -19,6 +20,9 @@ import TeacherReview from './TeacherReview.jsx';
 // No WebSockets in this stack, so an incoming call is detected by short
 // polling instead of a push notification — see apps.videocalls.views.ActiveCallView.
 const CALL_POLL_INTERVAL_MS = 8000;
+
+// The one nav entry per role that the support badge belongs on.
+const SUPPORT_SCREENS = ['support', 'supportInbox'];
 
 // Ported from `navConfigs` in renderVals() (lines 827-839). `labelKey` looks
 // up the translated label at render time (see i18n/translations.js `nav`).
@@ -53,11 +57,17 @@ export default function AppShell({ screen, goTo, openStudent, selectedStudentId,
   const role = user?.role || 'student';
   // A student's report is a sub-page of wherever it was opened from, so that menu entry stays highlighted.
   const activeKey = screen === 'adminStudent' ? studentReturnScreen : screen;
+  // Unread support replies, polled shell-wide (there are no WebSockets here -
+  // see state/useSupportPolling). Passing `screen` refreshes the count the
+  // moment the user navigates, so opening the thread clears the badge at once.
+  const supportUnread = useSupportUnread(screen);
+
   const navItems = (NAV_CONFIGS[role] || NAV_CONFIGS.student).map((n) => ({
     ...n,
     label: t(`nav.${n.labelKey}`),
     bg: activeKey === n.key ? 'rgba(46,85,112,0.12)' : 'transparent',
     color: activeKey === n.key ? '#1F374B' : '#556269',
+    badge: SUPPORT_SCREENS.includes(n.key) ? supportUnread : 0,
   }));
 
   // On mobile the sidebar is an off-canvas drawer (see .mm-shell-sidebar in
@@ -170,7 +180,14 @@ export default function AppShell({ screen, goTo, openStudent, selectedStudentId,
               <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
                 <path d={item.iconPath}></path>
               </svg>
-              {item.label}
+              <span style={{ flex: 1, minWidth: 0 }}>{item.label}</span>
+              {item.badge > 0 && (
+                <span style={{
+                  flexShrink: 0, minWidth: '18px', height: '18px', padding: '0 5px', borderRadius: '100px',
+                  background: '#3F9C6D', color: '#fff', fontSize: '10.5px', fontWeight: 700,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                }}>{item.badge > 9 ? '9+' : item.badge}</span>
+              )}
             </button>
           ))}
         </nav>

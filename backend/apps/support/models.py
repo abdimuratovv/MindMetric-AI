@@ -1,3 +1,5 @@
+import uuid
+
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
@@ -7,6 +9,17 @@ from django.utils import timezone
 # idea, not an essay, and the body is rendered as plain text either way.
 SUBJECT_MAX_LENGTH = 140
 BODY_MAX_LENGTH = 2000
+
+# Screenshot limits. The frontend already downscales to 1600px and re-encodes
+# as WebP (components/ScreenshotDropzone.jsx), which puts a typical screenshot
+# around 150-250KB — this cap is the server-side backstop, not the target.
+MAX_ATTACHMENTS_PER_MESSAGE = 3
+MAX_ATTACHMENT_BYTES = 1_500_000
+
+# Only these three are stored, and the type is decided by sniffing the bytes
+# (see serializers.sniff_image_type) rather than trusting the upload's declared
+# Content-Type — the value below is what we later serve the file back as.
+ALLOWED_IMAGE_TYPES = ('image/webp', 'image/png', 'image/jpeg')
 
 
 class SupportThread(models.Model):
@@ -87,3 +100,31 @@ class SupportMessage(models.Model):
 
     def __str__(self):
         return f'{self.thread_id}:{self.pk}'
+
+
+class SupportAttachment(models.Model):
+    """
+    A screenshot attached to a SupportMessage, stored as bytea in Postgres.
+
+    Deliberately not a FileField: Render's filesystem is ephemeral (an uploaded
+    file would vanish on the next deploy) and the project has no S3/Cloudinary
+    credentials — see render.yaml. The bytes are small and strictly capped, and
+    moving to object storage later is a STORAGES swap plus a data migration.
+
+    Served only through apps.support.views.AttachmentView, which re-checks the
+    thread's permissions — there is no public URL. The primary key is a UUID so
+    an id can't be walked to probe for other students' screenshots.
+    """
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    message = models.ForeignKey(SupportMessage, related_name='attachments', on_delete=models.CASCADE)
+    data = models.BinaryField()
+    content_type = models.CharField(max_length=40)
+    byte_size = models.PositiveIntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['created_at']
+
+    def __str__(self):
+        return f'{self.id} ({self.byte_size} B)'

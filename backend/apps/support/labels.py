@@ -33,6 +33,14 @@ _CATEGORY = {
 }
 
 
+_ATTACHMENT_PREVIEW = {'ru': '📎 Изображение', 'uz': '📎 Rasm'}
+
+
+def attachment_preview(lang: str) -> str:
+    """Stands in for the list-row preview of a message that is only a screenshot."""
+    return _ATTACHMENT_PREVIEW[lang]
+
+
 def status_style(status: str, lang: str) -> dict:
     entry = _STATUS.get(status, _STATUS[SupportThread.Status.OPEN])
     return {'bg': entry['bg'], 'color': entry['color'], 'label': entry[lang]}

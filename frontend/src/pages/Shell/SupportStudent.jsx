@@ -7,8 +7,10 @@ import {
   getSupportThreads,
   sendSupportMessage,
 } from '../../api/support.js';
+import ScreenshotDropzone from '../../components/ScreenshotDropzone.jsx';
 import SupportThreadView, { formatStamp } from '../../components/SupportThreadView.jsx';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
+import { useThreadMessagePolling } from '../../state/useSupportPolling.js';
 
 const PANEL = {
   borderRadius: '20px', background: 'rgba(255,255,255,0.6)', border: '1px solid rgba(255,255,255,0.85)',
@@ -40,6 +42,7 @@ export default function SupportStudent() {
   const [thread, setThread] = useState(null);
   const [composing, setComposing] = useState(false);
   const [form, setForm] = useState(EMPTY_FORM);
+  const [attachments, setAttachments] = useState([]);
   const [sending, setSending] = useState(false);
   const [error, setError] = useState(null);
   const [loaded, setLoaded] = useState(false);
@@ -47,6 +50,8 @@ export default function SupportStudent() {
   // Labels (category/status) are translated server-side, so a language switch
   // has to refetch rather than re-render — same as TeacherReview.jsx.
   useEffect(() => { getSupportOptions().then(setOptions).catch(() => {}); }, [language]);
+
+  const loadThreads = () => getSupportThreads().then(setThreads).catch(() => {});
 
   useEffect(() => {
     getSupportThreads()
@@ -65,6 +70,25 @@ export default function SupportStudent() {
     getSupportThread(selectedId).then(setThread).catch(() => {});
   }, [selectedId, language]);
 
+  // An admin's reply lands here without a refresh - see state/useSupportPolling.
+  // The new messages are painted straight away, then the thread and the list
+  // are refetched because the reply also moved the status ("answered") and the
+  // row's preview, both of which are decided server-side.
+  const appendMessages = (incoming) => {
+    setThread((current) => (current ? {
+      ...current,
+      messages: [...current.messages, ...incoming.filter((r) => !current.messages.some((m) => m.id === r.id))],
+    } : current));
+    if (selectedId != null) getSupportThread(selectedId).then(setThread).catch(() => {});
+    loadThreads();
+  };
+
+  useThreadMessagePolling({
+    threadId: thread?.id ?? null,
+    lastMessageId: thread?.messages?.length ? thread.messages[thread.messages.length - 1].id : null,
+    onMessages: appendMessages,
+  });
+
   const openThread = (id) => {
     setComposing(false);
     setError(null);
@@ -74,27 +98,37 @@ export default function SupportStudent() {
     setThreads((rows) => rows.map((r) => (r.id === id ? { ...r, unread: 0 } : r)));
   };
 
+  const clearAttachments = () => {
+    setAttachments((current) => { current.forEach((item) => URL.revokeObjectURL(item.url)); return []; });
+  };
+
   const startComposing = () => {
     setComposing(true);
     setSelectedId(null);
     setThread(null);
     setForm(EMPTY_FORM);
+    clearAttachments();
     setError(null);
   };
 
   const updateForm = (key, value) => { setForm((f) => ({ ...f, [key]: value })); setError(null); };
 
+  // The subject already carries the context, so a screenshot with no typed
+  // description is a complete report on its own.
+  const canSubmitNew = Boolean(form.subject.trim()) && Boolean(form.body.trim() || attachments.length) && !sending;
+
   const submitNew = async () => {
-    if (!form.subject.trim() || !form.body.trim() || sending) return;
+    if (!canSubmitNew) return;
     setSending(true);
     setError(null);
     try {
-      const created = await createSupportThread(form);
-      setThreads((rows) => [{ ...created, preview: form.body }, ...rows]);
+      const created = await createSupportThread(form, attachments.map((item) => item.file));
+      setThreads((rows) => [created, ...rows]);
       setThread(created);
       setSelectedId(created.id);
       setComposing(false);
       setForm(EMPTY_FORM);
+      clearAttachments();
     } catch (e) {
       setError(e.message);
     } finally {
@@ -102,13 +136,17 @@ export default function SupportStudent() {
     }
   };
 
-  const reply = async (body) => {
+  const reply = async (body, files) => {
     setSending(true);
     setError(null);
     try {
-      const message = await sendSupportMessage(thread.id, body);
+      const message = await sendSupportMessage(thread.id, body, files);
       setThread((current) => ({ ...current, messages: [...current.messages, message] }));
-      setThreads((rows) => rows.map((r) => (r.id === thread.id ? { ...r, preview: body } : r)));
+      // A reply reopens a resolved thread and changes the row's preview — both
+      // are decided server-side (an image-only message has no text to preview),
+      // so refetch rather than patching the local copies from here.
+      await loadThreads();
+      setThread(await getSupportThread(thread.id));
       return true;
     } catch (e) {
       setError(e.message);
@@ -226,13 +264,16 @@ export default function SupportStudent() {
                 <span style={{ fontSize: '11px', color: '#939EA3' }}>{form.body.length} / {BODY_MAX_LENGTH}</span>
               </div>
 
+              <label style={{ ...LABEL_STYLE, marginTop: '16px' }}>{t('support.screenshotsLabel')}</label>
+              <ScreenshotDropzone items={attachments} onChange={setAttachments} disabled={sending} />
+
               {error && <div style={{ fontSize: '12px', color: '#BD5B4C', marginTop: '10px' }}>{error}</div>}
 
               <div style={{ display: 'flex', gap: '9px', marginTop: '16px' }}>
-                <button className="mm-btn" onClick={submitNew} disabled={sending || !form.subject.trim() || !form.body.trim()} style={{
+                <button className="mm-btn" onClick={submitNew} disabled={!canSubmitNew} style={{
                   padding: '11px 20px', borderRadius: '100px', border: 'none', fontFamily: 'Manrope', fontWeight: 700, fontSize: '13px',
-                  background: sending || !form.subject.trim() || !form.body.trim() ? 'rgba(31,55,75,0.25)' : '#1F374B',
-                  color: '#fff', cursor: sending || !form.subject.trim() || !form.body.trim() ? 'default' : 'pointer',
+                  background: canSubmitNew ? '#1F374B' : 'rgba(31,55,75,0.25)',
+                  color: '#fff', cursor: canSubmitNew ? 'pointer' : 'default',
                 }}>{sending ? t('support.sending') : t('support.submitThread')}</button>
                 {threads.length > 0 && (
                   <button className="mm-btn" onClick={() => setComposing(false)} style={{

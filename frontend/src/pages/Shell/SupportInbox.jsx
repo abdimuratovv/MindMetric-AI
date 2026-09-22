@@ -10,6 +10,7 @@ import {
 import { SELECT_STYLE } from '../../components/adminStyles.js';
 import SupportThreadView, { formatStamp } from '../../components/SupportThreadView.jsx';
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
+import { useThreadMessagePolling } from '../../state/useSupportPolling.js';
 
 const PANEL = {
   borderRadius: '20px', background: 'rgba(255,255,255,0.6)', border: '1px solid rgba(255,255,255,0.85)',
@@ -45,6 +46,25 @@ export default function SupportInbox({ user }) {
     getSupportThread(selectedId).then(setThread).catch(() => {});
   }, [selectedId, language]);
 
+  // A student's follow-up appears without leaving the thread; the queue row is
+  // refreshed alongside it so its status badge keeps up.
+  const appendMessages = (incoming) => {
+    setThread((current) => (current ? {
+      ...current,
+      messages: [...current.messages, ...incoming.filter((r) => !current.messages.some((m) => m.id === r.id))],
+    } : current));
+    // A student's follow-up reopens the thread, so the open header and the
+    // queue row both need the server's new status, not just the message.
+    if (selectedId != null) getSupportThread(selectedId).then(setThread).catch(() => {});
+    loadRows();
+  };
+
+  useThreadMessagePolling({
+    threadId: thread?.id ?? null,
+    lastMessageId: thread?.messages?.length ? thread.messages[thread.messages.length - 1].id : null,
+    onMessages: appendMessages,
+  });
+
   const openThread = (id) => {
     setError(null);
     setSelectedId(id);
@@ -53,11 +73,11 @@ export default function SupportInbox({ user }) {
 
   const updateFilter = (key, value) => setFilters((f) => ({ ...f, [key]: value }));
 
-  const reply = async (body) => {
+  const reply = async (body, files) => {
     setSending(true);
     setError(null);
     try {
-      const message = await sendSupportMessage(thread.id, body);
+      const message = await sendSupportMessage(thread.id, body, files);
       setThread((current) => ({ ...current, messages: [...current.messages, message] }));
       // The reply flips the thread to "answered" and claims an unassigned one
       // server-side (apps.support.views._append_message) — refetch the queue so

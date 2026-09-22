@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 
 import { useLanguage } from '../i18n/LanguageContext.jsx';
+import AttachmentImage from './AttachmentImage.jsx';
+import ScreenshotDropzone from './ScreenshotDropzone.jsx';
 
 // Same hand-rolled formatter as Results.jsx/Achievements.jsx — browsers' bundled
 // ICU data has no Uzbek month names, so Intl would silently render "M07"-style
@@ -31,6 +33,7 @@ export const BODY_MAX_LENGTH = 2000;
 export default function SupportThreadView({ thread, onSend, sending, error, headerExtra, disabled }) {
   const { t, language } = useLanguage();
   const [draft, setDraft] = useState('');
+  const [attachments, setAttachments] = useState([]);
   const [focused, setFocused] = useState(false);
   const listRef = useRef(null);
 
@@ -42,13 +45,20 @@ export default function SupportThreadView({ thread, onSend, sending, error, head
 
   if (!thread) return null;
 
+  // A screenshot on its own is a valid message — the server allows an empty
+  // body when files are attached (apps.support.serializers).
+  const canSend = Boolean(draft.trim() || attachments.length) && !sending && !disabled;
+
   const submit = async () => {
-    const body = draft.trim();
-    if (!body || sending) return;
-    const ok = await onSend(body);
-    // Keep the text on failure so a dropped request doesn't cost the student
-    // everything they typed — they can retry with the same draft.
-    if (ok) setDraft('');
+    if (!canSend) return;
+    const ok = await onSend(draft.trim(), attachments.map((item) => item.file));
+    // Keep the text and images on failure so a dropped request doesn't cost the
+    // student everything they typed — they can retry with the same draft.
+    if (ok) {
+      setDraft('');
+      attachments.forEach((item) => URL.revokeObjectURL(item.url));
+      setAttachments([]);
+    }
   };
 
   const onKeyDown = (e) => {
@@ -89,7 +99,16 @@ export default function SupportThreadView({ thread, onSend, sending, error, head
                 border: m.mine ? 'none' : '1px solid rgba(31,55,75,0.1)',
                 color: m.mine ? '#fff' : '#161F24', fontSize: '13.5px', lineHeight: 1.5,
                 whiteSpace: 'pre-wrap', wordBreak: 'break-word',
+                display: m.body ? 'block' : 'none',
               }}>{m.body}</div>
+              {m.attachments?.length > 0 && (
+                <div style={{
+                  display: 'flex', gap: '6px', flexWrap: 'wrap', marginTop: m.body ? '6px' : 0,
+                  justifyContent: m.mine ? 'flex-end' : 'flex-start',
+                }}>
+                  {m.attachments.map((a) => <AttachmentImage key={a.id} attachment={a} />)}
+                </div>
+              )}
               <div style={{
                 fontSize: '10.5px', color: '#939EA3', marginTop: '4px',
                 textAlign: m.mine ? 'right' : 'left',
@@ -119,14 +138,17 @@ export default function SupportThreadView({ thread, onSend, sending, error, head
             fontFamily: 'Manrope', fontSize: '13.5px', outline: 'none', background: 'rgba(255,255,255,0.85)', color: '#161F24',
           }}
         />
+        <div style={{ marginTop: '9px' }}>
+          <ScreenshotDropzone items={attachments} onChange={setAttachments} disabled={disabled || sending} />
+        </div>
         {error && <div style={{ fontSize: '12px', color: '#BD5B4C', marginTop: '6px' }}>{error}</div>}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px', marginTop: '9px' }}>
           <span style={{ fontSize: '11px', color: '#939EA3' }}>{t('support.enterHint')}</span>
-          <button className="mm-btn" onClick={submit} disabled={sending || !draft.trim() || disabled} style={{
+          <button className="mm-btn" onClick={submit} disabled={!canSend} style={{
             padding: '9px 18px', borderRadius: '100px', border: 'none',
-            background: sending || !draft.trim() || disabled ? 'rgba(31,55,75,0.25)' : '#1F374B',
+            background: canSend ? '#1F374B' : 'rgba(31,55,75,0.25)',
             color: '#fff', fontWeight: 700, fontSize: '13px', fontFamily: 'Manrope',
-            cursor: sending || !draft.trim() || disabled ? 'default' : 'pointer',
+            cursor: canSend ? 'pointer' : 'default',
           }}>{sending ? t('support.sending') : t('support.send')}</button>
         </div>
       </div>

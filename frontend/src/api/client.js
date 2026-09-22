@@ -45,12 +45,47 @@ async function request(method, path, body) {
   return data;
 }
 
+/**
+ * Multipart POST — for the support screenshots, which can't ride in a JSON
+ * body. Content-Type is deliberately left unset so the browser adds the
+ * multipart boundary itself.
+ */
+async function postForm(path, formData) {
+  const headers = { 'X-Language': getStoredLanguage() };
+  const token = getToken();
+  if (token) headers.Authorization = `Bearer ${token}`;
+
+  const res = await fetch(`/api${path}`, { method: 'POST', headers, body: formData });
+  const data = await res.json().catch(() => null);
+  if (!res.ok) {
+    if (res.status === 401 && token) setToken(null);
+    throw new Error(data?.detail || `Request failed: ${res.status}`);
+  }
+  return data;
+}
+
 export const api = {
   get: (path) => request('GET', path),
   post: (path, body) => request('POST', path, body),
+  postForm,
   patch: (path, body) => request('PATCH', path, body),
   delete: (path) => request('DELETE', path),
 };
+
+/**
+ * Authenticated image fetch as an object URL. A plain <img src="/api/…"> can't
+ * carry the JWT, and support attachments are permission-checked per request
+ * (apps.support.views.AttachmentView), so the bytes are fetched here instead.
+ * Callers must URL.revokeObjectURL() when the image unmounts.
+ */
+export async function fetchBlobUrl(path) {
+  const headers = {};
+  const token = getToken();
+  if (token) headers.Authorization = `Bearer ${token}`;
+  const res = await fetch(`/api${path}`, { headers });
+  if (!res.ok) throw new Error(`Fetch failed: ${res.status}`);
+  return URL.createObjectURL(await res.blob());
+}
 
 /** Builds a `?key=value&...` query string, skipping empty/falsy values (e.g. unset filters). */
 export function buildQuery(params) {

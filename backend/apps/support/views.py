@@ -4,13 +4,18 @@ Written student-admin support channel - the counterpart to apps.videocalls.
 Role split, mirroring the rest of the project: a student only ever sees their
 own threads (the queryset is scoped by `student=request.user`, so a guessed id
 404s instead of leaking someone else's report), while any admin can open any
-thread from the inbox. Reads/writes are plain REST - the frontend refreshes on
-navigation, and the polling/unread badge lands in a later phase, the same way
-apps.videocalls settled on short polling rather than WebSockets.
+thread from the inbox.
+
+There are no WebSockets in this stack, so new messages reach the other side by
+short polling, exactly as apps.videocalls detects an incoming call: the shell
+polls /unread/ for the sidebar badge, and an open conversation polls
+/threads/{id}/messages/?after={id} for just the delta.
 """
 
-from django.db.models import Q
+from django.db.models import Q, Sum
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
+from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.throttling import ScopedRateThrottle
@@ -21,13 +26,14 @@ from apps.accounts.permissions import IsAdmin, IsStudent
 from apps.i18n import get_language
 
 from .labels import category_options, status_options
-from .models import SupportMessage, SupportThread
+from .models import SupportAttachment, SupportMessage, SupportThread
 from .serializers import (
     ERRORS,
     error,
     serialize_message,
     serialize_thread_detail,
     serialize_thread_row,
+    validate_attachments,
     validate_message_body,
     validate_thread_payload,
 )
@@ -57,10 +63,14 @@ def _thread_for(user, thread_id) -> SupportThread:
     return get_object_or_404(qs, id=thread_id, student=user)
 
 
-def _append_message(thread: SupportThread, author, body: str) -> SupportMessage:
+def _append_message(thread: SupportThread, author, body: str, attachments=()) -> SupportMessage:
     """Creates the message and moves the thread's queue state with it - the
     single place where status/unread/last_message_at are kept consistent."""
     message = SupportMessage.objects.create(thread=thread, author=author, body=body)
+    for data, content_type in attachments:
+        SupportAttachment.objects.create(
+            message=message, data=data, content_type=content_type, byte_size=len(data),
+        )
     thread.last_message_at = message.created_at
     if author.role == User.Role.ADMIN:
         thread.status = SupportThread.Status.ANSWERED
@@ -118,6 +128,9 @@ class ThreadListCreateView(APIView):
     POST /api/support/threads/ {category, subject, body, assignee_id?} - a
          student opens a new report; `assignee_id` omitted means "any admin".
     """
+
+    # Screenshots ride along as multipart; JSON still works for a text-only post.
+    parser_classes = [MultiPartParser, FormParser, JSONParser]
 
     def get_permissions(self):
         return [IsStudent()] if self.request.method == 'POST' else [IsAuthenticated()]
@@ -177,7 +190,11 @@ class ThreadListCreateView(APIView):
 
     def post(self, request):
         lang = get_language(request)
-        cleaned, err = validate_thread_payload(request.data, lang)
+        files, files_err = validate_attachments(request.FILES.getlist('attachments'), lang)
+        if files_err:
+            return Response(files_err, status=400)
+
+        cleaned, err = validate_thread_payload(request.data, lang, allow_empty_body=bool(files))
         if err:
             return Response(err, status=400)
 
@@ -187,7 +204,7 @@ class ThreadListCreateView(APIView):
             category=cleaned['category'],
             subject=cleaned['subject'],
         )
-        message = _append_message(thread, request.user, cleaned['body'])
+        message = _append_message(thread, request.user, cleaned['body'], files)
         return Response(serialize_thread_detail(thread, lang, request.user, [message]), status=201)
 
 
@@ -205,7 +222,7 @@ class ThreadDetailView(APIView):
     def get(self, request, thread_id):
         lang = get_language(request)
         thread = _thread_for(request.user, thread_id)
-        messages = list(thread.messages.select_related('author'))
+        messages = list(thread.messages.select_related('author').prefetch_related('attachments'))
         _mark_read(thread, request.user)
         return Response(serialize_thread_detail(thread, lang, request.user, messages))
 
@@ -230,7 +247,7 @@ class ThreadDetailView(APIView):
                 thread.assignee = admin
 
         thread.save()
-        messages = list(thread.messages.select_related('author'))
+        messages = list(thread.messages.select_related('author').prefetch_related('attachments'))
         return Response(serialize_thread_detail(thread, lang, request.user, messages))
 
 
@@ -242,6 +259,7 @@ class ThreadMessagesView(APIView):
     """
 
     permission_classes = [IsAuthenticated]
+    parser_classes = [MultiPartParser, FormParser, JSONParser]
 
     def get_throttles(self):
         if self.request.method == 'POST':
@@ -256,7 +274,7 @@ class ThreadMessagesView(APIView):
 
     def get(self, request, thread_id):
         thread = _thread_for(request.user, thread_id)
-        messages = thread.messages.select_related('author')
+        messages = thread.messages.select_related('author').prefetch_related('attachments')
         after = request.query_params.get('after')
         if after and after.isdigit():
             messages = messages.filter(id__gt=int(after))
@@ -268,8 +286,61 @@ class ThreadMessagesView(APIView):
     def post(self, request, thread_id):
         lang = get_language(request)
         thread = _thread_for(request.user, thread_id)
-        body, err = validate_message_body(request.data, lang)
+        files, files_err = validate_attachments(request.FILES.getlist('attachments'), lang)
+        if files_err:
+            return Response(files_err, status=400)
+        body, err = validate_message_body(request.data, lang, allow_empty=bool(files))
         if err:
             return Response(err, status=400)
-        message = _append_message(thread, request.user, body)
+        message = _append_message(thread, request.user, body, files)
         return Response(serialize_message(message, request.user), status=201)
+
+
+class AttachmentView(APIView):
+    """
+    GET /api/support/attachments/{uuid}/ - the stored screenshot's bytes.
+
+    Not a static file: the thread's own access rule is re-checked here, so a
+    student can only ever fetch images from their own threads. The response is
+    served under the type sniffed at upload time with `nosniff`, so a file that
+    somehow slipped through can't be interpreted as anything but an image.
+    """
+
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, attachment_id):
+        attachment = get_object_or_404(
+            SupportAttachment.objects.select_related('message__thread'), id=attachment_id,
+        )
+        # Raises 404 for a thread this user has no business reading.
+        _thread_for(request.user, attachment.message.thread_id)
+
+        response = HttpResponse(bytes(attachment.data), content_type=attachment.content_type)
+        response['Content-Disposition'] = 'inline'
+        response['X-Content-Type-Options'] = 'nosniff'
+        # Attachments are immutable, and the URL carries a UUID, so this can be
+        # cached hard — but privately: it is per-user authorized content.
+        response['Cache-Control'] = 'private, max-age=604800'
+        return response
+
+
+class UnreadCountView(APIView):
+    """
+    GET /api/support/unread/ - {threads, messages} for the sidebar badge.
+
+    Polled by the shell (frontend/src/pages/Shell/AppShell.jsx), so it stays a
+    single aggregate over the denormalized counters rather than touching the
+    message table at all.
+    """
+
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        if user.role == User.Role.ADMIN:
+            threads = SupportThread.objects.filter(admin_unread__gt=0)
+            total = threads.aggregate(total=Sum('admin_unread'))['total']
+        else:
+            threads = SupportThread.objects.filter(student=user, student_unread__gt=0)
+            total = threads.aggregate(total=Sum('student_unread'))['total']
+        return Response({'threads': threads.count(), 'messages': total or 0})

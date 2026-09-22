@@ -7,4 +7,6 @@ urlpatterns = [
     path('threads/', views.ThreadListCreateView.as_view(), name='support-threads'),
     path('threads/<int:thread_id>/', views.ThreadDetailView.as_view(), name='support-thread-detail'),
     path('threads/<int:thread_id>/messages/', views.ThreadMessagesView.as_view(), name='support-thread-messages'),
+    path('attachments/<uuid:attachment_id>/', views.AttachmentView.as_view(), name='support-attachment'),
+    path('unread/', views.UnreadCountView.as_view(), name='support-unread'),
 ]
