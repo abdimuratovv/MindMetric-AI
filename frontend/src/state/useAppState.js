@@ -37,6 +37,18 @@ export const INITIAL_STUDENTS_VIEW = {
   pageSize: 10,
 };
 
+// Support inbox: queue filters plus which thread is open. Same reason as the
+// two views above — an admin who opens a student's report from a thread should
+// come back to that thread, not to an empty queue.
+export const INITIAL_SUPPORT_VIEW = {
+  selectedId: null,
+  filters: { assignee: 'all', status: '', category: '', search: '' },
+};
+
+// Screens a student report can be opened from and returned to. Anything else
+// (the dashboard's own widgets) falls back to the overview, as before.
+const STUDENT_RETURN_SCREENS = ['adminStudents', 'supportInbox'];
+
 export function useAppState() {
   const [screen, setScreen] = useState('welcome');
   const [user, setUser] = useState(null); // { id, name, initials, role, program }
@@ -49,6 +61,7 @@ export function useAppState() {
   // Dashboard filters/search/sort/page live here (not in AdminOverview) so they survive opening a student and coming back.
   const [adminView, setAdminView] = useState(INITIAL_ADMIN_VIEW);
   const [studentsView, setStudentsView] = useState(INITIAL_STUDENTS_VIEW);
+  const [supportView, setSupportView] = useState(INITIAL_SUPPORT_VIEW);
   const [studentReturnScreen, setStudentReturnScreen] = useState('admin'); // where "back" leads from a student report
 
   // The mockup has no equivalent of this — its `state` lived only in memory,
@@ -66,7 +79,7 @@ export function useAppState() {
   const goTo = useCallback((next) => setScreen(next), []);
 
   const openStudent = useCallback((id) => {
-    setStudentReturnScreen(screen === 'adminStudents' ? 'adminStudents' : 'admin');
+    setStudentReturnScreen(STUDENT_RETURN_SCREENS.includes(screen) ? screen : 'admin');
     setSelectedStudentId(id);
     setScreen('adminStudent');
   }, [screen]);
@@ -98,8 +111,9 @@ export function useAppState() {
     setActiveCall(null);
     setAdminView(INITIAL_ADMIN_VIEW);
     setStudentsView(INITIAL_STUDENTS_VIEW);
+    setSupportView(INITIAL_SUPPORT_VIEW);
     setScreen('welcome');
   }, []);
 
-  return { screen, goTo, openStudent, selectedStudentId, adminView, setAdminView, studentsView, setStudentsView, studentReturnScreen, user, onLoginSuccess, onProfileCompleted, logout, activeCall, enterCall, leaveCall };
+  return { screen, goTo, openStudent, selectedStudentId, adminView, setAdminView, studentsView, setStudentsView, supportView, setSupportView, studentReturnScreen, user, onLoginSuccess, onProfileCompleted, logout, activeCall, enterCall, leaveCall };
 }

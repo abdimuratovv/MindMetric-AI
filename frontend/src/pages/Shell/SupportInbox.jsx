@@ -24,12 +24,13 @@ const OWNER_TABS = ['all', 'unassigned', 'me'];
  * TeacherReview.jsx (queue on the left, work surface on the right), so the two
  * admin queues read as one surface.
  */
-export default function SupportInbox({ user }) {
+export default function SupportInbox({ user, onOpenStudent, view, setView }) {
   const { t, language } = useLanguage();
   const [rows, setRows] = useState([]);
   const [options, setOptions] = useState({ categories: [], statuses: [], admins: [] });
-  const [filters, setFilters] = useState({ assignee: 'all', status: '', category: '', search: '' });
-  const [selectedId, setSelectedId] = useState(null);
+  // Filters and the open thread live in useAppState, so opening a student's
+  // report from a thread and coming back lands on the same thread.
+  const { filters, selectedId } = view;
   const [thread, setThread] = useState(null);
   const [sending, setSending] = useState(false);
   const [error, setError] = useState(null);
@@ -67,11 +68,11 @@ export default function SupportInbox({ user }) {
 
   const openThread = (id) => {
     setError(null);
-    setSelectedId(id);
+    setView((v) => ({ ...v, selectedId: id }));
     setRows((current) => current.map((r) => (r.id === id ? { ...r, unread: 0 } : r)));
   };
 
-  const updateFilter = (key, value) => setFilters((f) => ({ ...f, [key]: value }));
+  const updateFilter = (key, value) => setView((v) => ({ ...v, filters: { ...v.filters, [key]: value } }));
 
   const reply = async (body, files) => {
     setSending(true);
@@ -204,7 +205,19 @@ export default function SupportInbox({ user }) {
               headerExtra={
                 <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '8px', marginTop: '12px' }}>
                   <span style={{ fontSize: '11.5px', color: '#939EA3', flex: 1, minWidth: '140px' }}>
-                    {thread.student.name}{thread.student.program ? ` · ${thread.student.program}` : ''}
+                    {/* Opens the student's full report, so an admin can see who
+                        they're answering before replying. AppShell's openStudent
+                        remembers the inbox as the "back" target (useAppState). */}
+                    <button
+                      className="mm-btn"
+                      onClick={() => onOpenStudent(thread.student.id)}
+                      title={t('support.openStudentReport')}
+                      style={{
+                        padding: 0, border: 'none', background: 'none', cursor: 'pointer',
+                        fontFamily: 'Manrope', fontSize: '11.5px', fontWeight: 700, color: '#2E5570',
+                        textDecoration: 'underline', textUnderlineOffset: '2px',
+                      }}>{thread.student.name}</button>
+                    {thread.student.program ? ` · ${thread.student.program}` : ''}
                     <br />
                     {thread.assignee ? t('support.handledBy')(thread.assignee.name) : t('support.inSharedQueue')}
                   </span>

@@ -168,11 +168,17 @@ class ThreadListCreateView(APIView):
 
             search = request.query_params.get('search', '')
             if search:
+                # Message bodies are searched too, not just the subject: the
+                # useful question is "who reported the blank screen?", and the
+                # detail that identifies a report is usually in the text, not
+                # in the one line the student typed as a title. The join can
+                # match a thread once per message, hence distinct().
                 threads = threads.filter(
                     Q(subject__icontains=search)
+                    | Q(messages__body__icontains=search)
                     | Q(student__first_name__icontains=search)
                     | Q(student__last_name__icontains=search)
-                )
+                ).distinct()
         else:
             threads = threads.filter(student=user)
 
