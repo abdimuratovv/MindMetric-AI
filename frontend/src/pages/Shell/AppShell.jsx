@@ -12,6 +12,8 @@ import Students from './Students.jsx';
 import QuestionBank from './QuestionBank.jsx';
 import Results from './Results.jsx';
 import StudentSelection from './StudentSelection.jsx';
+import SupportInbox from './SupportInbox.jsx';
+import SupportStudent from './SupportStudent.jsx';
 import TeacherReview from './TeacherReview.jsx';
 
 // No WebSockets in this stack, so an incoming call is detected by short
@@ -28,11 +30,13 @@ const NAV_CONFIGS = {
     { key: 'selection', labelKey: 'assessments', iconPath: 'M3 3h8v8H3zM13 3h8v5h-8zM13 12h8v9h-8zM3 15h8v6H3z' },
     { key: 'results', labelKey: 'myResults', iconPath: 'M9 5h6a2 2 0 012 2v12a2 2 0 01-2 2H9a2 2 0 01-2-2V7a2 2 0 012-2zM9 3h6v4H9zM8 12l2 2 4-4' },
     { key: 'achievements', labelKey: 'achievements', iconPath: 'M12 2l2.4 5.8L20 9l-4.5 4 1.3 6-4.8-3-4.8 3 1.3-6L4 9l5.6-1.2z' },
+    { key: 'support', labelKey: 'support', iconPath: 'M21 11.5a8.4 8.4 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.4 8.4 0 01-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.4 8.4 0 013.8-.9h.5a8.5 8.5 0 018 8v.5z' },
   ],
   admin: [
     { key: 'admin', labelKey: 'overview', iconPath: 'M12 3l7 3v6c0 5-3.5 8-7 9-3.5-1-7-4-7-9V6z' },
     { key: 'adminStudents', labelKey: 'students', iconPath: 'M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM22 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75' },
     { key: 'teacherReview', labelKey: 'reviewQueue', iconPath: 'M17 21v-2a4 4 0 00-3-3.87M9 11a4 4 0 100-8 4 4 0 000 8zM3 21v-2a4 4 0 013-3.87M16 3.13a4 4 0 010 7.75' },
+    { key: 'supportInbox', labelKey: 'supportInbox', iconPath: 'M21 11.5a8.4 8.4 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.4 8.4 0 01-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.4 8.4 0 013.8-.9h.5a8.5 8.5 0 018 8v.5z' },
     { key: 'questionBank', labelKey: 'questionBank', iconPath: 'M9 4h6a1 1 0 011 1v1h1a2 2 0 012 2v11a2 2 0 01-2 2H7a2 2 0 01-2-2V8a2 2 0 012-2h1V5a1 1 0 011-1zM8 12h8M8 16h5' },
     { key: 'adminSettings', labelKey: 'settings', iconPath: 'M12 15a3 3 0 100-6 3 3 0 000 6zM19.4 15a1.7 1.7 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.8-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1.1-1.5 1.7 1.7 0 00-1.8.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.8 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.5-1.1 1.7 1.7 0 00-.3-1.8l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.8.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.8-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.8V9a1.7 1.7 0 001.5 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z' },
   ],
@@ -196,6 +200,8 @@ export default function AppShell({ screen, goTo, openStudent, selectedStudentId,
         {screen === 'selection' && <StudentSelection user={user} goTo={goTo} />}
         {screen === 'results' && <Results user={user} goTo={goTo} />}
         {screen === 'achievements' && <Achievements />}
+        {screen === 'support' && <SupportStudent />}
+        {screen === 'supportInbox' && <SupportInbox user={user} />}
         {screen === 'analytics' && <Analytics goTo={goTo} />}
         {screen === 'teacherReview' && <TeacherReview enterCall={enterCall} />}
         {screen === 'admin' && <AdminOverview onOpenStudent={openStudent} onViewAll={() => goTo('adminStudents')} view={adminView} setView={setAdminView} />}

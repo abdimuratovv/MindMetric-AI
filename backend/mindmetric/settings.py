@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'apps.reviews',
     'apps.analytics',
     'apps.videocalls',
+    'apps.support',
 ]
 
 MIDDLEWARE = [
@@ -117,6 +118,13 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     ),
+    # Applied only where a view opts in via `throttle_scope` — today that's
+    # apps.support, whose write endpoints are the only student-authored,
+    # unbounded-volume writes in the product (see its _StudentThrottle).
+    'DEFAULT_THROTTLE_RATES': {
+        'support-thread': '5/day',
+        'support-message': '30/hour',
+    },
 }
 
 from datetime import timedelta  # noqa: E402

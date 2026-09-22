@@ -8,7 +8,7 @@ import VideoCallPage from './pages/VideoCall/VideoCallPage.jsx';
 import Welcome from './pages/Welcome.jsx';
 import { useAppState } from './state/useAppState.js';
 
-const SHELL_SCREENS = ['selection', 'results', 'achievements', 'analytics', 'teacherReview', 'admin', 'questionBank', 'adminSettings', 'adminStudent', 'adminStudents'];
+const SHELL_SCREENS = ['selection', 'results', 'achievements', 'analytics', 'teacherReview', 'admin', 'questionBank', 'adminSettings', 'adminStudent', 'adminStudents', 'support', 'supportInbox'];
 
 /**
  * Top-level router. Mirrors the mockup's four mutually-exclusive `sc-if`

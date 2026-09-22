@@ -17,4 +17,5 @@ urlpatterns = [
     path('api/teacher/', include('apps.reviews.urls')),
     path('api/admin/', include('apps.analytics.urls')),
     path('api/videocalls/', include('apps.videocalls.urls')),
+    path('api/support/', include('apps.support.urls')),
 ]
