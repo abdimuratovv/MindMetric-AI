@@ -113,17 +113,20 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        # simplejwt's, plus refusing tokens older than User.tokens_valid_after.
+        'apps.accounts.authentication.JWTAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     ),
-    # Applied only where a view opts in via `throttle_scope` — today that's
-    # apps.support, whose write endpoints are the only student-authored,
-    # unbounded-volume writes in the product (see its _StudentThrottle).
+    # Applied only where a view opts in via `throttle_scope` — apps.support,
+    # whose write endpoints are the only student-authored, unbounded-volume
+    # writes in the product (see its _StudentThrottle), and the password change,
+    # which checks the current password and so must not allow guessing it.
     'DEFAULT_THROTTLE_RATES': {
         'support-thread': '5/day',
         'support-message': '30/hour',
+        'password-change': '10/hour',
     },
 }
 

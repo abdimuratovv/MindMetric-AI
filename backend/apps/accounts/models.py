@@ -43,6 +43,13 @@ class User(AbstractUser):
     # in the teacher/admin student lists.
     program = models.CharField(max_length=120, blank=True)
 
+    # Access tokens issued before this instant are rejected (see
+    # accounts.authentication.JWTAuthentication). JWTs are stateless, so without
+    # it a session left open on another device would outlive a password change
+    # by the rest of its 12-hour lifetime. Stamped by a password change and by
+    # "sign out everywhere"; null means every unexpired token is still good.
+    tokens_valid_after = models.DateTimeField(null=True, blank=True)
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 

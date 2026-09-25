@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { getToken } from '../api/client.js';
+import { SESSION_ENDED_EVENT, getToken } from '../api/client.js';
 import { logout as apiLogout, me } from '../api/auth.js';
 
 const LANDING_BY_ROLE = { student: 'selection', admin: 'admin' };
@@ -105,8 +105,10 @@ export function useAppState() {
     setScreen('selection');
   }, []);
 
-  const logout = useCallback(async () => {
-    await apiLogout();
+  // Profile settings saved a new name — refreshes the sidebar without leaving the screen.
+  const updateUser = useCallback((updatedUser) => setUser(updatedUser), []);
+
+  const resetSession = useCallback(() => {
     setUser(null);
     setActiveCall(null);
     setAdminView(INITIAL_ADMIN_VIEW);
@@ -115,5 +117,17 @@ export function useAppState() {
     setScreen('welcome');
   }, []);
 
-  return { screen, goTo, openStudent, selectedStudentId, adminView, setAdminView, studentsView, setStudentsView, supportView, setSupportView, studentReturnScreen, user, onLoginSuccess, onProfileCompleted, logout, activeCall, enterCall, leaveCall };
+  const logout = useCallback(async () => {
+    await apiLogout();
+    resetSession();
+  }, [resetSession]);
+
+  // The server refused this tab's token (see api/client.js) — e.g. the password
+  // was changed on another device — so nothing signed-in can load any more.
+  useEffect(() => {
+    window.addEventListener(SESSION_ENDED_EVENT, resetSession);
+    return () => window.removeEventListener(SESSION_ENDED_EVENT, resetSession);
+  }, [resetSession]);
+
+  return { screen, goTo, openStudent, selectedStudentId, adminView, setAdminView, studentsView, setStudentsView, supportView, setSupportView, studentReturnScreen, user, onLoginSuccess, onProfileCompleted, updateUser, logout, activeCall, enterCall, leaveCall };
 }

@@ -92,6 +92,67 @@ class StudentProfileSerializer(serializers.ModelSerializer):
         fields = ['faculty', 'course', 'group', 'specialization']
 
 
+STUDENT_PROFILE_FIELDS = ('faculty', 'course', 'group', 'specialization')
+PROFILE_FIELD_MAX_LENGTH = 150
+
+PROFILE_ERRORS = {
+    'required': {
+        'ru': 'Пожалуйста, заполните все поля.',
+        'uz': "Iltimos, barcha maydonlarni to'ldiring.",
+    },
+    'too_long': {
+        'ru': f'Значение слишком длинное (не более {PROFILE_FIELD_MAX_LENGTH} символов).',
+        'uz': f"Qiymat juda uzun (ko'pi bilan {PROFILE_FIELD_MAX_LENGTH} belgi).",
+    },
+}
+
+
+class ProfileUpdateSerializer(serializers.Serializer):
+    """
+    PATCH /api/accounts/profile/ body. Every field is optional, but one that is
+    sent can't be blank. Email is deliberately absent: it is the login, and a
+    student's has to stay on UNIVERSITY_EMAIL_DOMAIN, with no mail infra here to
+    verify a new address. The student-profile fields are the onboarding-survey
+    answers, editable afterwards so a typo'd group doesn't stick forever; the
+    view ignores them for non-students.
+
+    Blank/length checks are done in validate() rather than with allow_blank /
+    max_length so the errors come out localized, not in DRF's English.
+    """
+
+    first_name = serializers.CharField(required=False, allow_blank=True)
+    last_name = serializers.CharField(required=False, allow_blank=True)
+    faculty = serializers.CharField(required=False, allow_blank=True)
+    course = serializers.CharField(required=False, allow_blank=True)
+    group = serializers.CharField(required=False, allow_blank=True)
+    specialization = serializers.CharField(required=False, allow_blank=True)
+
+    def validate(self, attrs):
+        lang = self.context.get('lang', DEFAULT_LANGUAGE)
+        for value in attrs.values():
+            if not value:
+                raise serializers.ValidationError(PROFILE_ERRORS['required'][lang])
+            if len(value) > PROFILE_FIELD_MAX_LENGTH:
+                raise serializers.ValidationError(PROFILE_ERRORS['too_long'][lang])
+        return attrs
+
+
+def serialize_profile(user: User) -> dict:
+    """GET/PATCH /api/accounts/profile/ response — the settings form's values.
+    The survey fields are only present for students."""
+    data = {
+        'first_name': user.first_name,
+        'last_name': user.last_name,
+        'email': user.email,
+        'role': user.role,
+    }
+    if user.role == User.Role.STUDENT:
+        profile = getattr(user, 'student_profile', None)
+        for field in STUDENT_PROFILE_FIELDS:
+            data[field] = getattr(profile, field, '') if profile else ''
+    return data
+
+
 class UserSerializer(serializers.ModelSerializer):
     """Feeds {{ userName }} / {{ userInitial }} / {{ role }} in the sidebar."""
 

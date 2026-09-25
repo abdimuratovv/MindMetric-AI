@@ -9,6 +9,7 @@ import AdminOverview from './AdminOverview.jsx';
 import AdminStudentDetail from './AdminStudentDetail.jsx';
 import Analytics from './Analytics.jsx';
 import AdminSettings from './AdminSettings.jsx';
+import Profile from './Profile.jsx';
 import Students from './Students.jsx';
 import QuestionBank from './QuestionBank.jsx';
 import Results from './Results.jsx';
@@ -24,6 +25,9 @@ const CALL_POLL_INTERVAL_MS = 8000;
 // The one nav entry per role that the support badge belongs on.
 const SUPPORT_SCREENS = ['support', 'supportInbox'];
 
+// Every role's own profile settings — the last entry in each menu.
+const PROFILE_NAV = { key: 'profile', labelKey: 'profile', iconPath: 'M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2M12 11a4 4 0 100-8 4 4 0 000 8z' };
+
 // Ported from `navConfigs` in renderVals() (lines 827-839). `labelKey` looks
 // up the translated label at render time (see i18n/translations.js `nav`).
 // Review Queue lives under `admin` now — the teacher role was removed (a
@@ -35,6 +39,7 @@ const NAV_CONFIGS = {
     { key: 'results', labelKey: 'myResults', iconPath: 'M9 5h6a2 2 0 012 2v12a2 2 0 01-2 2H9a2 2 0 01-2-2V7a2 2 0 012-2zM9 3h6v4H9zM8 12l2 2 4-4' },
     { key: 'achievements', labelKey: 'achievements', iconPath: 'M12 2l2.4 5.8L20 9l-4.5 4 1.3 6-4.8-3-4.8 3 1.3-6L4 9l5.6-1.2z' },
     { key: 'support', labelKey: 'support', iconPath: 'M21 11.5a8.4 8.4 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.4 8.4 0 01-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.4 8.4 0 013.8-.9h.5a8.5 8.5 0 018 8v.5z' },
+    PROFILE_NAV,
   ],
   admin: [
     { key: 'admin', labelKey: 'overview', iconPath: 'M12 3l7 3v6c0 5-3.5 8-7 9-3.5-1-7-4-7-9V6z' },
@@ -43,6 +48,7 @@ const NAV_CONFIGS = {
     { key: 'supportInbox', labelKey: 'supportInbox', iconPath: 'M21 11.5a8.4 8.4 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.4 8.4 0 01-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.4 8.4 0 013.8-.9h.5a8.5 8.5 0 018 8v.5z' },
     { key: 'questionBank', labelKey: 'questionBank', iconPath: 'M9 4h6a1 1 0 011 1v1h1a2 2 0 012 2v11a2 2 0 01-2 2H7a2 2 0 01-2-2V8a2 2 0 012-2h1V5a1 1 0 011-1zM8 12h8M8 16h5' },
     { key: 'adminSettings', labelKey: 'settings', iconPath: 'M12 15a3 3 0 100-6 3 3 0 000 6zM19.4 15a1.7 1.7 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.8-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1.1-1.5 1.7 1.7 0 00-1.8.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.8 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.5-1.1 1.7 1.7 0 00-.3-1.8l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.8.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.8-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.8V9a1.7 1.7 0 001.5 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z' },
+    PROFILE_NAV,
   ],
 };
 
@@ -51,7 +57,7 @@ const NAV_CONFIGS = {
  * sidebar) plus the content-area router (lines 138-514) that swaps in the
  * screen matching `screen`.
  */
-export default function AppShell({ screen, goTo, openStudent, selectedStudentId, adminView, setAdminView, studentsView, setStudentsView, supportView, setSupportView, studentReturnScreen, user, logout, enterCall }) {
+export default function AppShell({ screen, goTo, openStudent, selectedStudentId, adminView, setAdminView, studentsView, setStudentsView, supportView, setSupportView, studentReturnScreen, user, updateUser, logout, enterCall }) {
   const { t } = useLanguage();
   const [navOpen, setNavOpen] = useState(false);
   const role = user?.role || 'student';
@@ -195,16 +201,22 @@ export default function AppShell({ screen, goTo, openStudent, selectedStudentId,
           display: 'flex', alignItems: 'center', gap: '10px', padding: '12px', borderRadius: '14px',
           background: 'rgba(255,255,255,0.6)', border: '1px solid rgba(255,255,255,0.8)',
         }}>
-          <div style={{
-            width: '34px', height: '34px', borderRadius: '50%', background: '#DCECEF', display: 'flex',
-            alignItems: 'center', justifyContent: 'center', fontWeight: 700, color: '#1F374B', fontSize: '13px',
-          }}>{user?.initials}</div>
-          <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ fontSize: '12.5px', fontWeight: 700, color: '#161F24', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-              {user?.name}
+          {/* The name card is also a way into the profile settings. */}
+          <button className="mm-btn" onClick={() => handleNav('profile')} title={t('nav.profile')} style={{
+            flex: 1, minWidth: 0, display: 'flex', alignItems: 'center', gap: '10px', padding: 0,
+            border: 'none', background: 'none', cursor: 'pointer', textAlign: 'left', fontFamily: 'Manrope',
+          }}>
+            <div style={{
+              width: '34px', height: '34px', borderRadius: '50%', background: '#DCECEF', display: 'flex', flexShrink: 0,
+              alignItems: 'center', justifyContent: 'center', fontWeight: 700, color: '#1F374B', fontSize: '13px',
+            }}>{user?.initials}</div>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ fontSize: '12.5px', fontWeight: 700, color: '#161F24', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                {user?.name}
+              </div>
+              <div style={{ fontSize: '11px', color: '#939EA3' }}>{t(`roles.${role}`)}</div>
             </div>
-            <div style={{ fontSize: '11px', color: '#939EA3' }}>{t(`roles.${role}`)}</div>
-          </div>
+          </button>
           <button className="mm-btn" onClick={handleLogout} title={t('nav.logout')} style={{ border: 'none', background: 'none', cursor: 'pointer', color: '#939EA3', padding: '4px' }}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
               <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"></path>
@@ -226,6 +238,7 @@ export default function AppShell({ screen, goTo, openStudent, selectedStudentId,
         {screen === 'adminStudent' && <AdminStudentDetail studentId={selectedStudentId} onBack={() => goTo(studentReturnScreen)} />}
         {screen === 'questionBank' && <QuestionBank />}
         {screen === 'adminSettings' && <AdminSettings />}
+        {screen === 'profile' && <Profile onUserUpdated={updateUser} />}
       </div>
     </div>
   );

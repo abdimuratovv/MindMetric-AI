@@ -20,6 +20,38 @@ export function setToken(token) {
 // JWTAuthentication ("Given token not valid for any token type") before AllowAny applies.
 const TOKENLESS_PATHS = ['/auth/login/', '/auth/register/'];
 
+// Fired when the server refuses the stored token — expired, or revoked by a
+// password change / "sign out everywhere" on another device. useAppState
+// listens and returns to the landing page, instead of leaving a signed-in
+// screen whose every request now fails.
+export const SESSION_ENDED_EVENT = 'mindmetric:session-ended';
+
+let rotatingToken = false;
+
+/**
+ * Runs a request that swaps this tab's token for a fresh one (password change,
+ * sign out everywhere). The server revokes the old token before the response
+ * arrives, so a background poll landing in that gap gets a 401 that doesn't
+ * mean this session is over — see the 401 checks below.
+ */
+export async function withTokenRotation(sendRequest) {
+  rotatingToken = true;
+  try {
+    const data = await sendRequest();
+    setToken(data.access);
+    return data;
+  } finally {
+    rotatingToken = false;
+  }
+}
+
+/** A 401 ends the session only for the token this tab still holds, and not mid-rotation. */
+function handleUnauthorized(sentToken) {
+  if (!sentToken || rotatingToken || sentToken !== getToken()) return;
+  setToken(null);
+  window.dispatchEvent(new Event(SESSION_ENDED_EVENT));
+}
+
 async function request(method, path, body) {
   const headers = { 'Content-Type': 'application/json', 'X-Language': getStoredLanguage() };
   const token = TOKENLESS_PATHS.includes(path) ? null : getToken();
@@ -39,7 +71,7 @@ async function request(method, path, body) {
     // JWTAuthentication before permission checks run — that would otherwise 401
     // every request, including AllowAny ones like /public/stats/. Drop it so the
     // app falls back to a logged-out state instead of repeating a dead token.
-    if (res.status === 401 && token) setToken(null);
+    if (res.status === 401) handleUnauthorized(token);
     throw new Error(data?.detail || `Request failed: ${res.status}`);
   }
   return data;
@@ -58,7 +90,7 @@ async function postForm(path, formData) {
   const res = await fetch(`/api${path}`, { method: 'POST', headers, body: formData });
   const data = await res.json().catch(() => null);
   if (!res.ok) {
-    if (res.status === 401 && token) setToken(null);
+    if (res.status === 401) handleUnauthorized(token);
     throw new Error(data?.detail || `Request failed: ${res.status}`);
   }
   return data;

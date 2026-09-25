@@ -2,40 +2,12 @@ import { useState } from 'react';
 
 import { login, register } from '../api/auth.js';
 import logoIcon from '../assets/logo-icon.png';
+import PasswordVisibilityToggle from '../components/PasswordVisibilityToggle.jsx';
 import { useLanguage } from '../i18n/LanguageContext.jsx';
 
 // Teacher removed as a role: a teacher could only ever view student results
 // in their own section, nothing else — that's now folded into Admin.
 const ROLES = ['student', 'admin'];
-
-/** Open/closed eye icon toggling a password field between masked and plain text. */
-function PasswordVisibilityToggle({ visible, onToggle, label }) {
-  return (
-    <button
-      type="button"
-      onClick={onToggle}
-      aria-label={label}
-      aria-pressed={visible}
-      style={{
-        position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)',
-        width: '28px', height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center',
-        border: 'none', background: 'transparent', cursor: 'pointer', padding: 0, color: '#7C8A91',
-      }}
-    >
-      {visible ? (
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A10.94 10.94 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
-          <line x1="1" y1="1" x2="23" y2="23" />
-        </svg>
-      ) : (
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z" />
-          <circle cx="12" cy="12" r="3" />
-        </svg>
-      )}
-    </button>
-  );
-}
 
 /** Shared label+input look for both the login and register forms below. */
 function AuthField({ label, type = 'text', value, onChange, placeholder, focused, onFocus, onBlur, marginBottom = '16px', showLabel, hideLabel }) {
