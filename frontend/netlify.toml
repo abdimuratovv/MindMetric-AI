@@ -1,0 +1,16 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# Proxied server-side by Netlify's edge, so the browser never sees a
+# different origin and no CORS preflight is triggered for /api calls.
+[[redirects]]
+  from = "/api/*"
+  to = "https://mindmetric-backend-48ad.onrender.com/api/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

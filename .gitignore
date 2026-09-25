@@ -12,3 +12,6 @@ frontend/dist/
 
 .claude/
 .thumbnail
+
+# Netlify CLI link state (site id), recreated by `netlify link`
+.netlify/
