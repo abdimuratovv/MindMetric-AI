@@ -37,7 +37,7 @@ export default function Results({ user, goTo }) {
         {t('results.assessedOn')(user?.name, user?.program, formatDate(new Date(), language))}
       </p>
 
-      <ResultsReport data={data} mistakes={mistakes} />
+      <ResultsReport data={data} mistakes={mistakes} onViewAnalytics={() => goTo('analytics')} />
     </div>
   );
 }

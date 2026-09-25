@@ -4,17 +4,18 @@ import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import { polar } from '../../theme/tokens.js';
 
 /**
- * The results report body (score card, radar, recommended fields, typical mistakes,
- * explanation). Shared by the student's own Results screen and the admin's
- * per-student view — `data` is the /results/summary/ payload and `mistakes` the
- * grouped list.
+ * The results report body (score card, radar, level scale, recommended fields,
+ * typical mistakes, explanation). Shared by the student's own Results screen and
+ * the admin's per-student view — `data` is the /results/summary/ payload and
+ * `mistakes` the grouped list. `onViewAnalytics` is omitted where the detailed
+ * analytics screen doesn't apply (admin view), which hides that link.
  */
-export default function ResultsReport({ data, mistakes }) {
+export default function ResultsReport({ data, mistakes, onViewAnalytics }) {
   const [hoverIdx, setHoverIdx] = useState(null);
   const { t } = useLanguage();
 
   const {
-    overallScore, verdict, verdictBg, verdictColor, band, bandColor, bandExplanation,
+    overallScore, verdict, verdictBg, verdictColor, band, bandColor, bandExplanation, bloom, levelScale,
     indicators, overallExplanation, programmingAptitudeScore, fieldRecommendations,
   } = data;
 
@@ -48,6 +49,7 @@ export default function ResultsReport({ data, mistakes }) {
               background: verdictBg, color: verdictColor,
             }}>{verdict}</span>
             <span style={{ fontSize: '12.5px', fontWeight: 700, color: bandColor }}>{band}</span>
+            {bloom && <span style={{ fontSize: '11.5px', fontWeight: 600, color: '#556269' }}>{t('results.bloomLabel')}: {bloom}</span>}
           </div>
           <p style={{ fontSize: '12.5px', color: '#556269', lineHeight: 1.55, margin: '8px 0 0', maxWidth: '280px' }}>{bandExplanation}</p>
           {programmingAptitudeScore != null && (
@@ -133,6 +135,44 @@ export default function ResultsReport({ data, mistakes }) {
           </div>
         </div>
       </div>
+
+      {/* Backend and frontend deploy separately; skip the legend rather than crash
+          against a backend that doesn't send levelScale yet. */}
+      {levelScale && (
+        <div style={{
+          padding: '26px 30px', borderRadius: '22px', background: 'rgba(255,255,255,0.62)', border: '1px solid rgba(255,255,255,0.85)',
+          backdropFilter: 'blur(16px)', boxShadow: '0 10px 30px rgba(31,55,75,0.06)', marginBottom: '22px',
+        }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'baseline', gap: '4px 16px', marginBottom: '4px' }}>
+            <h3 style={{ fontSize: '16px', fontWeight: 700, color: '#161F24', margin: 0 }}>{t('results.levelScaleTitle')}</h3>
+            {onViewAnalytics && (
+              <button className="mm-btn" onClick={onViewAnalytics} style={{ border: 'none', background: 'none', color: '#2E5570', fontWeight: 700, fontSize: '13px', cursor: 'pointer', padding: 0 }}>
+                {t('results.viewDetailedAnalytics')}
+              </button>
+            )}
+          </div>
+          <p style={{ fontSize: '12.5px', color: '#556269', margin: '0 0 16px' }}>{t('results.levelScaleSubtitle')}</p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            {levelScale.map((level) => (
+              <div key={level.key} style={{
+                display: 'flex', flexWrap: 'wrap', alignItems: 'center', columnGap: '16px', rowGap: '4px',
+                padding: '12px 16px', borderRadius: '14px',
+                background: level.current ? level.bg : 'rgba(255,255,255,0.5)',
+                border: `1.5px solid ${level.current ? level.color : 'rgba(46,85,112,0.1)'}`,
+              }}>
+                <span style={{ fontFamily: "'Montserrat',sans-serif", fontSize: '14px', fontWeight: 700, color: level.color, minWidth: '96px' }}>
+                  {t('results.levelScaleRange')(level.range)}
+                </span>
+                <span style={{ fontSize: '13px', fontWeight: 700, color: '#161F24', flex: '1 1 180px' }}>
+                  {level.label}
+                  {level.current && <span style={{ marginLeft: '8px', fontSize: '10.5px', fontWeight: 700, color: level.color }}>· {t('results.levelScaleCurrent')}</span>}
+                </span>
+                <span style={{ fontSize: '12px', color: '#556269', flex: '1 1 200px' }}>{t('results.bloomLabel')}: {level.bloom}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       <div style={{
         padding: '26px 30px', borderRadius: '22px', background: 'rgba(255,255,255,0.62)', border: '1px solid rgba(255,255,255,0.85)',

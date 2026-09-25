@@ -32,9 +32,10 @@ export default function Analytics({ goTo }) {
           }}>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '22px', alignItems: 'center' }}>
               <div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '10px', marginBottom: '6px' }}>
                   <h3 style={{ fontSize: '16px', fontWeight: 700, color: '#161F24', margin: 0 }}>{d.label}</h3>
                   <span style={{ fontSize: '11px', fontWeight: 700, padding: '3px 10px', borderRadius: '100px', background: d.tierBg, color: d.tierColor }}>{d.tier}</span>
+                  {d.bloom && <span style={{ fontSize: '11.5px', fontWeight: 600, color: '#939EA3' }}>{t('results.bloomLabel')}: {d.bloom}</span>}
                 </div>
                 <p style={{ fontSize: '12.5px', color: '#556269', lineHeight: 1.55, margin: '0 0 10px', maxWidth: '420px' }}>{d.explanation}</p>
                 <div style={{ height: '7px', borderRadius: '100px', background: '#EAF2F5', overflow: 'hidden', maxWidth: '320px' }}>

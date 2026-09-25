@@ -344,7 +344,7 @@ def _student_entries(request, lang):
             'group': student.group_name or '',
             'score': score,
             'progress': progress.get(student.id, 0), 'progressTotal': len(INDICATOR_CHOICES),
-            'levelLabel': level['band'] if level else None,
+            'levelLabel': level['short'] if level else None,
             'levelBg': level['bg'] if level else None, 'levelColor': level['color'] if level else None,
             'statusLabel': style['label'], 'statusBg': style['bg'], 'statusColor': style['color'],
             'date': _format_date(student.last_activity, lang) if student.last_activity else None,

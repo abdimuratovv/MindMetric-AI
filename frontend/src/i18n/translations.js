@@ -118,6 +118,12 @@ export const translations = {
       mistakesTitle: 'Типичные ошибки и рекомендации',
       mistakesSubtitle: 'Педагогические советы по вопросам, на которые не был дан полностью верный ответ.',
       mistakesCount: (n) => `${n} вопрос(ов)`,
+      bloomLabel: 'Таксономия Блума',
+      levelScaleTitle: 'Уровни одарённости',
+      levelScaleSubtitle: 'Уровень одарённости по общему баллу и соответствующие ему ступени таксономии Блума.',
+      levelScaleCurrent: 'Текущий уровень',
+      levelScaleRange: (range) => `${range} баллов`,
+      viewDetailedAnalytics: 'Подробная аналитика →',
     },
     analytics: {
       back: '← Назад к сводке результатов',
@@ -126,7 +132,7 @@ export const translations = {
       yourScore: 'Ваш балл',
       cohortAverage: (pct) => `Средний по группе · ${pct}-й процентиль`,
       takeTest: 'Пройти тест →',
-      methodology: 'Методология: общий балл — это среднее по всем десяти показателям способностей, каждый из которых оценивается собственным тестом или заданием, нормализованное относительно текущей группы учебного года.',
+      methodology: 'Методология: вопросы тестов подбираются адаптивно на основе 2PL-модели IRT — после каждого ответа оценка способности студента (θ) обновляется, и следующий вопрос выбирается среди наиболее информативных для этой оценки. Балл показателя (0–100) — доля верных ответов; командная работа, терпение и скорость обучения оцениваются по формулам своих форматов заданий, а алгоритмическое мышление — по тесту (40%) и программированию (60%). Общий балл — среднее по пройденным показателям, умноженное на долю пройденных (n/10). Уровень одарённости: 0–55 — начальный (знание, понимание), 56–79 — средний (применение, анализ), 80–100 — высокий (оценка, создание).',
     },
     teacherReview: {
       title: 'Экспертно-педагогическая оценка',
@@ -524,6 +530,12 @@ export const translations = {
       mistakesTitle: "Tipik xatolar va tavsiyalar",
       mistakesSubtitle: "To'liq to'g'ri javob berilmagan savollar bo'yicha pedagogik maslahatlar.",
       mistakesCount: (n) => `${n} ta savol`,
+      bloomLabel: 'Blum taksonomiyasi',
+      levelScaleTitle: 'Iqtidor darajalari',
+      levelScaleSubtitle: "Umumiy ball bo'yicha iqtidor darajasi va unga mos Blum taksonomiyasi bosqichlari.",
+      levelScaleCurrent: 'Joriy daraja',
+      levelScaleRange: (range) => `${range} ball`,
+      viewDetailedAnalytics: "Batafsil tahlilni ko'rish →",
     },
     analytics: {
       back: '← Natijalar xulosasiga qaytish',
@@ -532,7 +544,7 @@ export const translations = {
       yourScore: 'Sizning balingiz',
       cohortAverage: (pct) => `Guruh o'rtachasi · ${pct}-protsentil`,
       takeTest: 'Testni boshlash →',
-      methodology: "Metodologiya: umumiy ball — har biri o'z testi yoki topshirig'i orqali baholanadigan o'nta iqtidor ko'rsatkichining o'rtachasi bo'lib, joriy o'quv yili guruhiga nisbatan normallashtiriladi.",
+      methodology: "Metodologiya: test savollari 2PL IRT modeli asosida adaptiv tanlanadi — har bir javobdan so'ng talabaning qobiliyat bahosi (θ) yangilanadi va keyingi savol shu bahoga eng ko'p ma'lumot beradigan savollar orasidan olinadi. Ko'rsatkich bali (0–100) to'g'ri javoblar ulushidan hisoblanadi; jamoaviylik, sabr-toqat va o'rganish tezligi o'z topshiriq formatiga mos formula bilan, algoritmik fikrlash esa test (40%) va kodlash (60%) natijasi bo'yicha baholanadi. Umumiy ball — bajarilgan ko'rsatkichlar o'rtachasi, bajarilganlar ulushiga (n/10) ko'paytirilgan. Iqtidor darajasi: 0–55 — boshlang'ich (bilish, tushunish), 56–79 — o'rta (qo'llash, tahlil qilish), 80–100 — yuqori (baholash, yaratish).",
     },
     teacherReview: {
       title: "Ekspert-pedagogik baholash",

@@ -71,7 +71,7 @@ OVERALL_EXPLANATIONS = {
             'педагогический контекст см. в отзыве преподавателя.'
         ),
         'developing': (
-            'Развивающийся результат: некоторые показатели уже являются сильными сторонами, другие только '
+            'Средний результат: некоторые показатели уже являются сильными сторонами, другие только '
             'формируются. Показатели с наименьшим баллом на диаграмме ниже — область, которая больше всего '
             'выиграет от целевой практики. Эта оценка отражает только автоматизированное тестирование — '
             'педагогический контекст см. в отзыве преподавателя.'
@@ -91,7 +91,7 @@ OVERALL_EXPLANATIONS = {
             "kontekst uchun o'qituvchi tavsiyanomasiga qarang."
         ),
         'developing': (
-            "Rivojlanayotgan natija: ba'zi ko'rsatkichlar allaqachon kuchli tomon, boshqalari hali "
+            "O'rta darajadagi natija: ba'zi ko'rsatkichlar allaqachon kuchli tomon, boshqalari hali "
             "shakllanmoqda. Quyidagi diagrammada eng past ballga ega ko'rsatkichlar — maqsadli mashqdan eng ko'p "
             "foyda ko'radigan soha. Ushbu ball faqat avtomatlashtirilgan testlashni aks ettiradi — pedagogik "
             "kontekst uchun o'qituvchi tavsiyanomasiga qarang."
@@ -199,6 +199,8 @@ def build_results_summary(student, lang: str) -> dict:
         'band': band_info['band'],
         'bandColor': band_info['color'],
         'bandExplanation': BAND_EXPLANATIONS[lang][band_info['key']],
+        'bloom': band_info['bloom'],
+        'levelScale': calculators.level_scale(band_info['key'], lang),
         'indicators': indicators,
         'overallExplanation': OVERALL_EXPLANATIONS[lang][band_info['key']],
         'programmingAptitudeScore': overall.programming_aptitude_score if overall else None,
@@ -266,6 +268,7 @@ class AnalyticsDetailView(APIView):
                     'tier': NOT_COMPLETED_LABEL[lang],
                     'tierColor': NOT_COMPLETED_COLOR,
                     'tierBg': NOT_COMPLETED_BG,
+                    'bloom': None,
                     'color': NOT_COMPLETED_COLOR,
                     'pct': '0%',
                     'cohortAvg': None,
@@ -289,6 +292,7 @@ class AnalyticsDetailView(APIView):
                 'tier': tier['tier'],
                 'tierColor': tier['color'],
                 'tierBg': tier['bg'],
+                'bloom': tier['bloom'],
                 'color': tier['color'],
                 'pct': f'{score}%',
                 'cohortAvg': cohort_avg,

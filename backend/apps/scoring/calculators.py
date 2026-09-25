@@ -16,19 +16,29 @@ from .constants import FIELD_WEIGHTS, INDICATOR_CHOICES, PROGRAMMING_APTITUDE_WE
 
 TOTAL_INDICATOR_COUNT = len(INDICATOR_CHOICES)
 
+# The methodology's three giftedness levels and the Bloom's-taxonomy stages each one
+# corresponds to: 0-55 foundational (remember, understand), 56-79 developing (apply,
+# analyze), 80-100 high (evaluate, create). _TIERS (per indicator) and _BANDS
+# (overall) cut on these same thresholds and carry the same level names — the
+# tier's is just the short form, for the chips it's shown in.
+BLOOM_LEVELS = {
+    'ru': {'foundational': 'Знание, понимание', 'developing': 'Применение, анализ', 'high': 'Оценка, создание'},
+    'uz': {'foundational': 'Bilish, tushunish', 'developing': "Qo'llash, tahlil qilish", 'high': 'Baholash, yaratish'},
+}
+
 _TIERS = [
     (80, 'high', {'ru': 'Высокий', 'uz': 'Yuqori'}, '#2E7052', '#DCEFE2'),
-    (56, 'developing', {'ru': 'Развивающийся', 'uz': 'Rivojlanayotgan'}, '#B8862F', '#F5E9D3'),
-    (0, 'foundational', {'ru': 'Слабый', 'uz': 'Iqtidorsiz'}, '#BD5B4C', '#F6E0DC'),
+    (56, 'developing', {'ru': 'Средний', 'uz': "O'rta"}, '#B8862F', '#F5E9D3'),
+    (0, 'foundational', {'ru': 'Начальный', 'uz': "Boshlang'ich"}, '#BD5B4C', '#F6E0DC'),
 ]
 
 # The degree of aptitude, shown as a secondary line *under* the verdict on the
 # results screen (see verdict_for) — so these read as "how much", not "whether".
 # The whether/not question is answered once, by APTITUDE_THRESHOLD.
 _BANDS = [
-    (80, 'high', {'ru': 'Высокий уровень', 'uz': 'Yuqori daraja'}, '#DCEFE2', '#1F4B39'),
-    (56, 'developing', {'ru': 'Развивающийся уровень', 'uz': 'Rivojlanayotgan daraja'}, '#F5E9D3', '#B8862F'),
-    (0, 'foundational', {'ru': 'Начальный уровень', 'uz': "Boshlang'ich daraja"}, '#F6E0DC', '#BD5B4C'),
+    (80, 'high', {'ru': 'Высокий уровень одарённости', 'uz': 'Yuqori iqtidor darajasi'}, '#DCEFE2', '#1F4B39'),
+    (56, 'developing', {'ru': 'Средний уровень одарённости', 'uz': "O'rta iqtidor darajasi"}, '#F5E9D3', '#B8862F'),
+    (0, 'foundational', {'ru': 'Начальный уровень одарённости', 'uz': "Boshlang'ich iqtidor darajasi"}, '#F6E0DC', '#BD5B4C'),
 ]
 
 # The headline the results screen leads with: is this student gifted or not?
@@ -58,17 +68,44 @@ def tier_for(score: int, lang: str) -> dict:
     """Per-indicator tier — feeds {{ ind.tier }}/{{ ind.color }} and {{ d.tier }}/{{ d.tierBg }}."""
     for threshold, key, text, color, bg in _TIERS:
         if score >= threshold:
-            return {'key': key, 'tier': text[lang], 'color': color, 'bg': bg}
-    return {'key': 'foundational', 'tier': _TIERS[-1][2][lang], 'color': _TIERS[-1][3], 'bg': _TIERS[-1][4]}
+            return {'key': key, 'tier': text[lang], 'color': color, 'bg': bg, 'bloom': BLOOM_LEVELS[lang][key]}
+    return {
+        'key': 'foundational', 'tier': _TIERS[-1][2][lang], 'color': _TIERS[-1][3], 'bg': _TIERS[-1][4],
+        'bloom': BLOOM_LEVELS[lang]['foundational'],
+    }
+
+
+_SHORT_LEVEL_LABELS = {key: text for _threshold, key, text, _color, _bg in _TIERS}
 
 
 def band_for(score: int, lang: str) -> dict:
     """Degree of aptitude — feeds {{ band }}/{{ bandBg }}/{{ bandColor }}, the
-    secondary line under the verdict on the results screen."""
+    secondary line under the verdict on the results screen. `short` is the same
+    level's short name, for table chips too narrow for the full one."""
     for threshold, key, text, bg, color in _BANDS:
         if score >= threshold:
-            return {'key': key, 'band': text[lang], 'bg': bg, 'color': color}
-    return {'key': 'foundational', 'band': _BANDS[-1][2][lang], 'bg': _BANDS[-1][3], 'color': _BANDS[-1][4]}
+            return {
+                'key': key, 'band': text[lang], 'short': _SHORT_LEVEL_LABELS[key][lang], 'bg': bg, 'color': color,
+                'bloom': BLOOM_LEVELS[lang][key],
+            }
+    return {
+        'key': 'foundational', 'band': _BANDS[-1][2][lang], 'short': _SHORT_LEVEL_LABELS['foundational'][lang],
+        'bg': _BANDS[-1][3], 'color': _BANDS[-1][4], 'bloom': BLOOM_LEVELS[lang]['foundational'],
+    }
+
+
+def level_scale(current_key: str, lang: str) -> list[dict]:
+    """The whole level rubric, lowest level first, with each level's score range and
+    Bloom stages — the results screen's level legend. `current` marks `current_key`."""
+    ascending = list(reversed(_BANDS))
+    rows = []
+    for i, (threshold, key, text, bg, color) in enumerate(ascending):
+        upper = ascending[i + 1][0] - 1 if i + 1 < len(ascending) else 100
+        rows.append({
+            'key': key, 'label': text[lang], 'range': f'{threshold}–{upper}', 'bloom': BLOOM_LEVELS[lang][key],
+            'bg': bg, 'color': color, 'current': key == current_key,
+        })
+    return rows
 
 
 def verdict_for(score: int, lang: str) -> dict:
