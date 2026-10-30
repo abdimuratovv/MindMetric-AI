@@ -70,6 +70,8 @@ export const translations = {
     },
     nav: {
       assessments: 'Тесты и задания',
+      development: 'Развитие навыков',
+      developmentPlan: 'Мой план развития',
       myResults: 'Мои результаты',
       achievements: 'Достижения',
       reviewQueue: 'Экспертно-педагогическая оценка',
@@ -512,6 +514,8 @@ export const translations = {
     },
     nav: {
       assessments: 'Testlar va topshiriqlar',
+      development: 'Ko‘nikmalarni rivojlantirish',
+      developmentPlan: 'Shaxsiy rivojlanish rejam',
       myResults: 'Mening natijalarim',
       achievements: 'Yutuqlarim',
       reviewQueue: "Ekspert-pedagogik baholash",

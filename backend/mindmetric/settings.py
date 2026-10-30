@@ -35,7 +35,11 @@ INSTALLED_APPS = [
     'apps.analytics',
     'apps.videocalls',
     'apps.support',
+    'apps.development',
 ]
+
+# Pilot access is explicit; content imports remain draft until an admin publishes.
+DEVELOPMENT_CLUSTER1_ENABLED = os.environ.get('DEVELOPMENT_CLUSTER1_ENABLED', '0') == '1'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -127,6 +131,8 @@ REST_FRAMEWORK = {
         'support-thread': '5/day',
         'support-message': '30/hour',
         'password-change': '10/hour',
+        'development-session': '30/hour',
+        'development-answer': '300/hour',
     },
 }
 

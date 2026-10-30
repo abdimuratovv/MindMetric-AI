@@ -1,0 +1,954 @@
+{
+  "schema_version": 1,
+  "sources": [
+    {
+      "id": "source-1-6",
+      "filename": "1.6-mavzu.docx",
+      "sha256": "EA2A27F86AC3F05C3D5FC350013A5513F3768A72ED421F41B74CB13C5D245269"
+    }
+  ],
+  "module": {
+    "key": "matrices-linear-algebra",
+    "version": 1,
+    "order": 6,
+    "status": "draft",
+    "review_status": "internally_checked",
+    "title_uz": "Matritsalar va chiziqli algebra elementlari",
+    "title_ru": null,
+    "content_language": "uz",
+    "indicator_keys": [
+      "math"
+    ],
+    "diagnostic_coverage_note_uz": "Mavjud diagnostika bankida matritsa o‘lchami, amallari yoki determinantga bevosita mos savol yo‘q. Sun’iy havola yaratilmagan; modul precheck orqali baholanadi."
+  },
+  "skills": [
+    {
+      "key": "matrices-shape",
+      "title_uz": "Qator, ustun va o‘lcham",
+      "indicator_keys": [
+        "math"
+      ],
+      "prerequisite_keys": [
+        "arith-order"
+      ]
+    },
+    {
+      "key": "matrices-types",
+      "title_uz": "Kvadrat, diagonal va birlik matritsa",
+      "indicator_keys": [
+        "math"
+      ],
+      "prerequisite_keys": [
+        "matrices-shape"
+      ]
+    },
+    {
+      "key": "matrices-addition",
+      "title_uz": "Qo‘shish, ayirish va songa ko‘paytirish",
+      "indicator_keys": [
+        "math"
+      ],
+      "prerequisite_keys": [
+        "matrices-shape"
+      ]
+    },
+    {
+      "key": "matrices-product",
+      "title_uz": "Matritsalarni ko‘paytirish",
+      "indicator_keys": [
+        "math"
+      ],
+      "prerequisite_keys": [
+        "matrices-shape",
+        "arith-order"
+      ]
+    },
+    {
+      "key": "matrices-determinant",
+      "title_uz": "2×2 determinant",
+      "indicator_keys": [
+        "math"
+      ],
+      "prerequisite_keys": [
+        "matrices-shape",
+        "arith-order"
+      ]
+    }
+  ],
+  "lessons": [
+    {
+      "key": "matrices-shape-lesson",
+      "skill_key": "matrices-shape",
+      "title_uz": "Qator, ustun va o‘lcham",
+      "theory_uz": [
+        "Matritsa sonlarning to‘g‘ri to‘rtburchak jadvali. m ta qator va n ta ustunli matritsaning o‘lchami m×n; jami mn ta element bor.",
+        "Ushbu materialda [[a,b],[c,d]] yozuvida ichki qavslar qatorni bildiradi: birinchi qator a,b; ikkinchisi c,d.",
+        "Element Aᵢⱼ da birinchi indeks qator, ikkinchisi ustun. Indekslar bu modulda 1 dan boshlanadi.",
+        "Qator va ustun tartibini almashtirmang: 2×3 ikki qator, uch ustun; 3×2 esa uch qator, ikki ustun."
+      ],
+      "worked_example": {
+        "prompt_uz": "A=[[1,4,7],[2,5,8]] matritsaning o‘lchami va A₂₃ ni toping.",
+        "solution_steps_uz": [
+          "Ikki ichki qator, har birida uch element bor: 2×3.",
+          "Ikkinchi qatorning uchinchi elementi 8."
+        ],
+        "answer_uz": "2×3; A₂₃=8"
+      }
+    },
+    {
+      "key": "matrices-types-lesson",
+      "skill_key": "matrices-types",
+      "title_uz": "Kvadrat, diagonal va birlik matritsa",
+      "theory_uz": [
+        "Qatorlar soni ustunlar soniga teng matritsa kvadrat deyiladi: m=n.",
+        "Bosh diagonalda A₁₁,A₂₂,… elementlar turadi. Diagonal matritsada bosh diagonaldan tashqaridagi barcha elementlar 0.",
+        "Birlik matritsada bosh diagonaldagi barcha elementlar 1, qolganlari 0. I yoki E bilan belgilanadi.",
+        "Har bir birlik matritsa diagonal va kvadrat. Lekin har bir kvadrat yoki diagonal matritsa birlik emas. n×n birlik matritsada n ta 1 bor."
+      ],
+      "worked_example": {
+        "prompt_uz": "[[2,0],[0,3]] matritsa birlikmi?",
+        "solution_steps_uz": [
+          "Matritsa kvadrat va diagonaldan tashqarida 0 lar bor.",
+          "Diagonal 2 va 3 dan iborat; birlik uchun ikkalasi ham 1 bo‘lishi kerak."
+        ],
+        "answer_uz": "Diagonal, ammo birlik emas"
+      }
+    },
+    {
+      "key": "matrices-addition-lesson",
+      "skill_key": "matrices-addition",
+      "title_uz": "Qo‘shish, ayirish va songa ko‘paytirish",
+      "theory_uz": [
+        "Faqat bir xil o‘lchamli matritsalarni qo‘shish yoki ayirish mumkin. Mos qator va ustundagi elementlar ustida amal bajariladi.",
+        "Qo‘shishda Cᵢⱼ=Aᵢⱼ+Bᵢⱼ; ayirishda Cᵢⱼ=Aᵢⱼ−Bᵢⱼ. Ayirish ishorasi B ning barcha elementlariga taalluqli.",
+        "Matritsani k songa ko‘paytirishda har bir element k ga ko‘paytiriladi. Nol element 0 bo‘lib qoladi.",
+        "Manfiy songa ko‘paytirganda ishoralar almashadi. Matritsaning o‘lchami bu amallarda saqlanadi."
+      ],
+      "worked_example": {
+        "prompt_uz": "A=[[1,2],[3,0]], B=[[2,−1],[0,4]] uchun A+B ni toping.",
+        "solution_steps_uz": [
+          "Birinchi qator: 1+2=3 va 2+(−1)=1.",
+          "Ikkinchi qator: 3+0=3 va 0+4=4."
+        ],
+        "answer_uz": "[[3,1],[3,4]]"
+      }
+    },
+    {
+      "key": "matrices-product-lesson",
+      "skill_key": "matrices-product",
+      "title_uz": "Matritsalarni ko‘paytirish",
+      "theory_uz": [
+        "A ning ustunlar soni B ning qatorlar soniga teng bo‘lsa AB aniqlangan. (m×n)(n×p) natija m×p o‘lchamli.",
+        "Natijadagi Cᵢⱼ uchun A ning i-qatori bilan B ning j-ustunidagi mos elementlar ko‘paytiriladi va yig‘iladi.",
+        "2×2 holatda C₁₁=A₁₁B₁₁+A₁₂B₂₁. Bu mos elementlarni shunchaki ko‘paytirish emas.",
+        "AB va BA odatda teng emas; hatto ulardan biri aniqlanib, ikkinchisi aniqlanmasligi ham mumkin."
+      ],
+      "worked_example": {
+        "prompt_uz": "[[1,3]] qator matritsani [[2],[4]] ustun matritsaga ko‘paytiring.",
+        "solution_steps_uz": [
+          "O‘lchamlar (1×2)(2×1) mos; natija 1×1.",
+          "Bitta element 1×2+3×4=14."
+        ],
+        "answer_uz": "[[14]]"
+      }
+    },
+    {
+      "key": "matrices-determinant-lesson",
+      "skill_key": "matrices-determinant",
+      "title_uz": "2×2 determinant",
+      "theory_uz": [
+        "Determinant kvadrat matritsaga tegishli son. Bu modulda faqat 2×2 holat hisoblanadi.",
+        "A=[[a,b],[c,d]] uchun det(A)=ad−bc: bosh diagonal ko‘paytmasidan ikkinchi diagonal ko‘paytmasi ayiriladi.",
+        "Diagonal 2×2 matritsada b=c=0, shuning uchun determinant diagonal elementlar ko‘paytmasi ad ga teng.",
+        "Determinant manfiy, nol yoki musbat bo‘lishi mumkin. Manfiy ishorani o‘zboshimcha olib tashlamang; ad+bc formulasi noto‘g‘ri."
+      ],
+      "worked_example": {
+        "prompt_uz": "A=[[2,3],[1,4]] determinantini toping.",
+        "solution_steps_uz": [
+          "Bosh diagonal ko‘paytmasi 2×4=8.",
+          "Ikkinchi diagonal ko‘paytmasi 3×1=3.",
+          "det(A)=8−3=5."
+        ],
+        "answer_uz": "5"
+      }
+    }
+  ],
+  "exercises": [
+    {
+      "key": "matrix-practice-01",
+      "skill_key": "matrices-shape",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "easy",
+      "prompt_uz": "A=[[2,1],[4,3]] matritsaning o‘lchamini tanlang.",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "1×4",
+          "feedback_uz": "Bu matritsa bitta qatordan iborat emas."
+        },
+        {
+          "id": "b",
+          "text_uz": "4×1",
+          "feedback_uz": "Bu matritsa to‘rtta qatordan iborat emas."
+        },
+        {
+          "id": "c",
+          "text_uz": "2×4",
+          "feedback_uz": "Har bir qatorda to‘rtta emas, ikkita element bor."
+        },
+        {
+          "id": "d",
+          "text_uz": "2×2",
+          "feedback_uz": "To‘g‘ri. O‘lcham 2×2."
+        }
+      ],
+      "answer_key": {
+        "option_id": "d"
+      },
+      "solution_steps_uz": [
+        "Ikki qator va har qatorda ikki ustun bor.",
+        "O‘lcham 2×2."
+      ],
+      "hint_uz": "Avval ichki qatorlar, keyin har qatordagi elementlarni sanang.",
+      "common_error_uz": "To‘rtta element borligi o‘lcham 4×1 degani emas.",
+      "source": {
+        "id": "source-1-6",
+        "origin": "adapted",
+        "locator": "Amaliy topshiriqlar, 1; tahrirlangan"
+      }
+    },
+    {
+      "key": "matrix-practice-02",
+      "skill_key": "matrices-shape",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "easy",
+      "prompt_uz": "3×2 o‘lchamli matritsada jami nechta element bor?",
+      "options": [],
+      "answer_key": {
+        "value": "6"
+      },
+      "solution_steps_uz": [
+        "Har bir uch qatorda ikkitadan element bor.",
+        "3×2=6."
+      ],
+      "hint_uz": "Qatorlar sonini ustunlar soniga ko‘paytiring.",
+      "common_error_uz": "O‘lchamlar yig‘indisi jami elementlar sonini bermaydi.",
+      "source": {
+        "id": "source-1-6",
+        "origin": "authored",
+        "locator": "Yangi practice: matrices-shape"
+      }
+    },
+    {
+      "key": "matrix-practice-03",
+      "skill_key": "matrices-types",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "easy",
+      "prompt_uz": "2×2 birlik matritsani tanlang.",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "[[2,0],[0,2]]",
+          "feedback_uz": "Diagonalda 2 emas, 1 bo‘lishi kerak."
+        },
+        {
+          "id": "b",
+          "text_uz": "[[1,0],[0,1]]",
+          "feedback_uz": "To‘g‘ri. Bu [[1,0],[0,1]] matritsa."
+        },
+        {
+          "id": "c",
+          "text_uz": "[[1,1],[1,1]]",
+          "feedback_uz": "Diagonaldan tashqaridagi elementlar 0 bo‘lishi kerak."
+        },
+        {
+          "id": "d",
+          "text_uz": "[[0,1],[1,0]]",
+          "feedback_uz": "Bu yerda 1 lar ikkinchi diagonalda."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "Birlik matritsaning bosh diagonalida 1 lar, boshqa joylarida 0 lar bo‘ladi.",
+        "Bu [[1,0],[0,1]] matritsa."
+      ],
+      "hint_uz": "Ikkala diagonal element ham 1 bo‘lishi kerak.",
+      "common_error_uz": "Barcha elementlari 1 bo‘lgan matritsa birlik emas.",
+      "source": {
+        "id": "source-1-6",
+        "origin": "adapted",
+        "locator": "Amaliy topshiriqlar, 6; tahrirlangan"
+      }
+    },
+    {
+      "key": "matrix-practice-04",
+      "skill_key": "matrices-types",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "easy",
+      "prompt_uz": "[[2,0],[0,5]] matritsa haqida qaysi xulosa to‘g‘ri?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Diagonal, ammo birlik emas",
+          "feedback_uz": "To‘g‘ri. Diagonal 2 va 5 dan iborat, shu sabab birlik emas."
+        },
+        {
+          "id": "b",
+          "text_uz": "Birlik matritsa",
+          "feedback_uz": "Diagonal elementlar 1 emas."
+        },
+        {
+          "id": "c",
+          "text_uz": "Kvadrat emas",
+          "feedback_uz": "O‘lchami 2×2, ya’ni kvadrat."
+        },
+        {
+          "id": "d",
+          "text_uz": "Nol matritsa",
+          "feedback_uz": "2 va 5 nol emas."
+        }
+      ],
+      "answer_key": {
+        "option_id": "a"
+      },
+      "solution_steps_uz": [
+        "Diagonaldan tashqarida 0 lar bor.",
+        "Diagonal 2 va 5 dan iborat, shu sabab birlik emas."
+      ],
+      "hint_uz": "Birlik uchun diagonal qiymatlarining o‘zini tekshiring.",
+      "common_error_uz": "Diagonal bo‘lish birlik bo‘lish uchun yetarli emas.",
+      "source": {
+        "id": "source-1-6",
+        "origin": "authored",
+        "locator": "Yangi practice: matrices-types"
+      }
+    },
+    {
+      "key": "matrix-practice-05",
+      "skill_key": "matrices-addition",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "easy",
+      "prompt_uz": "[[1,−2],[3,4]] + [[2,5],[−1,0]] ni hisoblang.",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "[[3,7],[4,4]]",
+          "feedback_uz": "Manfiy elementlar ishorasi yo‘qolgan."
+        },
+        {
+          "id": "b",
+          "text_uz": "[[2,−10],[−3,0]]",
+          "feedback_uz": "Bu mos elementlarni ko‘paytirish natijasi, qo‘shish emas."
+        },
+        {
+          "id": "c",
+          "text_uz": "[[-1,−7],[4,4]]",
+          "feedback_uz": "Bu ayirish natijasi."
+        },
+        {
+          "id": "d",
+          "text_uz": "[[3,3],[2,4]]",
+          "feedback_uz": "To‘g‘ri. Ikkinchi qator: 3+(−1)=2; 4+0=4."
+        }
+      ],
+      "answer_key": {
+        "option_id": "d"
+      },
+      "solution_steps_uz": [
+        "Birinchi qator: 1+2=3; −2+5=3.",
+        "Ikkinchi qator: 3+(−1)=2; 4+0=4."
+      ],
+      "hint_uz": "Bir xil o‘rindagi elementlarni qo‘shing.",
+      "common_error_uz": "Turli qator yoki ustunlarni almashtirmang.",
+      "source": {
+        "id": "source-1-6",
+        "origin": "adapted",
+        "locator": "Amaliy topshiriqlar, 3; tahrirlangan"
+      }
+    },
+    {
+      "key": "matrix-practice-06",
+      "skill_key": "matrices-addition",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "easy",
+      "prompt_uz": "−2 × [[3,0],[−1,4]] ni toping.",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "[[−6,0],[−1,4]]",
+          "feedback_uz": "Ikkinchi qator ham ko‘paytirilishi kerak."
+        },
+        {
+          "id": "b",
+          "text_uz": "[[6,0],[−2,8]]",
+          "feedback_uz": "−2 ning manfiy ishorasi hisobga olinmagan."
+        },
+        {
+          "id": "c",
+          "text_uz": "[[-6,0],[2,−8]]",
+          "feedback_uz": "To‘g‘ri. −2×(−1)=2; −2×4=−8."
+        },
+        {
+          "id": "d",
+          "text_uz": "[[-6,0],[−2,−8]]",
+          "feedback_uz": "−2×(−1)=+2 bo‘lishi kerak."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "−2×3=−6; −2×0=0.",
+        "−2×(−1)=2; −2×4=−8."
+      ],
+      "hint_uz": "−2 ni har bir elementga ko‘paytiring.",
+      "common_error_uz": "Ikki manfiy son ko‘paytmasi musbat bo‘ladi.",
+      "source": {
+        "id": "source-1-6",
+        "origin": "adapted",
+        "locator": "Amaliy topshiriqlar, 4; tahrirlangan"
+      }
+    },
+    {
+      "key": "matrix-practice-07",
+      "skill_key": "matrices-product",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "AB aniqlanishi uchun qaysi shart kerak?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Ikkalasi albatta bir xil o‘lchamli",
+          "feedback_uz": "2×3 va 3×4 turli o‘lchamda, lekin ko‘paytma aniqlangan."
+        },
+        {
+          "id": "b",
+          "text_uz": "A ustunlari soni B qatorlari soniga teng",
+          "feedback_uz": "To‘g‘ri. Shuning uchun A ustunlari soni B qatorlari soniga teng."
+        },
+        {
+          "id": "c",
+          "text_uz": "A qatorlari soni B ustunlari soniga teng",
+          "feedback_uz": "Bu AB uchun kerakli ichki o‘lcham sharti emas."
+        },
+        {
+          "id": "d",
+          "text_uz": "Ikkalasi albatta kvadrat",
+          "feedback_uz": "To‘g‘ri to‘rtburchak matritsalar ham ko‘paytiriladi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "Har bir qator–ustun ko‘paytmasida hadlar soni teng bo‘lishi kerak.",
+        "Shuning uchun A ustunlari soni B qatorlari soniga teng."
+      ],
+      "hint_uz": "(m×n)(n×p) yozuvidagi ichki sonlarga qarang.",
+      "common_error_uz": "Ko‘paytirish shartini qo‘shishdagi bir xil o‘lcham sharti bilan aralashtirmang.",
+      "source": {
+        "id": "source-1-6",
+        "origin": "adapted",
+        "locator": "Amaliy topshiriqlar, 7; tahrirlangan"
+      }
+    },
+    {
+      "key": "matrix-practice-08",
+      "skill_key": "matrices-product",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "A=[[1,2],[0,1]], B=[[2,0],[3,1]]. AB ni toping.",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "[[8,2],[3,1]]",
+          "feedback_uz": "To‘g‘ri. C₂₁=0×2+1×3=3; C₂₂=0×0+1×1=1."
+        },
+        {
+          "id": "b",
+          "text_uz": "[[2,0],[0,1]]",
+          "feedback_uz": "Bu mos elementlarni ko‘paytirish."
+        },
+        {
+          "id": "c",
+          "text_uz": "[[2,4],[3,7]]",
+          "feedback_uz": "Bu BA ko‘paytmasi, AB emas."
+        },
+        {
+          "id": "d",
+          "text_uz": "[[3,2],[3,2]]",
+          "feedback_uz": "Bu A+B natijasi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "a"
+      },
+      "solution_steps_uz": [
+        "C₁₁=1×2+2×3=8; C₁₂=1×0+2×1=2.",
+        "C₂₁=0×2+1×3=3; C₂₂=0×0+1×1=1."
+      ],
+      "hint_uz": "Har bir element uchun A qatori va B ustunining ko‘paytmalari yig‘iladi.",
+      "common_error_uz": "Mos elementlarni alohida ko‘paytirish matritsa ko‘paytmasi emas.",
+      "source": {
+        "id": "source-1-6",
+        "origin": "authored",
+        "locator": "Yangi practice: matrices-product"
+      }
+    },
+    {
+      "key": "matrix-practice-09",
+      "skill_key": "matrices-determinant",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "[[5,2],[3,1]] determinantini toping.",
+      "options": [],
+      "answer_key": {
+        "value": "-1"
+      },
+      "solution_steps_uz": [
+        "ad=5×1=5; bc=2×3=6.",
+        "5−6=−1."
+      ],
+      "hint_uz": "Bosh diagonal ko‘paytmasidan ikkinchisini ayiring.",
+      "common_error_uz": "5+6 emas, 5−6 hisoblanadi.",
+      "source": {
+        "id": "source-1-6",
+        "origin": "adapted",
+        "locator": "Amaliy topshiriqlar, 2; tahrirlangan"
+      }
+    },
+    {
+      "key": "matrix-practice-10",
+      "skill_key": "matrices-determinant",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "[[7,4],[2,1]] determinantini hisoblang.",
+      "options": [],
+      "answer_key": {
+        "value": "-1"
+      },
+      "solution_steps_uz": [
+        "ad=7×1=7; bc=4×2=8.",
+        "7−8=−1."
+      ],
+      "hint_uz": "Manfiy natija ham mumkin.",
+      "common_error_uz": "Determinantning modulini olish talab qilinmagan.",
+      "source": {
+        "id": "source-1-6",
+        "origin": "adapted",
+        "locator": "Amaliy topshiriqlar, 5; tahrirlangan"
+      }
+    },
+    {
+      "key": "matrix-precheck-01",
+      "skill_key": "matrices-shape",
+      "purpose": "precheck",
+      "format": "single",
+      "difficulty": "easy",
+      "prompt_uz": "[[1,2,3],[4,5,6]] matritsaning o‘lchamini tanlang.",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "3×2",
+          "feedback_uz": "Qator va ustunlar almashgan."
+        },
+        {
+          "id": "b",
+          "text_uz": "1×6",
+          "feedback_uz": "Bu bitta qatorli matritsa emas."
+        },
+        {
+          "id": "c",
+          "text_uz": "6×1",
+          "feedback_uz": "Bu oltita qatorli matritsa emas."
+        },
+        {
+          "id": "d",
+          "text_uz": "2×3",
+          "feedback_uz": "To‘g‘ri. O‘lcham 2×3."
+        }
+      ],
+      "answer_key": {
+        "option_id": "d"
+      },
+      "solution_steps_uz": [
+        "Ikki qator bor, har biri uch elementli.",
+        "O‘lcham 2×3."
+      ],
+      "hint_uz": null,
+      "common_error_uz": "Qatorlar soni birinchi yoziladi.",
+      "source": {
+        "id": "source-1-6",
+        "origin": "authored",
+        "locator": "Yangi precheck: matrices-shape"
+      }
+    },
+    {
+      "key": "matrix-precheck-02",
+      "skill_key": "matrices-types",
+      "purpose": "precheck",
+      "format": "numeric",
+      "difficulty": "easy",
+      "prompt_uz": "3×3 birlik matritsada nechta 1 elementi bor?",
+      "options": [],
+      "answer_key": {
+        "value": "3"
+      },
+      "solution_steps_uz": [
+        "Faqat bosh diagonaldagi uchta element 1.",
+        "Qolgan oltita element 0."
+      ],
+      "hint_uz": null,
+      "common_error_uz": "Barcha 9 element 1 emas.",
+      "source": {
+        "id": "source-1-6",
+        "origin": "authored",
+        "locator": "Yangi precheck: matrices-types"
+      }
+    },
+    {
+      "key": "matrix-precheck-03",
+      "skill_key": "matrices-addition",
+      "purpose": "precheck",
+      "format": "single",
+      "difficulty": "easy",
+      "prompt_uz": "A o‘lchami 2×2, B o‘lchami 2×3. A+B haqida to‘g‘ri xulosani tanlang.",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Natija 4×5",
+          "feedback_uz": "O‘lchamlar bir-biriga qo‘shilmaydi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Qo‘shish aniqlanmagan",
+          "feedback_uz": "To‘g‘ri. Ustunlar soni turli, qo‘shish aniqlanmagan."
+        },
+        {
+          "id": "c",
+          "text_uz": "Natija 2×3",
+          "feedback_uz": "Mos elementlar yetishmaydi."
+        },
+        {
+          "id": "d",
+          "text_uz": "Natija 2×2",
+          "feedback_uz": "B ning uchinchi ustunini tashlab yuborish mumkin emas."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "Qo‘shish uchun qatorlar ham, ustunlar ham mos bo‘lishi kerak.",
+        "Ustunlar soni turli, qo‘shish aniqlanmagan."
+      ],
+      "hint_uz": null,
+      "common_error_uz": "Faqat qatorlarning tengligi yetarli emas.",
+      "source": {
+        "id": "source-1-6",
+        "origin": "authored",
+        "locator": "Yangi precheck: matrices-addition"
+      }
+    },
+    {
+      "key": "matrix-precheck-04",
+      "skill_key": "matrices-product",
+      "purpose": "precheck",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "A o‘lchami 2×3, B o‘lchami 3×4. AB ning o‘lchami qanday?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "2×4",
+          "feedback_uz": "To‘g‘ri. Natija tashqi o‘lchamlar bo‘yicha 2×4."
+        },
+        {
+          "id": "b",
+          "text_uz": "3×3",
+          "feedback_uz": "Bu ichki o‘lchamlarni natija deb olish."
+        },
+        {
+          "id": "c",
+          "text_uz": "4×2",
+          "feedback_uz": "Tashqi o‘lchamlar tartibi almashgan."
+        },
+        {
+          "id": "d",
+          "text_uz": "2×3",
+          "feedback_uz": "Natija A ning o‘lchami bilan bir xil bo‘lishi shart emas."
+        }
+      ],
+      "answer_key": {
+        "option_id": "a"
+      },
+      "solution_steps_uz": [
+        "Ichki o‘lchamlar 3 va 3 teng.",
+        "Natija tashqi o‘lchamlar bo‘yicha 2×4."
+      ],
+      "hint_uz": null,
+      "common_error_uz": "Natijada ichki 3 emas, tashqi o‘lchamlar qoladi.",
+      "source": {
+        "id": "source-1-6",
+        "origin": "authored",
+        "locator": "Yangi precheck: matrices-product"
+      }
+    },
+    {
+      "key": "matrix-precheck-05",
+      "skill_key": "matrices-determinant",
+      "purpose": "precheck",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "[[6,0],[0,2]] diagonal matritsaning determinantini toping.",
+      "options": [],
+      "answer_key": {
+        "value": "12"
+      },
+      "solution_steps_uz": [
+        "ad=6×2=12; bc=0×0=0.",
+        "12−0=12."
+      ],
+      "hint_uz": null,
+      "common_error_uz": "Diagonal elementlar yig‘indisi emas, ko‘paytmasi olinadi.",
+      "source": {
+        "id": "source-1-6",
+        "origin": "authored",
+        "locator": "Yangi precheck: matrices-determinant"
+      }
+    },
+    {
+      "key": "matrix-postcheck-01",
+      "skill_key": "matrices-shape",
+      "purpose": "postcheck",
+      "format": "single",
+      "difficulty": "easy",
+      "prompt_uz": "[[1],[2],[3],[4]] yozuvida har bir ichki qavs bitta qator. Matritsaning o‘lchamini tanlang.",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "1×4",
+          "feedback_uz": "Bu qator matritsaning o‘lchami bo‘lardi."
+        },
+        {
+          "id": "b",
+          "text_uz": "2×2",
+          "feedback_uz": "Berilgan qatorlar qayta joylashtirilmaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "4×4",
+          "feedback_uz": "Har bir qatorda to‘rtta emas, bitta element bor."
+        },
+        {
+          "id": "d",
+          "text_uz": "4×1",
+          "feedback_uz": "To‘g‘ri. O‘lcham 4×1."
+        }
+      ],
+      "answer_key": {
+        "option_id": "d"
+      },
+      "solution_steps_uz": [
+        "To‘rtta qator bor, har birida bitta element.",
+        "O‘lcham 4×1."
+      ],
+      "hint_uz": null,
+      "common_error_uz": "Bitta ustun bo‘lish bitta qator bo‘lish degani emas.",
+      "source": {
+        "id": "source-1-6",
+        "origin": "authored",
+        "locator": "Yangi postcheck: matrices-shape"
+      }
+    },
+    {
+      "key": "matrix-postcheck-02",
+      "skill_key": "matrices-types",
+      "purpose": "postcheck",
+      "format": "numeric",
+      "difficulty": "easy",
+      "prompt_uz": "[[1,0,0],[0,2,0],[0,0,1]] birlik matritsami? Ha=1, yo‘q=0 deb yozing.",
+      "options": [],
+      "answer_key": {
+        "value": "0"
+      },
+      "solution_steps_uz": [
+        "O‘rtadagi diagonal element 2.",
+        "Birlik matritsaning barcha diagonal elementlari 1 bo‘lishi kerak; javob 0."
+      ],
+      "hint_uz": null,
+      "common_error_uz": "Diagonal bo‘lishning o‘zi birlik bo‘lishni bildirmaydi.",
+      "source": {
+        "id": "source-1-6",
+        "origin": "authored",
+        "locator": "Yangi postcheck: matrices-types"
+      }
+    },
+    {
+      "key": "matrix-postcheck-03",
+      "skill_key": "matrices-addition",
+      "purpose": "postcheck",
+      "format": "single",
+      "difficulty": "easy",
+      "prompt_uz": "[[4,−1],[2,3]] − [[1,2],[0,−2]] ni hisoblang.",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "[[3,−3],[2,1]]",
+          "feedback_uz": "Oxirgi element 3−(−2)=5 bo‘lishi kerak."
+        },
+        {
+          "id": "b",
+          "text_uz": "[[3,−3],[2,5]]",
+          "feedback_uz": "To‘g‘ri. Ikkinchi qator: 2−0=2, 3−(−2)=5."
+        },
+        {
+          "id": "c",
+          "text_uz": "[[3,1],[2,1]]",
+          "feedback_uz": "Manfiy elementlar bilan ayirish ishoralari noto‘g‘ri qo‘llangan."
+        },
+        {
+          "id": "d",
+          "text_uz": "[[5,1],[2,1]]",
+          "feedback_uz": "Bu qo‘shish natijasi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "Birinchi qator: 4−1=3, −1−2=−3.",
+        "Ikkinchi qator: 2−0=2, 3−(−2)=5."
+      ],
+      "hint_uz": null,
+      "common_error_uz": "Manfiy sonni ayirish qo‘shishga aylanadi.",
+      "source": {
+        "id": "source-1-6",
+        "origin": "authored",
+        "locator": "Yangi postcheck: matrices-addition"
+      }
+    },
+    {
+      "key": "matrix-postcheck-04",
+      "skill_key": "matrices-product",
+      "purpose": "postcheck",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "[[2,−1]] × [[3],[4]] ko‘paytmadagi yagona elementni toping.",
+      "options": [],
+      "answer_key": {
+        "value": "2"
+      },
+      "solution_steps_uz": [
+        "Qator–ustun qoidasiga ko‘ra 2×3+(−1)×4.",
+        "6−4=2."
+      ],
+      "hint_uz": null,
+      "common_error_uz": "Mos ko‘paytmalar qo‘shiladi; ularning o‘zini ko‘paytirmang.",
+      "source": {
+        "id": "source-1-6",
+        "origin": "authored",
+        "locator": "Yangi postcheck: matrices-product"
+      }
+    },
+    {
+      "key": "matrix-postcheck-05",
+      "skill_key": "matrices-determinant",
+      "purpose": "postcheck",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "[[3,2],[1,4]] determinantini toping.",
+      "options": [],
+      "answer_key": {
+        "value": "10"
+      },
+      "solution_steps_uz": [
+        "ad=3×4=12; bc=2×1=2.",
+        "12−2=10."
+      ],
+      "hint_uz": null,
+      "common_error_uz": "Ikkinchi diagonal ko‘paytmasini ayirishni unutmang.",
+      "source": {
+        "id": "source-1-6",
+        "origin": "authored",
+        "locator": "Yangi postcheck: matrices-determinant"
+      }
+    }
+  ],
+  "diagnostic_links": [],
+  "blueprint": {
+    "precheck_order": [
+      "matrix-precheck-01",
+      "matrix-precheck-02",
+      "matrix-precheck-03",
+      "matrix-precheck-04",
+      "matrix-precheck-05"
+    ],
+    "practice_order": [
+      "matrix-practice-01",
+      "matrix-practice-03",
+      "matrix-practice-05",
+      "matrix-practice-07",
+      "matrix-practice-09",
+      "matrix-practice-02",
+      "matrix-practice-04",
+      "matrix-practice-06",
+      "matrix-practice-08",
+      "matrix-practice-10"
+    ],
+    "postcheck_order": [
+      "matrix-postcheck-01",
+      "matrix-postcheck-02",
+      "matrix-postcheck-03",
+      "matrix-postcheck-04",
+      "matrix-postcheck-05"
+    ],
+    "matched_pairs": [
+      {
+        "skill_key": "matrices-shape",
+        "difficulty": "easy",
+        "precheck_key": "matrix-precheck-01",
+        "postcheck_key": "matrix-postcheck-01"
+      },
+      {
+        "skill_key": "matrices-types",
+        "difficulty": "easy",
+        "precheck_key": "matrix-precheck-02",
+        "postcheck_key": "matrix-postcheck-02"
+      },
+      {
+        "skill_key": "matrices-addition",
+        "difficulty": "easy",
+        "precheck_key": "matrix-precheck-03",
+        "postcheck_key": "matrix-postcheck-03"
+      },
+      {
+        "skill_key": "matrices-product",
+        "difficulty": "medium",
+        "precheck_key": "matrix-precheck-04",
+        "postcheck_key": "matrix-postcheck-04"
+      },
+      {
+        "skill_key": "matrices-determinant",
+        "difficulty": "medium",
+        "precheck_key": "matrix-precheck-05",
+        "postcheck_key": "matrix-postcheck-05"
+      }
+    ],
+    "unseen_postcheck_sets": 1,
+    "comparison_note_uz": "Qiyinlik tahririy baholangan; savollar statistik tenglashtirilmagan. Natija faqat ushbu mavzuga tegishli.",
+    "exhaustion_note_uz": "Yangi yakuniy to‘plam tugaganda mashqlar ochiq qoladi, ammo yangi mustaqil tekshiruv uchun bank kengaytirilishi kerak."
+  }
+}

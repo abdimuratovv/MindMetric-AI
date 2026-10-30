@@ -72,7 +72,10 @@ async function request(method, path, body) {
     // every request, including AllowAny ones like /public/stats/. Drop it so the
     // app falls back to a logged-out state instead of repeating a dead token.
     if (res.status === 401) handleUnauthorized(token);
-    throw new Error(data?.detail || `Request failed: ${res.status}`);
+    const error = new Error(data?.detail || `Request failed: ${res.status}`);
+    error.status = res.status;
+    error.code = data?.code;
+    throw error;
   }
   return data;
 }

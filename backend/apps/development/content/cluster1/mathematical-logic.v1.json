@@ -1,0 +1,928 @@
+{
+  "schema_version": 1,
+  "sources": [
+    {
+      "id": "source-1-2",
+      "filename": "1.2-mavzu.docx",
+      "sha256": "A436D2015C4095685CA1AC4D4125DB4EC0DF9BC22D89B78004B3E4E3DE41601C"
+    }
+  ],
+  "module": {
+    "key": "mathematical-logic",
+    "version": 1,
+    "order": 2,
+    "status": "draft",
+    "review_status": "internally_checked",
+    "title_uz": "Matematik mantiq va mulohazalar algebrasi",
+    "title_ru": null,
+    "content_language": "uz",
+    "indicator_keys": [
+      "logic"
+    ]
+  },
+  "skills": [
+    {
+      "key": "logic-propositions",
+      "title_uz": "Mulohaza va uning qiymati",
+      "indicator_keys": [
+        "logic"
+      ],
+      "prerequisite_keys": []
+    },
+    {
+      "key": "logic-basic-operations",
+      "title_uz": "Inkor, AND va OR",
+      "indicator_keys": [
+        "logic"
+      ],
+      "prerequisite_keys": [
+        "logic-propositions"
+      ]
+    },
+    {
+      "key": "logic-implication",
+      "title_uz": "Implikatsiya va ekvivalentlik",
+      "indicator_keys": [
+        "logic"
+      ],
+      "prerequisite_keys": [
+        "logic-propositions"
+      ]
+    },
+    {
+      "key": "logic-truth-tables",
+      "title_uz": "Rostlik jadvali",
+      "indicator_keys": [
+        "logic"
+      ],
+      "prerequisite_keys": [
+        "logic-basic-operations",
+        "logic-implication"
+      ]
+    },
+    {
+      "key": "logic-laws",
+      "title_uz": "Mantiqiy qonunlar va soddalashtirish",
+      "indicator_keys": [
+        "logic"
+      ],
+      "prerequisite_keys": [
+        "logic-basic-operations"
+      ]
+    }
+  ],
+  "lessons": [
+    {
+      "key": "logic-propositions-lesson",
+      "skill_key": "logic-propositions",
+      "title_uz": "Mulohaza va uning qiymati",
+      "theory_uz": [
+        "Mulohaza — rost yoki yolg‘onligi aniq bo‘lgan darak gap. Rost qiymat 1 (True), yolg‘on qiymat 0 (False) bilan belgilanadi.",
+        "Yolg‘on gap ham mulohazadir: “9 juft son” — aniq yolg‘on mulohaza. Gapning yolg‘onligi uni mulohaza bo‘lishdan chiqarmaydi.",
+        "Savol va buyruq mulohaza emas. “Eshikni yoping!” buyrug‘iga rost yoki yolg‘on qiymat berilmaydi.",
+        "“x > 4” yozuvida x berilmagan bo‘lsa, bu ochiq ifoda. x=6 kabi qiymat yoki aniq shart berilgach uning rostligi tekshiriladi.",
+        "“Barcha A lar B” sharti har bir A elementning B ga ham tegishliligini bildiradi; undan barcha B lar A degan teskari xulosa kelib chiqmaydi."
+      ],
+      "worked_example": {
+        "prompt_uz": "“8 soni 2 ga bo‘linadi” va “8 tub son” gaplarini tekshiring.",
+        "solution_steps_uz": [
+          "Ikkala gap ham aniq darak gap, shuning uchun mulohaza.",
+          "8÷2=4, birinchi mulohaza rost.",
+          "8 ning 1 va 8 dan tashqari 2 bo‘luvchisi bor; ikkinchisi yolg‘on."
+        ],
+        "answer_uz": "1 va 0"
+      }
+    },
+    {
+      "key": "logic-basic-operations-lesson",
+      "skill_key": "logic-basic-operations",
+      "title_uz": "Inkor, AND va OR",
+      "theory_uz": [
+        "¬A (NOT) A ning qiymatini teskarisiga o‘zgartiradi: ¬0=1, ¬1=0.",
+        "A∧B (AND) faqat A va B ikkalasi ham rost bo‘lsa rost. Qolgan uch holatda natija 0.",
+        "A∨B (OR) kamida bittasi rost bo‘lsa rost. Bu inklyuziv OR: ikkala mulohaza rost bo‘lganda ham natija 1.",
+        "Murakkab ifodalarda qavsni saqlang. Dasturlashdagi and operatori kon’yunksiya, or diz’yunksiya, not inkorga mos."
+      ],
+      "worked_example": {
+        "prompt_uz": "A=0 va B=1 bo‘lsa, ¬(A∧B) ni toping.",
+        "solution_steps_uz": [
+          "A∧B=0∧1=0.",
+          "Natijani inkor qilamiz: ¬0=1."
+        ],
+        "answer_uz": "1"
+      }
+    },
+    {
+      "key": "logic-implication-lesson",
+      "skill_key": "logic-implication",
+      "title_uz": "Implikatsiya va ekvivalentlik",
+      "theory_uz": [
+        "A→B — “Agar A, u holda B”. U faqat A=1 va B=0 holatida yolg‘on. A=0 bo‘lsa B ning ikkala qiymatida ham implikatsiya rost.",
+        "A↔B ekvivalentlik bo‘lib, A va B bir xil qiymat olgandagina rost: 0↔0=1 va 1↔1=1.",
+        "A→B formulasi ¬A∨B bilan teng kuchli. A→B dan B→A degan teskari implikatsiya kelib chiqmaydi.",
+        "A→B va ¬B→¬A teng kuchli: bu kontrapozitsiya. Masalan, yomg‘ir bo‘lsa ko‘cha nam deyilsa, ko‘cha nam emasligidan yomg‘ir bo‘lmaganini chiqarish mumkin.",
+        "A→B va B→C berilib, A rost bo‘lsa, avval B, keyin C rostligi kelib chiqadi."
+      ],
+      "worked_example": {
+        "prompt_uz": "A=1 va B=0 bo‘lganda A→B hamda A↔B ni hisoblang.",
+        "solution_steps_uz": [
+          "Rost shartdan yolg‘on oqibat chiqmoqda: A→B=0.",
+          "Qiymatlar turli, shuning uchun A↔B=0."
+        ],
+        "answer_uz": "0 va 0"
+      }
+    },
+    {
+      "key": "logic-truth-tables-lesson",
+      "skill_key": "logic-truth-tables",
+      "title_uz": "Rostlik jadvali",
+      "theory_uz": [
+        "n ta turli mulohaza o‘zgaruvchisi uchun rostlik jadvalida 2ⁿ ta qator bor. Bir xil o‘zgaruvchini takror yozish qatorlar sonini oshirmaydi.",
+        "Ikki o‘zgaruvchi uchun standart tartib: (A,B)=(0,0),(0,1),(1,0),(1,1). Har bir topshiriqda qatorlar tartibi shu tarzda aniq beriladi.",
+        "Har bir qator uchun avval qavs ichidagi va yordamchi ifodalar hisoblanadi. Keyin yakuniy ustun to‘ldiriladi.",
+        "A∧B ning yakuniy ustuni 0,0,0,1; A∨B niki 0,1,1,1. Ustunda nechta rost qator borligi barcha qatorlarni sanash bilan topiladi."
+      ],
+      "worked_example": {
+        "prompt_uz": "00,01,10,11 tartibida A→B ustunini tuzing.",
+        "solution_steps_uz": [
+          "00 da implikatsiya 1; 01 da ham 1.",
+          "10 da rost shart yolg‘on oqibatga olib keladi: 0.",
+          "11 da natija 1."
+        ],
+        "answer_uz": "1,1,0,1"
+      }
+    },
+    {
+      "key": "logic-laws-lesson",
+      "skill_key": "logic-laws",
+      "title_uz": "Mantiqiy qonunlar va soddalashtirish",
+      "theory_uz": [
+        "Qo‘sh inkor: ¬¬A=A. Idempotentlik: A∧A=A va A∨A=A. O‘rin almashtirish va guruhlash AND hamda OR uchun ishlaydi.",
+        "De Morgan: ¬(A∧B)=¬A∨¬B va ¬(A∨B)=¬A∧¬B. Inkor butun qavsga tegishli; AND va OR o‘rin almashadi.",
+        "Yutilish: A∧(A∨B)=A va A∨(A∧B)=A.",
+        "Taqsimot: A∧(B∨C)=(A∧B)∨(A∧C). A∨¬A=1, A∧¬A=0; A∧1=A va A∨0=A.",
+        "Ikki formula teng kuchli bo‘lsa barcha kirish holatlarida bir xil natija beradi. Bitta misolda mos kelish yetarli emas."
+      ],
+      "worked_example": {
+        "prompt_uz": "¬(¬A∨B) ni soddalashtiring.",
+        "solution_steps_uz": [
+          "De Morgan: ¬(¬A∨B)=¬¬A∧¬B.",
+          "Qo‘sh inkor: ¬¬A=A."
+        ],
+        "answer_uz": "A∧¬B"
+      }
+    }
+  ],
+  "exercises": [
+    {
+      "key": "logic-practice-01",
+      "skill_key": "logic-propositions",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "easy",
+      "prompt_uz": "Qaysi gap rost yoki yolg‘onligi aniq mulohaza?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Eshikni yoping!",
+          "feedback_uz": "Bu buyruq."
+        },
+        {
+          "id": "b",
+          "text_uz": "Soat nechchi?",
+          "feedback_uz": "Bu savol."
+        },
+        {
+          "id": "c",
+          "text_uz": "x > 3 (x berilmagan)",
+          "feedback_uz": "x noma’lum, ifoda ochiq."
+        },
+        {
+          "id": "d",
+          "text_uz": "7 tub son.",
+          "feedback_uz": "To‘g‘ri. 7 faqat 1 va 7 ga bo‘linadi; gap rost mulohaza."
+        }
+      ],
+      "answer_key": {
+        "option_id": "d"
+      },
+      "solution_steps_uz": [
+        "“7 tub son” darak gap.",
+        "7 faqat 1 va 7 ga bo‘linadi; gap rost mulohaza."
+      ],
+      "hint_uz": "Aniq rostlik qiymatiga ega darak gapni qidiring.",
+      "common_error_uz": "Savol, buyruq va qiymati berilmagan ochiq ifoda mulohaza bilan bir xil emas.",
+      "source": {
+        "id": "source-1-2",
+        "origin": "authored",
+        "locator": "Yangi practice: logic-propositions"
+      }
+    },
+    {
+      "key": "logic-practice-02",
+      "skill_key": "logic-propositions",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "easy",
+      "prompt_uz": "“9 juft son” gapining qiymatini yozing: rost=1, yolg‘on=0.",
+      "options": [],
+      "answer_key": {
+        "value": "0"
+      },
+      "solution_steps_uz": [
+        "9 soni 2 ga qoldiqsiz bo‘linmaydi.",
+        "Shuning uchun gap yolg‘on: 0."
+      ],
+      "hint_uz": "9 ni 2 ga bo‘lganda qoldiq bormi?",
+      "common_error_uz": "Yolg‘on darak gap ham mulohaza bo‘la oladi.",
+      "source": {
+        "id": "source-1-2",
+        "origin": "authored",
+        "locator": "Yangi practice: logic-propositions"
+      }
+    },
+    {
+      "key": "logic-practice-03",
+      "skill_key": "logic-basic-operations",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "easy",
+      "prompt_uz": "A=1, B=0, C=1 bo‘lsa, (A∨B)∧¬C ni hisoblang. Rost=1, yolg‘on=0.",
+      "options": [],
+      "answer_key": {
+        "value": "0"
+      },
+      "solution_steps_uz": [
+        "A∨B=1∨0=1.",
+        "¬C=¬1=0.",
+        "1∧0=0."
+      ],
+      "hint_uz": "OR va inkorni alohida hisoblang, so‘ng AND ni bajaring.",
+      "common_error_uz": "AND uchun ikkala kirish ham rost bo‘lishi kerak.",
+      "source": {
+        "id": "source-1-2",
+        "origin": "adapted",
+        "locator": "Amaliy topshiriqlar, 1; tahrirlangan"
+      }
+    },
+    {
+      "key": "logic-practice-04",
+      "skill_key": "logic-basic-operations",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "easy",
+      "prompt_uz": "Dasturlashdagi and operatoriga qaysi matematik mantiq amali mos?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Kon’yunksiya (∧)",
+          "feedback_uz": "To‘g‘ri. Bu kon’yunksiya (∧)."
+        },
+        {
+          "id": "b",
+          "text_uz": "Diz’yunksiya (∨)",
+          "feedback_uz": "Bu or operatoriga mos."
+        },
+        {
+          "id": "c",
+          "text_uz": "Inkor (¬)",
+          "feedback_uz": "Bu not operatoriga mos."
+        },
+        {
+          "id": "d",
+          "text_uz": "Implikatsiya (→)",
+          "feedback_uz": "Bu “agar…, u holda…” munosabati."
+        }
+      ],
+      "answer_key": {
+        "option_id": "a"
+      },
+      "solution_steps_uz": [
+        "and ikkala shartning birgalikda bajarilishini talab qiladi.",
+        "Bu kon’yunksiya (∧)."
+      ],
+      "hint_uz": "Ikkala shart bir vaqtda rost bo‘lishini qaysi amal talab qiladi?",
+      "common_error_uz": "OR kamida bitta rost shartni, NOT esa inkorni bildiradi.",
+      "source": {
+        "id": "source-1-2",
+        "origin": "adapted",
+        "locator": "Amaliy topshiriqlar, 8; tahrirlangan"
+      }
+    },
+    {
+      "key": "logic-practice-05",
+      "skill_key": "logic-implication",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "easy",
+      "prompt_uz": "A→B qaysi holatda yolg‘on bo‘ladi?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "A=0, B=0",
+          "feedback_uz": "Yolg‘on asosli implikatsiya rost."
+        },
+        {
+          "id": "b",
+          "text_uz": "A=0, B=1",
+          "feedback_uz": "Bu holatda ham implikatsiya rost."
+        },
+        {
+          "id": "c",
+          "text_uz": "A=1, B=1",
+          "feedback_uz": "Shart va oqibat mos, natija rost."
+        },
+        {
+          "id": "d",
+          "text_uz": "A=1, B=0",
+          "feedback_uz": "To‘g‘ri. Yagona yolg‘on holat A=1, B=0."
+        }
+      ],
+      "answer_key": {
+        "option_id": "d"
+      },
+      "solution_steps_uz": [
+        "Implikatsiya shart bajarilib, oqibat bajarilmaganda buziladi.",
+        "Yagona yolg‘on holat A=1, B=0."
+      ],
+      "hint_uz": "Rost va’da bajarilmagan holatni qidiring.",
+      "common_error_uz": "A yolg‘on bo‘lsa, implikatsiya B ga qaramay rost.",
+      "source": {
+        "id": "source-1-2",
+        "origin": "adapted",
+        "locator": "Amaliy topshiriqlar, 3; tahrirlangan"
+      }
+    },
+    {
+      "key": "logic-practice-06",
+      "skill_key": "logic-implication",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "easy",
+      "prompt_uz": "A=0 va B=0 bo‘lsa, A↔B qiymati nechaga teng? Rost=1, yolg‘on=0.",
+      "options": [],
+      "answer_key": {
+        "value": "1"
+      },
+      "solution_steps_uz": [
+        "Ekvivalentlik qiymatlar tengligini tekshiradi.",
+        "0 va 0 teng, natija 1."
+      ],
+      "hint_uz": "Ekvivalentlik uchun qiymatlarning tengligi muhim.",
+      "common_error_uz": "Ekvivalentlikni AND bilan aralashtirmang.",
+      "source": {
+        "id": "source-1-2",
+        "origin": "adapted",
+        "locator": "Amaliy topshiriqlar, 7; tahrirlangan"
+      }
+    },
+    {
+      "key": "logic-practice-07",
+      "skill_key": "logic-truth-tables",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "¬(A∧¬B) uchun rostlik jadvali necha qatordan iborat?",
+      "options": [],
+      "answer_key": {
+        "value": "4"
+      },
+      "solution_steps_uz": [
+        "Ifodada ikkita turli o‘zgaruvchi bor: A va B.",
+        "Qatorlar soni 2²=4."
+      ],
+      "hint_uz": "Inkorlar sonini emas, turli o‘zgaruvchilarni sanang.",
+      "common_error_uz": "A yoki B ning takrorlanishi yangi o‘zgaruvchi yaratmaydi.",
+      "source": {
+        "id": "source-1-2",
+        "origin": "adapted",
+        "locator": "Amaliy topshiriqlar, 2; tahrirlangan"
+      }
+    },
+    {
+      "key": "logic-practice-08",
+      "skill_key": "logic-truth-tables",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "(A,B)=00,01,10,11 tartibida A∨B ustunini tanlang.",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "0,1,1,1",
+          "feedback_uz": "To‘g‘ri. Qolgan uch holatda kamida bittasi rost: 1,1,1."
+        },
+        {
+          "id": "b",
+          "text_uz": "0,0,0,1",
+          "feedback_uz": "Bu AND ustuni."
+        },
+        {
+          "id": "c",
+          "text_uz": "1,1,1,0",
+          "feedback_uz": "Bu AND ning inkoriga mos."
+        },
+        {
+          "id": "d",
+          "text_uz": "1,0,0,0",
+          "feedback_uz": "Bu OR ning inkoriga mos."
+        }
+      ],
+      "answer_key": {
+        "option_id": "a"
+      },
+      "solution_steps_uz": [
+        "00 da hech biri rost emas: 0.",
+        "Qolgan uch holatda kamida bittasi rost: 1,1,1."
+      ],
+      "hint_uz": "OR faqat ikkala qiymat 0 bo‘lsa 0 qaytaradi.",
+      "common_error_uz": "Jadval qatorlari tartibini o‘zgartirmang.",
+      "source": {
+        "id": "source-1-2",
+        "origin": "authored",
+        "locator": "Yangi practice: logic-truth-tables"
+      }
+    },
+    {
+      "key": "logic-practice-09",
+      "skill_key": "logic-laws",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "De Morgan qonuniga ko‘ra ¬(A∨B) qaysi ifodaga teng?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "¬A∨¬B",
+          "feedback_uz": "Amal AND ga o‘zgarishi kerak."
+        },
+        {
+          "id": "b",
+          "text_uz": "A∧B",
+          "feedback_uz": "Ikkala mulohazaning inkori yo‘q."
+        },
+        {
+          "id": "c",
+          "text_uz": "A∨¬B",
+          "feedback_uz": "Butun qavsning inkori bitta hadga tegishli emas."
+        },
+        {
+          "id": "d",
+          "text_uz": "¬A∧¬B",
+          "feedback_uz": "To‘g‘ri. Har bir mulohaza inkor qilinib, OR o‘rniga AND olinadi: ¬A∧¬B."
+        }
+      ],
+      "answer_key": {
+        "option_id": "d"
+      },
+      "solution_steps_uz": [
+        "Butun OR ifodasi inkor qilinmoqda.",
+        "Har bir mulohaza inkor qilinib, OR o‘rniga AND olinadi: ¬A∧¬B."
+      ],
+      "hint_uz": "Qavs ichidagi OR inkor tashqariga chiqqanda AND ga aylanadi.",
+      "common_error_uz": "Faqat harflarni inkor qilish yetmaydi: amal ham o‘zgaradi.",
+      "source": {
+        "id": "source-1-2",
+        "origin": "adapted",
+        "locator": "Amaliy topshiriqlar, 5; tahrirlangan"
+      }
+    },
+    {
+      "key": "logic-practice-10",
+      "skill_key": "logic-laws",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "A∧(A∨B) ni soddalashtiring.",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "A∨B",
+          "feedback_uz": "A=0, B=1 da qiymatlar farq qiladi."
+        },
+        {
+          "id": "b",
+          "text_uz": "0",
+          "feedback_uz": "A=1 bo‘lsa natija 1 bo‘ladi."
+        },
+        {
+          "id": "c",
+          "text_uz": "A",
+          "feedback_uz": "To‘g‘ri. Natija B ga bog‘liq emas: A."
+        },
+        {
+          "id": "d",
+          "text_uz": "B",
+          "feedback_uz": "A=1, B=0 holatida boshlang‘ich ifoda 1, B esa 0."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "Yutilish qonuni A∧(A∨B)=A.",
+        "Natija B ga bog‘liq emas: A."
+      ],
+      "hint_uz": "Yutilish qonunini qo‘llang.",
+      "common_error_uz": "Natijani B deb olish A ning majburiy shartligini yo‘qotadi.",
+      "source": {
+        "id": "source-1-2",
+        "origin": "adapted",
+        "locator": "Amaliy topshiriqlar, 6; tahrirlangan"
+      }
+    },
+    {
+      "key": "logic-precheck-01",
+      "skill_key": "logic-propositions",
+      "purpose": "precheck",
+      "format": "numeric",
+      "difficulty": "easy",
+      "prompt_uz": "“12 < 5” mulohazasining rostlik qiymatini yozing: rost=1, yolg‘on=0.",
+      "options": [],
+      "answer_key": {
+        "value": "0"
+      },
+      "solution_steps_uz": [
+        "12 soni 5 dan katta.",
+        "12 < 5 yolg‘on, qiymati 0."
+      ],
+      "hint_uz": null,
+      "common_error_uz": "Tengsizlik yo‘nalishini tekshiring.",
+      "source": {
+        "id": "source-1-2",
+        "origin": "authored",
+        "locator": "Yangi precheck: logic-propositions"
+      }
+    },
+    {
+      "key": "logic-precheck-02",
+      "skill_key": "logic-basic-operations",
+      "purpose": "precheck",
+      "format": "numeric",
+      "difficulty": "easy",
+      "prompt_uz": "A=0, B=1 bo‘lsa, ¬A∧B qiymati nechaga teng? Rost=1, yolg‘on=0.",
+      "options": [],
+      "answer_key": {
+        "value": "1"
+      },
+      "solution_steps_uz": [
+        "¬A=1.",
+        "1∧1=1."
+      ],
+      "hint_uz": null,
+      "common_error_uz": "Avval A inkorini topish kerak.",
+      "source": {
+        "id": "source-1-2",
+        "origin": "authored",
+        "locator": "Yangi precheck: logic-basic-operations"
+      }
+    },
+    {
+      "key": "logic-precheck-03",
+      "skill_key": "logic-implication",
+      "purpose": "precheck",
+      "format": "single",
+      "difficulty": "easy",
+      "prompt_uz": "A→B=0 ekani ma’lum. A va B ning qiymatlarini tanlang.",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "A=0, B=0",
+          "feedback_uz": "Yolg‘on asosda implikatsiya rost."
+        },
+        {
+          "id": "b",
+          "text_uz": "A=1, B=0",
+          "feedback_uz": "To‘g‘ri. Bu A=1, B=0 holati."
+        },
+        {
+          "id": "c",
+          "text_uz": "A=0, B=1",
+          "feedback_uz": "Yolg‘on asosda implikatsiya rost."
+        },
+        {
+          "id": "d",
+          "text_uz": "A=1, B=1",
+          "feedback_uz": "Rost oqibatda implikatsiya rost."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "Implikatsiyaning yagona yolg‘on holati mavjud.",
+        "Bu A=1, B=0 holati."
+      ],
+      "hint_uz": null,
+      "common_error_uz": "Asos va oqibatning tartibi muhim.",
+      "source": {
+        "id": "source-1-2",
+        "origin": "authored",
+        "locator": "Yangi precheck: logic-implication"
+      }
+    },
+    {
+      "key": "logic-precheck-04",
+      "skill_key": "logic-truth-tables",
+      "purpose": "precheck",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "A, B, C uchta turli mulohaza o‘zgaruvchisi uchun to‘liq rostlik jadvali necha qatordan iborat?",
+      "options": [],
+      "answer_key": {
+        "value": "8"
+      },
+      "solution_steps_uz": [
+        "Har bir o‘zgaruvchi ikki qiymat oladi.",
+        "2×2×2=8 qator."
+      ],
+      "hint_uz": null,
+      "common_error_uz": "O‘zgaruvchilar sonini 2 ga ko‘paytirish emas, 2 ni shu darajaga ko‘tarish kerak.",
+      "source": {
+        "id": "source-1-2",
+        "origin": "authored",
+        "locator": "Yangi precheck: logic-truth-tables"
+      }
+    },
+    {
+      "key": "logic-precheck-05",
+      "skill_key": "logic-laws",
+      "purpose": "precheck",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "¬¬A ga barcha holatlarda teng bo‘lgan ifodani tanlang.",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "¬A",
+          "feedback_uz": "Bu faqat bitta inkor."
+        },
+        {
+          "id": "b",
+          "text_uz": "0",
+          "feedback_uz": "A=1 da qo‘sh inkor 1."
+        },
+        {
+          "id": "c",
+          "text_uz": "1",
+          "feedback_uz": "A=0 da qo‘sh inkor 0."
+        },
+        {
+          "id": "d",
+          "text_uz": "A",
+          "feedback_uz": "To‘g‘ri. ¬¬A=A."
+        }
+      ],
+      "answer_key": {
+        "option_id": "d"
+      },
+      "solution_steps_uz": [
+        "Birinchi inkor A ni teskarilaydi, ikkinchisi qaytaradi.",
+        "¬¬A=A."
+      ],
+      "hint_uz": null,
+      "common_error_uz": "Ikki inkorni bitta inkor sifatida qabul qilmang.",
+      "source": {
+        "id": "source-1-2",
+        "origin": "authored",
+        "locator": "Yangi precheck: logic-laws"
+      }
+    },
+    {
+      "key": "logic-postcheck-01",
+      "skill_key": "logic-propositions",
+      "purpose": "postcheck",
+      "format": "single",
+      "difficulty": "easy",
+      "prompt_uz": "x ning qiymati berilmagan. “x > 4” yozuvi qanday tasniflanadi?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Har doim rost mulohaza",
+          "feedback_uz": "x=2 qarshi misol bo‘ladi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Har doim yolg‘on mulohaza",
+          "feedback_uz": "x=5 da ifoda rost bo‘ladi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Buyruq",
+          "feedback_uz": "Bu harakatni bajarish talabi emas."
+        },
+        {
+          "id": "d",
+          "text_uz": "Ochiq ifoda; rostligi hali aniqlanmagan",
+          "feedback_uz": "To‘g‘ri. Shartsiz bitta rostlik qiymati yo‘q, bu ochiq ifoda."
+        }
+      ],
+      "answer_key": {
+        "option_id": "d"
+      },
+      "solution_steps_uz": [
+        "Qiymat x ga bog‘liq: x=5 da rost, x=2 da yolg‘on.",
+        "Shartsiz bitta rostlik qiymati yo‘q, bu ochiq ifoda."
+      ],
+      "hint_uz": null,
+      "common_error_uz": "Noma’lum x ga o‘zboshimcha qiymat bermang.",
+      "source": {
+        "id": "source-1-2",
+        "origin": "authored",
+        "locator": "Yangi postcheck: logic-propositions"
+      }
+    },
+    {
+      "key": "logic-postcheck-02",
+      "skill_key": "logic-basic-operations",
+      "purpose": "postcheck",
+      "format": "numeric",
+      "difficulty": "easy",
+      "prompt_uz": "A=1, B=0 bo‘lsa, (A∧B)∨¬A ni hisoblang. Rost=1, yolg‘on=0.",
+      "options": [],
+      "answer_key": {
+        "value": "0"
+      },
+      "solution_steps_uz": [
+        "A∧B=0; ¬A=0.",
+        "0∨0=0."
+      ],
+      "hint_uz": null,
+      "common_error_uz": "Yakuniy OR ga kirishdan oldin ikkala qismni hisoblang.",
+      "source": {
+        "id": "source-1-2",
+        "origin": "authored",
+        "locator": "Yangi postcheck: logic-basic-operations"
+      }
+    },
+    {
+      "key": "logic-postcheck-03",
+      "skill_key": "logic-implication",
+      "purpose": "postcheck",
+      "format": "numeric",
+      "difficulty": "easy",
+      "prompt_uz": "A=0, B=0 bo‘lsa, A→B qiymatini yozing. Rost=1, yolg‘on=0.",
+      "options": [],
+      "answer_key": {
+        "value": "1"
+      },
+      "solution_steps_uz": [
+        "A yolg‘on bo‘lsa, implikatsiya buzilmaydi.",
+        "A→B=1."
+      ],
+      "hint_uz": null,
+      "common_error_uz": "Implikatsiya faqat A=1 va B=0 da yolg‘on.",
+      "source": {
+        "id": "source-1-2",
+        "origin": "authored",
+        "locator": "Yangi postcheck: logic-implication"
+      }
+    },
+    {
+      "key": "logic-postcheck-04",
+      "skill_key": "logic-truth-tables",
+      "purpose": "postcheck",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "Ikki o‘zgaruvchining barcha 00,01,10,11 holatlarida A∧B nechta qatorda rost bo‘ladi?",
+      "options": [],
+      "answer_key": {
+        "value": "1"
+      },
+      "solution_steps_uz": [
+        "00,01,10 holatlarida kamida bitta kirish 0.",
+        "Faqat 11 da AND rost: bitta qator."
+      ],
+      "hint_uz": null,
+      "common_error_uz": "Jami qatorlar bilan rost qatorlar sonini aralashtirmang.",
+      "source": {
+        "id": "source-1-2",
+        "origin": "authored",
+        "locator": "Yangi postcheck: logic-truth-tables"
+      }
+    },
+    {
+      "key": "logic-postcheck-05",
+      "skill_key": "logic-laws",
+      "purpose": "postcheck",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "(A∧B)∨(A∧¬B) ni soddalashtiring.",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "B",
+          "feedback_uz": "A=1, B=0 da natija B ga teng emas."
+        },
+        {
+          "id": "b",
+          "text_uz": "¬A",
+          "feedback_uz": "A=1 da boshlang‘ich ifoda 1."
+        },
+        {
+          "id": "c",
+          "text_uz": "0",
+          "feedback_uz": "A=1 bo‘lsa formula rost."
+        },
+        {
+          "id": "d",
+          "text_uz": "A",
+          "feedback_uz": "To‘g‘ri. B∨¬B=1; A∧1=A."
+        }
+      ],
+      "answer_key": {
+        "option_id": "d"
+      },
+      "solution_steps_uz": [
+        "A ni umumiy ko‘paytuvchi sifatida chiqaramiz: A∧(B∨¬B).",
+        "B∨¬B=1; A∧1=A."
+      ],
+      "hint_uz": null,
+      "common_error_uz": "B va uning inkorining OR qiymati doim 1.",
+      "source": {
+        "id": "source-1-2",
+        "origin": "authored",
+        "locator": "Yangi postcheck: logic-laws"
+      }
+    }
+  ],
+  "diagnostic_links": [
+    {
+      "question_key": "logic-contrapositive-1",
+      "skill_keys": [
+        "logic-implication"
+      ],
+      "rationale_uz": "Yomg‘ir/nam ko‘cha shartidan kontrapozitsiya aniqlanadi; darsda bu qoida tushuntirilgan."
+    },
+    {
+      "question_key": "logic-extra-conditional-10",
+      "skill_keys": [
+        "logic-implication"
+      ],
+      "rationale_uz": "A→B→C zanjirida A rostligidan C rostligi chiqariladi."
+    }
+  ],
+  "blueprint": {
+    "precheck_order": [
+      "logic-precheck-01",
+      "logic-precheck-02",
+      "logic-precheck-03",
+      "logic-precheck-04",
+      "logic-precheck-05"
+    ],
+    "practice_order": [
+      "logic-practice-01",
+      "logic-practice-03",
+      "logic-practice-05",
+      "logic-practice-07",
+      "logic-practice-09",
+      "logic-practice-02",
+      "logic-practice-04",
+      "logic-practice-06",
+      "logic-practice-08",
+      "logic-practice-10"
+    ],
+    "postcheck_order": [
+      "logic-postcheck-01",
+      "logic-postcheck-02",
+      "logic-postcheck-03",
+      "logic-postcheck-04",
+      "logic-postcheck-05"
+    ],
+    "matched_pairs": [
+      {
+        "skill_key": "logic-propositions",
+        "difficulty": "easy",
+        "precheck_key": "logic-precheck-01",
+        "postcheck_key": "logic-postcheck-01"
+      },
+      {
+        "skill_key": "logic-basic-operations",
+        "difficulty": "easy",
+        "precheck_key": "logic-precheck-02",
+        "postcheck_key": "logic-postcheck-02"
+      },
+      {
+        "skill_key": "logic-implication",
+        "difficulty": "easy",
+        "precheck_key": "logic-precheck-03",
+        "postcheck_key": "logic-postcheck-03"
+      },
+      {
+        "skill_key": "logic-truth-tables",
+        "difficulty": "medium",
+        "precheck_key": "logic-precheck-04",
+        "postcheck_key": "logic-postcheck-04"
+      },
+      {
+        "skill_key": "logic-laws",
+        "difficulty": "medium",
+        "precheck_key": "logic-precheck-05",
+        "postcheck_key": "logic-postcheck-05"
+      }
+    ],
+    "unseen_postcheck_sets": 1,
+    "comparison_note_uz": "Qiyinlik tahririy baholangan; savollar statistik tenglashtirilmagan. Natija faqat ushbu mavzuga tegishli.",
+    "exhaustion_note_uz": "Yangi yakuniy to‘plam tugaganda mashqlar ochiq qoladi, ammo yangi mustaqil tekshiruv uchun bank kengaytirilishi kerak."
+  }
+}

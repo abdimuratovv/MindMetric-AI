@@ -13,6 +13,8 @@ import Profile from './Profile.jsx';
 import Students from './Students.jsx';
 import QuestionBank from './QuestionBank.jsx';
 import Results from './Results.jsx';
+import DevelopmentPage from '../Development/DevelopmentPage.jsx';
+import { getDevelopmentCapabilities } from '../../api/development.js';
 import StudentSelection from './StudentSelection.jsx';
 import SupportInbox from './SupportInbox.jsx';
 import SupportStudent from './SupportStudent.jsx';
@@ -35,6 +37,7 @@ const PROFILE_NAV = { key: 'profile', labelKey: 'profile', iconPath: 'M20 21v-2a
 // screen is just another admin capability rather than its own role).
 const NAV_CONFIGS = {
   student: [
+    { key: 'development', labelKey: 'development', iconPath: 'M12 3v18M3 12h18M5 6l4 3M15 15l4 3M5 18l4-3M15 9l4-3' },
     { key: 'selection', labelKey: 'assessments', iconPath: 'M3 3h8v8H3zM13 3h8v5h-8zM13 12h8v9h-8zM3 15h8v6H3z' },
     { key: 'results', labelKey: 'myResults', iconPath: 'M9 5h6a2 2 0 012 2v12a2 2 0 01-2 2H9a2 2 0 01-2-2V7a2 2 0 012-2zM9 3h6v4H9zM8 12l2 2 4-4' },
     { key: 'achievements', labelKey: 'achievements', iconPath: 'M12 2l2.4 5.8L20 9l-4.5 4 1.3 6-4.8-3-4.8 3 1.3-6L4 9l5.6-1.2z' },
@@ -61,6 +64,15 @@ export default function AppShell({ screen, goTo, openStudent, selectedStudentId,
   const { t } = useLanguage();
   const [navOpen, setNavOpen] = useState(false);
   const role = user?.role || 'student';
+  const [developmentAvailable, setDevelopmentAvailable] = useState(false);
+  useEffect(() => {
+    let cancelled = false;
+    if (role !== 'student') { setDevelopmentAvailable(false); return undefined; }
+    getDevelopmentCapabilities().then((data) => {
+      if (!cancelled) setDevelopmentAvailable(data.available);
+    }).catch(() => { if (!cancelled) setDevelopmentAvailable(false); });
+    return () => { cancelled = true; };
+  }, [role, user?.id]);
   // A student's report is a sub-page of wherever it was opened from, so that menu entry stays highlighted.
   const activeKey = screen === 'adminStudent' ? studentReturnScreen : screen;
   // Unread support replies, polled shell-wide (there are no WebSockets here -
@@ -68,7 +80,7 @@ export default function AppShell({ screen, goTo, openStudent, selectedStudentId,
   // moment the user navigates, so opening the thread clears the badge at once.
   const supportUnread = useSupportUnread(screen);
 
-  const navItems = (NAV_CONFIGS[role] || NAV_CONFIGS.student).map((n) => ({
+  const navItems = (NAV_CONFIGS[role] || NAV_CONFIGS.student).filter((n) => n.key !== 'development' || developmentAvailable).map((n) => ({
     ...n,
     label: t(`nav.${n.labelKey}`),
     bg: activeKey === n.key ? 'rgba(46,85,112,0.12)' : 'transparent',
@@ -227,7 +239,8 @@ export default function AppShell({ screen, goTo, openStudent, selectedStudentId,
 
       <div className="mm-shell-main" style={{ flex: 1, minWidth: 0, padding: '32px 44px 60px', overflowX: 'hidden' }}>
         {screen === 'selection' && <StudentSelection user={user} goTo={goTo} />}
-        {screen === 'results' && <Results user={user} goTo={goTo} />}
+        {screen === 'results' && <Results user={user} goTo={goTo} developmentAvailable={developmentAvailable} />}
+        {screen === 'development' && role === 'student' && <DevelopmentPage user={user} goTo={goTo} />}
         {screen === 'achievements' && <Achievements />}
         {screen === 'support' && <SupportStudent />}
         {screen === 'supportInbox' && <SupportInbox user={user} onOpenStudent={openStudent} view={supportView} setView={setSupportView} />}

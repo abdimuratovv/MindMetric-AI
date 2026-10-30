@@ -10,6 +10,7 @@ const LANDING_BY_ROLE = { student: 'selection', admin: 'admin' };
 // straight to test-selection — see App.jsx's 'studentSurvey' branch.
 function resolveLandingScreen(user) {
   if (user.role === 'student' && !user.profile_completed) return 'studentSurvey';
+  if (user.role === 'student' && window.location.hash === '#development') return 'development';
   return LANDING_BY_ROLE[user.role];
 }
 
@@ -76,7 +77,11 @@ export function useAppState() {
     }).catch(() => {}); // expired/invalid token — stay on Welcome, same as no token
   }, []);
 
-  const goTo = useCallback((next) => setScreen(next), []);
+  const goTo = useCallback((next) => {
+    if (next === 'development') window.history.replaceState(null, '', `${window.location.pathname}${window.location.search}#development`);
+    else if (window.location.hash === '#development') window.history.replaceState(null, '', window.location.pathname + window.location.search);
+    setScreen(next);
+  }, []);
 
   const openStudent = useCallback((id) => {
     setStudentReturnScreen(STUDENT_RETURN_SCREENS.includes(screen) ? screen : 'admin');
@@ -109,6 +114,7 @@ export function useAppState() {
   const updateUser = useCallback((updatedUser) => setUser(updatedUser), []);
 
   const resetSession = useCallback(() => {
+    if (window.location.hash === '#development') window.history.replaceState(null, '', window.location.pathname + window.location.search);
     setUser(null);
     setActiveCall(null);
     setAdminView(INITIAL_ADMIN_VIEW);

@@ -18,7 +18,7 @@ function formatDate(date, lang) {
 }
 
 /** Ported verbatim from MindMetric AI.dc.html lines 171-234 (`isResults`). */
-export default function Results({ user, goTo }) {
+export default function Results({ user, goTo, developmentAvailable }) {
   const [data, setData] = useState(null);
   const [mistakes, setMistakes] = useState(null);
   const { t, language } = useLanguage();
@@ -37,6 +37,10 @@ export default function Results({ user, goTo }) {
         {t('results.assessedOn')(user?.name, user?.program, formatDate(new Date(), language))}
       </p>
 
+      {developmentAvailable && <button className="mm-btn" onClick={() => goTo('development')} style={{
+        background: '#2E5570', color: '#fff', border: 0, padding: '12px 20px', borderRadius: '10px',
+        fontFamily: 'Manrope', fontWeight: 700, cursor: 'pointer', marginBottom: '22px',
+      }}>{t('nav.developmentPlan')} →</button>}
       <ResultsReport data={data} mistakes={mistakes} onViewAnalytics={() => goTo('analytics')} />
     </div>
   );

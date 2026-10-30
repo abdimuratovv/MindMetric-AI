@@ -1,0 +1,860 @@
+{
+  "schema_version": 1,
+  "sources": [
+    {
+      "id": "source-1-5",
+      "filename": "1.5-mavzu.docx",
+      "sha256": "06BC72C5FC8FD97D6BF2834F03E512D6E6B8052AFEEEFA314C67B11044B6BEED"
+    }
+  ],
+  "module": {
+    "key": "functions-sequences-combinatorics",
+    "version": 1,
+    "order": 5,
+    "status": "draft",
+    "review_status": "internally_checked",
+    "title_uz": "Funksiyalar, ketma-ketliklar va kombinatorika",
+    "title_ru": null,
+    "content_language": "uz",
+    "indicator_keys": [
+      "math",
+      "iq"
+    ],
+    "diagnostic_coverage_note_uz": "Funksiyaning aniqlanish sohasi bo‘yicha mos mavjud diagnostika savoli topilmadi; bu ko‘nikma precheck bilan tekshiriladi."
+  },
+  "skills": [
+    {
+      "key": "functions-domain",
+      "title_uz": "Funksiya va aniqlanish sohasi",
+      "indicator_keys": [
+        "math"
+      ],
+      "prerequisite_keys": [
+        "arith-fractions",
+        "arith-substitution"
+      ]
+    },
+    {
+      "key": "sequences-arithmetic",
+      "title_uz": "Arifmetik progressiya",
+      "indicator_keys": [
+        "math",
+        "iq"
+      ],
+      "prerequisite_keys": [
+        "arith-substitution"
+      ]
+    },
+    {
+      "key": "sequences-geometric",
+      "title_uz": "Geometrik progressiya",
+      "indicator_keys": [
+        "math",
+        "iq"
+      ],
+      "prerequisite_keys": [
+        "arith-order"
+      ]
+    },
+    {
+      "key": "counting-factorial",
+      "title_uz": "Faktorial va o‘rin almashtirish",
+      "indicator_keys": [
+        "math"
+      ],
+      "prerequisite_keys": [
+        "arith-order"
+      ]
+    },
+    {
+      "key": "counting-selection",
+      "title_uz": "Joylashtirish va kombinatsiya",
+      "indicator_keys": [
+        "math"
+      ],
+      "prerequisite_keys": [
+        "counting-factorial"
+      ]
+    }
+  ],
+  "lessons": [
+    {
+      "key": "functions-domain-lesson",
+      "skill_key": "functions-domain",
+      "title_uz": "Funksiya va aniqlanish sohasi",
+      "theory_uz": [
+        "Funksiya har bir ruxsat etilgan x ga yagona f(x) qiymatni mos qo‘yadi. Aniqlanish sohasi — funksiyada ishlatish mumkin bo‘lgan barcha x lar to‘plami.",
+        "Haqiqiy sonli ifodada maxraj nol bo‘la olmaydi. f(x)=1/(x−a) uchun x≠a. Bir nechta nol nuqta bo‘lsa barchasi chiqariladi.",
+        "Kvadrat ildiz ostidagi ifoda manfiy bo‘lmasligi kerak: √(x−a) uchun x≥a.",
+        "Qiymatlar to‘plami mumkin bo‘lgan natijalar, aniqlanish sohasi esa kirish qiymatlaridir; ular bir xil tushuncha emas."
+      ],
+      "worked_example": {
+        "prompt_uz": "f(x)=1/(x+2) funksiyasining aniqlanish sohasini toping.",
+        "solution_steps_uz": [
+          "Maxraj x+2 nol bo‘lmasligi kerak.",
+          "x+2=0 dan x=−2.",
+          "Barcha haqiqiy sonlar olinadi, faqat −2 chiqariladi."
+        ],
+        "answer_uz": "x≠−2"
+      }
+    },
+    {
+      "key": "sequences-arithmetic-lesson",
+      "skill_key": "sequences-arithmetic",
+      "title_uz": "Arifmetik progressiya",
+      "theory_uz": [
+        "Arifmetik progressiyada ketma-ket hadlar orasidagi ayirma doimiy: d=a₂−a₁=a₃−a₂. d manfiy yoki nol ham bo‘lishi mumkin.",
+        "n-had aₙ=a₁+(n−1)d. Birinchi haddan n-hadgacha n emas, n−1 qadam bor.",
+        "Dastlabki n had yig‘indisi Sₙ=n(a₁+aₙ)/2. Barcha sonli topshiriqlarda n musbat butun son.",
+        "Oldingi hadni topishda formula teskari ishlatiladi: a₁=aₙ−(n−1)d. Qatorga keyingi had qo‘shishda avval ayirma doimiyligini tekshiring."
+      ],
+      "worked_example": {
+        "prompt_uz": "a₁=5, d=3 bo‘lsa a₄ va S₄ ni toping.",
+        "solution_steps_uz": [
+          "a₄=5+(4−1)×3=14.",
+          "S₄=4(5+14)/2=38."
+        ],
+        "answer_uz": "a₄=14; S₄=38"
+      }
+    },
+    {
+      "key": "sequences-geometric-lesson",
+      "skill_key": "sequences-geometric",
+      "title_uz": "Geometrik progressiya",
+      "theory_uz": [
+        "Geometrik progressiyada keyingi had oldingi hadni doimiy q ga ko‘paytirish orqali olinadi. Bu modulda b₁≠0 va q≠0.",
+        "n-had bₙ=b₁qⁿ⁻¹. q kasr yoki manfiy ham bo‘lishi mumkin; masalan q=1/2 bo‘lsa hadlar ikki baravar kamayadi.",
+        "Dastlabki n had yig‘indisi q≠1 uchun Sₙ=b₁(qⁿ−1)/(q−1). q=1 bo‘lsa Sₙ=nb₁.",
+        "Ayirma doimiy bo‘lsa arifmetik, nisbat doimiy bo‘lsa geometrik progressiya. Faqat boshidagi ikki hadga qarab umumiy qonuniyatni tasdiqlamang."
+      ],
+      "worked_example": {
+        "prompt_uz": "b₁=3, q=2 bo‘lsa b₃ va S₃ ni toping.",
+        "solution_steps_uz": [
+          "Hadlar 3,6,12; b₃=3×2²=12.",
+          "S₃=3+6+12=21.",
+          "Formula bilan: 3(2³−1)/(2−1)=21."
+        ],
+        "answer_uz": "b₃=12; S₃=21"
+      }
+    },
+    {
+      "key": "counting-factorial-lesson",
+      "skill_key": "counting-factorial",
+      "title_uz": "Faktorial va o‘rin almashtirish",
+      "theory_uz": [
+        "Musbat butun n uchun n!=1×2×…×n. 0!=1 deb olinadi. Masalan 4!=24, 5!=120 va 6!=720.",
+        "n ta turli elementning barchasini tartiblash soni Pₙ=n!. Birinchi o‘rin uchun n, keyingi uchun n−1 va shu tarzda oxirida bitta tanlov qoladi.",
+        "Bu formula barcha elementlar turli bo‘lganda qo‘llanadi. Takrorlanuvchi harflar uchun shu formula to‘g‘ridan-to‘g‘ri qo‘llanmaydi.",
+        "Faktoriallar tez o‘sadi; 6!−5! ifodasida ikkala faktorial alohida hisoblanadi yoki 5!(6−1) deb yoziladi."
+      ],
+      "worked_example": {
+        "prompt_uz": "Uchta turli A,B,C harfini nechta tartibda joylashtirish mumkin?",
+        "solution_steps_uz": [
+          "Birinchi o‘ringa 3, ikkinchisiga 2, uchinchisiga 1 tanlov bor.",
+          "3×2×1=3!=6."
+        ],
+        "answer_uz": "6"
+      }
+    },
+    {
+      "key": "counting-selection-lesson",
+      "skill_key": "counting-selection",
+      "title_uz": "Joylashtirish va kombinatsiya",
+      "theory_uz": [
+        "n ta turli elementdan k tasini takrorsiz tanlashda tartib muhim bo‘lsa joylashtirish olinadi: Aₙᵏ=n!/(n−k)!.",
+        "Tartib muhim bo‘lmasa kombinatsiya olinadi: Cₙᵏ=n!/[k!(n−k)!]. Bu modulda 0≤k≤n butun sonlar va takrorsiz tanlov qaraladi.",
+        "Guruhga ikki delegat tanlashda Ali–Vali va Vali–Ali bir xil guruh. Rahbar va yordamchi tanlashda rollar turli, shuning uchun bu ikki tanlov boshqacha.",
+        "Aₙᵏ=Cₙᵏ×k!: har bir tanlangan guruhni k! xil tartiblash mumkin. Avval topshiriqdagi tartib va takrorlanish shartini aniqlang."
+      ],
+      "worked_example": {
+        "prompt_uz": "4 kishidan 2 delegat yoki rahbar va yordamchi tanlash sonlarini taqqoslang.",
+        "solution_steps_uz": [
+          "Delegatlar guruhi: C₄²=4×3/(2×1)=6.",
+          "Rollar turli bo‘lsa: A₄²=4×3=12."
+        ],
+        "answer_uz": "6 va 12"
+      }
+    }
+  ],
+  "exercises": [
+    {
+      "key": "seq-practice-01",
+      "skill_key": "functions-domain",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "Funksiyaning aniqlanish sohasi nimani bildiradi?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Faqat f(x) natijalari to‘plami",
+          "feedback_uz": "Bu qiymatlar to‘plami."
+        },
+        {
+          "id": "b",
+          "text_uz": "Faqat x=0 nuqtasi",
+          "feedback_uz": "Ruxsat etilgan x lar odatda bir nuqta bilan cheklanmaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Funksiya nomi",
+          "feedback_uz": "Nom x ga qo‘yilgan cheklovlarni bildirmaydi."
+        },
+        {
+          "id": "d",
+          "text_uz": "Ruxsat etilgan barcha x qiymatlari to‘plami",
+          "feedback_uz": "To‘g‘ri. Bu ruxsat etilgan barcha x qiymatlari to‘plami."
+        }
+      ],
+      "answer_key": {
+        "option_id": "d"
+      },
+      "solution_steps_uz": [
+        "Aniqlanish sohasi kirish qiymatlariga tegishli.",
+        "Bu ruxsat etilgan barcha x qiymatlari to‘plami."
+      ],
+      "hint_uz": "Kirish bilan natija qiymatlarini farqlang.",
+      "common_error_uz": "Aniqlanish sohasini faqat natijalar to‘plami deb olmang.",
+      "source": {
+        "id": "source-1-5",
+        "origin": "adapted",
+        "locator": "Amaliy topshiriqlar, 8; tahrirlangan"
+      }
+    },
+    {
+      "key": "seq-practice-02",
+      "skill_key": "functions-domain",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "f(x)=1/(x−2) uchun qaysi cheklov to‘g‘ri?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "x≠−2",
+          "feedback_uz": "−2 da maxraj −4, nol emas."
+        },
+        {
+          "id": "b",
+          "text_uz": "Barcha haqiqiy x",
+          "feedback_uz": "x=2 da bo‘lish aniqlanmagan."
+        },
+        {
+          "id": "c",
+          "text_uz": "x≠2",
+          "feedback_uz": "To‘g‘ri. x=2 chiqariladi, ya’ni x≠2."
+        },
+        {
+          "id": "d",
+          "text_uz": "x=2",
+          "feedback_uz": "Bu aynan taqiqlangan nuqta."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "Maxraj x−2 nol bo‘lmasligi kerak.",
+        "x=2 chiqariladi, ya’ni x≠2."
+      ],
+      "hint_uz": "Qaysi x da maxraj nol bo‘ladi?",
+      "common_error_uz": "Maxraj nol bo‘ladigan qiymatni ruxsat etilgan yagona qiymat sifatida tanlamang.",
+      "source": {
+        "id": "source-1-5",
+        "origin": "authored",
+        "locator": "Yangi practice: functions-domain"
+      }
+    },
+    {
+      "key": "seq-practice-03",
+      "skill_key": "sequences-arithmetic",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "easy",
+      "prompt_uz": "a₁=3, d=4 bo‘lsa arifmetik progressiyaning 10-hadini toping.",
+      "options": [],
+      "answer_key": {
+        "value": "39"
+      },
+      "solution_steps_uz": [
+        "a₁₀=a₁+9d.",
+        "3+9×4=39."
+      ],
+      "hint_uz": "Birinchi haddan o‘ninchi hadgacha to‘qqiz qadam bor.",
+      "common_error_uz": "10d qo‘shish bir qadam ortiqcha hisoblaydi.",
+      "source": {
+        "id": "source-1-5",
+        "origin": "adapted",
+        "locator": "Amaliy topshiriqlar, 1; tahrirlangan"
+      }
+    },
+    {
+      "key": "seq-practice-04",
+      "skill_key": "sequences-arithmetic",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "easy",
+      "prompt_uz": "Arifmetik progressiyada a₁=2, a₅=14. Dastlabki 5 had yig‘indisini toping.",
+      "options": [],
+      "answer_key": {
+        "value": "40"
+      },
+      "solution_steps_uz": [
+        "S₅=5(a₁+a₅)/2.",
+        "5(2+14)/2=40."
+      ],
+      "hint_uz": "Birinchi va oxirgi hadlarning o‘rtachasini hadlar soniga ko‘paytiring.",
+      "common_error_uz": "Faqat a₅ ni topish emas, barcha besh hadni yig‘ish so‘ralgan.",
+      "source": {
+        "id": "source-1-5",
+        "origin": "adapted",
+        "locator": "Amaliy topshiriqlar, 3; tahrirlangan"
+      }
+    },
+    {
+      "key": "seq-practice-05",
+      "skill_key": "sequences-geometric",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "easy",
+      "prompt_uz": "b₁=2, q=3 bo‘lsa geometrik progressiyaning 4-hadini toping.",
+      "options": [],
+      "answer_key": {
+        "value": "54"
+      },
+      "solution_steps_uz": [
+        "b₄=b₁q³.",
+        "2×3³=2×27=54."
+      ],
+      "hint_uz": "Daraja 4−1 ga teng.",
+      "common_error_uz": "Nisbatni qo‘shish emas, ko‘paytirish kerak.",
+      "source": {
+        "id": "source-1-5",
+        "origin": "adapted",
+        "locator": "Amaliy topshiriqlar, 2; tahrirlangan"
+      }
+    },
+    {
+      "key": "seq-practice-06",
+      "skill_key": "sequences-geometric",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "easy",
+      "prompt_uz": "b₁=5, q=2 bo‘lsa geometrik progressiyaning dastlabki 4 hadi yig‘indisini toping.",
+      "options": [],
+      "answer_key": {
+        "value": "75"
+      },
+      "solution_steps_uz": [
+        "Hadlar 5,10,20,40.",
+        "5+10+20+40=75."
+      ],
+      "hint_uz": "To‘rt hadni alohida yozib tekshiring.",
+      "common_error_uz": "40 faqat to‘rtinchi had, yig‘indi emas.",
+      "source": {
+        "id": "source-1-5",
+        "origin": "adapted",
+        "locator": "Amaliy topshiriqlar, 9; tahrirlangan"
+      }
+    },
+    {
+      "key": "seq-practice-07",
+      "skill_key": "counting-factorial",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "easy",
+      "prompt_uz": "5! qiymatini hisoblang.",
+      "options": [],
+      "answer_key": {
+        "value": "120"
+      },
+      "solution_steps_uz": [
+        "5!=5×4×3×2×1.",
+        "Ko‘paytma 120."
+      ],
+      "hint_uz": "5 dan 1 gacha butun sonlarni ko‘paytiring.",
+      "common_error_uz": "Faktorial 5×5 yoki 1+2+3+4+5 emas.",
+      "source": {
+        "id": "source-1-5",
+        "origin": "adapted",
+        "locator": "Amaliy topshiriqlar, 4; tahrirlangan"
+      }
+    },
+    {
+      "key": "seq-practice-08",
+      "skill_key": "counting-factorial",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "easy",
+      "prompt_uz": "To‘rtta turli elementning o‘rin almashtirishlari soni P₄ nechaga teng?",
+      "options": [],
+      "answer_key": {
+        "value": "24"
+      },
+      "solution_steps_uz": [
+        "P₄=4!.",
+        "4×3×2×1=24."
+      ],
+      "hint_uz": "Barcha to‘rtta element tartiblanmoqda.",
+      "common_error_uz": "4² barcha elementlarning takrorsiz tartiblarini bermaydi.",
+      "source": {
+        "id": "source-1-5",
+        "origin": "adapted",
+        "locator": "Amaliy topshiriqlar, 5; tahrirlangan"
+      }
+    },
+    {
+      "key": "seq-practice-09",
+      "skill_key": "counting-selection",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "7 ta turli elementdan tartibi muhim bo‘lmagan 3 talik guruhlar sonini toping.",
+      "options": [],
+      "answer_key": {
+        "value": "35"
+      },
+      "solution_steps_uz": [
+        "C₇³=7!/(3!4!)=7×6×5/(3×2×1).",
+        "210/6=35."
+      ],
+      "hint_uz": "Bir xil uchlikning 3! ta tartibini bitta guruh deb oling.",
+      "common_error_uz": "210 joylashtirishlarni sanaydi; guruhlarni emas.",
+      "source": {
+        "id": "source-1-5",
+        "origin": "adapted",
+        "locator": "Amaliy topshiriqlar, 6; tahrirlangan"
+      }
+    },
+    {
+      "key": "seq-practice-10",
+      "skill_key": "counting-selection",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "5 ta turli harfdan takrorsiz 3 harfli tartibli yozuvlar nechta tuziladi?",
+      "options": [],
+      "answer_key": {
+        "value": "60"
+      },
+      "solution_steps_uz": [
+        "Birinchi o‘ringa 5, keyingisiga 4, uchinchisiga 3 tanlov.",
+        "A₅³=5×4×3=60."
+      ],
+      "hint_uz": "Yozuvda harflar tartibi muhim.",
+      "common_error_uz": "3! ga bo‘lish tartibni yo‘qotadi.",
+      "source": {
+        "id": "source-1-5",
+        "origin": "adapted",
+        "locator": "Amaliy topshiriqlar, 10; tahrirlangan"
+      }
+    },
+    {
+      "key": "seq-precheck-01",
+      "skill_key": "functions-domain",
+      "purpose": "precheck",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "f(x)=√(x−1) haqiqiy qiymat olishi uchun qaysi shart kerak?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "x>1",
+          "feedback_uz": "x=1 ham ruxsat etilgan."
+        },
+        {
+          "id": "b",
+          "text_uz": "x≠1",
+          "feedback_uz": "Bu ildiz ostining manfiyligini to‘smaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "x≤1",
+          "feedback_uz": "x<1 da ildiz osti manfiy."
+        },
+        {
+          "id": "d",
+          "text_uz": "x≥1",
+          "feedback_uz": "To‘g‘ri. Shuning uchun x≥1."
+        }
+      ],
+      "answer_key": {
+        "option_id": "d"
+      },
+      "solution_steps_uz": [
+        "Ildiz ostida x−1≥0 bo‘lishi kerak.",
+        "Shuning uchun x≥1."
+      ],
+      "hint_uz": null,
+      "common_error_uz": "Ildiz osti nol bo‘lishi mumkin; manfiy bo‘lishi mumkin emas.",
+      "source": {
+        "id": "source-1-5",
+        "origin": "authored",
+        "locator": "Yangi precheck: functions-domain"
+      }
+    },
+    {
+      "key": "seq-precheck-02",
+      "skill_key": "sequences-arithmetic",
+      "purpose": "precheck",
+      "format": "numeric",
+      "difficulty": "easy",
+      "prompt_uz": "4,7,10,… arifmetik progressiyaning navbatdagi hadini toping.",
+      "options": [],
+      "answer_key": {
+        "value": "13"
+      },
+      "solution_steps_uz": [
+        "Ayirma 7−4=3 va 10−7=3.",
+        "Keyingi had 10+3=13."
+      ],
+      "hint_uz": null,
+      "common_error_uz": "Doimiy ayirmani qo‘llang.",
+      "source": {
+        "id": "source-1-5",
+        "origin": "authored",
+        "locator": "Yangi precheck: sequences-arithmetic"
+      }
+    },
+    {
+      "key": "seq-precheck-03",
+      "skill_key": "sequences-geometric",
+      "purpose": "precheck",
+      "format": "numeric",
+      "difficulty": "easy",
+      "prompt_uz": "3,6,12,… geometrik progressiyaning navbatdagi hadini toping.",
+      "options": [],
+      "answer_key": {
+        "value": "24"
+      },
+      "solution_steps_uz": [
+        "Nisbat 6/3=2 va 12/6=2.",
+        "Keyingi had 12×2=24."
+      ],
+      "hint_uz": null,
+      "common_error_uz": "Oxirgi ayirmani davom ettirish o‘rniga doimiy nisbatni oling.",
+      "source": {
+        "id": "source-1-5",
+        "origin": "authored",
+        "locator": "Yangi precheck: sequences-geometric"
+      }
+    },
+    {
+      "key": "seq-precheck-04",
+      "skill_key": "counting-factorial",
+      "purpose": "precheck",
+      "format": "numeric",
+      "difficulty": "easy",
+      "prompt_uz": "3!+2! ifodaning qiymatini toping.",
+      "options": [],
+      "answer_key": {
+        "value": "8"
+      },
+      "solution_steps_uz": [
+        "3!=6 va 2!=2.",
+        "6+2=8."
+      ],
+      "hint_uz": null,
+      "common_error_uz": "Faktoriallarni qo‘shishdan oldin ularning har birini hisoblang.",
+      "source": {
+        "id": "source-1-5",
+        "origin": "authored",
+        "locator": "Yangi precheck: counting-factorial"
+      }
+    },
+    {
+      "key": "seq-precheck-05",
+      "skill_key": "counting-selection",
+      "purpose": "precheck",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "6 kishidan teng huquqli 2 delegatni nechta usulda tanlash mumkin?",
+      "options": [],
+      "answer_key": {
+        "value": "15"
+      },
+      "solution_steps_uz": [
+        "Rollar teng, shuning uchun tartib muhim emas.",
+        "C₆²=6×5/2=15."
+      ],
+      "hint_uz": null,
+      "common_error_uz": "Bir juftlikni ikki tartibda sanamang.",
+      "source": {
+        "id": "source-1-5",
+        "origin": "authored",
+        "locator": "Yangi precheck: counting-selection"
+      }
+    },
+    {
+      "key": "seq-postcheck-01",
+      "skill_key": "functions-domain",
+      "purpose": "postcheck",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "f(x)=1/(x²−9) uchun aniqlanish sohasidagi cheklovni tanlang.",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Faqat x≠3",
+          "feedback_uz": "x=−3 da ham maxraj nol."
+        },
+        {
+          "id": "b",
+          "text_uz": "Faqat x≠−3",
+          "feedback_uz": "x=3 da ham maxraj nol."
+        },
+        {
+          "id": "c",
+          "text_uz": "Barcha haqiqiy x",
+          "feedback_uz": "Maxrajni nol qiladigan ikki nuqta mavjud."
+        },
+        {
+          "id": "d",
+          "text_uz": "x≠−3 va x≠3",
+          "feedback_uz": "To‘g‘ri. Maxraj x=3 hamda x=−3 da nol; ikkala qiymat ham chiqariladi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "d"
+      },
+      "solution_steps_uz": [
+        "x²−9=(x−3)(x+3).",
+        "Maxraj x=3 hamda x=−3 da nol; ikkala qiymat ham chiqariladi."
+      ],
+      "hint_uz": null,
+      "common_error_uz": "Kvadrat tenglamada manfiy ildizni unutmang.",
+      "source": {
+        "id": "source-1-5",
+        "origin": "authored",
+        "locator": "Yangi postcheck: functions-domain"
+      }
+    },
+    {
+      "key": "seq-postcheck-02",
+      "skill_key": "sequences-arithmetic",
+      "purpose": "postcheck",
+      "format": "numeric",
+      "difficulty": "easy",
+      "prompt_uz": "Arifmetik progressiyada a₄=11 va d=3. a₁ ni toping.",
+      "options": [],
+      "answer_key": {
+        "value": "2"
+      },
+      "solution_steps_uz": [
+        "a₄=a₁+3d.",
+        "a₁=11−3×3=2."
+      ],
+      "hint_uz": null,
+      "common_error_uz": "Oldingi hadni topish uchun ayirma teskari yo‘nalishda ayiriladi.",
+      "source": {
+        "id": "source-1-5",
+        "origin": "authored",
+        "locator": "Yangi postcheck: sequences-arithmetic"
+      }
+    },
+    {
+      "key": "seq-postcheck-03",
+      "skill_key": "sequences-geometric",
+      "purpose": "postcheck",
+      "format": "numeric",
+      "difficulty": "easy",
+      "prompt_uz": "Geometrik progressiyada b₁=4, q=1/2. b₃ ni toping.",
+      "options": [],
+      "answer_key": {
+        "value": "1"
+      },
+      "solution_steps_uz": [
+        "Hadlar 4,2,1.",
+        "Formula bilan 4×(1/2)²=1."
+      ],
+      "hint_uz": null,
+      "common_error_uz": "q kasr bo‘lsa har qadamda qiymat kamayishi mumkin.",
+      "source": {
+        "id": "source-1-5",
+        "origin": "authored",
+        "locator": "Yangi postcheck: sequences-geometric"
+      }
+    },
+    {
+      "key": "seq-postcheck-04",
+      "skill_key": "counting-factorial",
+      "purpose": "postcheck",
+      "format": "numeric",
+      "difficulty": "easy",
+      "prompt_uz": "n musbat butun son va n!=720 bo‘lsa n ni toping.",
+      "options": [],
+      "answer_key": {
+        "value": "6"
+      },
+      "solution_steps_uz": [
+        "5!=120.",
+        "6!=6×120=720; demak n=6."
+      ],
+      "hint_uz": null,
+      "common_error_uz": "720 ni javob qilib takrorlash emas, faktoriali 720 bo‘lgan n so‘ralgan.",
+      "source": {
+        "id": "source-1-5",
+        "origin": "authored",
+        "locator": "Yangi postcheck: counting-factorial"
+      }
+    },
+    {
+      "key": "seq-postcheck-05",
+      "skill_key": "counting-selection",
+      "purpose": "postcheck",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "5 kishidan rahbar va undan boshqa yordamchini nechta usulda tanlash mumkin?",
+      "options": [],
+      "answer_key": {
+        "value": "20"
+      },
+      "solution_steps_uz": [
+        "Rahbar uchun 5, qolgan yordamchi uchun 4 tanlov bor.",
+        "Rollar turli: 5×4=20."
+      ],
+      "hint_uz": null,
+      "common_error_uz": "Rahbar va yordamchi o‘rin almashtirsa boshqa natija hosil bo‘ladi.",
+      "source": {
+        "id": "source-1-5",
+        "origin": "authored",
+        "locator": "Yangi postcheck: counting-selection"
+      }
+    }
+  ],
+  "diagnostic_links": [
+    {
+      "question_key": "math-medium-1",
+      "skill_keys": [
+        "counting-factorial"
+      ],
+      "rationale_uz": "Faktorial yoki barcha turli elementlarning o‘rin almashtirishlari hisoblanadi."
+    },
+    {
+      "question_key": "math-medium-8",
+      "skill_keys": [
+        "counting-factorial"
+      ],
+      "rationale_uz": "Faktorial yoki barcha turli elementlarning o‘rin almashtirishlari hisoblanadi."
+    },
+    {
+      "question_key": "math-easy-12",
+      "skill_keys": [
+        "counting-factorial"
+      ],
+      "rationale_uz": "Faktorial yoki barcha turli elementlarning o‘rin almashtirishlari hisoblanadi."
+    },
+    {
+      "question_key": "math-medium-3",
+      "skill_keys": [
+        "counting-selection"
+      ],
+      "rationale_uz": "Tartibsiz uchlik tanlash kombinatsiya formulasiga mos."
+    },
+    {
+      "question_key": "iq-extra-series-1",
+      "skill_keys": [
+        "sequences-arithmetic"
+      ],
+      "rationale_uz": "Qatorda o‘zgarmas ayirma bor; faqat arifmetik ketma-ketlik ko‘nikmasiga dalil."
+    },
+    {
+      "question_key": "iq-extra-series-2",
+      "skill_keys": [
+        "sequences-arithmetic"
+      ],
+      "rationale_uz": "Qatorda o‘zgarmas ayirma bor; faqat arifmetik ketma-ketlik ko‘nikmasiga dalil."
+    },
+    {
+      "question_key": "iq-extra-series-3",
+      "skill_keys": [
+        "sequences-arithmetic"
+      ],
+      "rationale_uz": "Qatorda o‘zgarmas ayirma bor; faqat arifmetik ketma-ketlik ko‘nikmasiga dalil."
+    },
+    {
+      "question_key": "iq-extra-series-11",
+      "skill_keys": [
+        "sequences-geometric"
+      ],
+      "rationale_uz": "Qatorda o‘zgarmas nisbat bor; umumiy IQga emas, geometrik ketma-ketlik ko‘nikmasiga tegishli."
+    },
+    {
+      "question_key": "iq-extra-series-12",
+      "skill_keys": [
+        "sequences-geometric"
+      ],
+      "rationale_uz": "Qatorda o‘zgarmas nisbat bor; umumiy IQga emas, geometrik ketma-ketlik ko‘nikmasiga tegishli."
+    },
+    {
+      "question_key": "iq-extra-series-13",
+      "skill_keys": [
+        "sequences-geometric"
+      ],
+      "rationale_uz": "Qatorda o‘zgarmas nisbat bor; umumiy IQga emas, geometrik ketma-ketlik ko‘nikmasiga tegishli."
+    }
+  ],
+  "blueprint": {
+    "precheck_order": [
+      "seq-precheck-01",
+      "seq-precheck-02",
+      "seq-precheck-03",
+      "seq-precheck-04",
+      "seq-precheck-05"
+    ],
+    "practice_order": [
+      "seq-practice-01",
+      "seq-practice-03",
+      "seq-practice-05",
+      "seq-practice-07",
+      "seq-practice-09",
+      "seq-practice-02",
+      "seq-practice-04",
+      "seq-practice-06",
+      "seq-practice-08",
+      "seq-practice-10"
+    ],
+    "postcheck_order": [
+      "seq-postcheck-01",
+      "seq-postcheck-02",
+      "seq-postcheck-03",
+      "seq-postcheck-04",
+      "seq-postcheck-05"
+    ],
+    "matched_pairs": [
+      {
+        "skill_key": "functions-domain",
+        "difficulty": "medium",
+        "precheck_key": "seq-precheck-01",
+        "postcheck_key": "seq-postcheck-01"
+      },
+      {
+        "skill_key": "sequences-arithmetic",
+        "difficulty": "easy",
+        "precheck_key": "seq-precheck-02",
+        "postcheck_key": "seq-postcheck-02"
+      },
+      {
+        "skill_key": "sequences-geometric",
+        "difficulty": "easy",
+        "precheck_key": "seq-precheck-03",
+        "postcheck_key": "seq-postcheck-03"
+      },
+      {
+        "skill_key": "counting-factorial",
+        "difficulty": "easy",
+        "precheck_key": "seq-precheck-04",
+        "postcheck_key": "seq-postcheck-04"
+      },
+      {
+        "skill_key": "counting-selection",
+        "difficulty": "medium",
+        "precheck_key": "seq-precheck-05",
+        "postcheck_key": "seq-postcheck-05"
+      }
+    ],
+    "unseen_postcheck_sets": 1,
+    "comparison_note_uz": "Qiyinlik tahririy baholangan; savollar statistik tenglashtirilmagan. Natija faqat ushbu mavzuga tegishli.",
+    "exhaustion_note_uz": "Yangi yakuniy to‘plam tugaganda mashqlar ochiq qoladi, ammo yangi mustaqil tekshiruv uchun bank kengaytirilishi kerak."
+  }
+}

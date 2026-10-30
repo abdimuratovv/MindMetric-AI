@@ -1,0 +1,359 @@
+{
+  "schema_version": 1,
+  "sources": [
+    {"id": "source-1-1", "filename": "1.1-mavzu.docx", "sha256": "1A3A18E9B03AC62D9C8469FE43B85C6FD7E864A5175A2794D1BC3F1C67FB1D1A"},
+    {"id": "source-curriculum", "filename": "Oqitish moduli.docx", "sha256": "C11956549286D3F6C99AE327B0DC0EE6DCDC4714E4E069D385901F0F8D58A473"}
+  ],
+  "module": {
+    "key": "arithmetic-algebra", "version": 1, "order": 1,
+    "status": "draft", "review_status": "internally_checked",
+    "title_uz": "Arifmetik hisoblash va algebraik ifodalar", "title_ru": null,
+    "content_language": "uz", "indicator_keys": ["math"]
+  },
+  "skills": [
+    {"key": "arith-order", "title_uz": "Amallar tartibi, daraja va ildiz", "indicator_keys": ["math"], "prerequisite_keys": []},
+    {"key": "arith-fractions", "title_uz": "Kasrlar va ratsional ifodalar", "indicator_keys": ["math"], "prerequisite_keys": ["arith-order"]},
+    {"key": "arith-substitution", "title_uz": "O‘zgaruvchi o‘rniga qiymat qo‘yish", "indicator_keys": ["math"], "prerequisite_keys": ["arith-order"]},
+    {"key": "arith-identities", "title_uz": "Algebraik xossalar va ayniyatlar", "indicator_keys": ["math"], "prerequisite_keys": ["arith-order"]},
+    {"key": "arith-equations", "title_uz": "Chiziqli tenglama va proporsiya", "indicator_keys": ["math"], "prerequisite_keys": ["arith-fractions", "arith-substitution"]}
+  ],
+  "lessons": [
+    {
+      "key": "arith-lesson-order", "skill_key": "arith-order", "title_uz": "Qaysi amalni avval bajarish kerak?",
+      "theory_uz": [
+        "Avval eng ichki qavslar, keyin daraja va ildizlar, so‘ng ko‘paytirish va bo‘lish, oxirida qo‘shish va ayirish bajariladi.",
+        "Bir xil ustuvorlikdagi ko‘paytirish/bo‘lish yoki qo‘shish/ayirish chapdan o‘ngga bajariladi. Masalan, 18 ÷ 3 × 2 = 6 × 2 = 12.",
+        "aⁿ — a sonining n marta ko‘paytmasi (n musbat butun son). a ≠ 0 uchun a⁰ = 1, aᵐ × aⁿ = aᵐ⁺ⁿ va aᵐ ÷ aⁿ = aᵐ⁻ⁿ.",
+        "Qavs ishorani o‘zgartirishi mumkin: (−2)² = 4, ammo −2² = −(2²) = −4.",
+        "√a — kvadrati a ga teng bo‘lgan manfiy bo‘lmagan son; haqiqiy sonlarda a ≥ 0. ∛a — kubi a ga teng son. Masalan, √81 = 9 va ∛(−8) = −2. Nolga bo‘lish mumkin emas."
+      ],
+      "worked_example": {
+        "prompt_uz": "30 − 2 × (3 + 5) ÷ 4 + √16 ni hisoblang.",
+        "solution_steps_uz": ["Qavs: 3 + 5 = 8; ildiz: √16 = 4.", "Ko‘paytirish va bo‘lish chapdan o‘ngga: 2 × 8 ÷ 4 = 16 ÷ 4 = 4.", "30 − 4 + 4 = 30."],
+        "answer_uz": "30"
+      }
+    },
+    {
+      "key": "arith-lesson-fractions", "skill_key": "arith-fractions", "title_uz": "Kasrlarni hisoblash va maxrajni tekshirish",
+      "theory_uz": [
+        "a/b kasrda b ≠ 0. Surat va maxrajni bir xil noldan farqli songa ko‘paytirish yoki bo‘lish kasr qiymatini o‘zgartirmaydi.",
+        "Qo‘shish/ayirishda umumiy maxraj olinadi: a/b ± c/d = (ad ± bc)/(bd), b ≠ 0 va d ≠ 0. Masalan, 1/2 + 1/3 = 3/6 + 2/6 = 5/6.",
+        "Ko‘paytirishda suratlar va maxrajlar o‘zaro ko‘payadi: (a/b) × (c/d) = ac/(bd). Bo‘lishda ikkinchi kasr teskarilanadi: (a/b) ÷ (c/d) = ad/(bc); bunda b, c, d nol emas.",
+        "Bir miqdorning qismini topish uchun ko‘paytiriladi. Idishning 2/3 qismi to‘la va shu suvning yarmi ishlatilsa, ishlatilgan suv butun idishning (2/3) × (1/2) = 1/3 qismidir.",
+        "O‘zgaruvchili kasrni soddalashtirishdan oldin maxrajni nol qiladigan qiymatlar chiqarib tashlanadi. (x²−1)/(x−1) = x+1 faqat x ≠ 1 uchun. Yig‘indidagi alohida hadlarni qisqartirish mumkin emas."
+      ],
+      "worked_example": {
+        "prompt_uz": "(2/3 − 1/4) ÷ (5/6) ni hisoblang.",
+        "solution_steps_uz": ["2/3 − 1/4 = 8/12 − 3/12 = 5/12.", "5/12 ÷ 5/6 = (5/12) × (6/5) = 30/60.", "30/60 = 1/2."],
+        "answer_uz": "1/2"
+      }
+    },
+    {
+      "key": "arith-lesson-substitution", "skill_key": "arith-substitution", "title_uz": "Qiymatni qavs bilan o‘rniga qo‘yish",
+      "theory_uz": [
+        "O‘zgaruvchi uchragan har bir joyga berilgan qiymat qo‘yiladi. Manfiy sonni qavs ichida yozish ishoralar xatosini kamaytiradi.",
+        "Masalan, x = −3 bo‘lsa, x² = (−3)² = 9 va x³ = (−3)³ = −27. −x² esa −9 bo‘ladi.",
+        "Ikkita manfiy son ko‘paytmasi musbat, turli ishorali sonlar ko‘paytmasi manfiy. Masalan, −4 × (−2) = 8, ammo 4 × (−2) = −8.",
+        "f(x) yozuvi x ga bog‘liq ifodani bildiradi. f(−1) ni topishda ifodadagi barcha x lar o‘rniga −1 qo‘yiladi.",
+        "Bir nechta o‘zgaruvchi bo‘lsa, hammasini almashtirib, keyin amallar tartibiga rioya qilinadi. Agar kasr bo‘lsa maxraj nol emasligi tekshiriladi."
+      ],
+      "worked_example": {
+        "prompt_uz": "x = −2 bo‘lsa, 3x² + 2x − 1 ni hisoblang.",
+        "solution_steps_uz": ["3 × (−2)² + 2 × (−2) − 1 deb yozamiz.", "(−2)² = 4; 3 × 4 = 12; 2 × (−2) = −4.", "12 − 4 − 1 = 7."],
+        "answer_uz": "7"
+      }
+    },
+    {
+      "key": "arith-lesson-identities", "skill_key": "arith-identities", "title_uz": "Ifodalarni ochish va ko‘paytuvchilarga ajratish",
+      "theory_uz": [
+        "Qo‘shish va ko‘paytirishda o‘rin almashtirish mumkin: a+b=b+a va ab=ba. Guruhlash: (a+b)+c=a+(b+c), (ab)c=a(bc). Ayirish va bo‘lishda bu qoidalar umumiy holda ishlamaydi.",
+        "Taqsimot: a(b+c)=ab+ac. Masalan, 2(y+3)−y = 2y+6−y = y+6. Faqat bir xil o‘zgaruvchili va darajali hadlar birlashtiriladi.",
+        "Kvadratlar ayirmasi: a²−b²=(a−b)(a+b). Kvadratlar yig‘indisi uchun bu formula qo‘llanmaydi.",
+        "Yig‘indi kvadrati: (a+b)²=a²+2ab+b². Ayirma kvadrati: (a−b)²=a²−2ab+b². O‘rta hadni tashlab ketmang.",
+        "Kublar ayirmasi: a³−b³=(a−b)(a²+ab+b²). Kublar yig‘indisi: a³+b³=(a+b)(a²−ab+b²).",
+        "Ayniyat barcha ruxsat etilgan qiymatlarda to‘g‘ri. Masalan, y²+4y+4=(y+2)². Bitta qiymatda mos kelish ayniyatni isbotlamaydi."
+      ],
+      "worked_example": {
+        "prompt_uz": "(t+2)² − (t−2)² ifodani soddalashtiring.",
+        "solution_steps_uz": ["Kvadratlar ayirmasi: [(t+2)−(t−2)] × [(t+2)+(t−2)].", "Birinchi qavs 4, ikkinchisi 2t bo‘ladi.", "4 × 2t = 8t."],
+        "answer_uz": "8t"
+      }
+    },
+    {
+      "key": "arith-lesson-equations", "skill_key": "arith-equations", "title_uz": "Tenglama yechimini topish va tekshirish",
+      "theory_uz": [
+        "Tenglama — noma’lum qiymat qatnashgan tenglik. Yechim topilgach qiymatni dastlabki tenglamaga qo‘yib tekshiriladi.",
+        "Ikkala tomonga bir xil ifodani qo‘shish yoki ayirish, bir xil noldan farqli songa ko‘paytirish yoki bo‘lish tenglikni saqlaydi.",
+        "ax+b=c bo‘lsa, a ≠ 0 shartida x=(c−b)/a. Qavsli tenglamada avval qavslar ochilib, o‘xshash hadlar yig‘iladi.",
+        "Kasrli tenglamada barcha hadlar umumiy maxrajga ko‘paytiriladi. a/b=c/d uchun b,d ≠ 0 bo‘lsa, ad=bc.",
+        "Noma’lum hadlar qisqargach 0=5 kabi noto‘g‘ri tenglik chiqsa, yechim yo‘q. 0=0 chiqsa, dastlabki cheklovlarga mos barcha qiymatlar yechim bo‘ladi.",
+        "Masalan, (2x+1)/2=x+3 dan 2x+1=2x+6, ya’ni 1=6 chiqadi. Bu tenglama yechimsiz."
+      ],
+      "worked_example": {
+        "prompt_uz": "3(x−2)=x+8 tenglamani yeching.",
+        "solution_steps_uz": ["Qavsni ochamiz: 3x−6=x+8.", "Ikkala tomondan x ayiramiz va 6 qo‘shamiz: 2x=14; x=7.", "Tekshiruv: 3(7−2)=15 va 7+8=15."],
+        "answer_uz": "x = 7"
+      }
+    }
+  ],
+  "exercises": [
+    {
+      "key": "arith-practice-01", "skill_key": "arith-order", "purpose": "practice", "format": "numeric", "difficulty": "easy",
+      "prompt_uz": "24 − 3 × (2 + 4) ÷ 2 + 5 ni hisoblang.",
+      "options": [], "answer_key": {"value": "20"},
+      "solution_steps_uz": ["2+4=6.", "3×6÷2=18÷2=9.", "24−9+5=20."],
+      "hint_uz": "Avval qavsni hisoblang, keyin ko‘paytirish va bo‘lishni chapdan o‘ngga bajaring.",
+      "common_error_uz": "Qo‘shish yoki ayirishni ko‘paytirishdan oldin bajarish natijani o‘zgartiradi.",
+      "source": {"id": "source-1-1", "origin": "adapted", "locator": "Amaliy topshiriqlar, 1"}
+    },
+    {
+      "key": "arith-practice-02", "skill_key": "arith-identities", "purpose": "practice", "format": "numeric", "difficulty": "medium",
+      "prompt_uz": "x=3 bo‘lganda (x+5)² − (x−5)² qiymatini toping.",
+      "options": [], "answer_key": {"value": "60"},
+      "solution_steps_uz": ["Kvadratlar ayirmasidan [(x+5)−(x−5)] × [(x+5)+(x−5)] = 10 × 2x = 20x.", "x=3: 20×3=60.", "Bevosita tekshiruv: 8²−(−2)²=64−4=60."],
+      "hint_uz": "a²−b²=(a−b)(a+b) formulasida a=x+5 va b=x−5 deb oling.",
+      "common_error_uz": "(x+5)²−(x−5)² ni [(x+5)−(x−5)]² ga almashtirish mumkin emas.",
+      "source": {"id": "source-1-1", "origin": "adapted", "locator": "Amaliy topshiriqlar, 2"}
+    },
+    {
+      "key": "arith-practice-03", "skill_key": "arith-substitution", "purpose": "practice", "format": "numeric", "difficulty": "medium",
+      "prompt_uz": "x=−3 bo‘lganda 2x³ − 4x + 7 ni hisoblang.",
+      "options": [], "answer_key": {"value": "-35"},
+      "solution_steps_uz": ["2(−3)³−4(−3)+7 deb yozamiz.", "(−3)³=−27; 2×(−27)=−54; −4×(−3)=12.", "−54+12+7=−35."],
+      "hint_uz": "−3 ni qavs bilan qo‘ying. Toq darajada manfiy sonning ishorasi manfiy qoladi.",
+      "common_error_uz": "−4(−3) ni −12 deb olish xato; ikki manfiy son ko‘paytmasi 12.",
+      "source": {"id": "source-1-1", "origin": "adapted", "locator": "Amaliy topshiriqlar, 3"}
+    },
+    {
+      "key": "arith-practice-04", "skill_key": "arith-fractions", "purpose": "practice", "format": "numeric", "difficulty": "medium",
+      "prompt_uz": "x=4 bo‘lganda (x²−9)/(x²−3x) ni hisoblang. Javobni kasr yoki o‘nli son bilan yozing.",
+      "options": [], "answer_key": {"value": "7/4"},
+      "solution_steps_uz": ["Maxraj x(x−3), shuning uchun x≠0 va x≠3. Berilgan x=4 mumkin.", "Surat: 4²−9=7. Maxraj: 4²−3×4=4.", "Qiymat 7/4=1.75."],
+      "hint_uz": "Surat va maxrajni alohida hisoblang. Maxraj nol emasligini tekshiring.",
+      "common_error_uz": "Yig‘indi yoki ayirma ichidagi hadlarni alohida qisqartirish mumkin emas.",
+      "source": {"id": "source-1-1", "origin": "adapted", "locator": "Amaliy topshiriqlar, 4"}
+    },
+    {
+      "key": "arith-practice-05", "skill_key": "arith-order", "purpose": "practice", "format": "numeric", "difficulty": "easy",
+      "prompt_uz": "√144 + ∛125 − 2³ ni hisoblang.",
+      "options": [], "answer_key": {"value": "9"},
+      "solution_steps_uz": ["√144=12, ∛125=5 va 2³=8.", "12+5−8=9."],
+      "hint_uz": "Ildizlar va darajani alohida hisoblang: qaysi sonning kubi 125?",
+      "common_error_uz": "Kub ildizni 125 ni 3 ga bo‘lish bilan almashtirib bo‘lmaydi.",
+      "source": {"id": "source-1-1", "origin": "adapted", "locator": "Amaliy topshiriqlar, 5"}
+    },
+    {
+      "key": "arith-practice-06", "skill_key": "arith-equations", "purpose": "practice", "format": "single", "difficulty": "medium",
+      "prompt_uz": "(2x−3)/4 = (x+1)/2 tenglama uchun to‘g‘ri xulosani tanlang.",
+      "options": [
+        {"id": "a", "text_uz": "x=5", "feedback_uz": "x=5 da chap tomon 7/4, o‘ng tomon 3; ular teng emas."},
+        {"id": "b", "text_uz": "Yechim yo‘q", "feedback_uz": "To‘g‘ri: 4 ga ko‘paytirganda 2x−3=2x+2, ya’ni −3=2 chiqadi."},
+        {"id": "c", "text_uz": "Barcha haqiqiy sonlar yechim", "feedback_uz": "Buning uchun noma’lumlar qisqargach to‘g‘ri tenglik chiqishi kerak edi. Bu yerda −3=2 noto‘g‘ri."},
+        {"id": "d", "text_uz": "x=−5", "feedback_uz": "x=−5 da chap tomon −13/4, o‘ng tomon −2; ular teng emas."}
+      ],
+      "answer_key": {"option_id": "b"},
+      "solution_steps_uz": ["Ikkala tomonni 4 ga ko‘paytiramiz: 2x−3=2(x+1).", "Qavsni ochamiz: 2x−3=2x+2.", "2x ni ayirsak −3=2 chiqadi. Bu mumkin emas, demak yechim yo‘q."],
+      "hint_uz": "Tenglamaning ikkala tomonini 4 ga ko‘paytirib, keyin 2x ni qisqartiring.",
+      "common_error_uz": "Har bir tenglamada albatta bitta sonli yechim bor deb taxmin qilish xato.",
+      "source": {"id": "source-1-1", "origin": "adapted", "locator": "Amaliy topshiriqlar, 6; yechimsiz holat aniqlashtirildi"}
+    },
+    {
+      "key": "arith-practice-07", "skill_key": "arith-identities", "purpose": "practice", "format": "single", "difficulty": "medium",
+      "prompt_uz": "x³−8 ning to‘g‘ri ko‘paytuvchilarga ajratilgan ko‘rinishi va x=3 dagi qiymati birga berilgan variantni tanlang.",
+      "options": [
+        {"id": "a", "text_uz": "(x−2)(x²−2x+4); 7", "feedback_uz": "Kublar ayirmasida ikkinchi qavsdagi o‘rta had +2x bo‘ladi."},
+        {"id": "b", "text_uz": "(x−2)(x²+2x+4); 19", "feedback_uz": "To‘g‘ri: x³−2³=(x−2)(x²+2x+4), x=3 da 27−8=19."},
+        {"id": "c", "text_uz": "(x−2)³; 1", "feedback_uz": "Ayirmaning kubi kublar ayirmasiga teng emas; qo‘shimcha aralash hadlar chiqadi."},
+        {"id": "d", "text_uz": "(x−2)(x²+2x+4); 27", "feedback_uz": "Ajratma to‘g‘ri, lekin qiymatda 8 ni ayirish unutilgan: 27−8=19."}
+      ],
+      "answer_key": {"option_id": "b"},
+      "solution_steps_uz": ["8=2³.", "a³−b³=(a−b)(a²+ab+b²) ga ko‘ra x³−8=(x−2)(x²+2x+4).", "x=3: (3−2)(9+6+4)=19."],
+      "hint_uz": "8 ni 2³ deb yozib, kublar ayirmasi formulasini qo‘llang.",
+      "common_error_uz": "To‘g‘ri ajratmani tanlash bilan birga berilgan x dagi qiymatni ham tekshirish kerak.",
+      "source": {"id": "source-1-1", "origin": "adapted", "locator": "Amaliy topshiriqlar, 7; ikki talab birgalikda aniq so‘raldi"}
+    },
+    {
+      "key": "arith-practice-08", "skill_key": "arith-fractions", "purpose": "practice", "format": "numeric", "difficulty": "easy",
+      "prompt_uz": "(3.5 × 4) − ((5/6) × 12) ni hisoblang.",
+      "options": [], "answer_key": {"value": "4"},
+      "solution_steps_uz": ["3.5×4=14.", "(5/6)×12=5×2=10.", "14−10=4."],
+      "hint_uz": "12 ni 6 ga bo‘lib, keyin 5 ga ko‘paytiring.",
+      "common_error_uz": "5/6 kasrini 12 ga ko‘paytirganda 12 suratga ko‘payadi; maxrajga emas.",
+      "source": {"id": "source-1-1", "origin": "adapted", "locator": "Amaliy topshiriqlar, 8"}
+    },
+    {
+      "key": "arith-practice-09", "skill_key": "arith-substitution", "purpose": "practice", "format": "numeric", "difficulty": "medium",
+      "prompt_uz": "a=2 va b=3 bo‘lganda (2a−b)(2a+b)+b² ni hisoblang.",
+      "options": [], "answer_key": {"value": "16"},
+      "solution_steps_uz": ["(4−3)(4+3)+3² deb yozamiz.", "1×7+9=16.", "Ayniyat bilan tekshiruv: (2a)²−b²+b²=4a²=16."],
+      "hint_uz": "Avval 2a va b² ni hisoblang; ikkala qavsga ham qiymatlarni qo‘ying.",
+      "common_error_uz": "2a ni a² deb tushunish yoki yakundagi +b² ni unutish xato.",
+      "source": {"id": "source-1-1", "origin": "adapted", "locator": "Amaliy topshiriqlar, 9"}
+    },
+    {
+      "key": "arith-practice-10", "skill_key": "arith-equations", "purpose": "practice", "format": "single", "difficulty": "easy",
+      "prompt_uz": "x/6 = 15/9 proporsiyadagi x ni toping.",
+      "options": [
+        {"id": "a", "text_uz": "5/3", "feedback_uz": "Bu 15/9 qiymati, ya’ni x/6; x ni topish uchun yana 6 ga ko‘paytirish kerak."},
+        {"id": "b", "text_uz": "90", "feedback_uz": "15×6 ni hisoblagandan keyin 9 ga bo‘lish ham kerak."},
+        {"id": "c", "text_uz": "10", "feedback_uz": "To‘g‘ri: x=6×15/9=10; ikkala kasr ham 5/3."},
+        {"id": "d", "text_uz": "15/54", "feedback_uz": "x/6 ni x ga aylantirish uchun 6 ga ko‘paytiriladi, bo‘linmaydi."}
+      ],
+      "answer_key": {"option_id": "c"},
+      "solution_steps_uz": ["Tenglamaning ikkala tomonini 6 ga ko‘paytiramiz: x=6×15/9.", "90/9=10.", "Tekshiruv: 10/6=5/3 va 15/9=5/3."],
+      "hint_uz": "x/6 dan x ga o‘tish uchun ikkala tomonni 6 ga ko‘paytiring.",
+      "common_error_uz": "Proporsiyada x ni topgach dastlabki kasrlarga qo‘yib tekshirishni unutmang.",
+      "source": {"id": "source-1-1", "origin": "adapted", "locator": "Amaliy topshiriqlar, 10"}
+    },
+    {
+      "key": "arith-precheck-01", "skill_key": "arith-order", "purpose": "precheck", "format": "single", "difficulty": "easy",
+      "prompt_uz": "(−3)² va −3² ifodalarining qiymatlari mos ravishda qaysi juftlikda berilgan?",
+      "options": [
+        {"id": "a", "text_uz": "9 va −9", "feedback_uz": "To‘g‘ri: birinchida manfiy son qavs ichida kvadratga ko‘tariladi, ikkinchida darajadan keyin minus qo‘yiladi."},
+        {"id": "b", "text_uz": "9 va 9", "feedback_uz": "Ikkinchi ifodada minus darajaning tashqarisida: −(3²)=−9."},
+        {"id": "c", "text_uz": "−9 va −9", "feedback_uz": "(−3)²=(−3)×(−3)=9."},
+        {"id": "d", "text_uz": "−6 va −6", "feedback_uz": "Kvadratga ko‘tarish 2 ga ko‘paytirish emas."}
+      ],
+      "answer_key": {"option_id": "a"},
+      "solution_steps_uz": ["(−3)²=(−3)×(−3)=9.", "−3²=−(3×3)=−9."],
+      "hint_uz": null,
+      "common_error_uz": "Qavsdagi manfiy son va darajadan tashqaridagi minus bir xil emas.",
+      "source": {"id": "source-1-1", "origin": "authored", "locator": "Yangi precheck: daraja va qavsni farqlash"}
+    },
+    {
+      "key": "arith-precheck-02", "skill_key": "arith-fractions", "purpose": "precheck", "format": "numeric", "difficulty": "medium",
+      "prompt_uz": "Idishda 3/4 litr sharbat bor edi. 1/6 litr sharbat ishlatildi. Necha litr sharbat qoldi? Faqat son yoki kasr yozing.",
+      "options": [], "answer_key": {"value": "7/12"},
+      "solution_steps_uz": ["Qolgan sharbat: 3/4−1/6.", "Umumiy maxraj 12: 9/12−2/12=7/12 litr."],
+      "hint_uz": null,
+      "common_error_uz": "Maxrajlarni ham ayirish mumkin emas; avval umumiy maxrajga keltirish kerak.",
+      "source": {"id": "source-1-1", "origin": "authored", "locator": "Yangi precheck: miqdorlardan kasrlarni ayirish"}
+    },
+    {
+      "key": "arith-precheck-03", "skill_key": "arith-substitution", "purpose": "precheck", "format": "numeric", "difficulty": "easy",
+      "prompt_uz": "f(x)=2x²−x bo‘lsa, f(−2) ni toping.",
+      "options": [], "answer_key": {"value": "10"},
+      "solution_steps_uz": ["f(−2)=2×(−2)²−(−2).", "2×4+2=10."],
+      "hint_uz": null,
+      "common_error_uz": "−x o‘rniga −(−2)=+2 qo‘yiladi.",
+      "source": {"id": "source-1-1", "origin": "authored", "locator": "Yangi precheck: funksiya yozuvida qiymat qo‘yish"}
+    },
+    {
+      "key": "arith-precheck-04", "skill_key": "arith-identities", "purpose": "precheck", "format": "single", "difficulty": "medium",
+      "prompt_uz": "3(y+4)−2y ga barcha haqiqiy y larda teng bo‘lgan ifodani tanlang.",
+      "options": [
+        {"id": "a", "text_uz": "y+4", "feedback_uz": "Qavsdagi 4 ham 3 ga ko‘paytiriladi: 3×4=12."},
+        {"id": "b", "text_uz": "5y+12", "feedback_uz": "3y−2y=y; ayirish o‘rniga qo‘shish mumkin emas."},
+        {"id": "c", "text_uz": "y+12", "feedback_uz": "To‘g‘ri: 3y+12−2y=y+12."},
+        {"id": "d", "text_uz": "3y+10", "feedback_uz": "−2y o‘zgaruvchili had; uni 12 dan 2 ayirish deb bo‘lmaydi."}
+      ],
+      "answer_key": {"option_id": "c"},
+      "solution_steps_uz": ["3(y+4)=3y+12.", "3y+12−2y=y+12."],
+      "hint_uz": null,
+      "common_error_uz": "Taqsimot xossasida ko‘paytuvchi qavsdagi barcha hadlarga qo‘llanadi.",
+      "source": {"id": "source-1-1", "origin": "authored", "locator": "Yangi precheck: umumiy ayniyat va taqsimot"}
+    },
+    {
+      "key": "arith-precheck-05", "skill_key": "arith-equations", "purpose": "precheck", "format": "single", "difficulty": "easy",
+      "prompt_uz": "(3x−1)/2=7 tenglamaning yechimini tanlang.",
+      "options": [
+        {"id": "a", "text_uz": "x=2", "feedback_uz": "x=2 da chap tomon 5/2 bo‘lib, 7 ga teng emas."},
+        {"id": "b", "text_uz": "x=13/3", "feedback_uz": "3x−1=14 dan 3x=15 chiqadi; −1 ni boshqa tomonga +1 qilib o‘tkazish kerak."},
+        {"id": "c", "text_uz": "x=5", "feedback_uz": "To‘g‘ri: (15−1)/2=7."},
+        {"id": "d", "text_uz": "Yechim yo‘q", "feedback_uz": "Bu tenglamada 3x=15, demak bitta yechim x=5 mavjud."}
+      ],
+      "answer_key": {"option_id": "c"},
+      "solution_steps_uz": ["2 ga ko‘paytiramiz: 3x−1=14.", "3x=15, x=5.", "Tekshiruv: (3×5−1)/2=7."],
+      "hint_uz": null,
+      "common_error_uz": "Maxrajni yo‘qotganda tenglamaning ikkala tomoni ham ko‘paytiriladi.",
+      "source": {"id": "source-1-1", "origin": "authored", "locator": "Yangi precheck: kasrli chiziqli tenglama"}
+    },
+    {
+      "key": "arith-postcheck-01", "skill_key": "arith-order", "purpose": "postcheck", "format": "numeric", "difficulty": "easy",
+      "prompt_uz": "18 ÷ (2+1)² + √49 ni hisoblang.",
+      "options": [], "answer_key": {"value": "9"},
+      "solution_steps_uz": ["(2+1)²=3²=9 va √49=7.", "18÷9+7=2+7=9."],
+      "hint_uz": null,
+      "common_error_uz": "Qavsni hisoblagandan keyin darajani bajarish kerak; 18 ni 3 ga bo‘lib keyin kvadratga ko‘tarish boshqa ifoda bo‘ladi.",
+      "source": {"id": "source-1-1", "origin": "authored", "locator": "Yangi postcheck: qavs darajasi, bo‘lish va ildiz"}
+    },
+    {
+      "key": "arith-postcheck-02", "skill_key": "arith-fractions", "purpose": "postcheck", "format": "numeric", "difficulty": "medium",
+      "prompt_uz": "Idishning 3/5 qismi suv bilan to‘la. Undagi suvning 1/4 qismi ishlatildi. Qolgan suv butun idishning qanday qismini tashkil qiladi? Kasr yozing.",
+      "options": [], "answer_key": {"value": "9/20"},
+      "solution_steps_uz": ["Undagi suvning 3/4 qismi qoldi.", "Butun idishga nisbatan: (3/5)×(3/4)=9/20.", "Tekshiruv: ishlatilgan suv 3/20, 3/5−3/20=12/20−3/20=9/20."],
+      "hint_uz": null,
+      "common_error_uz": "1/4 butun idishning emas, mavjud suvning ulushi. 3/5−1/4 deb olish shartni noto‘g‘ri talqin qiladi.",
+      "source": {"id": "source-1-1", "origin": "authored", "locator": "Yangi postcheck: ulushning ulushi va qoldiq"}
+    },
+    {
+      "key": "arith-postcheck-03", "skill_key": "arith-substitution", "purpose": "postcheck", "format": "numeric", "difficulty": "easy",
+      "prompt_uz": "a=−3 va b=2 bo‘lsa, ab−b² ni hisoblang.",
+      "options": [], "answer_key": {"value": "-10"},
+      "solution_steps_uz": ["(−3)×2−2² deb yozamiz.", "−6−4=−10."],
+      "hint_uz": null,
+      "common_error_uz": "Manfiy ko‘paytmadan musbat son ayirilganda qiymat yanada kamayadi.",
+      "source": {"id": "source-1-1", "origin": "authored", "locator": "Yangi postcheck: ikki o‘zgaruvchiga qiymat qo‘yish"}
+    },
+    {
+      "key": "arith-postcheck-04", "skill_key": "arith-identities", "purpose": "postcheck", "format": "single", "difficulty": "medium",
+      "prompt_uz": "x²−6x+9 ga barcha haqiqiy x larda teng bo‘lgan ifodani tanlang.",
+      "options": [
+        {"id": "a", "text_uz": "(x+3)²", "feedback_uz": "Bu ifoda x²+6x+9 ga teng; o‘rta had ishorasi mos emas."},
+        {"id": "b", "text_uz": "(x−3)²", "feedback_uz": "To‘g‘ri: x²−2×x×3+3²=x²−6x+9."},
+        {"id": "c", "text_uz": "(x−3)(x+3)", "feedback_uz": "Bu kvadratlar ayirmasi x²−9; −6x hadi hosil bo‘lmaydi."},
+        {"id": "d", "text_uz": "x(x−6)", "feedback_uz": "Bu x²−6x ga teng, lekin +9 hadi yo‘q."}
+      ],
+      "answer_key": {"option_id": "b"},
+      "solution_steps_uz": ["9=3² va −6x=−2×x×3.", "a²−2ab+b²=(a−b)² formulasiga a=x, b=3 qo‘yamiz.", "Natija (x−3)²."],
+      "hint_uz": null,
+      "common_error_uz": "To‘liq kvadrat va kvadratlar ayirmasini aralashtirmang.",
+      "source": {"id": "source-1-1", "origin": "authored", "locator": "Yangi postcheck: uchhaddan to‘liq kvadratni tanish"}
+    },
+    {
+      "key": "arith-postcheck-05", "skill_key": "arith-equations", "purpose": "postcheck", "format": "single", "difficulty": "easy",
+      "prompt_uz": "2(x+3)=x+11 tenglamaning yechimini tanlang.",
+      "options": [
+        {"id": "a", "text_uz": "x=8", "feedback_uz": "Qavsni ochganda 2×3=6; 3 emas. x=8 dastlabki tenglamani qanoatlantirmaydi."},
+        {"id": "b", "text_uz": "x=17", "feedback_uz": "2x+6=x+11 dan x=11−6 bo‘ladi; 11+6 emas."},
+        {"id": "c", "text_uz": "Barcha haqiqiy sonlar yechim", "feedback_uz": "Ikki tomondagi x hadlari to‘liq qisqarmaydi; bitta x=5 yechim bor."},
+        {"id": "d", "text_uz": "x=5", "feedback_uz": "To‘g‘ri: 2(5+3)=16 va 5+11=16."}
+      ],
+      "answer_key": {"option_id": "d"},
+      "solution_steps_uz": ["Qavsni ochamiz: 2x+6=x+11.", "Ikkala tomondan x va 6 ayiramiz: x=5.", "Tekshiruv: 2(5+3)=5+11=16."],
+      "hint_uz": null,
+      "common_error_uz": "Qavs oldidagi 2 qavsning ikkala hadiga ham ko‘paytiriladi.",
+      "source": {"id": "source-1-1", "origin": "authored", "locator": "Yangi postcheck: ikkala tomonda noma’lumli qavsli tenglama"}
+    }
+  ],
+  "diagnostic_links": [
+    {"question_key": "math-easy-2", "skill_keys": ["arith-order"], "rationale_uz": "120×(65−45): qavs va ko‘paytirish tartibi."},
+    {"question_key": "math-easy-4", "skill_keys": ["arith-identities"], "rationale_uz": "(x+1/x)² ni ochish orqali x²+1/x² topiladi."},
+    {"question_key": "math-easy-5", "skill_keys": ["arith-identities"], "rationale_uz": "a²+b²=(a+b)²−2ab ayniyatidan foydalaniladi."},
+    {"question_key": "math-easy-8", "skill_keys": ["arith-order"], "rationale_uz": "Bir xil asosli darajalarni bo‘lish qoidasi."},
+    {"question_key": "math-easy-10", "skill_keys": ["arith-substitution", "arith-equations"], "rationale_uz": "2x+3y=12 ga x=3 qo‘yib, y uchun chiziqli tenglama yechiladi."},
+    {"question_key": "math-easy-11", "skill_keys": ["arith-fractions"], "rationale_uz": "1/3+1/6+1/12 da umumiy maxraj kerak."},
+    {"question_key": "math-easy-13", "skill_keys": ["arith-order"], "rationale_uz": "x³=64 dan musbat kub ildiz aniqlanadi."},
+    {"question_key": "math-easy-17", "skill_keys": ["arith-order"], "rationale_uz": "Nolinchi daraja va yig‘indi hisoblanadi."},
+    {"question_key": "math-medium-7", "skill_keys": ["arith-order"], "rationale_uz": "4⁴ darajasini hisoblash."},
+    {"question_key": "math-medium-9", "skill_keys": ["arith-order"], "rationale_uz": "3⁴+4³ ifodasida darajalar qo‘shishdan oldin bajariladi."},
+    {"question_key": "math-medium-10", "skill_keys": ["arith-order"], "rationale_uz": "2¹⁰ darajasini hisoblash."},
+    {"question_key": "math-medium-11", "skill_keys": ["arith-order"], "rationale_uz": "Bir xil asosli darajalarni ko‘paytirish qoidasi."},
+    {"question_key": "math-medium-15", "skill_keys": ["arith-equations"], "rationale_uz": "Matnli shartdan 5x+15=65 chiziqli tenglamasi tuziladi."}
+  ],
+  "blueprint": {
+    "precheck_order": ["arith-precheck-01", "arith-precheck-02", "arith-precheck-03", "arith-precheck-04", "arith-precheck-05"],
+    "practice_order": ["arith-practice-01", "arith-practice-04", "arith-practice-03", "arith-practice-02", "arith-practice-06", "arith-practice-05", "arith-practice-08", "arith-practice-09", "arith-practice-07", "arith-practice-10"],
+    "postcheck_order": ["arith-postcheck-01", "arith-postcheck-02", "arith-postcheck-03", "arith-postcheck-04", "arith-postcheck-05"],
+    "matched_pairs": [
+      {"skill_key": "arith-order", "difficulty": "easy", "precheck_key": "arith-precheck-01", "postcheck_key": "arith-postcheck-01"},
+      {"skill_key": "arith-fractions", "difficulty": "medium", "precheck_key": "arith-precheck-02", "postcheck_key": "arith-postcheck-02"},
+      {"skill_key": "arith-substitution", "difficulty": "easy", "precheck_key": "arith-precheck-03", "postcheck_key": "arith-postcheck-03"},
+      {"skill_key": "arith-identities", "difficulty": "medium", "precheck_key": "arith-precheck-04", "postcheck_key": "arith-postcheck-04"},
+      {"skill_key": "arith-equations", "difficulty": "easy", "precheck_key": "arith-precheck-05", "postcheck_key": "arith-postcheck-05"}
+    ],
+    "unseen_postcheck_sets": 1,
+    "comparison_note_uz": "Qiyinlik tahririy baholangan, savollar statistik tenglashtirilmagan. Farq faqat ushbu mavzudagi natijani bildiradi.",
+    "exhaustion_note_uz": "Yangi postcheck savollari tugaganda takroriy mustaqil tekshiruv uchun bankni kengaytirish kerak; practice ochiq qoladi."
+  }
+}

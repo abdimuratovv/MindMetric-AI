@@ -1,0 +1,919 @@
+{
+  "schema_version": 1,
+  "sources": [
+    {
+      "id": "source-1-3",
+      "filename": "1.3-mavzu.docx",
+      "sha256": "CCC9CFB91A7C6A13CBA064F28B1FFF3D4D489E23F9DCD316330F216B85318EA7"
+    }
+  ],
+  "module": {
+    "key": "sets-and-relations",
+    "version": 1,
+    "order": 3,
+    "status": "draft",
+    "review_status": "internally_checked",
+    "title_uz": "To‘plamlar nazariyasi va Venn diagrammalari",
+    "title_ru": null,
+    "content_language": "uz",
+    "indicator_keys": [
+      "math",
+      "logic"
+    ],
+    "diagnostic_coverage_note_uz": "Mavjud havolalar faqat qism to‘plam mulohazasiga tegishli. Venn hisoblari va to‘ldiruvchi bo‘yicha alohida diagnostika dalili yo‘q; precheck kerak."
+  },
+  "skills": [
+    {
+      "key": "sets-membership",
+      "title_uz": "Element va qism to‘plam",
+      "indicator_keys": [
+        "math",
+        "logic"
+      ],
+      "prerequisite_keys": []
+    },
+    {
+      "key": "sets-operations",
+      "title_uz": "Birlashish, kesishish va ayirma",
+      "indicator_keys": [
+        "math",
+        "logic"
+      ],
+      "prerequisite_keys": [
+        "sets-membership"
+      ]
+    },
+    {
+      "key": "sets-complement",
+      "title_uz": "Universal va to‘ldiruvchi to‘plam",
+      "indicator_keys": [
+        "math",
+        "logic"
+      ],
+      "prerequisite_keys": [
+        "sets-membership"
+      ]
+    },
+    {
+      "key": "sets-venn",
+      "title_uz": "Venn diagrammasidagi hududlar",
+      "indicator_keys": [
+        "math",
+        "logic"
+      ],
+      "prerequisite_keys": [
+        "sets-operations",
+        "sets-complement"
+      ]
+    },
+    {
+      "key": "sets-counting",
+      "title_uz": "Elementlar soni va qo‘sh hisoblash",
+      "indicator_keys": [
+        "math",
+        "logic"
+      ],
+      "prerequisite_keys": [
+        "sets-venn",
+        "arith-order"
+      ]
+    }
+  ],
+  "lessons": [
+    {
+      "key": "sets-membership-lesson",
+      "skill_key": "sets-membership",
+      "title_uz": "Element va qism to‘plam",
+      "theory_uz": [
+        "To‘plam elementlardan iborat. a∈A — a A ga tegishli, a∉A — tegishli emas. Elementning takror yozilishi yangi element yaratmaydi: {1,1,2}={1,2}.",
+        "A⊆B barcha A elementlari B da ham borligini bildiradi; bunda A=B ham mumkin. Xos qism to‘plam uchun A⊊B yozuvi ishlatiladi.",
+        "∅ bo‘sh to‘plam, unda element yo‘q. {∅} esa bitta element — bo‘sh to‘plamning o‘zidan iborat.",
+        "n ta turli elementli to‘plamning 2ⁿ ta qism to‘plami bor; bunga ∅ va to‘plamning o‘zi ham kiradi.",
+        "“Barcha itlar hayvon” kabi shart itlar to‘plami hayvonlar to‘plamining qism to‘plami ekanini bildiradi. Reks it bo‘lsa, hayvon ham bo‘ladi; teskari xulosa shart emas."
+      ],
+      "worked_example": {
+        "prompt_uz": "A={p,q} ning barcha qism to‘plamlarini sanang.",
+        "solution_steps_uz": [
+          "Bo‘sh qism to‘plam: ∅.",
+          "Bitta elementlilar: {p}, {q}; ikkita elementli: {p,q}.",
+          "Jami 4=2² ta."
+        ],
+        "answer_uz": "∅, {p}, {q}, {p,q}"
+      }
+    },
+    {
+      "key": "sets-operations-lesson",
+      "skill_key": "sets-operations",
+      "title_uz": "Birlashish, kesishish va ayirma",
+      "theory_uz": [
+        "A∪B — A yoki B ga kiruvchi barcha elementlar. Element bir marta yoziladi. A∪A=A.",
+        "A∩B — ikkala to‘plamga kiruvchi umumiy elementlar. A∩A=A, A∩∅=∅.",
+        "A∖B — A da bor, B da yo‘q elementlar. A∖B va B∖A odatda teng emas; amallar tartibi muhim.",
+        "Dasturlashdagi set.intersection umumiy elementlarni, union birlashishni, difference ayirmani beradi. Bu yerda elementlarning tartibi emas, tegishliligi muhim."
+      ],
+      "worked_example": {
+        "prompt_uz": "A={1,2,4}, B={2,3} uchun A∪B, A∩B va A∖B ni toping.",
+        "solution_steps_uz": [
+          "Barcha turli elementlar: {1,2,3,4}.",
+          "Umumiy element: {2}.",
+          "A dan B elementlarini olib tashlasak {1,4} qoladi."
+        ],
+        "answer_uz": "{1,2,3,4}; {2}; {1,4}"
+      }
+    },
+    {
+      "key": "sets-complement-lesson",
+      "skill_key": "sets-complement",
+      "title_uz": "Universal va to‘ldiruvchi to‘plam",
+      "theory_uz": [
+        "Universal to‘plam U masalada qaralayotgan barcha elementlarni belgilaydi. A ning to‘ldiruvchisi A′=U∖A; U berilmasdan to‘ldiruvchi aniq emas.",
+        "A′ da U ga kirib, A ga kirmaydigan elementlar bo‘ladi. U dan tashqaridagi elementlar olinmaydi.",
+        "Bir xil U da (A′)′=A, A∪A′=U va A∩A′=∅.",
+        "Masalan, U={a,b,c}, A={b} bo‘lsa A′={a,c}. Qayta to‘ldiruvchi olinsa {b} ga qaytiladi."
+      ],
+      "worked_example": {
+        "prompt_uz": "U={1,2,3,4,5,6}, A={1,3,5} bo‘lsa A′ ni toping.",
+        "solution_steps_uz": [
+          "U ning har bir elementini tekshiramiz.",
+          "A dagi 1,3,5 chiqariladi; 2,4,6 qoladi."
+        ],
+        "answer_uz": "{2,4,6}"
+      }
+    },
+    {
+      "key": "sets-venn-lesson",
+      "skill_key": "sets-venn",
+      "title_uz": "Venn diagrammasidagi hududlar",
+      "theory_uz": [
+        "Ikki doira uchun U to‘rtta ajralgan hududga bo‘linadi: faqat A, A∩B, faqat B va ikkala doiradan tashqari hudud.",
+        "A ning elementlari soni faqat A va umumiy hudud sonlari yig‘indisi. B uchun ham xuddi shunday.",
+        "A∪B faqat A, kesishma va faqat B hududlarini qamrab oladi. Umumiy hudud bir marta hisoblanadi.",
+        "A ning B bilan umumiy bo‘lmagan soyali qismi A∖B dir. Diagrammani matndagi ajralgan hududlar soni bilan ham ifodalash mumkin."
+      ],
+      "worked_example": {
+        "prompt_uz": "Faqat A hududida 4, kesishmada 3, faqat B da 2 element bor. |A| va |A∪B| ni toping.",
+        "solution_steps_uz": [
+          "A doirasi: 4+3=7.",
+          "Birlashish uch ichki hududdan iborat: 4+3+2=9."
+        ],
+        "answer_uz": "|A|=7; |A∪B|=9"
+      }
+    },
+    {
+      "key": "sets-counting-lesson",
+      "skill_key": "sets-counting",
+      "title_uz": "Elementlar soni va qo‘sh hisoblash",
+      "theory_uz": [
+        "|A| A dagi turli elementlar sonini bildiradi. Ikki to‘plamda |A∪B|=|A|+|B|−|A∩B|.",
+        "Kesishmani ayirish sababi: u |A| va |B| da ikki marta sanalgan. Bir marta qoldirish uchun bir marta ayiriladi.",
+        "Birortasiga kirmaydiganlar soni |U|−|A∪B|. Kesishma noma’lum bo‘lsa |A∩B|=|A|+|B|−|A∪B|.",
+        "Sonlar shartga mos bo‘lishi kerak: kesishma ikkala to‘plamdan katta bo‘la olmaydi, birlashish esa U dan katta bo‘lmaydi."
+      ],
+      "worked_example": {
+        "prompt_uz": "30 kishidan 18 tasi A, 15 tasi B guruhida; 7 tasi ikkalasida. Hech biriga kirmaydiganlar nechta?",
+        "solution_steps_uz": [
+          "Birlashish: 18+15−7=26.",
+          "Tashqarida: 30−26=4."
+        ],
+        "answer_uz": "4"
+      }
+    }
+  ],
+  "exercises": [
+    {
+      "key": "sets-practice-01",
+      "skill_key": "sets-membership",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "easy",
+      "prompt_uz": "A={a,b} to‘plamning jami nechta qism to‘plami bor?",
+      "options": [],
+      "answer_key": {
+        "value": "4"
+      },
+      "solution_steps_uz": [
+        "∅, {a}, {b}, {a,b} qism to‘plamlar mavjud.",
+        "Jami 2²=4 ta."
+      ],
+      "hint_uz": "Bo‘sh to‘plam va A ning o‘zini ham hisobga oling.",
+      "common_error_uz": "Qism to‘plamlar sonini elementlar soniga teng deb olmang.",
+      "source": {
+        "id": "source-1-3",
+        "origin": "adapted",
+        "locator": "Amaliy topshiriqlar, 7; tahrirlangan"
+      }
+    },
+    {
+      "key": "sets-practice-02",
+      "skill_key": "sets-membership",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "easy",
+      "prompt_uz": "{1,1,2,3} to‘plamda nechta turli element bor?",
+      "options": [],
+      "answer_key": {
+        "value": "3"
+      },
+      "solution_steps_uz": [
+        "Takroriy 1 yangi element emas.",
+        "Turli elementlar 1,2,3: jami 3 ta."
+      ],
+      "hint_uz": "Bir xil elementlarni bir marta sanang.",
+      "common_error_uz": "To‘plam ro‘yxat emas; takrorlar alohida sanalmaydi.",
+      "source": {
+        "id": "source-1-3",
+        "origin": "authored",
+        "locator": "Yangi practice: sets-membership"
+      }
+    },
+    {
+      "key": "sets-practice-03",
+      "skill_key": "sets-operations",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "easy",
+      "prompt_uz": "A={1,2,3,4,5}, B={4,5,6,7} bo‘lsa A∪B ni tanlang.",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "{6,7}",
+          "feedback_uz": "Bu B∖A."
+        },
+        {
+          "id": "b",
+          "text_uz": "{1,2,3,4,5,6,7}",
+          "feedback_uz": "To‘g‘ri. Birlashish {1,2,3,4,5,6,7}."
+        },
+        {
+          "id": "c",
+          "text_uz": "{4,5}",
+          "feedback_uz": "Bu kesishma."
+        },
+        {
+          "id": "d",
+          "text_uz": "{1,2,3}",
+          "feedback_uz": "Bu A∖B."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "Ikkala to‘plamdagi barcha turli elementlar olinadi.",
+        "Birlashish {1,2,3,4,5,6,7}."
+      ],
+      "hint_uz": "Umumiy elementlarni takror yozmang.",
+      "common_error_uz": "Birlashish faqat umumiy elementlardan iborat emas.",
+      "source": {
+        "id": "source-1-3",
+        "origin": "adapted",
+        "locator": "Amaliy topshiriqlar, 1; tahrirlangan"
+      }
+    },
+    {
+      "key": "sets-practice-04",
+      "skill_key": "sets-operations",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "easy",
+      "prompt_uz": "A={1,2,3,4,5}, B={4,5,6,7} bo‘lsa A∖B ni tanlang.",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "{1,2,3}",
+          "feedback_uz": "To‘g‘ri. 1,2,3 qoladi."
+        },
+        {
+          "id": "b",
+          "text_uz": "{6,7}",
+          "feedback_uz": "Bu teskari ayirma."
+        },
+        {
+          "id": "c",
+          "text_uz": "{4,5}",
+          "feedback_uz": "Bu umumiy qism."
+        },
+        {
+          "id": "d",
+          "text_uz": "{1,2,3,6,7}",
+          "feedback_uz": "Bu ikkala to‘plamning umumiy bo‘lmagan qismlari yig‘indisi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "a"
+      },
+      "solution_steps_uz": [
+        "A dan B da ham bor 4 va 5 ni chiqaramiz.",
+        "1,2,3 qoladi."
+      ],
+      "hint_uz": "Avval A elementlarini yozing; ulardan B dagilarini o‘chiring.",
+      "common_error_uz": "A∖B ni B∖A bilan almashtirmang.",
+      "source": {
+        "id": "source-1-3",
+        "origin": "adapted",
+        "locator": "Amaliy topshiriqlar, 3; tahrirlangan"
+      }
+    },
+    {
+      "key": "sets-practice-05",
+      "skill_key": "sets-complement",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "easy",
+      "prompt_uz": "U={1,2,3,4,5,6,7,8,9,10}, A={2,4,6,8,10}. A′ ni tanlang.",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "{2,4,6,8,10}",
+          "feedback_uz": "Bu A ning o‘zi."
+        },
+        {
+          "id": "b",
+          "text_uz": "∅",
+          "feedback_uz": "U da A dan tashqari elementlar ham bor."
+        },
+        {
+          "id": "c",
+          "text_uz": "{1,3,5,7,9,11}",
+          "feedback_uz": "11 universal to‘plamga kirmaydi."
+        },
+        {
+          "id": "d",
+          "text_uz": "{1,3,5,7,9}",
+          "feedback_uz": "To‘g‘ri. U dagi toq sonlar qoladi: {1,3,5,7,9}."
+        }
+      ],
+      "answer_key": {
+        "option_id": "d"
+      },
+      "solution_steps_uz": [
+        "Universal to‘plamdan barcha A elementlarini chiqaramiz.",
+        "U dagi toq sonlar qoladi: {1,3,5,7,9}."
+      ],
+      "hint_uz": "U da bor, A da yo‘q elementlarni qidiring.",
+      "common_error_uz": "To‘ldiruvchini cheksiz barcha toq sonlar deb olmang.",
+      "source": {
+        "id": "source-1-3",
+        "origin": "adapted",
+        "locator": "Amaliy topshiriqlar, 9; tahrirlangan"
+      }
+    },
+    {
+      "key": "sets-practice-06",
+      "skill_key": "sets-complement",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "easy",
+      "prompt_uz": "U={a,b,c,d}, A={a,c} bo‘lsa A′ ni toping.",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "{a,b,c,d}",
+          "feedback_uz": "Bu U, A elementlari chiqarilmagan."
+        },
+        {
+          "id": "b",
+          "text_uz": "∅",
+          "feedback_uz": "b va d A ga kirmaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "{b,d}",
+          "feedback_uz": "To‘g‘ri. b va d qoladi."
+        },
+        {
+          "id": "d",
+          "text_uz": "{a,c}",
+          "feedback_uz": "Bu A."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "a va c ni U dan chiqaramiz.",
+        "b va d qoladi."
+      ],
+      "hint_uz": "Faqat U ichidagi qolgan elementlarni oling.",
+      "common_error_uz": "A ning elementlarini yana to‘ldiruvchiga qo‘shmang.",
+      "source": {
+        "id": "source-1-3",
+        "origin": "authored",
+        "locator": "Yangi practice: sets-complement"
+      }
+    },
+    {
+      "key": "sets-practice-07",
+      "skill_key": "sets-venn",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "Venn diagrammasida faqat A da 3, kesishmada 2, faqat B da 4 element bor. Birlashishda nechta element bor?",
+      "options": [],
+      "answer_key": {
+        "value": "9"
+      },
+      "solution_steps_uz": [
+        "Uch ajralgan hudud qo‘shiladi.",
+        "3+2+4=9."
+      ],
+      "hint_uz": "Kesishmani aynan bir marta sanang.",
+      "common_error_uz": "A va B sonlarini alohida qo‘shib kesishmani ikki marta sanamang.",
+      "source": {
+        "id": "source-1-3",
+        "origin": "authored",
+        "locator": "Yangi practice: sets-venn"
+      }
+    },
+    {
+      "key": "sets-practice-08",
+      "skill_key": "sets-venn",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "A doirasining B bilan umumiy bo‘lmagan qismi bo‘yalgan. Qaysi amal tasvirlangan?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "A∖B",
+          "feedback_uz": "To‘g‘ri. Bu A∖B ta’rifi."
+        },
+        {
+          "id": "b",
+          "text_uz": "A∩B",
+          "feedback_uz": "Bu ikkala to‘plamga ham kiradigan hudud."
+        },
+        {
+          "id": "c",
+          "text_uz": "A∪B",
+          "feedback_uz": "Bu ikkala doiraning to‘liq hududi."
+        },
+        {
+          "id": "d",
+          "text_uz": "B∖A",
+          "feedback_uz": "Bu B ning A dan tashqari qismi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "a"
+      },
+      "solution_steps_uz": [
+        "Bo‘yalgan elementlar A ga kiradi, B ga kirmaydi.",
+        "Bu A∖B ta’rifi."
+      ],
+      "hint_uz": "“A da bor, B da yo‘q” shartini amal bilan bog‘lang.",
+      "common_error_uz": "Doiralar kesishgan qism bu yerda bo‘yalmagan.",
+      "source": {
+        "id": "source-1-3",
+        "origin": "authored",
+        "locator": "Yangi practice: sets-venn"
+      }
+    },
+    {
+      "key": "sets-practice-09",
+      "skill_key": "sets-counting",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "|A|=12, |B|=15, |A∩B|=4 bo‘lsa |A∪B| ni toping.",
+      "options": [],
+      "answer_key": {
+        "value": "23"
+      },
+      "solution_steps_uz": [
+        "Birlashish uchun kesishma bir marta ayiriladi.",
+        "12+15−4=23."
+      ],
+      "hint_uz": "|A∪B|=|A|+|B|−|A∩B| formulasini ishlating.",
+      "common_error_uz": "27 deb olish umumiy to‘rt elementni ikki marta sanaydi.",
+      "source": {
+        "id": "source-1-3",
+        "origin": "adapted",
+        "locator": "Amaliy topshiriqlar, 5; tahrirlangan"
+      }
+    },
+    {
+      "key": "sets-practice-10",
+      "skill_key": "sets-counting",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "40 talabadan 25 tasi ingliz, 20 tasi nemis tilini, 8 tasi ikkala tilni biladi. Birorta tilni bilmaydiganlar nechta?",
+      "options": [],
+      "answer_key": {
+        "value": "3"
+      },
+      "solution_steps_uz": [
+        "Kamida bitta tilni biladiganlar: 25+20−8=37.",
+        "Hech birini bilmaydiganlar: 40−37=3."
+      ],
+      "hint_uz": "Avval kamida bitta tilni biladiganlarni toping.",
+      "common_error_uz": "Kesishmani ayirmasdan 25+20 ni olish noto‘g‘ri.",
+      "source": {
+        "id": "source-1-3",
+        "origin": "adapted",
+        "locator": "Amaliy topshiriqlar, 10; tahrirlangan"
+      }
+    },
+    {
+      "key": "sets-precheck-01",
+      "skill_key": "sets-membership",
+      "purpose": "precheck",
+      "format": "numeric",
+      "difficulty": "easy",
+      "prompt_uz": "A={2,4} bo‘lsa 4∈A mulohazasi qiymatini yozing: rost=1, yolg‘on=0.",
+      "options": [],
+      "answer_key": {
+        "value": "1"
+      },
+      "solution_steps_uz": [
+        "4 A ichida sanab o‘tilgan.",
+        "Mulohaza rost: 1."
+      ],
+      "hint_uz": null,
+      "common_error_uz": "∈ belgisi elementning to‘plamga tegishliligini bildiradi.",
+      "source": {
+        "id": "source-1-3",
+        "origin": "authored",
+        "locator": "Yangi precheck: sets-membership"
+      }
+    },
+    {
+      "key": "sets-precheck-02",
+      "skill_key": "sets-operations",
+      "purpose": "precheck",
+      "format": "single",
+      "difficulty": "easy",
+      "prompt_uz": "A={1,3,5}, B={3,4,5}. A∩B ni toping.",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "{1}",
+          "feedback_uz": "Bu A∖B."
+        },
+        {
+          "id": "b",
+          "text_uz": "{4}",
+          "feedback_uz": "Bu B∖A."
+        },
+        {
+          "id": "c",
+          "text_uz": "{3,5}",
+          "feedback_uz": "To‘g‘ri. A∩B={3,5}."
+        },
+        {
+          "id": "d",
+          "text_uz": "{1,3,4,5}",
+          "feedback_uz": "Bu birlashish."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "Ikkala to‘plamga ham kiradigan elementlar 3 va 5.",
+        "A∩B={3,5}."
+      ],
+      "hint_uz": null,
+      "common_error_uz": "Umumiy bo‘lmagan elementlar kesishmaga kirmaydi.",
+      "source": {
+        "id": "source-1-3",
+        "origin": "authored",
+        "locator": "Yangi precheck: sets-operations"
+      }
+    },
+    {
+      "key": "sets-precheck-03",
+      "skill_key": "sets-complement",
+      "purpose": "precheck",
+      "format": "single",
+      "difficulty": "easy",
+      "prompt_uz": "U={1,2,3,4,5}, A={1,5}. A′ ni tanlang.",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "∅",
+          "feedback_uz": "U bilan A teng emas."
+        },
+        {
+          "id": "b",
+          "text_uz": "{2,3,4}",
+          "feedback_uz": "To‘g‘ri. Qolganlari {2,3,4}."
+        },
+        {
+          "id": "c",
+          "text_uz": "{1,5}",
+          "feedback_uz": "Bu A."
+        },
+        {
+          "id": "d",
+          "text_uz": "{2,3,4,6}",
+          "feedback_uz": "6 U ga tegishli emas."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "U dan 1 va 5 chiqariladi.",
+        "Qolganlari {2,3,4}."
+      ],
+      "hint_uz": null,
+      "common_error_uz": "A ni U dan ayirish kerak, teskarisi emas.",
+      "source": {
+        "id": "source-1-3",
+        "origin": "authored",
+        "locator": "Yangi precheck: sets-complement"
+      }
+    },
+    {
+      "key": "sets-precheck-04",
+      "skill_key": "sets-venn",
+      "purpose": "precheck",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "Faqat A hududida 5, kesishmada 2, faqat B da 1 element bor. |A| nechaga teng?",
+      "options": [],
+      "answer_key": {
+        "value": "7"
+      },
+      "solution_steps_uz": [
+        "A o‘zining alohida hududi va kesishmani o‘z ichiga oladi.",
+        "5+2=7."
+      ],
+      "hint_uz": null,
+      "common_error_uz": "Faqat B hududini A ga qo‘shmang.",
+      "source": {
+        "id": "source-1-3",
+        "origin": "authored",
+        "locator": "Yangi precheck: sets-venn"
+      }
+    },
+    {
+      "key": "sets-precheck-05",
+      "skill_key": "sets-counting",
+      "purpose": "precheck",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "|A|=14, |B|=11 va |A∩B|=5. Birlashishdagi elementlar sonini toping.",
+      "options": [],
+      "answer_key": {
+        "value": "20"
+      },
+      "solution_steps_uz": [
+        "Kesishma ikki marta sanalmasligi uchun ayiriladi.",
+        "14+11−5=20."
+      ],
+      "hint_uz": null,
+      "common_error_uz": "Birlashish formulasida kesishma qo‘shilmaydi.",
+      "source": {
+        "id": "source-1-3",
+        "origin": "authored",
+        "locator": "Yangi precheck: sets-counting"
+      }
+    },
+    {
+      "key": "sets-postcheck-01",
+      "skill_key": "sets-membership",
+      "purpose": "postcheck",
+      "format": "numeric",
+      "difficulty": "easy",
+      "prompt_uz": "{∅} to‘plam nechta elementga ega?",
+      "options": [],
+      "answer_key": {
+        "value": "1"
+      },
+      "solution_steps_uz": [
+        "Qavs ichida bitta obyekt — bo‘sh to‘plam bor.",
+        "Shuning uchun {∅} da bitta element mavjud."
+      ],
+      "hint_uz": null,
+      "common_error_uz": "∅ bilan {∅} bir xil emas.",
+      "source": {
+        "id": "source-1-3",
+        "origin": "authored",
+        "locator": "Yangi postcheck: sets-membership"
+      }
+    },
+    {
+      "key": "sets-postcheck-02",
+      "skill_key": "sets-operations",
+      "purpose": "postcheck",
+      "format": "single",
+      "difficulty": "easy",
+      "prompt_uz": "A={2,4,6}, B={1,2,3} bo‘lsa B∖A ni tanlang.",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "{2}",
+          "feedback_uz": "Bu kesishma."
+        },
+        {
+          "id": "b",
+          "text_uz": "{1,2,3,4,6}",
+          "feedback_uz": "Bu birlashish."
+        },
+        {
+          "id": "c",
+          "text_uz": "{1,3}",
+          "feedback_uz": "To‘g‘ri. 1 va 3 qoladi."
+        },
+        {
+          "id": "d",
+          "text_uz": "{4,6}",
+          "feedback_uz": "Bu A∖B."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "B dagi 2 A ga ham kiradi, shuning uchun chiqariladi.",
+        "1 va 3 qoladi."
+      ],
+      "hint_uz": null,
+      "common_error_uz": "Ayirma B dan boshlanayotganiga e’tibor bering.",
+      "source": {
+        "id": "source-1-3",
+        "origin": "authored",
+        "locator": "Yangi postcheck: sets-operations"
+      }
+    },
+    {
+      "key": "sets-postcheck-03",
+      "skill_key": "sets-complement",
+      "purpose": "postcheck",
+      "format": "single",
+      "difficulty": "easy",
+      "prompt_uz": "Bir xil U={a,b,c,d,e} da A={b,d,e}. (A′)′ ni toping.",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "{a,b,c,d,e}",
+          "feedback_uz": "Bu universal to‘plam."
+        },
+        {
+          "id": "b",
+          "text_uz": "{b,d,e}",
+          "feedback_uz": "To‘g‘ri. U dan a va c ni chiqarib, A ga qaytamiz: {b,d,e}."
+        },
+        {
+          "id": "c",
+          "text_uz": "{a,c}",
+          "feedback_uz": "Bu faqat bir marta olingan to‘ldiruvchi."
+        },
+        {
+          "id": "d",
+          "text_uz": "∅",
+          "feedback_uz": "Ikki to‘ldirish doim bo‘sh to‘plam bermaydi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "A′={a,c}.",
+        "U dan a va c ni chiqarib, A ga qaytamiz: {b,d,e}."
+      ],
+      "hint_uz": null,
+      "common_error_uz": "To‘ldiruvchini ikki marta olish dastlabki to‘plamni qaytaradi.",
+      "source": {
+        "id": "source-1-3",
+        "origin": "authored",
+        "locator": "Yangi postcheck: sets-complement"
+      }
+    },
+    {
+      "key": "sets-postcheck-04",
+      "skill_key": "sets-venn",
+      "purpose": "postcheck",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "A doirasida jami 7 element bor, ulardan 3 tasi B ga ham kiradi. Faqat A hududida nechta element bor?",
+      "options": [],
+      "answer_key": {
+        "value": "4"
+      },
+      "solution_steps_uz": [
+        "A ning jami sonidan umumiy hududni ayiramiz.",
+        "7−3=4."
+      ],
+      "hint_uz": null,
+      "common_error_uz": "Kesishma jami 7 soni ichida allaqachon hisoblangan.",
+      "source": {
+        "id": "source-1-3",
+        "origin": "authored",
+        "locator": "Yangi postcheck: sets-venn"
+      }
+    },
+    {
+      "key": "sets-postcheck-05",
+      "skill_key": "sets-counting",
+      "purpose": "postcheck",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "|A|=22, |B|=19, |A∪B|=34 bo‘lsa |A∩B| ni toping.",
+      "options": [],
+      "answer_key": {
+        "value": "7"
+      },
+      "solution_steps_uz": [
+        "Formulani kesishma uchun yozamiz: |A∩B|=|A|+|B|−|A∪B|.",
+        "22+19−34=7."
+      ],
+      "hint_uz": null,
+      "common_error_uz": "Bu savolda noma’lum birlashish emas, kesishma.",
+      "source": {
+        "id": "source-1-3",
+        "origin": "authored",
+        "locator": "Yangi postcheck: sets-counting"
+      }
+    }
+  ],
+  "diagnostic_links": [
+    {
+      "question_key": "logic-extra-syllogism-1",
+      "skill_keys": [
+        "sets-membership"
+      ],
+      "rationale_uz": "Itlar hayvonlar qism to‘plami; Reksning tegishliligidan xulosa chiqariladi."
+    },
+    {
+      "question_key": "logic-extra-syllogism-2",
+      "skill_keys": [
+        "sets-membership"
+      ],
+      "rationale_uz": "Maktab o‘quvchilari forma kiyuvchilar qism to‘plami sifatida qaraladi."
+    },
+    {
+      "question_key": "logic-extra-syllogism-3",
+      "skill_keys": [
+        "sets-membership"
+      ],
+      "rationale_uz": "Atirgul, gul va suvga muhtoj obyektlar orasidagi qism to‘plam zanjiri qo‘llanadi."
+    }
+  ],
+  "blueprint": {
+    "precheck_order": [
+      "sets-precheck-01",
+      "sets-precheck-02",
+      "sets-precheck-03",
+      "sets-precheck-04",
+      "sets-precheck-05"
+    ],
+    "practice_order": [
+      "sets-practice-01",
+      "sets-practice-03",
+      "sets-practice-05",
+      "sets-practice-07",
+      "sets-practice-09",
+      "sets-practice-02",
+      "sets-practice-04",
+      "sets-practice-06",
+      "sets-practice-08",
+      "sets-practice-10"
+    ],
+    "postcheck_order": [
+      "sets-postcheck-01",
+      "sets-postcheck-02",
+      "sets-postcheck-03",
+      "sets-postcheck-04",
+      "sets-postcheck-05"
+    ],
+    "matched_pairs": [
+      {
+        "skill_key": "sets-membership",
+        "difficulty": "easy",
+        "precheck_key": "sets-precheck-01",
+        "postcheck_key": "sets-postcheck-01"
+      },
+      {
+        "skill_key": "sets-operations",
+        "difficulty": "easy",
+        "precheck_key": "sets-precheck-02",
+        "postcheck_key": "sets-postcheck-02"
+      },
+      {
+        "skill_key": "sets-complement",
+        "difficulty": "easy",
+        "precheck_key": "sets-precheck-03",
+        "postcheck_key": "sets-postcheck-03"
+      },
+      {
+        "skill_key": "sets-venn",
+        "difficulty": "medium",
+        "precheck_key": "sets-precheck-04",
+        "postcheck_key": "sets-postcheck-04"
+      },
+      {
+        "skill_key": "sets-counting",
+        "difficulty": "medium",
+        "precheck_key": "sets-precheck-05",
+        "postcheck_key": "sets-postcheck-05"
+      }
+    ],
+    "unseen_postcheck_sets": 1,
+    "comparison_note_uz": "Qiyinlik tahririy baholangan; savollar statistik tenglashtirilmagan. Natija faqat ushbu mavzuga tegishli.",
+    "exhaustion_note_uz": "Yangi yakuniy to‘plam tugaganda mashqlar ochiq qoladi, ammo yangi mustaqil tekshiruv uchun bank kengaytirilishi kerak."
+  }
+}
