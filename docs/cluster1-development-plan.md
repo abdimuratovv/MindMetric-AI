@@ -1,5 +1,7 @@
 # MindMetric AI birinchi klasterni ishlab chiqish rejasi
 
+2026-10-30 yangilanishi: foydalanuvchining alohida so‘rovi bilan dastlab manbasi yo‘q bo‘lgan 1.4 mavzu uchun yangi mualliflik resursi yaratildi. Sonlar nazariyasi va diskret matematika endi oltinchi modul sifatida, katalogda 1.3 va 1.5 orasida joylashadi. Joriy hajm: 6 modul, 30 ko‘nikma, 30 dars va 120 topshiriq. Quyidagi dastlabki besh-modulli reja va bosqich hisobotlari tarixiy qamrovni ko‘rsatadi. Yangi Word va Markdown manbalar `docs/content/cluster1/` ichida; eski 1.4 DOCX fayli taqdim etilgandek ko‘rsatilmaydi.
+
 Sana: 2026-10-28
 
 Ijro holati: 1–5-bosqichlar bajarildi. 6-bosqich tasdiqlandi: texnik tekshiruvlar yakunlandi, foydalanuvchi o‘zi bajaradigan pilot kuzatuvlari kutilmoqda. Natijalar: [birinchi bosqich hisoboti](cluster1-stage1-summary.md), [ikkinchi bosqich hisoboti](cluster1-stage2-summary.md), [uchinchi bosqich hisoboti](cluster1-stage3-summary.md), [to‘rtinchi bosqich hisoboti](cluster1-stage4-summary.md), [beshinchi bosqich hisoboti](cluster1-stage5-summary.md), [oltinchi bosqich holati](cluster1-stage6-summary.md). Keyingi ish pilot kuzatuvlaridagi muhim muammolarni tekshirish va tuzatishdir.
