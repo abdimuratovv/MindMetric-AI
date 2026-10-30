@@ -115,6 +115,18 @@ opening the next. It never publishes content into the main configured database.
 
 ## Tests
 
+For an authorized production release, `python manage.py activate_development_cluster1`
+imports and publishes the five reviewed modules in one transaction. It is
+idempotent, creates no accounts/scores and serializes PostgreSQL releases with
+an advisory lock. Render requires PostgreSQL; ephemeral SQLite is rejected.
+Gunicorn loads `backend/gunicorn.conf.py` automatically from its backend working
+directory. Its master startup hook runs this command only when
+`DEVELOPMENT_CLUSTER1_PUBLISH_ON_DEPLOY=1`, closing DB connections before workers
+fork. Set `DEVELOPMENT_CLUSTER1_ENABLED=1` separately to expose the pilot.
+Rollback access by setting the enabled flag to `0`; published content/results
+remain stored. Failed publication rolls back all five modules and fails the
+new startup, preserving the prior release. Normal startup does not publish.
+
 ```powershell
 python manage.py test apps.development --settings=apps.development.tests.settings
 python manage.py check --settings=apps.development.tests.settings
