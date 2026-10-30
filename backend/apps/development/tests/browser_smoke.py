@@ -44,7 +44,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--artifacts', required=True)
     parser.add_argument('--browser-executable', default=None, help='Optional installed Chromium/Chrome executable.')
-    parser.add_argument('--all-modules', action='store_true', help='Also verify the five-module catalogue and each new module entry.')
+    parser.add_argument('--all-modules', action='store_true', help='Also verify the six-module catalogue and each new module entry.')
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[4]
     output = Path(args.artifacts).resolve()
@@ -93,7 +93,7 @@ def main():
             try:
                 page.goto(f'http://127.0.0.1:{frontend_port}/#development')
                 page.wait_for_load_state('networkidle')
-                expect(page.locator('.dev-module')).to_have_count(5 if args.all_modules else 1)
+                expect(page.locator('.dev-module')).to_have_count(6 if args.all_modules else 1)
                 expect(page.locator('.dev-priority')).to_have_count(2 if args.all_modules else 1)
                 page.set_viewport_size({'width': 390, 'height': 844})
                 page.wait_for_function('document.querySelector(".mm-shell-sidebar").getBoundingClientRect().right <= 1')
@@ -217,7 +217,7 @@ def main():
                 result = {'passed': True, 'answered': 20 + opened * 5, 'precheck': 0, 'postcheck': 80,
                           'delta_percentage_points': 80, 'refresh_resume': True, 'invalid_input_correction': True,
                           'lost_response_retry': True, 'mobile_overflow': False, 'russian_interface_uzbek_content': True,
-                          'javascript_errors': page_errors, 'catalogue_modules': 5 if args.all_modules else 1,
+                          'javascript_errors': page_errors, 'catalogue_modules': 6 if args.all_modules else 1,
                           'opened_additional_modules': opened}
                 (output / 'result.json').write_text(json.dumps(result, indent=2), encoding='utf-8')
                 print(json.dumps(result))

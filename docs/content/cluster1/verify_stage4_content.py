@@ -160,7 +160,10 @@ def expected_examples():
 
 
 def verify(source_dir=None):
-    contents = [json.loads(path.read_text(encoding='utf-8')) for path in HERE.glob('*.v1.json')]
+    # Historical stage-four oracle covers its original five modules only.
+    # The later 1.4 bank has independent checks in test_number_theory.py.
+    contents = [json.loads(path.read_text(encoding='utf-8')) for path in HERE.glob('*.v1.json')
+                if path.name != 'number-theory-discrete-mathematics.v1.json']
     assert len(contents) == 5, 'Expected five course manifests'
     graph = {skill['key']: skill['prerequisite_keys'] for data in contents for skill in data['skills']}
     assert len(graph) == 25, 'Expected 25 unique skill keys'

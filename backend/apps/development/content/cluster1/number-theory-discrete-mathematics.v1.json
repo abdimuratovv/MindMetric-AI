@@ -1,0 +1,816 @@
+{
+  "schema_version": 1,
+  "sources": [
+    {
+      "id": "source-1-4",
+      "filename": "1.4-mavzu.md",
+      "sha256": "518812EDE1FB3EBC027566995D90584D75DAF03EA999267E2198C58AA2004AE9"
+    }
+  ],
+  "module": {
+    "key": "number-theory-discrete-mathematics",
+    "version": 1,
+    "order": 4,
+    "status": "draft",
+    "review_status": "internally_checked",
+    "title_uz": "Sonlar nazariyasi va diskret matematika",
+    "title_ru": null,
+    "content_language": "uz",
+    "indicator_keys": [
+      "math"
+    ],
+    "diagnostic_coverage_note_uz": "Ushbu modul uchun diagnostika xaritasi hali tasdiqlanmagan. Umumiy math yoki IQ bali o‘rniga modulning boshlang‘ich tekshiruvidan foydalaniladi."
+  },
+  "skills": [
+    {
+      "key": "numbers-divmod",
+      "title_uz": "Qoldiq bilan bo‘lish va div mod",
+      "indicator_keys": [
+        "math"
+      ],
+      "prerequisite_keys": [
+        "arith-order"
+      ]
+    },
+    {
+      "key": "numbers-primes",
+      "title_uz": "Tub va murakkab sonlar",
+      "indicator_keys": [
+        "math"
+      ],
+      "prerequisite_keys": [
+        "numbers-divmod"
+      ]
+    },
+    {
+      "key": "numbers-gcd",
+      "title_uz": "EKUB va Evklid algoritmi",
+      "indicator_keys": [
+        "math"
+      ],
+      "prerequisite_keys": [
+        "numbers-divmod",
+        "numbers-primes"
+      ]
+    },
+    {
+      "key": "numbers-lcm",
+      "title_uz": "EKUK va takrorlanadigan hodisalar",
+      "indicator_keys": [
+        "math"
+      ],
+      "prerequisite_keys": [
+        "numbers-gcd"
+      ]
+    },
+    {
+      "key": "numbers-bases",
+      "title_uz": "Ikki sakkiz o‘n va o‘n oltilik sanoq sistemalari",
+      "indicator_keys": [
+        "math"
+      ],
+      "prerequisite_keys": [
+        "numbers-divmod"
+      ]
+    }
+  ],
+  "lessons": [
+    {
+      "key": "numbers-divmod-lesson",
+      "skill_key": "numbers-divmod",
+      "title_uz": "Qoldiq bilan bo‘lish va div mod",
+      "theory_uz": [
+        "Bu darsda a manfiy bo‘lmagan butun son, b esa musbat butun son. a = bq + r va 0 ≤ r < b shartlarini qanoatlantiruvchi q va r yagona bo‘ladi.",
+        "a div b = q — butun bo‘linma; a mod b = r — qoldiq. Masalan, 23 div 5 = 4 va 23 mod 5 = 3, chunki 23 = 5 × 4 + 3.",
+        "Qoldiq bo‘luvchidan kichik bo‘lishi shart. Qoldiq 0 bo‘lsa, a soni b ga qoldiqsiz bo‘linadi. Nolga bo‘lish, div va mod amallari aniqlanmagan.",
+        "Masalan, 35 ta buyum 6 tadan qutilansa, 35 div 6 = 5 ta to‘liq quti va 35 mod 6 = 5 ta ortiqcha buyum chiqadi. Barcha buyum uchun yana bitta quti kerak.",
+        "Python tilida manfiy bo‘lmagan butun sonlar uchun // butun bo‘linmani, % qoldiqni beradi. Manfiy sonlar bo‘yicha dasturlash tillari kelishuvi farq qilishi mumkin; bu moduldagi topshiriqlar ularni ishlatmaydi."
+      ],
+      "worked_example": {
+        "prompt_uz": "59 ta detalni 8 tadan ajratsak, nechta to‘liq guruh va qancha qoldiq qoladi?",
+        "solution_steps_uz": [
+          "8 × 7 = 56 ≤ 59, ammo 8 × 8 = 64 > 59.",
+          "q = 7; r = 59 − 56 = 3.",
+          "59 = 8 × 7 + 3 va 0 ≤ 3 < 8."
+        ],
+        "answer_uz": "59 div 8 = 7; 59 mod 8 = 3"
+      }
+    },
+    {
+      "key": "numbers-primes-lesson",
+      "skill_key": "numbers-primes",
+      "title_uz": "Tub va murakkab sonlar",
+      "theory_uz": [
+        "2 dan kichik bo‘lmagan natural sonning faqat ikkita musbat bo‘luvchisi — 1 va o‘zi — bo‘lsa, u tub son. Masalan, 2, 3, 5, 7, 11 tub.",
+        "1 dan katta natural sonning ikkitadan ortiq musbat bo‘luvchisi bo‘lsa, u murakkab. Masalan, 12 ning bo‘luvchilari 1, 2, 3, 4, 6, 12. 0 va 1 tub ham, murakkab ham emas.",
+        "2 — yagona juft tub son. 2 dan katta barcha juft sonlar 2 ga bo‘lingani uchun murakkab, ammo har bir toq son tub emas: 9 = 3 × 3.",
+        "n sonining tub ekanini tekshirishda √n dan katta bo‘lmagan tub bo‘luvchilarni tekshirish yetarli. Agar n = ab murakkab bo‘lsa, ko‘paytuvchilardan kamida biri √n dan oshmaydi.",
+        "Tub ko‘paytuvchilarga ajratishda sonni 2, 3, 5 va keyingi tub sonlarga qoldiqsiz bo‘linguncha bo‘lamiz. Masalan, 90 = 2 × 3² × 5. Olingan ko‘paytuvchilarni qayta ko‘paytirib tekshiring."
+      ],
+      "worked_example": {
+        "prompt_uz": "97 soni tubmi?",
+        "solution_steps_uz": [
+          "9² < 97 < 10²; tekshiriladigan tub bo‘luvchilar 2, 3, 5, 7.",
+          "97 juft emas; raqamlar yig‘indisi 16, 5 bilan tugamaydi; 97 = 7 × 13 + 6.",
+          "Ularning hech biri 97 ni bo‘lmaydi, demak 97 tub."
+        ],
+        "answer_uz": "97 tub son"
+      }
+    },
+    {
+      "key": "numbers-gcd-lesson",
+      "skill_key": "numbers-gcd",
+      "title_uz": "EKUB va Evklid algoritmi",
+      "theory_uz": [
+        "EKUB(a,b) — ikkala sonni ham qoldiqsiz bo‘ladigan eng katta musbat butun son. Bu modulda a va b musbat; algoritmning so‘nggi qoldig‘i nol bo‘lishi mumkin.",
+        "Tub ko‘paytuvchilarda umumiy tub sonlarning kichik darajalari olinadi. 36 = 2² × 3² va 60 = 2² × 3 × 5 uchun EKUB(36,60) = 2² × 3 = 12.",
+        "Evklid qoidasi: EKUB(a,b) = EKUB(b,a mod b). Sonlar juftini (b,a mod b) bilan almashtirib boramiz. Ikkinchi son 0 bo‘lganda birinchi son javobdir.",
+        "Psevdokod: b ≠ 0 ekan, (a,b) ← (b,a mod b); yakunda a ni qaytaring. Almashtirishda eski b va eski a mod b birga hisoblanadi.",
+        "Eng katta teng guruhlar yoki eng katta kvadratga qoldiqsiz ajratish masalalari EKUBga olib keladi. EKUB 1 bo‘lsa, sonlar o‘zaro tub deyiladi; ularning har biri alohida tub bo‘lishi shart emas."
+      ],
+      "worked_example": {
+        "prompt_uz": "EKUB(252,105) ni Evklid algoritmi bilan toping.",
+        "solution_steps_uz": [
+          "252 = 105 × 2 + 42.",
+          "105 = 42 × 2 + 21.",
+          "42 = 21 × 2 + 0; oxirgi noldan farqli qoldiq 21."
+        ],
+        "answer_uz": "21"
+      }
+    },
+    {
+      "key": "numbers-lcm-lesson",
+      "skill_key": "numbers-lcm",
+      "title_uz": "EKUK va takrorlanadigan hodisalar",
+      "theory_uz": [
+        "EKUK(a,b) — musbat a va b sonlarining eng kichik musbat umumiy karralisi. EKUB bo‘luvchini, EKUK esa karralini topadi.",
+        "Tub ko‘paytuvchilarda barcha uchragan tub sonlarning katta darajalari olinadi. 12 = 2² × 3 va 18 = 2 × 3² uchun EKUK = 2² × 3² = 36.",
+        "Musbat butun sonlarda EKUB(a,b) × EKUK(a,b) = a × b. Shuning uchun EKUK(a,b) = (a div EKUB(a,b)) × b; avval bo‘lish katta oraliq ko‘paytmani kamaytiradi.",
+        "Ikki hodisa bir vaqtda boshlangan va mos ravishda a hamda b daqiqada takrorlansa, yana bir vaqtda kelishi EKUK(a,b) daqiqadan keyin bo‘ladi.",
+        "O‘zaro tub sonlarda EKUK(a,b) = a × b; umumiy bo‘luvchi bo‘lsa, shunchaki ko‘paytirish eng kichik javobni bermasligi mumkin. Bu darsdagi EKUK topshiriqlarida nol ishlatilmaydi."
+      ],
+      "worked_example": {
+        "prompt_uz": "6 va 15 daqiqada chalinadigan ikki signal birga chalindi. Yana qachon birga chalinadi?",
+        "solution_steps_uz": [
+          "EKUB(6,15) = 3.",
+          "EKUK(6,15) = (6 div 3) × 15 = 30.",
+          "30 musbat soni 6 ga ham, 15 ga ham bo‘linadi va eng kichik umumiy karralidir."
+        ],
+        "answer_uz": "30 daqiqadan keyin"
+      }
+    },
+    {
+      "key": "numbers-bases-lesson",
+      "skill_key": "numbers-bases",
+      "title_uz": "Ikki sakkiz o‘n va o‘n oltilik sanoq sistemalari",
+      "theory_uz": [
+        "Pozitsion b asosli sanoq sistemasida raqamlar 0 dan b−1 gacha. Son qiymati o‘ngdan boshlab raqam × b⁰, raqam × b¹ va hokazo hadlar yig‘indisidir.",
+        "2 likda 0,1; 8 likda 0…7; 10 likda 0…9; 16 likda 0…9,A,B,C,D,E,F ishlatiladi. A=10, B=11, C=12, D=13, E=14, F=15. Masalan, 8 raqami sakkizlik yozuvda mumkin emas.",
+        "Boshqa asosdan o‘nlikka: 1011₂ = 1 × 2³ + 0 × 2² + 1 × 2¹ + 1 = 11₁₀; 27₈ = 2 × 8 + 7 = 23₁₀; 1F₁₆ = 16 + 15 = 31₁₀.",
+        "O‘nlikdan b asosga o‘tishda sonni b ga ketma-ket butun bo‘lamiz, qoldiqlarni yozamiz va oxiridan boshiga o‘qiymiz. Masalan, 13 = 2 × 6 + 1, 6 = 2 × 3 + 0, 3 = 2 × 1 + 1, 1 = 2 × 0 + 1; javob 1101₂.",
+        "2³=8 bo‘lgani uchun ikkilik raqamlar o‘ngdan uchlikka, 2⁴=16 bo‘lgani uchun to‘rtlikka guruhlanadi. Masalan, 101111₂ = 101 111₂ = 57₈ = 0010 1111₂ = 2F₁₆. Chapga qo‘shilgan nollar qiymatni o‘zgartirmaydi.",
+        "0 barcha ushbu asoslarda 0 deb yoziladi. Asosni yonida ko‘rsating: 10₂=2₁₀, 10₈=8₁₀ va 10₁₆=16₁₀; bir xil yozuv har xil qiymat berishi mumkin."
+      ],
+      "worked_example": {
+        "prompt_uz": "2A₁₆ sonini o‘nlik ikkilik va sakkizlikda yozing.",
+        "solution_steps_uz": [
+          "2A₁₆ = 2 × 16 + 10 = 42₁₀.",
+          "Har bir hex raqam to‘rt bit: 2 → 0010, A → 1010; 00101010₂ = 101010₂.",
+          "Ikkilikni uchlikka ajratamiz: 101 010₂ → 5 2; demak 52₈."
+        ],
+        "answer_uz": "2A₁₆ = 42₁₀ = 101010₂ = 52₈"
+      }
+    }
+  ],
+  "exercises": [
+    {
+      "key": "numbers-practice-01",
+      "skill_key": "numbers-divmod",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "easy",
+      "prompt_uz": "73 div 9 ni hisoblang.",
+      "options": [],
+      "answer_key": {
+        "value": "8"
+      },
+      "solution_steps_uz": [
+        "9 × 8 = 72, 9 × 9 = 81 > 73.",
+        "73 = 9 × 8 + 1; butun bo‘linma 8."
+      ],
+      "hint_uz": "73 dan oshmaydigan eng katta 9 karralisini toping.",
+      "common_error_uz": "Qoldiq bilan butun bo‘linmani aralashtirmang.",
+      "source": {
+        "id": "source-1-4",
+        "origin": "authored",
+        "locator": "Yangi practice: numbers-divmod"
+      }
+    },
+    {
+      "key": "numbers-practice-02",
+      "skill_key": "numbers-divmod",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "easy",
+      "prompt_uz": "104 mod 9 ni hisoblang.",
+      "options": [],
+      "answer_key": {
+        "value": "5"
+      },
+      "solution_steps_uz": [
+        "9 × 11 = 99.",
+        "104 − 99 = 5; 0 ≤ 5 < 9."
+      ],
+      "hint_uz": "a − b × (a div b) formulasidan foydalaning.",
+      "common_error_uz": "Qoldiq bo‘luvchidan kichik bo‘lishi kerak.",
+      "source": {
+        "id": "source-1-4",
+        "origin": "authored",
+        "locator": "Yangi practice: numbers-divmod"
+      }
+    },
+    {
+      "key": "numbers-practice-03",
+      "skill_key": "numbers-primes",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "easy",
+      "prompt_uz": "25, 27, 29, 33 sonlaridan qaysi biri tub?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "33",
+          "feedback_uz": "33 = 3 × 11."
+        },
+        {
+          "id": "b",
+          "text_uz": "29",
+          "feedback_uz": "To‘g‘ri. 29 ni √29 dan oshmaydigan 2, 3, 5 tub sonlari bo‘lmaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "25",
+          "feedback_uz": "25 = 5 × 5."
+        },
+        {
+          "id": "d",
+          "text_uz": "27",
+          "feedback_uz": "27 = 3 × 9."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "25 = 5², 27 = 3³, 33 = 3 × 11.",
+        "29 ni √29 dan oshmaydigan 2, 3, 5 tub sonlari bo‘lmaydi."
+      ],
+      "hint_uz": "Har bir sonning 1 va o‘zidan boshqa bo‘luvchisi borligini tekshiring.",
+      "common_error_uz": "Toq son har doim tub emas.",
+      "source": {
+        "id": "source-1-4",
+        "origin": "authored",
+        "locator": "Yangi practice: numbers-primes"
+      }
+    },
+    {
+      "key": "numbers-practice-04",
+      "skill_key": "numbers-primes",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "easy",
+      "prompt_uz": "84 ning tub ko‘paytuvchilarga to‘g‘ri ajratilishini tanlang.",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "2² × 3 × 7",
+          "feedback_uz": "To‘g‘ri. 21 = 3 × 7; demak 84 = 2² × 3 × 7."
+        },
+        {
+          "id": "b",
+          "text_uz": "2 × 3 × 7",
+          "feedback_uz": "Bu ko‘paytma 42."
+        },
+        {
+          "id": "c",
+          "text_uz": "2² × 3² × 7",
+          "feedback_uz": "Bu ko‘paytma 252."
+        },
+        {
+          "id": "d",
+          "text_uz": "4 × 21",
+          "feedback_uz": "4 va 21 tub emas."
+        }
+      ],
+      "answer_key": {
+        "option_id": "a"
+      },
+      "solution_steps_uz": [
+        "84 = 2 × 42 = 2² × 21.",
+        "21 = 3 × 7; demak 84 = 2² × 3 × 7."
+      ],
+      "hint_uz": "84 ni avval 2 ga ketma-ket bo‘ling.",
+      "common_error_uz": "Ajratishning qiymati ham, har bir ko‘paytuvchining tubligi ham tekshiriladi.",
+      "source": {
+        "id": "source-1-4",
+        "origin": "authored",
+        "locator": "Yangi practice: numbers-primes"
+      }
+    },
+    {
+      "key": "numbers-practice-05",
+      "skill_key": "numbers-gcd",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "easy",
+      "prompt_uz": "EKUB(48,18) ni toping.",
+      "options": [],
+      "answer_key": {
+        "value": "6"
+      },
+      "solution_steps_uz": [
+        "48 mod 18 = 12; 18 mod 12 = 6.",
+        "12 mod 6 = 0; EKUB = 6."
+      ],
+      "hint_uz": "Evklid algoritmini qoldiq nol bo‘lguncha davom ettiring.",
+      "common_error_uz": "Oxirgi nol qoldiq emas, undan oldingi noldan farqli son javob.",
+      "source": {
+        "id": "source-1-4",
+        "origin": "authored",
+        "locator": "Yangi practice: numbers-gcd"
+      }
+    },
+    {
+      "key": "numbers-practice-06",
+      "skill_key": "numbers-gcd",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "easy",
+      "prompt_uz": "45 ta qizil va 60 ta ko‘k tugma teng tarkibli eng ko‘p nechta to‘plamga qoldiqsiz ajratiladi?",
+      "options": [],
+      "answer_key": {
+        "value": "15"
+      },
+      "solution_steps_uz": [
+        "To‘plamlar soni 45 ni ham, 60 ni ham bo‘lishi kerak.",
+        "EKUB(45,60) = 15; har to‘plamda 3 qizil va 4 ko‘k tugma."
+      ],
+      "hint_uz": "Eng katta umumiy bo‘luvchini qidiring.",
+      "common_error_uz": "Bu vaziyatda umumiy karrali emas, umumiy bo‘luvchi kerak.",
+      "source": {
+        "id": "source-1-4",
+        "origin": "authored",
+        "locator": "Yangi practice: numbers-gcd"
+      }
+    },
+    {
+      "key": "numbers-practice-07",
+      "skill_key": "numbers-lcm",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "easy",
+      "prompt_uz": "EKUK(8,12) ni toping.",
+      "options": [],
+      "answer_key": {
+        "value": "24"
+      },
+      "solution_steps_uz": [
+        "EKUB(8,12) = 4.",
+        "EKUK = (8 div 4) × 12 = 24."
+      ],
+      "hint_uz": "EKUB orqali EKUK formulasini ishlating.",
+      "common_error_uz": "8 × 12 = 96 umumiy karrali, ammo eng kichigi emas.",
+      "source": {
+        "id": "source-1-4",
+        "origin": "authored",
+        "locator": "Yangi practice: numbers-lcm"
+      }
+    },
+    {
+      "key": "numbers-practice-08",
+      "skill_key": "numbers-lcm",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "easy",
+      "prompt_uz": "Bir signal 9 daqiqada, boshqasi 15 daqiqada takrorlanadi. Hozir birga chalindi. Necha daqiqadan keyin yana birga chalinadi?",
+      "options": [],
+      "answer_key": {
+        "value": "45"
+      },
+      "solution_steps_uz": [
+        "EKUB(9,15) = 3.",
+        "EKUK = (9 div 3) × 15 = 45 daqiqa."
+      ],
+      "hint_uz": "Takrorlanishlar uchun EKUK ishlatiladi.",
+      "common_error_uz": "EKUB davrlarning yana mos kelish vaqtini bermaydi.",
+      "source": {
+        "id": "source-1-4",
+        "origin": "authored",
+        "locator": "Yangi practice: numbers-lcm"
+      }
+    },
+    {
+      "key": "numbers-practice-09",
+      "skill_key": "numbers-bases",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "easy",
+      "prompt_uz": "110101₂ ning o‘nlik qiymatini kiriting.",
+      "options": [],
+      "answer_key": {
+        "value": "53"
+      },
+      "solution_steps_uz": [
+        "110101₂ = 32 + 16 + 0 + 4 + 0 + 1.",
+        "Yig‘indi 53."
+      ],
+      "hint_uz": "O‘ngdan boshlab 1, 2, 4, 8, 16, 32 xonalarini belgilang.",
+      "common_error_uz": "Ikkilikdagi yozuvni o‘nlikdagi 110101 deb olmang.",
+      "source": {
+        "id": "source-1-4",
+        "origin": "authored",
+        "locator": "Yangi practice: numbers-bases"
+      }
+    },
+    {
+      "key": "numbers-practice-10",
+      "skill_key": "numbers-bases",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "easy",
+      "prompt_uz": "58₁₀ sonining sakkizlik yozuvini tanlang.",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "58₈",
+          "feedback_uz": "Sakkizlikda 8 raqami ishlatilmaydi."
+        },
+        {
+          "id": "b",
+          "text_uz": "70₈",
+          "feedback_uz": "7 × 8 = 56; qoldiq 2 qolgan."
+        },
+        {
+          "id": "c",
+          "text_uz": "72₈",
+          "feedback_uz": "To‘g‘ri. Qoldiqlar teskari o‘qiladi: 72₈; 7 × 8 + 2 = 58."
+        },
+        {
+          "id": "d",
+          "text_uz": "27₈",
+          "feedback_uz": "2 × 8 + 7 = 23."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "58 = 8 × 7 + 2; 7 = 8 × 0 + 7.",
+        "Qoldiqlar teskari o‘qiladi: 72₈; 7 × 8 + 2 = 58."
+      ],
+      "hint_uz": "8 ga ketma-ket bo‘ling va qoldiqlarni teskari o‘qing.",
+      "common_error_uz": "Qoldiqlarning yozilish va o‘qilish tartibi farq qiladi.",
+      "source": {
+        "id": "source-1-4",
+        "origin": "authored",
+        "locator": "Yangi practice: numbers-bases"
+      }
+    },
+    {
+      "key": "numbers-precheck-01",
+      "skill_key": "numbers-divmod",
+      "purpose": "precheck",
+      "format": "numeric",
+      "difficulty": "easy",
+      "prompt_uz": "85 div 7 ni hisoblang.",
+      "options": [],
+      "answer_key": {
+        "value": "12"
+      },
+      "solution_steps_uz": [
+        "85 = 7 × 12 + 1.",
+        "Butun bo‘linma 12."
+      ],
+      "hint_uz": null,
+      "common_error_uz": "Qoldiq va bo‘linma turli miqdorlardir.",
+      "source": {
+        "id": "source-1-4",
+        "origin": "authored",
+        "locator": "Yangi precheck: numbers-divmod"
+      }
+    },
+    {
+      "key": "numbers-precheck-02",
+      "skill_key": "numbers-primes",
+      "purpose": "precheck",
+      "format": "single",
+      "difficulty": "easy",
+      "prompt_uz": "1, 39, 43, 49 sonlaridan tubini tanlang.",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "39",
+          "feedback_uz": "39 = 3 × 13."
+        },
+        {
+          "id": "b",
+          "text_uz": "49",
+          "feedback_uz": "49 = 7 × 7."
+        },
+        {
+          "id": "c",
+          "text_uz": "43",
+          "feedback_uz": "To‘g‘ri. 43 ni 2, 3, 5 bo‘lmaydi; √43 < 7."
+        },
+        {
+          "id": "d",
+          "text_uz": "1",
+          "feedback_uz": "1 ning faqat bitta musbat bo‘luvchisi bor."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "1 tub emas, 39 = 3 × 13, 49 = 7².",
+        "43 ni 2, 3, 5 bo‘lmaydi; √43 < 7."
+      ],
+      "hint_uz": null,
+      "common_error_uz": "1 soni tub deb hisoblanmaydi.",
+      "source": {
+        "id": "source-1-4",
+        "origin": "authored",
+        "locator": "Yangi precheck: numbers-primes"
+      }
+    },
+    {
+      "key": "numbers-precheck-03",
+      "skill_key": "numbers-gcd",
+      "purpose": "precheck",
+      "format": "numeric",
+      "difficulty": "easy",
+      "prompt_uz": "EKUB(84,126) ni toping.",
+      "options": [],
+      "answer_key": {
+        "value": "42"
+      },
+      "solution_steps_uz": [
+        "126 mod 84 = 42.",
+        "84 mod 42 = 0; EKUB = 42."
+      ],
+      "hint_uz": null,
+      "common_error_uz": "Eng katta umumiy bo‘luvchini tanlang.",
+      "source": {
+        "id": "source-1-4",
+        "origin": "authored",
+        "locator": "Yangi precheck: numbers-gcd"
+      }
+    },
+    {
+      "key": "numbers-precheck-04",
+      "skill_key": "numbers-lcm",
+      "purpose": "precheck",
+      "format": "numeric",
+      "difficulty": "easy",
+      "prompt_uz": "EKUK(12,18) ni toping.",
+      "options": [],
+      "answer_key": {
+        "value": "36"
+      },
+      "solution_steps_uz": [
+        "EKUB(12,18) = 6.",
+        "(12 div 6) × 18 = 36."
+      ],
+      "hint_uz": null,
+      "common_error_uz": "EKUK ikkala sonning ham karralisi bo‘lishi kerak.",
+      "source": {
+        "id": "source-1-4",
+        "origin": "authored",
+        "locator": "Yangi precheck: numbers-lcm"
+      }
+    },
+    {
+      "key": "numbers-precheck-05",
+      "skill_key": "numbers-bases",
+      "purpose": "precheck",
+      "format": "numeric",
+      "difficulty": "easy",
+      "prompt_uz": "101101₂ sonining o‘nlik qiymati nechaga teng?",
+      "options": [],
+      "answer_key": {
+        "value": "45"
+      },
+      "solution_steps_uz": [
+        "32 + 8 + 4 + 1 = 45."
+      ],
+      "hint_uz": null,
+      "common_error_uz": "Har bir bitning xonasini hisobga oling.",
+      "source": {
+        "id": "source-1-4",
+        "origin": "authored",
+        "locator": "Yangi precheck: numbers-bases"
+      }
+    },
+    {
+      "key": "numbers-postcheck-01",
+      "skill_key": "numbers-divmod",
+      "purpose": "postcheck",
+      "format": "numeric",
+      "difficulty": "easy",
+      "prompt_uz": "a div 7 = 9 va a mod 7 = 4. a ni toping.",
+      "options": [],
+      "answer_key": {
+        "value": "67"
+      },
+      "solution_steps_uz": [
+        "a = bq + r = 7 × 9 + 4.",
+        "a = 67; 4 < 7 sharti bajarilgan."
+      ],
+      "hint_uz": null,
+      "common_error_uz": "Qoldiqni bo‘linmaga emas, bo‘luvchi bilan bo‘linma ko‘paytmasiga qo‘shing.",
+      "source": {
+        "id": "source-1-4",
+        "origin": "authored",
+        "locator": "Yangi postcheck: numbers-divmod"
+      }
+    },
+    {
+      "key": "numbers-postcheck-02",
+      "skill_key": "numbers-primes",
+      "purpose": "postcheck",
+      "format": "numeric",
+      "difficulty": "easy",
+      "prompt_uz": "20 dan katta va 30 dan kichik nechta tub son bor?",
+      "options": [],
+      "answer_key": {
+        "value": "2"
+      },
+      "solution_steps_uz": [
+        "21, 22, 24, 25, 26, 27, 28 murakkab.",
+        "23 va 29 tub; jami 2 ta."
+      ],
+      "hint_uz": null,
+      "common_error_uz": "Toq sonlar orasida ham murakkablari bor.",
+      "source": {
+        "id": "source-1-4",
+        "origin": "authored",
+        "locator": "Yangi postcheck: numbers-primes"
+      }
+    },
+    {
+      "key": "numbers-postcheck-03",
+      "skill_key": "numbers-gcd",
+      "purpose": "postcheck",
+      "format": "numeric",
+      "difficulty": "easy",
+      "prompt_uz": "48 cm × 180 cm to‘g‘ri to‘rtburchakni qoldiqsiz teng kvadratlarga bo‘lamiz. Eng katta kvadratning tomoni necha cm?",
+      "options": [],
+      "answer_key": {
+        "value": "12"
+      },
+      "solution_steps_uz": [
+        "Kvadrat tomoni 48 ni ham, 180 ni ham bo‘lishi kerak.",
+        "180 mod 48 = 36; 48 mod 36 = 12; 36 mod 12 = 0.",
+        "EKUB(48,180) = 12 cm."
+      ],
+      "hint_uz": null,
+      "common_error_uz": "Eng katta umumiy bo‘luvchi uzunlikni beradi.",
+      "source": {
+        "id": "source-1-4",
+        "origin": "authored",
+        "locator": "Yangi postcheck: numbers-gcd"
+      }
+    },
+    {
+      "key": "numbers-postcheck-04",
+      "skill_key": "numbers-lcm",
+      "purpose": "postcheck",
+      "format": "numeric",
+      "difficulty": "easy",
+      "prompt_uz": "Ikki qurilma 09:00 da birga signal berdi. Davrlari 8 va 14 daqiqa. 09:00 dan keyin yana birga signal berishigacha necha daqiqa o‘tadi?",
+      "options": [],
+      "answer_key": {
+        "value": "56"
+      },
+      "solution_steps_uz": [
+        "EKUB(8,14) = 2.",
+        "EKUK = (8 div 2) × 14 = 56 daqiqa; keyingi vaqt 09:56."
+      ],
+      "hint_uz": null,
+      "common_error_uz": "Boshlang‘ich birgalikdagi hodisani keyingi uchrashuv deb sanamang.",
+      "source": {
+        "id": "source-1-4",
+        "origin": "authored",
+        "locator": "Yangi postcheck: numbers-lcm"
+      }
+    },
+    {
+      "key": "numbers-postcheck-05",
+      "skill_key": "numbers-bases",
+      "purpose": "postcheck",
+      "format": "single",
+      "difficulty": "easy",
+      "prompt_uz": "202₁₀ sonining o‘n oltilik yozuvini tanlang.",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "AC₁₆",
+          "feedback_uz": "10 × 16 + 12 = 172."
+        },
+        {
+          "id": "b",
+          "text_uz": "C2₁₆",
+          "feedback_uz": "12 × 16 + 2 = 194."
+        },
+        {
+          "id": "c",
+          "text_uz": "12A₁₆",
+          "feedback_uz": "1 × 256 + 2 × 16 + 10 = 298."
+        },
+        {
+          "id": "d",
+          "text_uz": "CA₁₆",
+          "feedback_uz": "To‘g‘ri. 12 → C va 10 → A; demak CA₁₆."
+        }
+      ],
+      "answer_key": {
+        "option_id": "d"
+      },
+      "solution_steps_uz": [
+        "202 = 16 × 12 + 10.",
+        "12 → C va 10 → A; demak CA₁₆."
+      ],
+      "hint_uz": null,
+      "common_error_uz": "O‘n oltilikda A=10 va C=12.",
+      "source": {
+        "id": "source-1-4",
+        "origin": "authored",
+        "locator": "Yangi postcheck: numbers-bases"
+      }
+    }
+  ],
+  "diagnostic_links": [],
+  "blueprint": {
+    "precheck_order": [
+      "numbers-precheck-01",
+      "numbers-precheck-02",
+      "numbers-precheck-03",
+      "numbers-precheck-04",
+      "numbers-precheck-05"
+    ],
+    "practice_order": [
+      "numbers-practice-01",
+      "numbers-practice-03",
+      "numbers-practice-05",
+      "numbers-practice-07",
+      "numbers-practice-09",
+      "numbers-practice-02",
+      "numbers-practice-04",
+      "numbers-practice-06",
+      "numbers-practice-08",
+      "numbers-practice-10"
+    ],
+    "postcheck_order": [
+      "numbers-postcheck-01",
+      "numbers-postcheck-02",
+      "numbers-postcheck-03",
+      "numbers-postcheck-04",
+      "numbers-postcheck-05"
+    ],
+    "matched_pairs": [
+      {
+        "skill_key": "numbers-divmod",
+        "difficulty": "easy",
+        "precheck_key": "numbers-precheck-01",
+        "postcheck_key": "numbers-postcheck-01"
+      },
+      {
+        "skill_key": "numbers-primes",
+        "difficulty": "easy",
+        "precheck_key": "numbers-precheck-02",
+        "postcheck_key": "numbers-postcheck-02"
+      },
+      {
+        "skill_key": "numbers-gcd",
+        "difficulty": "easy",
+        "precheck_key": "numbers-precheck-03",
+        "postcheck_key": "numbers-postcheck-03"
+      },
+      {
+        "skill_key": "numbers-lcm",
+        "difficulty": "easy",
+        "precheck_key": "numbers-precheck-04",
+        "postcheck_key": "numbers-postcheck-04"
+      },
+      {
+        "skill_key": "numbers-bases",
+        "difficulty": "easy",
+        "precheck_key": "numbers-precheck-05",
+        "postcheck_key": "numbers-postcheck-05"
+      }
+    ],
+    "unseen_postcheck_sets": 1,
+    "comparison_note_uz": "Qiyinlik tahririy baholangan; savollar statistik tenglashtirilmagan. Natija faqat ushbu mavzuga tegishli.",
+    "exhaustion_note_uz": "Yangi yakuniy to‘plam tugaganda mashqlar ochiq qoladi, ammo yangi mustaqil tekshiruv uchun bank kengaytirilishi kerak."
+  }
+}

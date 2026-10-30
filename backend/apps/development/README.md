@@ -31,7 +31,7 @@ demo users to satisfy these references. Validate the target database and take
 an appropriate backup before applying migrations to an existing installation.
 
 The default command still imports only arithmetic/algebra. `--all` imports the
-latest bundled version of each of the five modules in one atomic transaction,
+latest bundled version of each of the six modules in one atomic transaction,
 with prerequisite modules first. Its dry run resolves all cross-module
 references without creating any rows. Matrix content intentionally has no
 diagnostic links because no matching questions exist in the current bank;
@@ -40,7 +40,7 @@ an explicit coverage note is required instead of a fabricated link.
 The stage-four authoring source is `docs/content/cluster1/build_stage4_content.py`.
 `verify_stage4_content.py` independently checks the new answers/examples,
 Boolean equivalence over all assignments, provenance hashes and the full graph.
-Browser smoke tests accept `--all-modules` to also verify the five-course catalogue.
+Browser smoke tests accept `--all-modules` to also verify the six-course catalogue.
 
 Drafts can be reconciled using the same key/version. After publication or
 enrollment, changed content requires a new version. Identical imports remain
@@ -116,7 +116,7 @@ opening the next. It never publishes content into the main configured database.
 ## Tests
 
 For an authorized production release, `python manage.py activate_development_cluster1`
-imports and publishes the five reviewed modules in one transaction. It is
+imports and publishes the six reviewed modules in one transaction. It is
 idempotent, creates no accounts/scores and serializes PostgreSQL releases with
 an advisory lock. Render requires PostgreSQL; ephemeral SQLite is rejected.
 Gunicorn loads `backend/gunicorn.conf.py` automatically from its backend working
@@ -124,7 +124,7 @@ directory. Its master startup hook runs this command only when
 `DEVELOPMENT_CLUSTER1_PUBLISH_ON_DEPLOY=1`, closing DB connections before workers
 fork. Set `DEVELOPMENT_CLUSTER1_ENABLED=1` separately to expose the pilot.
 Rollback access by setting the enabled flag to `0`; published content/results
-remain stored. Failed publication rolls back all five modules and fails the
+remain stored. Failed publication rolls back all six modules and fails the
 new startup, preserving the prior release. Normal startup does not publish.
 
 ```powershell
@@ -138,4 +138,38 @@ the database configured by `DATABASE_URL`. Tests cover real migrations,
 manifest validation, reference integrity, rollback, repeated seed, immutable
 versions and snapshots, uniqueness/range constraints, role/owner/profile/flag
 permissions, and the actual Django admin publication action. PostgreSQL lock
-behavior and concurrent HTTP requests still require the later staging checks.
+checks are described below; hosted staging remains a separate environment check.
+
+### PostgreSQL concurrency checks (stage six)
+
+`tests/postgres_settings.py` always connects to `127.0.0.1`, user `stage6test`,
+port `55436` (override only with `STAGE6_POSTGRES_PORT`). It never uses a
+production `DATABASE_URL`. Provision a disposable local PostgreSQL cluster with
+that role and bind it to loopback. The Django runner creates and drops only
+`test_mindmetric_stage6`; the base database name is `mindmetric_stage6`.
+Never point the runner at an existing user database. Binaries/data are local
+test infrastructure under ignored `backups/stage6-postgresql/` in this workspace.
+
+```powershell
+backend/venv/Scripts/python.exe backend/manage.py test apps.development --settings=apps.development.tests.postgres_settings --noinput
+```
+
+On PostgreSQL, seven additional TransactionTestCase tests send overlapping API
+view requests with separate database connections. They verify duplicate enroll,
+duplicate start, competing modules, identical answer UUID retries, different
+answer UUID races, duplicate finish and simultaneous hint/answer ordering.
+They run real migrations and use synthetic content/students only. SQLite skips
+these seven tests because its locks cannot establish PostgreSQL behavior.
+Production Neon was not used for destructive tests. Separate hosted staging
+and real participant observations must be recorded separately from these tests.
+
+## Number theory module 1.4
+
+`number-theory-discrete-mathematics.v1.json` adds five skills, five lessons and
+20 questions (10 practice, 5 precheck, 5 postcheck), ordered between sets and
+functions. The authored Markdown/Word resource is in `docs/content/cluster1/`.
+Its source hash pins the new Markdown, with LF line endings enforced by Git.
+It does not pretend a previously supplied 1.4 Word source existed.
+No diagnostic links are fabricated; the module begins with its own precheck.
+Existing five published manifests and their version hashes stay unchanged.
+`test_number_theory.py` checks all 20 answers and five examples independently.

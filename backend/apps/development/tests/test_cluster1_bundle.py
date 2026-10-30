@@ -32,12 +32,12 @@ class BundleTests(ContentDatabaseCase):
                         'indicator_key': indicator, **{key: value for key, value in question.items() if key != 'key'},
                     })
 
-    def test_all_five_manifests_import_prerequisite_first_even_reversed(self):
+    def test_all_six_manifests_import_prerequisite_first_even_reversed(self):
         result = import_bundle(list(reversed(deepcopy(self.contents))))
         self.assertEqual(result[0][0]['module']['key'], 'arithmetic-algebra')
-        self.assertEqual(DevelopmentModule.objects.count(), 5)
-        self.assertEqual(DevelopmentSkill.objects.count(), 25)
-        self.assertEqual(DevelopmentExercise.objects.count(), 100)
+        self.assertEqual(DevelopmentModule.objects.count(), 6)
+        self.assertEqual(DevelopmentSkill.objects.count(), 30)
+        self.assertEqual(DevelopmentExercise.objects.count(), 120)
         self.assertEqual(DiagnosticSkillLink.objects.count(), 29)
         self.assertEqual(set(DevelopmentModule.objects.values_list('status', flat=True)), {'draft'})
         self.assertEqual(DevelopmentEnrollment.objects.count(), 0)
@@ -51,14 +51,14 @@ class BundleTests(ContentDatabaseCase):
         ids = list(DevelopmentExercise.objects.values_list('pk', 'key').order_by('pk'))
         call_command('seed_development_content', all=True, stdout=output)
         self.assertEqual(list(DevelopmentExercise.objects.values_list('pk', 'key').order_by('pk')), ids)
-        self.assertEqual(DevelopmentModule.objects.count(), 5)
+        self.assertEqual(DevelopmentModule.objects.count(), 6)
 
     def test_whole_bundle_dry_run_resolves_cross_module_dependencies_without_writes(self):
         output = StringIO()
         call_command('seed_development_content', all=True, dry_run=True, stdout=output)
         self.assertEqual(DevelopmentModule.objects.count(), 0)
         self.assertEqual(DevelopmentSkill.objects.count(), 0)
-        self.assertEqual(output.getvalue().count('Validated without writes'), 5)
+        self.assertEqual(output.getvalue().count('Validated without writes'), 6)
 
     def test_missing_diagnostic_in_last_module_prevents_entire_bundle(self):
         data = deepcopy(self.contents)
@@ -146,6 +146,8 @@ class BundleTests(ContentDatabaseCase):
         for data in self.contents:
             if data['module']['order'] == 1:
                 continue
+            # Isolate each course flow; this is not a 35-write/hour throttle test.
+            cache.clear()
             active_key = data['module']['key']
             enrollment = post(f'modules/{active_key}/enroll/')
             session = post(f'enrollments/{enrollment["id"]}/sessions/', {'purpose': 'precheck'})
@@ -160,6 +162,6 @@ class BundleTests(ContentDatabaseCase):
             self.assertEqual(enrollment['postcheck_score'], 100)
             self.assertEqual(enrollment['stage'], 'completed')
             self.assertEqual(enrollment['delta_percentage_points'], 100)
-        self.assertEqual(DevelopmentAnswer.objects.count(), 80)
+        self.assertEqual(DevelopmentAnswer.objects.count(), 100)
         self.assertEqual(user.indicator_scores.count(), 0)
         self.assertEqual(DevelopmentModule.objects.get(key='matrices-linear-algebra').skills.filter(diagnostic_links__isnull=False).count(), 0)

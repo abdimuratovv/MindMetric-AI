@@ -2,7 +2,7 @@
 
 Sana: 2026-10-28
 
-Ijro holati: 1–5-bosqichlar bajarildi; 6-bosqich foydalanuvchi tasdig‘ini kutmoqda. Natijalar: [birinchi bosqich hisoboti](cluster1-stage1-summary.md), [ikkinchi bosqich hisoboti](cluster1-stage2-summary.md), [uchinchi bosqich hisoboti](cluster1-stage3-summary.md), [to‘rtinchi bosqich hisoboti](cluster1-stage4-summary.md), [beshinchi bosqich hisoboti](cluster1-stage5-summary.md). Keyingi har bir bosqich faqat avvalgi bosqich xulosasi va foydalanuvchi tasdig‘idan keyin boshlanadi.
+Ijro holati: 1–5-bosqichlar bajarildi. 6-bosqich tasdiqlandi: texnik tekshiruvlar yakunlandi, foydalanuvchi o‘zi bajaradigan pilot kuzatuvlari kutilmoqda. Natijalar: [birinchi bosqich hisoboti](cluster1-stage1-summary.md), [ikkinchi bosqich hisoboti](cluster1-stage2-summary.md), [uchinchi bosqich hisoboti](cluster1-stage3-summary.md), [to‘rtinchi bosqich hisoboti](cluster1-stage4-summary.md), [beshinchi bosqich hisoboti](cluster1-stage5-summary.md), [oltinchi bosqich holati](cluster1-stage6-summary.md). Keyingi ish pilot kuzatuvlaridagi muhim muammolarni tekshirish va tuzatishdir.
 
 ## 1. Maqsad va yakuniy natija
 

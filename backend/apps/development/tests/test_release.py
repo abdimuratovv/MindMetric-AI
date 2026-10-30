@@ -26,17 +26,18 @@ class ReleaseTests(ContentDatabaseCase):
                     })
 
     @patch.dict(os.environ, {'RENDER': ''})
-    def test_release_publishes_five_modules_and_is_idempotent(self):
+    def test_release_publishes_six_modules_and_is_idempotent(self):
         output=StringIO()
         call_command('activate_development_cluster1',stdout=output)
         ids=list(DevelopmentExercise.objects.order_by('pk').values_list('pk',flat=True))
         call_command('activate_development_cluster1',stdout=output)
-        self.assertEqual(DevelopmentModule.objects.filter(status='published').count(),5)
-        self.assertEqual(len(ids),100)
+        self.assertEqual(DevelopmentModule.objects.filter(status='published').count(),6)
+        self.assertEqual(len(ids),120)
         self.assertEqual(list(DevelopmentExercise.objects.order_by('pk').values_list('pk',flat=True)),ids)
         self.assertEqual(get_user_model().objects.count(),0)
 
     @patch.dict(os.environ, {'RENDER': 'true'})
+    @patch('apps.development.management.commands.activate_development_cluster1.connection.vendor', 'sqlite')
     def test_render_sqlite_is_rejected_before_writes(self):
         with self.assertRaisesMessage(CommandError,'persistent PostgreSQL'):
             call_command('activate_development_cluster1',stdout=StringIO())
@@ -48,7 +49,7 @@ class ReleaseTests(ContentDatabaseCase):
         def publish_then_fail(pk):
             nonlocal count
             count+=1
-            if count==5:
+            if count==6:
                 raise RuntimeError('publication failure')
             return publish_module(pk)
         with patch('apps.development.management.commands.activate_development_cluster1.publish_module',side_effect=publish_then_fail):
