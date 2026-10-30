@@ -1,4 +1,5 @@
-﻿$ErrorActionPreference = 'Stop'
+﻿param([switch]$ExportPdf)
+$ErrorActionPreference = 'Stop'
 $sourcePath = Join-Path $PSScriptRoot '1.4-mavzu.md'
 $outputPath = Join-Path $PSScriptRoot '1.4-mavzu.docx'
 $qaPath = Join-Path $PSScriptRoot '..\..\..\backups\number-theory-docx-qa'
@@ -41,7 +42,7 @@ try {
             $headings += @{ Index = $paragraphTexts.Count + 1; Style = -3; NewPage = (-[int]($lessonIndex -gt 1)) }
             $text = $line.Substring(4)
         } elseif ($line.StartsWith('## ')) {
-            $headings += @{ Index = $paragraphTexts.Count + 1; Style = -2; NewPage = (-[int]($lessonIndex -gt 0)) }
+            $headings += @{ Index = $paragraphTexts.Count + 1; Style = -2; NewPage = (-[int](($lessonIndex -gt 0) -and ($line -notlike '## Baholash*'))) }
             $text = $line.Substring(3)
         }
         $paragraphTexts.Add($text)
@@ -52,6 +53,11 @@ try {
         $paragraph = $document.Paragraphs.Item($entry.Index)
         $paragraph.Style = $document.Styles.Item($entry.Style)
         $paragraph.Format.PageBreakBefore = $entry.NewPage
+    }
+    for ($index = 0; $index -lt $paragraphTexts.Count; $index++) {
+        if (($paragraphTexts[$index] -like 'numbers-*') -or ($paragraphTexts[$index] -match '^[a-d]\)')) {
+            $document.Paragraphs.Item($index + 1).Format.KeepWithNext = -1
+        }
     }
     'Headings formatted' | Add-Content -LiteralPath $progressPath
     $document.Repaginate()
@@ -91,8 +97,10 @@ try {
             $entryStream.Write($bytes,0,$bytes.Length)
         } finally { $entryStream.Dispose() }
     } finally { $zip.Dispose(); $stream.Dispose() }
-    'Exporting PDF' | Add-Content -LiteralPath $progressPath
-    $document.ExportAsFixedFormat((Join-Path $qaPath '1.4-mavzu.pdf'),17)
+    if ($ExportPdf) {
+        'Exporting PDF' | Add-Content -LiteralPath $progressPath
+        $document.ExportAsFixedFormat((Join-Path $qaPath '1.4-mavzu.pdf'),17)
+    }
     Write-Output ('Word resource saved; pages: ' + $document.ComputeStatistics(2))
 } finally {
     if ($null -ne $document) { $document.Close(0) }
