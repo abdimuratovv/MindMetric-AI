@@ -2,6 +2,8 @@
 
 Sana: 2026-10-31. Ushbu bosqich repository kodi va izolyatsiyalangan test bazasini qamraydi. Production deploy va yangi frontend hali bajarilmagan.
 
+Joriy holat: bu shartnoma 2-bosqichda yozilgan; backend/frontend endi jonli platformada. [4-bosqichdagi chiqarish va tekshiruvlar](cluster2-stage4-summary.md).
+
 ## Kontent va migratsiya
 
 `DevelopmentModule.cluster` yangi maydon: 1 — akademik, 2 — algoritmik-amaliy. Migration `0003_developmentmodule_cluster` avvalgi modullarga 1 qiymatini beradi; original JSON, content hash, sessiya savollari va diagnostika snapshotlarini qayta yozmaydi. Klaster ichidagi tartib mavjud `order`; `topic_number` serverda `cluster.order` sifatida hosil qilinadi. Bir kalit yangi versiyada boshqa klasterga ko‘chirilmaydi.

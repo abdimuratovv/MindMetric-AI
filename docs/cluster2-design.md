@@ -1,6 +1,6 @@
 # 2-klaster: ikki tilli resurslar va platforma integratsiyasi
 
-Sana: 2026-10-31. Holat: foydalanuvchi tasdiqlagan loyiha yechimi; resurslar, backend va frontend integratsiyasi tugagan, chiqarish bosqichi tasdig‘i kutilmoqda.
+Sana: 2026-10-31. Holat: foydalanuvchi tasdiqlagan loyiha yechimi to‘liq bajarilgan; resurslar, backend, frontend va jonli chiqarish tugagan. [Yakuniy hisobot](cluster2-stage4-summary.md).
 
 ## Maqsad va manba
 

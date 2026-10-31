@@ -2,9 +2,9 @@
 
 2026-10-31 cluster-two update: both clusters are supported by the backend.
 Cluster one remains the default seed/release scope; cluster two requires an
-explicit bundle/release selection. The two-cluster frontend is tested locally;
-the live release remains a later stage. See `docs/cluster2-backend-contract.md`
-and `docs/cluster2-stage3-summary.md` at repository root.
+explicit bundle/release selection. Both clusters and the two-cluster frontend
+are live. See `docs/cluster2-backend-contract.md` and
+`docs/cluster2-stage4-summary.md` at repository root for validation and live checks.
 
 Stages two through four provide versioned content, progress storage, permissions,
 read-only Django admin inspection, explicit publication, atomic seed, student

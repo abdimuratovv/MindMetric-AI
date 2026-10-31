@@ -1,6 +1,6 @@
 # 2-klaster resurslari — UZ / RU
 
-**Holat: resurslar, backend va frontend tayyor, lokal tekshiruvlardan o‘tgan. Jonli chiqarish tasdig‘i kutilmoqda.**
+**Holat: resurslar, backend va frontend jonli platformaga chiqarilgan.** [Yakuniy hisobot](../../cluster2-stage4-summary.md).
 
 Algoritmik-amaliy blok: 6 modul, 30 mikroko‘nikma, 30 mini-dars va ishlangan namuna, 120 topshiriq (60 mashq, 30 boshlang‘ich, 30 yakuniy), 2 ochiq miniloyiha. Barcha mazmun o‘zbekcha va ruscha tayyorlandi. Ruscha savollar o‘zbekcha savollarning tarjimasi; ular qo‘shimcha mustaqil tekshiruv banki sifatida sanalmaydi.
 
@@ -45,7 +45,7 @@ Yangi resurslar `schema_version=2` bo‘lib, `module.cluster=2` va `module.topic
 
 `skills`, `lessons`, `exercises`, `sources`, `diagnostic_links`, `blueprint` bo‘limlari mavjud kontent shakliga mos. 2.6 dagi qo‘shimcha `projects` — `assessment=self_review`, `title_uz`, `brief_uz`, `constraints_uz`, `steps_uz`, `deliverables_uz`, `rubric_uz`. Ruscha locale’da `projects[key]` xuddi shu maydonlarning tilga neytral nomlarini saqlaydi. Miniloyihalar javobli tekshiruv bankiga kirmaydi; ularni ham active check paytida o‘quv nazariyasi sifatida yopish zarur.
 
-Backenddagi haqiqiy validator schema 1 va 2 ni tekshiradi; offline QA ham shu validatorni yangi JSONlarga to‘g‘ridan-to‘g‘ri qo‘llaydi. Resurslar `backend/apps/development/content/cluster2/` va umumiy `content/translations/` katalogiga ko‘chirildi. Backend importer schema 2 uchun to‘liq ruscha locale va hash mosligini yozuvdan oldin talab qiladi. Jonli serverga chiqarish keyingi alohida bosqich.
+Backenddagi haqiqiy validator schema 1 va 2 ni tekshiradi; offline QA ham shu validatorni yangi JSONlarga to‘g‘ridan-to‘g‘ri qo‘llaydi. Resurslar `backend/apps/development/content/cluster2/` va umumiy `content/translations/` katalogida. Backend importer schema 2 uchun to‘liq ruscha locale va hash mosligini yozuvdan oldin talab qiladi; ikkala klaster jonli serverda nashr qilingan.
 
 `notation_uz` va ruscha locale’dagi `notation` — javobsiz, neytral psevdokod qoidalari. Ular module v1 hashiga bog‘langan va enrollment javobida tekshiruv boshlanishidan oldin ochiladi. Aktiv check paytida barcha enrollmentlarda yopiladi. Dastlabki resurslar bosqichidagi vaqtinchalik schema-1 proyeksiyasi backend bosqichida olib tashlandi; shu sabab `verification-result.json` hozirgi validator holatini ko‘rsatadi.
 
