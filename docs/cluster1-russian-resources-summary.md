@@ -23,4 +23,8 @@ Asosiy fayllar: `backend/apps/development/translations.py`, `content/translation
 
 ## Chiqarish
 
-Lokal tekshiruvlar tugadi. Ushbu hisobot tayyorlanayotganda push/deploy va jonli RU ↔ UZ smoke tekshiruvi navbatdagi amaldir. Yakuniy natija shu chatda qayd etiladi. Asosiy Neon bazasida sinov uchun yangi javob yoki enrollment yaratish talab etilmaydi; jonli tekshiruv avval e’lon qilingan kontentni o‘qish bilan cheklanadi.
+- Implementatsiya `472ae4e595aabf592882f517b4e1e25933f2369d` commitida feature branch va `main`ga push qilindi.
+- Render backend deploy `dep-dbiuee2vcj2c73ed5th0` 2026-10-31 13:25:28 UTC da live bo‘ldi; frontend deploy `dep-dbiuee2vcj2c73ed5to0` ham live.
+- [Jonli platforma](https://mindmetric-frontend.onrender.com/#development) API va Chrome brauzerida UZ → RU → UZ → RU tekshirildi: olti modul, 1.1/1.6 ruscha sarlavhalar va haqiqiy `content_language`, qolgan modullarda o‘zbekcha fallback to‘g‘ri. Mavjud 1.1 v1 mashg‘ulotidagi aktiv savol ruscha qaytdi, stage va javoblar soni saqlandi. Bu hisobda darslar hali ochilmagani sabab jonli dars tekshiruvi bajarilmadi; barcha darslar lokal API va brauzer sinovlarida tekshirilgan.
+- Jonli brauzerda JS xatosi yo‘q, 390 px mobil kenglikda overflow yo‘q. Neon bazasida yangi enrollment yoki javob yaratilmadi.
+- Jonli tekshiruv natijasi va desktop/mobil skrinshotlar: `C:/Users/Asus/.codex/visualizations/2026/10/28/01a18264-3f77-7a02-a3d2-c4d4e2010e21/production-russian-resources/` (`result.json`, `catalogue-ru.png`, `catalogue-uz.png`, `catalogue-ru-mobile.png`).

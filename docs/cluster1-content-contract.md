@@ -2,6 +2,8 @@
 
 Versiya: 1. Sana: 2026-10-28. Birinchi backend implementatsiyasi uchun kirish formati.
 
+2026-10-31 til yangilanishi: asosiy `schema_version=1` o‘zbekcha manifestlari o‘zgarmaydi. 1.1 va 1.6 uchun `content/translations/<key>.v1.ru.json` alohida ruscha resurslari original kalit, versiya va `content_hash`ga bog‘lanadi. Shu sabab eski v1 enrollment ham tilni almashtira oladi. API’dagi `content_language` real ko‘rsatiladigan til; tarjima mavjud bo‘lmasa `uz` qaytadi. To‘liq qamrov, raqamli konstantalar, option IDlar va manba hash tekshiriladi. Tarjima answer key yoki check hintini qo‘sha olmaydi. Snapshot, grading va kontentning asl versiyasini tarjima qilish uchun tahrirlash kerak emas. Tafsilotlar: [ruscha resurslar hisoboti](cluster1-russian-resources-summary.md).
+
 ## Fayl va versiya
 
 UTF-8 JSON, `schema_version=1`. `module.key` barqaror slug, `module.version` musbat butun son. Kalit va versiya birgalikda nashrni aniqlaydi; keyingi nashr eski enrollment tarkibini almashtirmaydi. `module.status=draft` kontentning talabaga avtomatik ochilmasligini bildiradi. `review_status=internally_checked` tashqi metodist tasdig‘i degani emas.
