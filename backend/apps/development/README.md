@@ -181,15 +181,17 @@ No diagnostic links are fabricated; the module begins with its own precheck.
 Existing five published manifests and their version hashes stay unchanged.
 `test_number_theory.py` checks all 20 answers and five examples independently.
 
-## Russian resources for modules 1.1 and 1.6
+## Russian resources for all six cluster-one modules
 
 `content/translations/*.v1.ru.json` contains complete reviewed Russian overlays
-for arithmetic/algebra and matrices. Overlays are bound to the canonical module
+for topics 1.1–1.6, including logic, sets, number theory and combinatorics.
+Overlays are bound to the canonical module
 key, version and content hash. Frozen manifests, rows and session question
 snapshots stay unchanged, so existing v1 enrollments can switch languages too.
-The release command validates the overlays before the new process serves traffic.
-Missing translations or an incompatible version/hash use the explicit Uzbek
-fallback; there are no machine-generated partial translations in responses.
+Both release commands require and validate complete Russian overlays for every
+bundled topic before importing or publishing anything. An incomplete or stale
+translation blocks release. For unsupported future versions/hash mismatches,
+the runtime retains the explicit Uzbek fallback.
 
 All development endpoints resolve the existing `X-Language`/`lang` request
 language. `content_language` identifies the actual resource language, separately
@@ -206,10 +208,11 @@ an already open explanation. Frontend locale refresh also preserves the lesson,
 expanded example and selected option; a mutation finishing in an older language
 triggers a fresh read in the current language.
 
-Authoring source: `docs/content/cluster1/build_russian_resources.py`; reviewed
+Authoring sources: `docs/content/cluster1/build_russian_resources.py` (1.1/1.6)
+and `build_remaining_russian_resources.py` (1.2–1.5); reviewed
 copies live in `docs/content/cluster1/translations/`. Validation checks complete
 coverage, unchanged numerical constants and option IDs, and forbidden check
 hints/grading overrides. API tests cover pinned v1 sessions and immutable hashes.
 The browser smoke covers RU ↔ UZ in the catalogue, lesson, expanded example,
-selected answer, hint, feedback and matrix check, including Uzbek fallback for
-other modules.
+selected answer, hint, feedback and every cluster-one module's check and lessons.
+See `docs/cluster1-complete-russian-summary.md` for the missing-overlay fix.

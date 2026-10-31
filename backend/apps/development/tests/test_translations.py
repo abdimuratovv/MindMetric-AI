@@ -19,11 +19,13 @@ from apps.development.translations import DIRECTORY,bundled_translation,validate
 from apps.development.validation import ContentValidationError
 from .test_content import ContentDatabaseCase
 
+CLUSTER_ONE_KEYS = tuple(d['module']['key'] for d in bundled_contents())
+
 
 class TranslationResourceTests(SimpleTestCase):
     def test_all_fields_and_math_constants_are_reviewed_and_copies_match(self):
         reviewed=Path(__file__).resolve().parents[4]/'docs/content/cluster1/translations'
-        for key in ('arithmetic-algebra','matrices-linear-algebra'):
+        for key in CLUSTER_ONE_KEYS:
             translated=bundled_translation(key,1)
             self.assertEqual(translated,json.loads((reviewed/f'{key}.v1.ru.json').read_text(encoding='utf-8')))
             self.assertEqual(len(translated['lessons']),5)
@@ -81,16 +83,18 @@ class TranslationAPITests(ContentDatabaseCase):
         finish_session(self.user,session.pk)
         return enrollment
 
-    def test_catalogue_plan_skill_names_and_fallback_follow_language(self):
+    def test_catalogue_plan_and_all_six_skill_names_follow_language(self):
         hashes=list(DevelopmentModule.objects.values_list('pk','content_hash','content_snapshot'))
         for language in ('uz','ru','uz'):
             data=self.get('plan/',language)
             by_key={m['key']:m for m in data['modules']}
-            for key in ('arithmetic-algebra','matrices-linear-algebra'):
+            for key in CLUSTER_ONE_KEYS:
                 self.assertEqual(by_key[key]['content_language'],language)
-                if language=='ru':self.assertRegex(by_key[key]['title'],'[А-Яа-я]')
+                if language=='ru':
+                    translated = bundled_translation(key,1)
+                    self.assertEqual(by_key[key]['title'],translated['title'])
+                    self.assertEqual(by_key[key]['skill_titles'],list(translated['skills'].values()))
                 self.assertTrue(all(s['content_language']==language for s in by_key[key]['skills']))
-            self.assertEqual(by_key['mathematical-logic']['content_language'],'uz')
         self.assertEqual(hashes,list(DevelopmentModule.objects.values_list('pk','content_hash','content_snapshot')))
 
     def test_active_pinned_v1_check_swaps_text_without_advancing_or_revealing_answers(self):
@@ -111,8 +115,8 @@ class TranslationAPITests(ContentDatabaseCase):
         self.assertEqual(session.question_snapshot,before)
         self.assertEqual(DevelopmentAnswer.objects.count(),0)
 
-    def test_lessons_examples_completed_reviews_and_progress_translate_for_both_modules(self):
-        for key in ('arithmetic-algebra','matrices-linear-algebra'):
+    def test_lessons_examples_completed_reviews_and_progress_translate_for_all_six_modules(self):
+        for key in CLUSTER_ONE_KEYS:
             enrollment=self.study(key)
             ru=self.get(f'enrollments/{enrollment.pk}/','ru')
             uz=self.get(f'enrollments/{enrollment.pk}/','uz')

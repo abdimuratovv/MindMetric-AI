@@ -16,7 +16,7 @@ class Translation:
 
     def lesson(self,key,skill,title,theory,prompt,steps,answer,skill_title=None):
         self.data['skills'][skill]=skill_title or title
-        self.data['lessons'][key]={'title':title,'theory':theory,'worked_example':{'prompt':prompt,'solution_steps':steps.split('|'),'answer':answer}}
+        self.data['lessons'][key]={'title':title,'theory':theory,'worked_example':{'prompt':prompt,'solution_steps':steps.split('|') if isinstance(steps,str) else steps,'answer':answer}}
 
     def question(self,key,prompt,steps,hint,error,feedbacks=None,texts=None):
         original=next(q for q in self.source['exercises'] if q['key']==key)
@@ -25,7 +25,7 @@ class Translation:
             assert feedbacks is not None and len(feedbacks)==len(original['options']),key
             for i,option in enumerate(original['options']):
                 options[option['id']]={'text':texts[i] if texts else option['text_uz'],'feedback':feedbacks[i]}
-        self.data['exercises'][key]={'prompt':prompt,'solution_steps':steps.split('|'),'hint':hint,'common_error':error,'options':options}
+        self.data['exercises'][key]={'prompt':prompt,'solution_steps':steps.split('|') if isinstance(steps,str) else steps,'hint':hint,'common_error':error,'options':options}
 
     def write(self):
         for directory in [HERE/'translations',ROOT/'backend/apps/development/content/translations']:

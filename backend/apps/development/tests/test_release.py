@@ -10,6 +10,7 @@ from apps.assessments.content import MCQ_QUESTIONS
 from apps.assessments.models import CognitiveQuestion
 from apps.development.content_loader import bundled_contents, publish_module
 from apps.development.models import DevelopmentModule, DevelopmentExercise
+from apps.development.translations import bundled_translation
 from .test_content import ContentDatabaseCase
 
 
@@ -42,6 +43,26 @@ class ReleaseTests(ContentDatabaseCase):
         with self.assertRaisesMessage(CommandError,'persistent PostgreSQL'):
             call_command('activate_development_cluster1',stdout=StringIO())
         self.assertEqual(DevelopmentModule.objects.count(),0)
+
+    @patch.dict(os.environ, {'RENDER': ''})
+    def test_missing_or_stale_russian_topic_blocks_both_releases_before_import(self):
+        original = bundled_translation
+        for command in ('activate_development_cluster1', 'activate_development_cluster2'):
+            for key in ('mathematical-logic', 'sets-and-relations',
+                        'number-theory-discrete-mathematics', 'functions-sequences-combinatorics'):
+                for missing in (True, False):
+                    def broken(topic, version):
+                        value = original(topic, version)
+                        if topic == key:
+                            return None if missing else {**value, 'source_hash': '0'*64}
+                        return value
+                    with self.subTest(command=command, key=key, missing=missing), patch(
+                        'apps.development.translations.bundled_translation', side_effect=broken
+                    ), patch('apps.development.management.commands.'+command+'.import_bundle') as importer:
+                        with self.assertRaises(CommandError):
+                            call_command(command, stdout=StringIO())
+                        importer.assert_not_called()
+                    self.assertFalse(DevelopmentModule.objects.exists())
 
     @patch.dict(os.environ, {'RENDER': ''})
     def test_late_publication_failure_rolls_back_whole_bundle(self):

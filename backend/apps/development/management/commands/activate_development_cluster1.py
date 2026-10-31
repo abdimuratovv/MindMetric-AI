@@ -6,7 +6,8 @@ from django.core.management.base import BaseCommand, CommandError
 from django.db import connection, transaction
 
 from apps.development.content_loader import bundled_contents, import_bundle, publish_module
-from apps.development.translations import bundled_translation
+from apps.development.translations import bundled_translation, validate_release_translations
+from apps.development.validation import ContentValidationError
 
 
 class Command(BaseCommand):
@@ -20,7 +21,12 @@ class Command(BaseCommand):
                 # Serialize this release across overlapping Gunicorn masters/instances.
                 with connection.cursor() as cursor:
                     cursor.execute('SELECT pg_advisory_xact_lock(%s)', [192837465])
-            results = import_bundle(bundled_contents())
+            contents = bundled_contents()
+            try:
+                validate_release_translations(contents)
+            except (OSError, ContentValidationError) as exc:
+                raise CommandError(str(exc)) from exc
+            results = import_bundle(contents)
             for _, module, _ in results:
                 translated=bundled_translation(module.key,module.version)
                 if translated and translated['source_hash']!=module.content_hash:

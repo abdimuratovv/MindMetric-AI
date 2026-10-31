@@ -97,6 +97,15 @@ def bundled_translation(key,version):
         raise ContentValidationError(f'Invalid translation JSON: {exc}') from exc
 
 
+def validate_release_translations(contents):
+    """Every topic in an advertised bilingual release needs a complete overlay."""
+    for source in contents:
+        meta = source['module']
+        translated = bundled_translation(meta['key'], meta['version'])
+        require(translated is not None, f'{meta["key"]}: complete Russian resources required for release.')
+        validate_translation(source, translated)
+
+
 class ContentLocale:
     def __init__(self,module,language='uz'):
         candidate=bundled_translation(module.key,module.version) if language=='ru' else None

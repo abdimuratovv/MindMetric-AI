@@ -6,7 +6,7 @@ from django.core.management.base import BaseCommand, CommandError
 from django.db import connection, transaction
 
 from apps.development.content_loader import bundled_contents, import_bundle, publish_module
-from apps.development.translations import bundled_translation
+from apps.development.translations import bundled_translation, validate_release_translations
 from apps.development.validation import ContentValidationError, require
 
 
@@ -27,6 +27,7 @@ class Command(BaseCommand):
                     members = [d for d in contents if d['module'].get('cluster', 1) == cluster]
                     require(len(members) == 6 and {d['module']['order'] for d in members} == set(range(1, 7)),
                             f'Cluster {cluster} release requires all six reviewed topics.')
+                validate_release_translations(contents)
                 results = import_bundle(contents)
                 for _, module, _ in results:
                     translated = bundled_translation(module.key, module.version)
