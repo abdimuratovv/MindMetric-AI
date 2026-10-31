@@ -11,6 +11,7 @@ from .models import DevelopmentEnrollment, DevelopmentModule, DevelopmentSession
 from .permissions import STUDENT_PERMISSIONS
 from . import progress
 from .recommendations import build_plan, visible_catalogue
+from .translations import ContentLocale
 from .serializers import (
     AnswerSerializer, HintSerializer, StartSessionSerializer, enrollment_state, feedback, module_card, session_state,
 )
@@ -49,7 +50,7 @@ class CapabilitiesView(APIView):
 class ModuleListView(DevelopmentView):
     def get(self, request):
         modules, enrolled = visible_catalogue(request.user)
-        return Response({'modules': [module_card(module, enrolled.get(module.key)) for module in modules]})
+        return Response({'modules': [module_card(module, enrolled.get(module.key),get_language(request)) for module in modules]})
 
 
 class PlanView(DevelopmentView):
@@ -57,8 +58,8 @@ class PlanView(DevelopmentView):
         plan = build_plan(request.user, get_language(request))
 
         def card(entry):
-            return {**module_card(entry['module'], entry['enrollment']),
-                    'recommendation': entry['recommendation'], 'skills': entry['skills']}
+            return {**module_card(entry['module'], entry['enrollment'],get_language(request)),
+                    'recommendation': entry['recommendation'], 'skills': ContentLocale(entry['module'],get_language(request)).progress(entry['skills'])}
 
         return Response({
             'recommended': [card(row) for row in plan['recommended']],
@@ -74,12 +75,12 @@ class EnrollView(DevelopmentView):
     def post(self, request, key):
         row = progress.enroll(request.user, key)
         self.check_object_permissions(request, row)
-        return Response(enrollment_state(row))
+        return Response(enrollment_state(row,get_language(request)))
 
 
 class EnrollmentView(DevelopmentView):
     def get(self, request, pk):
-        return Response(enrollment_state(self.enrollment(pk)))
+        return Response(enrollment_state(self.enrollment(pk),get_language(request)))
 
 
 class LessonCompleteView(DevelopmentView):
@@ -87,7 +88,7 @@ class LessonCompleteView(DevelopmentView):
 
     def post(self, request, pk, key):
         self.enrollment(pk)
-        return Response(enrollment_state(progress.complete_lesson(request.user, pk, key)))
+        return Response(enrollment_state(progress.complete_lesson(request.user, pk, key),get_language(request)))
 
 
 class SessionStartView(DevelopmentView):
@@ -97,12 +98,12 @@ class SessionStartView(DevelopmentView):
         self.enrollment(pk)
         serializer = StartSessionSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        return Response(session_state(progress.start_session(request.user, pk, serializer.validated_data['purpose'])))
+        return Response(session_state(progress.start_session(request.user, pk, serializer.validated_data['purpose']),get_language(request)))
 
 
 class SessionNextView(DevelopmentView):
     def get(self, request, pk):
-        return Response(session_state(self.session(pk)))
+        return Response(session_state(self.session(pk),get_language(request)))
 
 
 class AnswerView(DevelopmentView):
@@ -113,9 +114,9 @@ class AnswerView(DevelopmentView):
         serializer = AnswerSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         session, answer = progress.submit_answer(request.user, pk, language=get_language(request), **serializer.validated_data)
-        result = {'accepted': True, 'session': session_state(session)}
+        result = {'accepted': True, 'session': session_state(session,get_language(request))}
         if session.purpose == 'practice' and not progress.live_check(session.enrollment):
-            result['feedback'] = feedback(session, answer)
+            result['feedback'] = feedback(session, answer,get_language(request))
         return Response(result)
 
 
@@ -126,7 +127,11 @@ class HintView(DevelopmentView):
         self.session(pk)
         serializer = HintSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        return Response({'hint': progress.request_hint(request.user, pk, serializer.validated_data['exercise_key'])})
+        key=serializer.validated_data['exercise_key']
+        original=progress.request_hint(request.user, pk, key)
+        locale=ContentLocale(self.session(pk).enrollment.module,get_language(request))
+        translated=locale.exercise(key)
+        return Response({'hint':translated['hint'] if translated else original,'content_language':locale.language})
 
 
 class FinishView(DevelopmentView):
@@ -135,10 +140,10 @@ class FinishView(DevelopmentView):
     def post(self, request, pk):
         self.session(pk)
         session = progress.finish_session(request.user, pk)
-        return Response({'session': session_state(session), 'enrollment': enrollment_state(session.enrollment)})
+        return Response({'session': session_state(session,get_language(request)), 'enrollment': enrollment_state(session.enrollment,get_language(request))})
 
 
 class ProgressView(DevelopmentView):
     def get(self, request):
-        return Response({'enrollments': [enrollment_state(row) for row in
+        return Response({'enrollments': [enrollment_state(row,get_language(request)) for row in
                          DevelopmentEnrollment.objects.filter(student=request.user).select_related('module').order_by('-started_at')]})

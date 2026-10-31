@@ -6,6 +6,7 @@ from django.core.management.base import BaseCommand, CommandError
 from django.db import connection, transaction
 
 from apps.development.content_loader import bundled_contents, import_bundle, publish_module
+from apps.development.translations import bundled_translation
 
 
 class Command(BaseCommand):
@@ -21,6 +22,9 @@ class Command(BaseCommand):
                     cursor.execute('SELECT pg_advisory_xact_lock(%s)', [192837465])
             results = import_bundle(bundled_contents())
             for _, module, _ in results:
+                translated=bundled_translation(module.key,module.version)
+                if translated and translated['source_hash']!=module.content_hash:
+                    raise CommandError('Translation source differs from the published module.')
                 publish_module(module.pk)
         self.stdout.write(self.style.SUCCESS(
             f'Cluster-one release ready: {len(results)} published modules; database={connection.vendor}.'

@@ -173,3 +173,36 @@ It does not pretend a previously supplied 1.4 Word source existed.
 No diagnostic links are fabricated; the module begins with its own precheck.
 Existing five published manifests and their version hashes stay unchanged.
 `test_number_theory.py` checks all 20 answers and five examples independently.
+
+## Russian resources for modules 1.1 and 1.6
+
+`content/translations/*.v1.ru.json` contains complete reviewed Russian overlays
+for arithmetic/algebra and matrices. Overlays are bound to the canonical module
+key, version and content hash. Frozen manifests, rows and session question
+snapshots stay unchanged, so existing v1 enrollments can switch languages too.
+The release command validates the overlays before the new process serves traffic.
+Missing translations or an incompatible version/hash use the explicit Uzbek
+fallback; there are no machine-generated partial translations in responses.
+
+All development endpoints resolve the existing `X-Language`/`lang` request
+language. `content_language` identifies the actual resource language, separately
+from the interface. Module/skill/lesson titles, theory, examples, live question
+text/options, practice hints, feedback and completed reviews are localized on
+the server. Full overlays are never sent to the browser during checks. Option
+IDs, answer keys, UUID retries, scoring and phase rules do not change.
+
+Worked examples now expose `prompt`, `solution_steps`, `answer`; the legacy
+`*_uz` aliases contain the same localized values for older clients. A requested
+practice hint may be restored on the current question. `last_feedback` is only
+available for practice outside any active check, so switching language can keep
+an already open explanation. Frontend locale refresh also preserves the lesson,
+expanded example and selected option; a mutation finishing in an older language
+triggers a fresh read in the current language.
+
+Authoring source: `docs/content/cluster1/build_russian_resources.py`; reviewed
+copies live in `docs/content/cluster1/translations/`. Validation checks complete
+coverage, unchanged numerical constants and option IDs, and forbidden check
+hints/grading overrides. API tests cover pinned v1 sessions and immutable hashes.
+The browser smoke covers RU ↔ UZ in the catalogue, lesson, expanded example,
+selected answer, hint, feedback and matrix check, including Uzbek fallback for
+other modules.

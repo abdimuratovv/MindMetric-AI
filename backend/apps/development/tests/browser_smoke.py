@@ -63,6 +63,8 @@ def main():
     token = json.loads((fixture / 'token.json').read_text(encoding='utf-8'))
     data = json.loads((root / 'backend/apps/development/content/cluster1/arithmetic-algebra.v1.json').read_text(encoding='utf-8'))
     by_prompt = {row['prompt_uz']: row for row in data['exercises']}
+    russian = {key: json.loads((root / 'backend/apps/development/content/translations' / f'{key}.v1.ru.json').read_text(encoding='utf-8'))
+               for key in ('arithmetic-algebra', 'matrices-linear-algebra')}
     if args.all_modules:
         for source in (root / 'backend/apps/development/content/cluster1').glob('*.v1.json'):
             by_prompt.update({row['prompt_uz']: row for row in json.loads(source.read_text(encoding='utf-8'))['exercises']})
@@ -93,7 +95,17 @@ def main():
             try:
                 page.goto(f'http://127.0.0.1:{frontend_port}/#development')
                 page.wait_for_load_state('networkidle')
+                def switch_language(language):
+                    page.locator('.mm-dev').get_by_role('button', name=language.upper(), exact=True).click()
+                    page.wait_for_load_state('networkidle')
+
                 expect(page.locator('.dev-module')).to_have_count(6 if args.all_modules else 1)
+                switch_language('ru')
+                expect(page.locator('.dev-module').filter(has_text=russian['arithmetic-algebra']['title'])).to_be_visible()
+                if args.all_modules:
+                    expect(page.locator('.dev-module').filter(has_text=russian['matrices-linear-algebra']['title'])).to_be_visible()
+                    expect(page.locator('.dev-module').filter(has_text='Matematik mantiq va mulohazalar algebrasi')).to_contain_text('Учебный материал на узбекском языке')
+                switch_language('uz')
                 expect(page.locator('.dev-priority')).to_have_count(2 if args.all_modules else 1)
                 page.set_viewport_size({'width': 390, 'height': 844})
                 page.wait_for_function('document.querySelector(".mm-shell-sidebar").getBoundingClientRect().right <= 1')
@@ -105,6 +117,16 @@ def main():
                 page.screenshot(path=str(output / 'catalogue.png'), full_page=True)
                 original.get_by_role('button', name='Modulni boshlash', exact=False).click()
                 page.get_by_role('button', name='Boshlang‘ich tekshiruvni boshlash', exact=False).click()
+                draft=page.locator('.dev-exercise input[type=radio]').first
+                draft.check()
+                draft_id=draft.get_attribute('value')
+                switch_language('ru')
+                expect(page.locator('.dev-question')).to_have_text(russian['arithmetic-algebra']['exercises']['arith-precheck-01']['prompt'])
+                expect(page.locator(f'.dev-exercise input[value="{draft_id}"]')).to_be_checked()
+                assert page.locator('.dev-question').get_attribute('lang')=='ru'
+                page.screenshot(path=str(output/'precheck-ru.png'),full_page=True)
+                switch_language('uz')
+                expect(page.locator(f'.dev-exercise input[value="{draft_id}"]')).to_be_checked()
 
                 def answer_current(correct, *, lose_response=False, invalid_first=False):
                     heading = page.locator('.dev-question')
@@ -147,6 +169,17 @@ def main():
                         expect(page.locator('.dev-exercise-top')).to_contain_text('3 / 5')
                 page.get_by_role('button', name='Yakunlash va natijani ko‘rish', exact=False).click()
                 expect(page.locator('.dev-lesson')).to_be_visible()
+                page.locator('.dev-lesson-nav button').nth(2).click()
+                page.locator('.dev-example summary').click()
+                switch_language('ru')
+                translated_lesson=russian['arithmetic-algebra']['lessons']['arith-lesson-substitution']
+                expect(page.locator('.dev-lesson h3')).to_have_text(translated_lesson['title'])
+                expect(page.locator('.dev-example .dev-math').first).to_have_text(translated_lesson['worked_example']['prompt'])
+                expect(page.locator('.dev-example')).to_have_attribute('open','')
+                page.screenshot(path=str(output/'lesson-ru.png'),full_page=True)
+                switch_language('uz')
+                expect(page.locator('.dev-lesson h3')).to_have_text(data['lessons'][2]['title_uz'])
+                page.locator('.dev-lesson-nav button').first.click()
                 page.screenshot(path=str(output / 'lesson.png'), full_page=True)
                 for index in range(5):
                     before = page.locator('.dev-lesson h3').inner_text()
@@ -158,8 +191,15 @@ def main():
                     if index == 0:
                         page.get_by_role('button', name='Yordam olish', exact=True).click()
                         expect(page.locator('.dev-exercise .dev-hint')).to_be_visible()
+                        switch_language('ru')
+                        expect(page.locator('.dev-exercise .dev-hint')).to_have_text(russian['arithmetic-algebra']['exercises']['arith-practice-01']['hint'])
+                        switch_language('uz')
                     answer_current(True)
                     if index == 0:
+                        switch_language('ru')
+                        expect(page.locator('.dev-feedback')).to_be_visible()
+                        expect(page.locator('.dev-feedback .dev-math').first).to_have_text(russian['arithmetic-algebra']['exercises']['arith-practice-01']['prompt'])
+                        switch_language('uz')
                         page.set_viewport_size({'width': 390, 'height': 844})
                         page.wait_for_function('document.querySelector(".mm-shell-sidebar").getBoundingClientRect().right <= 1')
                         assert page.evaluate('document.documentElement.scrollWidth <= window.innerWidth'), 'Mobile overflow'
@@ -176,7 +216,7 @@ def main():
                 page.screenshot(path=str(output / 'report.png'), full_page=True)
                 page.locator('.mm-dev').get_by_role('button', name='RU', exact=True).click()
                 expect(page.locator('.dev-heading h1')).to_have_text('От способностей к навыкам')
-                expect(page.locator('.dev-module-title')).to_contain_text('Учебный материал на узбекском языке')
+                expect(page.locator('.dev-module-title')).to_contain_text('Учебный материал на русском языке')
                 page.screenshot(path=str(output / 'report-ru.png'), full_page=True)
                 opened = 0
                 if args.all_modules:
@@ -199,6 +239,9 @@ def main():
                         expect(page.locator('.dev-question')).to_have_text(first['prompt_uz'])
                         opened+=1
                         if other['module']['order']==6:
+                            switch_language('ru')
+                            expect(page.locator('.dev-question')).to_have_text(russian['matrices-linear-algebra']['exercises'][first_key]['prompt'])
+                            switch_language('uz')
                             page.set_viewport_size({'width':390,'height':844})
                             page.wait_for_function('document.querySelector(".mm-shell-sidebar").getBoundingClientRect().right <= 1')
                             bounds = page.evaluate('''() => Object.fromEntries(
@@ -213,10 +256,21 @@ def main():
                         for _ in range(5):
                             answer_current(True)
                         page.get_by_role('button', name='Yakunlash va natijani ko‘rish', exact=False).click()
+                        if other['module']['order']==6:
+                            switch_language('ru')
+                            for index,lesson in enumerate(other['lessons']):
+                                page.locator('.dev-lesson-nav button').nth(index).click()
+                                target=russian['matrices-linear-algebra']['lessons'][lesson['key']]
+                                expect(page.locator('.dev-lesson h3')).to_have_text(target['title'])
+                                expect(page.locator('.dev-lesson')).to_have_attribute('lang','ru')
+                            page.screenshot(path=str(output/'matrix-lesson-ru.png'),full_page=True)
+                            switch_language('uz')
+                            expect(page.locator('.dev-lesson h3')).to_have_text(other['lessons'][-1]['title_uz'])
                 assert not page_errors, page_errors
                 result = {'passed': True, 'answered': 20 + opened * 5, 'precheck': 0, 'postcheck': 80,
                           'delta_percentage_points': 80, 'refresh_resume': True, 'invalid_input_correction': True,
-                          'lost_response_retry': True, 'mobile_overflow': False, 'russian_interface_uzbek_content': True,
+                          'lost_response_retry': True, 'mobile_overflow': False, 'russian_content_swap': True,
+                          'localized_modules': [1,6], 'draft_answer_preserved': True, 'hint_feedback_lesson_preserved': True,
                           'javascript_errors': page_errors, 'catalogue_modules': 6 if args.all_modules else 1,
                           'opened_additional_modules': opened}
                 (output / 'result.json').write_text(json.dumps(result, indent=2), encoding='utf-8')

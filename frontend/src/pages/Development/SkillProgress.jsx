@@ -7,7 +7,7 @@ export default function SkillProgress({ skills, c, lessons = [], onSelectLesson 
     <ul>{skills.map((skill) => {
       const lessonIndex = lessons.findIndex((lesson) => lesson.skill_key === skill.key);
       return <li key={skill.key}>
-        <div><strong lang="uz">{skill.title}</strong><p className="dev-note">
+        <div><strong lang={skill.content_language || 'uz'}>{skill.title}</strong><p className="dev-note">
           {sources[skill.source]}{skill.source !== 'none' && ` · ${skill.count} ${c.answerCount}`}
           {skill.status === 'insufficient' && skill.minimum_count ? ` · ${c.minimum}: ${skill.minimum_count}` : ''}
         </p></div>

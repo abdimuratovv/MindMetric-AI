@@ -240,13 +240,13 @@ class DevelopmentAPITests(ContentDatabaseCase):
             self.client.force_authenticate(User.objects.create_user(role+'@university.edu', role=role))
             self.assertEqual(self.client.get(PREFIX + 'capabilities/').status_code, 403)
 
-    def test_real_jwt_can_access_capabilities_and_uz_fallback_is_explicit(self):
+    def test_real_jwt_can_access_capabilities_and_russian_content(self):
         self.client.force_authenticate(None)
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {AccessToken.for_user(self.student)}')
         self.assertTrue(self.client.get(PREFIX + 'capabilities/').data['available'])
         cards = self.client.get(PREFIX + 'modules/', HTTP_X_LANGUAGE='ru').data['modules']
-        self.assertEqual(cards[0]['content_language'], 'uz')
-        self.assertEqual(cards[0]['title'], self.module.title_uz)
+        self.assertEqual(cards[0]['content_language'], 'ru')
+        self.assertEqual(cards[0]['title'], 'Арифметические вычисления и алгебраические выражения')
 
     def test_new_student_gets_latest_published_version(self):
         revised = deepcopy(self.data)

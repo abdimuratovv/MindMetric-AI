@@ -29,18 +29,22 @@ export default function DevelopmentPage({ user, goTo }) {
   const [hint, setHint] = useState('');
   const [feedback, setFeedback] = useState(null);
   const [loadVersion, setLoadVersion] = useState(0);
+  const [expandedExamples, setExpandedExamples] = useState([]);
   const pending = useRef(null);
   const questionHeading = useRef(null);
   const lessonHeading = useRef(null);
+  const currentLanguage = useRef(language);
+  currentLanguage.current = language;
   const selectedKey = `mindmetric-development:${user.id}`;
   const submissionKey = (id) => `${selectedKey}:submission:${id}`;
 
-  const applyEnrollment = (data) => {
+  const applyEnrollment = (data, preserved = {}) => {
     setEnrollment(data);
     setSession(data.active_session);
-    setFeedback(null);
-    setHint('');
-    const preferred = data.focus_lesson_keys?.find((key) => !data.completed_lesson_keys.includes(key));
+    const previous = data.active_session?.last_feedback;
+    setFeedback(previous && previous.exercise_key === preserved.feedbackKey ? previous : null);
+    setHint(data.active_session?.question?.hint || '');
+    const preferred = preserved.lessonKey || data.focus_lesson_keys?.find((key) => !data.completed_lesson_keys.includes(key));
     setLessonIndex(Math.max(0, data.lessons.findIndex((lesson) => lesson.key === preferred)));
     sessionStorage.setItem(selectedKey, String(data.id));
   };
@@ -67,7 +71,10 @@ export default function DevelopmentPage({ user, goTo }) {
             if (err.status === 404) sessionStorage.removeItem(selectedKey);
             else throw err;
           }
-          if (!cancelled && data) applyEnrollment(data);
+          if (!cancelled && data) applyEnrollment(data, {
+            lessonKey: enrollment?.lessons[lessonIndex]?.key,
+            feedbackKey: feedback?.exercise_key,
+          });
         }
       } catch (err) {
         if (!cancelled) setError(err.message);
@@ -91,14 +98,18 @@ export default function DevelopmentPage({ user, goTo }) {
       sessionStorage.removeItem(submissionKey(session.id));
       setAnswer('');
     }
-    setHint('');
+    setHint(session.question?.hint || '');
     questionHeading.current?.focus();
   }, [session?.id, session?.question?.key]);
 
   const perform = async (action) => {
+    const actionLanguage = language;
     setBusy(true);
     setError('');
-    try { await action(); } catch (err) { setError(err.message); } finally { setBusy(false); }
+    try { await action(); } catch (err) { setError(err.message); } finally {
+      setBusy(false);
+      if (currentLanguage.current !== actionLanguage) setLoadVersion((old) => old + 1);
+    }
   };
 
   const start = (purpose) => perform(async () => {
@@ -166,6 +177,8 @@ export default function DevelopmentPage({ user, goTo }) {
     completed: enrollment.stage === 'completed',
   } : {};
   const question = session?.question;
+  const contentLanguage = enrollment?.module.content_language || 'uz';
+  const contentLabel = (lang) => lang === 'ru' ? c.languageRu : c.language;
 
   return <div className="mm-dev">
     <header className="dev-heading">
@@ -189,15 +202,15 @@ export default function DevelopmentPage({ user, goTo }) {
         </section>
         {modules.length === 0 && <p>{c.empty}</p>}
         <div className="dev-module-grid">{modules.map((module) => <article className="dev-panel dev-module" key={module.key}>
-          <p className="dev-eyebrow">{c.module} / 1.{module.order}</p><h2 lang="uz">{module.title}</h2>
-          <p lang="uz">{module.skill_titles?.join(' · ')}</p><p>{c.precheckReady}</p>
-          <p className="dev-language">{c.language}</p>
+          <p className="dev-eyebrow">{c.module} / 1.{module.order}</p><h2 lang={module.content_language}>{module.title}</h2>
+          <p lang={module.content_language}>{module.skill_titles?.join(' · ')}</p><p>{c.precheckReady}</p>
+          <p className="dev-language">{contentLabel(module.content_language)}</p>
           {module.stage && <span className="dev-chip">{c[module.stage]}</span>}
           <p className="dev-note">{module.recommendation?.reason}</p>
           <button className="dev-button" disabled={busy} onClick={() => openModule(module)}>{module.enrollment_id ? c.resume : c.start} →</button>
         </article>)}</div>
       </> : <>
-        <div className="dev-module-title"><h2 lang="uz">{enrollment.module.title}</h2><span className="dev-language">{c.language}</span></div>
+        <div className="dev-module-title"><h2 lang={contentLanguage}>{enrollment.module.title}</h2><span className="dev-language">{contentLabel(contentLanguage)}</span></div>
         <ol className="dev-steps" aria-label={c.overview}>{steps.map((key, index) => <li key={key}
           aria-current={index === currentStep ? 'step' : undefined} className={finishedSteps[key] ? 'is-done' : ''}>
           <span>{finishedSteps[key] ? '✓' : String(index + 1).padStart(2, '0')}</span>{c[key]}</li>)}</ol>
@@ -209,23 +222,23 @@ export default function DevelopmentPage({ user, goTo }) {
           <p className="dev-note">{c[`${session.purpose}Note`]}</p>
           {session.purpose === 'practice' && session.number > 1 && <p className="dev-note">{c.rehearsalNote}</p>}
           {feedback ? <div className={`dev-feedback ${feedback.correct ? 'is-correct' : ''}`} aria-live="polite">
-            <h3>{feedback.correct ? c.correct : c.incorrect}</h3><p className="dev-math" lang="uz">{feedback.prompt}</p>
-            <p lang="uz">{feedback.explanation}</p><ol lang="uz">{feedback.solution_steps.map((line, i) => <li key={i}>{line}</li>)}</ol>
-            <p><strong>{c.correctAnswer}: </strong><span className="dev-math" lang="uz">{feedback.answer}</span></p>
+            <h3>{feedback.correct ? c.correct : c.incorrect}</h3><p className="dev-math" lang={feedback.content_language || contentLanguage}>{feedback.prompt}</p>
+            <p lang={feedback.content_language || contentLanguage}>{feedback.explanation}</p><ol lang={feedback.content_language || contentLanguage}>{feedback.solution_steps.map((line, i) => <li key={i}>{line}</li>)}</ol>
+            <p><strong>{c.correctAnswer}: </strong><span className="dev-math" lang={feedback.content_language || contentLanguage}>{feedback.answer}</span></p>
             {feedback.hint_used && <p>{c.hintUsed}</p>}
             <button className="dev-button" onClick={() => setFeedback(null)}>{c.next} →</button>
           </div> : question ? <form onSubmit={submit}>
-            <h3 className="dev-question dev-math" ref={questionHeading} tabIndex={-1} lang="uz">{question.prompt}</h3>
+            <h3 className="dev-question dev-math" ref={questionHeading} tabIndex={-1} lang={question.content_language}>{question.prompt}</h3>
             {question.format === 'numeric' ? <label className="dev-answer-label">{c.answer}
               <input autoComplete="off" type="text" inputMode="text" maxLength={80} required value={answer}
                 disabled={busy || Boolean(pending.current)} onChange={(event) => setAnswer(event.target.value)} placeholder={c.answerPlaceholder} />
             </label> : <fieldset disabled={busy || Boolean(pending.current)}><legend>{c.choose}</legend>
               {question.options.map((option) => <label className={`dev-option ${answer === option.id ? 'is-selected' : ''}`} key={option.id}>
                 <input type="radio" name={question.key} value={option.id} required checked={answer === option.id}
-                  onChange={() => setAnswer(option.id)} /><span lang="uz">{option.text}</span>
+                  onChange={() => setAnswer(option.id)} /><span lang={question.content_language}>{option.text}</span>
               </label>)}
             </fieldset>}
-            {hint && <p className="dev-hint" role="status" lang="uz">{hint}</p>}
+            {hint && <p className="dev-hint" role="status" lang={question.content_language}>{hint}</p>}
             <div className="dev-actions"><button type="submit" className="dev-button" disabled={busy || !answer.trim()}>
               {busy ? c.sending : pending.current ? c.retrySubmit : c.submit}</button>
               {session.purpose === 'practice' && <button type="button" className="dev-link" disabled={busy || Boolean(pending.current)} onClick={() => perform(async () => {
@@ -254,7 +267,7 @@ export default function DevelopmentPage({ user, goTo }) {
           {!enrollment.learning_locked && enrollment.focus_lesson_keys?.length > 0 && <div className="dev-focus-list">
             <strong>{c.focusedLessons}</strong>{enrollment.focus_lesson_keys.map((key) => {
               const index = enrollment.lessons.findIndex((lesson) => lesson.key === key);
-              return index < 0 ? null : <button key={key} className="dev-link" lang="uz" onClick={() => selectLesson(index)}>{enrollment.lessons[index].title} →</button>;
+              return index < 0 ? null : <button key={key} className="dev-link" lang={enrollment.lessons[index].content_language} onClick={() => selectLesson(index)}>{enrollment.lessons[index].title} →</button>;
             })}
           </div>}
           {enrollment.check_bank_exhausted && enrollment.stage !== 'completed' && <p className="dev-hint">{c.exhausted}</p>}
@@ -267,17 +280,20 @@ export default function DevelopmentPage({ user, goTo }) {
           {enrollment.lessons.length > 0 && <section className="dev-study">
             <nav className="dev-lesson-nav" aria-label={c.study}>{enrollment.lessons.map((lesson, index) => <button key={lesson.key}
               aria-current={index === lessonIndex ? 'true' : undefined} onClick={() => setLessonIndex(index)}>
-              <span>{enrollment.completed_lesson_keys.includes(lesson.key) ? '✓' : String(index + 1).padStart(2, '0')}</span><span lang="uz">{lesson.title}
+              <span>{enrollment.completed_lesson_keys.includes(lesson.key) ? '✓' : String(index + 1).padStart(2, '0')}</span><span lang={lesson.content_language}>{lesson.title}
                 {enrollment.focus_lesson_keys?.includes(lesson.key) && <small lang={language}>{c.focusedLesson}</small>}</span>
             </button>)}</nav>
             {enrollment.lessons[lessonIndex] && (() => {
               const lesson = enrollment.lessons[lessonIndex];
               const done = enrollment.completed_lesson_keys.includes(lesson.key);
-              return <article className="dev-panel dev-lesson" lang="uz"><p className="dev-eyebrow">{c.study} / {lessonIndex + 1}</p>
+              return <article className="dev-panel dev-lesson" lang={lesson.content_language}><p className="dev-eyebrow">{c.study} / {lessonIndex + 1}</p>
                 <h3 ref={lessonHeading} tabIndex={-1}>{lesson.title}</h3>{lesson.theory.map((line, index) => <p key={index}>{line}</p>)}
-                <details className="dev-example"><summary>{c.example}</summary><p className="dev-math">{lesson.worked_example.prompt_uz}</p>
-                  <ol>{lesson.worked_example.solution_steps_uz.map((line, index) => <li key={index}>{line}</li>)}</ol>
-                  <strong className="dev-math">{lesson.worked_example.answer_uz}</strong>
+                <details className="dev-example" open={expandedExamples.includes(lesson.key)} onToggle={(event) => {
+                  const open = event.currentTarget.open;
+                  setExpandedExamples((keys) => open ? (keys.includes(lesson.key) ? keys : [...keys, lesson.key]) : keys.filter((key) => key !== lesson.key));
+                }}><summary>{c.example}</summary><p className="dev-math">{lesson.worked_example.prompt ?? lesson.worked_example.prompt_uz}</p>
+                  <ol>{(lesson.worked_example.solution_steps ?? lesson.worked_example.solution_steps_uz).map((line, index) => <li key={index}>{line}</li>)}</ol>
+                  <strong className="dev-math">{lesson.worked_example.answer ?? lesson.worked_example.answer_uz}</strong>
                 </details>
                 <button className="dev-button" disabled={busy || done} onClick={() => perform(async () => {
                   const data = await completeDevelopmentLesson(enrollment.id, lesson.key);
@@ -290,8 +306,8 @@ export default function DevelopmentPage({ user, goTo }) {
           </section>}
           {enrollment.checks.length > 0 && <details className="dev-panel dev-review"><summary>{c.mistakes}</summary>
             {enrollment.checks.map((check) => <section key={check.id}><h3>{c[check.purpose]} · {check.score}%</h3>
-              {check.review?.map((item) => <details key={item.exercise_key}><summary lang="uz">{item.correct ? '✓' : '○'} {item.prompt}</summary>
-                <ol lang="uz">{item.solution_steps.map((line, index) => <li key={index}>{line}</li>)}</ol></details>)}
+              {check.review?.map((item) => <details key={item.exercise_key}><summary lang={item.content_language || contentLanguage}>{item.correct ? '✓' : '○'} {item.prompt}</summary>
+                <ol lang={item.content_language || contentLanguage}>{item.solution_steps.map((line, index) => <li key={index}>{line}</li>)}</ol></details>)}
             </section>)}
           </details>}
         </>}
