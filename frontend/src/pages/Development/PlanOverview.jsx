@@ -10,7 +10,7 @@ export default function PlanOverview({ plan, c, busy, onOpen }) {
     </div></div>
     {plan.recommended.length ? <div className="dev-priorities">{plan.recommended.map((module, index) => <article className="dev-priority" key={module.key}>
       <span className="dev-priority-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
-      <div><p className="dev-eyebrow">{c.module} / 1.{module.order}</p><h3 lang={module.content_language}>{module.title}</h3>
+      <div><p className="dev-eyebrow">{c.module} / {module.topic_number || `1.${module.order}`}</p><h3 lang={module.content_language}>{module.title}</h3>
         <p>{module.recommendation.reason}</p>
         {module.recommendation.evidence_count > 0 && <p className="dev-note">{c.relatedAnswers}: {module.recommendation.evidence_count}</p>}
         <button className="dev-button" disabled={busy} onClick={() => onOpen(module)}>

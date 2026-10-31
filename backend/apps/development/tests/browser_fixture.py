@@ -21,7 +21,10 @@ from apps.assessments.models import CognitiveQuestion
 from apps.development.content_loader import BUNDLED_CONTENT, bundled_contents, import_bundle, publish_module, read_content
 
 call_command('migrate', verbosity=0, interactive=False)
-contents = bundled_contents() if os.environ.get('DEVELOPMENT_BROWSER_ALL_CONTENT') == '1' else [read_content(BUNDLED_CONTENT)]
+if os.environ.get('DEVELOPMENT_BROWSER_CLUSTERS') == 'all':
+    contents = bundled_contents(cluster=None)
+else:
+    contents = bundled_contents() if os.environ.get('DEVELOPMENT_BROWSER_ALL_CONTENT') == '1' else [read_content(BUNDLED_CONTENT)]
 keys = {link['question_key'] for data in contents for link in data['diagnostic_links']}
 for indicator, questions in MCQ_QUESTIONS.items():
     for question in questions:

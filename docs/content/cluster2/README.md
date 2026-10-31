@@ -1,6 +1,6 @@
 # 2-klaster resurslari — UZ / RU
 
-**Holat: resurslar va backend integratsiyasi tayyor, draft. Frontend va jonli chiqarish keyingi bosqichlarda.**
+**Holat: resurslar, backend va frontend tayyor, lokal tekshiruvlardan o‘tgan. Jonli chiqarish tasdig‘i kutilmoqda.**
 
 Algoritmik-amaliy blok: 6 modul, 30 mikroko‘nikma, 30 mini-dars va ishlangan namuna, 120 topshiriq (60 mashq, 30 boshlang‘ich, 30 yakuniy), 2 ochiq miniloyiha. Barcha mazmun o‘zbekcha va ruscha tayyorlandi. Ruscha savollar o‘zbekcha savollarning tarjimasi; ular qo‘shimcha mustaqil tekshiruv banki sifatida sanalmaydi.
 
