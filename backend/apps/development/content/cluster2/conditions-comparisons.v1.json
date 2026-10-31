@@ -1,0 +1,891 @@
+{
+  "schema_version": 2,
+  "sources": [
+    {
+      "id": "source-curriculum",
+      "filename": "Oqitish moduli.docx",
+      "sha256": "c11956549286d3f6c99ae327b0dc0ee6dcdc4714e4e069d385901f0f8d58a473"
+    },
+    {
+      "id": "authored-cluster2",
+      "filename": "authoring-manifest.json",
+      "sha256": "2119f206f0255de004d39686833346e13c85ab8a87eb0829c15b7c2116d8800e"
+    }
+  ],
+  "module": {
+    "key": "conditions-comparisons",
+    "version": 1,
+    "order": 2,
+    "cluster": 2,
+    "topic_number": "2.2",
+    "title_uz": "Shart va taqqoslash operatorlari",
+    "title_ru": "Условия и операторы сравнения",
+    "content_language": "uz",
+    "indicator_keys": [
+      "algorithmic"
+    ],
+    "status": "draft",
+    "review_status": "internally_checked",
+    "diagnostic_coverage_note_uz": "Aniq diagnostika savollari bilan xarita hali tasdiqlanmagan. Boshlang‘ich tekshiruv mavzu bo‘yicha dastlabki dalil beradi."
+  },
+  "notation_uz": [
+    "← qiymat beradi; ==, !=, <, >, ≤, ≥ taqqoslaydi. OUTPUT qiymatni ko‘rsatadi, o‘zgartirmaydi.",
+    "AND ikkala shartni, OR kamida bittasini talab qiladi; NOT inkor qiladi. Qavslar shart chegarasini belgilaydi.",
+    "{ } bitta blokni, ; ketma-ket buyruqlar ajratgichini bildiradi. if-else va else if zanjirida faqat tanlangan bitta tarmoq bajariladi.",
+    "switch aniq mos case ni, mos kelmasa default ni bajaradi. Keyingi case ga avtomatik o‘tish yo‘q.",
+    "for i ← a TO b butun qiymatlarni 1 qadam bilan oshiradi, ikkala chegara kiritiladi. a > b bo‘lsa tana bajarilmaydi.",
+    "while shartni tanadan avval tekshiradi; do-while avval tanani bajaradi, keyin shart rost bo‘lsa takrorlaydi.",
+    "div va mod uchun bo‘linuvchi manfiy bo‘lmagan butun, bo‘luvchi musbat butun: butun bo‘linma va qoldiq olinadi. RETURN funksiya chaqiruvini natija bilan tugatadi.",
+    "Arifmetika aniq deb olinadi; haqiqiy tilda son turi chegarasi alohida tekshiriladi. START/END — boshlash/tugatish, INPUT/OUTPUT — kirish/chiqish, DECISION — shart."
+  ],
+  "skills": [
+    {
+      "key": "cond-compare",
+      "title_uz": "Taqqoslash va chegaralar",
+      "indicator_keys": [
+        "algorithmic"
+      ],
+      "prerequisite_keys": []
+    },
+    {
+      "key": "cond-boolean",
+      "title_uz": "Murakkab mantiqiy shartlar",
+      "indicator_keys": [
+        "algorithmic"
+      ],
+      "prerequisite_keys": [
+        "cond-compare"
+      ]
+    },
+    {
+      "key": "cond-if",
+      "title_uz": "if-else va bitta tarmoq",
+      "indicator_keys": [
+        "algorithmic"
+      ],
+      "prerequisite_keys": [
+        "cond-compare"
+      ]
+    },
+    {
+      "key": "cond-multiple",
+      "title_uz": "Ichma-ich va ko‘p tarmoqli shart",
+      "indicator_keys": [
+        "algorithmic"
+      ],
+      "prerequisite_keys": [
+        "cond-if",
+        "cond-boolean"
+      ]
+    },
+    {
+      "key": "cond-switch",
+      "title_uz": "switch-case va to‘liq qamrov",
+      "indicator_keys": [
+        "algorithmic"
+      ],
+      "prerequisite_keys": [
+        "cond-multiple"
+      ]
+    }
+  ],
+  "lessons": [
+    {
+      "key": "cond-compare-lesson",
+      "skill_key": "cond-compare",
+      "title_uz": "Taqqoslash va chegaralar",
+      "theory_uz": [
+        "== tenglikni, != teng emaslikni, < va > qat’iy taqqoslashni bildiradi. ≤ va ≥ tenglikni ham qamraydi. Natija TRUE yoki FALSE bo‘ladi.",
+        "x ← 5 buyruq, x == 5 esa savol. Shart o‘zgaruvchini yangilamasligi kerak. Belgining yo‘nalishini emas, butun gapning ma’nosini o‘qing.",
+        "“Kamida”, “ko‘pi bilan” va “dan katta” turli shartlar. Chegaraning o‘zini tekshirish > bilan ≥ xatosini aniqlaydi."
+      ],
+      "worked_example": {
+        "prompt_uz": "“Ball kamida 60” talabi ball = 60 da bajariladimi?",
+        "solution_steps_uz": [
+          "Talab ball ≥ 60.",
+          "60 ≥ 60 rost.",
+          "Natija TRUE."
+        ],
+        "answer_uz": "TRUE"
+      }
+    },
+    {
+      "key": "cond-boolean-lesson",
+      "skill_key": "cond-boolean",
+      "title_uz": "Murakkab mantiqiy shartlar",
+      "theory_uz": [
+        "AND ikkala shart rost bo‘lsa, OR kamida biri rost bo‘lsa TRUE bo‘ladi. OR ikkisi ham rost bo‘lishiga ham ruxsat beradi. NOT qiymatni teskarilaydi.",
+        "Oraliqni ikkita taqqoslash bilan yozing: (x ≥ 1) AND (x ≤ 10). Tashqarida bo‘lish: (x < 1) OR (x > 10). Qavslar shart chegarasini aniq qiladi.",
+        "NOT butun shartga taalluqli bo‘lishi mumkin. NOT (a AND b) ifodasi (NOT a) OR (NOT b) ga teng. Inkor qilganda taqqoslashning tenglik chegarasi ham o‘zgaradi."
+      ],
+      "worked_example": {
+        "prompt_uz": "x = 4 uchun (x ≥ 2) AND (x < 5) ni tekshiring.",
+        "solution_steps_uz": [
+          "4 ≥ 2 — TRUE.",
+          "4 < 5 — TRUE.",
+          "TRUE AND TRUE = TRUE."
+        ],
+        "answer_uz": "TRUE"
+      }
+    },
+    {
+      "key": "cond-if-lesson",
+      "skill_key": "cond-if",
+      "title_uz": "if-else va bitta tarmoq",
+      "theory_uz": [
+        "if sharti TRUE bo‘lsa birinchi blok, aks holda else bajariladi. Shu konstruksiyaning faqat bitta tarmog‘i ishlaydi.",
+        "Mustaqil ikkita if boshqa xulq beradi: ikkinchi shart birinchi blokdan keyingi qiymatni tekshiradi. if-else ikkinchi tarmog‘ida shart qayta tekshirilmaydi.",
+        "Kursda bloklar { } bilan ajratiladi. Chekinish o‘qishni osonlashtiradi, ammo bajariladigan amallarni qavslar belgilaydi."
+      ],
+      "worked_example": {
+        "prompt_uz": "x ← −2; if x < 0 {x ← −x} else {x ← x + 1}. Oxirgi x?",
+        "solution_steps_uz": [
+          "−2 < 0 rost.",
+          "Birinchi blok x ni 2 qiladi.",
+          "else bajarilmaydi."
+        ],
+        "answer_uz": "2"
+      }
+    },
+    {
+      "key": "cond-multiple-lesson",
+      "skill_key": "cond-multiple",
+      "title_uz": "Ichma-ich va ko‘p tarmoqli shart",
+      "theory_uz": [
+        "if ... else if ... else zanjirida birinchi rost tarmoq bajarilib, qolganlari tashlanadi. Umumiy shart avval tursa, torroq shartga navbat kelmasligi mumkin.",
+        "Ball bo‘yicha yuqori toifani avval tekshirish qulay: ball ≥ 90, keyin ball ≥ 60, oxirida qolgan holat. Chegaralarni jadval qilib tekshiring.",
+        "Ichma-ich shartda ichki if faqat tashqi blok ochilsa bajariladi. Tashqi shart yolg‘on bo‘lsa ichki tekshiruvga umuman kirilmaydi."
+      ],
+      "worked_example": {
+        "prompt_uz": "ball = 95; if ball ≥ 90 {r ← 3} else if ball ≥ 60 {r ← 2} else {r ← 1}. r?",
+        "solution_steps_uz": [
+          "Birinchi shart rost.",
+          "r = 3.",
+          "Keyingi shartlar bajarilmaydi."
+        ],
+        "answer_uz": "3"
+      }
+    },
+    {
+      "key": "cond-switch-lesson",
+      "skill_key": "cond-switch",
+      "title_uz": "switch-case va to‘liq qamrov",
+      "theory_uz": [
+        "Kursdagi switch mode {case ...; default ...} bir qiymatni aniq variantlar bilan taqqoslaydi. Faqat mos case ishlaydi; avtomatik keyingi case ga o‘tish yo‘q.",
+        "default hech bir case mos kelmaganda ishlaydi. Bu psevdokod qoidasi; haqiqiy tilda, masalan C uslubidagi switch da, break va boshqa qoidalarni alohida tekshirish zarur.",
+        "Oraliq, bir nechta o‘zgaruvchi yoki murakkab mantiq uchun if ko‘pincha ravshanroq. Menyu kodi kabi aniq diskret qiymatlar switch uchun mos."
+      ],
+      "worked_example": {
+        "prompt_uz": "mode = 2; switch mode {case 1: r ← 10; case 2: r ← 20; default: r ← 0}. r?",
+        "solution_steps_uz": [
+          "mode ikkinchi case ga teng.",
+          "Faqat r ← 20 bajariladi.",
+          "default bajarilmaydi."
+        ],
+        "answer_uz": "20"
+      }
+    }
+  ],
+  "exercises": [
+    {
+      "key": "cond-compare-practice-1",
+      "skill_key": "cond-compare",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "x = 8. Qaysi shart TRUE?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "x ≥ 8",
+          "feedback_uz": "Tenglik ≥ ga kiradi."
+        },
+        {
+          "id": "b",
+          "text_uz": "x > 8",
+          "feedback_uz": "8 o‘zidan katta emas."
+        },
+        {
+          "id": "c",
+          "text_uz": "x != 8",
+          "feedback_uz": "Qiymatlar teng."
+        }
+      ],
+      "answer_key": {
+        "option_id": "a"
+      },
+      "solution_steps_uz": [
+        "x o‘rniga 8 qo‘ying.",
+        "8 ≥ 8 rost, qolgan shartlar yolg‘on."
+      ],
+      "common_error_uz": "Qat’iy va tenglikli chegarani farqlang.",
+      "hint_uz": "Qiymat aynan chegaraga teng.",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "2/cond-compare/practice/1"
+      }
+    },
+    {
+      "key": "cond-compare-practice-2",
+      "skill_key": "cond-compare",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "“Yosh ko‘pi bilan 17” uchun to‘g‘ri shart?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "age < 17",
+          "feedback_uz": "Bu chegara yoshni chiqarib tashlaydi."
+        },
+        {
+          "id": "b",
+          "text_uz": "age ≥ 17",
+          "feedback_uz": "Bu talabni teskari qiladi."
+        },
+        {
+          "id": "c",
+          "text_uz": "age ≤ 17",
+          "feedback_uz": "Kichik va teng qiymatlar qabul qilinadi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "Ko‘pi bilan — oshmasin degani.",
+        "Shuning uchun age ≤ 17."
+      ],
+      "common_error_uz": "“Ko‘pi bilan”ni “kamida” bilan almashtirmang.",
+      "hint_uz": "Chegaraning o‘zi ham ruxsat etilgan.",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "2/cond-compare/practice/2"
+      }
+    },
+    {
+      "key": "cond-compare-precheck",
+      "skill_key": "cond-compare",
+      "purpose": "precheck",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "Harorat noldan qat’iy past bo‘lsa ogohlantirish kerak. Qaysi shart mos?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "t > 0",
+          "feedback_uz": "Musbat qiymatlarni tanlaydi."
+        },
+        {
+          "id": "b",
+          "text_uz": "t < 0",
+          "feedback_uz": "Nol kiritilmaydi, manfiylar kiritiladi."
+        },
+        {
+          "id": "c",
+          "text_uz": "t ≤ 0",
+          "feedback_uz": "Nolni ham qamrab, talabni kengaytiradi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "“Qat’iy past” tengliksiz taqqoslash.",
+        "Mos yozuv t < 0."
+      ],
+      "common_error_uz": "Matndagi qat’iylikni saqlang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "2/cond-compare/precheck/3"
+      }
+    },
+    {
+      "key": "cond-compare-postcheck",
+      "skill_key": "cond-compare",
+      "purpose": "postcheck",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "x = 12. x != 12 ifodasining qiymati?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "FALSE",
+          "feedback_uz": "Bir xil qiymatlar teng emas degan gap yolg‘on."
+        },
+        {
+          "id": "b",
+          "text_uz": "TRUE",
+          "feedback_uz": "!= tenglikni emas, teng emaslikni so‘raydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "x yangi qiymat oladi",
+          "feedback_uz": "Taqqoslash qiymat bermaydi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "a"
+      },
+      "solution_steps_uz": [
+        "12 != 12 ni tekshiring.",
+        "Qiymatlar teng, natija FALSE."
+      ],
+      "common_error_uz": "Taqqoslash bilan qiymat berishni farqlang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "2/cond-compare/postcheck/4"
+      }
+    },
+    {
+      "key": "cond-boolean-practice-1",
+      "skill_key": "cond-boolean",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "x = 0. (x > 0) OR (x == 0) natijasi?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "FALSE",
+          "feedback_uz": "OR ikkala qismni rost bo‘lishini talab qilmaydi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Aniqlanmagan",
+          "feedback_uz": "Ikkala taqqoslash ham aniq qiymatga ega."
+        },
+        {
+          "id": "c",
+          "text_uz": "TRUE",
+          "feedback_uz": "Ikkinchi qism rost, OR uchun yetarli."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "Birinchi qism FALSE, ikkinchisi TRUE.",
+        "FALSE OR TRUE = TRUE."
+      ],
+      "common_error_uz": "OR ni AND kabi baholamang.",
+      "hint_uz": "OR uchun kamida bitta rost qism yetadi.",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "2/cond-boolean/practice/1"
+      }
+    },
+    {
+      "key": "cond-boolean-practice-2",
+      "skill_key": "cond-boolean",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "Qaysi shart 10 dan 20 gacha, ikkala chekkasi bilan, qiymatni qabul qiladi?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "(x > 10) AND (x < 20)",
+          "feedback_uz": "Chegaralar chiqarib tashlangan."
+        },
+        {
+          "id": "b",
+          "text_uz": "(x ≥ 10) AND (x ≤ 20)",
+          "feedback_uz": "Ikkala chegara bir vaqtda bajariladi."
+        },
+        {
+          "id": "c",
+          "text_uz": "(x ≥ 10) OR (x ≤ 20)",
+          "feedback_uz": "Bu oraliq tashqarisidagi qiymatlarni ham qabul qiladi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "Pastdan va yuqoridan cheklov birga kerak.",
+        "Chegaralar kiritilgani uchun ≥ va ≤ olinadi."
+      ],
+      "common_error_uz": "Oraliq ichida bo‘lish uchun AND kerak.",
+      "hint_uz": "Qiymat ikkala talabni ham bajarishi kerak.",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "2/cond-boolean/practice/2"
+      }
+    },
+    {
+      "key": "cond-boolean-precheck",
+      "skill_key": "cond-boolean",
+      "purpose": "precheck",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "a = TRUE, b = FALSE. NOT (a AND b) qiymati?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "TRUE",
+          "feedback_uz": "AND yolg‘on, inkori rost."
+        },
+        {
+          "id": "b",
+          "text_uz": "FALSE",
+          "feedback_uz": "Bu AND natijasini inkorsiz qoldiradi."
+        },
+        {
+          "id": "c",
+          "text_uz": "a yangi qiymat oladi",
+          "feedback_uz": "Ifoda a ni o‘zgartirmaydi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "a"
+      },
+      "solution_steps_uz": [
+        "TRUE AND FALSE = FALSE.",
+        "NOT FALSE = TRUE."
+      ],
+      "common_error_uz": "NOT qavs ichidagi butun ifodaga qo‘llanadi.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "2/cond-boolean/precheck/3"
+      }
+    },
+    {
+      "key": "cond-boolean-postcheck",
+      "skill_key": "cond-boolean",
+      "purpose": "postcheck",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "Ruxsat: talaba yoki xodim, lekin bloklanmagan. Qaysi shart mos?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "student OR (staff AND NOT blocked)",
+          "feedback_uz": "Bu bloklangan talabaga ham ruxsat beradi."
+        },
+        {
+          "id": "b",
+          "text_uz": "student AND staff AND NOT blocked",
+          "feedback_uz": "Bir vaqtning o‘zida ikkala rolni talab qiladi."
+        },
+        {
+          "id": "c",
+          "text_uz": "(student OR staff) AND NOT blocked",
+          "feedback_uz": "Rol va bloklanmaganlik birga bajariladi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "Avval ruxsatli rollarni OR bilan birlashtiring.",
+        "Butun guruhga bloklanmaganlik talabini AND bilan qo‘shing."
+      ],
+      "common_error_uz": "Qavs olib tashlansa ruxsat ma’nosi o‘zgarishi mumkin.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "2/cond-boolean/postcheck/4"
+      }
+    },
+    {
+      "key": "cond-if-practice-1",
+      "skill_key": "cond-if",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "x ← 7; if x ≥ 5 {x ← x − 2} else {x ← x + 2}. Oxirgi x?",
+      "options": [],
+      "answer_key": {
+        "value": "5"
+      },
+      "solution_steps_uz": [
+        "7 ≥ 5 rost.",
+        "x = 7 − 2 = 5; else tashlanadi."
+      ],
+      "common_error_uz": "Ikkala tarmoqni ketma-ket bajarmang.",
+      "hint_uz": "Shartni blokka kirishdan oldingi qiymatda tekshiring.",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "2/cond-if/practice/1"
+      }
+    },
+    {
+      "key": "cond-if-practice-2",
+      "skill_key": "cond-if",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "x ← 1; if x < 3 {x ← x + 2}; if x == 3 {x ← x × 4}. Oxirgi x?",
+      "options": [],
+      "answer_key": {
+        "value": "12"
+      },
+      "solution_steps_uz": [
+        "Birinchi mustaqil if x ni 3 qiladi.",
+        "Ikkinchi if ham rost, x = 12."
+      ],
+      "common_error_uz": "Ikki mustaqil if ni if-else deb o‘qimang.",
+      "hint_uz": "Ikkinchi if yangi qiymatni ko‘radi.",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "2/cond-if/practice/2"
+      }
+    },
+    {
+      "key": "cond-if-precheck",
+      "skill_key": "cond-if",
+      "purpose": "precheck",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "x ← 0; if x > 0 {y ← 10} else {y ← 20}. y qiymati?",
+      "options": [],
+      "answer_key": {
+        "value": "20"
+      },
+      "solution_steps_uz": [
+        "0 > 0 yolg‘on.",
+        "else y ga 20 beradi."
+      ],
+      "common_error_uz": "Nolni musbat deb hisoblamang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "2/cond-if/precheck/3"
+      }
+    },
+    {
+      "key": "cond-if-postcheck",
+      "skill_key": "cond-if",
+      "purpose": "postcheck",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "x ← 4; if x < 5 {x ← x + 3} else {x ← x − 3}; OUTPUT x. Chiqish?",
+      "options": [],
+      "answer_key": {
+        "value": "7"
+      },
+      "solution_steps_uz": [
+        "Boshlang‘ich 4 shartni bajaradi, x = 7.",
+        "Yangi qiymat else ni ishga tushirmaydi, chiqish 7."
+      ],
+      "common_error_uz": "Blokdan keyingi qiymat sabab else ga o‘tib ketmang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "2/cond-if/postcheck/4"
+      }
+    },
+    {
+      "key": "cond-multiple-practice-1",
+      "skill_key": "cond-multiple",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "ball = 75; if ball ≥ 90 {r ← 3} else if ball ≥ 60 {r ← 2} else {r ← 1}. r?",
+      "options": [],
+      "answer_key": {
+        "value": "2"
+      },
+      "solution_steps_uz": [
+        "75 ≥ 90 yolg‘on.",
+        "75 ≥ 60 rost, r = 2."
+      ],
+      "common_error_uz": "Shartlarni tartib bilan baholang.",
+      "hint_uz": "Birinchi rost shartda zanjir to‘xtaydi.",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "2/cond-multiple/practice/1"
+      }
+    },
+    {
+      "key": "cond-multiple-practice-2",
+      "skill_key": "cond-multiple",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "a = 5, b = −1; r ← 0; if a > 0 {if b > 0 {r ← 1} else {r ← 2}} else {r ← 3}. r?",
+      "options": [],
+      "answer_key": {
+        "value": "2"
+      },
+      "solution_steps_uz": [
+        "Tashqi shart rost, ichki blok ochiladi.",
+        "b > 0 yolg‘on, ichki else r = 2 qiladi."
+      ],
+      "common_error_uz": "Ichki va tashqi else ni aralashtirmang.",
+      "hint_uz": "Har else qaysi if ga tegishli ekanini qavsdan toping.",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "2/cond-multiple/practice/2"
+      }
+    },
+    {
+      "key": "cond-multiple-precheck",
+      "skill_key": "cond-multiple",
+      "purpose": "precheck",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "ball = 90; if ball ≥ 90 {r ← 3} else if ball ≥ 60 {r ← 2} else {r ← 1}. r?",
+      "options": [],
+      "answer_key": {
+        "value": "3"
+      },
+      "solution_steps_uz": [
+        "90 yuqori chegaraga kiradi.",
+        "Birinchi tarmoq r = 3 beradi."
+      ],
+      "common_error_uz": "Chegarani pastki toifaga tushirmang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "2/cond-multiple/precheck/3"
+      }
+    },
+    {
+      "key": "cond-multiple-postcheck",
+      "skill_key": "cond-multiple",
+      "purpose": "postcheck",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "Yuqori toifa ball ≥ 90. Kod avval if ball ≥ 60, keyin else if ball ≥ 90 ni tekshiradi. Muammo nima?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Yuqori ball birinchi tarmoqqa kirib, yuqori toifa ochilmaydi",
+          "feedback_uz": "Tor shart umumiy shartdan keyin qolib ketgan."
+        },
+        {
+          "id": "b",
+          "text_uz": "Barcha shartlar doim yolg‘on",
+          "feedback_uz": "Yuqori ball birinchi shartni bajaradi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Har ikkala tarmoq bajariladi",
+          "feedback_uz": "else if zanjiri faqat birini bajaradi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "a"
+      },
+      "solution_steps_uz": [
+        "Yuqori ball quyi chegaradan ham katta.",
+        "Birinchi tarmoq tanlangach zanjir qolganini tashlaydi."
+      ],
+      "common_error_uz": "Tor va umumiy shartlarning tartibini tekshiring.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "2/cond-multiple/postcheck/4"
+      }
+    },
+    {
+      "key": "cond-switch-practice-1",
+      "skill_key": "cond-switch",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "mode = 9; switch mode {case 1: r ← 10; case 2: r ← 20; default: r ← −1}. r?",
+      "options": [],
+      "answer_key": {
+        "value": "-1"
+      },
+      "solution_steps_uz": [
+        "9 berilgan case lardan biriga ham teng emas.",
+        "default r = −1 beradi."
+      ],
+      "common_error_uz": "Noma’lum qiymatga mavjud case ni taxminan moslamang.",
+      "hint_uz": "Aniq moslik bo‘lmasa default olinadi.",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "2/cond-switch/practice/1"
+      }
+    },
+    {
+      "key": "cond-switch-practice-2",
+      "skill_key": "cond-switch",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "“x musbat VA y manfiy” kabi shart uchun qaysi usul aniqroq?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Har qanday kirishda default",
+          "feedback_uz": "Bu kerakli shartni tekshirmaydi."
+        },
+        {
+          "id": "b",
+          "text_uz": "if (x > 0) AND (y < 0)",
+          "feedback_uz": "Ikki o‘zgaruvchi bo‘yicha mantiq bevosita yozilgan."
+        },
+        {
+          "id": "c",
+          "text_uz": "switch x da faqat case 1",
+          "feedback_uz": "Bu barcha musbat qiymatlarni va y ni qamramaydi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "Shart aniq bitta qiymatga tenglik emas.",
+        "if ikki taqqoslashni AND bilan bog‘laydi."
+      ],
+      "common_error_uz": "switch ni har qanday shartning o‘rniga ishlatmang.",
+      "hint_uz": "Bu yerda bitta kod emas, ikki belgi tekshiriladi.",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "2/cond-switch/practice/2"
+      }
+    },
+    {
+      "key": "cond-switch-precheck",
+      "skill_key": "cond-switch",
+      "purpose": "precheck",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "code = 1; switch code {case 1: r ← 4; case 2: r ← 8; default: r ← 0}. Kurs qoidasi bo‘yicha r?",
+      "options": [],
+      "answer_key": {
+        "value": "4"
+      },
+      "solution_steps_uz": [
+        "Birinchi case mos.",
+        "Keyingi case ga o‘tish yo‘q, r = 4."
+      ],
+      "common_error_uz": "Boshqa tilning fall-through qoidasini bu psevdokodga ko‘chirmang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "2/cond-switch/precheck/3"
+      }
+    },
+    {
+      "key": "cond-switch-postcheck",
+      "skill_key": "cond-switch",
+      "purpose": "postcheck",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "Menyu faqat OPEN va SAVE kodlarini qabul qiladi. Boshqa kod uchun xabar ham kerak. Nima qo‘shiladi?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Noma’lum kodni SAVE deb olish",
+          "feedback_uz": "Bu noto‘g‘ri amalni boshlashi mumkin."
+        },
+        {
+          "id": "b",
+          "text_uz": "OPEN ni yana takrorlash",
+          "feedback_uz": "Takroriy case noma’lum qiymatni qamramaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "default da noma’lum kod xabari",
+          "feedback_uz": "Mos kelmagan qiymatlar aniq qayta ishlanadi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "Ma’lum variantlar alohida case.",
+        "Qolgan kirishlar default orqali tushunarli xabar oladi."
+      ],
+      "common_error_uz": "Noma’lum kirishni jim qoldirmang yoki boshqa amalga aylantirmang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "2/cond-switch/postcheck/4"
+      }
+    }
+  ],
+  "diagnostic_links": [],
+  "blueprint": {
+    "precheck_order": [
+      "cond-compare-precheck",
+      "cond-boolean-precheck",
+      "cond-if-precheck",
+      "cond-multiple-precheck",
+      "cond-switch-precheck"
+    ],
+    "practice_order": [
+      "cond-compare-practice-1",
+      "cond-boolean-practice-1",
+      "cond-if-practice-1",
+      "cond-multiple-practice-1",
+      "cond-switch-practice-1",
+      "cond-compare-practice-2",
+      "cond-boolean-practice-2",
+      "cond-if-practice-2",
+      "cond-multiple-practice-2",
+      "cond-switch-practice-2"
+    ],
+    "postcheck_order": [
+      "cond-compare-postcheck",
+      "cond-boolean-postcheck",
+      "cond-if-postcheck",
+      "cond-multiple-postcheck",
+      "cond-switch-postcheck"
+    ],
+    "matched_pairs": [
+      {
+        "skill_key": "cond-compare",
+        "difficulty": "medium",
+        "precheck_key": "cond-compare-precheck",
+        "postcheck_key": "cond-compare-postcheck"
+      },
+      {
+        "skill_key": "cond-boolean",
+        "difficulty": "medium",
+        "precheck_key": "cond-boolean-precheck",
+        "postcheck_key": "cond-boolean-postcheck"
+      },
+      {
+        "skill_key": "cond-if",
+        "difficulty": "medium",
+        "precheck_key": "cond-if-precheck",
+        "postcheck_key": "cond-if-postcheck"
+      },
+      {
+        "skill_key": "cond-multiple",
+        "difficulty": "medium",
+        "precheck_key": "cond-multiple-precheck",
+        "postcheck_key": "cond-multiple-postcheck"
+      },
+      {
+        "skill_key": "cond-switch",
+        "difficulty": "medium",
+        "precheck_key": "cond-switch-precheck",
+        "postcheck_key": "cond-switch-postcheck"
+      }
+    ],
+    "unseen_postcheck_sets": 1,
+    "comparison_note_uz": "Ko‘nikma va tahririy qiyinlik bo‘yicha juftlangan; statistik tenglashtirish va umumiy qobiliyat o‘sishi da’vosi yo‘q.",
+    "exhaustion_note_uz": "Bitta mustaqil yakuniy tekshiruv to‘plami bor. Yangi bank bo‘lmasa qayta o‘sish o‘lchovi olinmaydi."
+  }
+}

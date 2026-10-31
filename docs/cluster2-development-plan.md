@@ -2,7 +2,7 @@
 
 2026-10-31. Asos: foydalanuvchi tasdiqlagan [loyiha yechimi](cluster2-design.md).
 
-Ijro holati: **1-bosqich tugadi**, [resurslar hisoboti](cluster2-stage1-summary.md) tayyor. 2-bosqich tasdig‘i kutilmoqda.
+Ijro holati: **1 va 2-bosqichlar tugadi**: [resurslar hisoboti](cluster2-stage1-summary.md), [backend hisoboti](cluster2-stage2-summary.md). 3-bosqich — frontend integratsiyasi tasdig‘i kutilmoqda.
 
 1. **Resurslar:** olti modul uchun 30 ko‘nikma, 30 dars va ishlangan misol, 120 topshiriq, ikkita ochiq miniloyiha; barcha matnlar UZ/RU. Mualliflik manbalari, canonical JSON, hash bilan bog‘langan tarjima va o‘qiladigan Markdown nusxalar yaratish. Kalitlar, semantika, javoblar, tarjimalar va qamrovni tekshirish. Hisobotdan so‘ng backend bosqichiga tasdiq so‘raladi.
 2. **Backend:** yangi kontent shartnomasidagi klaster/indikatorlar, legacy v1 mosligi, klaster metama’lumoti, yangi bundle va locale yuklash, atomik import/nashr, permission va aktiv check himoyasi. Izolyatsiyalangan PostgreSQL tekshiruvlari. Hisobot va frontend bosqichiga tasdiq.

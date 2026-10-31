@@ -9,7 +9,7 @@
     {
       "id": "authored-cluster2",
       "filename": "authoring-manifest.json",
-      "sha256": "e0cbef97d4330bbd8b5c78b872deeaa7767def62aa47431308e5b025a6918031"
+      "sha256": "2119f206f0255de004d39686833346e13c85ab8a87eb0829c15b7c2116d8800e"
     }
   ],
   "module": {
@@ -28,6 +28,16 @@
     "review_status": "internally_checked",
     "diagnostic_coverage_note_uz": "Aniq diagnostika savollari bilan xarita hali tasdiqlanmagan. Boshlang‘ich tekshiruv mavzu bo‘yicha dastlabki dalil beradi."
   },
+  "notation_uz": [
+    "← qiymat beradi; ==, !=, <, >, ≤, ≥ taqqoslaydi. OUTPUT qiymatni ko‘rsatadi, o‘zgartirmaydi.",
+    "AND ikkala shartni, OR kamida bittasini talab qiladi; NOT inkor qiladi. Qavslar shart chegarasini belgilaydi.",
+    "{ } bitta blokni, ; ketma-ket buyruqlar ajratgichini bildiradi. if-else va else if zanjirida faqat tanlangan bitta tarmoq bajariladi.",
+    "switch aniq mos case ni, mos kelmasa default ni bajaradi. Keyingi case ga avtomatik o‘tish yo‘q.",
+    "for i ← a TO b butun qiymatlarni 1 qadam bilan oshiradi, ikkala chegara kiritiladi. a > b bo‘lsa tana bajarilmaydi.",
+    "while shartni tanadan avval tekshiradi; do-while avval tanani bajaradi, keyin shart rost bo‘lsa takrorlaydi.",
+    "div va mod uchun bo‘linuvchi manfiy bo‘lmagan butun, bo‘luvchi musbat butun: butun bo‘linma va qoldiq olinadi. RETURN funksiya chaqiruvini natija bilan tugatadi.",
+    "Arifmetika aniq deb olinadi; haqiqiy tilda son turi chegarasi alohida tekshiriladi. START/END — boshlash/tugatish, INPUT/OUTPUT — kirish/chiqish, DECISION — shart."
+  ],
   "skills": [
     {
       "key": "algo-io",

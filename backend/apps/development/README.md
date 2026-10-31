@@ -1,5 +1,10 @@
 # Development backend foundation
 
+2026-10-31 cluster-two update: both clusters are supported by the backend.
+Cluster one remains the default seed/release scope; cluster two requires an
+explicit bundle/release selection. The cluster-two frontend and live release
+are later stages. See `docs/cluster2-backend-contract.md` at repository root.
+
 Stages two through four provide versioned content, progress storage, permissions,
 read-only Django admin inspection, explicit publication, atomic seed, student
 learning APIs and the first React learning flow. Automated skill recommendations
@@ -7,7 +12,8 @@ remain a later stage.
 
 ## Content
 
-The five deployed manifests are in `content/cluster1/` in this application.
+The six academic manifests are in `content/cluster1/` in this application.
+Six bilingual algorithmic/practical manifests are in `content/cluster2/`.
 Reviewed copies are in `docs/content/cluster1/` at repository root; offline
 checks compare them. No Downloads files are
 needed to import. Numeric input accepts bounded exact integers, decimals or

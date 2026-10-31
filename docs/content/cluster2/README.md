@@ -1,6 +1,6 @@
 # 2-klaster resurslari — UZ / RU
 
-**Holat: resurslar bosqichi tugagan, draft. Platformaga hali ulanmagan.**
+**Holat: resurslar va backend integratsiyasi tayyor, draft. Frontend va jonli chiqarish keyingi bosqichlarda.**
 
 Algoritmik-amaliy blok: 6 modul, 30 mikroko‘nikma, 30 mini-dars va ishlangan namuna, 120 topshiriq (60 mashq, 30 boshlang‘ich, 30 yakuniy), 2 ochiq miniloyiha. Barcha mazmun o‘zbekcha va ruscha tayyorlandi. Ruscha savollar o‘zbekcha savollarning tarjimasi; ular qo‘shimcha mustaqil tekshiruv banki sifatida sanalmaydi.
 
@@ -33,17 +33,21 @@ python -X utf8 docs/content/cluster2/build_resources.py
 python -X utf8 docs/content/cluster2/verify_resources.py
 ```
 
+Backend uchun reviewed nusxalarni sinxronlash: `python -X utf8 docs/content/cluster2/build_resources.py --sync-backend`. Bu faqat repository ichidagi draft JSON fayllarini yozadi, bazaga import/nashr qilmaydi.
+
 Python standart kutubxonasi va repodagi sof kontent validatorlari ishlatiladi. Django serveri, baza, tarmoq yoki yangi paket kerak emas. O‘quvchi yuborgan kod bajarilmaydi; sonli javoblar mustaqil reference hisoblar bilan tekshiriladi. Barcha tanlovli savollarning ma’nosi va chalg‘ituvchi variantlari tahririy ko‘rib chiqildi; bu tashqi metodist tasdig‘i emas.
 
 Matnli mualliflik manbalari va manifest SHA-256si LF bilan normallashtiriladi; Windows CRLF checkout hashni buzmaydi. Original DOCX manbasi esa binar baytlari bo‘yicha tekshiriladi.
 
-## Keyingi integratsiya uchun shartnoma
+## Integratsiya shartnomasi
 
 Yangi resurslar `schema_version=2` bo‘lib, `module.cluster=2` va `module.topic_number=2.x` metama’lumotlariga ega. Ruxsatli indikatorlar `algorithmic`, `creative`, `problem_solving`; har ko‘nikma o‘z modulidagi indikatorlardan foydalanadi. `order` — klaster ichidagi tartib. Hozirgi `schema_version=1` manifestlari va frozen v1 modullar o‘zgartirilmagan.
 
 `skills`, `lessons`, `exercises`, `sources`, `diagnostic_links`, `blueprint` bo‘limlari mavjud kontent shakliga mos. 2.6 dagi qo‘shimcha `projects` — `assessment=self_review`, `title_uz`, `brief_uz`, `constraints_uz`, `steps_uz`, `deliverables_uz`, `rubric_uz`. Ruscha locale’da `projects[key]` xuddi shu maydonlarning tilga neytral nomlarini saqlaydi. Miniloyihalar javobli tekshiruv bankiga kirmaydi; ularni ham active check paytida o‘quv nazariyasi sifatida yopish zarur.
 
-Hozirgi production importer schema 2 ni ataylab rad qiladi; resurslar backend katalogiga ko‘chirilmagan. Offline validator metadata/loyihalarni alohida, o‘zgarmagan dars-savol-blueprint shaklini esa xotiradagi vaqtinchalik schema-1 proyeksiyasi orqali tekshiradi. Bu production schema-2 qo‘llovi borligini anglatmaydi. Keyingi bosqichda haqiqiy schema-2 validator/importer, locale yuklash va klaster metama’lumotlari implementatsiya qilinadi.
+Backenddagi haqiqiy validator schema 1 va 2 ni tekshiradi; offline QA ham shu validatorni yangi JSONlarga to‘g‘ridan-to‘g‘ri qo‘llaydi. Resurslar `backend/apps/development/content/cluster2/` va umumiy `content/translations/` katalogiga ko‘chirildi. Backend importer schema 2 uchun to‘liq ruscha locale va hash mosligini yozuvdan oldin talab qiladi. Jonli serverga chiqarish keyingi alohida bosqich.
+
+`notation_uz` va ruscha locale’dagi `notation` — javobsiz, neytral psevdokod qoidalari. Ular module v1 hashiga bog‘langan va enrollment javobida tekshiruv boshlanishidan oldin ochiladi. Aktiv check paytida barcha enrollmentlarda yopiladi. Dastlabki resurslar bosqichidagi vaqtinchalik schema-1 proyeksiyasi backend bosqichida olib tashlandi; shu sabab `verification-result.json` hozirgi validator holatini ko‘rsatadi.
 
 Diagnostika savollari bilan aniq xarita tasdiqlanmagani uchun `diagnostic_links=[]`; diagnostika qamrovi izohi mavjud. Kursdagi boshlang‘ich tekshiruv mavzu dalilini beradi. Savol matni tahlilisiz kategoriya nomidan avtomatik moslik yaratilmaydi.
 

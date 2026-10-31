@@ -1,8 +1,9 @@
 """Generate draft JSON/Markdown resources only; no Django or production writes."""
 import hashlib
+import argparse
 from pathlib import Path
 
-from authoring import HERE, compile_module, digest, markdown, write_json
+from authoring import HERE, ROOT, compile_module, digest, markdown, write_json
 from module21 import build as module21
 from module22 import build as module22
 from module23 import build as module23
@@ -12,7 +13,7 @@ from module26 import build as module26
 from projects import build as projects
 
 
-def main():
+def main(sync_backend=False):
     files = ['authoring.py', 'build_resources.py', 'module21.py', 'module22.py', 'module23.py',
              'module24.py', 'module25.py', 'module26.py', 'projects.py', 'pseudocode.uz.md', 'pseudocode.ru.md']
     # Text source hashes use LF on every checkout, including Windows autocrlf.
@@ -43,6 +44,10 @@ def main():
         key = data['module']['key']
         write_json(HERE / f'{key}.v1.json', data)
         write_json(HERE / 'translations' / f'{key}.v1.ru.json', ru)
+        if sync_backend:
+            target = ROOT / 'backend/apps/development/content'
+            write_json(target / 'cluster2' / f'{key}.v1.json', data)
+            write_json(target / 'translations' / f'{key}.v1.ru.json', ru)
         for language in ('uz', 'ru'):
             text = markdown(data, ru, language)
             for project in data.get('projects', []):
@@ -64,4 +69,6 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--sync-backend', action='store_true', help='Also write validated draft source copies for backend integration; no database writes.')
+    main(parser.parse_args().sync_backend)

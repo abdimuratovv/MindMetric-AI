@@ -1,0 +1,875 @@
+{
+  "schema_version": 2,
+  "sources": [
+    {
+      "id": "source-curriculum",
+      "filename": "Oqitish moduli.docx",
+      "sha256": "c11956549286d3f6c99ae327b0dc0ee6dcdc4714e4e069d385901f0f8d58a473"
+    },
+    {
+      "id": "authored-cluster2",
+      "filename": "authoring-manifest.json",
+      "sha256": "2119f206f0255de004d39686833346e13c85ab8a87eb0829c15b7c2116d8800e"
+    }
+  ],
+  "module": {
+    "key": "algorithmization-flowcharts",
+    "version": 1,
+    "order": 1,
+    "cluster": 2,
+    "topic_number": "2.1",
+    "title_uz": "Algoritmizatsiya va blok-sxemalar",
+    "title_ru": "Алгоритмизация и блок-схемы",
+    "content_language": "uz",
+    "indicator_keys": [
+      "algorithmic"
+    ],
+    "status": "draft",
+    "review_status": "internally_checked",
+    "diagnostic_coverage_note_uz": "Aniq diagnostika savollari bilan xarita hali tasdiqlanmagan. Boshlang‘ich tekshiruv mavzu bo‘yicha dastlabki dalil beradi."
+  },
+  "notation_uz": [
+    "← qiymat beradi; ==, !=, <, >, ≤, ≥ taqqoslaydi. OUTPUT qiymatni ko‘rsatadi, o‘zgartirmaydi.",
+    "AND ikkala shartni, OR kamida bittasini talab qiladi; NOT inkor qiladi. Qavslar shart chegarasini belgilaydi.",
+    "{ } bitta blokni, ; ketma-ket buyruqlar ajratgichini bildiradi. if-else va else if zanjirida faqat tanlangan bitta tarmoq bajariladi.",
+    "switch aniq mos case ni, mos kelmasa default ni bajaradi. Keyingi case ga avtomatik o‘tish yo‘q.",
+    "for i ← a TO b butun qiymatlarni 1 qadam bilan oshiradi, ikkala chegara kiritiladi. a > b bo‘lsa tana bajarilmaydi.",
+    "while shartni tanadan avval tekshiradi; do-while avval tanani bajaradi, keyin shart rost bo‘lsa takrorlaydi.",
+    "div va mod uchun bo‘linuvchi manfiy bo‘lmagan butun, bo‘luvchi musbat butun: butun bo‘linma va qoldiq olinadi. RETURN funksiya chaqiruvini natija bilan tugatadi.",
+    "Arifmetika aniq deb olinadi; haqiqiy tilda son turi chegarasi alohida tekshiriladi. START/END — boshlash/tugatish, INPUT/OUTPUT — kirish/chiqish, DECISION — shart."
+  ],
+  "skills": [
+    {
+      "key": "algo-io",
+      "title_uz": "Kirish, chiqish va shartnoma",
+      "indicator_keys": [
+        "algorithmic"
+      ],
+      "prerequisite_keys": []
+    },
+    {
+      "key": "algo-decompose",
+      "title_uz": "Masalani bosqichlarga ajratish",
+      "indicator_keys": [
+        "algorithmic"
+      ],
+      "prerequisite_keys": [
+        "algo-io"
+      ]
+    },
+    {
+      "key": "algo-assignment",
+      "title_uz": "Ketma-ketlik va qiymat berish",
+      "indicator_keys": [
+        "algorithmic"
+      ],
+      "prerequisite_keys": [
+        "algo-io"
+      ]
+    },
+    {
+      "key": "algo-symbols",
+      "title_uz": "Blok-sxema belgilari va yo‘nalishlar",
+      "indicator_keys": [
+        "algorithmic"
+      ],
+      "prerequisite_keys": [
+        "algo-assignment"
+      ]
+    },
+    {
+      "key": "algo-trace",
+      "title_uz": "Algoritmni qadam bilan tekshirish",
+      "indicator_keys": [
+        "algorithmic"
+      ],
+      "prerequisite_keys": [
+        "algo-assignment",
+        "algo-symbols"
+      ]
+    }
+  ],
+  "lessons": [
+    {
+      "key": "algo-io-lesson",
+      "skill_key": "algo-io",
+      "title_uz": "Kirish, chiqish va shartnoma",
+      "theory_uz": [
+        "Algoritm — berilgan kirishdan talab qilingan chiqishga olib boruvchi aniq qadamlar. Avval nima berilgani, nima topilishi va qaysi qiymatlar mumkinligini yozing.",
+        "Kirish foydalanuvchidan keladi, chiqish hisoblanadi. To‘rtburchak perimetri uchun kirish a va b tomonlar, chiqish esa P = 2 × (a + b). Musbat uzunliklar talab qilinadi.",
+        "Hisoblashdan oldin birliklarni moslang. Natija to‘g‘ri son bo‘lishi yetmaydi: uning nimani va qaysi birlikda bildirishini ham aniqlang."
+      ],
+      "worked_example": {
+        "prompt_uz": "Bir daftar 4000 so‘m, miqdor 3. Jami to‘lovni toping.",
+        "solution_steps_uz": [
+          "Kirish: narx va miqdor.",
+          "Jami = 4000 × 3 = 12000.",
+          "Chiqish — jami to‘lov, so‘mda."
+        ],
+        "answer_uz": "12000 so‘m"
+      }
+    },
+    {
+      "key": "algo-decompose-lesson",
+      "skill_key": "algo-decompose",
+      "title_uz": "Masalani bosqichlarga ajratish",
+      "theory_uz": [
+        "Dekompozitsiya katta vazifani kichik va tekshiriladigan qismlarga bo‘ladi. Har qismning kirishi, chiqishi va keyingi qismga bog‘lanishi aniqlanadi.",
+        "Buyurtma hisobida avval ma’lumotni tekshiring, keyin buyumlar summasini toping, chegirmani hisoblang va oxirida yetkazishni qo‘shing. Tartib masala shartidan olinadi.",
+        "Qismni alohida tekshirish xatoni toraytiradi. Har ekran yoki har satr alohida masala emas: bo‘linish mazmunli natijaga ega bo‘lsin."
+      ],
+      "worked_example": {
+        "prompt_uz": "20000 so‘mlik buyumga 5000 so‘m chegirma va keyin 3000 so‘m yetkazish qo‘shiladi. Bosqichlarni bajaring.",
+        "solution_steps_uz": [
+          "Buyum summasi 20000.",
+          "Chegirmadan keyin 20000 − 5000 = 15000.",
+          "Yetkazish bilan 15000 + 3000 = 18000."
+        ],
+        "answer_uz": "18000 so‘m"
+      }
+    },
+    {
+      "key": "algo-assignment-lesson",
+      "skill_key": "algo-assignment",
+      "title_uz": "Ketma-ketlik va qiymat berish",
+      "theory_uz": [
+        "Psevdokodda x ← ifoda qiymat berish, x == y taqqoslashdir. O‘ng tomon avval hisoblanadi, so‘ng chap o‘zgaruvchi yangilanadi.",
+        "Amallar yozilgan tartibda bajariladi. x ← x + 1 eski qiymatga qo‘shadi; tenglik tenglamasi sifatida yechilmaydi.",
+        "Ikki qiymatni almashtirishda vaqtinchalik t kerak: t ← a; a ← b; b ← t. Aks holda bir qiymat ustidan yozilib yo‘qoladi."
+      ],
+      "worked_example": {
+        "prompt_uz": "x ← 4; y ← x + 3; x ← y × 2. Oxirgi x?",
+        "solution_steps_uz": [
+          "x dastlab 4.",
+          "y = 4 + 3 = 7.",
+          "x yangi qiymati 7 × 2 = 14."
+        ],
+        "answer_uz": "14"
+      }
+    },
+    {
+      "key": "algo-symbols-lesson",
+      "skill_key": "algo-symbols",
+      "title_uz": "Blok-sxema belgilari va yo‘nalishlar",
+      "theory_uz": [
+        "Ushbu kursdagi shartli belgilar: oval — boshlash/tugatish; parallelogramm — kirish/chiqish; to‘g‘ri to‘rtburchak — amal; romb — shart. Har belgi matn yorlig‘i bilan ham beriladi.",
+        "O‘qlar bajarish tartibini ko‘rsatadi. Rombdan TRUE va FALSE deb belgilangan yo‘llar chiqadi. Hisoblash amali bilan shartni farqlang.",
+        "Matnli yozuv ham sxemani ifodalaydi: START → INPUT x → DECISION x > 0; TRUE → OUTPUT musbat → END; FALSE → OUTPUT musbat emas → END. Har yo‘l tugashi yoki belgilangan takrorlashga qaytishi kerak."
+      ],
+      "worked_example": {
+        "prompt_uz": "“n juftmi?” tekshiruvi va “n ni chiqarish” uchun belgilarni tanlang.",
+        "solution_steps_uz": [
+          "Savol shart bo‘lgani uchun romb.",
+          "Chiqarish kirish/chiqish amali, parallelogramm.",
+          "Shartdan ikkita belgilangan yo‘l chiqadi."
+        ],
+        "answer_uz": "Romb; parallelogramm"
+      }
+    },
+    {
+      "key": "algo-trace-lesson",
+      "skill_key": "algo-trace",
+      "title_uz": "Algoritmni qadam bilan tekshirish",
+      "theory_uz": [
+        "Kuzatish jadvalida buyruqdan keyingi o‘zgaruvchilar va chiqarilgan qiymatlar alohida yoziladi. OUTPUT qiymatni ko‘rsatadi, o‘zgaruvchini o‘zgartirmaydi.",
+        "Oddiy, chegaraviy va yaroqsiz kirishni farqlang. Musbat yosh talab qilinsa, nol yoki manfiy qiymatni hisoblashdan oldin qaytarish kerak.",
+        "Bir muvaffaqiyatli misol algoritmni barcha kirishda to‘g‘ri qilmaydi. Avval kichik kirishlar bilan qo‘lda kuzating, keyin shartni buzadigan qarshi misol qidiring."
+      ],
+      "worked_example": {
+        "prompt_uz": "x ← 2; OUTPUT x; x ← x + 5; OUTPUT x. Chiqishlar ketma-ketligi?",
+        "solution_steps_uz": [
+          "Birinchi OUTPUT 2 ni chiqaradi.",
+          "Yangilanishdan keyin x = 7.",
+          "Ikkinchi OUTPUT 7 ni chiqaradi."
+        ],
+        "answer_uz": "2, 7"
+      }
+    }
+  ],
+  "exercises": [
+    {
+      "key": "algo-io-practice-1",
+      "skill_key": "algo-io",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "Bir chipta 6000 so‘m. 4 chipta jami necha so‘m?",
+      "options": [],
+      "answer_key": {
+        "value": "24000"
+      },
+      "solution_steps_uz": [
+        "Narx miqdorga ko‘payadi.",
+        "6000 × 4 = 24000."
+      ],
+      "common_error_uz": "Narx va miqdorni qo‘shish jami to‘lovni bermaydi.",
+      "hint_uz": "Bir xil narx har bir chiptaga tegishli.",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "1/algo-io/practice/1"
+      }
+    },
+    {
+      "key": "algo-io-practice-2",
+      "skill_key": "algo-io",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "Aylana uzunligi emas, to‘rtburchak YUZINI hisoblash kerak. Qaysi kirish/chiqish mos?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Kirish: r radius; chiqish: aylana uzunligi",
+          "feedback_uz": "Bu boshqa shakl va boshqa kattalik."
+        },
+        {
+          "id": "b",
+          "text_uz": "Kirish: a, b; chiqish: 2 × (a + b)",
+          "feedback_uz": "Bu yuzani emas, perimetrni beradi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Kirish: a, b tomonlar; chiqish: a × b",
+          "feedback_uz": "Ikki tomon yuza uchun yetarli."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "Yuza uchun ikki tomon olinadi.",
+        "S = a × b formulasi ishlatiladi."
+      ],
+      "common_error_uz": "Kirish bir xil bo‘lsa ham chiqish maqsadini almashtirmang.",
+      "hint_uz": "Yuza ichki sohani o‘lchaydi.",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "1/algo-io/practice/2"
+      }
+    },
+    {
+      "key": "algo-io-precheck",
+      "skill_key": "algo-io",
+      "purpose": "precheck",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "Yo‘l vaqtini topish uchun masofa va o‘zgarmas tezlik beriladi. Qaysi cheklov zarur?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Masofa har doim tezlikka teng",
+          "feedback_uz": "Turli fizik kattaliklar uchun bunday talab yo‘q."
+        },
+        {
+          "id": "b",
+          "text_uz": "Tezlik musbat, birliklar mos",
+          "feedback_uz": "Tezlikka bo‘linadi; nol va nomos birliklar yaramaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Tezlik nol bo‘lishi shart",
+          "feedback_uz": "Nolga bo‘lib vaqt topilmaydi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "Vaqt = masofa / tezlik.",
+        "Tezlik musbat bo‘lishi, birliklar mos kelishi kerak."
+      ],
+      "common_error_uz": "Formula bilan birga uning qo‘llanish shartini ham yozing.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "1/algo-io/precheck/3"
+      }
+    },
+    {
+      "key": "algo-io-postcheck",
+      "skill_key": "algo-io",
+      "purpose": "postcheck",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "Omborda 18 quti bor, har birida 12 dona buyum. Dona sonini toping.",
+      "options": [],
+      "answer_key": {
+        "value": "216"
+      },
+      "solution_steps_uz": [
+        "Chiqish — qutilar emas, dona soni.",
+        "18 × 12 = 216."
+      ],
+      "common_error_uz": "Qutilar sonini o‘zini javob deb olmang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "1/algo-io/postcheck/4"
+      }
+    },
+    {
+      "key": "algo-decompose-practice-1",
+      "skill_key": "algo-decompose",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "O‘rtacha baho dasturini qaysi tartibda tuzish ma’qul?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "O‘rtacha → baholarni olish → yig‘indi",
+          "feedback_uz": "Hali olinmagan ma’lumot bilan o‘rtacha hisoblanmaydi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Faqat oynaning rangini tanlash",
+          "feedback_uz": "Bu hisoblash vazifasini qismlarga ajratmaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Baholarni olish → tekshirish → yig‘indi va son → o‘rtacha",
+          "feedback_uz": "Bo‘lishdan avval yig‘indi va bo‘luvchi tayyor."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "Kirish va tekshirish birinchi.",
+        "Hisoblash natijalari ketma-ket keyingi qismga uzatiladi."
+      ],
+      "common_error_uz": "Hisoblashni o‘z kirishidan oldin joylashtirmang.",
+      "hint_uz": "Har bosqichga avvalgi bosqich nimani beradi?",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "1/algo-decompose/practice/1"
+      }
+    },
+    {
+      "key": "algo-decompose-practice-2",
+      "skill_key": "algo-decompose",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "Buyum 80000 so‘m. Avval 10000 so‘m chegirma, so‘ng 5000 so‘m yetkazish. Jami qancha?",
+      "options": [],
+      "answer_key": {
+        "value": "75000"
+      },
+      "solution_steps_uz": [
+        "80000 − 10000 = 70000.",
+        "70000 + 5000 = 75000."
+      ],
+      "common_error_uz": "Yetkazishni chegirma sifatida ayirmang.",
+      "hint_uz": "Chegirma kamaytiradi, yetkazish oshiradi.",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "1/algo-decompose/practice/2"
+      }
+    },
+    {
+      "key": "algo-decompose-precheck",
+      "skill_key": "algo-decompose",
+      "purpose": "precheck",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "Ro‘yxat bo‘sh bo‘lishi mumkin. O‘rtachani hisoblashdan oldingi qaysi kichik vazifa zarur?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Elementlar soni nol emasligini tekshirish",
+          "feedback_uz": "Bu nolga bo‘lishni oldini oladi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Natijani oldindan yaxlitlash",
+          "feedback_uz": "Hisoblanmagan qiymatni yaxlitlash bo‘sh ro‘yxatni hal qilmaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Barcha baholarni o‘chirib tashlash",
+          "feedback_uz": "Bu kerakli ma’lumotni yo‘qotadi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "a"
+      },
+      "solution_steps_uz": [
+        "Bo‘luvchi — elementlar soni.",
+        "Son nol bo‘lsa o‘rtacha o‘rniga bo‘sh holat qaytariladi."
+      ],
+      "common_error_uz": "Bo‘sh kirishni tekshirish hisoblashdan oldin turadi.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "1/algo-decompose/precheck/3"
+      }
+    },
+    {
+      "key": "algo-decompose-postcheck",
+      "skill_key": "algo-decompose",
+      "purpose": "postcheck",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "Hisob: 3 ta mahsulot, har biri 20000 so‘m; umumiy summadan 15000 so‘m chegirma; keyin 7000 so‘m yetkazish. Jami?",
+      "options": [],
+      "answer_key": {
+        "value": "52000"
+      },
+      "solution_steps_uz": [
+        "3 × 20000 = 60000.",
+        "60000 − 15000 + 7000 = 52000."
+      ],
+      "common_error_uz": "Umumiy chegirmani har bir mahsulotdan ayirmang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "1/algo-decompose/postcheck/4"
+      }
+    },
+    {
+      "key": "algo-assignment-practice-1",
+      "skill_key": "algo-assignment",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "x ← 5; x ← x + 2; x ← x × 3. Oxirgi x?",
+      "options": [],
+      "answer_key": {
+        "value": "21"
+      },
+      "solution_steps_uz": [
+        "Yangilanishdan keyin x = 7.",
+        "Keyin x = 7 × 3 = 21."
+      ],
+      "common_error_uz": "Oxirgi amalda dastlabki qiymatni qayta ishlatmang.",
+      "hint_uz": "Har satrdan keyin qiymat jadvalini yangilang.",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "1/algo-assignment/practice/1"
+      }
+    },
+    {
+      "key": "algo-assignment-practice-2",
+      "skill_key": "algo-assignment",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "a ← 2; b ← 9; a ← b; b ← a. Oxirgi a + b?",
+      "options": [],
+      "answer_key": {
+        "value": "18"
+      },
+      "solution_steps_uz": [
+        "a ← b dan keyin a = 9.",
+        "b ← a dan keyin b = 9; yig‘indi 18."
+      ],
+      "common_error_uz": "Bu vaqtinchalik o‘zgaruvchisiz almashtirish emas.",
+      "hint_uz": "Birinchi qiymat berishda a ning eski qiymati yo‘qoladi.",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "1/algo-assignment/practice/2"
+      }
+    },
+    {
+      "key": "algo-assignment-precheck",
+      "skill_key": "algo-assignment",
+      "purpose": "precheck",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "a ← 6; b ← 4; t ← a; a ← b; b ← t. Oxirgi b?",
+      "options": [],
+      "answer_key": {
+        "value": "6"
+      },
+      "solution_steps_uz": [
+        "t eski a qiymati 6 ni saqlaydi.",
+        "b ← t sabab b = 6."
+      ],
+      "common_error_uz": "Vaqtinchalik saqlangan qiymatni keyingi a bilan aralashtirmang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "1/algo-assignment/precheck/3"
+      }
+    },
+    {
+      "key": "algo-assignment-postcheck",
+      "skill_key": "algo-assignment",
+      "purpose": "postcheck",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "x ← 3; y ← x × 2; x ← y − 1; y ← x + y. Oxirgi y?",
+      "options": [],
+      "answer_key": {
+        "value": "11"
+      },
+      "solution_steps_uz": [
+        "y = 6, keyin x = 5.",
+        "y = 5 + 6 = 11."
+      ],
+      "common_error_uz": "Har bir o‘zgaruvchining eng so‘nggi qiymatini oling.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "1/algo-assignment/postcheck/4"
+      }
+    },
+    {
+      "key": "algo-symbols-practice-1",
+      "skill_key": "algo-symbols",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "x ← x + 1 amali qaysi blokka yoziladi?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "To‘g‘ri to‘rtburchak",
+          "feedback_uz": "Bu qiymatni yangilash amali."
+        },
+        {
+          "id": "b",
+          "text_uz": "Romb",
+          "feedback_uz": "Bu yerda rost/yolg‘on savoli yo‘q."
+        },
+        {
+          "id": "c",
+          "text_uz": "Oval",
+          "feedback_uz": "Oval boshlash yoki tugatish uchun."
+        }
+      ],
+      "answer_key": {
+        "option_id": "a"
+      },
+      "solution_steps_uz": [
+        "Qiymat hisoblanib yoziladi.",
+        "Hisoblash bloki to‘g‘ri to‘rtburchak."
+      ],
+      "common_error_uz": "Hisoblashni taqqoslash bilan almashtirmang.",
+      "hint_uz": "Bu buyruq savol beradimi yoki qiymatni o‘zgartiradimi?",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "1/algo-symbols/practice/1"
+      }
+    },
+    {
+      "key": "algo-symbols-practice-2",
+      "skill_key": "algo-symbols",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "DECISION x ≥ 10 dan x = 10 uchun qaysi yo‘l tanlanadi?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "FALSE",
+          "feedback_uz": "≥ faqat qat’iy kattalik emas."
+        },
+        {
+          "id": "b",
+          "text_uz": "Ikkala yo‘l birga",
+          "feedback_uz": "Bitta tekshiruv natijasi bitta yo‘lni tanlaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "TRUE",
+          "feedback_uz": "Tenglik ≥ shartiga kiradi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "10 ≥ 10 rost.",
+        "Shuning uchun TRUE yo‘li olinadi."
+      ],
+      "common_error_uz": "Chegaradagi tenglikni unutmang.",
+      "hint_uz": "≥ belgisi tenglikni ham o‘z ichiga oladi.",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "1/algo-symbols/practice/2"
+      }
+    },
+    {
+      "key": "algo-symbols-precheck",
+      "skill_key": "algo-symbols",
+      "purpose": "precheck",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "Qaysi blok kirish/chiqishga tegishli?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Oval",
+          "feedback_uz": "Oval bajarilishning boshlanishi yoki oxiri."
+        },
+        {
+          "id": "b",
+          "text_uz": "Parallelogramm",
+          "feedback_uz": "Kursdagi kirish/chiqish belgisi shu."
+        },
+        {
+          "id": "c",
+          "text_uz": "Romb",
+          "feedback_uz": "Romb shartni bildiradi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "INPUT va OUTPUT ma’lumot almashadi.",
+        "Ular parallelogramm bilan ko‘rsatiladi."
+      ],
+      "common_error_uz": "Blok nomini uning vazifasidan ajrating.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "1/algo-symbols/precheck/3"
+      }
+    },
+    {
+      "key": "algo-symbols-postcheck",
+      "skill_key": "algo-symbols",
+      "purpose": "postcheck",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "Sxema: START → INPUT x → DECISION x < 0; TRUE → OUTPUT 1 → END; FALSE → OUTPUT 0 → END. x = 0 da chiqish?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "0",
+          "feedback_uz": "Nol manfiy emas, FALSE yo‘li olinadi."
+        },
+        {
+          "id": "b",
+          "text_uz": "1",
+          "feedback_uz": "Bu TRUE yo‘lining chiqishi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Chiqish yo‘q",
+          "feedback_uz": "FALSE yo‘lida ham OUTPUT bor."
+        }
+      ],
+      "answer_key": {
+        "option_id": "a"
+      },
+      "solution_steps_uz": [
+        "0 < 0 yolg‘on.",
+        "FALSE yo‘li 0 ni chiqarib tugaydi."
+      ],
+      "common_error_uz": "Rombdan keyingi yorliqni tekshirmay chiqishni tanlamang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "1/algo-symbols/postcheck/4"
+      }
+    },
+    {
+      "key": "algo-trace-practice-1",
+      "skill_key": "algo-trace",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "a ← 8; OUTPUT a; a ← a − 3; OUTPUT a. Faqat oxirgi chiqarilgan sonni yozing.",
+      "options": [],
+      "answer_key": {
+        "value": "5"
+      },
+      "solution_steps_uz": [
+        "Birinchi chiqish 8.",
+        "a yangilangach 5, oxirgi chiqish 5."
+      ],
+      "common_error_uz": "Birinchi va oxirgi chiqishni aralashtirmang.",
+      "hint_uz": "OUTPUTdan keyin ham buyruqlar davom etadi.",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "1/algo-trace/practice/1"
+      }
+    },
+    {
+      "key": "algo-trace-practice-2",
+      "skill_key": "algo-trace",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "n musbat butun bo‘lishi kerak. Qaysi to‘plam odatiy, chegara va yaroqsiz holatni qamraydi?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "0, −1, −2",
+          "feedback_uz": "Bu to‘plamda yaroqli holat yo‘q."
+        },
+        {
+          "id": "b",
+          "text_uz": "5, 1, 0",
+          "feedback_uz": "5 odatiy, 1 eng kichik yaroqli, 0 yaroqsiz."
+        },
+        {
+          "id": "c",
+          "text_uz": "5, 6, 7",
+          "feedback_uz": "Barchasi yaroqli ichki qiymatlar."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "Talab n > 0.",
+        "Eng kichik yaroqli 1, uning ostidagi 0 ni ham tekshiring."
+      ],
+      "common_error_uz": "Faqat bir xil turdagi misollar bilan cheklanmang.",
+      "hint_uz": "Talab bajarilishining eng chet nuqtasini toping.",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "1/algo-trace/practice/2"
+      }
+    },
+    {
+      "key": "algo-trace-precheck",
+      "skill_key": "algo-trace",
+      "purpose": "precheck",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "x ← 7; y ← x; x ← 2; OUTPUT y. Chiqish?",
+      "options": [],
+      "answer_key": {
+        "value": "7"
+      },
+      "solution_steps_uz": [
+        "y ga shu paytdagi 7 nusxalanadi.",
+        "x ni o‘zgartirish y ni o‘zgartirmaydi."
+      ],
+      "common_error_uz": "Qiymat nusxasini doimiy bog‘lanish deb tushunmang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "1/algo-trace/precheck/3"
+      }
+    },
+    {
+      "key": "algo-trace-postcheck",
+      "skill_key": "algo-trace",
+      "purpose": "postcheck",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "“Har qanday a va b uchun kattasini topadi” degan algoritm faqat a > b da OUTPUT a qiladi. Qaysi kirish kamchilikni ko‘rsatadi?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "a = 5, b = 2",
+          "feedback_uz": "Bu kirishda katta a chiqariladi, kamchilik ochilmaydi."
+        },
+        {
+          "id": "b",
+          "text_uz": "a = 9, b = 1",
+          "feedback_uz": "Bu ham a katta bo‘lgan muvaffaqiyatli holat."
+        },
+        {
+          "id": "c",
+          "text_uz": "a = 2, b = 5",
+          "feedback_uz": "Shart yolg‘on, lekin 5 chiqarilishi kerak; algoritm chiqish bermaydi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "a > b bo‘lmagan holatni oling.",
+        "b katta bo‘lsa ham chiqish bo‘lishi kerak."
+      ],
+      "common_error_uz": "Faqat ishlaydigan tarmoqni sinash boshqa yo‘lni tekshirmaydi.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "1/algo-trace/postcheck/4"
+      }
+    }
+  ],
+  "diagnostic_links": [],
+  "blueprint": {
+    "precheck_order": [
+      "algo-io-precheck",
+      "algo-decompose-precheck",
+      "algo-assignment-precheck",
+      "algo-symbols-precheck",
+      "algo-trace-precheck"
+    ],
+    "practice_order": [
+      "algo-io-practice-1",
+      "algo-decompose-practice-1",
+      "algo-assignment-practice-1",
+      "algo-symbols-practice-1",
+      "algo-trace-practice-1",
+      "algo-io-practice-2",
+      "algo-decompose-practice-2",
+      "algo-assignment-practice-2",
+      "algo-symbols-practice-2",
+      "algo-trace-practice-2"
+    ],
+    "postcheck_order": [
+      "algo-io-postcheck",
+      "algo-decompose-postcheck",
+      "algo-assignment-postcheck",
+      "algo-symbols-postcheck",
+      "algo-trace-postcheck"
+    ],
+    "matched_pairs": [
+      {
+        "skill_key": "algo-io",
+        "difficulty": "medium",
+        "precheck_key": "algo-io-precheck",
+        "postcheck_key": "algo-io-postcheck"
+      },
+      {
+        "skill_key": "algo-decompose",
+        "difficulty": "medium",
+        "precheck_key": "algo-decompose-precheck",
+        "postcheck_key": "algo-decompose-postcheck"
+      },
+      {
+        "skill_key": "algo-assignment",
+        "difficulty": "medium",
+        "precheck_key": "algo-assignment-precheck",
+        "postcheck_key": "algo-assignment-postcheck"
+      },
+      {
+        "skill_key": "algo-symbols",
+        "difficulty": "medium",
+        "precheck_key": "algo-symbols-precheck",
+        "postcheck_key": "algo-symbols-postcheck"
+      },
+      {
+        "skill_key": "algo-trace",
+        "difficulty": "medium",
+        "precheck_key": "algo-trace-precheck",
+        "postcheck_key": "algo-trace-postcheck"
+      }
+    ],
+    "unseen_postcheck_sets": 1,
+    "comparison_note_uz": "Ko‘nikma va tahririy qiyinlik bo‘yicha juftlangan; statistik tenglashtirish va umumiy qobiliyat o‘sishi da’vosi yo‘q.",
+    "exhaustion_note_uz": "Bitta mustaqil yakuniy tekshiruv to‘plami bor. Yangi bank bo‘lmasa qayta o‘sish o‘lchovi olinmaydi."
+  }
+}

@@ -12,6 +12,7 @@ from .permissions import STUDENT_PERMISSIONS
 from . import progress
 from .recommendations import build_plan, visible_catalogue
 from .translations import ContentLocale
+from .curriculum import cluster_cards
 from .serializers import (
     AnswerSerializer, HintSerializer, StartSessionSerializer, enrollment_state, feedback, module_card, session_state,
 )
@@ -50,7 +51,8 @@ class CapabilitiesView(APIView):
 class ModuleListView(DevelopmentView):
     def get(self, request):
         modules, enrolled = visible_catalogue(request.user)
-        return Response({'modules': [module_card(module, enrolled.get(module.key),get_language(request)) for module in modules]})
+        return Response({'modules': [module_card(module, enrolled.get(module.key),get_language(request)) for module in modules],
+                         'clusters': cluster_cards(modules, get_language(request))})
 
 
 class PlanView(DevelopmentView):
@@ -66,6 +68,7 @@ class PlanView(DevelopmentView):
             'modules': [card(row) for row in plan['entries']],
             'check_active': plan['check_active'], 'active_enrollment_id': plan['active_enrollment_id'],
             'minimum_diagnostic_responses': plan['minimum_diagnostic_responses'],
+            'clusters': cluster_cards([row['module'] for row in plan['entries']], get_language(request)),
         })
 
 

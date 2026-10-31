@@ -1,0 +1,897 @@
+{
+  "schema_version": 2,
+  "sources": [
+    {
+      "id": "source-curriculum",
+      "filename": "Oqitish moduli.docx",
+      "sha256": "c11956549286d3f6c99ae327b0dc0ee6dcdc4714e4e069d385901f0f8d58a473"
+    },
+    {
+      "id": "authored-cluster2",
+      "filename": "authoring-manifest.json",
+      "sha256": "2119f206f0255de004d39686833346e13c85ab8a87eb0829c15b7c2116d8800e"
+    }
+  ],
+  "module": {
+    "key": "solutions-optimization",
+    "version": 1,
+    "order": 4,
+    "cluster": 2,
+    "topic_number": "2.4",
+    "title_uz": "Ko‘p variantli yechimlar va optimizatsiya",
+    "title_ru": "Варианты решений и оптимизация",
+    "content_language": "uz",
+    "indicator_keys": [
+      "algorithmic",
+      "problem_solving"
+    ],
+    "status": "draft",
+    "review_status": "internally_checked",
+    "diagnostic_coverage_note_uz": "Aniq diagnostika savollari bilan xarita hali tasdiqlanmagan. Boshlang‘ich tekshiruv mavzu bo‘yicha dastlabki dalil beradi."
+  },
+  "notation_uz": [
+    "← qiymat beradi; ==, !=, <, >, ≤, ≥ taqqoslaydi. OUTPUT qiymatni ko‘rsatadi, o‘zgartirmaydi.",
+    "AND ikkala shartni, OR kamida bittasini talab qiladi; NOT inkor qiladi. Qavslar shart chegarasini belgilaydi.",
+    "{ } bitta blokni, ; ketma-ket buyruqlar ajratgichini bildiradi. if-else va else if zanjirida faqat tanlangan bitta tarmoq bajariladi.",
+    "switch aniq mos case ni, mos kelmasa default ni bajaradi. Keyingi case ga avtomatik o‘tish yo‘q.",
+    "for i ← a TO b butun qiymatlarni 1 qadam bilan oshiradi, ikkala chegara kiritiladi. a > b bo‘lsa tana bajarilmaydi.",
+    "while shartni tanadan avval tekshiradi; do-while avval tanani bajaradi, keyin shart rost bo‘lsa takrorlaydi.",
+    "div va mod uchun bo‘linuvchi manfiy bo‘lmagan butun, bo‘luvchi musbat butun: butun bo‘linma va qoldiq olinadi. RETURN funksiya chaqiruvini natija bilan tugatadi.",
+    "Arifmetika aniq deb olinadi; haqiqiy tilda son turi chegarasi alohida tekshiriladi. START/END — boshlash/tugatish, INPUT/OUTPUT — kirish/chiqish, DECISION — shart."
+  ],
+  "skills": [
+    {
+      "key": "opt-equivalence",
+      "title_uz": "Bir masalaga bir nechta yechim",
+      "indicator_keys": [
+        "algorithmic",
+        "problem_solving"
+      ],
+      "prerequisite_keys": []
+    },
+    {
+      "key": "opt-time",
+      "title_uz": "Amallar soni va o‘sish",
+      "indicator_keys": [
+        "algorithmic",
+        "problem_solving"
+      ],
+      "prerequisite_keys": [
+        "opt-equivalence",
+        "loop-nested"
+      ]
+    },
+    {
+      "key": "opt-memory",
+      "title_uz": "Qo‘shimcha xotirani baholash",
+      "indicator_keys": [
+        "algorithmic",
+        "problem_solving"
+      ],
+      "prerequisite_keys": [
+        "opt-time"
+      ]
+    },
+    {
+      "key": "opt-reuse",
+      "title_uz": "Takroriy hisobni kamaytirish",
+      "indicator_keys": [
+        "algorithmic",
+        "problem_solving"
+      ],
+      "prerequisite_keys": [
+        "opt-memory"
+      ]
+    },
+    {
+      "key": "opt-choice",
+      "title_uz": "Cheklovlarga mos yechim tanlash",
+      "indicator_keys": [
+        "algorithmic",
+        "problem_solving"
+      ],
+      "prerequisite_keys": [
+        "opt-reuse"
+      ]
+    }
+  ],
+  "lessons": [
+    {
+      "key": "opt-equivalence-lesson",
+      "skill_key": "opt-equivalence",
+      "title_uz": "Bir masalaga bir nechta yechim",
+      "theory_uz": [
+        "Yechimlarni taqqoslashdan oldin bir xil vazifani bajarishini tekshiring: kirish sohasi, chiqish va chekka holatlar teng bo‘lsin. Tez, lekin noto‘g‘ri algoritm mos yechim emas.",
+        "Musbat n uchun yig‘indini siklda jamlash yoki n × (n + 1) / 2 orqali hisoblash mumkin. Kursda bu misoldagi arifmetika aniq, katta butun sonlarni ko‘tara oladi deb olinadi; real tilda tur chegarasi tekshiriladi.",
+        "Yangi yechimni odatiy, eng kichik va chegara holatlarida tekshiring. Bir nechta bir xil javob moslikka dalil bo‘ladi, barcha holat uchun isbot o‘rnini bosmaydi."
+      ],
+      "worked_example": {
+        "prompt_uz": "n = 5. Siklli yig‘indi va formula natijalarini solishtiring.",
+        "solution_steps_uz": [
+          "Sikl: 1 + 2 + 3 + 4 + 5 = 15.",
+          "Formula: 5 × 6 / 2 = 15.",
+          "Bu kirishda natijalar teng."
+        ],
+        "answer_uz": "15; 15"
+      }
+    },
+    {
+      "key": "opt-time-lesson",
+      "skill_key": "opt-time",
+      "title_uz": "Amallar soni va o‘sish",
+      "theory_uz": [
+        "Bir xil oddiy amalni sanash vaqt xarajatini taxminiy taqqoslaydi. T(n) = n bilan T(n) = n² katta n da turlicha o‘sadi. Bu devordagi sekundning aniq bashorati emas.",
+        "Ketma-ket ikki siklning ishlari qo‘shiladi; ichma-ich mustaqil sikllarda ko‘payadi. Bir xil chegara bilan ketma-ketlik va ichma-ichlikni ajrating.",
+        "O(n) o‘sish uchun yuqori chegara yozuvi. Ushbu darsdagi aniq chiziqli va kvadratik misollarni amallar soni bilan tushuntiramiz; doimiy omillar va kirish xususiyatlari ham amaliy natijaga ta’sir qiladi."
+      ],
+      "worked_example": {
+        "prompt_uz": "A n ta, B n × n ta bir xil ish qiladi. n = 10 da ishlar soni?",
+        "solution_steps_uz": [
+          "A: 10 ta.",
+          "B: 10 × 10 = 100 ta.",
+          "Faqat shu hisob modeli bo‘yicha A kamroq ish qiladi."
+        ],
+        "answer_uz": "10; 100"
+      }
+    },
+    {
+      "key": "opt-memory-lesson",
+      "skill_key": "opt-memory",
+      "title_uz": "Qo‘shimcha xotirani baholash",
+      "theory_uz": [
+        "Bu kursda qo‘shimcha xotira kirish ro‘yxatidan tashqari ajratilgan joydir. Bir necha jamlagich o‘zgarmas hajm, n ta nusxa esa n ga bog‘liq hajm oladi.",
+        "Bir o‘tishda yig‘indi topish barcha oraliq yig‘indilarni ro‘yxatga saqlashni talab qilmaydi. Agar keyin barcha oraliq natijalar so‘ralsa, vazifa o‘zgaradi.",
+        "Rekursiyada chaqiruv steki ham xotira hisoblanadi. Nusxadan voz kechish kirishni buzsa, ruxsat etilganlikni tekshiring: xotira yutug‘i ma’lumotni yashirin o‘zgartirishga ruxsat bermaydi."
+      ],
+      "worked_example": {
+        "prompt_uz": "Kirishda 100 son. A faqat sum saqlaydi, B 100 elementli nusxa ham saqlaydi. Qaysi kamroq qo‘shimcha xotira ishlatadi?",
+        "solution_steps_uz": [
+          "Kirish joyi hisobdan chiqariladi.",
+          "A bitta jamlagich ishlatadi.",
+          "B nusxa sabab ko‘proq qo‘shimcha joy oladi."
+        ],
+        "answer_uz": "A"
+      }
+    },
+    {
+      "key": "opt-reuse-lesson",
+      "skill_key": "opt-reuse",
+      "title_uz": "Takroriy hisobni kamaytirish",
+      "theory_uz": [
+        "Bir xil o‘zgarmaydigan hisobni qayta-qayta bajarish o‘rniga natijasini bir marta saqlash mumkin. Bu faqat hisobning kirishlari o‘zgarmaganda mos.",
+        "Masalan, o‘zgarmaydigan ro‘yxat yig‘indisini har so‘rovda qayta yurish o‘rniga saqlang. Ro‘yxat yangilansa saqlangan natija ham qayta hisoblanishi yoki mos yangilanishi kerak.",
+        "Bir o‘tishda yig‘indi va maksimumni birga hisoblash ikki to‘liq o‘tishni kamaytirishi mumkin. Lekin maksimum uchun ro‘yxat bo‘sh holatini alohida qayta ishlang."
+      ],
+      "worked_example": {
+        "prompt_uz": "O‘zgarmaydigan 10 elementli ro‘yxat yig‘indisi 3 marta kerak. Har safar 10 ta qo‘shish o‘rniga bir marta hisoblasak nechta qo‘shish tejaymiz?",
+        "solution_steps_uz": [
+          "Takroriy variant 3 × 10 = 30.",
+          "Saqlangan variant 10 qo‘shish.",
+          "30 − 10 = 20 qo‘shish tejaladi."
+        ],
+        "answer_uz": "20"
+      }
+    },
+    {
+      "key": "opt-choice-lesson",
+      "skill_key": "opt-choice",
+      "title_uz": "Cheklovlarga mos yechim tanlash",
+      "theory_uz": [
+        "Tanlashda avval to‘g‘rilik va majburiy cheklovlar, keyin vaqt va xotira, so‘ng tushunarlilik tekshiriladi. Mezonsiz “eng yaxshi” degan xulosa noaniq.",
+        "A tezroq, lekin ko‘proq xotira olishi mumkin. Qaysi cheklov muhimligi ma’lum bo‘lmasa, murosani tushuntiring; bitta universal g‘olib uydirmang.",
+        "Tanlangan algoritmni bir xil kirishlar va hisob modeli bilan tekshiring. Katta tezlik da’vosi kichik bir misol yoki faqat kod satrlari sonidan kelib chiqmaydi."
+      ],
+      "worked_example": {
+        "prompt_uz": "Xotira chegarasi 8 katak. A: 5 katak, 30 amal; B: 12 katak, 10 amal. Qaysi mos?",
+        "solution_steps_uz": [
+          "A xotira talabiga mos.",
+          "B tezroq, lekin chegaradan oshadi.",
+          "Ushbu talabda A tanlanadi."
+        ],
+        "answer_uz": "A"
+      }
+    }
+  ],
+  "exercises": [
+    {
+      "key": "opt-equivalence-practice-1",
+      "skill_key": "opt-equivalence",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "1 dan 8 gacha yig‘indini n × (n + 1) / 2 formulasi bilan toping.",
+      "options": [],
+      "answer_key": {
+        "value": "36"
+      },
+      "solution_steps_uz": [
+        "n = 8 ni qo‘yamiz.",
+        "8 × 9 / 2 = 36."
+      ],
+      "common_error_uz": "n + 1 ko‘paytuvchisini n − 1 bilan almashtirmang.",
+      "hint_uz": "Yig‘indining ikki uchini juftlash formulasini ishlating.",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "4/opt-equivalence/practice/1"
+      }
+    },
+    {
+      "key": "opt-equivalence-practice-2",
+      "skill_key": "opt-equivalence",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "A ro‘yxatdagi birinchi juft sonni, B esa eng katta juft sonni qaytaradi. Ularni bir masalaning yechimlari deb tezlikda solishtirish mumkinmi?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Ha, ikkalasida juft son bor",
+          "feedback_uz": "Umumiy xususiyat bir xil natija shartini bermaydi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Har doim B tezroq",
+          "feedback_uz": "Vazifalar farqi bunday xulosaga asos bermaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Avval chiqish talabi tenglashtiriladi",
+          "feedback_uz": "Ular turli savollarga javob beradi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "Birinchi va eng katta — turli mezon.",
+        "Bir xil spetsifikatsiya bo‘lmaguncha tezlik taqqoslanmaydi."
+      ],
+      "common_error_uz": "Nomlari o‘xshash algoritmlarning maqsadini tekshiring.",
+      "hint_uz": "Ro‘yxatdagi eng katta juft qiymat har doim birinchimi?",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "4/opt-equivalence/practice/2"
+      }
+    },
+    {
+      "key": "opt-equivalence-precheck",
+      "skill_key": "opt-equivalence",
+      "purpose": "precheck",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "Ikki algoritm bitta kirishda teng javob berdi. Qaysi xulosa asosli?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Ikkalasi barcha kirishda xato",
+          "feedback_uz": "Moslik bunday inkorni ham ko‘rsatmaydi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Faqat tekshirilgan kirishda moslik ko‘rildi",
+          "feedback_uz": "Boshqa kirishlar hali tekshirilmagan."
+        },
+        {
+          "id": "c",
+          "text_uz": "Barcha kirishda tengligi isbotlandi",
+          "feedback_uz": "Bitta misol umumiy isbot emas."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "Misol faqat o‘z kirishi haqida dalil.",
+        "Umumiy moslik uchun qo‘shimcha tahlil kerak."
+      ],
+      "common_error_uz": "Test natijasi bilan isbotni bir xil deb olmang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "4/opt-equivalence/precheck/3"
+      }
+    },
+    {
+      "key": "opt-equivalence-postcheck",
+      "skill_key": "opt-equivalence",
+      "purpose": "postcheck",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "Formula 1 dan n gacha yig‘indini hisoblaydi. n = 1 uchun eng kichik musbat holatdagi natija?",
+      "options": [],
+      "answer_key": {
+        "value": "1"
+      },
+      "solution_steps_uz": [
+        "Yig‘indi faqat 1 dan iborat.",
+        "1 × (1 + 1) / 2 = 1."
+      ],
+      "common_error_uz": "Minimal kirishni bo‘sh yig‘indi bilan almashtirmang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "4/opt-equivalence/postcheck/4"
+      }
+    },
+    {
+      "key": "opt-time-practice-1",
+      "skill_key": "opt-time",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "Ketma-ket ikki sikl bor: birinchisi 7, ikkinchisi 5 marta bir xil amal qiladi. Jami amal?",
+      "options": [],
+      "answer_key": {
+        "value": "12"
+      },
+      "solution_steps_uz": [
+        "Ketma-ket ishlar qo‘shiladi.",
+        "7 + 5 = 12."
+      ],
+      "common_error_uz": "Ketma-ket sikllarni ko‘paytirmang.",
+      "hint_uz": "Ikkinchi sikl birinchining ichida emas.",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "4/opt-time/practice/1"
+      }
+    },
+    {
+      "key": "opt-time-practice-2",
+      "skill_key": "opt-time",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "Tashqi sikl 5 marta, har safar ichki sikl 6 marta bir xil amal qiladi. Jami amal?",
+      "options": [],
+      "answer_key": {
+        "value": "30"
+      },
+      "solution_steps_uz": [
+        "Har tashqi aylanishda 6 ish.",
+        "5 × 6 = 30."
+      ],
+      "common_error_uz": "Ichma-ich ishni ketma-ket ish kabi qo‘shmang.",
+      "hint_uz": "Ichki ish har tashqi aylanishda takrorlanadi.",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "4/opt-time/practice/2"
+      }
+    },
+    {
+      "key": "opt-time-precheck",
+      "skill_key": "opt-time",
+      "purpose": "precheck",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "T(n) = n². n qiymati 4 dan 8 ga oshsa, amallar soni necha baravar oshadi?",
+      "options": [],
+      "answer_key": {
+        "value": "4"
+      },
+      "solution_steps_uz": [
+        "T(4) = 16, T(8) = 64.",
+        "64 / 16 = 4."
+      ],
+      "common_error_uz": "Kirish ikki baravar bo‘lishi kvadratik ishni ikki baravar qilmaydi.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "4/opt-time/precheck/3"
+      }
+    },
+    {
+      "key": "opt-time-postcheck",
+      "skill_key": "opt-time",
+      "purpose": "postcheck",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "A uchun T(n) = 3n + 2, B uchun T(n) = n²; bir amal narxi teng. n = 10 da qaysi kamroq ish qiladi?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "B: 100 amal",
+          "feedback_uz": "Bu ko‘proq, kamroq emas."
+        },
+        {
+          "id": "b",
+          "text_uz": "Ikkalasi teng",
+          "feedback_uz": "32 va 100 teng emas."
+        },
+        {
+          "id": "c",
+          "text_uz": "A: 32 amal",
+          "feedback_uz": "32 kvadratik variantning 100 amalidan kam."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "A = 3 × 10 + 2 = 32.",
+        "B = 10² = 100; shu modelda A tanlanadi."
+      ],
+      "common_error_uz": "O‘sish nomidan oldin berilgan kirishdagi hisobni tekshiring.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "4/opt-time/postcheck/4"
+      }
+    },
+    {
+      "key": "opt-memory-practice-1",
+      "skill_key": "opt-memory",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "Faqat yig‘indi kerak. Qaysi saqlash tuzilishi yetarli?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Faqat oxirgi element",
+          "feedback_uz": "Oldingi hissalar yo‘qoladi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Bitta jamlagich va joriy element",
+          "feedback_uz": "Barcha oldingi elementlarni qayta saqlash shart emas."
+        },
+        {
+          "id": "c",
+          "text_uz": "Har bir oraliq yig‘indining to‘liq nusxalari",
+          "feedback_uz": "Bular yakuniy yig‘indi uchun talab qilinmagan."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "sum har bir elementni qo‘shib yangilanadi.",
+        "Bitta jamlagich barcha oldingi hissani saqlaydi."
+      ],
+      "common_error_uz": "Kam xotira natija uchun zarur ma’lumotni yo‘qotmasin.",
+      "hint_uz": "Qaysi bitta qiymat oldingi hisobni jamlaydi?",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "4/opt-memory/practice/1"
+      }
+    },
+    {
+      "key": "opt-memory-practice-2",
+      "skill_key": "opt-memory",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "A qo‘shimcha 3 ta son saqlaydi. B qo‘shimcha 20 elementli ro‘yxat va 2 ta son saqlaydi. Har bir katak hajmi bir xil. B nechta qo‘shimcha katak oladi?",
+      "options": [],
+      "answer_key": {
+        "value": "22"
+      },
+      "solution_steps_uz": [
+        "Ro‘yxat va alohida sonlar birga sanaladi.",
+        "20 + 2 = 22."
+      ],
+      "common_error_uz": "Yordamchi o‘zgaruvchilarni hisobdan tushirmang.",
+      "hint_uz": "B uchun ajratilgan barcha kataklarni qo‘shing.",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "4/opt-memory/practice/2"
+      }
+    },
+    {
+      "key": "opt-memory-precheck",
+      "skill_key": "opt-memory",
+      "purpose": "precheck",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "A kirishni o‘zgartirmasdan ishlaydi. B kirishni saralab yuboradi. Vazifa asl tartibni saqlashni talab qiladi. Qaysi xulosa to‘g‘ri?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Kamroq xotira har qanday o‘zgarishga ruxsat beradi",
+          "feedback_uz": "Resurs yutug‘i shartnomani bekor qilmaydi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Tartib talabi faqat rangga tegishli",
+          "feedback_uz": "Bu ma’lumot tartibi haqida."
+        },
+        {
+          "id": "c",
+          "text_uz": "B ni qo‘shimcha chorasisiz mos yechim deb bo‘lmaydi",
+          "feedback_uz": "Saqlash talabi buzilyapti."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "Asl tartib — majburiy chiqishdan tashqari shart.",
+        "B shu shartni buzsa rad etiladi yoki nusxa bilan moslashtiriladi."
+      ],
+      "common_error_uz": "Optimizatsiya to‘g‘rilik talablarini bekor qilmaydi.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "4/opt-memory/precheck/3"
+      }
+    },
+    {
+      "key": "opt-memory-postcheck",
+      "skill_key": "opt-memory",
+      "purpose": "postcheck",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "Algoritm n elementli yangi nusxa va 4 yordamchi katak ishlatadi. n = 12 da kirishni hisoblamasdan qo‘shimcha kataklar soni?",
+      "options": [],
+      "answer_key": {
+        "value": "16"
+      },
+      "solution_steps_uz": [
+        "Nusxa uchun 12 katak.",
+        "12 + 4 = 16 qo‘shimcha katak."
+      ],
+      "common_error_uz": "Kirish ro‘yxatini yana qo‘shib, ikki marta sanamang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "4/opt-memory/postcheck/4"
+      }
+    },
+    {
+      "key": "opt-reuse-practice-1",
+      "skill_key": "opt-reuse",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "O‘zgarmas hisob 6 amal oladi va 5 marta so‘raladi. Bir marta hisoblab saqlasak, saqlash/o‘qish xarajatini hisoblamay nechta amal tejaladi?",
+      "options": [],
+      "answer_key": {
+        "value": "24"
+      },
+      "solution_steps_uz": [
+        "Qayta hisoblash 6 × 5 = 30.",
+        "Bir marta 6, tejash 30 − 6 = 24."
+      ],
+      "common_error_uz": "Tejash umumiy eski ish emas, eski va yangi ish farqi.",
+      "hint_uz": "Eski va yangi hisob sonlarini alohida toping.",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "4/opt-reuse/practice/1"
+      }
+    },
+    {
+      "key": "opt-reuse-practice-2",
+      "skill_key": "opt-reuse",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "Ro‘yxat yig‘indisi saqlangan, keyin ro‘yxatga yangi element qo‘shildi. Nima qilish kerak?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Eski natijani doim qaytarish",
+          "feedback_uz": "Yangi element hissasi tushib qoladi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Yangi elementni yashirish",
+          "feedback_uz": "Bu vazifa ma’lumotini o‘zgartiradi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Saqlangan yig‘indini yangilash yoki qayta hisoblash",
+          "feedback_uz": "Kirish o‘zgardi, eski natija endi to‘liq emas."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "Saqlangan natija oldingi kirishga tegishli.",
+        "Yangi kirish uchun uni yangilash zarur."
+      ],
+      "common_error_uz": "Saqlangan natijani kirish bilan birga kuzating.",
+      "hint_uz": "Oldingi natija qaysi ma’lumot uchun hisoblangan edi?",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "4/opt-reuse/practice/2"
+      }
+    },
+    {
+      "key": "opt-reuse-precheck",
+      "skill_key": "opt-reuse",
+      "purpose": "precheck",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "Bir o‘tish n elementni ko‘radi. Alohida yig‘indi va maksimum uchun ikki o‘tish o‘rniga birlashtirilgan bir o‘tish qilinadi. n = 15 da element ko‘rishlaridan nechta tejaladi?",
+      "options": [],
+      "answer_key": {
+        "value": "15"
+      },
+      "solution_steps_uz": [
+        "Oldin 2 × 15 = 30 ko‘rish.",
+        "Keyin 15, farq 15."
+      ],
+      "common_error_uz": "Bu faqat element ko‘rishlar soni; barcha boshqa amallar yo‘qolmaydi.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "4/opt-reuse/precheck/3"
+      }
+    },
+    {
+      "key": "opt-reuse-postcheck",
+      "skill_key": "opt-reuse",
+      "purpose": "postcheck",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "F(x) ni sikldan tashqarida bir marta hisoblash qachon xavfsiz? F tashqi ta’sirsiz.",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "x barcha aylanishlarda o‘zgarmasa",
+          "feedback_uz": "Bir xil kirish bir xil natijani saqlaydi."
+        },
+        {
+          "id": "b",
+          "text_uz": "x har aylanishda yangilansa",
+          "feedback_uz": "Natija ham o‘zgarishi mumkin."
+        },
+        {
+          "id": "c",
+          "text_uz": "F nomi qisqa bo‘lsa",
+          "feedback_uz": "Nom hisob semantikasini belgilamaydi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "a"
+      },
+      "solution_steps_uz": [
+        "Sikldan chiqarilgan hisob barcha aylanishlar o‘rnini bosadi.",
+        "Shuning uchun uning kirishi o‘zgarmas bo‘lishi kerak."
+      ],
+      "common_error_uz": "Faqat tashqi ko‘rinishga qarab hisobni ko‘chirmang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "4/opt-reuse/postcheck/4"
+      }
+    },
+    {
+      "key": "opt-choice-practice-1",
+      "skill_key": "opt-choice",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "Limit: 10 xotira katagi va 50 amal. A: 8 katak/40 amal; B: 12 katak/20 amal; C: 6 katak/60 amal. Qaysi ikkala limitga mos?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "B",
+          "feedback_uz": "Xotira limiti buziladi."
+        },
+        {
+          "id": "b",
+          "text_uz": "C",
+          "feedback_uz": "Amallar limiti buziladi."
+        },
+        {
+          "id": "c",
+          "text_uz": "A",
+          "feedback_uz": "Ikkala miqdor ham limitdan oshmaydi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "Har nomzodda ikkala talabni tekshiring.",
+        "Faqat A ikkalasini bajaradi."
+      ],
+      "common_error_uz": "Bitta yaxshi ko‘rsatkich boshqa limit buzilishini oqlamaydi.",
+      "hint_uz": "Talablar OR emas, AND bilan bog‘langan.",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "4/opt-choice/practice/1"
+      }
+    },
+    {
+      "key": "opt-choice-practice-2",
+      "skill_key": "opt-choice",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "Barcha variant to‘g‘ri. A kam vaqt/ko‘p xotira, B ko‘p vaqt/kam xotira ishlatadi. Limitlar berilmagan. Xulosa?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "B har qanday vazifada eng yaxshi",
+          "feedback_uz": "Vaqt chegarasi bunga qarshi bo‘lishi mumkin."
+        },
+        {
+          "id": "b",
+          "text_uz": "Ustuvor mezon aniqlanmaguncha yagona g‘olib yo‘q",
+          "feedback_uz": "Bu vaqt-xotira murosasi."
+        },
+        {
+          "id": "c",
+          "text_uz": "A har qanday vazifada eng yaxshi",
+          "feedback_uz": "Xotira chegarasi bunga qarshi bo‘lishi mumkin."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "Variantlar turli resursda ustun.",
+        "Mezonni aniqlab, keyin tanlang."
+      ],
+      "common_error_uz": "Universal eng yaxshi degan da’vodan saqlaning.",
+      "hint_uz": "Qaysi resurs cheklanganini bilish kerak.",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "4/opt-choice/practice/2"
+      }
+    },
+    {
+      "key": "opt-choice-precheck",
+      "skill_key": "opt-choice",
+      "purpose": "precheck",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "A qisqaroq kod, B uzunroq kod. Boshqa ma’lumot yo‘q. Qaysi tezroq?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Faqat satrlar sonidan aniqlab bo‘lmaydi",
+          "feedback_uz": "Bir satr ichida ham katta ish bo‘lishi mumkin."
+        },
+        {
+          "id": "b",
+          "text_uz": "A albatta tezroq",
+          "feedback_uz": "Qisqalik bajariladigan ishni ko‘rsatmaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "B albatta tezroq",
+          "feedback_uz": "Uzunlik ham tezlik dalili emas."
+        }
+      ],
+      "answer_key": {
+        "option_id": "a"
+      },
+      "solution_steps_uz": [
+        "Ish hajmi va kirishlar tahlil qilinadi.",
+        "Satr soni o‘zi yetarli mezon emas."
+      ],
+      "common_error_uz": "Kod ko‘rinishi va bajarilish xarajatini farqlang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "4/opt-choice/precheck/3"
+      }
+    },
+    {
+      "key": "opt-choice-postcheck",
+      "skill_key": "opt-choice",
+      "purpose": "postcheck",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "Faqat bitta so‘rov bo‘ladi. A: tayyorlash 100 amal + so‘rov 1 amal. B: tayyorlashsiz so‘rov 20 amal. Bir xil amal narxida qaysi kamroq jami ish qiladi?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "A: faqat 1 amal",
+          "feedback_uz": "Bu tayyorlash xarajatini tashlab ketadi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Ikkalasi: 100 amal",
+          "feedback_uz": "Berilgan xarajatlar bunday emas."
+        },
+        {
+          "id": "c",
+          "text_uz": "B: jami 20",
+          "feedback_uz": "A tayyorlash bilan 101 amal oladi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "A jami 100 + 1 = 101.",
+        "B jami 20, bir so‘rovda B afzal."
+      ],
+      "common_error_uz": "Oldindan tayyorlashni umumiy xarajatga kiriting.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "4/opt-choice/postcheck/4"
+      }
+    }
+  ],
+  "diagnostic_links": [],
+  "blueprint": {
+    "precheck_order": [
+      "opt-equivalence-precheck",
+      "opt-time-precheck",
+      "opt-memory-precheck",
+      "opt-reuse-precheck",
+      "opt-choice-precheck"
+    ],
+    "practice_order": [
+      "opt-equivalence-practice-1",
+      "opt-time-practice-1",
+      "opt-memory-practice-1",
+      "opt-reuse-practice-1",
+      "opt-choice-practice-1",
+      "opt-equivalence-practice-2",
+      "opt-time-practice-2",
+      "opt-memory-practice-2",
+      "opt-reuse-practice-2",
+      "opt-choice-practice-2"
+    ],
+    "postcheck_order": [
+      "opt-equivalence-postcheck",
+      "opt-time-postcheck",
+      "opt-memory-postcheck",
+      "opt-reuse-postcheck",
+      "opt-choice-postcheck"
+    ],
+    "matched_pairs": [
+      {
+        "skill_key": "opt-equivalence",
+        "difficulty": "medium",
+        "precheck_key": "opt-equivalence-precheck",
+        "postcheck_key": "opt-equivalence-postcheck"
+      },
+      {
+        "skill_key": "opt-time",
+        "difficulty": "medium",
+        "precheck_key": "opt-time-precheck",
+        "postcheck_key": "opt-time-postcheck"
+      },
+      {
+        "skill_key": "opt-memory",
+        "difficulty": "medium",
+        "precheck_key": "opt-memory-precheck",
+        "postcheck_key": "opt-memory-postcheck"
+      },
+      {
+        "skill_key": "opt-reuse",
+        "difficulty": "medium",
+        "precheck_key": "opt-reuse-precheck",
+        "postcheck_key": "opt-reuse-postcheck"
+      },
+      {
+        "skill_key": "opt-choice",
+        "difficulty": "medium",
+        "precheck_key": "opt-choice-precheck",
+        "postcheck_key": "opt-choice-postcheck"
+      }
+    ],
+    "unseen_postcheck_sets": 1,
+    "comparison_note_uz": "Ko‘nikma va tahririy qiyinlik bo‘yicha juftlangan; statistik tenglashtirish va umumiy qobiliyat o‘sishi da’vosi yo‘q.",
+    "exhaustion_note_uz": "Bitta mustaqil yakuniy tekshiruv to‘plami bor. Yangi bank bo‘lmasa qayta o‘sish o‘lchovi olinmaydi."
+  }
+}

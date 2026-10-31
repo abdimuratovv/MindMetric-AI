@@ -45,7 +45,7 @@ def module_card(module, enrollment=None, language='uz'):
     locale=ContentLocale(module,language)
     return {
         'key': module.key, 'version': module.version, 'title': locale.title(module),
-        'order': module.order,
+        'order': module.order, 'cluster': module.cluster, 'topic_number': f'{module.cluster}.{module.order}',
         'skill_titles': [locale.skill(row.key,row.title_uz) for row in sorted(module.skills.all(), key=lambda skill: next(
             (lesson.order for lesson in module.lessons.all() if lesson.skill_id == skill.pk), 0))],
         'content_language': locale.language, 'indicator_keys': module.indicator_keys,
@@ -120,6 +120,8 @@ def enrollment_state(enrollment, language='uz'):
         'skill_progress': [] if hide_lessons else locale.progress(module_analysis(enrollment.student, enrollment.module, enrollment)),
         'other_active_enrollment_id': other_active,
         'learning_locked': live_check(enrollment),
+        'notation': [] if live_check(enrollment) else locale.notation(enrollment.module),
+        'projects': [] if hide_lessons else locale.projects(enrollment.module),
         'lessons': [] if hide_lessons else [
             lesson_card(lesson)
             for lesson in enrollment.module.lessons.select_related('skill').order_by('order')

@@ -2,6 +2,8 @@
 
 Sana: 2026-10-31. Holat: resurslar tayyorlandi va offline tekshirildi; backend/frontend integratsiyasi boshlanmagan.
 
+Keyingi holat: ushbu hisobot 1-bosqich yakunini qayd etadi. 2-bosqichda backend integratsiyasi, haqiqiy schema-2 validatsiyasi va hashga bog‘langan notation qo‘shildi; joriy texnik holat [backend hisobotida](cluster2-stage2-summary.md). Quyidagi dastlabki importer cheklovi tarixiy bosqich holati.
+
 ## Natija
 
 Manba `Oqitish moduli.docx` dagi II klaster xaritasi asosida oltita yangi mualliflik modulining to‘liq UZ/RU nusxasi yaratildi:

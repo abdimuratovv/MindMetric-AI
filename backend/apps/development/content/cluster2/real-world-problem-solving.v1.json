@@ -1,0 +1,916 @@
+{
+  "schema_version": 2,
+  "sources": [
+    {
+      "id": "source-curriculum",
+      "filename": "Oqitish moduli.docx",
+      "sha256": "c11956549286d3f6c99ae327b0dc0ee6dcdc4714e4e069d385901f0f8d58a473"
+    },
+    {
+      "id": "authored-cluster2",
+      "filename": "authoring-manifest.json",
+      "sha256": "2119f206f0255de004d39686833346e13c85ab8a87eb0829c15b7c2116d8800e"
+    }
+  ],
+  "module": {
+    "key": "real-world-problem-solving",
+    "version": 1,
+    "order": 5,
+    "cluster": 2,
+    "topic_number": "2.5",
+    "title_uz": "Hayotiy muammolarni algoritmga aylantirish",
+    "title_ru": "Преобразование жизненных задач в алгоритмы",
+    "content_language": "uz",
+    "indicator_keys": [
+      "problem_solving",
+      "algorithmic"
+    ],
+    "status": "draft",
+    "review_status": "internally_checked",
+    "diagnostic_coverage_note_uz": "Aniq diagnostika savollari bilan xarita hali tasdiqlanmagan. Boshlang‘ich tekshiruv mavzu bo‘yicha dastlabki dalil beradi."
+  },
+  "notation_uz": [
+    "← qiymat beradi; ==, !=, <, >, ≤, ≥ taqqoslaydi. OUTPUT qiymatni ko‘rsatadi, o‘zgartirmaydi.",
+    "AND ikkala shartni, OR kamida bittasini talab qiladi; NOT inkor qiladi. Qavslar shart chegarasini belgilaydi.",
+    "{ } bitta blokni, ; ketma-ket buyruqlar ajratgichini bildiradi. if-else va else if zanjirida faqat tanlangan bitta tarmoq bajariladi.",
+    "switch aniq mos case ni, mos kelmasa default ni bajaradi. Keyingi case ga avtomatik o‘tish yo‘q.",
+    "for i ← a TO b butun qiymatlarni 1 qadam bilan oshiradi, ikkala chegara kiritiladi. a > b bo‘lsa tana bajarilmaydi.",
+    "while shartni tanadan avval tekshiradi; do-while avval tanani bajaradi, keyin shart rost bo‘lsa takrorlaydi.",
+    "div va mod uchun bo‘linuvchi manfiy bo‘lmagan butun, bo‘luvchi musbat butun: butun bo‘linma va qoldiq olinadi. RETURN funksiya chaqiruvini natija bilan tugatadi.",
+    "Arifmetika aniq deb olinadi; haqiqiy tilda son turi chegarasi alohida tekshiriladi. START/END — boshlash/tugatish, INPUT/OUTPUT — kirish/chiqish, DECISION — shart."
+  ],
+  "skills": [
+    {
+      "key": "case-contract",
+      "title_uz": "Talabdan kirish va chiqishga",
+      "indicator_keys": [
+        "problem_solving",
+        "algorithmic"
+      ],
+      "prerequisite_keys": []
+    },
+    {
+      "key": "case-validation",
+      "title_uz": "Cheklovlar va yaroqsiz kirish",
+      "indicator_keys": [
+        "problem_solving",
+        "algorithmic"
+      ],
+      "prerequisite_keys": [
+        "case-contract",
+        "cond-boolean"
+      ]
+    },
+    {
+      "key": "case-taxi",
+      "title_uz": "Bosqichli taksi tarifi modeli",
+      "indicator_keys": [
+        "problem_solving",
+        "algorithmic"
+      ],
+      "prerequisite_keys": [
+        "case-validation",
+        "cond-if"
+      ]
+    },
+    {
+      "key": "case-atm",
+      "title_uz": "Soddalashtirilgan bankomat modeli",
+      "indicator_keys": [
+        "problem_solving",
+        "algorithmic"
+      ],
+      "prerequisite_keys": [
+        "case-validation",
+        "cond-boolean"
+      ]
+    },
+    {
+      "key": "case-tests",
+      "title_uz": "Test holatlari va kutilgan natija",
+      "indicator_keys": [
+        "problem_solving",
+        "algorithmic"
+      ],
+      "prerequisite_keys": [
+        "case-taxi",
+        "case-atm"
+      ]
+    }
+  ],
+  "lessons": [
+    {
+      "key": "case-contract-lesson",
+      "skill_key": "case-contract",
+      "title_uz": "Talabdan kirish va chiqishga",
+      "theory_uz": [
+        "Hayotiy gapni hisoblash vazifasiga aylantirish uchun maqsad, kirish, chiqish, birlik va cheklovlarni yozing. Noaniq iborani kod bilan yashirmang.",
+        "Tarif o‘quv misoli bo‘lsa barcha narx va qoidalar shartning o‘zida beriladi. Ular haqiqiy xizmatning amaldagi narxi yoki moliyaviy tavsiya emas.",
+        "Masalan, kutubxona kechikish haqini hisoblashda kunlar butunmi, imtiyozli davr bormi, manfiy kirish qanday qaytarilishi aniqlanadi. Talab kelishilmasdan to‘g‘ri chiqishni belgilab bo‘lmaydi."
+      ],
+      "worked_example": {
+        "prompt_uz": "O‘quv tarifida kunlik ijara 7000 so‘m, butun kunlar soni 3. Jami to‘lov?",
+        "solution_steps_uz": [
+          "Kirish: kunlik narx va kunlar.",
+          "To‘lov = 7000 × 3.",
+          "Chiqish 21000 so‘m."
+        ],
+        "answer_uz": "21000 so‘m"
+      }
+    },
+    {
+      "key": "case-validation-lesson",
+      "skill_key": "case-validation",
+      "title_uz": "Cheklovlar va yaroqsiz kirish",
+      "theory_uz": [
+        "Kiritilgan matnni son sifatida o‘qish mumkinligi, son diapazoni va birliklari alohida tekshiriladi. “abc” son emas; manfiy masofa esa son bo‘lsa ham vazifada yaroqsiz.",
+        "Tekshirishni hisoblashdan oldin bajaring. Noto‘g‘ri kirishda natijani nol deb berish xato bilan haqiqiy nolni ajratishni qiyinlashtiradi.",
+        "Xabar qaysi maydonni va qanday tuzatishni aytsin. Shaxsiy ma’lumot yoki texnik ichki xato tafsilotlari o‘rniga foydalanuvchiga kerakli ko‘rsatma bering."
+      ],
+      "worked_example": {
+        "prompt_uz": "Ishtirokchilar soni butun va 1 dan 30 gacha. 0 kiritilsa nima qilinadi?",
+        "solution_steps_uz": [
+          "0 pastki chegaradan kichik.",
+          "Hisoblash boshlanmaydi.",
+          "Ruxsatli oraliqni ko‘rsatuvchi xabar beriladi."
+        ],
+        "answer_uz": "Kirish rad etiladi"
+      }
+    },
+    {
+      "key": "case-taxi-lesson",
+      "skill_key": "case-taxi",
+      "title_uz": "Bosqichli taksi tarifi modeli",
+      "theory_uz": [
+        "Bu o‘quv modelida bazaviy to‘lov b dastlabki k kilometrni qoplaydi. d ≤ k bo‘lsa to‘lov b, d > k bo‘lsa b + (d − k) × r. Bu yerda d manfiy bo‘lmagan butun kilometr.",
+        "Chegaradan oshgan qism alohida hisoblanadi. Bazaga kiritilgan masofani yana narxlash ikki marta haq hisoblashga olib keladi.",
+        "Shartda kutish, vaqt yoki yaxlitlash berilmagan bo‘lsa ularni o‘zingizcha qo‘shmang. Tarifning chegarasida va uning ikki yonida tekshirish qiling."
+      ],
+      "worked_example": {
+        "prompt_uz": "b = 10000, k = 2, r = 3000; d = 5. To‘lov?",
+        "solution_steps_uz": [
+          "Ortiqcha masofa 5 − 2 = 3.",
+          "Qo‘shimcha 3 × 3000 = 9000.",
+          "Jami 10000 + 9000 = 19000."
+        ],
+        "answer_uz": "19000"
+      }
+    },
+    {
+      "key": "case-atm-lesson",
+      "skill_key": "case-atm",
+      "title_uz": "Soddalashtirilgan bankomat modeli",
+      "theory_uz": [
+        "O‘quv modelida yechish so‘rovi musbat, balansdan oshmasligi va mavjud yagona nominalga qoldiqsiz bo‘linishi kerak. Komissiya va bank qoidalari ushbu modelga kiritilmagan.",
+        "Qabul sharti: (amount > 0) AND (amount ≤ balance) AND (amount mod note == 0). Faqat barchasi bajarilgach yangi balans = balance − amount.",
+        "Rad etilganda balans o‘zgarmaydi. Haqiqiy bankomatda kupyuralar zaxirasi va boshqa cheklovlar ham bor; bu yerda yagona nominal zaxirasi yetarli deb beriladi."
+      ],
+      "worked_example": {
+        "prompt_uz": "balance = 100000, note = 10000, amount = 30000. So‘rov va yangi balans?",
+        "solution_steps_uz": [
+          "Miqdor musbat va balansdan oshmaydi.",
+          "30000 mod 10000 = 0.",
+          "Qabul qilinadi, balans 100000 − 30000 = 70000."
+        ],
+        "answer_uz": "Qabul; 70000"
+      }
+    },
+    {
+      "key": "case-tests-lesson",
+      "skill_key": "case-tests",
+      "title_uz": "Test holatlari va kutilgan natija",
+      "theory_uz": [
+        "Test holatida kirish bilan birga kutilgan chiqish yoziladi. Faqat “tekshirildi” deyish natijaning to‘g‘riligini tekshirishga yetmaydi.",
+        "Shart tarmoqlari uchun har xil yo‘lga tushadigan kirishlarni oling. Tarif chegarasidan past, aynan unda va yuqorida holatlar xatolarni ochishga yordam beradi.",
+        "Invariant — butun jarayonda saqlanishi kerak bo‘lgan xossa. Rad etilgan yechishdan keyin balans o‘zgarmasligi yoki qabul qilinganidan keyin kamayish miqdori so‘rovga tengligi tekshiriladi."
+      ],
+      "worked_example": {
+        "prompt_uz": "O‘quv tarifi: b = 10000, k = 2, r = 3000. d = 1, 2, 3 uchun test jadvali tuzing.",
+        "solution_steps_uz": [
+          "d = 1: 10000.",
+          "d = 2: 10000.",
+          "d = 3: 10000 + 3000 = 13000."
+        ],
+        "answer_uz": "10000; 10000; 13000"
+      }
+    }
+  ],
+  "exercises": [
+    {
+      "key": "case-contract-practice-1",
+      "skill_key": "case-contract",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "“Eng qulay yo‘lni toping” talabi uchun avval nimani aniqlash kerak?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Qulaylik mezoni: vaqtmi, narxmi yoki boshqa talabmi",
+          "feedback_uz": "Mezonsiz eng yaxshi chiqish noaniq."
+        },
+        {
+          "id": "b",
+          "text_uz": "Tugma rangini",
+          "feedback_uz": "Bu yo‘lni tanlash mezonini belgilamaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Tasodifiy bitta yo‘lni eng qulay deb olish",
+          "feedback_uz": "Bu foydalanuvchi talabini tekshirmaydi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "a"
+      },
+      "solution_steps_uz": [
+        "“Qulay” o‘lchanadigan mezonga aylantiriladi.",
+        "Shundan keyin variantlar solishtiriladi."
+      ],
+      "common_error_uz": "Noaniq maqsadni taxmin bilan yopmang.",
+      "hint_uz": "Ikki yo‘ldan qaysi birini afzal deyishga nima asos bo‘ladi?",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "5/case-contract/practice/1"
+      }
+    },
+    {
+      "key": "case-contract-practice-2",
+      "skill_key": "case-contract",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "O‘quv shartida quti narxi 9000 so‘m, miqdor 5, qo‘shimcha to‘lov yo‘q. Jami?",
+      "options": [],
+      "answer_key": {
+        "value": "45000"
+      },
+      "solution_steps_uz": [
+        "Narx va miqdor ko‘paytiriladi.",
+        "9000 × 5 = 45000."
+      ],
+      "common_error_uz": "Shartda yo‘q komissiya yoki chegirmani qo‘shmang.",
+      "hint_uz": "Faqat berilgan qoidalardan foydalaning.",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "5/case-contract/practice/2"
+      }
+    },
+    {
+      "key": "case-contract-precheck",
+      "skill_key": "case-contract",
+      "purpose": "precheck",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "Masofa km, tezlik km/soat; chiqish vaqt soatda. Qaysi formula mos? Tezlik musbat.",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "vaqt = masofa + tezlik",
+          "feedback_uz": "Turli birlikdagi miqdorlar bunday qo‘shilmaydi."
+        },
+        {
+          "id": "b",
+          "text_uz": "vaqt = masofa / tezlik",
+          "feedback_uz": "Birliklar soatni beradi."
+        },
+        {
+          "id": "c",
+          "text_uz": "vaqt = masofa × tezlik",
+          "feedback_uz": "Birliklar vaqt emas."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "Vaqt = yo‘l / tezlik.",
+        "km ni km/soat ga bo‘lish soat beradi."
+      ],
+      "common_error_uz": "Formulani birliklari bilan tekshiring.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "5/case-contract/precheck/3"
+      }
+    },
+    {
+      "key": "case-contract-postcheck",
+      "skill_key": "case-contract",
+      "purpose": "postcheck",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "Buyurtma summasi uchun manfiy miqdor kiritildi, talab esa musbat butun miqdor. To‘g‘ri chiqish qanday?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Hisoblamasdan, miqdorni tuzatish xabari",
+          "feedback_uz": "Yaroqsiz kirish shartnomaga mos qaytariladi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Manfiy to‘lovni tayyor buyurtma deb ko‘rsatish",
+          "feedback_uz": "Bu yaroqsiz kirishni qabul qiladi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Miqdorni yashirincha musbatga aylantirish",
+          "feedback_uz": "Bu foydalanuvchi bergan ma’lumotni kelishilmagan tarzda o‘zgartiradi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "a"
+      },
+      "solution_steps_uz": [
+        "Miqdor talabni buzgan.",
+        "Hisoblash o‘rniga xato holati va tuzatish yo‘li beriladi."
+      ],
+      "common_error_uz": "Kirishni yashirin tuzatish bilan validatsiyani almashtirmang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "5/case-contract/postcheck/4"
+      }
+    },
+    {
+      "key": "case-validation-practice-1",
+      "skill_key": "case-validation",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "n butun, 1 ≤ n ≤ 30. Qaysi kirish yaroqli?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "0",
+          "feedback_uz": "Pastki chegaradan kichik."
+        },
+        {
+          "id": "b",
+          "text_uz": "2.5",
+          "feedback_uz": "Oraliqda bo‘lsa ham butun emas."
+        },
+        {
+          "id": "c",
+          "text_uz": "30",
+          "feedback_uz": "Yuqori chegara kiritilgan va son butun."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "Butunlik va ikkala chegara tekshiriladi.",
+        "Faqat 30 barcha talabni bajaradi."
+      ],
+      "common_error_uz": "Diapazonning o‘zi tur talabini almashtirmaydi.",
+      "hint_uz": "Talablar birgalikda bajarilishi kerak.",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "5/case-validation/practice/1"
+      }
+    },
+    {
+      "key": "case-validation-practice-2",
+      "skill_key": "case-validation",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "Son maydonida “abc” kiritildi. Qaysi xabar foydali?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Natija: 0",
+          "feedback_uz": "Yaroqsiz kirish to‘g‘ri natijadek ko‘rsatilgan."
+        },
+        {
+          "id": "b",
+          "text_uz": "Miqdor maydoniga musbat butun son kiriting",
+          "feedback_uz": "Maydon va tuzatish usuli aniq."
+        },
+        {
+          "id": "c",
+          "text_uz": "Xato!",
+          "feedback_uz": "Tuzatish yo‘li aytilmagan."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "Kirish son emas.",
+        "Xabar kerakli maydon va ruxsatli formatni aytadi."
+      ],
+      "common_error_uz": "Xato va hisoblangan natijani bir ko‘rinishda bermang.",
+      "hint_uz": "Talaba keyin nima qilishini bilishi kerak.",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "5/case-validation/practice/2"
+      }
+    },
+    {
+      "key": "case-validation-precheck",
+      "skill_key": "case-validation",
+      "purpose": "precheck",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "Cheklov: 0 ≤ d ≤ 100. Qaysi qiymat yaroqsiz?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "−1",
+          "feedback_uz": "Pastki chegaradan kichik."
+        },
+        {
+          "id": "b",
+          "text_uz": "0",
+          "feedback_uz": "Pastki chegara kiritilgan."
+        },
+        {
+          "id": "c",
+          "text_uz": "100",
+          "feedback_uz": "Yuqori chegara kiritilgan."
+        }
+      ],
+      "answer_key": {
+        "option_id": "a"
+      },
+      "solution_steps_uz": [
+        "Ikkala chegara yaroqli.",
+        "Manfiy qiymat oraliqdan tashqarida."
+      ],
+      "common_error_uz": "Tenglik belgisi chegarani qamrashini unutmang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "5/case-validation/precheck/3"
+      }
+    },
+    {
+      "key": "case-validation-postcheck",
+      "skill_key": "case-validation",
+      "purpose": "postcheck",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "Hisob: total = price × quantity. quantity yaroqsiz bo‘lsa qaysi tartib mos?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Hisoblash → qabul qilish → tekshirish",
+          "feedback_uz": "Qabul qilishdan keyingi tekshirish juda kech."
+        },
+        {
+          "id": "b",
+          "text_uz": "Xatoni yashirish → total ni ko‘rsatish",
+          "feedback_uz": "Bu foydalanuvchini chalg‘itadi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Tekshirish → xabar → hisobni to‘xtatish",
+          "feedback_uz": "Natija yaroqsiz kirishdan hosil qilinmaydi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "Avval kirish talablari tekshiriladi.",
+        "Yaroqsiz bo‘lsa hisoblash tarmog‘iga o‘tilmaydi."
+      ],
+      "common_error_uz": "Validatsiya faqat xabar emas, jarayonni boshqarish hamdir.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "5/case-validation/postcheck/4"
+      }
+    },
+    {
+      "key": "case-taxi-practice-1",
+      "skill_key": "case-taxi",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "O‘quv tarifi: b = 12000, k = 3, r = 2000. d = 7 da to‘lov?",
+      "options": [],
+      "answer_key": {
+        "value": "20000"
+      },
+      "solution_steps_uz": [
+        "Ortiqcha masofa 7 − 3 = 4.",
+        "12000 + 4 × 2000 = 20000."
+      ],
+      "common_error_uz": "Barcha masofani qo‘shimcha tarifga ko‘paytirmang.",
+      "hint_uz": "Baza allaqachon dastlabki masofani qoplaydi.",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "5/case-taxi/practice/1"
+      }
+    },
+    {
+      "key": "case-taxi-practice-2",
+      "skill_key": "case-taxi",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "b = 12000, k = 3, r = 2000. d = 2 da to‘lov?",
+      "options": [],
+      "answer_key": {
+        "value": "12000"
+      },
+      "solution_steps_uz": [
+        "2 ≤ 3, qo‘shimcha masofa yo‘q.",
+        "Bazaviy to‘lov 12000 saqlanadi."
+      ],
+      "common_error_uz": "Bazadan kam masofaga manfiy qo‘shimcha bermang.",
+      "hint_uz": "Avval masofa qaysi tarmoqqa tushishini toping.",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "5/case-taxi/practice/2"
+      }
+    },
+    {
+      "key": "case-taxi-precheck",
+      "skill_key": "case-taxi",
+      "purpose": "precheck",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "b = 9000, k = 2, r = 2500. d = 2 da to‘lov?",
+      "options": [],
+      "answer_key": {
+        "value": "9000"
+      },
+      "solution_steps_uz": [
+        "Chegaraning o‘zi bazaga kiradi.",
+        "Qo‘shimcha yo‘q, to‘lov 9000."
+      ],
+      "common_error_uz": "Chegaradagi masofani ortiqcha deb olmang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "5/case-taxi/precheck/3"
+      }
+    },
+    {
+      "key": "case-taxi-postcheck",
+      "skill_key": "case-taxi",
+      "purpose": "postcheck",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "b = 15000, k = 4, r = 3000. d = 6 da bazaga qo‘shiladigan QO‘SHIMCHA to‘lovni toping.",
+      "options": [],
+      "answer_key": {
+        "value": "6000"
+      },
+      "solution_steps_uz": [
+        "Ortiqcha masofa 6 − 4 = 2.",
+        "Faqat qo‘shimcha 2 × 3000 = 6000."
+      ],
+      "common_error_uz": "Jami to‘lov bilan so‘ralgan qo‘shimchani aralashtirmang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "5/case-taxi/postcheck/4"
+      }
+    },
+    {
+      "key": "case-atm-practice-1",
+      "skill_key": "case-atm",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "balance = 80000, note = 10000, amount = 50000. Yangi balans? Nominal zaxirasi yetarli.",
+      "options": [],
+      "answer_key": {
+        "value": "30000"
+      },
+      "solution_steps_uz": [
+        "Uchala shart bajariladi.",
+        "80000 − 50000 = 30000."
+      ],
+      "common_error_uz": "Qabuldan keyin yechilgan summani ayiring.",
+      "hint_uz": "Avval qabul shartlarini, keyin balansni tekshiring.",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "5/case-atm/practice/1"
+      }
+    },
+    {
+      "key": "case-atm-practice-2",
+      "skill_key": "case-atm",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "balance = 100000, note = 20000, amount = 30000. Nominal zaxirasi yetarli. Qaror?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Qabul: balans yetarli",
+          "feedback_uz": "Balans faqat bitta shart."
+        },
+        {
+          "id": "b",
+          "text_uz": "Qabul: so‘rov musbat",
+          "feedback_uz": "Musbatlik boshqa talablarni bekor qilmaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Rad: nominalga qoldiqsiz bo‘linmaydi",
+          "feedback_uz": "30000 mod 20000 = 10000, shart bajarilmagan."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "So‘rov balansga sig‘adi.",
+        "Lekin yagona nominal bilan aynan chiqarib bo‘lmaydi, balans o‘zgarmaydi."
+      ],
+      "common_error_uz": "Balans yetarli bo‘lishi o‘zi yetarli emas.",
+      "hint_uz": "Qoldiqni hisoblab ko‘ring.",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "5/case-atm/practice/2"
+      }
+    },
+    {
+      "key": "case-atm-precheck",
+      "skill_key": "case-atm",
+      "purpose": "precheck",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "balance = 40000, note = 10000, amount = 50000. Rad etilgan so‘rovdan keyingi balans?",
+      "options": [],
+      "answer_key": {
+        "value": "40000"
+      },
+      "solution_steps_uz": [
+        "So‘rov balansdan katta.",
+        "Rad etiladi, avvalgi 40000 qoladi."
+      ],
+      "common_error_uz": "Tekshiruvdan oldin balansni kamaytirmang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "5/case-atm/precheck/3"
+      }
+    },
+    {
+      "key": "case-atm-postcheck",
+      "skill_key": "case-atm",
+      "purpose": "postcheck",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "balance = 60000, note = 10000, amount = 0. Qaror?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Rad: so‘rov musbat emas",
+          "feedback_uz": "Nol nominalga bo‘linsa ham musbatlik talabini buzadi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Qabul: qoldiq nol",
+          "feedback_uz": "Bitta shart yetarli emas."
+        },
+        {
+          "id": "c",
+          "text_uz": "Balansni nol qilish",
+          "feedback_uz": "Rad yoki nol so‘rov balansni o‘chirmaydi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "a"
+      },
+      "solution_steps_uz": [
+        "amount > 0 sharti yolg‘on.",
+        "So‘rov rad, balans o‘zgarmaydi."
+      ],
+      "common_error_uz": "Nolning qoldiq xossasini musbatlik bilan aralashtirmang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "5/case-atm/postcheck/4"
+      }
+    },
+    {
+      "key": "case-tests-practice-1",
+      "skill_key": "case-tests",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "Chegara k = 4. Qaysi masofalar to‘plami uning ikki yoni va o‘zini tekshiradi?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "1, 2, 3",
+          "feedback_uz": "Barchasi chegaradan past."
+        },
+        {
+          "id": "b",
+          "text_uz": "5, 6, 7",
+          "feedback_uz": "Barchasi chegaradan yuqori."
+        },
+        {
+          "id": "c",
+          "text_uz": "3, 4, 5",
+          "feedback_uz": "Past, teng va yuqori holatlar bor."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "Chegaradan bir qadam past va yuqorini oling.",
+        "Chegaraning o‘zini ham qo‘shing."
+      ],
+      "common_error_uz": "Faqat bir tarmoqni tekshiruvchi misollardan foydalanmang.",
+      "hint_uz": "Uch holat: past, teng, yuqori.",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "5/case-tests/practice/1"
+      }
+    },
+    {
+      "key": "case-tests-practice-2",
+      "skill_key": "case-tests",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "Tarif: b = 8000, k = 1, r = 2000. d = 3 uchun testdagi kutilgan JAMI chiqish?",
+      "options": [],
+      "answer_key": {
+        "value": "12000"
+      },
+      "solution_steps_uz": [
+        "Qo‘shimcha masofa 3 − 1 = 2.",
+        "8000 + 2 × 2000 = 12000."
+      ],
+      "common_error_uz": "Test kutilgan natijasi ham mustaqil hisoblanishi kerak.",
+      "hint_uz": "Bazaga faqat ortiqcha masofa haqini qo‘shing.",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "5/case-tests/practice/2"
+      }
+    },
+    {
+      "key": "case-tests-precheck",
+      "skill_key": "case-tests",
+      "purpose": "precheck",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "So‘rov rad etildi. Qaysi invariant tekshiriladi?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Yakuniy balans boshlang‘ich balansga teng",
+          "feedback_uz": "Rad etish mablag‘ni o‘zgartirmaydi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Yakuniy balans nol",
+          "feedback_uz": "Rad javobi hisobni bo‘shatmaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Balans har safar oshadi",
+          "feedback_uz": "Bunday qoida berilmagan."
+        }
+      ],
+      "answer_key": {
+        "option_id": "a"
+      },
+      "solution_steps_uz": [
+        "Rad tarmog‘ida hisob yangilanishi yo‘q.",
+        "Oldingi balans saqlanishi kerak."
+      ],
+      "common_error_uz": "Xato tarmog‘idagi yon ta’sirlarni ham tekshiring.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "5/case-tests/precheck/3"
+      }
+    },
+    {
+      "key": "case-tests-postcheck",
+      "skill_key": "case-tests",
+      "purpose": "postcheck",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "Testda faqat kirish yozilgan, kutilgan chiqish yo‘q. Nima yetishmaydi?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Faqat ekran fon rasmi",
+          "feedback_uz": "Rasm hisob to‘g‘riligini baholamaydi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Ko‘proq tasodifiy tugma bosish",
+          "feedback_uz": "Mezonsiz ko‘proq harakat muammoni hal qilmaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Natijani solishtirish uchun aniq mezon",
+          "feedback_uz": "Kutilgan chiqish to‘g‘ri va noto‘g‘rini ajratadi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "Test kirishi bajariladi.",
+        "Chiqqan natija oldindan belgilangan kutilgan qiymatga solishtiriladi."
+      ],
+      "common_error_uz": "Har testga tekshiriladigan natija yoki xossa yozing.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "5/case-tests/postcheck/4"
+      }
+    }
+  ],
+  "diagnostic_links": [],
+  "blueprint": {
+    "precheck_order": [
+      "case-contract-precheck",
+      "case-validation-precheck",
+      "case-taxi-precheck",
+      "case-atm-precheck",
+      "case-tests-precheck"
+    ],
+    "practice_order": [
+      "case-contract-practice-1",
+      "case-validation-practice-1",
+      "case-taxi-practice-1",
+      "case-atm-practice-1",
+      "case-tests-practice-1",
+      "case-contract-practice-2",
+      "case-validation-practice-2",
+      "case-taxi-practice-2",
+      "case-atm-practice-2",
+      "case-tests-practice-2"
+    ],
+    "postcheck_order": [
+      "case-contract-postcheck",
+      "case-validation-postcheck",
+      "case-taxi-postcheck",
+      "case-atm-postcheck",
+      "case-tests-postcheck"
+    ],
+    "matched_pairs": [
+      {
+        "skill_key": "case-contract",
+        "difficulty": "medium",
+        "precheck_key": "case-contract-precheck",
+        "postcheck_key": "case-contract-postcheck"
+      },
+      {
+        "skill_key": "case-validation",
+        "difficulty": "medium",
+        "precheck_key": "case-validation-precheck",
+        "postcheck_key": "case-validation-postcheck"
+      },
+      {
+        "skill_key": "case-taxi",
+        "difficulty": "medium",
+        "precheck_key": "case-taxi-precheck",
+        "postcheck_key": "case-taxi-postcheck"
+      },
+      {
+        "skill_key": "case-atm",
+        "difficulty": "medium",
+        "precheck_key": "case-atm-precheck",
+        "postcheck_key": "case-atm-postcheck"
+      },
+      {
+        "skill_key": "case-tests",
+        "difficulty": "medium",
+        "precheck_key": "case-tests-precheck",
+        "postcheck_key": "case-tests-postcheck"
+      }
+    ],
+    "unseen_postcheck_sets": 1,
+    "comparison_note_uz": "Ko‘nikma va tahririy qiyinlik bo‘yicha juftlangan; statistik tenglashtirish va umumiy qobiliyat o‘sishi da’vosi yo‘q.",
+    "exhaustion_note_uz": "Bitta mustaqil yakuniy tekshiruv to‘plami bor. Yangi bank bo‘lmasa qayta o‘sish o‘lchovi olinmaydi."
+  }
+}

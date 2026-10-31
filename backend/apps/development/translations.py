@@ -5,12 +5,22 @@ from collections import Counter
 from functools import lru_cache
 from pathlib import Path
 
-from .validation import content_hash, require, text
+from .validation import ContentValidationError, content_hash, require, text
 
 DIRECTORY=Path(__file__).resolve().parent/'content/translations'
 
 
 def validate_translation(source, translated):
+    try:
+        return _validate_translation(source, translated)
+    except ContentValidationError:
+        raise
+    except (TypeError, KeyError, ValueError, AttributeError) as exc:
+        raise ContentValidationError(f'Malformed translation: {exc}') from exc
+
+
+def _validate_translation(source, translated):
+    require(isinstance(translated, dict), 'Translation must be an object.')
     require(translated.get('module_key')==source['module']['key'], 'Translation module mismatch.')
     require(translated.get('version')==source['module']['version'], 'Translation version mismatch.')
     require(translated.get('language')=='ru', 'Unsupported translation language.')
@@ -41,6 +51,10 @@ def validate_translation(source, translated):
         target=translated['exercises'][question['key']]
         require('answer_key' not in target, 'Translations cannot override grading.')
         field(question['prompt_uz'],target.get('prompt'),question['key'])
+        if source['schema_version'] == 2:
+            operators = r'←|==|!=|≥|≤|[<>]|\b(?:TRUE|FALSE|AND|OR|NOT|TO|OUTPUT|RETURN|INPUT|DECISION|START|END|div|mod)\b'
+            require(Counter(re.findall(operators, question['prompt_uz'])) == Counter(re.findall(operators, target['prompt'])),
+                    f'{question["key"]}: code operators changed.')
         lines(question['solution_steps_uz'],target.get('solution_steps'),question['key'])
         field(question['common_error_uz'],target.get('common_error'),question['key'])
         if question['purpose']=='practice':field(question['hint_uz'],target.get('hint'),question['key'])
@@ -50,6 +64,21 @@ def validate_translation(source, translated):
             item=target['options'][option['id']]
             field(option['text_uz'],item.get('text'),question['key'])
             field(option['feedback_uz'],item.get('feedback'),question['key'])
+    if source['schema_version'] == 2:
+        require(set(translated) <= {'module_key', 'version', 'language', 'source_hash', 'title',
+                                   'skills', 'lessons', 'exercises', 'notation', 'projects'}, 'Unknown translation fields.')
+        lines(source['notation_uz'], translated.get('notation'), 'notation')
+        projects = source.get('projects', [])
+        local = translated.get('projects', {})
+        require(isinstance(local, dict) and set(local) == {p['key'] for p in projects}, 'Incomplete translated projects.')
+        for project in projects:
+            target = local[project['key']]
+            require(set(target) == {'title', 'brief', 'constraints', 'steps', 'deliverables', 'rubric'},
+                    'Invalid project translation fields.')
+            for name in ('title', 'brief'):
+                field(project[name + '_uz'], target[name], project['key'])
+            for name in ('constraints', 'steps', 'deliverables', 'rubric'):
+                lines(project[name + '_uz'], target[name], project['key'])
     return translated
 
 
@@ -57,8 +86,15 @@ def validate_translation(source, translated):
 def bundled_translation(key,version):
     path=DIRECTORY/f'{key}.v{version}.ru.json'
     if not path.exists():return None
-    source=DIRECTORY.parent/'cluster1'/f'{key}.v{version}.json'
-    return validate_translation(json.loads(source.read_text(encoding='utf-8')),json.loads(path.read_text(encoding='utf-8')))
+    matches = [directory / f'{key}.v{version}.json' for directory in
+               (DIRECTORY.parent / 'cluster1', DIRECTORY.parent / 'cluster2')]
+    matches = [source for source in matches if source.exists()]
+    require(len(matches) == 1, 'Translation needs exactly one canonical source.')
+    try:
+        return validate_translation(json.loads(matches[0].read_text(encoding='utf-8')),
+                                    json.loads(path.read_text(encoding='utf-8')))
+    except (ValueError, UnicodeError) as exc:
+        raise ContentValidationError(f'Invalid translation JSON: {exc}') from exc
 
 
 class ContentLocale:
@@ -73,3 +109,15 @@ class ContentLocale:
     def exercise(self,key):return self.data['exercises'][key] if self.data else None
     def progress(self,skills):
         return [{**skill,'title':self.skill(skill['key'],skill['title']),'content_language':self.language} for skill in skills]
+
+    def notation(self, module):
+        return self.data.get('notation', []) if self.data else module.content_snapshot.get('notation_uz', [])
+
+    def projects(self, module):
+        result = []
+        for project in module.content_snapshot.get('projects', []):
+            fields = ('title', 'brief', 'constraints', 'steps', 'deliverables', 'rubric')
+            translated = self.data['projects'][project['key']] if self.data else None
+            result.append({'key': project['key'], 'assessment': 'self_review', 'content_language': self.language,
+                           **{name: translated[name] if translated else project[name + '_uz'] for name in fields}})
+        return result

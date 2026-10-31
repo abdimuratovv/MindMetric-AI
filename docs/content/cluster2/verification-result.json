@@ -30,7 +30,7 @@
     "prerequisite_cycle",
     "missing_translated_project"
   ],
-  "legacy_importer_guard": "legacy_importer_rejects_schema2",
-  "production_importer_schema2_supported": false,
+  "legacy_schema_guard": "legacy_schema_rejects_cluster2_metadata",
+  "schema2_validator_supported": true,
   "database_writes": false
 }

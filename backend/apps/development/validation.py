@@ -1,4 +1,4 @@
-"""Validate the reviewed cluster-one JSON contract before any database writes."""
+"""Validate legacy academic and bilingual algorithmic content before writes."""
 
 import hashlib
 import json
@@ -62,7 +62,8 @@ def validate_content(data, *, known_skills=None, diagnostic_keys=None):
 
 def _validate_content(data, *, known_skills=None, diagnostic_keys=None):
     require(isinstance(data, dict), 'Content must be an object.')
-    require(type(data.get('schema_version')) is int and data['schema_version'] == 1, 'Unsupported schema_version.')
+    schema = data.get('schema_version')
+    require(type(schema) is int and schema in (1, 2), 'Unsupported schema_version.')
     module = data.get('module')
     require(isinstance(module, dict), 'module is required.')
     keyed([module], 'module')
@@ -74,9 +75,35 @@ def _validate_content(data, *, known_skills=None, diagnostic_keys=None):
     require(module.get('title_ru') is None or isinstance(module['title_ru'], str), 'Invalid title_ru.')
     require(len(module.get('title_ru') or '') <= 200, 'title_ru is too long.')
     text(module.get('review_status'), 'module.review_status', 40)
-    indicators = {'math', 'logic', 'iq'}
+    if schema == 1:
+        require(type(module.get('cluster', 1)) is int and module.get('cluster', 1) == 1,
+                'Schema 1 belongs to cluster one.')
+        require(not data.get('projects') and not data.get('notation_uz'), 'New study resources require schema 2.')
+        indicators = {'math', 'logic', 'iq'}
+    else:
+        require(type(module.get('cluster')) is int and module['cluster'] == 2, 'Schema 2 requires cluster two.')
+        require(module['order'] in range(1, 7), 'Invalid cluster-two order.')
+        require(module.get('topic_number') == f"2.{module['order']}", 'Topic number mismatch.')
+        indicators = {'algorithmic', 'creative', 'problem_solving'}
+        strings(data.get('notation_uz'), 'notation_uz')
+        require(len(data['notation_uz']) <= 16, 'Too many notation rules.')
+        for rule in data['notation_uz']:
+            text(rule, 'notation_uz', 1000)
+        projects = data.get('projects', [])
+        require(isinstance(projects, list) and len(projects) <= 10, 'Invalid projects.')
+        if projects:
+            keyed(projects, 'projects')
+        fields = {'key', 'assessment', 'title_uz', 'brief_uz', 'constraints_uz',
+                  'steps_uz', 'deliverables_uz', 'rubric_uz'}
+        for project in projects:
+            require(set(project) == fields and project['assessment'] == 'self_review',
+                    'Projects must be self-review study resources, without grading keys.')
+            text(project['title_uz'], 'project.title_uz', 200)
+            text(project['brief_uz'], 'project.brief_uz')
+            for field in ('constraints_uz', 'steps_uz', 'deliverables_uz', 'rubric_uz'):
+                strings(project[field], 'project.' + field)
     strings(module.get('indicator_keys'), 'module.indicator_keys')
-    require(set(module['indicator_keys']) <= indicators, 'Only cluster-one indicators are allowed.')
+    require(set(module['indicator_keys']) <= indicators, 'Invalid indicators for this cluster.')
 
     sources = records(data.get('sources'), 'sources')
     source_ids = set()

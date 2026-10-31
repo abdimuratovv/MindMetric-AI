@@ -1,4 +1,4 @@
-"""Offline resource QA. Does not make the old production importer accept schema 2."""
+"""Offline schema-two resource QA; no database or production writes."""
 import copy
 import hashlib
 import json
@@ -36,15 +36,7 @@ def validate_resource(data, ru, graph):
         require(set(row['indicator_keys']) <= set(meta['indicator_keys']), 'Skill indicator mismatch.')
     require(meta['title_ru'] == ru['title'], 'Russian module title mismatch.')
     require(meta['status'] == 'draft', 'Stage one cannot publish content.')
-    # Reuse the deployed validator for the unchanged lesson/question/blueprint
-    # shape only. New metadata is checked above, never written to a database.
-    # schema/indicators in this disposable projection are not the resource file.
-    core = copy.deepcopy(data)
-    core['schema_version'] = 1
-    core['module']['indicator_keys'] = ['math']
-    for skill in core['skills']:
-        skill['indicator_keys'] = ['math']
-    validate_content(core, known_skills=graph)
+    validate_content(data, known_skills=graph)
     validate_translation(data, ru)
     require('answer_key' not in json.dumps(ru), 'Translation contains grading override.')
     operators = re.compile(r'←|==|!=|≥|≤|[<>]|\b(?:TRUE|FALSE|AND|OR|NOT|TO|OUTPUT|RETURN|INPUT|DECISION|START|END|div|mod)\b')
@@ -253,14 +245,15 @@ def main():
     project_data, project_ru = next((d, t) for d, t in resources if d['module']['order'] == 6)
     altered = copy.deepcopy(project_ru); altered['projects'] = {}
     negatives.append(rejected(lambda: validate_resource(project_data, altered, graph), 'missing_translated_project'))
-    legacy_guard = rejected(lambda: validate_content(data, known_skills=graph), 'legacy_importer_rejects_schema2')
+    altered = copy.deepcopy(data); altered['schema_version'] = 1
+    legacy_guard = rejected(lambda: validate_content(altered, known_skills=graph), 'legacy_schema_rejects_cluster2_metadata')
     result = {'passed': True, 'stage': 'offline_resources_only', 'modules': 6, 'languages': ['uz', 'ru'],
               'skills': 30, 'lessons': 30, 'worked_examples': 30, 'questions': 120,
               'numeric_reference_checks': len(numeric_keys), 'single_choice_editorial_review': 120 - len(numeric_keys),
               'practice': 60, 'precheck': 30, 'postcheck': 30, 'self_review_projects': 2,
               'curriculum_source_hash_checked': source_checked, 'negative_cases': negatives,
-              'legacy_importer_guard': legacy_guard,
-              'production_importer_schema2_supported': False, 'database_writes': False}
+              'legacy_schema_guard': legacy_guard,
+              'schema2_validator_supported': True, 'database_writes': False}
     (HERE / 'verification-result.json').write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\n', encoding='utf-8', newline='\n')
     print(json.dumps(result, ensure_ascii=False))
 

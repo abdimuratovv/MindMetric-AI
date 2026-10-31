@@ -38,8 +38,8 @@ class DevelopmentAdmin(admin.ModelAdmin):
 
 @admin.register(DevelopmentModule)
 class ModuleAdmin(DevelopmentAdmin):
-    list_display = ('key', 'version', 'title_uz', 'status', 'review_status', 'published_at')
-    list_filter = ('status', 'content_language')
+    list_display = ('key', 'version', 'cluster', 'title_uz', 'status', 'review_status', 'published_at')
+    list_filter = ('cluster', 'status', 'content_language')
     search_fields = ('key', 'title_uz')
     actions = ('publish_selected',)
 

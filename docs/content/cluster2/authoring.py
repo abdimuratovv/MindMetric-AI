@@ -46,6 +46,20 @@ def digest(data):
                                      ensure_ascii=False, allow_nan=False).encode()).hexdigest()
 
 
+def notation():
+    """Neutral syntax rules, without worked examples or question-specific help."""
+    return [b(p) for p in [
+        '← qiymat beradi; ==, !=, <, >, ≤, ≥ taqqoslaydi. OUTPUT qiymatni ko‘rsatadi, o‘zgartirmaydi. || ← присваивает значение; ==, !=, <, >, ≤, ≥ сравнивают. OUTPUT показывает значение, но не меняет его.',
+        'AND ikkala shartni, OR kamida bittasini talab qiladi; NOT inkor qiladi. Qavslar shart chegarasini belgilaydi. || AND требует оба условия, OR — хотя бы одно; NOT отрицает. Скобки задают границы условия.',
+        '{ } bitta blokni, ; ketma-ket buyruqlar ajratgichini bildiradi. if-else va else if zanjirida faqat tanlangan bitta tarmoq bajariladi. || { } обозначают один блок, ; разделяет последовательные команды. В if-else и цепочке else if выполняется только одна выбранная ветвь.',
+        'switch aniq mos case ni, mos kelmasa default ni bajaradi. Keyingi case ga avtomatik o‘tish yo‘q. || switch выполняет точно совпавший case, при отсутствии совпадения — default. Автоматического перехода к следующему case нет.',
+        'for i ← a TO b butun qiymatlarni 1 qadam bilan oshiradi, ikkala chegara kiritiladi. a > b bo‘lsa tana bajarilmaydi. || for i ← a TO b увеличивает целые значения с шагом 1, обе границы включены. При a > b тело не выполняется.',
+        'while shartni tanadan avval tekshiradi; do-while avval tanani bajaradi, keyin shart rost bo‘lsa takrorlaydi. || while проверяет условие до тела; do-while сначала выполняет тело, затем повторяет при истинном условии.',
+        'div va mod uchun bo‘linuvchi manfiy bo‘lmagan butun, bo‘luvchi musbat butun: butun bo‘linma va qoldiq olinadi. RETURN funksiya chaqiruvini natija bilan tugatadi. || Для div и mod делимое — неотрицательное целое, делитель — положительное целое: берутся целая часть частного и остаток. RETURN завершает вызов функции с результатом.',
+        'Arifmetika aniq deb olinadi; haqiqiy tilda son turi chegarasi alohida tekshiriladi. START/END — boshlash/tugatish, INPUT/OUTPUT — kirish/chiqish, DECISION — shart. || Арифметика считается точной; в реальном языке границы числового типа проверяются отдельно. START/END — начало/конец, INPUT/OUTPUT — ввод/вывод, DECISION — условие.'
+    ]]
+
+
 def compile_module(authored, sources):
     m = authored
     data = {'schema_version': 2, 'sources': sources,
@@ -55,13 +69,15 @@ def compile_module(authored, sources):
                        'content_language': 'uz', 'indicator_keys': m['indicators'],
                        'status': 'draft', 'review_status': 'internally_checked',
                        'diagnostic_coverage_note_uz': 'Aniq diagnostika savollari bilan xarita hali tasdiqlanmagan. Boshlang‘ich tekshiruv mavzu bo‘yicha dastlabki dalil beradi.'},
+            'notation_uz': [p['uz'] for p in notation()],
             'skills': [], 'lessons': [], 'exercises': [], 'diagnostic_links': [],
             'blueprint': {'precheck_order': [], 'practice_order': [], 'postcheck_order': [],
                           'matched_pairs': [], 'unseen_postcheck_sets': 1,
                           'comparison_note_uz': 'Ko‘nikma va tahririy qiyinlik bo‘yicha juftlangan; statistik tenglashtirish va umumiy qobiliyat o‘sishi da’vosi yo‘q.',
                           'exhaustion_note_uz': 'Bitta mustaqil yakuniy tekshiruv to‘plami bor. Yangi bank bo‘lmasa qayta o‘sish o‘lchovi olinmaydi.'}}
     ru = {'module_key': m['key'], 'version': 1, 'language': 'ru',
-          'title': m['title']['ru'], 'skills': {}, 'lessons': {}, 'exercises': {}}
+          'title': m['title']['ru'], 'notation': [p['ru'] for p in notation()],
+          'skills': {}, 'lessons': {}, 'exercises': {}}
     for index, l in enumerate(m['lessons']):
         key = l['key']
         data['skills'].append({'key': key, 'title_uz': l['title']['uz'],

@@ -43,12 +43,12 @@ def visible_catalogue(student):
     enrollments = {row.module.key: row for row in DevelopmentEnrollment.objects.filter(student=student)
                    .select_related('module').order_by('module__version')}
     selected = {}
-    for module in DevelopmentModule.objects.filter(status='published').order_by('order', 'key', '-version'):
+    for module in DevelopmentModule.objects.filter(status='published').order_by('cluster', 'order', 'key', '-version'):
         selected.setdefault(module.key, module.pk)
     selected.update({key: row.module_id for key, row in enrollments.items()})
     modules = list(DevelopmentModule.objects.filter(pk__in=selected.values()).prefetch_related(
         'skills__prerequisites', 'skills__diagnostic_links', 'lessons',
-    ).order_by('order', 'key'))
+    ).order_by('cluster', 'order', 'key'))
     for module in modules:
         if module.key in enrollments:
             enrollments[module.key].module = module
@@ -192,7 +192,7 @@ def build_plan(student, language='uz'):
         relevant = {indicator for skill in module.skills.all() if any(row['key'] == skill.key for row in diagnostic_weak)
                     for indicator in skill.indicator_keys if indicator in scores}
         tie_score = min((scores[key] for key in relevant), default=100)
-        rank = (bucket, -max((row['error_fraction'] for row in weak), default=0), tie_score, module.order, module.key)
+        rank = (bucket, -max((row['error_fraction'] for row in weak), default=0), tie_score, module.cluster, module.order, module.key)
         entries.append({'module': module, 'enrollment': enrollment, 'skills': skills,
                         'recommendation': {'code': code, 'action': action, 'reason': REASONS[language][code],
                                            'focus_skill_keys': [row['key'] for row in weak],

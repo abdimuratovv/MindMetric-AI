@@ -94,6 +94,17 @@ class ConcurrentDevelopmentTests(TransactionTestCase):
         self.assertEqual(DevelopmentAnswer.objects.count(),1)
         self.assertEqual([r[1]['session']['answered'] for r in results],[1,1])
 
+    def test_simultaneous_clusters_allow_only_one_active_session(self):
+        for _, module, _ in import_bundle(bundled_contents(cluster=2)):
+            publish_module(module.pk)
+        other = self.client.post('/api/development/modules/algorithmization-flowcharts/enroll/', {}, format='json').data
+        results = self.parallel(*[
+            (f'/api/development/enrollments/{eid}/sessions/', {'purpose': 'precheck'})
+            for eid in (self.enrollment['id'], other['id'])
+        ])
+        self.assertEqual(sorted(result[0] for result in results), [200, 409])
+        self.assertEqual(DevelopmentSession.objects.filter(status='in_progress').count(), 1)
+
     def test_competing_answer_uuids_do_not_advance_twice(self):
         session=self.begin()
         question=session.question_snapshot[0]

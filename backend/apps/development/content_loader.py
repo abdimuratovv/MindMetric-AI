@@ -17,18 +17,37 @@ from .validation import ContentValidationError, content_hash, require, validate_
 BUNDLED_CONTENT = Path(__file__).resolve().parent / 'content' / 'cluster1' / 'arithmetic-algebra.v1.json'
 
 
-def bundled_contents():
+def bundled_contents(cluster=1):
     """One latest reviewed version per course, sorted by curriculum order."""
     latest = {}
-    for path in sorted(BUNDLED_CONTENT.parent.glob('*.v*.json')):
+    require(cluster is None or (type(cluster) is int and cluster in (1, 2)), 'Invalid bundle cluster.')
+    directories = [BUNDLED_CONTENT.parent.parent / f'cluster{number}' for number in ((1, 2) if cluster is None else (cluster,))]
+    for path in sorted(path for directory in directories for path in directory.glob('*.v*.json')):
         data = read_content(path)
         meta = data.get('module', {}) if isinstance(data, dict) else {}
         key, version = meta.get('key'), meta.get('version')
         require(isinstance(key, str) and type(version) is int, f'Invalid module metadata: {path.name}.')
+        expected_cluster = int(path.parent.name[-1])
+        require(meta.get('cluster', 1) == expected_cluster, f'Content stored in wrong cluster: {path.name}.')
         if key not in latest or version > latest[key]['module']['version']:
             latest[key] = data
     require(bool(latest), 'No bundled content found.')
-    return sorted(latest.values(), key=lambda data: (data['module'].get('order', 0), data['module']['key']))
+    return sorted(latest.values(), key=lambda data: (data['module'].get('cluster', 1), data['module'].get('order', 0), data['module']['key']))
+
+
+def validate_localization(data):
+    """Schema two is bilingual from its first import; reject partial releases."""
+    if data['schema_version'] != 2:
+        return
+    from .translations import bundled_translation, validate_translation
+    translated = bundled_translation(data['module']['key'], data['module']['version'])
+    require(translated is not None, 'Cluster two requires a complete Russian translation.')
+    validate_translation(data, translated)
+
+
+def validate_module_cluster(meta):
+    require(not DevelopmentModule.objects.filter(key=meta['key']).exclude(cluster=meta.get('cluster', 1)).exists(),
+            'A module key cannot move between clusters.')
 
 
 def known_skill_graph(excluded=()):
@@ -63,6 +82,8 @@ def validate_dependencies(data):
     question_keys = {link['question_key'] for link in data['diagnostic_links']}
     questions = {q.key: q for q in CognitiveQuestion.objects.filter(key__in=question_keys)}
     validate_content(data, known_skills=known, diagnostic_keys=questions.keys())
+    validate_module_cluster(meta)
+    validate_localization(data)
     return questions
 
 
@@ -75,8 +96,12 @@ def import_bundle(contents, *, dry_run=False):
         require(isinstance(data, dict) and isinstance(data.get('module'), dict), 'Invalid bundle module.')
         meta = data['module']
         require(isinstance(meta.get('key'), str) and type(meta.get('version')) is int, 'Invalid bundle identity.')
+        require(type(meta.get('order')) is int and type(meta.get('cluster', 1)) is int,
+                'Invalid bundle cluster/order.')
         identities.append((meta['key'], meta['version']))
     require(len({key for key, _ in identities}) == len(identities), 'Bundle must contain one version per module key.')
+    topics = [(data['module'].get('cluster', 1), data['module'].get('order')) for data in contents]
+    require(len(set(topics)) == len(topics), 'Duplicate topic order within a cluster.')
     graph = known_skill_graph(excluded=identities)
     owners = {}
     by_key = {data['module']['key']: data for data in contents}
@@ -90,6 +115,8 @@ def import_bundle(contents, *, dry_run=False):
     questions = set(CognitiveQuestion.objects.values_list('key', flat=True))
     for data in contents:
         validate_content(data, known_skills=graph, diagnostic_keys=questions)
+        validate_module_cluster(data['module'])
+        validate_localization(data)
 
     ordered, visited, visiting = [], set(), set()
 
@@ -107,7 +134,7 @@ def import_bundle(contents, *, dry_run=False):
         visited.add(key)
         ordered.append(by_key[key])
 
-    for data in sorted(contents, key=lambda row: (row['module']['order'], row['module']['key'])):
+    for data in sorted(contents, key=lambda row: (row['module'].get('cluster', 1), row['module']['order'], row['module']['key'])):
         visit(data['module']['key'])
 
     results = []
@@ -149,6 +176,7 @@ def import_content(data, *, dry_run=False):
     for field in ('order', 'title_uz', 'content_language', 'indicator_keys', 'review_status'):
         setattr(module, field, meta[field])
     module.title_ru = meta.get('title_ru') or ''
+    module.cluster = meta.get('cluster', 1)
     module.content_hash = digest
     module.content_snapshot = data
     module.blueprint = data['blueprint']
