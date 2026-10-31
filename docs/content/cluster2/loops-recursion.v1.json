@@ -1,0 +1,755 @@
+{
+  "schema_version": 2,
+  "sources": [
+    {
+      "id": "source-curriculum",
+      "filename": "Oqitish moduli.docx",
+      "sha256": "c11956549286d3f6c99ae327b0dc0ee6dcdc4714e4e069d385901f0f8d58a473"
+    },
+    {
+      "id": "authored-cluster2",
+      "filename": "authoring-manifest.json",
+      "sha256": "e0cbef97d4330bbd8b5c78b872deeaa7767def62aa47431308e5b025a6918031"
+    }
+  ],
+  "module": {
+    "key": "loops-recursion",
+    "version": 1,
+    "order": 3,
+    "cluster": 2,
+    "topic_number": "2.3",
+    "title_uz": "Takrorlash operatorlari va rekursiya",
+    "title_ru": "Циклы и рекурсия",
+    "content_language": "uz",
+    "indicator_keys": [
+      "algorithmic"
+    ],
+    "status": "draft",
+    "review_status": "internally_checked",
+    "diagnostic_coverage_note_uz": "Aniq diagnostika savollari bilan xarita hali tasdiqlanmagan. Boshlang‘ich tekshiruv mavzu bo‘yicha dastlabki dalil beradi."
+  },
+  "skills": [
+    {
+      "key": "loop-for",
+      "title_uz": "for va takrorlanish chegaralari",
+      "indicator_keys": [
+        "algorithmic"
+      ],
+      "prerequisite_keys": [
+        "algo-assignment"
+      ]
+    },
+    {
+      "key": "loop-while",
+      "title_uz": "while va tugash sharti",
+      "indicator_keys": [
+        "algorithmic"
+      ],
+      "prerequisite_keys": [
+        "loop-for",
+        "cond-if"
+      ]
+    },
+    {
+      "key": "loop-do",
+      "title_uz": "do-while: avval tana, keyin shart",
+      "indicator_keys": [
+        "algorithmic"
+      ],
+      "prerequisite_keys": [
+        "loop-while"
+      ]
+    },
+    {
+      "key": "loop-nested",
+      "title_uz": "Ichma-ich sikllarni kuzatish",
+      "indicator_keys": [
+        "algorithmic"
+      ],
+      "prerequisite_keys": [
+        "loop-for"
+      ]
+    },
+    {
+      "key": "loop-recursion",
+      "title_uz": "Rekursiya va tayanch holat",
+      "indicator_keys": [
+        "algorithmic"
+      ],
+      "prerequisite_keys": [
+        "loop-while"
+      ]
+    }
+  ],
+  "lessons": [
+    {
+      "key": "loop-for-lesson",
+      "skill_key": "loop-for",
+      "title_uz": "for va takrorlanish chegaralari",
+      "theory_uz": [
+        "Kursda for i ← a TO b {amal} butun i ni a dan b gacha oshirib yuradi; ikkala chegara kiritiladi. a > b bo‘lsa tana bajarilmaydi. Bu Python range qoidasidan farq qiladi.",
+        "Hisoblagich iteratsiya qiymatini, jamlagich esa umumiy natijani saqlaydi. Yig‘indi uchun s ← 0 sikldan oldin yoziladi; tanada s ← s + i yangilanadi.",
+        "Jamlagichni har aylanishda nol qilish avvalgi yig‘indini yo‘qotadi. Tana necha marta bajarilishini va har safar qaysi qiymat bilan ishlashini alohida kuzating."
+      ],
+      "worked_example": {
+        "prompt_uz": "s ← 0; for i ← 1 TO 4 {s ← s + i}. s?",
+        "solution_steps_uz": [
+          "i qiymatlari 1, 2, 3, 4.",
+          "s qiymatlari 1, 3, 6, 10.",
+          "Oxirgi yig‘indi 10."
+        ],
+        "answer_uz": "10"
+      }
+    },
+    {
+      "key": "loop-while-lesson",
+      "skill_key": "loop-while",
+      "title_uz": "while va tugash sharti",
+      "theory_uz": [
+        "while shartni tanadan oldin tekshiradi. Dastlab FALSE bo‘lsa tana bir marta ham bajarilmaydi. Har aylanishdan keyin shart qayta tekshiriladi.",
+        "Sikl holati shartni bir kuni FALSE qiladigan tomonga o‘zgarishi kerak. i ← i + 1 yoki qoldiqni kamaytirish kabi qadamning yo‘qligi cheksiz siklga olib kelishi mumkin.",
+        "Tugashni taxmin qilish o‘rniga nima kamayishi yoki chegaraga yaqinlashishini ayting. Shartdagi va yangilanishdagi belgilar bir-biriga mos bo‘lsin."
+      ],
+      "worked_example": {
+        "prompt_uz": "x ← 1; while x < 8 {x ← x × 2}. Oxirgi x?",
+        "solution_steps_uz": [
+          "x: 1 → 2 → 4 → 8.",
+          "8 < 8 yolg‘on.",
+          "Tana qayta bajarilmaydi, x = 8."
+        ],
+        "answer_uz": "8"
+      }
+    },
+    {
+      "key": "loop-do-lesson",
+      "skill_key": "loop-do",
+      "title_uz": "do-while: avval tana, keyin shart",
+      "theory_uz": [
+        "do {tana} while shart tanani avval bajaradi, keyin shart TRUE bo‘lsa takrorlaydi. Shuning uchun tana kamida bir marta bajariladi.",
+        "Bu yozuv repeat-until emas: while sharti rost bo‘lsa DAVOM etadi. Shartning ma’nosini teskarilash xatoga olib keladi.",
+        "Menyu yoki birinchi urinish majburiy bo‘lgan jarayonga mos. Kirishning yaroqliligini baribir tekshirish kerak; kamida bir marta bajarilishi xavfsizlik tekshiruvi o‘rnini bosmaydi."
+      ],
+      "worked_example": {
+        "prompt_uz": "x ← 5; do {x ← x + 1} while x < 3. Oxirgi x?",
+        "solution_steps_uz": [
+          "Tana avval x ni 6 qiladi.",
+          "6 < 3 yolg‘on.",
+          "Takror yo‘q, x = 6."
+        ],
+        "answer_uz": "6"
+      }
+    },
+    {
+      "key": "loop-nested-lesson",
+      "skill_key": "loop-nested",
+      "title_uz": "Ichma-ich sikllarni kuzatish",
+      "theory_uz": [
+        "Tashqi siklning har bir aylanishida ichki sikl qaytadan boshlanadi. Mustaqil chegaralarda umumiy tana soni tashqi va ichki takrorlar ko‘paytmasidir.",
+        "for i ← 1 TO 2 {for j ← 1 TO 3 {...}} juftlari qatorlab yuradi. Juftlar sonini takrorlar sonlarini qo‘shib hisoblamang.",
+        "Ichki chegara i ga bog‘liq bo‘lsa ko‘paytma yetmaydi: har tashqi qiymatdagi ichki takrorni alohida sanang. Uchburchak shakldagi ish 1 + 2 + ... bo‘lishi mumkin."
+      ],
+      "worked_example": {
+        "prompt_uz": "c ← 0; for i ← 1 TO 2 {for j ← 1 TO 3 {c ← c + 1}}. c?",
+        "solution_steps_uz": [
+          "Tashqi sikl 2 marta.",
+          "Har safar ichki sikl 3 marta.",
+          "c = 2 × 3 = 6."
+        ],
+        "answer_uz": "6"
+      }
+    },
+    {
+      "key": "loop-recursion-lesson",
+      "skill_key": "loop-recursion",
+      "title_uz": "Rekursiya va tayanch holat",
+      "theory_uz": [
+        "Rekursiv funksiya o‘zini kichikroq masala bilan chaqiradi. Tayanch holat bevosita javob qaytarib, yangi chaqiruv qilmaydi.",
+        "S(n): if n == 0 {RETURN 0} else {RETURN n + S(n − 1)}, n manfiy bo‘lmagan butun. Har chaqiruv argumentni kamaytirib tayanch holatga olib boradi.",
+        "Chaqiruvlar avval chuqurlashadi, javoblar esa orqaga qaytadi. Rekursiya bepul emas: tugallanmagan chaqiruvlar stekda joy oladi. Yetarli bo‘lmagan tayanch yoki noto‘g‘ri yo‘nalish tugamaslikka olib keladi."
+      ],
+      "worked_example": {
+        "prompt_uz": "S(3) ni yuqoridagi qoida bilan toping.",
+        "solution_steps_uz": [
+          "S(3) = 3 + S(2), S(2) = 2 + S(1).",
+          "S(1) = 1 + S(0), S(0) = 0.",
+          "Orqaga qaytib: 1, 3, 6."
+        ],
+        "answer_uz": "6"
+      }
+    }
+  ],
+  "exercises": [
+    {
+      "key": "loop-for-practice-1",
+      "skill_key": "loop-for",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "s ← 0; for i ← 2 TO 5 {s ← s + i}. s?",
+      "options": [],
+      "answer_key": {
+        "value": "14"
+      },
+      "solution_steps_uz": [
+        "Ikkala chegara kiradi.",
+        "2 + 3 + 4 + 5 = 14."
+      ],
+      "common_error_uz": "Oxirgi chegarani tashlab ketmang.",
+      "hint_uz": "Avval barcha i qiymatlarini yozing.",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "3/loop-for/practice/1"
+      }
+    },
+    {
+      "key": "loop-for-practice-2",
+      "skill_key": "loop-for",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "p ← 1; for i ← 1 TO 3 {p ← p × 2}. p?",
+      "options": [],
+      "answer_key": {
+        "value": "8"
+      },
+      "solution_steps_uz": [
+        "Tana 3 marta bajariladi.",
+        "p: 2, 4, 8."
+      ],
+      "common_error_uz": "Ko‘paytirish sonini i qiymatlari yig‘indisi bilan aralashtirmang.",
+      "hint_uz": "Har safar avvalgi p ikki baravar bo‘ladi.",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "3/loop-for/practice/2"
+      }
+    },
+    {
+      "key": "loop-for-precheck",
+      "skill_key": "loop-for",
+      "purpose": "precheck",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "c ← 0; for i ← 3 TO 7 {c ← c + 1}. c?",
+      "options": [],
+      "answer_key": {
+        "value": "5"
+      },
+      "solution_steps_uz": [
+        "Qiymatlar 3, 4, 5, 6, 7.",
+        "Ular 5 ta, demak c = 5."
+      ],
+      "common_error_uz": "Takrorlar soni oxirgi i qiymatiga teng bo‘lishi shart emas.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "3/loop-for/precheck/3"
+      }
+    },
+    {
+      "key": "loop-for-postcheck",
+      "skill_key": "loop-for",
+      "purpose": "postcheck",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "s ← 9; for i ← 5 TO 3 {s ← s + i}. Kurs qoidasi bo‘yicha s?",
+      "options": [],
+      "answer_key": {
+        "value": "9"
+      },
+      "solution_steps_uz": [
+        "Boshlanish tugashdan katta.",
+        "O‘suvchi for tanasi bajarilmaydi, s = 9."
+      ],
+      "common_error_uz": "TO yashirin kamayish qadamini bildirmaydi.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "3/loop-for/postcheck/4"
+      }
+    },
+    {
+      "key": "loop-while-practice-1",
+      "skill_key": "loop-while",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "x ← 3; c ← 0; while x < 12 {x ← x + 3; c ← c + 1}. c?",
+      "options": [],
+      "answer_key": {
+        "value": "3"
+      },
+      "solution_steps_uz": [
+        "Tana x boshlanishlari 3, 6, 9 da ishlaydi.",
+        "x = 12 da to‘xtaydi, c = 3."
+      ],
+      "common_error_uz": "To‘xtashdagi tekshiruvni yana bitta tana deb sanamang.",
+      "hint_uz": "Shart har gal tanadan oldin tekshiriladi.",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "3/loop-while/practice/1"
+      }
+    },
+    {
+      "key": "loop-while-practice-2",
+      "skill_key": "loop-while",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "i ← 0; while i < 4 {OUTPUT i}. Nima yetishmayapti?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "OUTPUT ni ko‘paytirish",
+          "feedback_uz": "Chiqarish i ni o‘zgartirmaydi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Tanada i ni chegaraga yaqinlashtiruvchi yangilanish",
+          "feedback_uz": "i o‘zgarmasa shart doim rost qoladi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Har safar i ← 0 qilish",
+          "feedback_uz": "Bu holatni boshlanishga qaytarib, tugashga yordam bermaydi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "i qiymati tanada o‘zgarmayapti.",
+        "Masalan, i ← i + 1 tugashga olib boradi."
+      ],
+      "common_error_uz": "OUTPUTni holat yangilanishi deb hisoblamang.",
+      "hint_uz": "Shartni yolg‘on qiladigan qiymatga qanday yetiladi?",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "3/loop-while/practice/2"
+      }
+    },
+    {
+      "key": "loop-while-precheck",
+      "skill_key": "loop-while",
+      "purpose": "precheck",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "x ← 10; c ← 0; while x < 5 {c ← c + 1; x ← x + 1}. c?",
+      "options": [],
+      "answer_key": {
+        "value": "0"
+      },
+      "solution_steps_uz": [
+        "Dastlab 10 < 5 yolg‘on.",
+        "Tana bajarilmaydi, c = 0."
+      ],
+      "common_error_uz": "while kamida bir marta ishlaydi degan taxmin noto‘g‘ri.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "3/loop-while/precheck/3"
+      }
+    },
+    {
+      "key": "loop-while-postcheck",
+      "skill_key": "loop-while",
+      "purpose": "postcheck",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "x ← 20; c ← 0; while x > 2 {x ← x div 2; c ← c + 1}. c?",
+      "options": [],
+      "answer_key": {
+        "value": "3"
+      },
+      "solution_steps_uz": [
+        "Butun bo‘linish: 20 → 10 → 5 → 2.",
+        "2 > 2 yolg‘on, c = 3."
+      ],
+      "common_error_uz": "div kasr qismini tashlaydi; oddiy bo‘lish bilan almashtirmang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "3/loop-while/postcheck/4"
+      }
+    },
+    {
+      "key": "loop-do-practice-1",
+      "skill_key": "loop-do",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "x ← 0; do {x ← x + 2} while x < 5. Oxirgi x?",
+      "options": [],
+      "answer_key": {
+        "value": "6"
+      },
+      "solution_steps_uz": [
+        "Tanadan keyingi qiymatlar 2, 4, 6.",
+        "6 < 5 yolg‘on, x = 6."
+      ],
+      "common_error_uz": "Chegaraga yetishdan oldingi qiymatda to‘xtatmang.",
+      "hint_uz": "Shartni yangilangan qiymatda tekshiring.",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "3/loop-do/practice/1"
+      }
+    },
+    {
+      "key": "loop-do-practice-2",
+      "skill_key": "loop-do",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "c ← 0; do {c ← c + 1} while FALSE. c?",
+      "options": [],
+      "answer_key": {
+        "value": "1"
+      },
+      "solution_steps_uz": [
+        "Birinchi tana shartsiz bajariladi.",
+        "FALSE takrorni to‘xtatadi, c = 1."
+      ],
+      "common_error_uz": "Boshlang‘ich shartni tanadan oldin qo‘ymang.",
+      "hint_uz": "do-while ning birinchi qadami tana.",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "3/loop-do/practice/2"
+      }
+    },
+    {
+      "key": "loop-do-precheck",
+      "skill_key": "loop-do",
+      "purpose": "precheck",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "x ← 9; do {x ← x − 4} while x > 3. Oxirgi x?",
+      "options": [],
+      "answer_key": {
+        "value": "1"
+      },
+      "solution_steps_uz": [
+        "Avval x = 5, shart rost.",
+        "Keyin x = 1, shart yolg‘on."
+      ],
+      "common_error_uz": "do-while shart rostligida tugamaydi, davom etadi.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "3/loop-do/precheck/3"
+      }
+    },
+    {
+      "key": "loop-do-postcheck",
+      "skill_key": "loop-do",
+      "purpose": "postcheck",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "Dastlab shart FALSE. while va do-while tanalari necha marta bajariladi? Shart tanada ham FALSE qoladi.",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Ikkalasi: 1",
+          "feedback_uz": "while yolg‘on boshlang‘ich shartda kirmaydi."
+        },
+        {
+          "id": "b",
+          "text_uz": "while: 0; do-while: 1",
+          "feedback_uz": "Tekshirish joylari farq qiladi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Ikkalasi: 0",
+          "feedback_uz": "do-while dastlab tanani bajaradi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "while oldindan tekshiradi.",
+        "do-while birinchi tanadan keyin tekshiradi."
+      ],
+      "common_error_uz": "Nomiga emas, tekshirish joyiga qarang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "3/loop-do/postcheck/4"
+      }
+    },
+    {
+      "key": "loop-nested-practice-1",
+      "skill_key": "loop-nested",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "c ← 0; for i ← 1 TO 3 {for j ← 1 TO 4 {c ← c + 1}}. c?",
+      "options": [],
+      "answer_key": {
+        "value": "12"
+      },
+      "solution_steps_uz": [
+        "Har tashqi aylanishda 4 ichki aylanish.",
+        "3 × 4 = 12."
+      ],
+      "common_error_uz": "Takrorlar sonini qo‘shmang.",
+      "hint_uz": "Har tashqi qiymat uchun ichki sikl yangidan yuradi.",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "3/loop-nested/practice/1"
+      }
+    },
+    {
+      "key": "loop-nested-practice-2",
+      "skill_key": "loop-nested",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "c ← 0; for i ← 1 TO 3 {for j ← 1 TO i {c ← c + 1}}. c?",
+      "options": [],
+      "answer_key": {
+        "value": "6"
+      },
+      "solution_steps_uz": [
+        "Ichki takrorlar mos ravishda 1, 2, 3.",
+        "1 + 2 + 3 = 6."
+      ],
+      "common_error_uz": "Bog‘liq chegarada bir xil ichki uzunlikni olmang.",
+      "hint_uz": "Har i uchun j chegarasini alohida yozing.",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "3/loop-nested/practice/2"
+      }
+    },
+    {
+      "key": "loop-nested-precheck",
+      "skill_key": "loop-nested",
+      "purpose": "precheck",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "s ← 0; for i ← 1 TO 2 {for j ← 1 TO 3 {s ← s + i}}. s?",
+      "options": [],
+      "answer_key": {
+        "value": "9"
+      },
+      "solution_steps_uz": [
+        "i = 1 da 1 uch marta, i = 2 da 2 uch marta qo‘shiladi.",
+        "3 + 6 = 9."
+      ],
+      "common_error_uz": "Tana sanog‘i bilan jamlanayotgan qiymat bir xil emas.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "3/loop-nested/precheck/3"
+      }
+    },
+    {
+      "key": "loop-nested-postcheck",
+      "skill_key": "loop-nested",
+      "purpose": "postcheck",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "c ← 0; for i ← 1 TO 4 {for j ← 1 TO i {c ← c + 1}}. c?",
+      "options": [],
+      "answer_key": {
+        "value": "10"
+      },
+      "solution_steps_uz": [
+        "Ichki takrorlar 1, 2, 3, 4.",
+        "Yig‘indi 10."
+      ],
+      "common_error_uz": "Ichki chegaraning tashqi hisoblagichga bog‘liqligini saqlang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "3/loop-nested/postcheck/4"
+      }
+    },
+    {
+      "key": "loop-recursion-practice-1",
+      "skill_key": "loop-recursion",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "F(0) = 1; n > 0 da F(n) = n × F(n − 1). F(4)?",
+      "options": [],
+      "answer_key": {
+        "value": "24"
+      },
+      "solution_steps_uz": [
+        "F(4) = 4 × 3 × 2 × 1 × F(0).",
+        "F(0) = 1, natija 24."
+      ],
+      "common_error_uz": "Ko‘paytmaning tayanchini nol qilmang.",
+      "hint_uz": "Chaqiruvni tayanch holatgacha yozib chiqing.",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "3/loop-recursion/practice/1"
+      }
+    },
+    {
+      "key": "loop-recursion-practice-2",
+      "skill_key": "loop-recursion",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "n ≥ 0 uchun G(n) faqat G(n + 1) ni chaqiradi, tayanch esa n == 0. n > 0 da muammo?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Tayanch borligi o‘zi yetarli",
+          "feedback_uz": "Unga yetish ham zarur."
+        },
+        {
+          "id": "b",
+          "text_uz": "Argument tayanchdan uzoqlashadi",
+          "feedback_uz": "Musbat qiymat oshib nolga yetmaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Rekursiya avtomatik kamaytiradi",
+          "feedback_uz": "O‘zgarish aynan yozilgan ifodaga bog‘liq."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "n + 1 musbat argumentni oshiradi.",
+        "Tayanchga yetish yo‘li yo‘q, yo‘nalish tuzatilishi kerak."
+      ],
+      "common_error_uz": "Tayanchni yozish bilan birga unga yetishni isbotlang.",
+      "hint_uz": "Har chaqiruvda argument tayanchga yaqinlashyaptimi?",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "3/loop-recursion/practice/2"
+      }
+    },
+    {
+      "key": "loop-recursion-precheck",
+      "skill_key": "loop-recursion",
+      "purpose": "precheck",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "H(0) = 2; n > 0 da H(n) = H(n − 1) + 3. H(3)?",
+      "options": [],
+      "answer_key": {
+        "value": "11"
+      },
+      "solution_steps_uz": [
+        "H(1) = 5, H(2) = 8.",
+        "H(3) = 11."
+      ],
+      "common_error_uz": "Boshlang‘ich tayanch qiymatni yo‘qotmang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "3/loop-recursion/precheck/3"
+      }
+    },
+    {
+      "key": "loop-recursion-postcheck",
+      "skill_key": "loop-recursion",
+      "purpose": "postcheck",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "R(0) = 0; n > 0 da R(n) faqat R(n − 1) ni bir marta chaqiradi. R(4) hisobida tayanch bilan jami nechta funksiya chaqiruvi bor?",
+      "options": [],
+      "answer_key": {
+        "value": "5"
+      },
+      "solution_steps_uz": [
+        "Argumentlar 4, 3, 2, 1, 0.",
+        "Boshlang‘ich va tayanch bilan 5 chaqiruv."
+      ],
+      "common_error_uz": "Faqat rekursiv o‘tishlarni sanab, dastlabki chaqiruvni unutmang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "3/loop-recursion/postcheck/4"
+      }
+    }
+  ],
+  "diagnostic_links": [],
+  "blueprint": {
+    "precheck_order": [
+      "loop-for-precheck",
+      "loop-while-precheck",
+      "loop-do-precheck",
+      "loop-nested-precheck",
+      "loop-recursion-precheck"
+    ],
+    "practice_order": [
+      "loop-for-practice-1",
+      "loop-while-practice-1",
+      "loop-do-practice-1",
+      "loop-nested-practice-1",
+      "loop-recursion-practice-1",
+      "loop-for-practice-2",
+      "loop-while-practice-2",
+      "loop-do-practice-2",
+      "loop-nested-practice-2",
+      "loop-recursion-practice-2"
+    ],
+    "postcheck_order": [
+      "loop-for-postcheck",
+      "loop-while-postcheck",
+      "loop-do-postcheck",
+      "loop-nested-postcheck",
+      "loop-recursion-postcheck"
+    ],
+    "matched_pairs": [
+      {
+        "skill_key": "loop-for",
+        "difficulty": "medium",
+        "precheck_key": "loop-for-precheck",
+        "postcheck_key": "loop-for-postcheck"
+      },
+      {
+        "skill_key": "loop-while",
+        "difficulty": "medium",
+        "precheck_key": "loop-while-precheck",
+        "postcheck_key": "loop-while-postcheck"
+      },
+      {
+        "skill_key": "loop-do",
+        "difficulty": "medium",
+        "precheck_key": "loop-do-precheck",
+        "postcheck_key": "loop-do-postcheck"
+      },
+      {
+        "skill_key": "loop-nested",
+        "difficulty": "medium",
+        "precheck_key": "loop-nested-precheck",
+        "postcheck_key": "loop-nested-postcheck"
+      },
+      {
+        "skill_key": "loop-recursion",
+        "difficulty": "medium",
+        "precheck_key": "loop-recursion-precheck",
+        "postcheck_key": "loop-recursion-postcheck"
+      }
+    ],
+    "unseen_postcheck_sets": 1,
+    "comparison_note_uz": "Ko‘nikma va tahririy qiyinlik bo‘yicha juftlangan; statistik tenglashtirish va umumiy qobiliyat o‘sishi da’vosi yo‘q.",
+    "exhaustion_note_uz": "Bitta mustaqil yakuniy tekshiruv to‘plami bor. Yangi bank bo‘lmasa qayta o‘sish o‘lchovi olinmaydi."
+  }
+}

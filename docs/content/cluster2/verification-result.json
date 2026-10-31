@@ -1,0 +1,36 @@
+{
+  "passed": true,
+  "stage": "offline_resources_only",
+  "modules": 6,
+  "languages": [
+    "uz",
+    "ru"
+  ],
+  "skills": 30,
+  "lessons": 30,
+  "worked_examples": 30,
+  "questions": 120,
+  "numeric_reference_checks": 56,
+  "single_choice_editorial_review": 64,
+  "practice": 60,
+  "precheck": 30,
+  "postcheck": 30,
+  "self_review_projects": 2,
+  "curriculum_source_hash_checked": true,
+  "negative_cases": [
+    "wrong_source_hash",
+    "missing_translated_lesson",
+    "check_hint",
+    "grading_override",
+    "mixed_pre_post_bank",
+    "changed_numeric_constant",
+    "wrong_cluster_indicator",
+    "missing_translated_option",
+    "changed_code_operator",
+    "prerequisite_cycle",
+    "missing_translated_project"
+  ],
+  "legacy_importer_guard": "legacy_importer_rejects_schema2",
+  "production_importer_schema2_supported": false,
+  "database_writes": false
+}

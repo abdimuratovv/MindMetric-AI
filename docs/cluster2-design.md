@@ -1,6 +1,6 @@
 # 2-klaster: ikki tilli resurslar va platforma integratsiyasi
 
-Sana: 2026-10-31. Holat: foydalanuvchi ko‘rib chiqishi uchun loyiha yechimi; implementatsiya boshlanmagan.
+Sana: 2026-10-31. Holat: foydalanuvchi tasdiqlagan loyiha yechimi; resurslar bosqichi tugagan, backend integratsiyasi tasdig‘i kutilmoqda.
 
 ## Maqsad va manba
 
@@ -60,4 +60,4 @@ Yakuniy natija: platformada I klasterning oltita moduli saqlanadi va II klastern
 
 ## Loyihani ko‘rib chiqish
 
-Manbadagi II klasterning olti mavzusi qamralgan. Kod bajarish/erkin loyiha baholash qo‘shilmaydi; II klaster bilim mashqlari bilan ochiq loyiha yo‘riqnomalari farqlangan. Ishchi daraxtdagi oldindan mavjud PostgreSQL recovery va konfiguratsiya o‘zgarishlari bu ishga qo‘shib commit qilinmaydi. Keyingi amaliy ish ushbu yechim tasdiqlangach boshlanadi.
+Manbadagi II klasterning olti mavzusi qamralgan. Kod bajarish/erkin loyiha baholash qo‘shilmaydi; II klaster bilim mashqlari bilan ochiq loyiha yo‘riqnomalari farqlangan. Ishchi daraxtdagi oldindan mavjud PostgreSQL recovery va konfiguratsiya o‘zgarishlari bu ishga qo‘shib commit qilinmaydi. Yechim foydalanuvchi tomonidan tasdiqlandi; bosqichma-bosqich bajarish [rejada](cluster2-development-plan.md), resurslar natijasi [1-bosqich hisobotida](cluster2-stage1-summary.md).

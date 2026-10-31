@@ -1,0 +1,1046 @@
+{
+  "schema_version": 2,
+  "sources": [
+    {
+      "id": "source-curriculum",
+      "filename": "Oqitish moduli.docx",
+      "sha256": "c11956549286d3f6c99ae327b0dc0ee6dcdc4714e4e069d385901f0f8d58a473"
+    },
+    {
+      "id": "authored-cluster2",
+      "filename": "authoring-manifest.json",
+      "sha256": "e0cbef97d4330bbd8b5c78b872deeaa7767def62aa47431308e5b025a6918031"
+    }
+  ],
+  "module": {
+    "key": "creative-mini-apps",
+    "version": 1,
+    "order": 6,
+    "cluster": 2,
+    "topic_number": "2.6",
+    "title_uz": "Kreativ dasturlash va kichik ilova dizayni",
+    "title_ru": "Креативное программирование и проектирование мини-приложений",
+    "content_language": "uz",
+    "indicator_keys": [
+      "creative",
+      "problem_solving"
+    ],
+    "status": "draft",
+    "review_status": "internally_checked",
+    "diagnostic_coverage_note_uz": "Aniq diagnostika savollari bilan xarita hali tasdiqlanmagan. Boshlang‘ich tekshiruv mavzu bo‘yicha dastlabki dalil beradi."
+  },
+  "skills": [
+    {
+      "key": "design-needs",
+      "title_uz": "Foydalanuvchi ehtiyoji va maqsad",
+      "indicator_keys": [
+        "creative",
+        "problem_solving"
+      ],
+      "prerequisite_keys": []
+    },
+    {
+      "key": "design-functions",
+      "title_uz": "Funksiyalar va minimal ko‘lam",
+      "indicator_keys": [
+        "creative",
+        "problem_solving"
+      ],
+      "prerequisite_keys": [
+        "design-needs"
+      ]
+    },
+    {
+      "key": "design-states",
+      "title_uz": "Interfeys holatlari va qayta aloqa",
+      "indicator_keys": [
+        "creative",
+        "problem_solving"
+      ],
+      "prerequisite_keys": [
+        "design-functions"
+      ]
+    },
+    {
+      "key": "design-alternatives",
+      "title_uz": "G‘oyalarni mezon bilan taqqoslash",
+      "indicator_keys": [
+        "creative",
+        "problem_solving"
+      ],
+      "prerequisite_keys": [
+        "design-needs",
+        "opt-choice"
+      ]
+    },
+    {
+      "key": "design-prototype",
+      "title_uz": "Prototip va tekshirish rejasi",
+      "indicator_keys": [
+        "creative",
+        "problem_solving"
+      ],
+      "prerequisite_keys": [
+        "design-states",
+        "design-alternatives"
+      ]
+    }
+  ],
+  "lessons": [
+    {
+      "key": "design-needs-lesson",
+      "skill_key": "design-needs",
+      "title_uz": "Foydalanuvchi ehtiyoji va maqsad",
+      "theory_uz": [
+        "Kreativ yechim foydalanuvchi muammosidan boshlanadi. “Noodatiy” funksiya o‘zi foydali degani emas: kimga, qaysi vaziyatda va qanday yordam berishini tushuntiring.",
+        "Talaba topshiriq muddatini unutsa, eslatma, haftalik taqvim yoki ustuvorlik ro‘yxati turli yechimlar bo‘lishi mumkin. Ularni ehtiyoj va cheklov bo‘yicha taqqoslang.",
+        "“Talaba vazifani kiritadi, muddatni belgilaydi, kelgusi vazifani ko‘radi” kabi foydalanuvchi ssenariysi funksiyani aniq qiladi. Shaxsiy ma’lumotni faqat zarur bo‘lsa so‘rang."
+      ],
+      "worked_example": {
+        "prompt_uz": "Talaba uy vazifalarining muddatini unutadi. Minimal foydali ssenariyni tuzing.",
+        "solution_steps_uz": [
+          "Ehtiyoj — yaqin muddatni bilish.",
+          "Vazifa nomi va muddat kiritiladi.",
+          "Yaqin vazifalar ro‘yxati ko‘rsatiladi."
+        ],
+        "answer_uz": "Kiritish → muddat → yaqin vazifalar"
+      }
+    },
+    {
+      "key": "design-functions-lesson",
+      "skill_key": "design-functions",
+      "title_uz": "Funksiyalar va minimal ko‘lam",
+      "theory_uz": [
+        "Kichik ilovani mustaqil vazifalarga ajrating: ma’lumotni olish, tekshirish, saqlash, ko‘rsatish. Har qismda bitta ravshan mas’uliyat bo‘lsin.",
+        "Minimal ishlaydigan nusxa foydalanuvchining bitta muhim ssenariysini oxirigacha bajaradi. Keraksiz statistika yoki bezakdan oldin asosiy saqlash va qayta ko‘rsatishni tugating.",
+        "Ma’lumot oqimi: INPUT title → VALIDATE title → SAVE task → SHOW list. Tekshirish xato topsa SAVE ga o‘tilmaydi."
+      ],
+      "worked_example": {
+        "prompt_uz": "Vazifa nomi bo‘sh bo‘lsa saqlanmasin. To‘g‘ri oqimni yozing.",
+        "solution_steps_uz": [
+          "Kirish nomi olinadi.",
+          "Bo‘shlik tekshiriladi; bo‘lsa xabar va qaytish.",
+          "Yaroqli bo‘lsa saqlash va yangilangan ro‘yxat."
+        ],
+        "answer_uz": "Olish → tekshirish → saqlash → ko‘rsatish"
+      }
+    },
+    {
+      "key": "design-states-lesson",
+      "skill_key": "design-states",
+      "title_uz": "Interfeys holatlari va qayta aloqa",
+      "theory_uz": [
+        "Interfeys boshlang‘ich, yuklanish, muvaffaqiyat, bo‘sh va xato holatlarini farqlashi kerak. Bo‘sh ro‘yxat xato emas: hali vazifa yo‘q bo‘lishi mumkin.",
+        "Saqlash tugamaguncha “saqlandi” demang. Tugma bloklanishi takroriy bosishni kamaytiradi; natijaning dublikat bo‘lmasligi ma’lumotni saqlash qismida ham ta’minlanadi.",
+        "Xato faqat rang bilan berilmasin: aniq matn va tuzatish yo‘lini ko‘rsating. Klaviaturada foydalanish va fokusning qayerga o‘tishini ham ssenariyga kiriting."
+      ],
+      "worked_example": {
+        "prompt_uz": "Saqlash so‘rovi davom etmoqda, keyin xato qaytdi. Holatlar ketma-ketligi?",
+        "solution_steps_uz": [
+          "Avval SAVING holati.",
+          "Xato kelgach ERROR holati va tuzatish/qayta urinish.",
+          "Muvaffaqiyat tasdiqlanmagani uchun SUCCESS ko‘rsatilmaydi."
+        ],
+        "answer_uz": "SAVING → ERROR"
+      }
+    },
+    {
+      "key": "design-alternatives-lesson",
+      "skill_key": "design-alternatives",
+      "title_uz": "G‘oyalarni mezon bilan taqqoslash",
+      "theory_uz": [
+        "Bir ehtiyoj uchun bir nechta g‘oya yozing, keyin foydalilik, bajarish murakkabligi va cheklovlarga moslik bilan taqqoslang. Avval yozilgan g‘oya avtomatik g‘olib emas.",
+        "Baholash jadvali tanlovni ochiq qiladi, lekin ballar mezon va vaznlarga bog‘liq. Masalan, internetsiz ishlash majburiy bo‘lsa bu talabni ball yig‘indisi bilan chetlab bo‘lmaydi.",
+        "Ushbu yopiq savollar berilgan mezonga mos qarorni tekshiradi. Ular erkin ijodiy mahsulotning noyobligi yoki insonning umumiy kreativlik darajasiga ball qo‘ymaydi."
+      ],
+      "worked_example": {
+        "prompt_uz": "A g‘oya: foydalilik 4, soddalik 3. B: foydalilik 3, soddalik 5. Vaznlar teng, katta jami afzal. Qaysi tanlanadi?",
+        "solution_steps_uz": [
+          "A jami 4 + 3 = 7.",
+          "B jami 3 + 5 = 8.",
+          "Berilgan mezonda B ustun."
+        ],
+        "answer_uz": "B"
+      }
+    },
+    {
+      "key": "design-prototype-lesson",
+      "skill_key": "design-prototype",
+      "title_uz": "Prototip va tekshirish rejasi",
+      "theory_uz": [
+        "Prototip g‘oyani tekshirish uchun eng sodda namuna: qog‘oz ekranlar, bosiladigan maket yoki kichik ishlaydigan qism. Unda qaysi taxmin tekshirilishi oldindan yoziladi.",
+        "Sinovda foydalanuvchiga vazifa bering, masalan yangi vazifani kiritib bajarilganini belgilang. Qayerda to‘xtagani, adashgani va natijani tushunganini kuzating; oldindan barcha bosishlarni aytib bermang.",
+        "Kuzatuvdan keyin bitta muammoni tanlab o‘zgartiring va yana tekshiring. Ochiq miniloyihalarda mustaqil tekshiruv mezonlari ishlatiladi; o‘zini tekshirish platformadagi avtomatik tekshiruv natijasi o‘rniga o‘tmaydi."
+      ],
+      "worked_example": {
+        "prompt_uz": "Foydalanuvchi “saqlash” tugmasini topolmadi. Keyingi kichik tajriba?",
+        "solution_steps_uz": [
+          "Kuzatuv: tugma topilmayapti.",
+          "Yorliq va joylashuvni ravshanlashtiring.",
+          "Xuddi shu vazifa bilan qayta sinang."
+        ],
+        "answer_uz": "Kuzatish → o‘zgartirish → qayta tekshirish"
+      }
+    }
+  ],
+  "exercises": [
+    {
+      "key": "design-needs-practice-1",
+      "skill_key": "design-needs",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "Ehtiyoj: talaba muddatni unutadi. Qaysi funksiya bevosita yordam beradi?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Muddat bo‘yicha yaqin vazifalarni ko‘rsatish",
+          "feedback_uz": "Bu aynan kerakli ma’lumotni ochadi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Har bosishda fon rangini tasodifiy o‘zgartirish",
+          "feedback_uz": "Bu muddatni eslash muammosini hal qilmaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Vazifa nomini yashirish",
+          "feedback_uz": "Bu kerakli vazifani tanishni qiyinlashtiradi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "a"
+      },
+      "solution_steps_uz": [
+        "Funksiyani muammo bilan bog‘lang.",
+        "Muddatga oid ko‘rsatish ehtiyojga to‘g‘ri keladi."
+      ],
+      "common_error_uz": "Yangilikni foydalilik bilan tenglashtirmang.",
+      "hint_uz": "Qaysi variant foydalanuvchi xatosini kamaytiradi?",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "6/design-needs/practice/1"
+      }
+    },
+    {
+      "key": "design-needs-practice-2",
+      "skill_key": "design-needs",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "Oddiy vazifa ro‘yxati uchun qaysi ma’lumot eng zarur?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Pasport va bank karta raqami",
+          "feedback_uz": "Bunday ma’lumot bu vazifa uchun zarur emas."
+        },
+        {
+          "id": "b",
+          "text_uz": "Faqat foydalanuvchi sevimli rangi",
+          "feedback_uz": "Bu vazifalarni yuritishga yetmaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Vazifa nomi va bajarilganlik holati",
+          "feedback_uz": "Bular ro‘yxatning asosiy funksiyasini ta’minlaydi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "Har maydonning maqsadini tekshiring.",
+        "Nom va holat asosiy ro‘yxat uchun yetarli."
+      ],
+      "common_error_uz": "Zarur bo‘lmagan ma’lumotni yig‘mang.",
+      "hint_uz": "Funksiya ishlashi uchun aynan nima kerak?",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "6/design-needs/practice/2"
+      }
+    },
+    {
+      "key": "design-needs-precheck",
+      "skill_key": "design-needs",
+      "purpose": "precheck",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "“Ilova zamonaviy bo‘lsin” talabini qaysi yozuv aniqroq qiladi?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Barcha funksiyalar birga bo‘lsin",
+          "feedback_uz": "Qamrov va qabul mezoni noaniq."
+        },
+        {
+          "id": "b",
+          "text_uz": "Talaba yangi vazifani kiritib, saqlanganini ko‘ra oladi",
+          "feedback_uz": "Tekshiriladigan harakat va natija bor."
+        },
+        {
+          "id": "c",
+          "text_uz": "Juda zo‘r va noyob bo‘lsin",
+          "feedback_uz": "O‘lchanadigan xatti-harakat yo‘q."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "Mavhum sifatni ssenariyga aylantiring.",
+        "Harakat va kutilgan natija tekshirilishi mumkin."
+      ],
+      "common_error_uz": "Tekshirib bo‘lmaydigan sifat so‘zlariga suyanmang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "6/design-needs/precheck/3"
+      }
+    },
+    {
+      "key": "design-needs-postcheck",
+      "skill_key": "design-needs",
+      "purpose": "postcheck",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "Internetsiz ishlash talab qilingan. Qaysi g‘oya cheklovga mos?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Vazifalarni qurilmada saqlab, keyin ko‘rsatish",
+          "feedback_uz": "Asosiy ssenariy tarmoqsiz bajariladi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Har ochishda majburiy server javobini kutish",
+          "feedback_uz": "Tarmoqsiz asosiy oqim to‘xtaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Internet yo‘qligida barcha vazifalarni o‘chirish",
+          "feedback_uz": "Bu foydalanuvchi ma’lumotini yo‘qotadi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "a"
+      },
+      "solution_steps_uz": [
+        "Cheklov tarmoqsiz asosiy ishni talab qiladi.",
+        "Mahalliy saqlash shu ssenariyni ta’minlashi mumkin."
+      ],
+      "common_error_uz": "Qiziqarli g‘oya majburiy cheklovni buzmasin.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "6/design-needs/postcheck/4"
+      }
+    },
+    {
+      "key": "design-functions-practice-1",
+      "skill_key": "design-functions",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "Faqat ma’lumotni tekshiradigan qism nima qaytarishi ma’qul?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "O‘zi yashirin buyurtma yuborishi",
+          "feedback_uz": "Bu tekshirishdan tashqari yon ta’sir."
+        },
+        {
+          "id": "b",
+          "text_uz": "Barcha vazifalarni o‘chirishi",
+          "feedback_uz": "Tekshirish bunday o‘chirishni talab qilmaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Yaroqli yoki tuzatish kerakligi haqidagi natija",
+          "feedback_uz": "Tekshirishning mas’uliyati aniq saqlanadi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "Tekshiruvchi ma’lumotni baholaydi.",
+        "Keyingi amalni boshqaruvchi qism natijadan foydalanadi."
+      ],
+      "common_error_uz": "Bir qismga bog‘liq bo‘lmagan vazifalarni yig‘mang.",
+      "hint_uz": "Qismning nomi uning haqiqiy vazifasiga mos bo‘lsin.",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "6/design-functions/practice/1"
+      }
+    },
+    {
+      "key": "design-functions-practice-2",
+      "skill_key": "design-functions",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "Minimal vazifa ilovasi uchun birinchi to‘liq oqim qaysi?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Hisob-kitobi yo‘q statistik panel",
+          "feedback_uz": "Bu ishlaydigan asosiy oqim emas."
+        },
+        {
+          "id": "b",
+          "text_uz": "Vazifa qo‘shish → ro‘yxatda ko‘rish → bajarilgan deb belgilash",
+          "feedback_uz": "Bitta foydali ssenariy oxirigacha ishlaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Faqat fon animatsiyasi",
+          "feedback_uz": "Asosiy ma’lumot bilan ish yo‘q."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "Minimal degani faqat tashqi ko‘rinish emas.",
+        "Asosiy vazifa hayot sikli bajariladi."
+      ],
+      "common_error_uz": "Bezakni asosiy funksiyaning o‘rniga qo‘ymang.",
+      "hint_uz": "Talaba vazifasini boshidan oxirigacha bajara oladimi?",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "6/design-functions/practice/2"
+      }
+    },
+    {
+      "key": "design-functions-precheck",
+      "skill_key": "design-functions",
+      "purpose": "precheck",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "Nom bo‘sh. Qaysi oqim talabga mos?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "VALIDATE → ERROR → INPUT",
+          "feedback_uz": "Saqlashsiz tuzatish imkoniyati beriladi."
+        },
+        {
+          "id": "b",
+          "text_uz": "SAVE → VALIDATE → SHOW",
+          "feedback_uz": "Yaroqsiz vazifa avval saqlanib bo‘lgan."
+        },
+        {
+          "id": "c",
+          "text_uz": "SAVE → SUCCESS",
+          "feedback_uz": "Tekshirish butunlay tashlab ketilgan."
+        }
+      ],
+      "answer_key": {
+        "option_id": "a"
+      },
+      "solution_steps_uz": [
+        "Bo‘sh nom talabga mos emas.",
+        "Saqlashga o‘tmay kirishga qaytiladi."
+      ],
+      "common_error_uz": "Tekshirish saqlashdan avval ishlashi kerak.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "6/design-functions/precheck/3"
+      }
+    },
+    {
+      "key": "design-functions-postcheck",
+      "skill_key": "design-functions",
+      "purpose": "postcheck",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "Ro‘yxatda 4 vazifa bor. Bitta yaroqli yangi vazifa saqlanadi, keyingi bo‘sh nomli so‘rov rad etiladi. Oxirida nechta vazifa?",
+      "options": [],
+      "answer_key": {
+        "value": "5"
+      },
+      "solution_steps_uz": [
+        "Yaroqli saqlash sonni 4 dan 5 ga oshiradi.",
+        "Rad etilgan kirish yangi vazifa yaratmaydi."
+      ],
+      "common_error_uz": "Rad etilgan urinishni saqlangan obyekt deb sanamang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "6/design-functions/postcheck/4"
+      }
+    },
+    {
+      "key": "design-states-practice-1",
+      "skill_key": "design-states",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "So‘rov hali tugamadi. Qaysi xabar to‘g‘ri?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Ma’lumot butunlay yo‘qoldi",
+          "feedback_uz": "Bunday xulosa uchun dalil yo‘q."
+        },
+        {
+          "id": "b",
+          "text_uz": "Saqlanmoqda",
+          "feedback_uz": "Haqiqiy oraliq holat ifodalangan."
+        },
+        {
+          "id": "c",
+          "text_uz": "Muvaffaqiyatli saqlandi",
+          "feedback_uz": "Muvaffaqiyat hali tasdiqlanmagan."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "Jarayon natijasi hali noma’lum.",
+        "Yuklanish holatini ko‘rsating."
+      ],
+      "common_error_uz": "Kutilayotgan natijani yakuniy fakt deb ko‘rsatmang.",
+      "hint_uz": "Hozir qaysi holat tasdiqlangan?",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "6/design-states/practice/1"
+      }
+    },
+    {
+      "key": "design-states-practice-2",
+      "skill_key": "design-states",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "Faqat qizil ramka bilan xato belgilangan. Qaysi qo‘shimcha foydali?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Maydon yonida aniq xato va tuzatish matni",
+          "feedback_uz": "Ma’no rangga qaram bo‘lib qolmaydi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Matnni ham qizilga yashirish",
+          "feedback_uz": "Tushuntirish yo‘qoladi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Xatoni ovozsiz yopish",
+          "feedback_uz": "Foydalanuvchi nima bo‘lganini bilmaydi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "a"
+      },
+      "solution_steps_uz": [
+        "Rangning o‘zi yetarli ma’no bermaydi.",
+        "Matn xato va keyingi qadamni bildiradi."
+      ],
+      "common_error_uz": "Ko‘rinishni o‘zgartirishni tushuntirish o‘rniga ishlatmang.",
+      "hint_uz": "Rang ajratilmasa ham xabar tushunarli bo‘lsin.",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "6/design-states/practice/2"
+      }
+    },
+    {
+      "key": "design-states-precheck",
+      "skill_key": "design-states",
+      "purpose": "precheck",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "Ro‘yxat muvaffaqiyatli yuklandi, lekin unda vazifa yo‘q. Qaysi holat?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Server xatosi deb ko‘rsatish",
+          "feedback_uz": "Bunga asos yo‘q."
+        },
+        {
+          "id": "b",
+          "text_uz": "Cheksiz yuklanish",
+          "feedback_uz": "So‘rov allaqachon tugagan."
+        },
+        {
+          "id": "c",
+          "text_uz": "Bo‘sh holat va vazifa qo‘shish taklifi",
+          "feedback_uz": "So‘rov muvaffaqiyatli, ma’lumot esa bo‘sh."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "Yuklanish tugaganini ajrating.",
+        "Bo‘sh natija alohida, tushunarli holat bo‘ladi."
+      ],
+      "common_error_uz": "Bo‘sh natijani texnik xato bilan aralashtirmang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "6/design-states/precheck/3"
+      }
+    },
+    {
+      "key": "design-states-postcheck",
+      "skill_key": "design-states",
+      "purpose": "postcheck",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "Saqlash xato qaytardi. Qaysi holat o‘tishi mos?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "SAVING → barcha ma’lumotni o‘chirish",
+          "feedback_uz": "Bunday yon ta’sir talab qilinmagan."
+        },
+        {
+          "id": "b",
+          "text_uz": "SAVING → ERROR, kirish saqlanib qayta urinish taklif qilinadi",
+          "feedback_uz": "Kiritilgan ish yo‘qolmasdan xato ko‘rsatiladi."
+        },
+        {
+          "id": "c",
+          "text_uz": "SAVING → SUCCESS, xato yashiriladi",
+          "feedback_uz": "Bu natijani yolg‘on tasdiqlaydi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "Xato natijasi ERROR ni tanlaydi.",
+        "Foydalanuvchi ishini saqlab, qayta urinish yo‘li beriladi."
+      ],
+      "common_error_uz": "Muvaffaqiyatsiz so‘rovni tayyor natija deb ko‘rsatmang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "6/design-states/postcheck/4"
+      }
+    },
+    {
+      "key": "design-alternatives-practice-1",
+      "skill_key": "design-alternatives",
+      "purpose": "practice",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "G‘oya uchun foydalilik 5, soddalik 3. Baho = 2 × foydalilik + soddalik. Baho?",
+      "options": [],
+      "answer_key": {
+        "value": "13"
+      },
+      "solution_steps_uz": [
+        "Foydalilik vazni bilan 2 × 5 = 10.",
+        "10 + 3 = 13."
+      ],
+      "common_error_uz": "Vaznni barcha mezonlarga bir xil qo‘llamang.",
+      "hint_uz": "Har mezonning koeffitsiyentini alohida tekshiring.",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "6/design-alternatives/practice/1"
+      }
+    },
+    {
+      "key": "design-alternatives-practice-2",
+      "skill_key": "design-alternatives",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "Majburiy talab: internetsiz ishlash. A balli yuqori, lekin tarmoqqa bog‘liq. B balli pastroq, lekin talabga mos. Qaror?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Faqat yuqori jami uchun A ni tanlash",
+          "feedback_uz": "Ball majburiy cheklovni bekor qilmaydi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Talabni foydalanuvchidan yashirish",
+          "feedback_uz": "Bu kelishilgan shartni buzadi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Talabga mos B ni tanlash yoki A ni qayta ishlab chiqish",
+          "feedback_uz": "Majburiy talab ustuvor."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "Avval nomos variantlar ajratiladi.",
+        "Keyin mos variantlar ball bilan solishtiriladi."
+      ],
+      "common_error_uz": "Mezon ballari bilan majburiy talabni farqlang.",
+      "hint_uz": "Ushbu talab bajarilmasa asosiy ssenariy ishlaydimi?",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "6/design-alternatives/practice/2"
+      }
+    },
+    {
+      "key": "design-alternatives-precheck",
+      "skill_key": "design-alternatives",
+      "purpose": "precheck",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "Ikki g‘oya berilgan barcha mezonda teng. Qaysi xulosa asosli?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Ikkalasi mutlaqo foydasiz",
+          "feedback_uz": "Tenglik foydasizlikni bildirmaydi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Qo‘shimcha mezon yoki kichik foydalanuvchi sinovi kerak",
+          "feedback_uz": "Mavjud jadval yagona tanlov bermaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Birinchi g‘oya ilmiy jihatdan ustun",
+          "feedback_uz": "Tartib ustunlik dalili emas."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "Berilgan mezonlar farq ko‘rsatmadi.",
+        "Yangi dalil bilan tanlov aniqlashtiriladi."
+      ],
+      "common_error_uz": "Teng natijadan uydirma g‘olib chiqarmang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "6/design-alternatives/precheck/3"
+      }
+    },
+    {
+      "key": "design-alternatives-postcheck",
+      "skill_key": "design-alternatives",
+      "purpose": "postcheck",
+      "format": "numeric",
+      "difficulty": "medium",
+      "prompt_uz": "A: foydalilik 4, soddalik 2. B: foydalilik 3, soddalik 5. Baho = 2 × foydalilik + soddalik. B bahosi A dan nechaga katta?",
+      "options": [],
+      "answer_key": {
+        "value": "1"
+      },
+      "solution_steps_uz": [
+        "A = 2 × 4 + 2 = 10.",
+        "B = 2 × 3 + 5 = 11; farq 1."
+      ],
+      "common_error_uz": "Jami ball o‘rniga so‘ralgan farqni qaytaring.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "6/design-alternatives/postcheck/4"
+      }
+    },
+    {
+      "key": "design-prototype-practice-1",
+      "skill_key": "design-prototype",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "Sinov maqsadi: vazifa qo‘shish tushunarliligini bilish. Qaysi topshiriq mos?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Men aytgan barcha tugmalarni bosib chiqing",
+          "feedback_uz": "Ko‘rsatma mustaqil topish qiyinligini yashiradi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Faqat ekran rangini ayting",
+          "feedback_uz": "Qo‘shish oqimi tekshirilmaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Ertangi topshirig‘ingizni ro‘yxatga kiriting",
+          "feedback_uz": "Bu haqiqiy foydalanuvchi ssenariysini bajaradi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "Vazifa maqsadni bajarishga yo‘naltiriladi.",
+        "Bosish ketma-ketligini oldindan ko‘rsatmasdan kuzating."
+      ],
+      "common_error_uz": "Mustaqil foydalanish sinovini yo‘riqnoma bajarishga aylantirmang.",
+      "hint_uz": "Sinov foydalanuvchi o‘zi nima topishini ko‘rsatsin.",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "6/design-prototype/practice/1"
+      }
+    },
+    {
+      "key": "design-prototype-practice-2",
+      "skill_key": "design-prototype",
+      "purpose": "practice",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "Bitta foydalanuvchi tugmani topmadi. Qaysi xulosa ehtiyotkor va foydali?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Foydalanuvchini ayblab sinovni tugatish",
+          "feedback_uz": "Bu dizaynni yaxshilashga dalilni ishlatmaydi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Tugma topilishida muammo bo‘lishi mumkin; o‘zgartirib qayta tekshirish kerak",
+          "feedback_uz": "Kuzatuv muammoni ko‘rsatadi, umumiy hukm bermaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Hech kim bu ilovadan foydalana olmaydi",
+          "feedback_uz": "Bitta kuzatuv bunday umumiy hukmni bermaydi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "Muammo aniq ssenariyda kuzatildi.",
+        "Taxminni kichik o‘zgarish va qayta sinov bilan tekshiring."
+      ],
+      "common_error_uz": "Kichik kuzatuvdan barcha foydalanuvchiga hukm chiqarmang.",
+      "hint_uz": "Kuzatuv va umumlashtirish orasini ajrating.",
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "6/design-prototype/practice/2"
+      }
+    },
+    {
+      "key": "design-prototype-precheck",
+      "skill_key": "design-prototype",
+      "purpose": "precheck",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "Qog‘oz prototipi nimani yaxshi tekshiradi?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Ekranlar ketma-ketligi va yozuvlarning tushunarliligini",
+          "feedback_uz": "Buning uchun haqiqiy server shart emas."
+        },
+        {
+          "id": "b",
+          "text_uz": "Serverning aniq sekunddagi tezligini",
+          "feedback_uz": "Qog‘ozda server ishlamaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Ma’lumotlar bazasi parallel tranzaksiyalarini",
+          "feedback_uz": "Bular ishlaydigan tizim sinovini talab qiladi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "a"
+      },
+      "solution_steps_uz": [
+        "Prototipning tekshira oladigan qatlamini belgilang.",
+        "Qog‘oz ekranlar oqim va matnni sinaydi."
+      ],
+      "common_error_uz": "Prototip turidan tashqaridagi xususiyatni isbotlangan demang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "6/design-prototype/precheck/3"
+      }
+    },
+    {
+      "key": "design-prototype-postcheck",
+      "skill_key": "design-prototype",
+      "purpose": "postcheck",
+      "format": "single",
+      "difficulty": "medium",
+      "prompt_uz": "Tugma yorlig‘i o‘zgartirildi. Yaxshilanishni qanday tekshirish kerak?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Faqat muallifga chiroyli ko‘rinishi yetarli",
+          "feedback_uz": "Bu foydalanuvchining tushunishini tekshirmaydi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Barcha boshqa funksiyani o‘chirib tashlash",
+          "feedback_uz": "Bu faqat yorliq ta’sirini ajratmaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Bir xil vazifani qayta berib topish va xatolarni kuzatish",
+          "feedback_uz": "Oldingi muammo bilan bog‘langan dalil olinadi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "Bir muammodagi o‘zgarishni tekshiring.",
+        "Shu ssenariyda yangi kuzatuv bilan solishtiring."
+      ],
+      "common_error_uz": "O‘zgartirishning o‘zi foyda isboti emas.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster2",
+        "origin": "authored",
+        "locator": "6/design-prototype/postcheck/4"
+      }
+    }
+  ],
+  "diagnostic_links": [],
+  "blueprint": {
+    "precheck_order": [
+      "design-needs-precheck",
+      "design-functions-precheck",
+      "design-states-precheck",
+      "design-alternatives-precheck",
+      "design-prototype-precheck"
+    ],
+    "practice_order": [
+      "design-needs-practice-1",
+      "design-functions-practice-1",
+      "design-states-practice-1",
+      "design-alternatives-practice-1",
+      "design-prototype-practice-1",
+      "design-needs-practice-2",
+      "design-functions-practice-2",
+      "design-states-practice-2",
+      "design-alternatives-practice-2",
+      "design-prototype-practice-2"
+    ],
+    "postcheck_order": [
+      "design-needs-postcheck",
+      "design-functions-postcheck",
+      "design-states-postcheck",
+      "design-alternatives-postcheck",
+      "design-prototype-postcheck"
+    ],
+    "matched_pairs": [
+      {
+        "skill_key": "design-needs",
+        "difficulty": "medium",
+        "precheck_key": "design-needs-precheck",
+        "postcheck_key": "design-needs-postcheck"
+      },
+      {
+        "skill_key": "design-functions",
+        "difficulty": "medium",
+        "precheck_key": "design-functions-precheck",
+        "postcheck_key": "design-functions-postcheck"
+      },
+      {
+        "skill_key": "design-states",
+        "difficulty": "medium",
+        "precheck_key": "design-states-precheck",
+        "postcheck_key": "design-states-postcheck"
+      },
+      {
+        "skill_key": "design-alternatives",
+        "difficulty": "medium",
+        "precheck_key": "design-alternatives-precheck",
+        "postcheck_key": "design-alternatives-postcheck"
+      },
+      {
+        "skill_key": "design-prototype",
+        "difficulty": "medium",
+        "precheck_key": "design-prototype-precheck",
+        "postcheck_key": "design-prototype-postcheck"
+      }
+    ],
+    "unseen_postcheck_sets": 1,
+    "comparison_note_uz": "Ko‘nikma va tahririy qiyinlik bo‘yicha juftlangan; statistik tenglashtirish va umumiy qobiliyat o‘sishi da’vosi yo‘q.",
+    "exhaustion_note_uz": "Bitta mustaqil yakuniy tekshiruv to‘plami bor. Yangi bank bo‘lmasa qayta o‘sish o‘lchovi olinmaydi."
+  },
+  "projects": [
+    {
+      "key": "project-study-planner",
+      "assessment": "self_review",
+      "title_uz": "Miniloyiha: internetsiz o‘quv rejalashtirgichi",
+      "brief_uz": "Talaba vazifani nomi va muddati bilan qo‘shsin, bajarilganini belgilasin va yaqin muddatlarni topsin. Asosiy ssenariy internetsiz ishlasin. Qog‘oz prototip yoki kichik ilova tayyorlang.",
+      "constraints_uz": [
+        "Vazifa nomi bo‘sh bo‘lmasin; shaxsiy maxfiy ma’lumotlar so‘ralmasin.",
+        "Xato kirishda yozilgan matn saqlansin; tasdiqlanmagan saqlash muvaffaqiyat deb ko‘rsatilmasin.",
+        "Qog‘oz prototip saqlash tezligini isbotlamaydi; ishlaydigan ilovada qayta ochish bilan mahalliy saqlash tekshirilsin."
+      ],
+      "steps_uz": [
+        "Avval vazifani kiritish → tekshirish → saqlash → ko‘rsatish oqimining blok-sxemasini tuzing.",
+        "Ro‘yxat, taqvim va ustuvorlik kartalari variantlarini yozing; ehtiyoj va internetsiz ishlash bo‘yicha solishtiring.",
+        "Tanlangan variantning bo‘sh, kiritish, saqlash, xato va muvaffaqiyat ekranlarini chizing.",
+        "Tayyor oqimni sinang: qo‘shish, bajarilganini belgilash, bo‘sh nomni rad etish.",
+        "Bitta foydalanuvchi kuzatuvini yozing, bitta o‘zgarish qiling va shu vazifani qayta sinang."
+      ],
+      "deliverables_uz": [
+        "Maqsad va kirish/chiqish shartnomasi; uch variantning qisqa taqqoslashi.",
+        "Blok-sxema, ekranlar yoki ishlaydigan kichik namuna.",
+        "Test jadvali: kirish, kutilgan natija, kuzatilgan natija; o‘zgartirishdan oldin/keyin qayd."
+      ],
+      "rubric_uz": [
+        "Ehtiyoj bilan funksiya aloqasi tushuntirilganmi?",
+        "Asosiy oqim va xato holati yo‘qotishsiz ishlaydimi yoki prototipda aniq ko‘rsatilganmi?",
+        "Variant tanlovi mezonlar bilan asoslanganmi?",
+        "Chegaralar va bo‘sh kirish uchun kutilgan natija yozilganmi?",
+        "Kuzatuvga asoslangan o‘zgartirish va qayta sinov bormi?"
+      ]
+    },
+    {
+      "key": "project-queue-helper",
+      "assessment": "self_review",
+      "title_uz": "Miniloyiha: kutubxona navbat yordamchisi",
+      "brief_uz": "Kutubxona xizmatida raqamli navbat prototipini yarating. Yangi talaba navbat oxiriga qo‘shiladi, chaqirish navbat boshidan oladi. Bo‘sh navbatdan chaqirish odam yaratmasin. Ismlar o‘rniga anonim navbat raqamlaridan foydalaning.",
+      "constraints_uz": [
+        "Birinchi kelgan birinchi chaqiriladi; ustuvorlik qoidasi bu modelda yo‘q.",
+        "Navbat bo‘shligi bilan texnik xatoni farqlang.",
+        "Har bir tasdiqlangan qo‘shish aynan bitta raqam yaratsin; bosilishni takrorlash tasdiqlanmagan natijani o‘chirib yubormasin."
+      ],
+      "steps_uz": [
+        "Qo‘shish, chaqirish va ro‘yxatni ko‘rsatish qismlarini ajrating.",
+        "Ketma-ket raqamli ro‘yxat, navbat kartalari va faqat keyingi raqam oynasi variantlarini taqqoslang.",
+        "Kichik psevdokod yozing: bo‘sh bo‘lsa EMPTY, aks holda boshini qaytarib olib tashlash.",
+        "Ikki kishi qo‘shish, birini chaqirish, qolganini ko‘rish va bo‘sh navbat holatlarini tekshiring.",
+        "Ekran yorliqlarini foydalanuvchi bilan tekshirib, bitta o‘zgarishni asoslang."
+      ],
+      "deliverables_uz": [
+        "Navbat qoidasi, holatlar diagrammasi va ikki xil interfeysning kamida qisqa eskizi.",
+        "Har amal oldidan/keyin navbatni ko‘rsatuvchi kuzatish jadvali.",
+        "Yechim tanlovi, test natijalari va keyingi yaxshilash qaydi."
+      ],
+      "rubric_uz": [
+        "Navbat tartibi barcha ko‘rsatilgan amallarda saqlanganmi?",
+        "Bo‘sh navbat foydalanuvchiga tushunarli ko‘rsatilganmi?",
+        "Kamida ikki yechim bir xil mezon bilan solishtirilganmi?",
+        "Testda kirish va kutilgan holat alohida yozilganmi?",
+        "Shaxsiy ma’lumotlarsiz ehtiyoj qondirilganmi?"
+      ]
+    }
+  ]
+}

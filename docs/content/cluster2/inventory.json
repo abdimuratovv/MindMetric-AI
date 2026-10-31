@@ -1,0 +1,94 @@
+{
+  "cluster": 2,
+  "status": "draft",
+  "languages": [
+    "uz",
+    "ru"
+  ],
+  "modules": [
+    {
+      "key": "algorithmization-flowcharts",
+      "topic_number": "2.1",
+      "title_uz": "Algoritmizatsiya va blok-sxemalar",
+      "title_ru": "Алгоритмизация и блок-схемы",
+      "skills": 5,
+      "lessons": 5,
+      "exercises": 20,
+      "practice": 10,
+      "precheck": 5,
+      "postcheck": 5,
+      "projects": 0,
+      "source_hash": "4bb0616046be5372e2f93f491379f3a978c5921308d01036800830cb0fbcf639"
+    },
+    {
+      "key": "conditions-comparisons",
+      "topic_number": "2.2",
+      "title_uz": "Shart va taqqoslash operatorlari",
+      "title_ru": "Условия и операторы сравнения",
+      "skills": 5,
+      "lessons": 5,
+      "exercises": 20,
+      "practice": 10,
+      "precheck": 5,
+      "postcheck": 5,
+      "projects": 0,
+      "source_hash": "175d65835b1e1b86c321f475157e09b2f18baee7b7916afc1e624cf3d968b410"
+    },
+    {
+      "key": "loops-recursion",
+      "topic_number": "2.3",
+      "title_uz": "Takrorlash operatorlari va rekursiya",
+      "title_ru": "Циклы и рекурсия",
+      "skills": 5,
+      "lessons": 5,
+      "exercises": 20,
+      "practice": 10,
+      "precheck": 5,
+      "postcheck": 5,
+      "projects": 0,
+      "source_hash": "b296dda9fd98640f66bfa23ce3eb92aac8f9943af3d5a948b34227ef8d4ac3e6"
+    },
+    {
+      "key": "solutions-optimization",
+      "topic_number": "2.4",
+      "title_uz": "Ko‘p variantli yechimlar va optimizatsiya",
+      "title_ru": "Варианты решений и оптимизация",
+      "skills": 5,
+      "lessons": 5,
+      "exercises": 20,
+      "practice": 10,
+      "precheck": 5,
+      "postcheck": 5,
+      "projects": 0,
+      "source_hash": "f3aecdd4b5e10dd7a199b15eb2343e352e196cae170cc1b1377b486a3db63220"
+    },
+    {
+      "key": "real-world-problem-solving",
+      "topic_number": "2.5",
+      "title_uz": "Hayotiy muammolarni algoritmga aylantirish",
+      "title_ru": "Преобразование жизненных задач в алгоритмы",
+      "skills": 5,
+      "lessons": 5,
+      "exercises": 20,
+      "practice": 10,
+      "precheck": 5,
+      "postcheck": 5,
+      "projects": 0,
+      "source_hash": "92ebffac071fbc5c2734df2145f60e3914c15db26d93b1e1d5e1f8de1b75dca3"
+    },
+    {
+      "key": "creative-mini-apps",
+      "topic_number": "2.6",
+      "title_uz": "Kreativ dasturlash va kichik ilova dizayni",
+      "title_ru": "Креативное программирование и проектирование мини-приложений",
+      "skills": 5,
+      "lessons": 5,
+      "exercises": 20,
+      "practice": 10,
+      "precheck": 5,
+      "postcheck": 5,
+      "projects": 2,
+      "source_hash": "6b2dc4ba6225f9001889f2d2c0d7b0caf3f21cb220d83c61b168219775c97a64"
+    }
+  ]
+}
