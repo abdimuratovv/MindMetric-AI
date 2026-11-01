@@ -12,7 +12,7 @@ class DevelopmentModule(models.Model):
 
     key = models.SlugField(max_length=64)
     version = models.PositiveIntegerField()
-    cluster = models.PositiveSmallIntegerField(choices=[(1, 'Academic'), (2, 'Algorithmic/practical')], default=1)
+    cluster = models.PositiveSmallIntegerField(choices=[(1, 'Academic'), (2, 'Algorithmic/practical'), (3, 'Personal/team skills')], default=1)
     order = models.PositiveSmallIntegerField(default=0)
     title_uz = models.CharField(max_length=200)
     title_ru = models.CharField(max_length=200, blank=True, default='')
@@ -31,7 +31,7 @@ class DevelopmentModule(models.Model):
         constraints = [
             models.UniqueConstraint(fields=['key', 'version'], name='dev_module_version_unique'),
             models.CheckConstraint(check=models.Q(version__gte=1), name='dev_module_positive_version'),
-            models.CheckConstraint(check=models.Q(cluster__in=[1, 2]), name='dev_module_valid_cluster'),
+            models.CheckConstraint(check=models.Q(cluster__in=[1, 2, 3]), name='dev_module_valid_cluster'),
         ]
 
     def __str__(self):

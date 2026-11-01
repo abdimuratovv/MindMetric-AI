@@ -101,10 +101,17 @@
 .dev-focus-list strong { display: block; font-size: 13px; }
 .dev-focus-list .dev-link { margin-right: 18px; }
 .dev-lesson-nav small { display: block; color: #2e5570; font-size: 10px; font-weight: 800; }
-.dev-cluster-selector { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-bottom: 20px; }
+.dev-cluster-selector { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 14px; margin-bottom: 20px; }
 .dev-cluster-selector button { display: flex; align-items: center; gap: 18px; min-width: 0; padding: 20px 24px; text-align: left; border: 1px solid #dce5e9; border-radius: 14px; background: rgba(255,255,255,.65); color: #556269; font-family: Manrope, sans-serif; cursor: pointer; }
 .dev-cluster-selector button[aria-pressed="true"] { background: #e5f0f5; border-color: #3e7ea6; color: #1f374b; box-shadow: inset 0 3px #3e7ea6; }
 .dev-cluster-selector button[data-cluster="2"][aria-pressed="true"] { background: #e8f1ed; border-color: #51806b; color: #24443e; box-shadow: inset 0 3px #51806b; }
+.dev-cluster-selector button[data-cluster="3"][aria-pressed="true"] { background: #f1edf6; border-color: #806098; color: #4d355e; box-shadow: inset 0 3px #806098; }
+#development-cluster-topics[data-cluster="3"] .dev-intro { background: #493957; }
+.mm-dev[data-cluster="3"] .dev-question { font-family: Manrope, sans-serif; font-size: clamp(18px, 2.3vw, 24px); }
+.dev-code { max-width: 100%; overflow-x: auto; white-space: pre; background: #182a34; color: #eef5f7; padding: 18px; border-radius: 10px; font: 14px/1.7 Consolas, 'Courier New', monospace; text-align: left; }
+.dev-content-text { white-space: pre-wrap; overflow-wrap: anywhere; }
+.dev-study-files { margin-top: 24px; }
+.dev-study-files button { max-width: 100%; overflow-wrap: anywhere; }
 .dev-cluster-number { font: 500 26px Montserrat, sans-serif; color: #3e7ea6; flex-shrink: 0; }
 .dev-cluster-selector strong { display: block; font-size: 14px; line-height: 1.6; overflow-wrap: anywhere; }
 .dev-cluster-selector small { display: block; margin-top: 5px; font-size: 11px; }

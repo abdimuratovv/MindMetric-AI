@@ -9,6 +9,10 @@ CLUSTERS = {
         'uz': ('Algoritmik-amaliy blok', 'Algoritmlar, shartlar, sikllar va amaliy yechimlar.'),
         'ru': ('Алгоритмико-практический блок', 'Алгоритмы, условия, циклы и практические решения.'),
     },
+    3: {
+        'uz': ('Shaxsiy-psixologik blok', 'Debugging, jamoaviy ish, code review va hujjatdan o‘rganish.'),
+        'ru': ('Личностно-психологический блок', 'Отладка, командная работа, ревью кода и обучение по документации.'),
+    },
 }
 
 

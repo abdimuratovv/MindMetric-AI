@@ -1,0 +1,968 @@
+{
+  "sources": [
+    {
+      "id": "source-curriculum",
+      "filename": "Oqitish moduli.docx",
+      "sha256": "c11956549286d3f6c99ae327b0dc0ee6dcdc4714e4e069d385901f0f8d58a473"
+    },
+    {
+      "id": "authored-cluster3",
+      "filename": "authoring-manifest.json",
+      "sha256": "9111d5eeb6c31ef804e2e2408e33f31572c9c575d393f5192a0372cc4e6aab6c"
+    }
+  ],
+  "module": {
+    "key": "documentation-learning",
+    "version": 1,
+    "cluster": 3,
+    "order": 4,
+    "topic_number": "3.4",
+    "title_uz": "Hujjatlar asosida yangi bilimni o‘zlashtirish",
+    "title_ru": "Освоение нового по документации",
+    "status": "draft",
+    "content_language": "uz",
+    "review_status": "internally_checked",
+    "indicator_keys": [
+      "learning_speed"
+    ],
+    "diagnostic_coverage_note_uz": "Aniq diagnostika savoli xaritasi tasdiqlanmagan; boshlang‘ich tekshiruvdan foydalaning."
+  },
+  "skills": [
+    {
+      "key": "learn-locate",
+      "title_uz": "Savol va kerakli bo‘limni topish",
+      "prerequisite_keys": [],
+      "indicator_keys": [
+        "learning_speed"
+      ]
+    },
+    {
+      "key": "learn-signature",
+      "title_uz": "Imzo, parametr va natija",
+      "prerequisite_keys": [
+        "learn-locate"
+      ],
+      "indicator_keys": [
+        "learning_speed"
+      ]
+    },
+    {
+      "key": "learn-minimal",
+      "title_uz": "Minimal ishlaydigan misol",
+      "prerequisite_keys": [
+        "learn-signature"
+      ],
+      "indicator_keys": [
+        "learning_speed"
+      ]
+    },
+    {
+      "key": "learn-limits",
+      "title_uz": "Cheklov, xato va versiya",
+      "prerequisite_keys": [
+        "learn-minimal"
+      ],
+      "indicator_keys": [
+        "learning_speed"
+      ]
+    },
+    {
+      "key": "learn-transfer",
+      "title_uz": "Yangi vaziyatga ko‘chirish va bilim qaydi",
+      "prerequisite_keys": [
+        "learn-limits"
+      ],
+      "indicator_keys": [
+        "learning_speed"
+      ]
+    }
+  ],
+  "lessons": [
+    {
+      "key": "learn-locate-lesson",
+      "skill_key": "learn-locate",
+      "title_uz": "Savol va kerakli bo‘limni topish",
+      "theory_uz": [
+        "Natija: O‘rganish maqsadini savolga aylantirib, mos versiyadagi rasmiy bo‘limni topasiz.",
+        "Avval kichik amaliy savol yozing: “ro‘yxatdan ko‘pi bilan 3 elementni qanday olaman?” Keyin vosita nomi, versiyasi va muhitini belgilang. Butun qo‘llanmani boshidan oxirigacha o‘qish har vazifa uchun shart emas.",
+        "Rasmiy hujjatning qidiruvi yoki mundarijasidan imzo va misolni toping. Natija turi, cheklovlar va versiya eslatmasini ham o‘qing. Tasodifiy forum parchasi ayni versiyaga tegishli bo‘lmasligi mumkin.",
+        "Bu moduldagi StudyTools 1.0 — mualliflik o‘quv API, o‘rnatiladigan ommaviy paket emas. Uning hujjati topshiriqlarda beriladi; kodni mahalliy laboratoriya faylidan import qilish mumkin. O‘qish tezligi shaxsiy qobiliyat tashxisi sifatida baholanmaydi."
+      ],
+      "worked_example": {
+        "prompt_uz": "Vazifa: take funksiyasining limit parametrini topish. O‘quvchi StudyTools 1.0 ishlatyapti; qidiruv StudyTools 2.0 sahifasini ochdi. Nima qilinadi?",
+        "solution_steps_uz": [
+          "Ishlatilayotgan versiyani qayd eting.",
+          "1.0 hujjatiga o‘ting.",
+          "Imzo, cheklov va misolni shu versiyadan oling."
+        ],
+        "answer_uz": "Versiya mosligini tekshirib o‘qish."
+      }
+    },
+    {
+      "key": "learn-signature-lesson",
+      "skill_key": "learn-signature",
+      "title_uz": "Imzo, parametr va natija",
+      "theory_uz": [
+        "Natija: Hujjatdan sukut qiymati, parametr va qaytish turini ajratasiz.",
+        "StudyTools 1.0 hujjati: take(items, limit=2) ro‘yxatning dastlabki ko‘pi bilan limit elementidan yangi ro‘yxat qaytaradi. limit manfiy bo‘lmagan butun son; items o‘zgarmaydi. Sukut qiymati parametr berilmaganda olinadi.",
+        "Natija turi va soni boshqa tushunchalar. take ro‘yxat qaytaradi; len(take(...)) uning uzunligi. Kirish qisqa bo‘lsa mavjud elementlar qaytadi; take bo‘sh joylarni sun’iy to‘ldirmaydi.",
+        "Nomli parametr limit=3 ma’noni ochiq qiladi. Imzoda bo‘lmagan nomni o‘ylab topmang. Alohida ko‘rsatilmagan yon ta’sirni taxmin qilish o‘rniga “items o‘zgarmaydi” kabi aniq shartni tekshiring."
+      ],
+      "worked_example": {
+        "prompt_uz": "StudyTools 1.0: take(items, limit=2) dastlabki elementlardan yangi ro‘yxat qaytaradi. take([8, 4, 9]) natijasi?",
+        "solution_steps_uz": [
+          "limit berilmagan, 2 olinadi.",
+          "Birinchi ikki element 8 va 4.",
+          "Natija yangi [8, 4]."
+        ],
+        "answer_uz": "[8, 4]"
+      }
+    },
+    {
+      "key": "learn-minimal-lesson",
+      "skill_key": "learn-minimal",
+      "title_uz": "Minimal ishlaydigan misol",
+      "theory_uz": [
+        "Natija: Bitta API xatti-harakatini kichik test bilan tekshirasiz.",
+        "Eng kichik tajriba bitta savolni tekshiradi: aniq kirish, oldindan yozilgan kutilgan natija, bitta chaqiruv va taqqoslash. Butun ilovaga qo‘shishdan oldin shu tajriba tushunmovchilikni kamaytiradi.",
+        "StudyTools 1.0: find(items, target, default=None) birinchi mos elementning noldan boshlanuvchi indeksini qaytaradi; topilmasa default. find([6, 9], 6) natijasi 0. Indeksning 0 bo‘lishi topilmadi degani emas.",
+        "Mahalliy lab_studytools.py yonida from lab_studytools import find yozib tajriba qiling. Olingan javobni talab bilan solishtiring; xato bo‘lsa birdan butun loyihani qayta yozmang."
+      ],
+      "worked_example": {
+        "prompt_uz": "Hujjat: find birinchi moslikning noldan indeksini, topilmasa None qaytaradi. find([4, 7, 4], 4) uchun kutilgan natija?",
+        "solution_steps_uz": [
+          "Birinchi 4 ro‘yxat boshida.",
+          "Bosh indeks 0.",
+          "Ikkinchi moslik emas, birinchi olinadi."
+        ],
+        "answer_uz": "0"
+      }
+    },
+    {
+      "key": "learn-limits-lesson",
+      "skill_key": "learn-limits",
+      "title_uz": "Cheklov, xato va versiya",
+      "theory_uz": [
+        "Natija: Hujjatdagi cheklov va versiya farqiga mos chaqiruvni tanlaysiz.",
+        "StudyTools 1.0: clip(x, low=0, high=10) sonni yopiq [low, high] oraliqda ushlab qaytaradi: past bo‘lsa low, yuqori bo‘lsa high, ichida bo‘lsa x. low > high bo‘lsa ValueError. Bu x ni joyida o‘zgartirmaydi.",
+        "take uchun manfiy limit ValueError, butun bo‘lmagan yoki bool limit TypeError beradi. Bunday cheklovlar nomdan bilinmaydi, hujjatdan o‘qiladi. Xatoni tutish uni sababini tuzatish bilan bir xil emas.",
+        "Faqat versiya taqqoslash mashqi uchun StudyTools 2.0 imzosi take(items, *, count=2) deb belgilangan: count faqat nom bilan beriladi. Bu simulyatsiya, 1.0 lokal faylda mavjud emas. Eski limit nomini yangi imzoga aralashtirmang."
+      ],
+      "worked_example": {
+        "prompt_uz": "StudyTools 1.0: clip(x, low, high), low > high bo‘lsa ValueError. clip(5, low=9, high=2) ni ko‘rib chiqing.",
+        "solution_steps_uz": [
+          "Chegaralarni solishtiring: 9 > 2.",
+          "Oraliq shartnomaga zid.",
+          "Natija son emas, ValueError."
+        ],
+        "answer_uz": "Avval noto‘g‘ri chegaralar sababini tuzating."
+      }
+    },
+    {
+      "key": "learn-transfer-lesson",
+      "skill_key": "learn-transfer",
+      "title_uz": "Yangi vaziyatga ko‘chirish va bilim qaydi",
+      "theory_uz": [
+        "Natija: O‘qigan qoidani yangi kirishga qo‘llab, qayta foydalanish uchun dalilli qayd yozasiz.",
+        "Ko‘chirish — misoldagi raqamlarni yodlash emas, qoida saqlangan yangi vaziyatni yechish. take uchun “ko‘pi bilan” degani ro‘yxat qisqa bo‘lsa uning bor elementlarini olishdir. Yangi uzunlik va limitda tekshiring.",
+        "Bilim qaydi qisqa bo‘lsin: savol, vosita/versiya, imzo, bitta ishlagan misol, bitta chegara yoki xato va manba. “Hammasi tushunarli” degani qayta foydalanishga yetmaydi.",
+        "Avval javobning aniqligini tekshiring, keyin vaqtni ixtiyoriy qayd eting. Qiyin bo‘lsa savolni kichraytiring, misol va cheklovni qayta o‘qing. Bir mashg‘ulot vaqtidan odamning umumiy o‘rganish tezligi haqida hukm chiqarmang."
+      ],
+      "worked_example": {
+        "prompt_uz": "Hujjat: take(items, limit) dastlabki ko‘pi bilan limit elementni yangi ro‘yxatga oladi. 2 kitobli katalogdan 5 tavsiya so‘raldi. Yechim va qayd?",
+        "solution_steps_uz": [
+          "5 limit, majburiy uzunlik emas.",
+          "Mavjud 2 kitob qaytadi.",
+          "Qaydga versiya, chaqiruv va qisqa kirish chegarasini yozing."
+        ],
+        "answer_uz": "2 tavsiya; qoida yangi vaziyatga qo‘llandi."
+      }
+    }
+  ],
+  "exercises": [
+    {
+      "key": "learn-locate-practice-1",
+      "skill_key": "learn-locate",
+      "purpose": "practice",
+      "format": "single",
+      "prompt_uz": "StudyTools 1.0 da take limitini bilish kerak. Eng yaxshi boshlang‘ich manba?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Versiyasiz tasodifiy kod rasmi",
+          "feedback_uz": "Moslik va cheklovlar noma’lum."
+        },
+        {
+          "id": "b",
+          "text_uz": "Funksiya nomidan javobni taxmin qilish",
+          "feedback_uz": "Nom parametr semantikasini to‘liq bermaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "1.0 uchun berilgan API ma’lumotnomasi",
+          "feedback_uz": "Ayni versiya shartnomasi mavjud."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "Versiyani moslang.",
+        "Imzoni rasmiy o‘quv ma’lumotnomasidan oling."
+      ],
+      "common_error_uz": "Qidiruvdagi birinchi natija doim mos emas.",
+      "hint_uz": "Qaysi versiya ishlatyapsiz?",
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.4/learn-locate-practice-1"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "learn-locate-practice-2",
+      "skill_key": "learn-locate",
+      "purpose": "practice",
+      "format": "single",
+      "prompt_uz": "“Kutubxonani o‘rganaman” maqsadini qaysi savol aniqlashtiradi?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Barcha funksiyalar nomini bir yo‘la yodlash mumkinmi?",
+          "feedback_uz": "Bu aniq vazifada qo‘llash natijasini belgilamaydi."
+        },
+        {
+          "id": "b",
+          "text_uz": "take yordamida ro‘yxatdan ko‘pi bilan 3 elementni qanday olaman?",
+          "feedback_uz": "Amal va tekshiriladigan natija aniq."
+        },
+        {
+          "id": "c",
+          "text_uz": "Hammasini yodlab olamanmi?",
+          "feedback_uz": "Amaliy vazifa va natija yo‘q."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "Vazifa kirishi va natijasini aniqlang.",
+        "Savolni bitta kichik amalga qisqartiring."
+      ],
+      "common_error_uz": "Yodlashni qo‘llay olish bilan tenglashtirmang.",
+      "hint_uz": "Nimani ishlatib ko‘rmoqchisiz?",
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.4/learn-locate-practice-2"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "learn-locate-precheck",
+      "skill_key": "learn-locate",
+      "purpose": "precheck",
+      "format": "single",
+      "prompt_uz": "Misol topildi, ammo xato holatlari yozilmagan parchada. Keyin nimani qidirasiz?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "To‘liq ma’lumotnomadagi cheklov, istisno va versiya qaydi",
+          "feedback_uz": "Bitta misol barcha kirishni qamramaydi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Xato hech qachon bo‘lmaydi deb qabul qilish",
+          "feedback_uz": "Parchada yo‘qlik kafolat emas."
+        },
+        {
+          "id": "c",
+          "text_uz": "Faqat yana bitta muvaffaqiyatli misolni",
+          "feedback_uz": "U foydali, lekin cheklov va xato holatlarini bermasligi mumkin."
+        }
+      ],
+      "answer_key": {
+        "option_id": "a"
+      },
+      "solution_steps_uz": [
+        "Misolni to‘liq shartnoma bilan to‘ldiring.",
+        "Cheklovni yozib oling."
+      ],
+      "common_error_uz": "Misolni to‘liq spetsifikatsiya deb olmang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.4/learn-locate-precheck"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "learn-locate-postcheck",
+      "skill_key": "learn-locate",
+      "purpose": "postcheck",
+      "format": "single",
+      "prompt_uz": "Lokal hujjat 1.0, internet parchasi 2.0. Natijalar zid. To‘g‘ri yo‘l?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Ikki versiya imzosini aralashtirish",
+          "feedback_uz": "Bunday API mavjud bo‘lmasligi mumkin."
+        },
+        {
+          "id": "b",
+          "text_uz": "Eng yangi sana har doim mos deyish",
+          "feedback_uz": "Muhit eski versiyada qolishi mumkin."
+        },
+        {
+          "id": "c",
+          "text_uz": "Amaldagi versiyani aniqlab, ayni versiya shartnomasini tekshirish",
+          "feedback_uz": "Ziddiyatning versiya sababi tekshiriladi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "Versiyani taxmin qilmang.",
+        "Muhit va hujjatni moslang."
+      ],
+      "common_error_uz": "Yangiroq hujjat eski kodga avtomatik mos emas.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.4/learn-locate-postcheck"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "learn-signature-practice-1",
+      "skill_key": "learn-signature",
+      "purpose": "practice",
+      "format": "numeric",
+      "prompt_uz": "StudyTools 1.0: take(items, limit=2) dastlabki ko‘pi bilan limit elementni oladi. len(take([5, 6, 7, 8])) nechaga teng?",
+      "options": [],
+      "answer_key": {
+        "value": "2"
+      },
+      "solution_steps_uz": [
+        "Sukut limit 2.",
+        "Natija uzunligi 2."
+      ],
+      "common_error_uz": "Kirish uzunligini natija uzunligi deb olmang.",
+      "hint_uz": "Parametr berilmaganda imzodagi qiymat olinadi.",
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.4/learn-signature-practice-1"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "learn-signature-practice-2",
+      "skill_key": "learn-signature",
+      "purpose": "practice",
+      "format": "single",
+      "prompt_uz": "Hujjat: take(items, limit=2), kirish o‘zgarmaydi. xs=[3, 8, 1]; take(xs, limit=1)dan keyin xs?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "[3, 8, 1]",
+          "feedback_uz": "Yangi ro‘yxat qaytadi, kirish saqlanadi."
+        },
+        {
+          "id": "b",
+          "text_uz": "[3]",
+          "feedback_uz": "Bu qaytgan natija, xsning o‘zi emas."
+        },
+        {
+          "id": "c",
+          "text_uz": "[]",
+          "feedback_uz": "Hujjat elementlarni o‘chirishni aytmagan."
+        }
+      ],
+      "answer_key": {
+        "option_id": "a"
+      },
+      "solution_steps_uz": [
+        "Qaytgan natija va kirishni ajrating.",
+        "xs o‘zgarmaydi."
+      ],
+      "common_error_uz": "Natija olish doim kirishni o‘zgartirish emas.",
+      "hint_uz": "Hujjat yon ta’sir haqida nima deydi?",
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.4/learn-signature-practice-2"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "learn-signature-precheck",
+      "skill_key": "learn-signature",
+      "purpose": "precheck",
+      "format": "numeric",
+      "prompt_uz": "StudyTools 1.0: take(items, limit=2) mavjud dastlabki elementlarni qaytaradi, to‘ldirmaydi. len(take([9], limit=4))?",
+      "options": [],
+      "answer_key": {
+        "value": "1"
+      },
+      "solution_steps_uz": [
+        "Kirishda bitta element bor.",
+        "Ko‘pi bilan 4, lekin mavjud 1 qaytadi."
+      ],
+      "common_error_uz": "Limitni majburiy natija uzunligi deb bilmang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.4/learn-signature-precheck"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "learn-signature-postcheck",
+      "skill_key": "learn-signature",
+      "purpose": "postcheck",
+      "format": "single",
+      "prompt_uz": "Hujjat: take(items, limit=2) yangi ro‘yxat qaytaradi. Qaysi chaqiruv 3 tagacha oladi?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "take(xs)",
+          "feedback_uz": "Sukut qiymati 2."
+        },
+        {
+          "id": "b",
+          "text_uz": "take(xs, limit=3)",
+          "feedback_uz": "Imzodagi haqiqiy parametr berildi."
+        },
+        {
+          "id": "c",
+          "text_uz": "take(xs, size=3)",
+          "feedback_uz": "size bu imzoda yo‘q."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "Imzodagi limit nomini oling.",
+        "Unga 3 bering."
+      ],
+      "common_error_uz": "Parametr nomini taxmin qilmang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.4/learn-signature-postcheck"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "learn-minimal-practice-1",
+      "skill_key": "learn-minimal",
+      "purpose": "practice",
+      "format": "numeric",
+      "prompt_uz": "StudyTools 1.0: find birinchi moslik indeksini noldan qaytaradi. find([2, 5, 8], 8) natijasi?",
+      "options": [],
+      "answer_key": {
+        "value": "2"
+      },
+      "solution_steps_uz": [
+        "Indekslar 0, 1, 2.",
+        "8 indeks 2 da."
+      ],
+      "common_error_uz": "Indeks bilan qiymatni almashtirmang.",
+      "hint_uz": "Birinchi element indeksi 0.",
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.4/learn-minimal-practice-1"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "learn-minimal-practice-2",
+      "skill_key": "learn-minimal",
+      "purpose": "practice",
+      "format": "single",
+      "prompt_uz": "find topilmasa None, topsa indeks qaytaradi. idx=0 bo‘lsa “topildi”ni qanday tekshiramiz?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "bool(idx)",
+          "feedback_uz": "bool(0) False, mavjud element yo‘q deb olinadi."
+        },
+        {
+          "id": "b",
+          "text_uz": "idx > 0",
+          "feedback_uz": "Birinchi element chiqarib tashlanadi."
+        },
+        {
+          "id": "c",
+          "text_uz": "idx is not None",
+          "feedback_uz": "0 ham mavjud indeks sifatida qabul qilinadi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "Topilmadi belgisi None.",
+        "0 ni undan ajrating."
+      ],
+      "common_error_uz": "Yolg‘on qiymat va topilmadi holati bir xil emas.",
+      "hint_uz": "Shartnomada topilmadi qanday ifodalangan?",
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.4/learn-minimal-practice-2"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "learn-minimal-precheck",
+      "skill_key": "learn-minimal",
+      "purpose": "precheck",
+      "format": "single",
+      "prompt_uz": "Yangi API ni birinchi marta sinashda eng foydali tajriba?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Hech natijani ko‘rmaslik",
+          "feedback_uz": "O‘rganish taxmini tekshirilmaydi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Kichik kirish, bitta chaqiruv, oldindan hisoblangan natija bilan tekshiruv",
+          "feedback_uz": "Qaysi xatti-harakat tekshirilgani aniq."
+        },
+        {
+          "id": "c",
+          "text_uz": "Darhol barcha modullarni almashtirish",
+          "feedback_uz": "Nomoslik sababini ajratish qiyin."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "Bitta savolni ajrating.",
+        "Natijani mustaqil taxmin bilan solishtiring."
+      ],
+      "common_error_uz": "Katta integratsiya birinchi tajriba uchun ortiqcha.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.4/learn-minimal-precheck"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "learn-minimal-postcheck",
+      "skill_key": "learn-minimal",
+      "purpose": "postcheck",
+      "format": "numeric",
+      "prompt_uz": "Hujjat: find(items, target, default=None) birinchi indeksni, topilmasa defaultni beradi. find([1, 3], 9, default=-1) natijasi?",
+      "options": [],
+      "answer_key": {
+        "value": "-1"
+      },
+      "solution_steps_uz": [
+        "9 ro‘yxatda yo‘q.",
+        "Aniq default -1 qaytadi."
+      ],
+      "common_error_uz": "Aniq berilgan default sukut None ni almashtiradi.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.4/learn-minimal-postcheck"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "learn-limits-practice-1",
+      "skill_key": "learn-limits",
+      "purpose": "practice",
+      "format": "numeric",
+      "prompt_uz": "StudyTools 1.0: clip past qiymatni low, yuqorini high, ichidagini o‘zini qaytaradi. clip(14, low=2, high=9)?",
+      "options": [],
+      "answer_key": {
+        "value": "9"
+      },
+      "solution_steps_uz": [
+        "14 yuqori chegara 9 dan katta.",
+        "Natija 9."
+      ],
+      "common_error_uz": "clip oraliqdan tashqari sonni o‘zgartirmay qaytarmaydi.",
+      "hint_uz": "Yuqori chegara qaysi?",
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.4/learn-limits-practice-1"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "learn-limits-practice-2",
+      "skill_key": "learn-limits",
+      "purpose": "practice",
+      "format": "single",
+      "prompt_uz": "Hujjat: take limit < 0 bo‘lsa ValueError. take([1, 2], limit=-2) natijasi?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Har doim []",
+          "feedback_uz": "Hujjat aynan istisno deydi."
+        },
+        {
+          "id": "b",
+          "text_uz": "ValueError",
+          "feedback_uz": "Berilgan limit shartnomaga zid."
+        },
+        {
+          "id": "c",
+          "text_uz": "Oxirgi 2 element",
+          "feedback_uz": "Python slice taxminini bu APIga ko‘chirmang."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "Cheklovni tekshiring.",
+        "-2 manfiy, ValueError."
+      ],
+      "common_error_uz": "O‘xshash API semantikasini taxmin qilmang.",
+      "hint_uz": "Istisno bo‘limini o‘qing.",
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.4/learn-limits-practice-2"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "learn-limits-precheck",
+      "skill_key": "learn-limits",
+      "purpose": "precheck",
+      "format": "single",
+      "prompt_uz": "Versiya taqqoslash simulyatsiyasi: 2.0 imzosi take(items, *, count=2). Qaysi chaqiruv mos?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "take(xs, count=3)",
+          "feedback_uz": "count nomi bilan berilgan."
+        },
+        {
+          "id": "b",
+          "text_uz": "take(xs, limit=3)",
+          "feedback_uz": "Bu eski 1.0 parametr nomi."
+        },
+        {
+          "id": "c",
+          "text_uz": "take(xs, 3)",
+          "feedback_uz": "* dan keyingi count faqat nomli."
+        }
+      ],
+      "answer_key": {
+        "option_id": "a"
+      },
+      "solution_steps_uz": [
+        "Imzodagi * countni nomli qiladi.",
+        "count=3 dan foydalaning."
+      ],
+      "common_error_uz": "Versiyalarni bir chaqiruvda aralashtirmang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.4/learn-limits-precheck"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "learn-limits-postcheck",
+      "skill_key": "learn-limits",
+      "purpose": "postcheck",
+      "format": "single",
+      "prompt_uz": "Hujjat: clip low > high bo‘lsa ValueError. low=8, high=3. Eng to‘g‘ri keyingi qadam?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Barcha istisnoni yutib 0 qaytarish",
+          "feedback_uz": "Noto‘g‘ri kirishni yashiradi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Hujjatni tekshirmasdan xatoni tasodifiy deb olish",
+          "feedback_uz": "Cheklov aniq buzilgan."
+        },
+        {
+          "id": "c",
+          "text_uz": "Talabga ko‘ra chegaralarni tekshirib, noto‘g‘ri tartib manbasini tuzatish",
+          "feedback_uz": "Sabab bartaraf etiladi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "8 > 3 shartnomani buzadi.",
+        "Talabga mos chegaralarni manbada belgilang."
+      ],
+      "common_error_uz": "Istisnoni yashirish o‘rganish xatosini tuzatmaydi.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.4/learn-limits-postcheck"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "learn-transfer-practice-1",
+      "skill_key": "learn-transfer",
+      "purpose": "practice",
+      "format": "single",
+      "prompt_uz": "Qayta ishlatishga eng foydali bilim qaydi?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Faqat o‘rganishga ketgan soniyalar",
+          "feedback_uz": "API ma’nosi yozilmagan."
+        },
+        {
+          "id": "b",
+          "text_uz": "StudyTools 1.0; take(items, limit=2); qisqa kirish to‘ldirilmaydi; misol va manba",
+          "feedback_uz": "Versiya, qoida va tekshirish yo‘li bor."
+        },
+        {
+          "id": "c",
+          "text_uz": "“Zo‘r kutubxona”",
+          "feedback_uz": "Qanday ishlatilishi noma’lum."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "Qayta ochganda nima kerakligini o‘ylang.",
+        "Imzo va chegarani saqlang."
+      ],
+      "common_error_uz": "Mamnunlik qaydi foydalanish yo‘riqnomasi emas.",
+      "hint_uz": "Bir haftadan keyin chaqiruvni tiklay olasizmi?",
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.4/learn-transfer-practice-1"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "learn-transfer-practice-2",
+      "skill_key": "learn-transfer",
+      "purpose": "practice",
+      "format": "numeric",
+      "prompt_uz": "Hujjat: take dastlabki ko‘pi bilan limit elementni oladi. 5 topshiriq bor, limit=3. Natijada nechta topshiriq?",
+      "options": [],
+      "answer_key": {
+        "value": "3"
+      },
+      "solution_steps_uz": [
+        "5 ta mavjud, limit 3.",
+        "Ko‘pi bilan 3, natija 3."
+      ],
+      "common_error_uz": "Qoida o‘zgarmaydi, vaziyat nomi almashgan.",
+      "hint_uz": "Mavjud son va limitdan kichigini oling.",
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.4/learn-transfer-practice-2"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "learn-transfer-precheck",
+      "skill_key": "learn-transfer",
+      "purpose": "precheck",
+      "format": "single",
+      "prompt_uz": "Hujjat o‘qildi, lekin yangi kirishda javob chiqmayapti. Eng foydali qadam?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "O‘zimni qobiliyatsiz deb e’lon qilish",
+          "feedback_uz": "Bitta vaziyat bunday xulosani isbotlamaydi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Tasodifiy parametr nomlarini sinash",
+          "feedback_uz": "Hujjatga asoslangan o‘rganish o‘rnini taxmin egallaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Savolni kichraytirib, bitta minimal misol va cheklovni qayta tekshirish",
+          "feedback_uz": "Tushunilmagan qoida ajratiladi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "Aniq tushunmovchilikni toping.",
+        "Kichik tajriba bilan tekshiring."
+      ],
+      "common_error_uz": "Qiyinchilikni shaxsiy hukmga aylantirmang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.4/learn-transfer-precheck"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "learn-transfer-postcheck",
+      "skill_key": "learn-transfer",
+      "purpose": "postcheck",
+      "format": "numeric",
+      "prompt_uz": "Hujjat: clip(x, low, high) oraliq ichida x ni qaytaradi, chegaralar ham kiradi. clip(6, low=2, high=8) natijasi?",
+      "options": [],
+      "answer_key": {
+        "value": "6"
+      },
+      "solution_steps_uz": [
+        "2 <= 6 <= 8.",
+        "Qiymat oraliqda, 6 saqlanadi."
+      ],
+      "common_error_uz": "Har chaqiruv sonni chegara qiymatiga almashtirmaydi.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.4/learn-transfer-postcheck"
+      },
+      "difficulty": "medium"
+    }
+  ],
+  "diagnostic_links": [],
+  "blueprint": {
+    "practice_order": [
+      "learn-locate-practice-1",
+      "learn-signature-practice-1",
+      "learn-minimal-practice-1",
+      "learn-limits-practice-1",
+      "learn-transfer-practice-1",
+      "learn-locate-practice-2",
+      "learn-signature-practice-2",
+      "learn-minimal-practice-2",
+      "learn-limits-practice-2",
+      "learn-transfer-practice-2"
+    ],
+    "precheck_order": [
+      "learn-locate-precheck",
+      "learn-signature-precheck",
+      "learn-minimal-precheck",
+      "learn-limits-precheck",
+      "learn-transfer-precheck"
+    ],
+    "postcheck_order": [
+      "learn-locate-postcheck",
+      "learn-signature-postcheck",
+      "learn-minimal-postcheck",
+      "learn-limits-postcheck",
+      "learn-transfer-postcheck"
+    ],
+    "matched_pairs": [
+      {
+        "skill_key": "learn-locate",
+        "precheck_key": "learn-locate-precheck",
+        "postcheck_key": "learn-locate-postcheck",
+        "difficulty": "medium"
+      },
+      {
+        "skill_key": "learn-signature",
+        "precheck_key": "learn-signature-precheck",
+        "postcheck_key": "learn-signature-postcheck",
+        "difficulty": "medium"
+      },
+      {
+        "skill_key": "learn-minimal",
+        "precheck_key": "learn-minimal-precheck",
+        "postcheck_key": "learn-minimal-postcheck",
+        "difficulty": "medium"
+      },
+      {
+        "skill_key": "learn-limits",
+        "precheck_key": "learn-limits-precheck",
+        "postcheck_key": "learn-limits-postcheck",
+        "difficulty": "medium"
+      },
+      {
+        "skill_key": "learn-transfer",
+        "precheck_key": "learn-transfer-precheck",
+        "postcheck_key": "learn-transfer-postcheck",
+        "difficulty": "medium"
+      }
+    ],
+    "unseen_postcheck_sets": 1,
+    "comparison_note_uz": "Ko‘nikmalar bo‘yicha juftlangan; statistik tenglashtirish yoki shaxs xususiyatlari o‘sishi da’vosi yo‘q.",
+    "exhaustion_note_uz": "Bitta mustaqil yakuniy to‘plam mavjud; qayta mashq mustaqil o‘sish o‘lchovi emas."
+  },
+  "schema_version": 3,
+  "notation_uz": [
+    "Python 3: = qiymat beradi; ==, !=, <, >, <=, >= taqqoslaydi.",
+    "Python bloklari : va bir xil chekinish bilan yoziladi; satr oxirida ; majburiy emas.",
+    "Ro‘yxat indekslari 0 dan boshlanadi. range(a, b) yuqori b chegarasini kiritmaydi.",
+    "and, or, not — mantiqiy amallar; True va False mantiqiy qiymatlar.",
+    "None — alohida qiymat. return funksiyadan natija beradi; print qiymatni ko‘rsatadi.",
+    "Trace jadvali satrdan keyingi holatni yozadi. Debugger strelkasi hali bajarilmagan satrni ko‘rsatadi.",
+    "Git: working tree — ishchi nusxa, index — tanlangan holat, commit — mahalliy tarix.",
+    "StudyTools 1.0 — kursning lokal o‘quv API si. Topshiriqdagi hujjat va versiyaga amal qiling."
+  ],
+  "projects": [
+    {
+      "key": "documentation-lab",
+      "assessment": "self_review",
+      "title_uz": "Hujjatdan yangi API ni o‘rganish",
+      "brief_uz": "Berilgan kichik hujjatdan qoida topib, yangi vaziyatda mustaqil qo‘llash.",
+      "constraints_uz": [
+        "Python 3 va lab_studytools.py; internet shart emas. StudyTools 1.0 — ushbu kursning mualliflik API si; pip bilan o‘rnatilmaydi.",
+        "Import: from lab_studytools import take, find, clip. Quyidagi hujjat asosiy manba.",
+        "take(items, limit=2): items ro‘yxat; dastlabki ko‘pi bilan limit elementdan yangi sayoz ro‘yxat qaytadi. Elementlar o‘zi chuqur nusxalanmaydi. items o‘zgarmaydi. limit >= 0 butun, bool emas; manfiyga ValueError, boshqa turga TypeError.",
+        "find(items, target, default=None): items ro‘yxat; == bo‘yicha birinchi mos elementning noldan indeksini qaytaradi. Moslik yo‘q bo‘lsa default. Kirish o‘zgarmaydi.",
+        "clip(x, low=0, high=10): bu laboratoriyada faqat chekli int/float sonlar beriladi; low <= high. Oraliq yopiq; pastda low, yuqorida high, ichkarida x qaytadi. low > high — ValueError. Kirish o‘zgarmaydi.",
+        "Versiya taqqoslash kartasi: faqat simulyatsiyadagi 2.0 take(items, *, count=2) nomli count talab qiladi. Lokal kod faqat 1.0 ni bajaradi."
+      ],
+      "steps_uz": [
+        "Dastlab ishga tushirmasdan natijani taxmin qiling: take([7, 8, 9]); take([7], limit=3); find([4, 4, 9], 4); find([], 2, default=-1); clip(15, low=3, high=12).",
+        "Keyin bitta chaqiruvni ishga tushirib, bashorat bilan solishtiring. Qaysi hujjat jumlasi javobni berganini belgilang.",
+        "Xato holatlarini oldindan nomlang va sinang: take([1], limit=-1); take([1], limit=True); clip(5, low=8, high=2). Har biri uchun sababni yozing.",
+        "Yangi vaziyat: tasks=[\"A\", \"B\", \"C\", \"D\"]. Dastlabki 3 topshiriqni ko‘rsating; \"A\" topilganini indeks 0 bo‘lsa ham to‘g‘ri aniqlang; 14 ballni [0, 10] ga cheklang.",
+        "Rasmiy hujjat mashqi: Python str.split bo‘limini oching. sep va maxsplit ma’nosini o‘qing. Python 3 da \"a,b,c\".split(\",\", maxsplit=1) uchun natijani avval yozib, keyin tekshiring. Internet bo‘lmasa help(str.split)dan foydalaning.",
+        "Savol, versiya, imzo, ishlagan misol, xato/chegara va manbadan iborat bilim qaydi yozing. Vaqtni ixtiyoriy o‘zingiz uchun qayd etishingiz mumkin; aniqlik birinchi o‘rinda."
+      ],
+      "deliverables_uz": [
+        "Bashorat/haqiqiy natija jadvali; kichik lab_solution.py; xatolar sababi; yangi vaziyat yechimi; str.split qaydi va bilim kartasi."
+      ],
+      "rubric_uz": [
+        "Hujjatdan dalil: 0 — taxmin; 1 — ayrim javoblar; 2 — har javob shartnomaga bog‘langan.",
+        "Aniqlik: 0 — asosiy natijalar noto‘g‘ri; 1 — qisman; 2 — berilgan natijalar va istisnolar to‘g‘ri.",
+        "Ko‘chirish: 0 — faqat ko‘chirilgan misol; 1 — yangi vaziyatning bir qismi; 2 — topshiriq, indeks 0 va ball chegarasi to‘g‘ri.",
+        "Qayd: 0 — yo‘q; 1 — versiya yoki cheklov yetishmaydi; 2 — qayta foydalanishga yetarli. Jami 8 gacha — ish rubrikasi, umumiy o‘rganish tezligi bahosi emas."
+      ]
+    }
+  ],
+  "study_files": [
+    {
+      "key": "studytools-api",
+      "title_uz": "StudyTools 1.0 o‘quv API kodi",
+      "filename": "lab_studytools.py",
+      "content": "\"\"\"StudyTools 1.0: fictional, dependency-free teaching API, not a PyPI package.\"\"\"\n__version__ = '1.0'\n\n\ndef take(items, limit=2):\n    if type(limit) is not int:\n        raise TypeError('limit must be an integer, not bool')\n    if limit < 0:\n        raise ValueError('limit must be nonnegative')\n    return items[:limit].copy()\n\n\ndef find(items, target, default=None):\n    for index, item in enumerate(items):\n        if item == target:\n            return index\n    return default\n\n\ndef clip(x, low=0, high=10):\n    if low > high:\n        raise ValueError('low must not exceed high')\n    return min(max(x, low), high)\n"
+    }
+  ]
+}

@@ -20,8 +20,8 @@ BUNDLED_CONTENT = Path(__file__).resolve().parent / 'content' / 'cluster1' / 'ar
 def bundled_contents(cluster=1):
     """One latest reviewed version per course, sorted by curriculum order."""
     latest = {}
-    require(cluster is None or (type(cluster) is int and cluster in (1, 2)), 'Invalid bundle cluster.')
-    directories = [BUNDLED_CONTENT.parent.parent / f'cluster{number}' for number in ((1, 2) if cluster is None else (cluster,))]
+    require(cluster is None or (type(cluster) is int and cluster in (1, 2, 3)), 'Invalid bundle cluster.')
+    directories = [BUNDLED_CONTENT.parent.parent / f'cluster{number}' for number in ((1, 2, 3) if cluster is None else (cluster,))]
     for path in sorted(path for directory in directories for path in directory.glob('*.v*.json')):
         data = read_content(path)
         meta = data.get('module', {}) if isinstance(data, dict) else {}
@@ -37,7 +37,7 @@ def bundled_contents(cluster=1):
 
 def validate_localization(data):
     """Schema two is bilingual from its first import; reject partial releases."""
-    if data['schema_version'] != 2:
+    if data['schema_version'] < 2:
         return
     from .translations import bundled_translation, validate_translation
     translated = bundled_translation(data['module']['key'], data['module']['version'])

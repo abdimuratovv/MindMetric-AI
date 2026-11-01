@@ -9,7 +9,8 @@ import LanguageSwitcher from '../../components/LanguageSwitcher.jsx';
 import PlanOverview from './PlanOverview.jsx';
 import SkillProgress from './SkillProgress.jsx';
 import ClusterCatalogue from './ClusterCatalogue.jsx';
-import { CourseNotation, MiniProjects } from './LearningResources.jsx';
+import { CourseNotation, MiniProjects, StudyFiles } from './LearningResources.jsx';
+import ContentText from './ContentText.jsx';
 import { developmentCopy } from './copy.js';
 import './development.css';
 
@@ -149,7 +150,7 @@ export default function DevelopmentPage({ user, goTo }) {
   const start = (purpose) => perform(async () => {
     const data = await startDevelopmentSession(enrollment.id, purpose);
     setSession(data);
-    setEnrollment((old) => ({ ...old, lessons: [], projects: [], notation: [] }));
+    setEnrollment((old) => ({ ...old, lessons: [], projects: [], notation: [], study_files: [] }));
     setNotationOpen(false);
     setFeedback(null);
   });
@@ -257,13 +258,13 @@ export default function DevelopmentPage({ user, goTo }) {
           <p className="dev-note">{c[`${session.purpose}Note`]}</p>
           {session.purpose === 'practice' && session.number > 1 && <p className="dev-note">{c.rehearsalNote}</p>}
           {feedback ? <div className={`dev-feedback ${feedback.correct ? 'is-correct' : ''}`} aria-live="polite">
-            <h3>{feedback.correct ? c.correct : c.incorrect}</h3><p className="dev-math" lang={feedback.content_language || contentLanguage}>{feedback.prompt}</p>
+            <h3>{feedback.correct ? c.correct : c.incorrect}</h3><div className="dev-math" lang={feedback.content_language || contentLanguage}><ContentText text={feedback.prompt} /></div>
             <p lang={feedback.content_language || contentLanguage}>{feedback.explanation}</p><ol lang={feedback.content_language || contentLanguage}>{feedback.solution_steps.map((line, i) => <li key={i}>{line}</li>)}</ol>
             <p><strong>{c.correctAnswer}: </strong><span className="dev-math" lang={feedback.content_language || contentLanguage}>{feedback.answer}</span></p>
             {feedback.hint_used && <p>{c.hintUsed}</p>}
             <button className="dev-button" onClick={() => setFeedback(null)}>{c.next} →</button>
           </div> : question ? <form onSubmit={submit}>
-            <h3 className="dev-question dev-math" ref={questionHeading} tabIndex={-1} lang={question.content_language}>{question.prompt}</h3>
+            <div role="heading" aria-level="3" className="dev-question dev-math" ref={questionHeading} tabIndex={-1} lang={question.content_language}><ContentText text={question.prompt} /></div>
             {question.format === 'numeric' ? <label className="dev-answer-label">{c.answer}
               <input autoComplete="off" type="text" inputMode="text" maxLength={80} required value={answer}
                 disabled={busy || Boolean(pending.current)} onChange={(event) => changeAnswer(event.target.value)} placeholder={c.answerPlaceholder} />
@@ -332,7 +333,7 @@ export default function DevelopmentPage({ user, goTo }) {
                     sessionStorage.setItem(examplesKey, JSON.stringify(next));
                     return next;
                   });
-                }}><summary>{c.example}</summary><p className={`dev-math ${enrollment.module.cluster === 2 ? 'dev-pseudocode' : ''}`}>{lesson.worked_example.prompt ?? lesson.worked_example.prompt_uz}</p>
+                }}><summary>{c.example}</summary><div className={`dev-math ${enrollment.module.cluster >= 2 ? 'dev-pseudocode' : ''}`}><ContentText text={lesson.worked_example.prompt ?? lesson.worked_example.prompt_uz} /></div>
                   <ol>{(lesson.worked_example.solution_steps ?? lesson.worked_example.solution_steps_uz).map((line, index) => <li key={index}>{line}</li>)}</ol>
                   <strong className="dev-math">{lesson.worked_example.answer ?? lesson.worked_example.answer_uz}</strong>
                 </details>
@@ -349,6 +350,7 @@ export default function DevelopmentPage({ user, goTo }) {
           </section>}
           {!enrollment.learning_locked && <MiniProjects projects={enrollment.projects} expanded={expandedProjects}
             onToggle={toggleProject} c={c} />}
+          {!enrollment.learning_locked && <StudyFiles files={enrollment.study_files} c={c} />}
           {enrollment.checks.length > 0 && <details className="dev-panel dev-review"><summary>{c.mistakes}</summary>
             {enrollment.checks.map((check) => <section key={check.id}><h3>{c[check.purpose]} · {check.score}%</h3>
               {check.review?.map((item) => <details key={item.exercise_key}><summary lang={item.content_language || contentLanguage}>{item.correct ? '✓' : '○'} {item.prompt}</summary>

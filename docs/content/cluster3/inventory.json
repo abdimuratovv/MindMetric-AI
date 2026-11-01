@@ -1,0 +1,56 @@
+{
+  "cluster": 3,
+  "status": "draft",
+  "integration_status": "not_importable",
+  "languages": [
+    "uz",
+    "ru"
+  ],
+  "modules": [
+    {
+      "key": "code-debugging",
+      "topic_number": "3.1",
+      "skills": 5,
+      "lessons": 5,
+      "examples": 5,
+      "practice": 10,
+      "precheck": 5,
+      "postcheck": 5,
+      "source_hash": "be7d436103c30442304353422e237fc71753b78bb957a8a0d2924009531615c9"
+    },
+    {
+      "key": "teamwork-git",
+      "topic_number": "3.2",
+      "skills": 5,
+      "lessons": 5,
+      "examples": 5,
+      "practice": 10,
+      "precheck": 5,
+      "postcheck": 5,
+      "source_hash": "fb54f4aaf9658bf787aa696d2f0b9c18619b7112eec1920e6a8022120ca2b8e2"
+    },
+    {
+      "key": "attention-code-review",
+      "topic_number": "3.3",
+      "skills": 5,
+      "lessons": 5,
+      "examples": 5,
+      "practice": 10,
+      "precheck": 5,
+      "postcheck": 5,
+      "source_hash": "9d96d6fea35ee0778e796d16eaf6f5f05dabf6b1ed461c8dc99a9f6fda1cf8f6"
+    },
+    {
+      "key": "documentation-learning",
+      "topic_number": "3.4",
+      "skills": 5,
+      "lessons": 5,
+      "examples": 5,
+      "practice": 10,
+      "precheck": 5,
+      "postcheck": 5,
+      "source_hash": "c7fdff6f20a4021e9df3200016a1777c024caf0d57e3ff3b26aa66d594cfe1f9"
+    }
+  ],
+  "open_activities": 3
+}

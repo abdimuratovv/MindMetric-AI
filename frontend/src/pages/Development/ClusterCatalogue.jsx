@@ -16,10 +16,11 @@ export default function ClusterCatalogue({ modules, clusters, selectedCluster, o
     <div id="development-cluster-topics" data-cluster={active.id}>
       <section className="dev-intro" aria-labelledby="development-cluster-heading">
         <p className="dev-eyebrow">{c.clusterLabel} {String(active.id).padStart(2, '0')} / {active.title}</p>
-        <h2 id="development-cluster-heading">{active.id === 2 ? c.algorithmicOverview : c.overview}</h2>
-        <p>{active.id === 2 ? c.algorithmicDescription : c.description}</p>
+        <h2 id="development-cluster-heading">{active.id === 3 ? c.personalOverview : active.id === 2 ? c.algorithmicOverview : c.overview}</h2>
+        <p>{active.id === 3 ? c.personalDescription : active.id === 2 ? c.algorithmicDescription : c.description}</p>
         <div className="dev-symbols" aria-hidden="true">{active.id === 2
           ? <>if <span>→</span> for <span>→</span> return</>
+          : active.id === 3 ? <>debug <span>→</span> review <span>→</span> learn</>
           : <>a² <span>+</span> √x <span>→</span> x = ?</>}</div>
       </section>
       {visible.length === 0 && <p>{c.empty}</p>}

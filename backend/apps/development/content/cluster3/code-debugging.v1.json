@@ -1,0 +1,1026 @@
+{
+  "sources": [
+    {
+      "id": "source-curriculum",
+      "filename": "Oqitish moduli.docx",
+      "sha256": "c11956549286d3f6c99ae327b0dc0ee6dcdc4714e4e069d385901f0f8d58a473"
+    },
+    {
+      "id": "authored-cluster3",
+      "filename": "authoring-manifest.json",
+      "sha256": "9111d5eeb6c31ef804e2e2408e33f31572c9c575d393f5192a0372cc4e6aab6c"
+    }
+  ],
+  "module": {
+    "key": "code-debugging",
+    "version": 1,
+    "cluster": 3,
+    "order": 1,
+    "topic_number": "3.1",
+    "title_uz": "Kod tahlili va debugging",
+    "title_ru": "Анализ кода и отладка",
+    "status": "draft",
+    "content_language": "uz",
+    "review_status": "internally_checked",
+    "indicator_keys": [
+      "patience",
+      "attention",
+      "problem_solving"
+    ],
+    "diagnostic_coverage_note_uz": "Aniq diagnostika savoli xaritasi tasdiqlanmagan; boshlang‘ich tekshiruvdan foydalaning."
+  },
+  "skills": [
+    {
+      "key": "debug-types",
+      "title_uz": "Xato turini ajratish",
+      "prerequisite_keys": [],
+      "indicator_keys": [
+        "patience",
+        "attention",
+        "problem_solving"
+      ]
+    },
+    {
+      "key": "debug-reproduce",
+      "title_uz": "Xatoni qayta hosil qilish",
+      "prerequisite_keys": [
+        "debug-types"
+      ],
+      "indicator_keys": [
+        "patience",
+        "attention",
+        "problem_solving"
+      ]
+    },
+    {
+      "key": "debug-trace",
+      "title_uz": "Qiymatlar izi va traceback",
+      "prerequisite_keys": [
+        "debug-reproduce"
+      ],
+      "indicator_keys": [
+        "patience",
+        "attention",
+        "problem_solving"
+      ]
+    },
+    {
+      "key": "debug-breakpoint",
+      "title_uz": "Breakpoint va qadamli tekshiruv",
+      "prerequisite_keys": [
+        "debug-trace"
+      ],
+      "indicator_keys": [
+        "patience",
+        "attention",
+        "problem_solving"
+      ]
+    },
+    {
+      "key": "debug-regression",
+      "title_uz": "Chegaralar va regressiya",
+      "prerequisite_keys": [
+        "debug-breakpoint"
+      ],
+      "indicator_keys": [
+        "patience",
+        "attention",
+        "problem_solving"
+      ]
+    }
+  ],
+  "lessons": [
+    {
+      "key": "debug-types-lesson",
+      "skill_key": "debug-types",
+      "title_uz": "Xato turini ajratish",
+      "theory_uz": [
+        "Natija: Belgidan kelib chiqib sintaksis, bajarilish yoki mantiqiy xatoni ajratasiz.",
+        "Python kodni avval tahlil qiladi. Masalan, if sarlavhasidagi ikki nuqta tushsa SyntaxError yuz beradi; dastur odatdagi bajarilishga o‘tmaydi. Xabar ko‘rsatgan joy sababning o‘zi bo‘lmasligi mumkin: oldingi satrni ham tekshiring.",
+        "Sintaktik to‘g‘ri kod bajarilayotganda ham to‘xtashi mumkin: 8 / 0 — ZeroDivisionError. Kod tugab, talabga zid javob bersa, bu mantiqiy xato bo‘lishi mumkin. To‘g‘ri ishlayotganini bilish uchun kutilgan natija zarur.",
+        "Tuzatishdan oldin xato turini, berilgan kirishni va talabni yozing. Birinchi xatoni bartaraf etish barcha keyingi xatolar yo‘qligini kafolatlamaydi."
+      ],
+      "worked_example": {
+        "prompt_uz": "Python 3, ataylab xato kod:\n```python\nif 4 > 2\n    print(4)\n```\nNega natija chiqmaydi?",
+        "solution_steps_uz": [
+          "if sarlavhasini ko‘ring.",
+          "Oxirida : yo‘q.",
+          "Sintaksisni tuzatib, keyin qayta tekshiring."
+        ],
+        "answer_uz": "SyntaxError; sarlavha if 4 > 2: bo‘ladi."
+      }
+    },
+    {
+      "key": "debug-reproduce-lesson",
+      "skill_key": "debug-reproduce",
+      "title_uz": "Xatoni qayta hosil qilish",
+      "theory_uz": [
+        "Natija: Takrorlanadigan xato hisobotini va kichik qarshi misolni tuzasiz.",
+        "Yaxshi hisobotda versiya, aniq kirish, bajarish qadami, kutilgan va haqiqiy natija bo‘ladi. “Ishlamadi” sababni izlashga yetmaydi. Maxfiy ma’lumot o‘rniga sun’iy kichik kirish ishlating.",
+        "Minimal misol xatoni saqlagan holda ortiqcha qismlarni olib tashlaydi. Xato yo‘qolsa, o‘sha qisqartirishni qaytaring. Minimal degani faqat satrlar soni eng kam degani emas: sababni tekshirishga yetarli bo‘lishi kerak.",
+        "Gipoteza tekshiriladigan taxmin: “faqat bo‘sh ro‘yxatda ishlamaydi”. Bir o‘zgarish qiling va ayni testni qaytaring; bir vaqtning o‘zida bir necha joyni almashtirish sababni chalkashtiradi."
+      ],
+      "worked_example": {
+        "prompt_uz": "mean(xs) funksiyasi sum(xs) / len(xs) qaytaradi. [2, 4] da 3, [] da ZeroDivisionError. Hisobotni qisqartiring.",
+        "solution_steps_uz": [
+          "Python 3 va mean funksiyasini qoldiring.",
+          "Kirish [] bo‘lsin.",
+          "Bo‘sh ro‘yxat uchun talabni aniqlang; xato va kutilgan natijani yozing."
+        ],
+        "answer_uz": "Bo‘sh kirish xatoni qaytaradi; bo‘sh holat uchun shartnoma zarur."
+      }
+    },
+    {
+      "key": "debug-trace-lesson",
+      "skill_key": "debug-trace",
+      "title_uz": "Qiymatlar izi va traceback",
+      "theory_uz": [
+        "Natija: Satrlar bo‘yicha qiymat o‘zgarishini va xabar zanjirini o‘qiysiz.",
+        "Trace jadvalida bajarilgan satr va undan KEYINGI qiymatlar yoziladi. Shart tekshiruvi o‘zi qiymatni o‘zgartirmaydi. Bir xil nomning qayerda aniqlangani va yangilangani kuzatiladi.",
+        "Tracebackning oxirgi satri istisno turi va xabarini bildiradi. Yuqoridagi kadrlar chaqiruv yo‘lini ko‘rsatadi. Eng quyi tegishli kadrdan muammoli ifodani toping; chaqiruvchi berayotgan qiymatni ham tekshiring.",
+        "Tasodifiy printlar o‘rniga shubhali amal oldi va keyinini kuzating. Kuzatuv o‘zgaruvchini o‘zgartirib yubormasin; diagnostik yozuvlarga maxfiy ma’lumot chiqarmang."
+      ],
+      "worked_example": {
+        "prompt_uz": "Python 3:\n```python\nx = 2\nx = x + 3\ny = x * 2\n```\ny ni iz bilan toping.",
+        "solution_steps_uz": [
+          "Birinchi satrdan keyin x=2.",
+          "Ikkinchisidan keyin x=5.",
+          "Uchinchisida y=10."
+        ],
+        "answer_uz": "10"
+      }
+    },
+    {
+      "key": "debug-breakpoint-lesson",
+      "skill_key": "debug-breakpoint",
+      "title_uz": "Breakpoint va qadamli tekshiruv",
+      "theory_uz": [
+        "Natija: Pauza joyini va step/next/continue amallarini maqsadga mos tanlaysiz.",
+        "Breakpoint dastur holatini tekshirish uchun bajarilishni pauza qiladi; u kodni avtomatik tuzatmaydi. Bu kursdagi strelka bilan belgilangan pauza satri hali bajarilmagan deb olinadi.",
+        "Python pdb da p x qiymatni ko‘rsatadi; n (next) joriy satrni bajarib, odatda shu kadrdagi keyingi satrga o‘tadi; s (step) chaqirilgan funksiyaga kirishi mumkin; c (continue) keyingi to‘xtashgacha davom etadi.",
+        "Avval taxminingizni yozing, keyin holatni kuzating. Cheksiz sikldan shubhalansangiz, shartdagi qiymat va uning yangilanishini tekshiring. Sinov nusxasida ishlang; tuzatishni oddiy ishga tushirish bilan ham tasdiqlang."
+      ],
+      "worked_example": {
+        "prompt_uz": "Python 3: x=4 bajarilgan. Strelka x = x + 2 satrida, satr hali bajarilmagan. p x, keyin n, keyin p x nima beradi?",
+        "solution_steps_uz": [
+          "Pauzada x=4.",
+          "n qo‘shishni bajaradi.",
+          "Keyingi kuzatuvda x=6."
+        ],
+        "answer_uz": "4, keyin 6"
+      }
+    },
+    {
+      "key": "debug-regression-lesson",
+      "skill_key": "debug-regression",
+      "title_uz": "Chegaralar va regressiya",
+      "theory_uz": [
+        "Natija: Xato sababiga mos minimal tuzatish va regressiya to‘plamini tanlaysiz.",
+        "Chegaraviy test talab ajraladigan joyni tekshiradi: limitdan past, teng va yuqori. Ro‘yxatlarda bo‘sh, bitta va bir nechta element muhim. Kutilgan natija koddan emas, shartnomadan olinadi.",
+        "Minimal tuzatish sababni nishonga oladi. Masalan, talab “kamida 18” bo‘lsa > ni >= ga almashtirish mos; barcha foydalanuvchilarni qabul qilish bu xatoni yashiradi.",
+        "Regressiya testi oldingi xato qaytmaganini tekshiradi. Tuzatishdan keyin muammoli test bilan birga ilgari o‘tgan oddiy va chegaraviy testlarni qaytaring. O‘tmagan testni yashirish o‘rniga yangi kuzatuv yozing va gipotezani yangilang."
+      ],
+      "worked_example": {
+        "prompt_uz": "Talab: age >= 18 bo‘lsa ruxsat. Kod age > 18. 18 yosh rad bo‘ladi. Tuzatish va testlar?",
+        "solution_steps_uz": [
+          "> o‘rniga >= qo‘ying.",
+          "17 rad, 18 ruxsat, 19 ruxsatni tekshiring.",
+          "Avvalgi katta yosh holatini ham qaytaring."
+        ],
+        "answer_uz": "Sababga mos tuzatish va chegara atrofidagi sinov."
+      }
+    }
+  ],
+  "exercises": [
+    {
+      "key": "debug-types-practice-1",
+      "skill_key": "debug-types",
+      "purpose": "practice",
+      "format": "single",
+      "prompt_uz": "Python 3: print(9 / 0). Qaysi turdagi xato?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Sintaksis xatosi",
+          "feedback_uz": "Bu ifoda sintaktik jihatdan yaroqli."
+        },
+        {
+          "id": "b",
+          "text_uz": "To‘g‘ri natija 0",
+          "feedback_uz": "Nolga bo‘lish nol natija bermaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Bajarilish xatosi",
+          "feedback_uz": "Bo‘lish bajarilganda ZeroDivisionError keladi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "Sintaksis yaroqli.",
+        "Bo‘luvchi nol, bajarilish to‘xtaydi."
+      ],
+      "common_error_uz": "Barcha xatolarni SyntaxError deb atamang.",
+      "hint_uz": "Amalni bajarish mumkinmi?",
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.1/debug-types-practice-1"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "debug-types-practice-2",
+      "skill_key": "debug-types",
+      "purpose": "practice",
+      "format": "single",
+      "prompt_uz": "Talab: a va b yig‘indisi. Python kodi print(a - b), a=8, b=3; natija 5. Sabab?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Python ayirishni bilmaydi",
+          "feedback_uz": "Ayirish mavjud, ammo bu talabga mos emas."
+        },
+        {
+          "id": "b",
+          "text_uz": "Mantiqiy xato: noto‘g‘ri amal",
+          "feedback_uz": "Talab 11, kod esa ayirmani hisoblaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Bajarilish istisnosi",
+          "feedback_uz": "Berilgan sonlarni ayirish istisno bermaydi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "Kutilgan qiymat 8 + 3 = 11.",
+        "5 talabga mos emas."
+      ],
+      "common_error_uz": "Dastur tugaganini to‘g‘rilik isboti demang.",
+      "hint_uz": "Talab bilan ishlatilgan operatorni solishtiring.",
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.1/debug-types-practice-2"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "debug-types-precheck",
+      "skill_key": "debug-types",
+      "purpose": "precheck",
+      "format": "single",
+      "prompt_uz": "Python 3: print(total), lekin total hech qayerda aniqlanmagan. Natija?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "NameError",
+          "feedback_uz": "Nom bajarilish vaqtida topilmaydi."
+        },
+        {
+          "id": "b",
+          "text_uz": "SyntaxError",
+          "feedback_uz": "Funksiya chaqiruvining sintaksisi to‘g‘ri."
+        },
+        {
+          "id": "c",
+          "text_uz": "Avtomatik 0",
+          "feedback_uz": "Aniqlanmagan nomga Python nol bermaydi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "a"
+      },
+      "solution_steps_uz": [
+        "Nomning ta’rifini qidiring.",
+        "U yo‘q, NameError yuz beradi."
+      ],
+      "common_error_uz": "Aniqlanmagan o‘zgaruvchini nol deb olmang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.1/debug-types-precheck"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "debug-types-postcheck",
+      "skill_key": "debug-types",
+      "purpose": "postcheck",
+      "format": "single",
+      "prompt_uz": "To‘rtburchak yuzi kerak. Python kodi print(2 * (a + b)), a=3, b=5. Dastur 16 chiqaradi. Xulosa?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Sintaksis xatosi",
+          "feedback_uz": "Kod bajarildi, uning sintaksisi yaroqli."
+        },
+        {
+          "id": "b",
+          "text_uz": "Natija har doim to‘g‘ri",
+          "feedback_uz": "Muvaffaqiyatli bajarilish talabni almashtirmaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Mantiqiy xato, perimetr hisoblangan",
+          "feedback_uz": "Yuza 15, qo‘llangan formula boshqa kattalik uchun."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "Talab yuzani so‘raydi.",
+        "3 × 5 = 15, kod perimetrni bergan."
+      ],
+      "common_error_uz": "Formula va talabni birgalikda tekshiring.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.1/debug-types-postcheck"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "debug-reproduce-practice-1",
+      "skill_key": "debug-reproduce",
+      "purpose": "practice",
+      "format": "single",
+      "prompt_uz": "Hisobot: “Chegirma noto‘g‘ri”. Qaysi qo‘shimcha eng foydali?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Faqat xato xabari; kirish va kutilgan natijasiz",
+          "feedback_uz": "Xabar foydali, ammo hisobni qaytarish va tekshirish uchun yetarli emas."
+        },
+        {
+          "id": "b",
+          "text_uz": "Kirish 100, stavka 10%; kutilgan 90, olingan 110; ishga tushirish qadami",
+          "feedback_uz": "Aniq farq va qayta bajarish yo‘li bor."
+        },
+        {
+          "id": "c",
+          "text_uz": "“Tezroq tuzating”",
+          "feedback_uz": "Shoshiltirish qayta hosil qilish ma’lumoti emas."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "Kirishni qaytaring.",
+        "Kutilgan va haqiqiy natijani solishtiring."
+      ],
+      "common_error_uz": "Hisobotga faqat baho yozmang.",
+      "hint_uz": "Boshqa odam xatoni qaytara oladimi?",
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.1/debug-reproduce-practice-1"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "debug-reproduce-practice-2",
+      "skill_key": "debug-reproduce",
+      "purpose": "practice",
+      "format": "single",
+      "prompt_uz": "Ro‘yxatning birinchi elementini o‘qish [] da yiqiladi. Minimal misolda nima qoladi?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Bo‘sh ro‘yxat va birinchi elementni o‘qish",
+          "feedback_uz": "Xatoni yuzaga keltiradigan sabab saqlanadi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Bo‘sh ro‘yxatni [1]ga almashtirish",
+          "feedback_uz": "Bu xatoni yashiradi, qaytarmaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Barcha interfeys va rasmlar",
+          "feedback_uz": "Indeks xatosiga aloqasiz qismlar ortiqcha."
+        }
+      ],
+      "answer_key": {
+        "option_id": "a"
+      },
+      "solution_steps_uz": [
+        "Xato [] da saqlansin.",
+        "Faqat zarur amalni qoldiring."
+      ],
+      "common_error_uz": "Minimal misolda muammoli kirishni almashtirmang.",
+      "hint_uz": "Qisqartirishdan keyin ham xato bo‘lishi shart.",
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.1/debug-reproduce-practice-2"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "debug-reproduce-precheck",
+      "skill_key": "debug-reproduce",
+      "purpose": "precheck",
+      "format": "single",
+      "prompt_uz": "Nosozlik faqat miqdor 0 bo‘lganda kuzatildi. Qaysi gipoteza tekshiriladi?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Sabab aniq Pythonning o‘zida; kirishni tekshirmayman",
+          "feedback_uz": "Kuzatuv bunday qat’iy xulosaga yetarli emas."
+        },
+        {
+          "id": "b",
+          "text_uz": "Kodni to‘liq qayta yozish kerak; avval tajriba shart emas",
+          "feedback_uz": "Qayta yozish sababni sinaydigan gipoteza emas."
+        },
+        {
+          "id": "c",
+          "text_uz": "Miqdor 0 ga bo‘linayotgan bo‘lishi mumkin; bo‘lish satrini tekshiraman",
+          "feedback_uz": "Aniq holat va tekshiriladigan amal bor."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "0 bilan bog‘liq amallarni qidiring.",
+        "Bo‘lish joyini ayni kirishda tekshiring."
+      ],
+      "common_error_uz": "Gipoteza va keskin qayta yozishni adashtirmang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.1/debug-reproduce-precheck"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "debug-reproduce-postcheck",
+      "skill_key": "debug-reproduce",
+      "purpose": "postcheck",
+      "format": "single",
+      "prompt_uz": "Bir vaqtning o‘zida 4 joy o‘zgartirildi, xato yo‘qoldi. Keyingi yaxshi qadam?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Testni o‘chirish",
+          "feedback_uz": "Xatoni aniqlash vositasi yo‘qoladi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Alohida nusxada o‘zgarishlarni bittalab tekshirib sabab va regressiya testini aniqlash",
+          "feedback_uz": "Natijani sabab bilan bog‘lash mumkin bo‘ladi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Har bir o‘zgarish zarur deb e’lon qilish",
+          "feedback_uz": "Buning uchun dalil yo‘q."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "Bir xil kirishni saqlang.",
+        "Har bir tuzatish ta’sirini ajrating."
+      ],
+      "common_error_uz": "Birga o‘zgarish sababni isbotlamaydi.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.1/debug-reproduce-postcheck"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "debug-trace-practice-1",
+      "skill_key": "debug-trace",
+      "purpose": "practice",
+      "format": "numeric",
+      "prompt_uz": "Python 3: x = 4; x = x + 2; x = x * 3. Oxirgi x?",
+      "options": [],
+      "answer_key": {
+        "value": "18"
+      },
+      "solution_steps_uz": [
+        "Avval x=6.",
+        "Keyin 6 × 3 = 18."
+      ],
+      "common_error_uz": "Keyingi satr eski emas, yangilangan x ni oladi.",
+      "hint_uz": "Har satrdan keyingi x ni yozing.",
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.1/debug-trace-practice-1"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "debug-trace-practice-2",
+      "skill_key": "debug-trace",
+      "purpose": "practice",
+      "format": "single",
+      "prompt_uz": "Traceback oxiri: ZeroDivisionError: division by zero. Eng foydali tekshiruv?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Faqat fayl nomini o‘zgartirish",
+          "feedback_uz": "Bo‘luvchining qiymati o‘zgarmaydi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Har doim oxirgi printni o‘chirish",
+          "feedback_uz": "Xabar sababini tekshirmaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Ko‘rsatilgan bo‘lish ifodasidagi bo‘luvchi qanday 0 bo‘lganini",
+          "feedback_uz": "Istisno ma’nosi bilan bevosita bog‘liq."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "Xabar turini o‘qing.",
+        "Amaldagi bo‘luvchi va uning manbasini toping."
+      ],
+      "common_error_uz": "Xabar matnini tuzatish sababni tuzatmaydi.",
+      "hint_uz": "Qaysi operand nol bo‘lishi mumkin?",
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.1/debug-trace-practice-2"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "debug-trace-precheck",
+      "skill_key": "debug-trace",
+      "purpose": "precheck",
+      "format": "numeric",
+      "prompt_uz": "Python 3: a = 3; b = a; a = 8; print(b). Nima chiqadi?",
+      "options": [],
+      "answer_key": {
+        "value": "3"
+      },
+      "solution_steps_uz": [
+        "b ga o‘sha paytdagi 3 berildi.",
+        "a ni 8 qilish b ni o‘zgartirmaydi."
+      ],
+      "common_error_uz": "Butun qiymat berishni doimiy formula bog‘lanishi deb olmang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.1/debug-trace-precheck"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "debug-trace-postcheck",
+      "skill_key": "debug-trace",
+      "purpose": "postcheck",
+      "format": "numeric",
+      "prompt_uz": "Python 3:\n```python\ns = 0\nfor x in [2, 5, 1]:\n    s = s + x\n```\nSikldan keyingi s?",
+      "options": [],
+      "answer_key": {
+        "value": "8"
+      },
+      "solution_steps_uz": [
+        "s qiymatlari 0 → 2 → 7 → 8.",
+        "Oxirgi qiymat 8."
+      ],
+      "common_error_uz": "s ni har aylanishda noldan boshlamang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.1/debug-trace-postcheck"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "debug-breakpoint-practice-1",
+      "skill_key": "debug-breakpoint",
+      "purpose": "practice",
+      "format": "numeric",
+      "prompt_uz": "Python pdb: x=7. Strelka x = x * 2 satrida, u hali bajarilmagan. p x nechani ko‘rsatadi?",
+      "options": [],
+      "answer_key": {
+        "value": "7"
+      },
+      "solution_steps_uz": [
+        "Pauza amal oldida.",
+        "Ko‘paytirish hali bo‘lmagan, x=7."
+      ],
+      "common_error_uz": "Pauza qilingan satrni bajarilgan deb olmang.",
+      "hint_uz": "Strelka keyingi bajariladigan satrda.",
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.1/debug-breakpoint-practice-1"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "debug-breakpoint-practice-2",
+      "skill_key": "debug-breakpoint",
+      "purpose": "practice",
+      "format": "single",
+      "prompt_uz": "pdb da f() ichidagi satrlarni kuzatish kerak. Chaqiruv satrida qaysi buyruq mos?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "q — quit",
+          "feedback_uz": "Bu debuggingdan chiqadi."
+        },
+        {
+          "id": "b",
+          "text_uz": "s — step",
+          "feedback_uz": "Chaqirilgan funksiyaga kirish uchun."
+        },
+        {
+          "id": "c",
+          "text_uz": "p x",
+          "feedback_uz": "Bu qiymatni ko‘radi, funksiyaga qadam qilmaydi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "Maqsad funksiya ichiga kirish.",
+        "step shu maqsadga mos."
+      ],
+      "common_error_uz": "Kuzatish buyrug‘i bilan qadam buyrug‘ini farqlang.",
+      "hint_uz": "Funksiyaga kirish va uning ustidan o‘tish farq qiladi.",
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.1/debug-breakpoint-practice-2"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "debug-breakpoint-precheck",
+      "skill_key": "debug-breakpoint",
+      "purpose": "precheck",
+      "format": "single",
+      "prompt_uz": "Breakpoint qo‘yildi. Qaysi da’vo to‘g‘ri?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "U holatni kuzatishga yordam beradi; sabab va tuzatish alohida aniqlanadi",
+          "feedback_uz": "Pauza dalil yig‘ishga xizmat qiladi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Barcha xatolar avtomatik tuzatiladi",
+          "feedback_uz": "Breakpoint tuzatish mexanizmi emas."
+        },
+        {
+          "id": "c",
+          "text_uz": "Shundan keyin test kerak emas",
+          "feedback_uz": "Kuzatuv barcha kirishlarni qamramaydi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "a"
+      },
+      "solution_steps_uz": [
+        "Breakpoint bajarilishni to‘xtatadi.",
+        "Natijaning to‘g‘riligini test tekshiradi."
+      ],
+      "common_error_uz": "Vosita borligi to‘g‘rilik kafolati emas.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.1/debug-breakpoint-precheck"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "debug-breakpoint-postcheck",
+      "skill_key": "debug-breakpoint",
+      "purpose": "postcheck",
+      "format": "single",
+      "prompt_uz": "pdb da hozirgi satrni bajarib, keyingi breakpointgacha davom etish kerak. Qaysi buyruq?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "p x",
+          "feedback_uz": "Qiymatni ko‘rsatish bajarilishni davom ettirmaydi."
+        },
+        {
+          "id": "b",
+          "text_uz": "s ni bir marta berish",
+          "feedback_uz": "Faqat bitta qadam maqsadga yetmasligi mumkin."
+        },
+        {
+          "id": "c",
+          "text_uz": "c — continue",
+          "feedback_uz": "Davom etadi; boshqa to‘xtash sababi bo‘lsa ham pauza mumkin."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "Ketma-ket bitta qadam emas, davom ettirish so‘ralgan.",
+        "c mos keladi."
+      ],
+      "common_error_uz": "step va continue ni aralashtirmang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.1/debug-breakpoint-postcheck"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "debug-regression-practice-1",
+      "skill_key": "debug-regression",
+      "purpose": "practice",
+      "format": "single",
+      "prompt_uz": "Bepul yetkazish summa >= 100 bo‘lganda. Qaysi to‘plam chegarani tekshiradi?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Faqat 1000",
+          "feedback_uz": "Tenglik xatosi topilmasligi mumkin."
+        },
+        {
+          "id": "b",
+          "text_uz": "99, 100, 101",
+          "feedback_uz": "Chegaraning ikki tomoni va o‘zi bor."
+        },
+        {
+          "id": "c",
+          "text_uz": "150, 200, 300",
+          "feedback_uz": "Barchasi bir tomonda."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "Talab 100 da ajraladi.",
+        "Atrofidagi butun qiymatlarni oling."
+      ],
+      "common_error_uz": "Faqat katta qiymatlar chegarani tekshirmaydi.",
+      "hint_uz": "Past, teng, yuqori holatlarni toping.",
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.1/debug-regression-practice-1"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "debug-regression-practice-2",
+      "skill_key": "debug-regression",
+      "purpose": "practice",
+      "format": "single",
+      "prompt_uz": "[] da xato tuzatildi. Regressiya uchun nima kerak?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "[] hamda ilgari o‘tgan [4] va [2, 6] ni talab bilan solishtirish",
+          "feedback_uz": "Yangi va eski holatlar birga tekshiriladi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Faqat fayl ochilishini tekshirish",
+          "feedback_uz": "Natijalar to‘g‘riligini isbotlamaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "[] testini o‘chirish",
+          "feedback_uz": "Aynan qaytishi mumkin bo‘lgan xato nazoratsiz qoladi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "a"
+      },
+      "solution_steps_uz": [
+        "Muammoli kirishni saqlang.",
+        "Ilgari ishlagan holatlarni qaytaring."
+      ],
+      "common_error_uz": "Tuzatish boshqa holatni buzishi mumkin.",
+      "hint_uz": "Yangi tuzatishdan oldin nimalar ishlagan?",
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.1/debug-regression-practice-2"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "debug-regression-precheck",
+      "skill_key": "debug-regression",
+      "purpose": "precheck",
+      "format": "single",
+      "prompt_uz": "Talab: 0 ham yaroqli. Kod x > 0. Eng kichik mos tuzatish?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Har doim True",
+          "feedback_uz": "Manfiylar ham o‘tib ketadi."
+        },
+        {
+          "id": "b",
+          "text_uz": "x < 0",
+          "feedback_uz": "Nol yana o‘tmaydi va ma’no teskarilanadi."
+        },
+        {
+          "id": "c",
+          "text_uz": "x >= 0",
+          "feedback_uz": "Nol kiradi, manfiylar kirmaydi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "Faqat tenglik holati yetishmayapti.",
+        ">= talabga mos."
+      ],
+      "common_error_uz": "Xatoni barcha kirishlarga ruxsat bilan yashirmang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.1/debug-regression-precheck"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "debug-regression-postcheck",
+      "skill_key": "debug-regression",
+      "purpose": "postcheck",
+      "format": "single",
+      "prompt_uz": "Tuzatishdan keyin yangi test o‘tdi, avvalgi test yiqildi. Nima qilish kerak?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Faqat yangi test yetarli deyish",
+          "feedback_uz": "O‘tgan holat boshqa holatdagi xatoni bekor qilmaydi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Avvalgi talabni tekshirib, regressiya sababini aniqlash",
+          "feedback_uz": "Talab o‘zgarmagan bo‘lsa avvalgi ishlash ham saqlanishi kerak."
+        },
+        {
+          "id": "c",
+          "text_uz": "Yiqilgan testni izohsiz olib tashlash",
+          "feedback_uz": "Muammoni yashiradi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "Testning kutilgan natijasini talabdan tekshiring.",
+        "Regressiyani bartaraf etib, ikkisini qaytaring."
+      ],
+      "common_error_uz": "Bitta muvaffaqiyat barcha test o‘rnini bosmaydi.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.1/debug-regression-postcheck"
+      },
+      "difficulty": "medium"
+    }
+  ],
+  "diagnostic_links": [],
+  "blueprint": {
+    "practice_order": [
+      "debug-types-practice-1",
+      "debug-reproduce-practice-1",
+      "debug-trace-practice-1",
+      "debug-breakpoint-practice-1",
+      "debug-regression-practice-1",
+      "debug-types-practice-2",
+      "debug-reproduce-practice-2",
+      "debug-trace-practice-2",
+      "debug-breakpoint-practice-2",
+      "debug-regression-practice-2"
+    ],
+    "precheck_order": [
+      "debug-types-precheck",
+      "debug-reproduce-precheck",
+      "debug-trace-precheck",
+      "debug-breakpoint-precheck",
+      "debug-regression-precheck"
+    ],
+    "postcheck_order": [
+      "debug-types-postcheck",
+      "debug-reproduce-postcheck",
+      "debug-trace-postcheck",
+      "debug-breakpoint-postcheck",
+      "debug-regression-postcheck"
+    ],
+    "matched_pairs": [
+      {
+        "skill_key": "debug-types",
+        "precheck_key": "debug-types-precheck",
+        "postcheck_key": "debug-types-postcheck",
+        "difficulty": "medium"
+      },
+      {
+        "skill_key": "debug-reproduce",
+        "precheck_key": "debug-reproduce-precheck",
+        "postcheck_key": "debug-reproduce-postcheck",
+        "difficulty": "medium"
+      },
+      {
+        "skill_key": "debug-trace",
+        "precheck_key": "debug-trace-precheck",
+        "postcheck_key": "debug-trace-postcheck",
+        "difficulty": "medium"
+      },
+      {
+        "skill_key": "debug-breakpoint",
+        "precheck_key": "debug-breakpoint-precheck",
+        "postcheck_key": "debug-breakpoint-postcheck",
+        "difficulty": "medium"
+      },
+      {
+        "skill_key": "debug-regression",
+        "precheck_key": "debug-regression-precheck",
+        "postcheck_key": "debug-regression-postcheck",
+        "difficulty": "medium"
+      }
+    ],
+    "unseen_postcheck_sets": 1,
+    "comparison_note_uz": "Ko‘nikmalar bo‘yicha juftlangan; statistik tenglashtirish yoki shaxs xususiyatlari o‘sishi da’vosi yo‘q.",
+    "exhaustion_note_uz": "Bitta mustaqil yakuniy to‘plam mavjud; qayta mashq mustaqil o‘sish o‘lchovi emas."
+  },
+  "schema_version": 3,
+  "notation_uz": [
+    "Python 3: = qiymat beradi; ==, !=, <, >, <=, >= taqqoslaydi.",
+    "Python bloklari : va bir xil chekinish bilan yoziladi; satr oxirida ; majburiy emas.",
+    "Ro‘yxat indekslari 0 dan boshlanadi. range(a, b) yuqori b chegarasini kiritmaydi.",
+    "and, or, not — mantiqiy amallar; True va False mantiqiy qiymatlar.",
+    "None — alohida qiymat. return funksiyadan natija beradi; print qiymatni ko‘rsatadi.",
+    "Trace jadvali satrdan keyingi holatni yozadi. Debugger strelkasi hali bajarilmagan satrni ko‘rsatadi.",
+    "Git: working tree — ishchi nusxa, index — tanlangan holat, commit — mahalliy tarix.",
+    "StudyTools 1.0 — kursning lokal o‘quv API si. Topshiriqdagi hujjat va versiyaga amal qiling."
+  ],
+  "projects": [
+    {
+      "key": "debugging-challenge",
+      "assessment": "self_review",
+      "title_uz": "Uch bosqichli debugging challenge",
+      "brief_uz": "Xatoni tasodifiy tahrir bilan emas, kuzatuv, gipoteza va regressiya bilan tuzatish.",
+      "constraints_uz": [
+        "Python 3, matn muharriri; debugging-starter.py.txt dan mahalliy exercise.py nusxasi. Original o‘zgarmasin.",
+        "Jurnal ustunlari: bosqich, kirish, kutilgan, haqiqiy, xato turi, gipoteza, bitta tahrir, qayta test, xulosa.",
+        "1-bosqich add(a, b) ikki son yig‘indisini qaytaradi. Tekshirish kirishlari: (2, 5), (-3, 3), (0, 0).",
+        "2-bosqich discount(price, percent): price >= 0; 0 <= percent <= 100. Foiz chegirilgan narx. Kirishlar: (200, 15), (200, 0), (200, 100), (0, 25). Shu cheklovdan tashqari validatsiya bu vazifaga kirmaydi.",
+        "3-bosqich can_borrow(available): available manfiy bo‘lmagan butun. Kamida bitta nusxa bo‘lsa True. Kirishlar: 0, 1, 2."
+      ],
+      "steps_uz": [
+        "Avval starterdagi sintaksis xatosini kuzating. 1-bosqich sababini yozing, bitta tahrir qiling va uning testlarini ishga tushiring.",
+        "2-bosqichda kutilgan narxni qo‘lda hisoblang. Haqiqiy natija bilan farqini yozib, amallarni izlang.",
+        "3-bosqichda 0, 1, 2 chegaralarini tekshiring. Har tuzatishdan keyin avvalgi bosqich testlarini ham qaytaring.",
+        "Birinchi mashqda 1-bosqich ishorasi: funksiya sarlavhasini ko‘ring. 2-bosqichda faqat kutilgan/haqiqiy jadval beriladi. 3-bosqichda ishora berilmaydi.",
+        "Test yana yiqilsa, ayni taxminni ko‘r-ko‘rona takrorlamang: yangi kuzatuv va yangi gipoteza yozing. Zarur bo‘lsa tanaffus qiling yoki aniq savol bilan yordam so‘rang."
+      ],
+      "deliverables_uz": [
+        "Tuzatilgan exercise.py; to‘ldirilgan jurnal; test natijalari; qaysi tuzatish nega kerakligini tushuntiruvchi qisqa qayd."
+      ],
+      "rubric_uz": [
+        "Sabab va dalil: 0 — yo‘q; 1 — qisman; 2 — uch bosqich uchun xato turi va aniq kuzatuv bor.",
+        "Tuzatish: 0 — talab buzilgan; 1 — faqat oddiy holat; 2 — barcha berilgan kirishlar va cheklovlarda mos.",
+        "Regressiya: 0 — qayta test yo‘q; 1 — ayrim holatlar; 2 — oldingi bosqichlar ham qayta tekshirilgan.",
+        "Jarayon qaydi: 0 — yo‘q; 1 — tahrirlar bor, sabab yo‘q; 2 — gipoteza, tahrir va natija ajratilgan. Jami 8 gacha — ish dalili, sabr yoki shaxs tashxisi emas."
+      ]
+    }
+  ],
+  "study_files": [
+    {
+      "key": "debugging-starter",
+      "title_uz": "Debugging uchun starter",
+      "filename": "debugging-starter.py.txt",
+      "content": "# Python 3. Stage 1 intentionally contains a syntax error.\n# Fix each stage separately; record input, expected, actual, hypothesis, change, retest.\n\n# Stage 1: return the sum of a and b.\ndef add(a, b)\n    return a + b\n\n# Stage 2: price >= 0; 0 <= percent <= 100. Return the discounted price.\ndef discount(price, percent):\n    return price + price * percent / 100\n\n# Stage 3: available is a nonnegative integer. Borrowing requires one available copy.\ndef can_borrow(available):\n    return available >= 0\n"
+    }
+  ]
+}

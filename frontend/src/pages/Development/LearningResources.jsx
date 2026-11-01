@@ -1,3 +1,20 @@
+import ContentText from './ContentText.jsx';
+
+export function StudyFiles({ files, c }) {
+  if (!files?.length) return null;
+  function download(file) {
+    const url = URL.createObjectURL(new Blob([file.content], { type: 'text/plain;charset=utf-8' }));
+    const link = document.createElement('a');
+    link.href = url; link.download = file.filename; link.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+  return <section className="dev-panel dev-study-files"><h3>{c.studyFilesTitle}</h3>
+    {files.map((file) => <div key={file.key} lang={file.content_language}><p>{file.title}</p>
+      <button className="dev-button dev-button-secondary" onClick={() => download(file)}>{c.downloadFile}: {file.filename}</button>
+    </div>)}
+  </section>;
+}
+
 export function CourseNotation({ rules, language, c, open, onToggle }) {
   if (!rules?.length) return null;
   return <details className="dev-panel dev-notation" open={open} onToggle={(event) => onToggle(event.currentTarget.open)}>
@@ -19,8 +36,8 @@ export function MiniProjects({ projects, expanded, onToggle, c }) {
       <p className="dev-project-brief" lang={project.content_language}>{project.brief}</p>
       <div className="dev-project-sections">{['constraints', 'steps', 'deliverables', 'rubric'].map((field) => <section key={field}>
         <h4>{c[`project_${field}`]}</h4>{field === 'steps'
-          ? <ol lang={project.content_language}>{project[field].map((line, i) => <li key={i}>{line}</li>)}</ol>
-          : <ul lang={project.content_language}>{project[field].map((line, i) => <li key={i}>{line}</li>)}</ul>}
+          ? <ol lang={project.content_language}>{project[field].map((line, i) => <li key={i}><ContentText text={line} /></li>)}</ol>
+          : <ul lang={project.content_language}>{project[field].map((line, i) => <li key={i}><ContentText text={line} /></li>)}</ul>}
       </section>)}</div>
     </details>)}
   </section>;

@@ -122,6 +122,7 @@ def enrollment_state(enrollment, language='uz'):
         'learning_locked': live_check(enrollment),
         'notation': [] if live_check(enrollment) else locale.notation(enrollment.module),
         'projects': [] if hide_lessons else locale.projects(enrollment.module),
+        'study_files': [] if hide_lessons else locale.study_files(enrollment.module),
         'lessons': [] if hide_lessons else [
             lesson_card(lesson)
             for lesson in enrollment.module.lessons.select_related('skill').order_by('order')

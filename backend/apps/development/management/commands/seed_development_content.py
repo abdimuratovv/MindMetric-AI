@@ -12,7 +12,7 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument('--path', default=None, help='UTF-8 JSON manifest; defaults to the 1.1 module.')
         parser.add_argument('--all', action='store_true', help='Import all bundled modules atomically, prerequisite-first.')
-        parser.add_argument('--cluster', choices=['1', '2', 'all'], default='1', help='Bundle scope for --all; legacy default is cluster one.')
+        parser.add_argument('--cluster', choices=['1', '2', '3', 'all'], default='1', help='Bundle scope for --all; legacy default is cluster one.')
         parser.add_argument('--dry-run', action='store_true', help='Validate content and database references without writes.')
 
     def handle(self, *args, **options):

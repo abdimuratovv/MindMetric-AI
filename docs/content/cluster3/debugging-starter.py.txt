@@ -1,0 +1,14 @@
+# Python 3. Stage 1 intentionally contains a syntax error.
+# Fix each stage separately; record input, expected, actual, hypothesis, change, retest.
+
+# Stage 1: return the sum of a and b.
+def add(a, b)
+    return a + b
+
+# Stage 2: price >= 0; 0 <= percent <= 100. Return the discounted price.
+def discount(price, percent):
+    return price + price * percent / 100
+
+# Stage 3: available is a nonnegative integer. Borrowing requires one available copy.
+def can_borrow(available):
+    return available >= 0

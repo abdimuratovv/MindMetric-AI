@@ -1,0 +1,26 @@
+[
+  {
+    "key": "attention-code-review",
+    "source_hash": "f93ed26237995e354e8e33301089c44cd45b3e52d2da37930d8da14952a3fff8",
+    "cluster": 3,
+    "schema_version": 3
+  },
+  {
+    "key": "code-debugging",
+    "source_hash": "ed04dab6323665808507fbb0e275ac49fbbce2f143d87bd57db5d079d8c1a365",
+    "cluster": 3,
+    "schema_version": 3
+  },
+  {
+    "key": "documentation-learning",
+    "source_hash": "a60e8cc239e450843164544b769e6f3b395c24e45b98f9d65ee592797fc118bd",
+    "cluster": 3,
+    "schema_version": 3
+  },
+  {
+    "key": "teamwork-git",
+    "source_hash": "3705332000a5edcdabff90864bed715b7999ccb9fca336d9758fe8362b301c40",
+    "cluster": 3,
+    "schema_version": 3
+  }
+]

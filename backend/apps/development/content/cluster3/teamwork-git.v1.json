@@ -1,0 +1,1073 @@
+{
+  "sources": [
+    {
+      "id": "source-curriculum",
+      "filename": "Oqitish moduli.docx",
+      "sha256": "c11956549286d3f6c99ae327b0dc0ee6dcdc4714e4e069d385901f0f8d58a473"
+    },
+    {
+      "id": "authored-cluster3",
+      "filename": "authoring-manifest.json",
+      "sha256": "9111d5eeb6c31ef804e2e2408e33f31572c9c575d393f5192a0372cc4e6aab6c"
+    }
+  ],
+  "module": {
+    "key": "teamwork-git",
+    "version": 1,
+    "cluster": 3,
+    "order": 2,
+    "topic_number": "3.2",
+    "title_uz": "Kichik guruh loyihasi va Git",
+    "title_ru": "Командный мини-проект и Git",
+    "status": "draft",
+    "content_language": "uz",
+    "review_status": "internally_checked",
+    "indicator_keys": [
+      "teamwork"
+    ],
+    "diagnostic_coverage_note_uz": "Aniq diagnostika savoli xaritasi tasdiqlanmagan; boshlang‘ich tekshiruvdan foydalaning."
+  },
+  "skills": [
+    {
+      "key": "team-contract",
+      "title_uz": "Vazifalar va modul shartnomasi",
+      "prerequisite_keys": [],
+      "indicator_keys": [
+        "teamwork"
+      ]
+    },
+    {
+      "key": "team-pair",
+      "title_uz": "Juftlikda dasturlash",
+      "prerequisite_keys": [
+        "team-contract"
+      ],
+      "indicator_keys": [
+        "teamwork"
+      ]
+    },
+    {
+      "key": "git-staging",
+      "title_uz": "Fayl holati va commit",
+      "prerequisite_keys": [
+        "team-pair"
+      ],
+      "indicator_keys": [
+        "teamwork"
+      ]
+    },
+    {
+      "key": "git-review-merge",
+      "title_uz": "Branch, review va birlashtirish",
+      "prerequisite_keys": [
+        "git-staging"
+      ],
+      "indicator_keys": [
+        "teamwork"
+      ]
+    },
+    {
+      "key": "git-conflict",
+      "title_uz": "Konflikt va umumiy natija",
+      "prerequisite_keys": [
+        "git-review-merge"
+      ],
+      "indicator_keys": [
+        "teamwork"
+      ]
+    }
+  ],
+  "lessons": [
+    {
+      "key": "team-contract-lesson",
+      "skill_key": "team-contract",
+      "title_uz": "Vazifalar va modul shartnomasi",
+      "theory_uz": [
+        "Natija: Ishni mas’ul, kirish, chiqish va qabul mezoni bilan taqsimlaysiz.",
+        "Modul foydali alohida natija beradi: katalog kitob ma’lumotini topadi, berish moduli mavjud nusxani qarzga beradi. Vazifa nomi bilan birga mas’ul, bog‘liqlik va tugallanish mezoni yoziladi.",
+        "Shartnomada parametrlar, natija va xato holati kelishiladi. Masalan, find_book(book_id) topilmasa None qaytaradi. Biri None, boshqasi {} kutsa, kodlar alohida ishlasa ham birgalikda buziladi.",
+        "“Tugadi” degani kod yozildi emas: shartnoma testlari o‘tgan, kerakli izoh va hamkor reviewsi bor. To‘siqni erta aytish va yangi kelishuvni yozish jamoaning vaqtini tejaydi."
+      ],
+      "worked_example": {
+        "prompt_uz": "Katalogchi find_book(id) topilmaganda None qaytaradi. Berish moduli natijadan title o‘qiydi. Integratsiyadan oldingi kelishuv?",
+        "solution_steps_uz": [
+          "Topildi va topilmadi holatlarini yozing.",
+          "None bo‘lsa berishni rad etish kelishilsin.",
+          "Ikkala holat uchun umumiy test tuzing."
+        ],
+        "answer_uz": "Bir xil shartnoma va integratsiya testi."
+      }
+    },
+    {
+      "key": "team-pair-lesson",
+      "skill_key": "team-pair",
+      "title_uz": "Juftlikda dasturlash",
+      "theory_uz": [
+        "Natija: Driver va navigator vazifalarini hamda foydali rol almashishni tushuntirasiz.",
+        "Driver klaviaturada kod yozadi va niyatini ovoz chiqarib tushuntiradi. Navigator talab, keyingi qadam, test va xavflarni kuzatadi. Ikkalasi ham faol fikrlaydi; navigator tomoshabin emas.",
+        "Rolni kichik vazifa tugaganda yoki kelishilgan qisqa davrda almashtiring. Almashishdan oldin joriy holat, keyingi test va ochiq savol aytiladi. Tez yozuvchi doim driver bo‘lib qolmasin.",
+        "Fikrlar farq qilsa, talab va kichik testga qayting. “Sen noto‘g‘ri” o‘rniga “bo‘sh kirishda nima bo‘ladi?” deyish muammoni tekshirishga yordam beradi."
+      ],
+      "worked_example": {
+        "prompt_uz": "Driver kitob berish funksiyasini yozmoqda. Navigator qaytgan kitobni yana berish mumkinligini so‘raydi. Bu rolga mosmi?",
+        "solution_steps_uz": [
+          "Navigator talab va holatlarni tekshiradi.",
+          "Qaytarishdan keyingi holat uchun test yoziladi.",
+          "Natija bilan qaror qilinadi."
+        ],
+        "answer_uz": "Ha, bu foydali talab/test savoli."
+      }
+    },
+    {
+      "key": "git-staging-lesson",
+      "skill_key": "git-staging",
+      "title_uz": "Fayl holati va commit",
+      "theory_uz": [
+        "Natija: Working tree, staging va commit mazmunini farqlaysiz.",
+        "Working tree — fayllarning joriy nusxasi. git add tanlangan mazmunni staging (indeks)ga oladi. git commit indeksdagi holatni mahalliy tarixga yozadi. Commitni masofaviy serverga uzatish uchun alohida push kerak.",
+        "git status holatni ko‘rsatadi. git diff odatda working tree bilan indeks farqini, git diff --staged esa indeks bilan HEAD farqini ko‘rsatadi. Adddan keyingi yangi tahrir avtomatik stagingga kirmaydi.",
+        "Kichik mazmunli commit bir vazifa yoki tuzatishni tushuntiradi. Commitdan oldin diff va testni ko‘ring. O‘quv mashqlarida ham parol va tokenlarni commitga qo‘shmang."
+      ],
+      "worked_example": {
+        "prompt_uz": "Tracked note.txt avval v1. Uni v2 qildingiz, git add note.txt; keyin v3 qildingiz. Commit nima saqlaydi?",
+        "solution_steps_uz": [
+          "Add paytida indeksga v2 olindi.",
+          "Keyingi v3 faqat working treeda.",
+          "Oddiy git commit indeksdagi v2 ni saqlaydi."
+        ],
+        "answer_uz": "Commit v2; ishchi faylda v3 qoladi."
+      }
+    },
+    {
+      "key": "git-review-merge-lesson",
+      "skill_key": "git-review-merge",
+      "title_uz": "Branch, review va birlashtirish",
+      "theory_uz": [
+        "Natija: Kichik o‘zgarishni alohida branchda ko‘rib chiqib birlashtirish oqimini tanlaysiz.",
+        "Branch alohida ish yo‘lini beradi. O‘quv oqimi: kelishilgan bazadan branch, kichik o‘zgarish, test, commit, review, so‘ng maqsad branchga merge. Pull request hosting xizmatidagi review vositasi; mahalliy Gitning o‘zi emas.",
+        "git merge feature joriy branchga feature tarixini birlashtiradi. Avval joriy branchni tekshiring. Konfliktsiz merge mazmuniy to‘g‘rilikni kafolatlamaydi: natija test va shartnoma bilan tekshiriladi.",
+        "Review uchun nima o‘zgargani, nima sababdan va qanday tekshirilgani yoziladi. Hamkor fikri qayta tekshiriladi; tasdiqdan keyingi yangi tuzatish ham tegishli review/testdan o‘tadi."
+      ],
+      "worked_example": {
+        "prompt_uz": "Joriy branch main, toza holat. feature da katalog testi o‘tgan. git merge feature qaysi branchni yangilaydi?",
+        "solution_steps_uz": [
+          "Joriy branch main ekanini tekshiring.",
+          "Merge feature ni main ga oladi.",
+          "Birlashtirilgan holatda testni qaytaring."
+        ],
+        "answer_uz": "main yangilanadi; integratsiya testi baribir kerak."
+      }
+    },
+    {
+      "key": "git-conflict-lesson",
+      "skill_key": "git-conflict",
+      "title_uz": "Konflikt va umumiy natija",
+      "theory_uz": [
+        "Natija: Konfliktni talab bilan hal qilib, integratsiya va himoya dalilini tayyorlaysiz.",
+        "Bir joydagi mos kelmaydigan o‘zgarishlarda Git konfliktni ko‘rsatishi mumkin. <<<<<<<, ======= va >>>>>>> markerlari yakuniy kod emas. Har ikki tomondagi niyatni o‘qib, talabga mos yakuniy variant yoziladi.",
+        "Faqat bir tomonni ko‘r-ko‘rona olish boshqa talabni yo‘qotadi. Markerlarni olib tashlagach sintaksis, shartnoma va umumiy oqim test qilinadi; hal qilingan fayl add qilinadi va merge yakunlanadi.",
+        "Loyiha himoyasida har ishtirokchi o‘z moduli, interfeysi, bitta xato holati va umumiy natijadagi rolini tushuntiradi. Demo bilan birga test dalillari ko‘rsatiladi; commitlar soni shaxsning hamkorlik qobiliyati bahosi emas."
+      ],
+      "worked_example": {
+        "prompt_uz": "Bir branch limitni 3, ikkinchisi 5 qildi. Kelishilgan talab: bir o‘quvchiga ko‘pi bilan 4 kitob. Konflikt yechimi?",
+        "solution_steps_uz": [
+          "Ikkala variant talabga mos emas.",
+          "Limitni 4 qilib, markerlarni tozalang.",
+          "3, 4 va 5 kitob holatlarida talabni tekshiring."
+        ],
+        "answer_uz": "Uchinchi, kelishuvga mos variant zarur."
+      }
+    }
+  ],
+  "exercises": [
+    {
+      "key": "team-contract-practice-1",
+      "skill_key": "team-contract",
+      "purpose": "practice",
+      "format": "single",
+      "prompt_uz": "“Katalogni qil” vazifasini nima aniqlashtiradi?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Har kim barcha faylni bir vaqtda yozishi",
+          "feedback_uz": "Vazifalar va bog‘lanishlar aniqlanmaydi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Mas’ul, find_book kirish/chiqishi va topilmadi testi",
+          "feedback_uz": "Mas’uliyat va qabul mezoni tekshiriladi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Faqat “tezroq” deb yozish",
+          "feedback_uz": "Natija va shartnoma noaniq qoladi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "Kim va nima qilishi aniq bo‘lsin.",
+        "Natijani test bilan qabul qiling."
+      ],
+      "common_error_uz": "Topshiriq sarlavhasini shartnoma deb olmang.",
+      "hint_uz": "Bajarilganini qanday tekshirasiz?",
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.2/team-contract-practice-1"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "team-contract-practice-2",
+      "skill_key": "team-contract",
+      "purpose": "practice",
+      "format": "single",
+      "prompt_uz": "A modul narxni so‘mda, B modul tiyin deb qabul qiladi. Oldindan nima kelishiladi?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Birlik va zarur o‘zgartirish qoidasi",
+          "feedback_uz": "Bir xil son boshqa miqdor bo‘lib talqin qilinmaydi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Ikkalasida ham int ishlatish; birlikni yozmaslik",
+          "feedback_uz": "Bir xil tur turli birlikni ajratmaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Ikkala o‘zgaruvchini price deb nomlashning o‘zi",
+          "feedback_uz": "Bir xil nom birlik kelishuvini almashtirmaydi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "a"
+      },
+      "solution_steps_uz": [
+        "Kirish/chiqishning ma’nosi ham shartnomaga kiradi.",
+        "Pul birligini bitta qilib belgilang."
+      ],
+      "common_error_uz": "Faqat tur mosligi yetarli emas.",
+      "hint_uz": "100 soni qaysi birlikda?",
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.2/team-contract-practice-2"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "team-contract-precheck",
+      "skill_key": "team-contract",
+      "purpose": "precheck",
+      "format": "single",
+      "prompt_uz": "Funksiya ba’zan ro‘yxat, ba’zan matn qaytaradi; chaqiruvchi faqat ro‘yxat kutadi. Birinchi qadam?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Xato chiqqan satrni yashirish",
+          "feedback_uz": "Format nomosligi qoladi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Faqat bitta muvaffaqiyatli demo qilish",
+          "feedback_uz": "Xato holati tekshirilmaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Natija va xato formatini kelishib, ikkala tomonni moslashtirish",
+          "feedback_uz": "Mos interfeys yaratiladi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "Nomoslikni shartnomada hal qiling.",
+        "Oddiy va xato holatlarni tekshiring."
+      ],
+      "common_error_uz": "Alohida ishlash integratsiya isboti emas.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.2/team-contract-precheck"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "team-contract-postcheck",
+      "skill_key": "team-contract",
+      "purpose": "postcheck",
+      "format": "single",
+      "prompt_uz": "Hamkor moduliga bog‘liq ish to‘xtadi. Jamoaga nima yetkazish foydali?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Hamkorni dalilsiz ayblash",
+          "feedback_uz": "Vazifa yoki yechim aniqlashmaydi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Qaysi shartnoma kutilayotgani, ta’siri va vaqtinchalik test varianti",
+          "feedback_uz": "To‘siq bo‘yicha qaror qilish mumkin."
+        },
+        {
+          "id": "c",
+          "text_uz": "Indamay oxirgi kungacha kutish",
+          "feedback_uz": "Bog‘liqlik xavfi kech ochiladi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "To‘siqni aniq yozing.",
+        "Shartnoma asosidagi vaqtinchalik stubni kelishing."
+      ],
+      "common_error_uz": "To‘siqni yashirish hamkorlik emas.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.2/team-contract-postcheck"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "team-pair-practice-1",
+      "skill_key": "team-pair",
+      "purpose": "practice",
+      "format": "single",
+      "prompt_uz": "Navigator uchun eng mos ish?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Talab, chegaralar va keyingi testni tekshirish",
+          "feedback_uz": "Bu kod yozishni mazmunli kuzatadi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Faqat xabarlarni ko‘rish",
+          "feedback_uz": "Juftlikdagi faol vazifa bajarilmaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Driver izohini eshitmay boshqa modul yozish",
+          "feedback_uz": "Bu juftlikdagi umumiy diqqatni bo‘ladi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "a"
+      },
+      "solution_steps_uz": [
+        "Bitta vazifa birgalikda bajariladi.",
+        "Navigator talab va testga e’tibor beradi."
+      ],
+      "common_error_uz": "Navigator passiv kuzatuvchi emas.",
+      "hint_uz": "Klaviaturadan tashqari qaysi fikrlash ishi kerak?",
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.2/team-pair-practice-1"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "team-pair-practice-2",
+      "skill_key": "team-pair",
+      "purpose": "practice",
+      "format": "single",
+      "prompt_uz": "Rol almashishda nimani topshirish kerak?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Faqat klaviaturani",
+          "feedback_uz": "Kontekst yo‘qolishi mumkin."
+        },
+        {
+          "id": "b",
+          "text_uz": "Faqat oxirgi satr raqamini",
+          "feedback_uz": "Maqsad va tekshiruv rejasi noma’lum qoladi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Joriy holat, keyingi qadam va hali yechilmagan savol",
+          "feedback_uz": "Yangi driver ishni tushunib davom ettiradi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "Holatni qisqa tushuntiring.",
+        "Keyingi testni ayting."
+      ],
+      "common_error_uz": "Jismoniy almashish bilim almashishning o‘zi emas.",
+      "hint_uz": "Hamkor darhol nimani bilishi kerak?",
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.2/team-pair-practice-2"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "team-pair-precheck",
+      "skill_key": "team-pair",
+      "purpose": "precheck",
+      "format": "single",
+      "prompt_uz": "Juftlik yechim bo‘yicha kelisha olmayapti. Foydali qadam?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Testlarni taqiqlash",
+          "feedback_uz": "Tekshirish imkoniyati kamayadi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Talabga oid kichik test bilan variantlarni solishtirish",
+          "feedback_uz": "Qaror dalilga tayanadi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Balandroq gapirgan variantni olish",
+          "feedback_uz": "To‘g‘rilik ovozga bog‘liq emas."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "Kelishmovchilikni aniq shartga aylantiring.",
+        "Test natijasini talab bilan solishtiring."
+      ],
+      "common_error_uz": "Obro‘ dalil o‘rnini bosmaydi.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.2/team-pair-precheck"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "team-pair-postcheck",
+      "skill_key": "team-pair",
+      "purpose": "postcheck",
+      "format": "single",
+      "prompt_uz": "Faqat bitta a’zo kod va sababni tushunadi. Qaysi yakunlash qadami mos?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Rolni almashtirib, hamkor asosiy oqimni test bilan tushuntirsin",
+          "feedback_uz": "Bilimni bo‘lishish kuzatiladigan bo‘ladi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Faqat bitta a’zo nomidan topshirish",
+          "feedback_uz": "Jamoaviy o‘rganish tekshirilmaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Kodga tasodifiy izoh qo‘shish",
+          "feedback_uz": "Hamkor tushunishini ko‘rsatmaydi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "a"
+      },
+      "solution_steps_uz": [
+        "Hamkor izoh va test bilan qayta ko‘rsatsin.",
+        "Savol tug‘ilsa shartnomaga qayting."
+      ],
+      "common_error_uz": "Commitlar soni bilim almashishni o‘zi isbotlamaydi.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.2/team-pair-postcheck"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "git-staging-practice-1",
+      "skill_key": "git-staging",
+      "purpose": "practice",
+      "format": "single",
+      "prompt_uz": "git add file.py dan keyin oddiy git commit nimani oladi?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Har doim barcha disklardagi fayllarni",
+          "feedback_uz": "Git repozitoriy va indeks doirasida ishlaydi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Faqat serverdagi fayllarni",
+          "feedback_uz": "Mahalliy commit server nusxasidan olinmaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Indeksdagi tanlangan mazmunni",
+          "feedback_uz": "Commit staging holatini yozadi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "Add indeksni tayyorlaydi.",
+        "Commit shu holatni yozadi."
+      ],
+      "common_error_uz": "Working tree va indeks doim bir xil emas.",
+      "hint_uz": "Add nima tayyorlaydi?",
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.2/git-staging-practice-1"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "git-staging-practice-2",
+      "skill_key": "git-staging",
+      "purpose": "practice",
+      "format": "single",
+      "prompt_uz": "Keyingi commitda nima bo‘lishini ko‘rish uchun qaysi diff?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "git log --oneline",
+          "feedback_uz": "Bu oldingi tarixni ko‘rsatadi."
+        },
+        {
+          "id": "b",
+          "text_uz": "git diff --staged",
+          "feedback_uz": "Indeksni HEAD bilan taqqoslaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Faqat git diff",
+          "feedback_uz": "Odatda stagingga olinmagan farqni ko‘rsatadi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "Commitning manbasi indeks.",
+        "Shuning diffini ko‘ring."
+      ],
+      "common_error_uz": "Tarix bilan tayyorlanayotgan o‘zgarishni farqlang.",
+      "hint_uz": "Indeksni qaysi parametr ko‘rsatadi?",
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.2/git-staging-practice-2"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "git-staging-precheck",
+      "skill_key": "git-staging",
+      "purpose": "precheck",
+      "format": "single",
+      "prompt_uz": "Mahalliy commit yaratildi, push qilinmadi. Hamkor remote orqali uni oladimi?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Yo‘q, commit hali remote ga uzatilmagan",
+          "feedback_uz": "Commit va push alohida amallar."
+        },
+        {
+          "id": "b",
+          "text_uz": "Ha, commit har doim avtomatik push qiladi",
+          "feedback_uz": "Oddiy Git commit bunday qilmaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Ha, git status uzatadi",
+          "feedback_uz": "Status kuzatuv buyrug‘i."
+        }
+      ],
+      "answer_key": {
+        "option_id": "a"
+      },
+      "solution_steps_uz": [
+        "Commit mahalliy tarixga yozildi.",
+        "Remote hali yangilanmagan."
+      ],
+      "common_error_uz": "Mahalliy saqlash va uzatishni aralashtirmang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.2/git-staging-precheck"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "git-staging-postcheck",
+      "skill_key": "git-staging",
+      "purpose": "postcheck",
+      "format": "single",
+      "prompt_uz": "Tracked a.txt v1 edi. v2 qilib add, keyin v3 qilib qayta add qilindi. Oddiy commitdagi mazmun?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "v1",
+          "feedback_uz": "Indeks ikki marta yangilandi."
+        },
+        {
+          "id": "b",
+          "text_uz": "v2",
+          "feedback_uz": "Bu birinchi add holati, ikkinchisi uni almashtirdi."
+        },
+        {
+          "id": "c",
+          "text_uz": "v3",
+          "feedback_uz": "Ikkinchi add indeksni yangiladi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "Oxirgi add paytidagi mazmunni toping.",
+        "U v3."
+      ],
+      "common_error_uz": "Indeks eng birinchi addda muzlab qolmaydi.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.2/git-staging-postcheck"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "git-review-merge-practice-1",
+      "skill_key": "git-review-merge",
+      "purpose": "practice",
+      "format": "single",
+      "prompt_uz": "Merge oldidan eng foydali tekshiruv?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Faqat branch testini ko‘rish, joriy branchni tekshirmaslik",
+          "feedback_uz": "To‘g‘ri kod ham noto‘g‘ri branchga qo‘shilishi mumkin."
+        },
+        {
+          "id": "b",
+          "text_uz": "Joriy branch, diff va test natijasi",
+          "feedback_uz": "Qayerga va nimani qo‘shish ma’lum."
+        },
+        {
+          "id": "c",
+          "text_uz": "Faqat commit xabarini o‘qish, diff va testni ko‘rmaslik",
+          "feedback_uz": "Tavsif haqiqiy o‘zgarish va to‘g‘rilikni kafolatlamaydi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "Maqsad branchni aniqlang.",
+        "O‘zgarish va tekshiruvni ko‘ring."
+      ],
+      "common_error_uz": "Merge buyrug‘ini kontekstsiz bermang.",
+      "hint_uz": "Merge qaysi branchga ta’sir qiladi?",
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.2/git-review-merge-practice-1"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "git-review-merge-practice-2",
+      "skill_key": "git-review-merge",
+      "purpose": "practice",
+      "format": "single",
+      "prompt_uz": "Review tavsifida nima foydali?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Muammo, yangi xatti-harakat va bajarilgan test",
+          "feedback_uz": "Reviewer maqsad va dalilni baholay oladi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Faqat “tayyor”",
+          "feedback_uz": "Maqsad va tekshiruv noma’lum."
+        },
+        {
+          "id": "c",
+          "text_uz": "Barcha eski commitlarni izohsiz ko‘chirish",
+          "feedback_uz": "Joriy o‘zgarishning mazmunini yashiradi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "a"
+      },
+      "solution_steps_uz": [
+        "Nima va nima uchun o‘zgarganini yozing.",
+        "Tekshiruv dalilini qo‘shing."
+      ],
+      "common_error_uz": "Tavsif kodni ko‘rish uchun kontekst beradi.",
+      "hint_uz": "Hamkor nimani tekshirishini biladimi?",
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.2/git-review-merge-practice-2"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "git-review-merge-precheck",
+      "skill_key": "git-review-merge",
+      "purpose": "precheck",
+      "format": "single",
+      "prompt_uz": "Joriy branch review. git merge main bajarildi. Qaysi branch yangilanishi mumkin?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "main har doim",
+          "feedback_uz": "Argument maqsad branchni bildirmaydi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Barcha branchlar",
+          "feedback_uz": "Merge barcha ko‘rsatkichlarni yangilamaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "review",
+          "feedback_uz": "Merge joriy branchga boshqa tarixni oladi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "Joriy branch review.",
+        "main uning ichiga birlashtiriladi."
+      ],
+      "common_error_uz": "Merge argumenti bilan maqsadni adashtirmang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.2/git-review-merge-precheck"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "git-review-merge-postcheck",
+      "skill_key": "git-review-merge",
+      "purpose": "postcheck",
+      "format": "single",
+      "prompt_uz": "Merge konfliktsiz o‘tdi. Ikki modul turli birlik kutmoqda. Xulosa?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Faqat branchni qayta nomlash yetarli",
+          "feedback_uz": "Birliklar o‘zgarmaydi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Matn birlashdi, lekin semantik integratsiya testi kerak",
+          "feedback_uz": "Git biznes shartnomasini isbotlamaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Konflikt yo‘qligi barcha talab bajarilganini bildiradi",
+          "feedback_uz": "Birlik nomosligi qolishi mumkin."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "Matn va ma’no mosligini ajrating.",
+        "Umumiy oqimni tekshiring."
+      ],
+      "common_error_uz": "Git muvaffaqiyati dastur to‘g‘riligi emas.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.2/git-review-merge-postcheck"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "git-conflict-practice-1",
+      "skill_key": "git-conflict",
+      "purpose": "practice",
+      "format": "single",
+      "prompt_uz": "Konfliktda birinchi nima qilinadi?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Ikkala o‘zgarish va talabni tushunish",
+          "feedback_uz": "Yakuniy kod mazmun bilan tanlanadi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Har doim yuqoridagi bo‘lakni olish",
+          "feedback_uz": "U boshqa talabni yo‘qotishi mumkin."
+        },
+        {
+          "id": "c",
+          "text_uz": "Faqat marker satrlarini o‘chirib, ikkala kodni qoldirish",
+          "feedback_uz": "Takror yoki zid kod qolishi mumkin."
+        }
+      ],
+      "answer_key": {
+        "option_id": "a"
+      },
+      "solution_steps_uz": [
+        "Har tomonning niyatini aniqlang.",
+        "Yagona mos yechim yozing."
+      ],
+      "common_error_uz": "Konflikt tanlovini joylashuvga bog‘lamang.",
+      "hint_uz": "Qaysi talab saqlanishi kerak?",
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.2/git-conflict-practice-1"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "git-conflict-practice-2",
+      "skill_key": "git-conflict",
+      "purpose": "practice",
+      "format": "single",
+      "prompt_uz": "Markerlar olib tashlandi. Merge tugatishdan oldin nima kerak?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Faqat faylni saqlash",
+          "feedback_uz": "Test va indeks holati tekshirilmaydi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Talabni o‘chirish",
+          "feedback_uz": "To‘g‘rilik mezoni yo‘qoladi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Sintaksis va umumiy test, keyin hal qilingan faylni add qilish",
+          "feedback_uz": "Yakuniy fayl tekshiriladi va indeksga olinadi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "Marker yo‘qligi yetmaydi.",
+        "Kod va integratsiyani tekshirib indeksga oling."
+      ],
+      "common_error_uz": "Matn tozaligi mazmun to‘g‘riligini kafolatlamaydi.",
+      "hint_uz": "Gitga hal qilingan mazmun qanday beriladi?",
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.2/git-conflict-practice-2"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "git-conflict-precheck",
+      "skill_key": "git-conflict",
+      "purpose": "precheck",
+      "format": "single",
+      "prompt_uz": "Bir modul testdan o‘tdi, umumiy kitob berish oqimi yiqildi. Nima tekshiriladi?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Faqat alohida o‘tgan testni ko‘rsatish",
+          "feedback_uz": "Umumiy nosozlik qoladi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Modullar chegarasidagi kirish/chiqish va holat almashuvi",
+          "feedback_uz": "Integratsiya muammosi shu yerda bo‘lishi mumkin."
+        },
+        {
+          "id": "c",
+          "text_uz": "Faqat alohida modulning ichki testini yana qaytarish",
+          "feedback_uz": "U modul chegarasidagi kelishuvni qamramasligi mumkin."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "Modullar qanday ulanayotganini tekshiring.",
+        "Umumiy test kirishini qaytaring."
+      ],
+      "common_error_uz": "Alohida muvaffaqiyat umumiy muvaffaqiyat emas.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.2/git-conflict-precheck"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "key": "git-conflict-postcheck",
+      "skill_key": "git-conflict",
+      "purpose": "postcheck",
+      "format": "single",
+      "prompt_uz": "Himoyada jamoaning eng foydali dalili?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Har a’zo interfeysni tushuntiradi, umumiy oqim va xato holati test bilan ko‘rsatiladi",
+          "feedback_uz": "Hissa, tushunish va natija kuzatiladi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Faqat eng ko‘p commit qilgan odam gapiradi",
+          "feedback_uz": "Boshqalarning tushunishi bilinmaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Faqat bosh ekran rasmi",
+          "feedback_uz": "Funksional oqim isbotlanmaydi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "a"
+      },
+      "solution_steps_uz": [
+        "Natijani qayta ko‘rsatish mumkin bo‘lsin.",
+        "Har a’zo o‘z chegarasini tushuntirsin."
+      ],
+      "common_error_uz": "Ko‘rinishning o‘zi hamkorlik natijasini isbotlamaydi.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.2/git-conflict-postcheck"
+      },
+      "difficulty": "medium"
+    }
+  ],
+  "diagnostic_links": [],
+  "blueprint": {
+    "practice_order": [
+      "team-contract-practice-1",
+      "team-pair-practice-1",
+      "git-staging-practice-1",
+      "git-review-merge-practice-1",
+      "git-conflict-practice-1",
+      "team-contract-practice-2",
+      "team-pair-practice-2",
+      "git-staging-practice-2",
+      "git-review-merge-practice-2",
+      "git-conflict-practice-2"
+    ],
+    "precheck_order": [
+      "team-contract-precheck",
+      "team-pair-precheck",
+      "git-staging-precheck",
+      "git-review-merge-precheck",
+      "git-conflict-precheck"
+    ],
+    "postcheck_order": [
+      "team-contract-postcheck",
+      "team-pair-postcheck",
+      "git-staging-postcheck",
+      "git-review-merge-postcheck",
+      "git-conflict-postcheck"
+    ],
+    "matched_pairs": [
+      {
+        "skill_key": "team-contract",
+        "precheck_key": "team-contract-precheck",
+        "postcheck_key": "team-contract-postcheck",
+        "difficulty": "medium"
+      },
+      {
+        "skill_key": "team-pair",
+        "precheck_key": "team-pair-precheck",
+        "postcheck_key": "team-pair-postcheck",
+        "difficulty": "medium"
+      },
+      {
+        "skill_key": "git-staging",
+        "precheck_key": "git-staging-precheck",
+        "postcheck_key": "git-staging-postcheck",
+        "difficulty": "medium"
+      },
+      {
+        "skill_key": "git-review-merge",
+        "precheck_key": "git-review-merge-precheck",
+        "postcheck_key": "git-review-merge-postcheck",
+        "difficulty": "medium"
+      },
+      {
+        "skill_key": "git-conflict",
+        "precheck_key": "git-conflict-precheck",
+        "postcheck_key": "git-conflict-postcheck",
+        "difficulty": "medium"
+      }
+    ],
+    "unseen_postcheck_sets": 1,
+    "comparison_note_uz": "Ko‘nikmalar bo‘yicha juftlangan; statistik tenglashtirish yoki shaxs xususiyatlari o‘sishi da’vosi yo‘q.",
+    "exhaustion_note_uz": "Bitta mustaqil yakuniy to‘plam mavjud; qayta mashq mustaqil o‘sish o‘lchovi emas."
+  },
+  "schema_version": 3,
+  "notation_uz": [
+    "Python 3: = qiymat beradi; ==, !=, <, >, <=, >= taqqoslaydi.",
+    "Python bloklari : va bir xil chekinish bilan yoziladi; satr oxirida ; majburiy emas.",
+    "Ro‘yxat indekslari 0 dan boshlanadi. range(a, b) yuqori b chegarasini kiritmaydi.",
+    "and, or, not — mantiqiy amallar; True va False mantiqiy qiymatlar.",
+    "None — alohida qiymat. return funksiyadan natija beradi; print qiymatni ko‘rsatadi.",
+    "Trace jadvali satrdan keyingi holatni yozadi. Debugger strelkasi hali bajarilmagan satrni ko‘rsatadi.",
+    "Git: working tree — ishchi nusxa, index — tanlangan holat, commit — mahalliy tarix.",
+    "StudyTools 1.0 — kursning lokal o‘quv API si. Topshiriqdagi hujjat va versiyaga amal qiling."
+  ],
+  "projects": [
+    {
+      "key": "team-library",
+      "assessment": "self_review",
+      "title_uz": "Kutubxona uchun jamoaviy miniloyiha",
+      "brief_uz": "2–3 kishilik guruhda modul shartnomasi, Git, review va integratsiyani amalda qo‘llash.",
+      "constraints_uz": [
+        "Python 3, Git va alohida yangi lokal repozitoriy; haqiqiy talaba yoki kitobxon ma’lumotlari kerak emas. Remote ixtiyoriy.",
+        "Boshlang‘ich catalog = {\"b1\": {\"title\": \"Algorithms\", \"total\": 1, \"available\": 1}}; loans = {}. loans kaliti (reader, book_id), qiymati musbat butun miqdor.",
+        "find_book(catalog, book_id) yangi dict yoki None qaytaradi; asl catalog o‘zgarmaydi. borrow(catalog, loans, reader, book_id): ok, not_found yoki unavailable. return_book shu parametrlar bilan: ok, not_found yoki no_loan.",
+        "Old shart: reader va book_id bo‘sh bo‘lmagan matn; catalog izchil, total va available manfiy bo‘lmagan butun; available <= total; mavjud qarzlar hisobga mos. Paralellik, saqlash bazasi va autentifikatsiya bu mashqqa kirmaydi.",
+        "Muvaffaqiyatli berish available ni 1 kamaytiradi va qarzni 1 oshiradi. Qaytarish faqat shu reader qarzi bo‘lsa bajariladi. Rad holatida catalog va loans o‘zgarmaydi; nol qarz kaliti o‘chiriladi.",
+        "Har kitob uchun available + barcha reader qarzlari yig‘indisi = total. Shu invariant har muvaffaqiyatli amaldan keyin saqlansin."
+      ],
+      "steps_uz": [
+        "Rollar: katalog va interfeys; berish/qaytarish; integratsiya/test. 2 kishi bo‘lsa integratsiya birga. Driver/navigator rolini almashing, har a’zo boshqa modulni ham review qilsin.",
+        "CONTRACT.md da imzo, qaytish kodi va rad holatini yozing. Har vazifa uchun mas’ul va qabul testini belgilang. Avval shartnomaga mos kichik stub bilan bog‘lanishni tekshiring.",
+        "Alohida branchlar va kichik commitlarda ishlang. git status, git diff va git diff --staged ni ko‘ring. Birlashtirishdan oldin hamkor reviewsi va test bo‘lsin.",
+        "Konflikt simulyatsiyasi: toza bazada POLICY.md ga display_limit=2 yozib commit qiling. review-a va review-b ayni bazadan chiqsin. Birida 3, boshqasida 5 qiling. main ga birini, keyin ikkinchisini merge qiling; konfliktni yakuniy kelishuv display_limit=4 bilan hal qiling. Bu ko‘rsatish limiti, qarz olish cheklovi emas.",
+        "Umumiy oqim: b1 topish → r1 ga berish → r2 ga takror berishni rad qilish → r1 qaytarishi → r2 ga berish. Yo‘q kitob va qarzsiz qaytarishni ham sinang.",
+        "Har a’zo o‘z modulini, boshqa modulga bog‘lanishini, bitta xato holatini va bitta review qarorini tushuntirsin."
+      ],
+      "deliverables_uz": [
+        "Kod; CONTRACT.md; vazifalar/rollar jadvali; kichik Git log va diff dalillari; konflikt yechimi qaydi; umumiy test natijalari; qisqa himoya. Commitlar soni bo‘yicha a’zolarni reyting qilmang."
+      ],
+      "rubric_uz": [
+        "Shartnoma: 0 — yo‘q; 1 — qisman; 2 — imzo, holat kodi va old shartlar mos.",
+        "Integratsiya: 0 — umumiy oqim yo‘q; 1 — faqat oddiy yo‘l; 2 — umumiy yo‘l, rad holati va invariant tekshirilgan.",
+        "Hamkorlik dalili: 0 — yo‘q; 1 — ish bo‘lingan, review yo‘q; 2 — rol almashish va dalilli o‘zaro review bor.",
+        "Git va himoya: 0 — iz yo‘q; 1 — commit yoki tushuntirish yetishmaydi; 2 — mazmunli diff, konflikt sababi va har a’zoning tushuntirishi bor. Jami 8 gacha — loyiha rubrikasi."
+      ]
+    }
+  ],
+  "study_files": []
+}

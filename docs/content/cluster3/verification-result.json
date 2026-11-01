@@ -1,0 +1,42 @@
+{
+  "status": "passed",
+  "scope": "offline standalone resources only",
+  "modules": 4,
+  "skills": 20,
+  "lessons": 20,
+  "worked_examples": 20,
+  "questions": 80,
+  "question_formats": {
+    "single": 68,
+    "numeric": 12
+  },
+  "numeric_reference_answers": 12,
+  "choice_key_rotation_checks": 68,
+  "open_activities": 3,
+  "python_reference_checks": 143,
+  "git_reference_checks": 13,
+  "negative_cases_rejected": [
+    "missing translation",
+    "empty Russian title",
+    "wrong answer ID",
+    "duplicate question",
+    "invalid locale option",
+    "check hint",
+    "unknown skill",
+    "prerequisite cycle",
+    "blueprint overlap",
+    "matched pair purpose",
+    "changed constant",
+    "changed code",
+    "claim importability",
+    "stale locale hash"
+  ],
+  "languages": [
+    "uz",
+    "ru"
+  ],
+  "curriculum_verified_on_this_host": true,
+  "integration_status": "not_importable",
+  "external_pedagogical_review": false,
+  "psychometric_calibration": false
+}

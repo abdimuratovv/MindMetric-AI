@@ -1,0 +1,968 @@
+{
+  "resource_format": "mindmetric-cluster3-draft-v1",
+  "integration_status": "not_importable",
+  "sources": [
+    {
+      "id": "source-curriculum",
+      "filename": "Oqitish moduli.docx",
+      "sha256": "c11956549286d3f6c99ae327b0dc0ee6dcdc4714e4e069d385901f0f8d58a473"
+    },
+    {
+      "id": "authored-cluster3",
+      "filename": "authoring-manifest.json",
+      "sha256": "9111d5eeb6c31ef804e2e2408e33f31572c9c575d393f5192a0372cc4e6aab6c"
+    }
+  ],
+  "module": {
+    "key": "attention-code-review",
+    "version": 1,
+    "cluster": 3,
+    "order": 3,
+    "topic_number": "3.3",
+    "title_uz": "Diqqat va aniqlik uchun code review",
+    "title_ru": "Внимательность и точность при ревью кода",
+    "status": "draft",
+    "content_language": "uz",
+    "review_status": "internally_checked"
+  },
+  "skills": [
+    {
+      "key": "review-requirement",
+      "title_uz": "Talab va diffni solishtirish",
+      "prerequisite_keys": []
+    },
+    {
+      "key": "review-tokens",
+      "title_uz": "Nomlar, operatorlar va bloklar",
+      "prerequisite_keys": [
+        "review-requirement"
+      ]
+    },
+    {
+      "key": "review-boundaries",
+      "title_uz": "Chegaraviy holat va invariant",
+      "prerequisite_keys": [
+        "review-tokens"
+      ]
+    },
+    {
+      "key": "review-feedback",
+      "title_uz": "Aniq va hurmatli izoh",
+      "prerequisite_keys": [
+        "review-boundaries"
+      ]
+    },
+    {
+      "key": "review-followup",
+      "title_uz": "Tuzatishni qayta tekshirish",
+      "prerequisite_keys": [
+        "review-feedback"
+      ]
+    }
+  ],
+  "lessons": [
+    {
+      "key": "review-requirement-lesson",
+      "skill_key": "review-requirement",
+      "title_uz": "Talab va diffni solishtirish",
+      "outcome_uz": "O‘zgarishning talabni bajarayotganini va uning ta’sir doirasini tekshirasiz.",
+      "theory_uz": [
+        "Review avval talabdan boshlanadi: nima o‘zgarishi va nima saqlanishi kerak? Diffdagi + qo‘shilgan, - olib tashlangan satrni bildiradi; bu belgilar kodning arifmetik operatori emas. Atrofdagi kodni ham o‘qing.",
+        "Avval funksional talab, keyin aniqlik va o‘qiluvchanlikni tekshiring. Chiroyli format noto‘g‘ri hisobni oqlamaydi. Kichik diff ham autentifikatsiya yoki chegara xatti-harakatini o‘zgartirishi mumkin.",
+        "Review savol yoki dalilli taklif beradi. Agar kod allaqachon to‘g‘ri bo‘lsa, sun’iy xato qidirmang: tekshirilgan talab va dalilni yozib tasdiqlash ham to‘g‘ri natija."
+      ],
+      "worked_example": {
+        "prompt_uz": "Talab: 10 va undan katta qiymat qabul qilinsin. Diff:\n```diff\n-ok = x > 10\n+ok = x >= 10\n```\nO‘zgarishni qanday tekshirasiz?",
+        "solution_steps_uz": [
+          "Talab tenglikni ham oladi.",
+          "9, 10 va 11 ni solishtiring.",
+          "Yangi shart ayni chegarani to‘g‘rilaydi."
+        ],
+        "answer_uz": "9 rad, 10 va 11 qabul; diff talabga mos."
+      }
+    },
+    {
+      "key": "review-tokens-lesson",
+      "skill_key": "review-tokens",
+      "title_uz": "Nomlar, operatorlar va bloklar",
+      "outcome_uz": "Bir belgi yoki chekinishdagi o‘zgarishning ma’nosini tekshirasiz.",
+      "theory_uz": [
+        "Bir-biriga o‘xshash nomlar boshqa o‘zgaruvchi bo‘lishi mumkin: total va tota1, count va counts. Nom aniqlanganmi, ayni vazifani bildiradimi? Ko‘rish bilan cheklanmay ta’rif va ishlatishni izlang.",
+        "Python da = qiymat beradi, == taqqoslaydi. >= bilan > tenglik holatida farq qiladi. and/or shartni o‘zgartiradi. Python bloklari chekinish bilan ajraladi; semicolon satr oxirida majburiy emas.",
+        "Muammo turini aniq nomlang: aniqlanmagan nom bajarilish xatosi bo‘lishi mumkin, noto‘g‘ri aniqlangan nom esa jim noto‘g‘ri natija beradi. Rasmiy sintaksisni boshqa tildan taxmin qilib qo‘llamang."
+      ],
+      "worked_example": {
+        "prompt_uz": "Python 3:\n```python\ntotal = 12\ntota1 = 2\nprint(tota1)\n```\nTalab total ni chiqarish. Muammo?",
+        "solution_steps_uz": [
+          "Ikkala nom aniqlangan.",
+          "Print oxiri 1 raqamli nomni olgan.",
+          "Natija 2, keraklisi 12."
+        ],
+        "answer_uz": "Mantiqiy nom xatosi; print(total) kerak."
+      }
+    },
+    {
+      "key": "review-boundaries-lesson",
+      "skill_key": "review-boundaries",
+      "title_uz": "Chegaraviy holat va invariant",
+      "outcome_uz": "Oddiy misoldan tashqari buzuvchi kirishni va saqlanishi kerak bo‘lgan xususiyatni topasiz.",
+      "theory_uz": [
+        "Invariant — jarayon davomida saqlanishi kerak bo‘lgan xususiyat. Kutubxonada mavjud nusxalar soni manfiy bo‘lmasligi shunday mezon. Har qadamdan keyin uni tekshiring.",
+        "Chegaraviy kirishlar: bo‘sh ro‘yxat, bitta element, oxirgi indeks, limitga teng qiymat. Qarshi misol koddagi da’voni buzadi: “hamma sonlarda maksimum” funksiyasi faqat musbatlarda ishlasa, manfiy ro‘yxat uni fosh qiladi.",
+        "Test kutilgan natijasi koddan ko‘chirib olinmaydi. Avval talabni yozing, keyin natijani mustaqil hisoblang. Bitta testning o‘tishi umumiy isbot emas."
+      ],
+      "worked_example": {
+        "prompt_uz": "max_value boshida best=0, keyin kattaroq elementni oladi. Talab: bo‘sh bo‘lmagan butun sonlar ro‘yxatining maksimumi. [-5, -2] da nima bo‘ladi?",
+        "solution_steps_uz": [
+          "Hech bir element 0 dan katta emas.",
+          "Kod 0 ni qoldiradi.",
+          "Haqiqiy maksimum -2; best birinchi elementdan boshlanishi mumkin."
+        ],
+        "answer_uz": "0 noto‘g‘ri; manfiylar qarshi misol bo‘ldi."
+      }
+    },
+    {
+      "key": "review-feedback-lesson",
+      "skill_key": "review-feedback",
+      "title_uz": "Aniq va hurmatli izoh",
+      "outcome_uz": "Joy, talab, qarshi misol va taklif bilan foydali review izohini yozasiz.",
+      "theory_uz": [
+        "Yaxshi izoh koddagi joyni, talabga zid holatni va uning ta’sirini ko‘rsatadi. “Shu shartda x=0 noto‘g‘ri rad qilinadi, talab nolga ruxsat beradi” tekshiriladigan fikrdir.",
+        "Majburiy tuzatishni shaxsiy diddan ajrating: nuqson, savol yoki ixtiyoriy uslub taklifi ekanini ayting. Izoh odamning qobiliyatiga emas, kod va dalilga qaratiladi.",
+        "Muallif fikrni tushunmasa, kichik misol bering. O‘zingiz ham xato qilishingiz mumkin: talab aniqlashsa, izohni yangilang. Review maqsadi bahs yutish emas, tekshirilgan yaxshi o‘zgarishdir."
+      ],
+      "worked_example": {
+        "prompt_uz": "Kod x > 0, talab x >= 0. “Yomon kod!” o‘rniga izoh yozing.",
+        "solution_steps_uz": [
+          "Muammoli shartni ko‘rsating.",
+          "x=0 qarshi misolini bering.",
+          ">= va chegara testini taklif qiling."
+        ],
+        "answer_uz": "“x=0 rad bo‘lyapti; talab uni qabul qiladi. >= ni va 0 testini qo‘sha olamizmi?”"
+      }
+    },
+    {
+      "key": "review-followup-lesson",
+      "skill_key": "review-followup",
+      "title_uz": "Tuzatishni qayta tekshirish",
+      "outcome_uz": "Izoh yopilishidan oldin kod, test va umumiy ta’sirni tekshirasiz.",
+      "theory_uz": [
+        "“Tuzatildi” degan xabar tekshiruv dalili emas. Yangilangan diffni, ayni qarshi misolni va atrofdagi talablarni qayta ko‘ring. Yangi o‘zgarish eski review qamrovini oshirib yuborsa, uni ham tekshiring.",
+        "Qisqa ro‘yxat yordam beradi: talab; nom/operator/blok; bo‘sh va chegara holat; xato holatida holat o‘zgarmasligi; test; ortiqcha o‘zgarish. Ro‘yxat fikrlashga yordamchi, satrlarni mexanik belgilash emas.",
+        "Review yakunida qaysi holatlar tekshirilgani va qaysi cheklov qolgani aytiladi. Bir xil savolni cheksiz takrorlash o‘rniga tekshiruv dalili saqlanadi."
+      ],
+      "worked_example": {
+        "prompt_uz": "Izoh: 0 noto‘g‘ri rad qilingan. Tuzatishdan keyin 0 o‘tdi, lekin -1 ham o‘tdi. Reviewni yopasizmi?",
+        "solution_steps_uz": [
+          "Talab manfiy qiymatni rad qiladi.",
+          "0 testi o‘tishi yetarli emas.",
+          "-1 uchun regressiyani tuzatishni so‘rang."
+        ],
+        "answer_uz": "Yo‘q, yangi regressiya bor."
+      }
+    }
+  ],
+  "exercises": [
+    {
+      "key": "review-requirement-practice-1",
+      "skill_key": "review-requirement",
+      "purpose": "practice",
+      "format": "single",
+      "prompt_uz": "Reviewda birinchi qaysi savol foydali?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Qaysi talab o‘zgaradi va kutilgan natija qanday?",
+          "feedback_uz": "To‘g‘rilik uchun mezon beradi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Faqat o‘zgargan satrlar kammi?",
+          "feedback_uz": "Kichik diff ham talabni buzishi mumkin."
+        },
+        {
+          "id": "c",
+          "text_uz": "Kod formatlash qoidasiga mosmi, talabni keyin ko‘ramizmi?",
+          "feedback_uz": "Format foydali, ammo avval xatti-harakat mezoni kerak."
+        }
+      ],
+      "answer_key": {
+        "option_id": "a"
+      },
+      "solution_steps_uz": [
+        "Avval maqsadni aniqlang.",
+        "Diffni shu maqsadga nisbatan baholang."
+      ],
+      "common_error_uz": "Talabsiz review shaxsiy didga aylanadi.",
+      "hint_uz": "To‘g‘ri yoki noto‘g‘riligini nimaga qarab aytasiz?",
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.3/review-requirement-practice-1"
+      }
+    },
+    {
+      "key": "review-requirement-practice-2",
+      "skill_key": "review-requirement",
+      "purpose": "practice",
+      "format": "single",
+      "prompt_uz": "Diffda -print(old) va +print(new) bor. - va + nimani bildiradi?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Sonlarni ayirish va qo‘shish",
+          "feedback_uz": "Bu yerda belgilar diff metama’lumoti."
+        },
+        {
+          "id": "b",
+          "text_uz": "Har ikkisi bajariladigan yakuniy satrlar",
+          "feedback_uz": "Olib tashlangan satr yangi holatda yo‘q."
+        },
+        {
+          "id": "c",
+          "text_uz": "Olib tashlangan va qo‘shilgan satrlar",
+          "feedback_uz": "Diff o‘zgarishlarni shunday belgilaydi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "Diffni kodning o‘zi bilan adashtirmang.",
+        "Yangi holatda faqat qo‘shilgan variant qoladi."
+      ],
+      "common_error_uz": "Diff belgilarini dasturga ko‘chirmang.",
+      "hint_uz": "Yangi faylda qaysi satr qoladi?",
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.3/review-requirement-practice-2"
+      }
+    },
+    {
+      "key": "review-requirement-precheck",
+      "skill_key": "review-requirement",
+      "purpose": "precheck",
+      "format": "single",
+      "prompt_uz": "Talab: faqat chegirmani tuzatish. Diff shu bilan birga kirish nazoratini olib tashlagan. Xulosa?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Chegirma to‘g‘ri bo‘lsa boshqasini ko‘rmaymiz",
+          "feedback_uz": "Review o‘zgarishning ta’sirini ham ko‘radi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Qo‘shimcha ta’sirni aniqlashtirish va kirish nazoratini tekshirish kerak",
+          "feedback_uz": "Talabdan tashqari xatti-harakat o‘zgargan."
+        },
+        {
+          "id": "c",
+          "text_uz": "Satrlar kamaysa har doim yaxshi",
+          "feedback_uz": "Qisqarish zarur talabni yo‘qotishi mumkin."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "Diffning barcha ta’sirini ko‘ring.",
+        "Aloqasiz o‘zgarishga dalil yoki ajratish so‘rang."
+      ],
+      "common_error_uz": "Kichik vazifa keng ta’sirni yashirishi mumkin.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.3/review-requirement-precheck"
+      }
+    },
+    {
+      "key": "review-requirement-postcheck",
+      "skill_key": "review-requirement",
+      "purpose": "postcheck",
+      "format": "single",
+      "prompt_uz": "Talab, oddiy va chegara testlari o‘tdi, reviewda xato topilmadi. To‘g‘ri yakun?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Tekshirilgan qamrovni yozib tasdiqlash",
+          "feedback_uz": "Review doim xato topishga majbur emas."
+        },
+        {
+          "id": "b",
+          "text_uz": "Albatta biror xato o‘ylab topish",
+          "feedback_uz": "Asossiz fikr sifatni oshirmaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Testlarni ko‘rmagandek baholash",
+          "feedback_uz": "Mavjud dalil e’tiborsiz qoladi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "a"
+      },
+      "solution_steps_uz": [
+        "Dalillarni qayd eting.",
+        "Qamrov chegarasini bildirib tasdiqlang."
+      ],
+      "common_error_uz": "Reviewni kamchilik soni bilan baholamang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.3/review-requirement-postcheck"
+      }
+    },
+    {
+      "key": "review-tokens-practice-1",
+      "skill_key": "review-tokens",
+      "purpose": "practice",
+      "format": "single",
+      "prompt_uz": "Python 3 da print(5) oxirida ; yo‘q. Review xulosasi?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Har doim SyntaxError",
+          "feedback_uz": "Boshqa til qoidasi ko‘chirilgan."
+        },
+        {
+          "id": "b",
+          "text_uz": "Natija 0 bo‘ladi",
+          "feedback_uz": "Bu chiqish qiymatini o‘zgartirmaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Bu o‘zi xato emas; ; majburiy emas",
+          "feedback_uz": "Python satr tugashini qabul qiladi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "Tilni aniqlang.",
+        "Python uchun ; talab qilmang."
+      ],
+      "common_error_uz": "Tilga xos qoida bilan ishlang.",
+      "hint_uz": "Bu misol qaysi tilda?",
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.3/review-tokens-practice-1"
+      }
+    },
+    {
+      "key": "review-tokens-practice-2",
+      "skill_key": "review-tokens",
+      "purpose": "practice",
+      "format": "single",
+      "prompt_uz": "Talab: login ham, kod ham to‘g‘ri bo‘lsin. Kod login_ok or code_ok. Muammo?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Faqat nom uzunligini o‘zgartirish kerak",
+          "feedback_uz": "Operator semantikasi qoladi."
+        },
+        {
+          "id": "b",
+          "text_uz": "or o‘rniga and kerak",
+          "feedback_uz": "Ikkala shart majburiy."
+        },
+        {
+          "id": "c",
+          "text_uz": "or doim ikkala shartni talab qiladi",
+          "feedback_uz": "or kamida bittasini qabul qiladi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "Bir shart yolg‘on holatni sinang.",
+        "or uni o‘tkazadi, and rad qiladi."
+      ],
+      "common_error_uz": "Mantiqiy operatorni ko‘rinishi bilan tanlamang.",
+      "hint_uz": "Bittasi noto‘g‘ri bo‘lsa ruxsat bo‘ladimi?",
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.3/review-tokens-practice-2"
+      }
+    },
+    {
+      "key": "review-tokens-precheck",
+      "skill_key": "review-tokens",
+      "purpose": "precheck",
+      "format": "single",
+      "prompt_uz": "Python 3: total=8, count=2; print(totla). totla aniqlanmagan. Muammo?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Nomdagi xato NameError beradi",
+          "feedback_uz": "Ishlatilgan nom ta’rifi yo‘q."
+        },
+        {
+          "id": "b",
+          "text_uz": "count avtomatik chiqariladi",
+          "feedback_uz": "Python eng yaqin nomni o‘zi tanlamaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Natija har doim 8",
+          "feedback_uz": "total boshqa nom."
+        }
+      ],
+      "answer_key": {
+        "option_id": "a"
+      },
+      "solution_steps_uz": [
+        "Ta’rif va ishlatilgan nomni belgima-belgi solishtiring.",
+        "totla topilmaydi."
+      ],
+      "common_error_uz": "O‘xshash yozuv bir xil identifikator emas.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.3/review-tokens-precheck"
+      }
+    },
+    {
+      "key": "review-tokens-postcheck",
+      "skill_key": "review-tokens",
+      "purpose": "postcheck",
+      "format": "numeric",
+      "prompt_uz": "Python 3:\n```python\ns = 0\nfor x in [1, 2, 3]:\n    s = s + x\n    print(s)\n```\nprint necha marta bajariladi?",
+      "options": [],
+      "answer_key": {
+        "value": "3"
+      },
+      "solution_steps_uz": [
+        "Print sikl ichida chekingan.",
+        "Har element uchun bir marta, jami 3."
+      ],
+      "common_error_uz": "Chekinishni bezak deb olmang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.3/review-tokens-postcheck"
+      }
+    },
+    {
+      "key": "review-boundaries-practice-1",
+      "skill_key": "review-boundaries",
+      "purpose": "practice",
+      "format": "single",
+      "prompt_uz": "Nusxalar soni 0. borrow uni tekshirmasdan 1 ga kamaytiradi. Qaysi invariant buziladi?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Har commitda rang o‘zgarishi",
+          "feedback_uz": "Bu ma’lumot invariantiga aloqasiz."
+        },
+        {
+          "id": "b",
+          "text_uz": "Mavjud nusxalar manfiy bo‘lmasligi",
+          "feedback_uz": "0 − 1 = -1."
+        },
+        {
+          "id": "c",
+          "text_uz": "Har doim nusxalar 100 bo‘lishi",
+          "feedback_uz": "Bunday talab berilmagan."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "Berishdan keyingi sonni hisoblang.",
+        "-1 mavjudlik talabiga zid."
+      ],
+      "common_error_uz": "Holatni yangilashdan oldin ruxsatni tekshiring.",
+      "hint_uz": "0 dan yana bitta olish mumkinmi?",
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.3/review-boundaries-practice-1"
+      }
+    },
+    {
+      "key": "review-boundaries-practice-2",
+      "skill_key": "review-boundaries",
+      "purpose": "practice",
+      "format": "single",
+      "prompt_uz": "Python xs[0] ni doim o‘qiydi. Qaysi kirish chegaraviy nosozlikni topadi?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "[]",
+          "feedback_uz": "Birinchi element mavjud emas."
+        },
+        {
+          "id": "b",
+          "text_uz": "[7]",
+          "feedback_uz": "Birinchi element bor."
+        },
+        {
+          "id": "c",
+          "text_uz": "[7, 8]",
+          "feedback_uz": "Bu ham birinchi elementga ega."
+        }
+      ],
+      "answer_key": {
+        "option_id": "a"
+      },
+      "solution_steps_uz": [
+        "Indeks 0 mavjudligini tekshiring.",
+        "Bo‘sh ro‘yxatda u yo‘q."
+      ],
+      "common_error_uz": "Har ro‘yxatni bo‘sh emas deb olmang.",
+      "hint_uz": "Eng kichik ro‘yxat uzunligi qanday?",
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.3/review-boundaries-practice-2"
+      }
+    },
+    {
+      "key": "review-boundaries-precheck",
+      "skill_key": "review-boundaries",
+      "purpose": "precheck",
+      "format": "single",
+      "prompt_uz": "Talab: qolgan balans manfiy bo‘lmasin. balans=50, yechish=50. Qaysi shart mos?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "yechish < balans",
+          "feedback_uz": "Ruxsat etilgan tenglikni rad qiladi."
+        },
+        {
+          "id": "b",
+          "text_uz": "yechish > balans",
+          "feedback_uz": "Manfiy balansga ruxsat beradi."
+        },
+        {
+          "id": "c",
+          "text_uz": "yechish <= balans",
+          "feedback_uz": "Tenglikda qolgan qiymat 0 bo‘ladi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "Tenglik holatida 50 − 50 = 0.",
+        "0 talabga mos."
+      ],
+      "common_error_uz": "Nol va manfiy natijani ajrating.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.3/review-boundaries-precheck"
+      }
+    },
+    {
+      "key": "review-boundaries-postcheck",
+      "skill_key": "review-boundaries",
+      "purpose": "postcheck",
+      "format": "single",
+      "prompt_uz": "Talab: musbat va manfiy sonlar maksimumi. best=0 boshlanishiga qaysi qarshi misol mos?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "[0, 4]",
+          "feedback_uz": "Bu misolda 4 olinadi."
+        },
+        {
+          "id": "b",
+          "text_uz": "[-8, -3]",
+          "feedback_uz": "Kod 0 qoldirishi mumkin, maksimum esa -3."
+        },
+        {
+          "id": "c",
+          "text_uz": "[2, 9]",
+          "feedback_uz": "Musbat maksimum boshlang‘ich 0 dan katta."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "Barcha element boshlang‘ich bestdan kichik bo‘lsin.",
+        "Manfiylar buni ko‘rsatadi."
+      ],
+      "common_error_uz": "Faqat odatiy musbatlar bilan tekshirmang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.3/review-boundaries-postcheck"
+      }
+    },
+    {
+      "key": "review-feedback-practice-1",
+      "skill_key": "review-feedback",
+      "purpose": "practice",
+      "format": "single",
+      "prompt_uz": "Eng foydali review izohi qaysi?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Shu shart 0 ni rad qiladi; talab qabul qiladi. Chegara testini qo‘shaylik",
+          "feedback_uz": "Joy, talab va tekshiruv taklifi bor."
+        },
+        {
+          "id": "b",
+          "text_uz": "Siz umuman bilmaysiz",
+          "feedback_uz": "Shaxsiy hukm kodni tuzatishga dalil bermaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Nimadir yoqmadi",
+          "feedback_uz": "Muammo aniqlanmagan."
+        }
+      ],
+      "answer_key": {
+        "option_id": "a"
+      },
+      "solution_steps_uz": [
+        "Fikrni aniq kirish bilan bog‘lang.",
+        "Tuzatish yoki savolni ko‘rsating."
+      ],
+      "common_error_uz": "Shaxsiy baho dalil emas.",
+      "hint_uz": "Muallif izoh asosida test yozoladimi?",
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.3/review-feedback-practice-1"
+      }
+    },
+    {
+      "key": "review-feedback-practice-2",
+      "skill_key": "review-feedback",
+      "purpose": "practice",
+      "format": "single",
+      "prompt_uz": "Nomlash variantlari ikkalasi ham qo‘llanmaga mos. Birini ko‘proq yoqtirasiz. Izoh turi?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Kritik bajarilish xatosi",
+          "feedback_uz": "Nom yoqishi bajarilish xatosi emas."
+        },
+        {
+          "id": "b",
+          "text_uz": "Shaxs qobiliyati tashxisi",
+          "feedback_uz": "Kod reviewsi buni o‘lchamaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Ixtiyoriy uslub taklifi",
+          "feedback_uz": "Majburiy nuqson uchun asos yo‘q."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "Talab va qo‘llanma buzilmagan.",
+        "Taklifni ixtiyoriy deb belgilang."
+      ],
+      "common_error_uz": "Didni majburiy qoida deb bermang.",
+      "hint_uz": "Qaysi yozilgan qoida buzilgan?",
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.3/review-feedback-practice-2"
+      }
+    },
+    {
+      "key": "review-feedback-precheck",
+      "skill_key": "review-feedback",
+      "purpose": "precheck",
+      "format": "single",
+      "prompt_uz": "Talab noaniq, ammo xato bo‘lishi mumkin. Qanday yozish mos?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Har qanday savolni yashirish",
+          "feedback_uz": "Muhim noaniqlik hal bo‘lmaydi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Talabni aniqlashtiruvchi savol va mumkin bo‘lgan qarshi misol",
+          "feedback_uz": "Noaniqlik ochiq ko‘rsatiladi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Dalilsiz qat’iy ayblov",
+          "feedback_uz": "Noma’lum talabni isbotlangan xato deb beradi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "Nima ma’lum va nima noaniqligini ayting.",
+        "Aniq holat uchun kutilgan natijani so‘rang."
+      ],
+      "common_error_uz": "Taxminni fakt sifatida yozmang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.3/review-feedback-precheck"
+      }
+    },
+    {
+      "key": "review-feedback-postcheck",
+      "skill_key": "review-feedback",
+      "purpose": "postcheck",
+      "format": "single",
+      "prompt_uz": "Muallif rasmiy talabni ko‘rsatdi va sizning qarshi misolingiz noto‘g‘ri ekani aniqlandi. Keyingi qadam?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Izohni tuzatish va talab bo‘yicha tekshiruvni yangilash",
+          "feedback_uz": "Review dalilga moslashadi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Har qanday holatda oldingi fikrda qolish",
+          "feedback_uz": "Dalil e’tiborsiz qoladi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Muallifdan kodni ataylab buzishni so‘rash",
+          "feedback_uz": "Talabga zid o‘zgarish kiritadi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "a"
+      },
+      "solution_steps_uz": [
+        "Yangi dalilni qabul qiling.",
+        "Tekshiruvni haqiqiy talabga moslang."
+      ],
+      "common_error_uz": "Reviewda fikrni yangilash sifatning bir qismi.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.3/review-feedback-postcheck"
+      }
+    },
+    {
+      "key": "review-followup-practice-1",
+      "skill_key": "review-followup",
+      "purpose": "practice",
+      "format": "single",
+      "prompt_uz": "Muallif “tuzatdim” dedi. Izohni yopish uchun nima kerak?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Faqat xabarga ishonish",
+          "feedback_uz": "Aniq tekshiruv yo‘q."
+        },
+        {
+          "id": "b",
+          "text_uz": "Eski skrinshotga qarash",
+          "feedback_uz": "Yangi holatni ko‘rsatmaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Yangilangan diff va muammoli testni qayta tekshirish",
+          "feedback_uz": "Tuzatish dalil bilan tasdiqlanadi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "Yangi mazmunni ko‘ring.",
+        "Avval yiqilgan holatni qaytaring."
+      ],
+      "common_error_uz": "Xabar bilan tekshirishni farqlang.",
+      "hint_uz": "Qaysi dalil yangilandi?",
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.3/review-followup-practice-1"
+      }
+    },
+    {
+      "key": "review-followup-practice-2",
+      "skill_key": "review-followup",
+      "purpose": "practice",
+      "format": "single",
+      "prompt_uz": "Review ro‘yxatidan foydalanishning to‘g‘ri maqsadi?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Testlarni har doim almashtirish",
+          "feedback_uz": "Ro‘yxat testning o‘rnini bosmaydi."
+        },
+        {
+          "id": "b",
+          "text_uz": "Muhim holatlarni unutmaslik va har birini dalil bilan tekshirish",
+          "feedback_uz": "Ro‘yxat diqqatni qo‘llab-quvvatlaydi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Kodni o‘qimasdan barcha bandni belgilash",
+          "feedback_uz": "Tekshiruv bajarilmaydi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "b"
+      },
+      "solution_steps_uz": [
+        "Har band aniq kuzatuvga bog‘lansin.",
+        "Mexanik belgi yetmaydi."
+      ],
+      "common_error_uz": "Ro‘yxat sifat kafolati emas, yordamchi.",
+      "hint_uz": "Band uchun qanday dalil bor?",
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.3/review-followup-practice-2"
+      }
+    },
+    {
+      "key": "review-followup-precheck",
+      "skill_key": "review-followup",
+      "purpose": "precheck",
+      "format": "single",
+      "prompt_uz": "Rad etilgan kitob so‘rovi available ni baribir kamaytiradi. Reviewda nima tekshiriladi?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Rad holatida oldingi va keyingi holat tengligini",
+          "feedback_uz": "Rad qilingan amal resursni sarflamasligi kerak."
+        },
+        {
+          "id": "b",
+          "text_uz": "Faqat rad javobi matnini",
+          "feedback_uz": "To‘g‘ri xabar bilan noto‘g‘ri holat birga kelishi mumkin."
+        },
+        {
+          "id": "c",
+          "text_uz": "Faqat muvaffaqiyatli berish sonini",
+          "feedback_uz": "Rad yo‘lidagi yon ta’sir tekshirilmaydi."
+        }
+      ],
+      "answer_key": {
+        "option_id": "a"
+      },
+      "solution_steps_uz": [
+        "Rad oldidagi available ni yozing.",
+        "Raddan keyin ayni qiymat qolishini talab qiling."
+      ],
+      "common_error_uz": "Natija xabari bilan holatni birga tekshiring.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.3/review-followup-precheck"
+      }
+    },
+    {
+      "key": "review-followup-postcheck",
+      "skill_key": "review-followup",
+      "purpose": "postcheck",
+      "format": "single",
+      "prompt_uz": "Faqat kichik sun’iy kirishlar tekshirildi. Yakuniy reviewda qanday yoziladi?",
+      "options": [
+        {
+          "id": "a",
+          "text_uz": "Barcha holatlarda mutlaq to‘g‘ri deyish",
+          "feedback_uz": "Tekshiruv buni isbotlamagan."
+        },
+        {
+          "id": "b",
+          "text_uz": "Tekshiruvni yashirish",
+          "feedback_uz": "Natijani baholash qiyinlashadi."
+        },
+        {
+          "id": "c",
+          "text_uz": "Tekshirilgan holatlarni va katta yuklama tekshirilmaganini aytish",
+          "feedback_uz": "Dalilning amaliy chegarasi aniq."
+        }
+      ],
+      "answer_key": {
+        "option_id": "c"
+      },
+      "solution_steps_uz": [
+        "Nima tekshirilganini sanang.",
+        "Qolgan noaniqlikni qisqa yozing."
+      ],
+      "common_error_uz": "Cheklangan dalildan umumiy kafolat chiqarmang.",
+      "hint_uz": null,
+      "source": {
+        "id": "authored-cluster3",
+        "origin": "authored",
+        "locator": "3.3/review-followup-postcheck"
+      }
+    }
+  ],
+  "diagnostic_links": [],
+  "blueprint": {
+    "practice_order": [
+      "review-requirement-practice-1",
+      "review-tokens-practice-1",
+      "review-boundaries-practice-1",
+      "review-feedback-practice-1",
+      "review-followup-practice-1",
+      "review-requirement-practice-2",
+      "review-tokens-practice-2",
+      "review-boundaries-practice-2",
+      "review-feedback-practice-2",
+      "review-followup-practice-2"
+    ],
+    "precheck_order": [
+      "review-requirement-precheck",
+      "review-tokens-precheck",
+      "review-boundaries-precheck",
+      "review-feedback-precheck",
+      "review-followup-precheck"
+    ],
+    "postcheck_order": [
+      "review-requirement-postcheck",
+      "review-tokens-postcheck",
+      "review-boundaries-postcheck",
+      "review-feedback-postcheck",
+      "review-followup-postcheck"
+    ],
+    "matched_pairs": [
+      {
+        "skill_key": "review-requirement",
+        "precheck_key": "review-requirement-precheck",
+        "postcheck_key": "review-requirement-postcheck"
+      },
+      {
+        "skill_key": "review-tokens",
+        "precheck_key": "review-tokens-precheck",
+        "postcheck_key": "review-tokens-postcheck"
+      },
+      {
+        "skill_key": "review-boundaries",
+        "precheck_key": "review-boundaries-precheck",
+        "postcheck_key": "review-boundaries-postcheck"
+      },
+      {
+        "skill_key": "review-feedback",
+        "precheck_key": "review-feedback-precheck",
+        "postcheck_key": "review-feedback-postcheck"
+      },
+      {
+        "skill_key": "review-followup",
+        "precheck_key": "review-followup-precheck",
+        "postcheck_key": "review-followup-postcheck"
+      }
+    ],
+    "unseen_postcheck_sets": 1
+  }
+}

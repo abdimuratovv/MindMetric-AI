@@ -27,6 +27,10 @@ from apps.scoring.models import IndicatorScore, OverallScore, StudentAbilityEsti
 from .test_content import ContentDatabaseCase
 
 
+def legacy_contents():
+    return bundled_contents(cluster=1) + bundled_contents(cluster=2)
+
+
 def graph_for(contents):
     return {s['key']: s['prerequisite_keys'] for d in contents for s in d['skills']}
 
@@ -43,7 +47,7 @@ def seed_diagnostic_references():
 
 class ClusterTwoResourceTests(SimpleTestCase):
     def setUp(self):
-        self.contents = bundled_contents(cluster=None)
+        self.contents = legacy_contents()
         self.graph = graph_for(self.contents)
         self.data = next(d for d in self.contents if d['module']['key'] == 'creative-mini-apps')
 
@@ -121,7 +125,7 @@ class ClusterTwoImportTests(ContentDatabaseCase):
     def test_combined_dry_run_and_draft_import_are_atomic_idempotent_and_legacy_default_stays_six(self):
         out = StringIO()
         call_command('seed_development_content', all=True, cluster='all', dry_run=True, stdout=out)
-        self.assertEqual(out.getvalue().count('Validated without writes'), 12)
+        self.assertEqual(out.getvalue().count('Validated without writes'), 16)
         self.assertFalse(DevelopmentModule.objects.exists())
         call_command('seed_development_content', all=True, stdout=StringIO())
         self.assertEqual(DevelopmentModule.objects.count(), 6)
@@ -129,8 +133,12 @@ class ClusterTwoImportTests(ContentDatabaseCase):
         self.assertEqual(DevelopmentModule.objects.count(), 12)
         ids = list(DevelopmentExercise.objects.order_by('pk').values_list('pk', 'key'))
         call_command('seed_development_content', all=True, cluster='all', stdout=StringIO())
-        self.assertEqual(ids, list(DevelopmentExercise.objects.order_by('pk').values_list('pk', 'key')))
-        self.assertEqual(DevelopmentExercise.objects.count(), 240)
+        self.assertEqual(ids, list(DevelopmentExercise.objects.filter(module__cluster__in=[1, 2]).order_by('pk').values_list('pk', 'key')))
+        self.assertEqual(DevelopmentModule.objects.count(), 16)
+        self.assertEqual(DevelopmentExercise.objects.count(), 320)
+        all_ids = list(DevelopmentExercise.objects.order_by('pk').values_list('pk', 'key'))
+        call_command('seed_development_content', all=True, cluster='all', stdout=StringIO())
+        self.assertEqual(all_ids, list(DevelopmentExercise.objects.order_by('pk').values_list('pk', 'key')))
         self.assertEqual(set(DevelopmentModule.objects.values_list('status', flat=True)), {'draft'})
         self.assertFalse(get_user_model().objects.exists())
 
@@ -146,7 +154,7 @@ class ClusterTwoImportTests(ContentDatabaseCase):
                 return value
             with self.subTest(missing=missing), patch('apps.development.translations.bundled_translation', side_effect=bad_translation):
                 with self.assertRaises(ContentValidationError):
-                    import_bundle(bundled_contents(cluster=None))
+                    import_bundle(legacy_contents())
                 self.assertFalse(DevelopmentModule.objects.exists())
 
     def test_missing_prerequisite_and_duplicate_topic_are_rejected_without_fabricated_cluster_one_dependency(self):
@@ -162,7 +170,7 @@ class ClusterTwoImportTests(ContentDatabaseCase):
                 import_bundle(malformed)
         import_bundle(bundled_contents(cluster=2))
         self.assertEqual(DevelopmentModule.objects.count(), 6)
-        contents = deepcopy(bundled_contents(cluster=None))
+        contents = deepcopy(legacy_contents())
         contents[-1]['module']['order'] = 5
         with self.assertRaisesMessage(ContentValidationError, 'Duplicate topic'):
             import_bundle(contents)
@@ -197,7 +205,7 @@ class ClusterTwoImportTests(ContentDatabaseCase):
     @patch.dict(os.environ, {'RENDER': ''})
     def test_incomplete_release_bundle_is_rejected_before_writes(self):
         for cluster in (1, 2):
-            contents = [d for d in bundled_contents(cluster=None)
+            contents = [d for d in legacy_contents()
                         if not (d['module'].get('cluster', 1) == cluster and d['module']['order'] == 6)]
             with self.subTest(cluster=cluster), patch(
                 'apps.development.management.commands.activate_development_cluster2.bundled_contents', return_value=contents
@@ -245,7 +253,7 @@ class ClusterTwoAPITests(ContentDatabaseCase):
     def setUpTestData(cls):
         super().setUpTestData()
         seed_diagnostic_references()
-        for _, module, _ in import_bundle(bundled_contents(cluster=None)):
+        for _, module, _ in import_bundle(legacy_contents()):
             publish_module(module.pk)
         cls.user = get_user_model().objects.create_user('cluster2-learner@university.edu')
         cls.other = get_user_model().objects.create_user('cluster2-other@university.edu')

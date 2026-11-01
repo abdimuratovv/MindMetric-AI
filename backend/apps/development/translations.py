@@ -30,6 +30,12 @@ def _validate_translation(source, translated):
         # Grammar can reorder numbers, but cannot add/drop/change constants.
         numbers=lambda s:Counter(re.findall(r'\d+|[⁰¹²³⁴⁵⁶⁷⁸⁹]+',s))
         require(numbers(original)==numbers(value),f'{label}: mathematical constants changed.')
+        if source['schema_version'] == 3:
+            require(re.findall(r'```[^\n]*\n(.*?)```', original, re.S) == re.findall(r'```[^\n]*\n(.*?)```', value, re.S),
+                    f'{label}: code blocks changed.')
+            operators = r'==|!=|>=|<=|[<>]|\b(?:True|False|None|and|or|not|SyntaxError|NameError|ValueError|TypeError|ZeroDivisionError)\b'
+            require(Counter(re.findall(operators, original)) == Counter(re.findall(operators, value)),
+                    f'{label}: Python operators changed.')
     def lines(original,value,label):
         require(isinstance(value,list) and len(value)==len(original),f'{label}: missing paragraphs.')
         for a,b in zip(original,value):field(a,b,label)
@@ -64,9 +70,10 @@ def _validate_translation(source, translated):
             item=target['options'][option['id']]
             field(option['text_uz'],item.get('text'),question['key'])
             field(option['feedback_uz'],item.get('feedback'),question['key'])
-    if source['schema_version'] == 2:
+    if source['schema_version'] >= 2:
         require(set(translated) <= {'module_key', 'version', 'language', 'source_hash', 'title',
-                                   'skills', 'lessons', 'exercises', 'notation', 'projects'}, 'Unknown translation fields.')
+                                   'skills', 'lessons', 'exercises', 'notation', 'projects',
+                                   *({'study_files'} if source['schema_version'] == 3 else set())}, 'Unknown translation fields.')
         lines(source['notation_uz'], translated.get('notation'), 'notation')
         projects = source.get('projects', [])
         local = translated.get('projects', {})
@@ -79,6 +86,14 @@ def _validate_translation(source, translated):
                 field(project[name + '_uz'], target[name], project['key'])
             for name in ('constraints', 'steps', 'deliverables', 'rubric'):
                 lines(project[name + '_uz'], target[name], project['key'])
+    if source['schema_version'] == 3:
+        files = source.get('study_files', [])
+        local_files = translated.get('study_files')
+        require(isinstance(local_files, dict) and set(local_files) == {f['key'] for f in files}, 'Incomplete translated study files.')
+        for item in files:
+            target = local_files[item['key']]
+            require(set(target) == {'title'}, 'Study file translation cannot override content.')
+            field(item['title_uz'], target['title'], 'study file title')
     return translated
 
 
@@ -87,7 +102,7 @@ def bundled_translation(key,version):
     path=DIRECTORY/f'{key}.v{version}.ru.json'
     if not path.exists():return None
     matches = [directory / f'{key}.v{version}.json' for directory in
-               (DIRECTORY.parent / 'cluster1', DIRECTORY.parent / 'cluster2')]
+               (DIRECTORY.parent / 'cluster1', DIRECTORY.parent / 'cluster2', DIRECTORY.parent / 'cluster3')]
     matches = [source for source in matches if source.exists()]
     require(len(matches) == 1, 'Translation needs exactly one canonical source.')
     try:
@@ -130,3 +145,9 @@ class ContentLocale:
             result.append({'key': project['key'], 'assessment': 'self_review', 'content_language': self.language,
                            **{name: translated[name] if translated else project[name + '_uz'] for name in fields}})
         return result
+
+    def study_files(self, module):
+        return [{**{k: item[k] for k in ('key', 'filename', 'content')},
+                 'title': self.data['study_files'][item['key']]['title'] if self.data else item['title_uz'],
+                 'content_language': self.language}
+                for item in module.content_snapshot.get('study_files', [])]

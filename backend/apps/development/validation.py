@@ -63,7 +63,7 @@ def validate_content(data, *, known_skills=None, diagnostic_keys=None):
 def _validate_content(data, *, known_skills=None, diagnostic_keys=None):
     require(isinstance(data, dict), 'Content must be an object.')
     schema = data.get('schema_version')
-    require(type(schema) is int and schema in (1, 2), 'Unsupported schema_version.')
+    require(type(schema) is int and schema in (1, 2, 3), 'Unsupported schema_version.')
     module = data.get('module')
     require(isinstance(module, dict), 'module is required.')
     keyed([module], 'module')
@@ -81,10 +81,12 @@ def _validate_content(data, *, known_skills=None, diagnostic_keys=None):
         require(not data.get('projects') and not data.get('notation_uz'), 'New study resources require schema 2.')
         indicators = {'math', 'logic', 'iq'}
     else:
-        require(type(module.get('cluster')) is int and module['cluster'] == 2, 'Schema 2 requires cluster two.')
-        require(module['order'] in range(1, 7), 'Invalid cluster-two order.')
-        require(module.get('topic_number') == f"2.{module['order']}", 'Topic number mismatch.')
-        indicators = {'algorithmic', 'creative', 'problem_solving'}
+        cluster = 2 if schema == 2 else 3
+        require(type(module.get('cluster')) is int and module['cluster'] == cluster, f'Schema {schema} requires cluster {cluster}.')
+        require(module['order'] in range(1, 7 if cluster == 2 else 5), 'Invalid cluster topic order.')
+        require(module.get('topic_number') == f"{cluster}.{module['order']}", 'Topic number mismatch.')
+        indicators = ({'algorithmic', 'creative', 'problem_solving'} if cluster == 2 else
+                      {'patience', 'attention', 'problem_solving', 'teamwork', 'learning_speed'})
         strings(data.get('notation_uz'), 'notation_uz')
         require(len(data['notation_uz']) <= 16, 'Too many notation rules.')
         for rule in data['notation_uz']:
@@ -102,6 +104,16 @@ def _validate_content(data, *, known_skills=None, diagnostic_keys=None):
             text(project['brief_uz'], 'project.brief_uz')
             for field in ('constraints_uz', 'steps_uz', 'deliverables_uz', 'rubric_uz'):
                 strings(project[field], 'project.' + field)
+    study_files = data.get('study_files', [])
+    require(isinstance(study_files, list) and len(study_files) <= 5, 'Invalid study files.')
+    require(schema == 3 or not study_files, 'Study files require schema 3.')
+    if study_files:
+        keyed(study_files, 'study_files')
+    for item in study_files:
+        require(set(item) == {'key', 'title_uz', 'filename', 'content'}, 'Invalid study file fields.')
+        text(item['title_uz'], 'study file title', 200)
+        require(isinstance(item['filename'], str) and re.fullmatch(r'[a-z0-9_-]+\.(?:py|py\.txt)', item['filename']), 'Invalid study filename.')
+        text(item['content'], 'study file content', 50000)
     strings(module.get('indicator_keys'), 'module.indicator_keys')
     require(set(module['indicator_keys']) <= indicators, 'Invalid indicators for this cluster.')
 

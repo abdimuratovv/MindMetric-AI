@@ -12,7 +12,7 @@ class ClusterMigrationTests(TransactionTestCase):
         after = [('development', '0003_developmentmodule_cluster')]
         executor = MigrationExecutor(connection)
         executor.migrate(before)
-        self.addCleanup(lambda: MigrationExecutor(connection).migrate(after))
+        self.addCleanup(lambda: MigrationExecutor(connection).migrate([('development', '0004_cluster3')]))
         old = executor.loader.project_state(before).apps
         User = old.get_model(*settings.AUTH_USER_MODEL.split('.'))
         Module = old.get_model('development', 'DevelopmentModule')

@@ -22,7 +22,7 @@ class Command(BaseCommand):
                     with connection.cursor() as cursor:
                         # Same lock as cluster one's release; overlapping releases serialize.
                         cursor.execute('SELECT pg_advisory_xact_lock(%s)', [192837465])
-                contents = bundled_contents(cluster=None)
+                contents = [d for d in bundled_contents(cluster=None) if d['module'].get('cluster', 1) in (1, 2)]
                 for cluster in (1, 2):
                     members = [d for d in contents if d['module'].get('cluster', 1) == cluster]
                     require(len(members) == 6 and {d['module']['order'] for d in members} == set(range(1, 7)),
