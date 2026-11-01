@@ -51,6 +51,21 @@ til almashinuvi va 1.2–1.6 dagi barcha dars/nazariyalarni RU ↔ UZ da tekshir
   belgilar, o‘zgaruvchilar va dasturlash atamalari tarjima qilinmagan holda saqlangan.
 - Asl klaster-1 kanonik JSONlari Git bo‘yicha o‘zgarmagan.
 
-Jonli reliz tasdig‘i deploy yakunida qo‘shiladi. Reliz oldidan jonli platformadagi
-ikki mavjud mashg‘ulot holati yozib olindi; ishlab chiqarish bazasida yangi
-enrollment yoki javob yaratilmadi.
+## Jonli reliz tasdig‘i — 2026-11-01
+
+- Tuzatish `b495c2b05618395adef0b963c45d93eccb07bd51` commitida feature branch va
+  `main`ga push qilindi. Render backend deploy `dep-dbj2vl95efls73dj98fg`
+  2026-10-31 23:35:28 Toshkent vaqti (18:35:28 UTC) da `live` bo‘ldi.
+- 2026-11-01 14:32 Toshkent vaqti atrofida [jonli platforma](https://mindmetric-frontend.onrender.com/#development)
+  API va Chrome brauzerida qayta tekshirildi: ikkala klasterning barcha 12 moduli
+  RU ↔ UZ da to‘g‘ri sarlavha, ko‘nikma va kontent tili qaytardi. Birinchi
+  klaster RU katalogida o‘zbekcha material belgisi qolmagan.
+- Reliz oldidan qayd qilingan ikki mashg‘ulotning bosqichi, savol/javob soni,
+  faol savol kaliti, tugallangan darslari va ballari saqlangan. Faol 1.1
+  tekshiruvining matni ham tanlangan tilga mos; yangi enrollment yoki javob
+  yaratilmagan. Jonli darslar ushbu hisobda yopiq bo‘lgani uchun barcha yangi
+  dars/misollar lokal API va brauzerda tekshirildi.
+- Jonli brauzerda JavaScript xatosi, 390 px mobil overflow va kutilmagan
+  development API yozuvlari yo‘q. Tekshiruv davridagi backend error loglari bo‘sh.
+- Natija va skrinshotlar:
+  `C:/Users/Asus/.codex/visualizations/2026/10/28/01a18264-3f77-7a02-a3d2-c4d4e2010e21/production-complete-russian/`.
