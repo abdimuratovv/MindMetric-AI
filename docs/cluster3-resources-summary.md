@@ -1,5 +1,7 @@
 # III klaster resurslari yakuniy hisoboti
 
+Keyingi bosqich ham bajarildi: [integratsiya va jonli Render tekshiruv hisoboti](cluster3-integration-release.md). Quyidagi matn resurslar bosqichining yakuniy holatini qayd etadi.
+
 Sana: 2026-11-01. Holat: **resurslar tayyor va offline tekshirilgan**. Foydalanuvchi tasdig‘iga muvofiq faqat resurslar yakunlandi; platforma integratsiyasi va Render deployi bajarilmadi.
 
 [Barcha resurslarni ochish](content/cluster3/README.md).

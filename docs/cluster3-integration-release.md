@@ -1,10 +1,10 @@
 # III klaster integratsiyasi va chiqarish hisoboti
 
-Sana: 2026-11-01. Holat: lokal integratsiya va tekshiruvlar bajarildi; Renderga chiqarish navbatdagi qadam. Foydalanuvchi resurs bosqichidan keyin integratsiya va deployni alohida buyurdi.
+Sana: 2026-11-01. Holat: **integratsiya bajarildi, Renderda jonli, production smoke o‘tdi**. Foydalanuvchi resurs bosqichidan keyin integratsiya va deployni alohida buyurdi.
 
 ## Natija
 
-Mavjud 12 modulga III klasterning 3.1–3.4 mavzulari qo‘shiladi: 20 dars, 20 misol, 80 savol va uch ochiq amaliy ish to‘liq UZ/RU. Debugging starter va StudyTools kodi dars ichidan yuklanadi. O‘qituvchi yechimlari student kontentiga kiritilmaydi.
+Mavjud 12 modulga III klasterning 3.1–3.4 mavzulari qo‘shildi: 20 dars, 20 misol, 80 savol va uch ochiq amaliy ish to‘liq UZ/RU. Debugging starter va StudyTools kodi dars ichidan yuklanadi. O‘qituvchi yechimlari student kontentiga kiritilmaydi.
 
 Schema 3 aynan III klaster, to‘rtta mavzu va mos indikatorlarni tekshiradi. Standalone draftlar saqlanadi; [export_platform.py](content/cluster3/export_platform.py) ulardan platforma canonical JSON/locale yaratadi. Natijalar nazariya boshida beriladi. [Platforma nusxalari](content/cluster3/platform/inventory.json) backend bundle bilan mos.
 
@@ -30,4 +30,25 @@ Katalog vizual tekshiruvi shu ildizdagi `cluster3-catalogue/`da. Production’da
 
 ## Render chiqarish
 
-Avval tasdiqlangan My Workspace va mavjud backend/frontend xizmatlari, GitHubdagi main ishlatiladi. AutoDeploy yoqilgan; pushdan keyin qo‘lda takroriy trigger yuborilmaydi. Yangi flag bitta env kaliti sifatida merge qilinadi; boshqa env va DB ulanishi saqlanadi. Yakuniy jonli dalillar chiqarishdan keyin qo‘shiladi.
+Avval tasdiqlangan My Workspace va mavjud backend/frontend xizmatlari, GitHubdagi main ishlatildi. `DEVELOPMENT_CLUSTER3_PUBLISH_ON_DEPLOY=1` bitta env kaliti sifatida merge qilindi; boshqa env va DB ulanishi saqlandi. Env yangilanishi avvalgi commit uchun build boshladi, yangi commit undan keyin navbatda avtomatik chiqarildi; qo‘lda takroriy trigger yuborilmadi.
+
+Deployed kod: `718a4a26479319b7e353defade869544349822a7`. Quyidagi vaqtlar Asia/Tashkent:
+
+| Xizmat | Deploy | Holat / yakunlangan vaqt |
+|---|---|---|
+| Frontend | `dep-dbjkasbm8hqs73fsb87g` | live, 2026-11-01 18:58:22 |
+| Backend | `dep-dbjkasdh3lcs738g7030` | live, 2026-11-01 19:49:12 |
+
+Backend logi `development.0004_cluster3... OK`, `Development content release completed: clusters 1/2/3` va PostgreSQLda 16 published modul mavjudligini tasdiqladi.
+
+[Jonli Rivojlanish bo‘limi](https://mindmetric-frontend.onrender.com/#development).
+
+## Jonli tekshiruv
+
+Chrome/API smoke muvaffaqiyatli: 3 klaster, 6/6/4 ta modul, barcha 16 modulning UZ/RU sarlavha va skilllari canonical/locale bilan mos. III klasterning to‘rt kartasi, til almashishi, refreshdan keyin tanlov saqlanishi va 390px mobil ko‘rinish tekshirildi. JS xatosi va gorizontal toshish yo‘q. Screenshot vizual ko‘rib chiqildi.
+
+Demo hisobning deploydan oldin olingan ikki mavjud enrollment holati (stage, darslar, check ballari, aktiv session/savol) deploydan keyin aynan saqlangan. Production’da yangi enrollment yoki javob yaratilmagan; login’dan keyingi development so‘rovlari faqat GET. To‘liq 80 javobli o‘quv oqimi lokal sinovda tekshirilgan. Bu tekshiruv barcha foydalanuvchilar tarixini alohida audit qilmaydi.
+
+Birinchi login so‘rovi xizmat uyqudan ishga tushayotganda 90 soniyadan oshdi; backend ishga tushgach qayta smoke to‘liq o‘tdi. Tekshiruv davridagi backend error loglari bo‘sh.
+
+Dalillar yuqoridagi vizualizatsiya ildizining `cluster3-production/` papkasida: `baseline.json`, `result.json`, UZ/RU desktop va RU mobile tasvirlari. Yakuniy hisobot hujjatlar commiti `[skip render]` bilan saqlanadi; jonli dastur kodi yuqoridagi `718a4a2` commitidir.
