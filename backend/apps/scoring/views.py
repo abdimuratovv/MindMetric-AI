@@ -6,6 +6,7 @@ from rest_framework.views import APIView
 from apps.accounts.permissions import IsStudent
 from apps.assessments.models import AssessmentAttempt, CognitiveResponse
 from apps.i18n import get_language
+from apps.development.cluster_guidance import student_cluster_guidance
 
 from .constants import FIELD_CHOICES, FIELD_LABELS, INDICATOR_CHOICES, INDICATOR_LABELS
 from .models import Achievement, FieldRecommendation, IndicatorScore, OverallScore
@@ -205,6 +206,7 @@ def build_results_summary(student, lang: str) -> dict:
         'overallExplanation': OVERALL_EXPLANATIONS[lang][band_info['key']],
         'programmingAptitudeScore': overall.programming_aptitude_score if overall else None,
         'fieldRecommendations': serialize_field_recommendation(field_recommendation, lang),
+        'clusterRecommendation': student_cluster_guidance(student, lang),
     }
 
 

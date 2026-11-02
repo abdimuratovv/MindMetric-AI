@@ -13,6 +13,7 @@ from . import progress
 from .recommendations import build_plan, visible_catalogue
 from .translations import ContentLocale
 from .curriculum import cluster_cards
+from .cluster_guidance import student_cluster_guidance
 from .serializers import (
     AnswerSerializer, HintSerializer, StartSessionSerializer, enrollment_state, feedback, module_card, session_state,
 )
@@ -65,6 +66,7 @@ class PlanView(DevelopmentView):
 
         return Response({
             'recommended': [card(row) for row in plan['recommended']],
+            'clusterRecommendation': None if plan['check_active'] else student_cluster_guidance(request.user, get_language(request)),
             'modules': [card(row) for row in plan['entries']],
             'check_active': plan['check_active'], 'active_enrollment_id': plan['active_enrollment_id'],
             'minimum_diagnostic_responses': plan['minimum_diagnostic_responses'],

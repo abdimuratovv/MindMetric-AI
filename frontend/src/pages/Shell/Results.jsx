@@ -41,7 +41,11 @@ export default function Results({ user, goTo, developmentAvailable }) {
         background: '#2E5570', color: '#fff', border: 0, padding: '12px 20px', borderRadius: '10px',
         fontFamily: 'Manrope', fontWeight: 700, cursor: 'pointer', marginBottom: '22px',
       }}>{t('nav.developmentPlan')} →</button>}
-      <ResultsReport data={data} mistakes={mistakes} onViewAnalytics={() => goTo('analytics')} />
+      <ResultsReport data={data} mistakes={mistakes} onViewAnalytics={() => goTo('analytics')}
+        onOpenCluster={developmentAvailable ? (cluster) => {
+          sessionStorage.setItem(`mindmetric-development:${user.id}:requested-cluster`, String(cluster));
+          goTo('development');
+        } : undefined} />
     </div>
   );
 }

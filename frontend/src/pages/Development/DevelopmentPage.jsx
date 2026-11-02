@@ -7,6 +7,7 @@ import {
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import LanguageSwitcher from '../../components/LanguageSwitcher.jsx';
 import PlanOverview from './PlanOverview.jsx';
+import ClusterRecommendation from './ClusterRecommendation.jsx';
 import SkillProgress from './SkillProgress.jsx';
 import ClusterCatalogue from './ClusterCatalogue.jsx';
 import { CourseNotation, MiniProjects, StudyFiles } from './LearningResources.jsx';
@@ -95,6 +96,15 @@ export default function DevelopmentPage({ user, goTo }) {
         if (cancelled) return;
         setModules(result.modules);
         setPlan(result);
+        const requested = Number(sessionStorage.getItem(`${selectedKey}:requested-cluster`));
+        if ([1, 2, 3].includes(requested) && result.clusters.some((row) => row.id === requested)) {
+          selectCluster(requested);
+          setEnrollment(null);
+          setSession(null);
+          sessionStorage.removeItem(selectedKey);
+          sessionStorage.removeItem(`${selectedKey}:requested-cluster`);
+          return;
+        }
         const saved = sessionStorage.getItem(selectedKey);
         if (saved && /^\d+$/.test(saved)) {
           let data;
@@ -241,6 +251,7 @@ export default function DevelopmentPage({ user, goTo }) {
     </div>}
     {loading ? <p role="status">{c.loading}</p> : !available ? <div className="dev-panel"><p>{c.unavailable}</p></div> : <>
       {!enrollment ? <>
+        <ClusterRecommendation guidance={plan?.clusterRecommendation} onOpen={(id) => selectCluster(id)} />
         <PlanOverview plan={plan} c={c} busy={busy} onOpen={openModule} />
         <ClusterCatalogue modules={modules} clusters={plan?.clusters} selectedCluster={selectedCluster}
           onSelect={selectCluster} c={c} busy={busy} onOpen={openModule} />

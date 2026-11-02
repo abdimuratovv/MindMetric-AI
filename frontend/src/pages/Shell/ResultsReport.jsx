@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import { useLanguage } from '../../i18n/LanguageContext.jsx';
 import { polar } from '../../theme/tokens.js';
+import ClusterRecommendation from '../Development/ClusterRecommendation.jsx';
 
 /**
  * The results report body (score card, radar, level scale, recommended fields,
@@ -10,7 +11,7 @@ import { polar } from '../../theme/tokens.js';
  * `mistakes` the grouped list. `onViewAnalytics` is omitted where the detailed
  * analytics screen doesn't apply (admin view), which hides that link.
  */
-export default function ResultsReport({ data, mistakes, onViewAnalytics }) {
+export default function ResultsReport({ data, mistakes, onViewAnalytics, onOpenCluster }) {
   const [hoverIdx, setHoverIdx] = useState(null);
   const { t } = useLanguage();
 
@@ -174,6 +175,7 @@ export default function ResultsReport({ data, mistakes, onViewAnalytics }) {
         </div>
       )}
 
+      <ClusterRecommendation guidance={data.clusterRecommendation} onOpen={onOpenCluster} />
       <div style={{
         padding: '26px 30px', borderRadius: '22px', background: 'rgba(255,255,255,0.62)', border: '1px solid rgba(255,255,255,0.85)',
         backdropFilter: 'blur(16px)', boxShadow: '0 10px 30px rgba(31,55,75,0.06)', marginBottom: '22px',

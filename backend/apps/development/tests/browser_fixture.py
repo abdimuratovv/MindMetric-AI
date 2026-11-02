@@ -34,5 +34,13 @@ for _, module, _ in import_bundle(contents):
     publish_module(module.pk)
 user = get_user_model().objects.create_user('development-smoke@university.edu', first_name='Development', last_name='Smoke')
 StudentProfile.objects.create(user=user, faculty='Test', course='1', group='Smoke', specialization='Test', completed_at=timezone.now())
+if os.environ.get('CLUSTER_GUIDANCE_SMOKE') == '1':
+    from apps.assessments.models import AssessmentAttempt
+    from apps.scoring.models import IndicatorScore
+    from apps.development.cluster_guidance import CLUSTER_INDICATORS
+    for number, group in CLUSTER_INDICATORS.items():
+        for key in group:
+            AssessmentAttempt.objects.create(student=user, assessment_type=key, status='completed')
+            IndicatorScore.objects.create(student=user, indicator_key=key, score=40 if number == 3 else 90)
 Path(os.environ['DEVELOPMENT_BROWSER_TOKEN_PATH']).write_text(json.dumps({'access': str(AccessToken.for_user(user)), 'user_id': user.pk}), encoding='utf-8')
 print('Disposable browser fixture ready.')
