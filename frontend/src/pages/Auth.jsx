@@ -65,10 +65,7 @@ export default function Auth({ onLoginSuccess, onGoWelcome }) {
 
   const doLogin = async () => {
     setRegisterSuccess(false);
-    if (!email.trim() || !password.trim()) {
-      setLoginError(t('auth.missingFields'));
-      return;
-    }
+    // Empty email + password is allowed: the backend signs in as a demo user of the chosen role.
     setIsLoggingIn(true);
     try {
       const user = await login(email, password, authTab);

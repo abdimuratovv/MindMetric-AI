@@ -9,6 +9,7 @@ for real values via environment variables in production.
 """
 import os
 from pathlib import Path
+from django.core.exceptions import ImproperlyConfigured
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -39,7 +40,10 @@ INSTALLED_APPS = [
 ]
 
 # Pilot access is explicit; content imports remain draft until an admin publishes.
-DEVELOPMENT_CLUSTER1_ENABLED = os.environ.get('DEVELOPMENT_CLUSTER1_ENABLED', '0') == '1'
+# Preview mode: an empty email+password on the login form signs in as a shared
+# demo student/admin. Set PASSWORDLESS_LOGIN=0 to turn it off.
+PASSWORDLESS_LOGIN = os.environ.get('PASSWORDLESS_LOGIN', '1') == '1'
+DEVELOPMENT_CLUSTER1_ENABLED =os.environ.get('DEVELOPMENT_CLUSTER1_ENABLED', '0') == '1'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -74,6 +78,14 @@ TEMPLATES = [
 WSGI_APPLICATION = 'mindmetric.wsgi.application'
 
 import dj_database_url  # noqa: E402
+
+# Render's filesystem is ephemeral: never silently deploy against SQLite.
+if os.environ.get('RENDER') and not os.environ.get('DATABASE_URL'):
+    raise ImproperlyConfigured('DATABASE_URL is required on Render.')
+if os.environ.get('DATABASE_URL') and not os.environ['DATABASE_URL'].startswith(
+    ('postgres://', 'postgresql://')
+):
+    raise ImproperlyConfigured('DATABASE_URL must be a PostgreSQL URL.')
 
 # Render (and most PaaS) inject DATABASE_URL for the managed Postgres instance;
 # fall back to local SQLite when it's unset so `runserver` keeps working as-is.

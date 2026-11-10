@@ -1,5 +1,6 @@
 import math
 
+from django.conf import settings
 from django.contrib.auth import authenticate
 from django.utils import timezone
 from rest_framework import status
@@ -34,6 +35,22 @@ NO_ACCOUNT_MESSAGE = {
 }
 
 
+def _demo_user(role):
+    """Shared passwordless preview account for `role` (created on first use, no usable password)."""
+    user, created = User.objects.get_or_create(
+        email=f'demo-{role}@mindmetric.local',
+        defaults={
+            'role': role,
+            'first_name': 'Demo',
+            'last_name': 'Admin' if role == User.Role.ADMIN else 'Student',
+        },
+    )
+    if created:
+        user.set_unusable_password()
+        user.save(update_fields=['password'])
+    return user
+
+
 class LoginView(APIView):
     """
     POST /api/auth/login/  {email, password, role}
@@ -48,6 +65,21 @@ class LoginView(APIView):
 
     def post(self, request):
         lang = get_language(request)
+        demo_role = request.data.get('role')
+        if (
+            settings.PASSWORDLESS_LOGIN
+            and demo_role in (User.Role.STUDENT, User.Role.ADMIN)
+            and not str(request.data.get('email') or '').strip()
+            and not str(request.data.get('password') or '').strip()
+        ):
+            user = _demo_user(demo_role)
+            refresh = RefreshToken.for_user(user)
+            return Response({
+                'access': str(refresh.access_token),
+                'refresh': str(refresh),
+                'user': UserSerializer(user).data,
+            })
+
         serializer = LoginSerializer(data=request.data, context={'lang': lang})
         if not serializer.is_valid():
             first_error = next(iter(serializer.errors.values()))[0]
