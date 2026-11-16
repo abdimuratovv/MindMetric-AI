@@ -37,8 +37,8 @@ NO_ACCOUNT_MESSAGE = {
 
 # Display names for the shared passwordless accounts, per UI language.
 PASSWORDLESS_NAMES = {
-    'uz': {'admin': ('Tizim', 'administratori'), 'student': ('Talaba', '')},
-    'ru': {'admin': ('Системный', 'администратор'), 'student': ('Студент', '')},
+    'uz': {'admin': ('Administrator', ''), 'student': ('Talaba', '')},
+    'ru': {'admin': ('Администратор', ''), 'student': ('Студент', '')},
 }
 
 
